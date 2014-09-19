@@ -99,6 +99,23 @@ class EventfulController extends BaseController {
 				$eventRecord->save();
 			}
 
+			$app_key = 'pLB3SGLn9xSnfcg5';
+
+			$evCategories = new Services_Eventful($app_key);
+
+			// print_r($ev);
+
+			// All method calls other than login() go through call().
+			$args = array(
+			  'location' => 'Atlanta',
+			  'page_size' => '50'
+			);
+
+			$eventCategories = $evCategories->call('categories/list', $args, 'json');
+
+
+			print_r($eventCategories);
+
 		}
 
 	}

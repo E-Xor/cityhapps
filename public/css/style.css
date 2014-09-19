@@ -37,7 +37,7 @@ html body {
 
 .day-slider {
   background: #d1d2d4;
-  height: 60px;
+  height: auto;
   padding: 0 40px; }
 
 .right {
