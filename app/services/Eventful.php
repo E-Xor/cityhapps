@@ -259,17 +259,25 @@ class Services_Eventful
     /* Process the response XML through SimpleXML */
     $resp_data = $response->getBody();
     $this->_response_data = $resp_data;
-    $data = new SimpleXMLElement($resp_data);
+    // $data = new SimpleXMLElement($resp_data);
     
     /* Check for call-specific error messages */
-        if ($data->getName() === 'error') 
-        {
-            $error = $data['string'] . ": " . $data->description;
-            $code = $data['string'];
-            return PEAR::raiseError($error, $code);
-        }
+        // if ($data->getName() === 'error') 
+        // {
+        //     $error = $data['string'] . ": " . $data->description;
+        //     $code = $data['string'];
+        //     return PEAR::raiseError($error, $code);
+        // }
+
+        // if ($resp_data->$type == "json") {
+        //   return json_encode($resp_data);
+        // }
     
-        return($data);
+      // $json_output = json_encode($resp_data, JSON_PRETTY_PRINT);
+
+      return($resp_data);
+
+
     }
 }
 ?>
