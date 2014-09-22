@@ -30,5 +30,7 @@ Route::get('events', 'EventfulController@events');
 
 Route::resource('user', 'UserController');
 
+Route::resource('test', 'Testerson');
+
 
 // Route::get("")
