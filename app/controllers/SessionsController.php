@@ -5,10 +5,10 @@ class SessionsController extends BaseController {
 	public function create() {
 
 		if (Auth::check()) {
-			return Redirect::to('/admin');	
+			return Redirect::to('/');	
 		}
 
-		return View::make('sessions.create');
+		return Redirect::to('/');
 
 	}
 

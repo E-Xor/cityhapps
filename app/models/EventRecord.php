@@ -57,6 +57,8 @@ class EventRecord extends Eloquent {
 
 // ];
 
+	protected $guarded = array('id','create_at', "updated_at");
+
 	/**
 	 * The database table used by the model.
 	 *

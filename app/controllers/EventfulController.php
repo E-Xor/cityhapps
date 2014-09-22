@@ -72,7 +72,7 @@ class EventfulController extends BaseController {
 				$eventRecord->region_name		=	$jsonArray['events']['event'][$i]['region_name'];
 				$eventRecord->start_time		=	$jsonArray['events']['event'][$i]['start_time'];
 				$eventRecord->tz_id				=	$jsonArray['events']['event'][$i]['tz_id'];
-				$eventRecord->description		=	$jsonArray['events']['event'][$i]['description'];
+				// $eventRecord->description		=	$jsonArray['events']['event'][$i]['description'];
 				$eventRecord->modified			=	$jsonArray['events']['event'][$i]['modified'];
 				$eventRecord->venue_display		=	$jsonArray['events']['event'][$i]['venue_display'];
 				$eventRecord->tz_country		=	$jsonArray['events']['event'][$i]['tz_country'];

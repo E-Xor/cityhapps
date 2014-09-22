@@ -28,12 +28,7 @@ Route::get('/', 'HomeController@showWelcome');
 
 Route::get('events', 'EventfulController@events');
 
-// User::create([
-// 	'username' => 'Craigers', 
-// 	'email' => 'ckahle33@gmail.com', 
-// 	"password" => Hash::make('password')
+Route::resource('user', 'UserController');
 
-
-// ]);
 
 // Route::get("")
