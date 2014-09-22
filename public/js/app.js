@@ -3,8 +3,10 @@ var cityHapps = angular.module('cityHapps', []);
 
 cityHapps.controller("EventsCtrl", function($scope, $http) {
 
-	$http.get('/app/controllers/EventfulController.php').success(json);
+	var events = $http.get('/events');
 
-	alert(json);
+	events.success(function(data) {
+		console.log(data);
+	});
 
 });

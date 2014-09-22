@@ -97,7 +97,10 @@ class EventfulController extends BaseController {
 	
 
 				$eventRecord->save();
+
 			}
+
+			return Response::json(EventRecord::all());
 
 			$app_key = 'pLB3SGLn9xSnfcg5';
 
