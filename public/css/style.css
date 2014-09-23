@@ -13,6 +13,9 @@ html body {
     height: 40px;
     padding: 5px; }
 
+.register input {
+  margin: 15px 0; }
+
 .view-select {
   height: 60px; }
 
@@ -34,6 +37,9 @@ html body {
 
 .center {
   text-align: center; }
+
+.block {
+  display: block; }
 
 .day-slider {
   background: #d1d2d4;

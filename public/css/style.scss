@@ -27,6 +27,12 @@ html body {
 	}
 }
 
+.register {
+	input {
+		margin: 15px 0;
+	}
+}
+
 .view-select {
 	height: 60px;
 }
@@ -56,6 +62,10 @@ html body {
 
 .center {
 	text-align: center;
+}
+
+.block {
+	display: block;
 }
 
 

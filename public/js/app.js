@@ -1,4 +1,4 @@
-var cityHapps = angular.module('cityHapps', ['ui.bootstrap.modal']);
+var cityHapps = angular.module('cityHapps', ['ui.bootstrap']);
 
 
 cityHapps.controller("EventsCtrl", function($scope, $http) {
@@ -6,22 +6,39 @@ cityHapps.controller("EventsCtrl", function($scope, $http) {
 	var events = $http.get('/events');
 
 	events.success(function(data) {
-		console.log(data);
+		// console.log(data);
 	});
 
 });
 
-cityHapps.controller("createAccount", function($scope){
-	$scope.open =  function() {
-		$scope.showModal =  true;
-	};
 
-	$scope.ok =  function() {
-		$scope.showModal =  false;
-	};
+cityHapps.controller('registerFormController', function($scope, $http){
 
-	$scope.cancel =  function() {
-		$scope.showModal =  false;
+	$scope.formData = {};
+
+	$scope.processForm = function() {
+		$http({
+			method: 'POST',
+			url: '/user',
+			data: $scope.formData,
+			headers: {"Content-Type": "application/json"}
+		}).success(function(data){
+
+			if(!data.success) {
+				console.log('not working');
+			} else {
+				console.log('successfully POSTang!');
+			}
+
+			console.log(data);
+
+		});
 	};
 
 });
+
+
+// cityHapps.controller('registrationModal', function($scope){
+// $scope.open();
+
+// });

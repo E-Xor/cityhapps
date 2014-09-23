@@ -13,27 +13,16 @@
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> <!-- load angular -->
-	<script src="/js/angular-ui.bootstrap-modal.js"></script>
+	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
 	<script src="/js/app.js"></script>
+	<script src="/js/dom.js"></script>
 
 </head>
 
 <body ng-app="cityHapps">
 
-<div modal="showModal" close="cancel()">
-    <div class="modal-header">
-        <h4>Modal Dialog</h4>
-    </div>
-    <div class="modal-body">
-        <p>Example paragraph with some text.</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-success" ng-click="ok()">Okay</button>
-      <button class="btn" ng-click="cancel()">Cancel</button>
-    </div>
-</div>
+	<div ng-include src="'/templates/registrationModal.html'"></div>
 
 	<div class="container main">
 		<div class="wide">
@@ -50,10 +39,10 @@
 						<input type="text" placholder="Find Events &amp; Activities" class="main-search" />
 
 					</div>
-					<div class="col-sm-3 col-sm-offset-1 left" ng-controller="createAccount">
+					<div class="col-sm-3 col-sm-offset-1 left">
 						
-						<h4 class="uppercase" ng-click="open()">Create An Account</h4>
-						<h4 class="uppercase" ng-click="open()">Sign in</h4>
+						<h4 class="uppercase registerModal" >Create An Account</h4>
+						<h4 class="uppercase" >Sign in</h4>
 
 					</div>
 				</div>

@@ -31,16 +31,18 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		return "stored new user!!! ";
+		// return 'user created!!!! ';
+		
+		$json = Input::json()->all();
 
 		$user = new User;
-		$user->username = Request::get('username');
-		$user->email = Request::get('email');
+		// $user->username = $json['username'];
+		$user->email = $json['email'];
 
-
-		$user->password = Request::get('password');
+		$user->password = $json['password'];
 		$user->save();
 
+		return $user . "New User Created Sucessfully!";
 		
 	}
 
