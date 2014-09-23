@@ -2,31 +2,42 @@
 
 class SessionsController extends BaseController {
 	
+	public function index() {
+		return Response::json(Auth::check());
+	}
+
+
 	public function create() {
 
 		if (Auth::check()) {
-			return Redirect::to('/');	
+			return Redirect::to('/admin');	
 		}
 
 		return Redirect::to('/');
 
 	}
 
-	public function store() {
+	public function login() {
 
-		if (Auth::attempt(Input::only('email', 'password'))) {
+		if (Auth::attempt(array('email' => Input::json('email'), 'password' => Input::json('password')))) {
 			
-			return Redirect::to('/admin');
+			return Response::json(Auth::user());
 
+			// return Redirect::to('/admin');
+		} else {
+
+			return Response::json(array('flash' => 'Invalid username or password'), 500);	
 		}
 		
-		return "Failed";
+		
 	}
 
-	public function destroy() {
+	public function logout() {
+
 		Auth::logout();
 
-		return Redirect::route('sessions.create');
+		return Response::json(array('flash' => 'Logged Out!'));
+
 	}
 }
 

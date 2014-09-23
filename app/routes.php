@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('login', 'SessionsController@create');
-
-Route::get('logout', 'SessionsController@destroy');
-
-Route::resource('sessions', 'SessionsController');
 
 Route::get('admin', function() {
 
@@ -28,9 +23,16 @@ Route::get('/', 'HomeController@showWelcome');
 
 Route::get('events', 'EventfulController@events');
 
-Route::resource('user', 'UserController');
 
-Route::resource('test', 'Testerson');
+
+	Route::get('auth/status', 'SessionsController@index');
+
+	Route::post('auth/login', 'SessionsController@login');
+
+	Route::get('auth/logout', 'SessionsController@logout');
+
+	Route::resource('user', 'UserController');
+
 
 
 // Route::get("")

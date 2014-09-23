@@ -23,6 +23,7 @@
 <body ng-app="cityHapps">
 
 	<div ng-include src="'/templates/registrationModal.html'"></div>
+	<div ng-include src="'/templates/loginModal.html'"></div>
 
 	<div class="container main">
 		<div class="wide">
@@ -42,7 +43,7 @@
 					<div class="col-sm-3 col-sm-offset-1 left">
 						
 						<h4 class="uppercase registerModal" >Create An Account</h4>
-						<h4 class="uppercase" >Sign in</h4>
+						<h4 class="uppercase loginModal" >Sign in</h4>
 
 					</div>
 				</div>

@@ -1,26 +1,18 @@
 <?php 
 
-require __DIR__ . '/../services/Eventful.php';
 
 class EventfulController extends BaseController { 
 
 	public function events() {
 
 		// Enter your application key here. (See http://api.eventful.com/keys/)
-			$app_key = 'pLB3SGLn9xSnfcg5';
+			// $app_key = 'pLB3SGLn9xSnfcg5';
 
-			$ev = new Services_Eventful($app_key);
+			$event = file_get_contents('http://api.eventful.com/json/events/search?location=Atlanta&app_key="pLB3SGLn9xSnfcg5"&date=Future');
 
-			// print_r($ev);
+			return $event;
 
-			// All method calls other than login() go through call().
-			$args = array(
-			  'location' => 'Atlanta',
-			  'page_size' => '20'
-			);
-
-			$event = $ev->call('/events/search', $args, 'json');
-
+			//Eventful will return an object but we need an array 
 			function objectToArray($d) {
 					if (is_object($d)) {
 						// Gets the properties of the given object
@@ -75,7 +67,7 @@ class EventfulController extends BaseController {
 				// $eventRecord->region_name		=	$jsonArray['events']['event'][$i]['region_name'];
 				// $eventRecord->start_time		=	$jsonArray['events']['event'][$i]['start_time'];
 				// $eventRecord->tz_id				=	$jsonArray['events']['event'][$i]['tz_id'];
-				// // $eventRecord->description		=	$jsonArray['events']['event'][$i]['description'];
+				// $eventRecord->description		=	$jsonArray['events']['event'][$i]['description'];
 				// $eventRecord->modified			=	$jsonArray['events']['event'][$i]['modified'];
 				// $eventRecord->venue_display		=	$jsonArray['events']['event'][$i]['venue_display'];
 				// $eventRecord->tz_country		=	$jsonArray['events']['event'][$i]['tz_country'];
@@ -103,24 +95,9 @@ class EventfulController extends BaseController {
 
 			}
 
-			return Response::json(EventRecord::all());
+			// return Response::json(EventRecord::all());
 
-			$app_key = 'pLB3SGLn9xSnfcg5';
-
-			$evCategories = new Services_Eventful($app_key);
-
-			// print_r($ev);
-
-			// All method calls other than login() go through call().
-			$args = array(
-			  'location' => 'Atlanta',
-			  'page_size' => '50'
-			);
-
-			$eventCategories = $evCategories->call('categories/list', $args, 'json');
-
-
-			print_r($eventCategories);
+			// print_r($eventCategories);
 
 		}
 

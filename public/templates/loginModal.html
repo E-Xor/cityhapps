@@ -1,21 +1,21 @@
-	<div class="modal fade register" >
+	<div class="modal fade login" >
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h3 class="modal-title uppercase">New Account</h3>
+	        <h3 class="modal-title uppercase">Login</h3>
 	        <p>Lorem ipsum dolor sit amet, cu nec debet urbanitas, putent electram temporibus eos in</p>
 	      </div>
-	      <div class="modal-body" ng-controller="registerFormController">
-	        <form ng-submit="processForm()" class="registerForm">
+	      <div class="modal-body" ng-controller="loginController">
+	        <form ng-submit="loginUser()" class="loginForm">
 				<input type="text" placeholder="Email" class="registerEmail block" ng-model="formData.email">
 				<input type="password" placeholder="password" class="registerPassword block" ng-model="formData.password">
-				<input type="password" placeholder="password" class="registerPassword left" ng-model="formData.password2">
+				<!-- <input type="password" placeholder="password" class="registerPassword left" ng-model="formData.password2"> -->
 	        
 	        {{formData}}
 	        
 	        <div>
-		        <button type="submit" class="btn btn-primary">Create Account</button>
+		        <button type="submit" class="btn btn-primary">Login</button>
 	      	</div>
 	      </form>
 

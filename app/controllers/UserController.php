@@ -39,10 +39,10 @@ class UserController extends \BaseController {
 		// $user->username = $json['username'];
 		$user->email = $json['email'];
 
-		$user->password = $json['password'];
+		$user->password = Hash::make($json['password']);
 		$user->save();
 
-		return $user . "New User Created Sucessfully!";
+		return $user . " New User Created Successfully!";
 		
 	}
 

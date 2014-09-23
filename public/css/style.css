@@ -13,8 +13,18 @@ html body {
     height: 40px;
     padding: 5px; }
 
-.register input {
-  margin: 15px 0; }
+.registerModal {
+  cursor: pointer; }
+
+.register .modal-dialog {
+  max-width: 400px;
+  overflow-wrap: break-word; }
+
+.register input, .login input {
+  margin: 15px 0;
+  width: 100%;
+  height: 40px;
+  padding: 10px 15px; }
 
 .view-select {
   height: 60px; }

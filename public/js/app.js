@@ -24,9 +24,9 @@ cityHapps.controller('registerFormController', function($scope, $http){
 			headers: {"Content-Type": "application/json"}
 		}).success(function(data){
 
-			if(!data.success) {
+			if(!data) {
 				console.log('not working');
-			} else {
+			} else if (data) {
 				console.log('successfully POSTang!');
 			}
 
@@ -34,6 +34,30 @@ cityHapps.controller('registerFormController', function($scope, $http){
 
 		});
 	};
+
+});
+
+cityHapps.controller('loginController', function($scope, $http) {
+
+	$scope.formData = {};
+
+	$scope.loginUser =  function() {
+		$http({
+			method: "POST",
+			url: '/auth/login',
+			data: $scope.formData,
+			headers : {"Content-Type": "application/json"}
+		}).success(function(data){
+
+			if (!data) {
+				console.log("You are Logged in!!");
+			} else if(data) {
+				console.log("There was an error logging you in");
+			}
+
+		});
+	};
+
 
 });
 
