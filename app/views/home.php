@@ -22,10 +22,11 @@
 
 <body ng-app="cityHapps">
 
+	<div class="container main" ng-controller="loginController">
+	
 	<div ng-include src="'/templates/registrationModal.html'"></div>
 	<div ng-include src="'/templates/loginModal.html'"></div>
-
-	<div class="container main">
+	
 		<div class="wide">
 			<div class="row header-search">
 
@@ -40,10 +41,18 @@
 						<input type="text" placholder="Find Events &amp; Activities" class="main-search" />
 
 					</div>
-					<div class="col-sm-3 col-sm-offset-1 left">
+					<div class="col-sm-3 col-sm-offset-1 left auth">
 						
 						<h4 class="uppercase registerModal" >Create An Account</h4>
 						<h4 class="uppercase loginModal" >Sign in</h4>
+	
+						<div ng-controller="logoutController">
+							<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
+						</div>
+						<div ng-show="currentUserSignedIn">
+							Welcome, {{currentUser.email}} !	
+
+						</div>
 
 					</div>
 				</div>

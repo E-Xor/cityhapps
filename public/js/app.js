@@ -40,6 +40,8 @@ cityHapps.controller('registerFormController', function($scope, $http){
 cityHapps.controller('loginController', function($scope, $http) {
 
 	$scope.formData = {};
+	$scope.currentUser = {};
+	$scope.currentUserSignedIn = false;
 
 	$scope.loginUser =  function() {
 		$http({
@@ -50,12 +52,43 @@ cityHapps.controller('loginController', function($scope, $http) {
 		}).success(function(data){
 
 			if (!data) {
-				console.log("You are Logged in!!");
-			} else if(data) {
 				console.log("There was an error logging you in");
+			} else if(data) {
+				console.log("You are Logged in!!");
+				console.log(data);
+
+
+			
+				$scope.currentUserSignedIn = true;
+
+				console.log($scope.currentUserSignedIn);
+				$scope.currentUser.email = data.email;
+			}
+		});
+	};
+
+
+});
+
+
+cityHapps.controller('logoutController', function($scope, $http) {
+
+	$scope.logoutUser = function() {
+		$http({
+			method: "GET",
+			url: '/auth/logout',
+			// data: $scope.formData,
+			headers : {"Content-Type": "application/json"}
+		}).success(function(data){
+
+			if (!data) {
+				console.log("There was an error logging you out");
+			} else if(data) {
+				console.log("You have logged out");
 			}
 
 		});
+
 	};
 
 
