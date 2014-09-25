@@ -11,6 +11,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	
+
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> <!-- load angular -->
@@ -28,6 +29,9 @@
 	<div ng-include src="'/templates/loginModal.html'"></div>
 	
 		<div class="wide">
+			<div class='row wide-search'>
+				<input type="text" placeholder="Search" class="search-large">
+			</div>
 			<div class="row header-search">
 
 				<div class="row-sm-12">
