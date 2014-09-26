@@ -10,13 +10,17 @@
 	<link rel="stylesheet" href="/css/style.css" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	
+	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
+
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> <!-- load angular -->
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+	<script src="/js/jquery.bxslider.min.js"></script>
 	<script src="/js/app.js"></script>
 	<script src="/js/dom.js"></script>
+	<script src="/js/slider.js"></script>
+	
 
 </head>
 
@@ -96,7 +100,8 @@
 <div class="row event-slider" ng-controller="EventsCtrl">
 	<div class="col-sm-12">
 		<h3 class="uppercase">Events</h3>
-		<div class="col-sm-3 event">
+	<div class="bxslider">
+		<div class="col-sm-12 event">
 			<div class="event-inner">
 				<img src="http://placehold.it/255x150">
 				<div class="event-details">
@@ -104,12 +109,10 @@
 					<p>Jul 11 11:00 am</p>
 					<p>Fabulous Fox Thetre</p>
 					<p>in Atlanta</p>
-
 				</div>
 			</div>
-
-		</div>	
-		<div class="col-sm-3 event">
+		</div>
+		<div class="col-sm-12 event">
 			<div class="event-inner">
 				<img src="http://placehold.it/255x150">
 				<div class="event-details">
@@ -117,29 +120,10 @@
 					<p>Jul 11 11:00 am</p>
 					<p>Fabulous Fox Thetre</p>
 					<p>in Atlanta</p>
-
-
 				</div>
-
-			</div>			
-
-		</div>	
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-
-
-				</div>
-
 			</div>
-
-		</div>	
-		<div class="col-sm-3 event">
+		</div>
+		<div class="col-sm-12 event">
 			<div class="event-inner">
 				<img src="http://placehold.it/255x150">
 				<div class="event-details">
@@ -148,18 +132,50 @@
 					<p>Fabulous Fox Thetre</p>
 					<p>in Atlanta</p>
 				</div>
-
 			</div>
-
-		</div>	
-				
-	</div>	
+		</div>
+ 		<div class="col-sm-12 event">
+			<div class="event-inner">
+				<img src="http://placehold.it/255x150">
+				<div class="event-details">
+					<h3>Event Header</h3>
+					<p>Jul 11 11:00 am</p>
+					<p>Fabulous Fox Thetre</p>
+					<p>in Atlanta</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 event">
+			<div class="event-inner">
+				<img src="http://placehold.it/255x150">
+				<div class="event-details">
+					<h3>Event Header</h3>
+					<p>Jul 11 11:00 am</p>
+					<p>Fabulous Fox Thetre</p>
+					<p>in Atlanta</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 event">
+			<div class="event-inner">
+				<img src="http://placehold.it/255x150">
+				<div class="event-details">
+					<h3>Event Header</h3>
+					<p>Jul 11 11:00 am</p>
+					<p>Fabulous Fox Thetre</p>
+					<p>in Atlanta</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 
 <div class="row event-slider">
 	<div class="col-sm-12">
 		<h3 class="uppercase">Activities</h3>
-		<div class="col-sm-3 event">
+		<div class="bxslider">
+		<div class="col-sm-12 event">
 			<div class="event-inner">
 				<img src="http://placehold.it/255x150">
 				<div class="event-details">
@@ -167,12 +183,10 @@
 					<p>Jul 11 11:00 am</p>
 					<p>Fabulous Fox Thetre</p>
 					<p>in Atlanta</p>
-
 				</div>
 			</div>
-
-		</div>	
-		<div class="col-sm-3 event">
+		</div>
+		<div class="col-sm-12 event">
 			<div class="event-inner">
 				<img src="http://placehold.it/255x150">
 				<div class="event-details">
@@ -180,29 +194,10 @@
 					<p>Jul 11 11:00 am</p>
 					<p>Fabulous Fox Thetre</p>
 					<p>in Atlanta</p>
-
-
 				</div>
-
-			</div>			
-
-		</div>	
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-
-
-				</div>
-
 			</div>
-
-		</div>	
-		<div class="col-sm-3 event">
+		</div>
+		<div class="col-sm-12 event">
 			<div class="event-inner">
 				<img src="http://placehold.it/255x150">
 				<div class="event-details">
@@ -211,12 +206,43 @@
 					<p>Fabulous Fox Thetre</p>
 					<p>in Atlanta</p>
 				</div>
-
 			</div>
-
-		</div>	
-				
-	</div>	
+		</div>
+ 		<div class="col-sm-12 event">
+			<div class="event-inner">
+				<img src="http://placehold.it/255x150">
+				<div class="event-details">
+					<h3>Event Header</h3>
+					<p>Jul 11 11:00 am</p>
+					<p>Fabulous Fox Thetre</p>
+					<p>in Atlanta</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 event">
+			<div class="event-inner">
+				<img src="http://placehold.it/255x150">
+				<div class="event-details">
+					<h3>Event Header</h3>
+					<p>Jul 11 11:00 am</p>
+					<p>Fabulous Fox Thetre</p>
+					<p>in Atlanta</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 event">
+			<div class="event-inner">
+				<img src="http://placehold.it/255x150">
+				<div class="event-details">
+					<h3>Event Header</h3>
+					<p>Jul 11 11:00 am</p>
+					<p>Fabulous Fox Thetre</p>
+					<p>in Atlanta</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 
 
