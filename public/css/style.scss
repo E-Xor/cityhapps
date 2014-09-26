@@ -27,6 +27,21 @@ html body {
 	}
 }
 
+.wide-search {
+	height: 0px;
+	display: none;
+	height: 137px;
+}
+
+.search-large {
+	width: 100%;
+	//height should by dynamically set by js for mobile view
+	height: 137px;
+	padding: 10px;
+	font-size: 1.6em;
+	// display: none;
+}
+
 .auth > div, h4 {
 	cursor: pointer;
 }

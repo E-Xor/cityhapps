@@ -1,29 +1,61 @@
 $(function(){
 
-	$(".registerModal").on("click", function(){
+	//fullWidth Search
+	$(".main-search").on("focus", function(){
 
-		$('.register').modal("show");
+		$(".header-search").fadeOut("fast", function(){
 
-	});
+			$('.wide-search').fadeIn("fast");
 
-	$('.registerForm').submit(function(){
+			$(".search-large").focus();
+		
+		});
 
-		$('.register').modal("hide");
-
-	});
-
-
-	$(".loginModal").on("click", function(){
-
-		$('.login').modal("show");
+		
 
 	});
 
-	$('.loginForm').submit(function(){
+	$(".search-large").blur(function(){
 
-		$('.login').modal("hide");
+		$('.wide-search').fadeOut("fast", function(){
+
+			$(".header-search").fadeIn("fast");
+
+		});
+
+		
+
+		
 
 	});
 	
+
+	
+
+	//register modal
+	$(".registerModal").on("click", function(){
+		$('.register').modal("show");
+	});
+
+	$('.registerForm').on("submit", function(){
+		$('.register').modal("hide");
+	});
+
+	//login modal
+	$(".loginModal").on("click", function(){
+		$('.login').modal("show");
+	});
+
+	//login modal close on submit 
+	$('.loginForm').on("submit", function(){
+		$('.login').modal("hide");
+	});
+	
+
+
+
+
+
+
 
 });

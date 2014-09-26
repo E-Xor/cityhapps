@@ -13,6 +13,17 @@ html body {
     height: 40px;
     padding: 5px; }
 
+.wide-search {
+  height: 0px;
+  display: none;
+  height: 137px; }
+
+.search-large {
+  width: 100%;
+  height: 137px;
+  padding: 10px;
+  font-size: 1.6em; }
+
 .auth > div, h4 {
   cursor: pointer; }
 

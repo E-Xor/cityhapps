@@ -32,6 +32,9 @@
 	<div ng-include src="'/templates/loginModal.html'"></div>
 	
 		<div class="wide">
+			<div class='row wide-search'>
+				<input type="text" placeholder="Search" class="search-large">
+			</div>
 			<div class="row header-search">
 
 				<div class="row-sm-12">
