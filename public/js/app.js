@@ -1,4 +1,4 @@
-var cityHapps = angular.module('cityHapps', ['ui.bootstrap']);
+var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute']);
 
 
 cityHapps.controller("EventsCtrl", function($scope, $http) {
@@ -90,9 +90,42 @@ cityHapps.controller('logoutController', function($scope, $http) {
 		});
 
 	};
+});
+ 
+//handle all routing via anuglar templates
 
+cityHapps.config(function($routeProvider, $locationProvider){
+
+	$routeProvider
+		.when("/", {
+			controller: 'EventsCtrl',
+			templateUrl: 'templates/homeView.html'
+		})
+		.when("/map", {
+			controller: 'mapViewController',
+			templateUrl: 'templates/mapView.html'
+		})
+		.when("/calendar", {
+			controller: "calViewController",
+			templateUrl: "templates/calView.html"
+		})
+		.otherwise({redirectTo: "/"});
+
+		// use the HTML5 History API
+		$locationProvider.html5Mode(true);
+});
+
+
+
+cityHapps.controller('mapViewController', function($scope){
 
 });
+
+cityHapps.controller('calViewController', function($scope){
+
+});
+
+
 
 
 // cityHapps.controller('registrationModal', function($scope){

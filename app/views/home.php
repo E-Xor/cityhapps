@@ -15,9 +15,12 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> <!-- load angular -->
+	<script src="/js/angular-route.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
 	<script src="/js/app.js"></script>
 	<script src="/js/dom.js"></script>
+
+	<base href="/">
 
 </head>
 
@@ -37,7 +40,7 @@
 				<div class="row-sm-12">
 					<div class="col-sm-4 center">
 
-						<h3>Logo Goes here</h3>
+						<a href="/"><img src="/img/logo.png"></a>
 
 					</div>
 					<div class="col-sm-4 center">
@@ -69,7 +72,7 @@
 					<h1>&lsaquo;</h1>
 				</div>
 				<div class="col-sm-10">
-					<h3 class="">Wednesday, September 10, 2014</h3>
+					<h3 class="uppercase bold">Wednesday, September 10, 2014</h3>
 				</div>
 				<div class="col-sm-1 left">
 					<h1>&rsaquo;</h1>
@@ -79,7 +82,7 @@
 		</div><!-- Get the header partial -->
 		<div class="row view-select">
 	
-	<div class="col-sm-12">
+	<div class="col-sm-12 view-row">
 		<div class="col-sm-2">
 			All Categories
 				
@@ -88,8 +91,10 @@
 			Most Recent
 
 		</div>	
-		<div class="col-sm-2 col-sm-offset-6">
-			View Icons will go here
+		<div class="col-sm-3 col-sm-offset-5">
+			<a class="list-icon" href=""></a>
+			<a class="map-icon" href="#/map"></a>
+			<a class="cal-icon" href="#/calendar"></a>
 
 		</div>	
 
@@ -97,134 +102,7 @@
 
 </div>
 
-<div class="row event-slider" ng-controller="EventsCtrl">
-	<div class="col-sm-12">
-		<h3 class="uppercase">Events</h3>
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-
-				</div>
-			</div>
-
-		</div>	
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-
-
-				</div>
-
-			</div>			
-
-		</div>	
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-
-
-				</div>
-
-			</div>
-
-		</div>	
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-				</div>
-
-			</div>
-
-		</div>	
-				
-	</div>	
-</div>
-
-<div class="row event-slider">
-	<div class="col-sm-12">
-		<h3 class="uppercase">Activities</h3>
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-
-				</div>
-			</div>
-
-		</div>	
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-
-
-				</div>
-
-			</div>			
-
-		</div>	
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-
-
-				</div>
-
-			</div>
-
-		</div>	
-		<div class="col-sm-3 event">
-			<div class="event-inner">
-				<img src="http://placehold.it/255x150">
-				<div class="event-details">
-					<h3>Event Header</h3>
-					<p>Jul 11 11:00 am</p>
-					<p>Fabulous Fox Thetre</p>
-					<p>in Atlanta</p>
-				</div>
-
-			</div>
-
-		</div>	
-				
-	</div>	
-</div>
-
-
-
+<div ng-view></div>
 <!-- Get the home body partial -->
 
 

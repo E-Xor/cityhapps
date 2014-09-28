@@ -37,6 +37,25 @@ html body {
   height: 40px;
   padding: 10px 15px; }
 
+.view-row {
+  margin: 20px 0; }
+
+.icon, .list-icon, .map-icon, .cal-icon {
+  width: 40px;
+  height: 40px;
+  display: block;
+  float: left;
+  margin: 0 10px; }
+
+.list-icon {
+  background: url("/img/viewSelectSprite.png") no-repeat 0 0; }
+
+.map-icon {
+  background: url("/img/viewSelectSprite.png") no-repeat -69px 0; }
+
+.cal-icon {
+  background: url("/img/viewSelectSprite.png") no-repeat -119px 0; }
+
 .view-select {
   height: 60px; }
 
@@ -46,6 +65,8 @@ html body {
 .event-inner {
   background: #fff;
   height: 320px; }
+  .event-inner img {
+    width: 100%; }
 
 .event-details {
   padding: 10px 20px; }
@@ -62,6 +83,9 @@ html body {
 .block {
   display: block; }
 
+.bold {
+  font-weight: bold; }
+
 .day-slider {
   background: #d1d2d4;
   height: auto;
@@ -72,3 +96,7 @@ html body {
 
 .left {
   float: left; }
+
+@media screen and (max-width: 768px) {
+  .event-inner {
+    height: 100%; } }

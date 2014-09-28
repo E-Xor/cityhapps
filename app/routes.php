@@ -21,6 +21,13 @@ Route::get('admin', function() {
 
 Route::get('/', 'HomeController@showWelcome');
 
+App::missing(function($exception) {
+
+	return View::make('home');
+
+});
+
+
 Route::get('events', 'EventfulController@events');
 
 
