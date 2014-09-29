@@ -80,27 +80,8 @@
 				
 			</div>
 		</div><!-- Get the header partial -->
-		<div class="row view-select">
-	
-	<div class="col-sm-12 view-row">
-		<div class="col-sm-2">
-			All Categories
-				
-		</div>	
-		<div class="col-sm-2">
-			Most Recent
 
-		</div>	
-		<div class="col-sm-3 col-sm-offset-5">
-			<a class="list-icon" href=""></a>
-			<a class="map-icon" href="#/map"></a>
-			<a class="cal-icon" href="#/calendar"></a>
 
-		</div>	
-
-	</div>	
-
-</div>
 
 <div ng-view></div>
 <!-- Get the home body partial -->
