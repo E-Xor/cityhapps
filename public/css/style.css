@@ -37,6 +37,14 @@ html body {
   height: 40px;
   padding: 10px 15px; }
 
+.bx-wrapper.ng-scope .bx-viewport {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  left: 0;
+  background: none; }
+
 .view-row {
   margin: 20px 0; }
 

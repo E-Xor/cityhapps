@@ -1,12 +1,14 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute']);
 
-
-cityHapps.controller("EventsCtrl", function($scope, $http) {
+cityHapps.controller("eventsController", function($scope, $http) {
 
 	var events = $http.get('/events');
-
+	
 	events.success(function(data) {
-		console.log(data);
+		
+		$scope.eventData = data.events["event"];
+		console.log(typeof($scope.eventData));
+
 	});
 
 });
@@ -98,7 +100,7 @@ cityHapps.config(function($routeProvider, $locationProvider){
 
 	$routeProvider
 		.when("/", {
-			controller: 'EventsCtrl',
+			controller: 'eventsController',
 			templateUrl: 'templates/homeView.html'
 		})
 		.when("/map", {
@@ -115,6 +117,22 @@ cityHapps.config(function($routeProvider, $locationProvider){
 		$locationProvider.html5Mode(true);
 });
 
+
+cityHapps.controller("tabSetController", function($scope){
+
+$scope.tabs = [
+    { title:'Events', content:'Dynamic content 1' },
+    { title:'Activities', content:'Dynamic content 2' }
+  ];
+
+ //  var tabEvents = $http.get('/events');
+
+	// tabEvents.success(function(data) {
+		
+	// });
+
+
+});
 
 
 cityHapps.controller('mapViewController', function($scope){

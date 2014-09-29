@@ -60,6 +60,16 @@ html body {
 	}
 }
 
+.bx-wrapper.ng-scope .bx-viewport {
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border:  none;
+	left: 0;
+	background: none;
+}
+
+
 //view icons 
 .view-row {
 	margin: 20px 0;

@@ -10,7 +10,7 @@ class EventfulController extends BaseController {
 
 			$event = file_get_contents('http://api.eventful.com/json/events/search?location=Atlanta&app_key="pLB3SGLn9xSnfcg5"&date=Future');
 
-			// return $event;
+			return $event;
 
 			//Eventful will return an object but we need an array 
 			function objectToArray($d) {
@@ -71,7 +71,10 @@ class EventfulController extends BaseController {
 				$eventRecord->modified			=	$jsonArray['events']['event'][$i]['modified'];
 				$eventRecord->venue_display		=	$jsonArray['events']['event'][$i]['venue_display'];
 				$eventRecord->tz_country		=	$jsonArray['events']['event'][$i]['tz_country'];
+				
+				//Needle in haystack- This returned value is sometimes an array needs to be a string.
 				// $eventRecord->performers		=	$jsonArray['events']['event'][$i]['performers'];
+				
 				$eventRecord->title				=	$jsonArray['events']['event'][$i]['title'];
 				$eventRecord->venue_address		=	$jsonArray['events']['event'][$i]['venue_address'];
 				$eventRecord->geocode_type		=	$jsonArray['events']['event'][$i]['geocode_type'];
