@@ -1,17 +1,20 @@
-html body {
+.open-sans, html, body {
   font-family: 'Open Sans', sans-serif; }
 
-.main {
-  background: #eee; }
+.bgContainer {
+  background: url("/img/fullWidthBG.png") no-repeat #2c2625;
+  background-size: contain;
+  -moz-background-size: contain; }
 
 .header-search {
-  background: #404042;
   color: #fff;
   padding: 20px; }
   .header-search input {
     width: 100%;
-    height: 40px;
-    padding: 5px; }
+    height: 50px;
+    padding: 5px;
+    background: transparent;
+    border: 2px solid #fff; }
 
 .wide-search {
   height: 0px;
@@ -27,7 +30,7 @@ html body {
 .auth > div, h4 {
   cursor: pointer; }
 
-.register .modal-dialog {
+.register .modal-dialog, .login .modal-dialog {
   max-width: 400px;
   overflow-wrap: break-word; }
 
@@ -65,10 +68,20 @@ html body {
   background: url("/img/viewSelectSprite.png") no-repeat -119px 0; }
 
 .view-select {
-  height: 60px; }
+  height: 60px;
+  color: #fff; }
 
 .event {
   padding: 20px; }
+
+.facebookButton {
+  background: #3b5998 url("/img/facebookIcon.png") no-repeat 93% 12px/17.5px 35px;
+  width: 100%;
+  color: #fff;
+  padding: 12px; }
+
+.lucida {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif; }
 
 .event-inner {
   background: #fff;
@@ -78,6 +91,9 @@ html body {
 
 .event-details {
   padding: 10px 20px; }
+
+.register .ng-invalid {
+  border: 1px solid #FF5C50; }
 
 .uppercase {
   text-transform: uppercase; }
@@ -95,9 +111,9 @@ html body {
   font-weight: bold; }
 
 .day-slider {
-  background: #d1d2d4;
   height: auto;
-  padding: 0 40px; }
+  padding: 0 40px;
+  color: #fff; }
 
 .right {
   float: right; }

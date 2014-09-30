@@ -7,10 +7,16 @@
 	        <p>Lorem ipsum dolor sit amet, cu nec debet urbanitas, putent electram temporibus eos in</p>
 	      </div>
 	      <div class="modal-body" ng-controller="registerFormController">
+	        <div class="facebookButton">
+				<div class="lucida">Sign In With Facebook</div>
+	        </div>
+
 	        <form ng-submit="processForm()" class="registerForm">
-				<input type="text" placeholder="Email" class="registerEmail block" ng-model="formData.email">
-				<input type="password" placeholder="password" class="registerPassword block" ng-model="formData.password">
-				<input type="password" placeholder="password" class="registerPassword left" ng-model="formData.password2">
+				<input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
+
+				<input type="password" placeholder="password" required class="registerPassword block" ng-model="formData.password">
+				
+				<input type="password" placeholder="password" required ui-validate=" '$value==formData.password' " class="registerPassword2 left" ng-model="formData.password2">
 	        
 	        {{formData}}
 	        

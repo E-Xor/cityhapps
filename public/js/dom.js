@@ -11,8 +11,6 @@ $(function(){
 		
 		});
 
-		
-
 	});
 
 	$(".search-large").blur(function(){
@@ -23,14 +21,8 @@ $(function(){
 
 		});
 
-		
-
-		
-
 	});
-	
 
-	
 
 	//register modal
 	$(".registerModal").on("click", function(){

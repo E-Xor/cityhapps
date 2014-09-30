@@ -1,4 +1,4 @@
-var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute']);
+var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate']);
 
 cityHapps.controller("eventsController", function($scope, $http) {
 
@@ -31,6 +31,8 @@ cityHapps.controller('registerFormController', function($scope, $http){
 			} else if (data) {
 				console.log('successfully POSTang!');
 			}
+
+
 
 			console.log(data);
 
