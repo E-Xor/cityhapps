@@ -32,10 +32,7 @@
 	
 	<div class="bgContainer">	
 		<div class="container main">
-		
-		<div ng-include src="'/templates/registrationModal.html'"></div>
-		<div ng-include src="'/templates/loginModal.html'"></div>
-		
+			
 			<div class="wide">
 				<div class='row wide-search'>
 					<input type="text" placeholder="Search" class="search-large">
@@ -53,19 +50,19 @@
 							<input type="text" placholder="Find Events &amp; Activities" class="main-search" />
 
 						</div>
-						<div class="col-sm-3 col-sm-offset-1 left auth">
+						<div class="col-sm-3 col-sm-offset-1 left auth" ng-controller="modalController">
 							
-							<h4 class="uppercase registerModal" >Create An Account</h4>
-							<h4 class="uppercase loginModal" >Sign in</h4>
+							<h4 class="uppercase" ng-click="registerOpen('md')">Create An Account</h4>
+							<h4 class="uppercase" ng-click="loginOpen('md')">Sign in</h4>
 		
 							<div ng-controller="logoutController">
 								<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
-							</div>
+
 							<div ng-show="currentUserSignedIn">
 								Welcome, {{currentUser.email}} !	
 
 							</div>
-
+							</div>
 						</div>
 					</div>
 				</div>

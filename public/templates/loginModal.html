@@ -1,28 +1,18 @@
-	<div class="modal fade login" >
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h3 class="modal-title uppercase">Login</h3>
-	        <p>Lorem ipsum dolor sit amet, cu nec debet urbanitas, putent electram temporibus eos in</p>
-	      </div>
-	      <div class="modal-body" ng-controller="loginController">
-	        <form ng-submit="loginUser()" class="loginForm">
-				<input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
-				<input type="password" placeholder="password" class="registerPassword block" ng-model="formData.password">
-				<!-- <input type="password" placeholder="password" class="registerPassword left" ng-model="formData.password2"> -->
-	        
-	        {{formData}}
-	        
+	<div class="login">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title uppercase">Login</h3>
+        <p>Lorem ipsum dolor sit amet, cu nec debet urbanitas, putent electram temporibus eos in</p>
+      </div>
+      <div class="modal-body" ng-controller="loginController">
+        <form ng-submit="loginUser()" class="loginForm">
+			<input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
+			<input type="password" placeholder="password" class="registerPassword block" ng-model="formData.password">
+			<!-- <input type="password" placeholder="password" class="registerPassword left" ng-model="formData.password2"> -->
 	        <div>
 		        <button type="submit" class="btn btn-primary">Login</button>
 	      	</div>
-	      </form>
+      </form>
+    </div>
 
 
-	      </div>
-	    
-
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->

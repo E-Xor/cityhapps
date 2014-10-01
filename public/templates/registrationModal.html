@@ -1,34 +1,30 @@
-	<div class="modal fade register" >
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+	<div class="register">
+      <div class="modal-header">
+	        <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	        <h3 class="modal-title uppercase">New Account</h3>
 	        <p>Lorem ipsum dolor sit amet, cu nec debet urbanitas, putent electram temporibus eos in</p>
-	      </div>
-	      <div class="modal-body" ng-controller="registerFormController">
+      </div>
+
+      	<div class="modal-body" ng-controller="registerFormController">
 	        <div class="facebookButton">
 				<div class="lucida">Sign In With Facebook</div>
 	        </div>
 
-	        <form ng-submit="processForm()" class="registerForm">
-				<input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
+		        <div class="registerForm" ng-controller="modalController">
+					<input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
 
-				<input type="password" placeholder="password" required class="registerPassword block" ng-model="formData.password">
-				
-				<input type="password" placeholder="password" required ui-validate=" '$value==formData.password' " class="registerPassword2 left" ng-model="formData.password2">
-	        
-	        {{formData}}
-	        
-	        <div>
-		        <button type="submit" class="btn btn-primary">Create Account</button>
-	      	</div>
-	      </form>
+					<input type="password" placeholder="password" required class="registerPassword block" ng-model="formData.password">
+					
+					<input type="password" placeholder="password" name="password2" required ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "class="registerPassword2 block" ng-model="formData.password2">
+
+					<span ng-show="registerForm.password2.$error.validator" class="block">Passwords do not match!</span>
+		        
+		        	<!-- ng-disabled="registerForm.$invalid" -->
+			        <button type="button" class="create-account" ng-click="categoriesOpen('md'); " >Next</button>
+		      </div>
+		      {{formData}}
+  		</div>
+  	</div>
 
 
-	      </div>
-	    
-
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->

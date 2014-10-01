@@ -23,31 +23,4 @@ $(function(){
 
 	});
 
-
-	//register modal
-	$(".registerModal").on("click", function(){
-		$('.register').modal("show");
-	});
-
-	$('.registerForm').on("submit", function(){
-		$('.register').modal("hide");
-	});
-
-	//login modal
-	$(".loginModal").on("click", function(){
-		$('.login').modal("show");
-	});
-
-	//login modal close on submit 
-	$('.loginForm').on("submit", function(){
-		$('.login').modal("hide");
-	});
-	
-
-
-
-
-
-
-
 });

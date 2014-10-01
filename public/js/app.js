@@ -16,6 +16,7 @@ cityHapps.controller("eventsController", function($scope, $http) {
 
 cityHapps.controller('registerFormController', function($scope, $http){
 
+
 	$scope.formData = {};
 
 	$scope.processForm = function() {
@@ -33,6 +34,17 @@ cityHapps.controller('registerFormController', function($scope, $http){
 			}
 
 
+		$scope.checkEmail = function() {
+			$http({
+				method: "POST", 
+				url: "/user", 
+				data: $scope.formData.email, 
+				headers: {"Content-Type": "application/json"}
+			}).success(function(data) {
+
+			});
+		}
+
 
 			console.log(data);
 
@@ -40,6 +52,60 @@ cityHapps.controller('registerFormController', function($scope, $http){
 	};
 
 });
+
+cityHapps.controller("modalController", function($scope, $modal){
+
+	$scope.registerOpen = function(size) {
+
+		var modalInstance = $modal.open({
+			templateUrl: "templates/registrationModal.html",
+			controller: 'modalInstanceController',
+			size: size
+		});
+	};
+
+	$scope.loginOpen = function(size) {
+
+		var modalInstance = $modal.open({
+			templateUrl: "templates/loginModal.html",
+			controller: 'modalInstanceController',
+			size: size
+		});
+	};
+
+	$scope.categoriesOpen = function(size) {
+
+		var modalInstance = $modal.open({
+			templateUrl: "templates/categoriesModal.html",
+			controller: 'modalInstanceController',
+			size: size
+		});
+	};
+
+	$scope.confirmationOpen = function(size) {
+
+		var modalInstance = $modal.open({
+			templateUrl: "templates/confirmationModal.html",
+			controller: 'modalInstanceController',
+			size: size
+		});
+	};
+
+});
+
+
+cityHapps.controller("modalInstanceController", function($scope, $modalInstance){
+	
+	$scope.ok = function () {
+		$modalInstance.close($scope.selected.item);
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+
+});
+
 
 cityHapps.controller('loginController', function($scope, $http) {
 

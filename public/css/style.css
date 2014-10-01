@@ -30,9 +30,20 @@
 .auth > div, h4 {
   cursor: pointer; }
 
-.register .modal-dialog, .login .modal-dialog {
-  max-width: 400px;
+.modal-dialog {
+  max-width: 500px;
   overflow-wrap: break-word; }
+
+.event-category {
+  padding: 10px 5px;
+  border: 2px solid #395467;
+  color: #395467;
+  background: #fff;
+  border-radius: 15px;
+  cursor: pointer; }
+  .event-category.active {
+    background: #395467;
+    color: #fff; }
 
 .register input, .login input {
   margin: 15px 0;
@@ -40,7 +51,7 @@
   height: 40px;
   padding: 10px 15px; }
 
-.bx-wrapper.ng-scope .bx-viewport {
+.event-slider > .bx-wrapper > .bx-viewport {
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -85,15 +96,29 @@
 
 .event-inner {
   background: #fff;
-  height: 320px; }
+  height: 400px; }
   .event-inner img {
     width: 100%; }
 
 .event-details {
   padding: 10px 20px; }
 
-.register .ng-invalid {
+.create-account {
+  padding: 10px 15px;
+  background: #FF5C50;
+  border-radius: 20px;
+  border: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+  margin: 5px 0;
+  display: block; }
+
+.register input.ng-invalid {
   border: 1px solid #FF5C50; }
+
+.register input.ng-pristine {
+  border: 1px solid #ddd; }
 
 .uppercase {
   text-transform: uppercase; }
@@ -109,6 +134,9 @@
 
 .bold {
   font-weight: bold; }
+
+.pointer {
+  cursor: pointer; }
 
 .day-slider {
   height: auto;
