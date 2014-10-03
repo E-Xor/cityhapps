@@ -8,7 +8,7 @@ class EventfulController extends BaseController {
 		// Enter your application key here. (See http://api.eventful.com/keys/)
 			// $app_key = 'pLB3SGLn9xSnfcg5';
 
-			$event = file_get_contents('http://api.eventful.com/json/events/search?location=Atlanta&app_key="pLB3SGLn9xSnfcg5"&date=Future');
+			$event = file_get_contents('http://api.eventful.com/json/events/search?location=Atlanta&image_sizes=block250&app_key="pLB3SGLn9xSnfcg5"&date=Future');
 
 			return $event;
 
@@ -74,7 +74,7 @@ class EventfulController extends BaseController {
 				
 				//Needle in haystack- This returned value is sometimes an array needs to be a string.
 				// $eventRecord->performers		=	$jsonArray['events']['event'][$i]['performers'];
-				
+
 				$eventRecord->title				=	$jsonArray['events']['event'][$i]['title'];
 				$eventRecord->venue_address		=	$jsonArray['events']['event'][$i]['venue_address'];
 				$eventRecord->geocode_type		=	$jsonArray['events']['event'][$i]['geocode_type'];

@@ -21,10 +21,11 @@
 					<span ng-show="registerForm.password2.$error.validator" class="block">Passwords do not match!</span>
 		        
 		        	<!-- ng-disabled="registerForm.$invalid" -->
-			        <button type="button" class="create-account" ng-click="categoriesOpen('md'); " >Next</button>
-		      </div>
+			        <button type="button" class="create-account" ng-click="categoriesOpen('md'); cancel(); getCategories()" >Next</button>
+		      </div>  
 		      {{formData}}
   		</div>
+
   	</div>
 
 

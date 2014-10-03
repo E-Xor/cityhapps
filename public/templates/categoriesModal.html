@@ -7,13 +7,10 @@
       </div>
 
       	<div class="modal-body" ng-controller="registerFormController">
-		        <div class="registerForm">
-					<label class="event-category" ng-model="formData.sports" btn-checkbox>Sports</label>
-					<label class="event-category" ng-model="formData.bars" btn-checkbox>Bars</label>
-					<label class="event-category" ng-model="formData.family" btn-checkbox>Family</label>
-					<label class="event-category" ng-model="formData.movies" btn-checkbox>Movies</label>
-		
-
+		        <div class="registerForm" ng-repeat="category in categories">
+						
+						<label class="event-category" ng-model="formData.sports" btn-checkbox>{{category}}</label>
+			
 			        <button type="submit" ng-click="processForm(); confirmationOpen()" class="create-account" ng-disabled="registerForm.$invalid">Submit</button>
 		      </div>
 		      {{formData}}

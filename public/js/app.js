@@ -14,10 +14,14 @@ cityHapps.controller("eventsController", function($scope, $http) {
 });
 
 
-cityHapps.controller('registerFormController', function($scope, $http){
+cityHapps.formData = {};
+
+cityHapps.controller('registerFormController', function($scope, $http, registerDataService){
 
 
-	$scope.formData = {};
+	$scope.formData = registerDataService.data;
+
+	// console.log($scope.formData);
 
 	$scope.processForm = function() {
 		$http({
@@ -33,25 +37,40 @@ cityHapps.controller('registerFormController', function($scope, $http){
 				console.log('successfully POSTang!');
 			}
 
+		
+		// $scope.checkEmail = function() {
+		// 	$http({
+		// 		method: "POST", 
+		// 		url: "/user", 
+		// 		data: $scope.formData.email, 
+		// 		headers: {"Content-Type": "application/json"}
+		// 	}).success(function(data) {
 
-		$scope.checkEmail = function() {
-			$http({
-				method: "POST", 
-				url: "/user", 
-				data: $scope.formData.email, 
-				headers: {"Content-Type": "application/json"}
-			}).success(function(data) {
-
-			});
-		}
-
-
+		// 	});
+		// }
 			console.log(data);
 
 		});
 	};
 
+	$scope.getCategories = function() {
+		$http({
+			method: "GET", 
+			url: "/category", 
+			headers: {"Content-Type": "application/json"}
+		}).success(function(data){
+			if(!data) {
+			console.log('Unable to Get Categories');
+			} else if (data) {
+				console.log('successfully Getting Categories');
+				console.log(data);
+				$scope.categories = data;
+			}
+		});
+	}
+
 });
+
 
 cityHapps.controller("modalController", function($scope, $modal){
 
@@ -94,7 +113,9 @@ cityHapps.controller("modalController", function($scope, $modal){
 });
 
 
-cityHapps.controller("modalInstanceController", function($scope, $modalInstance){
+cityHapps.controller("modalInstanceController", function($scope, $modalInstance, registerDataService){
+
+	$scope.formData = registerDataService.data;
 	
 	$scope.ok = function () {
 		$modalInstance.close($scope.selected.item);
@@ -103,6 +124,17 @@ cityHapps.controller("modalInstanceController", function($scope, $modalInstance)
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
 	};
+
+});
+
+
+cityHapps.factory("registerDataService", function(){
+
+	var registerDataService = {};
+	registerDataService.data = {};
+
+	return registerDataService;
+
 
 });
 
