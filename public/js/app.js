@@ -7,11 +7,40 @@ cityHapps.controller("eventsController", function($scope, $http) {
 	events.success(function(data) {
 		
 		$scope.eventData = data.events["event"];
-		console.log(typeof($scope.eventData));
+		console.log($scope.eventData);
 
 	});
 
+	// $scope.groupOfFour = function() {
+	// 	for (var i = 0; i < $scope.eventData.length; i++ ) {
+
+	// 	var four += 4;
+	// 	var fourMore += four;
+		
+	// 	return $scope.eventData.slice(four, fourMore);
+		
+	// 	}
+	// }
 });
+
+cityHapps.controller("sliderController", function($scope){
+
+	$scope.interval = 5000;
+	
+	$scope.getTimes=function(n){
+     return new Array(n);
+};
+
+
+});
+
+
+cityHapps.controller('appController', function($scope, Auth){
+
+	Auth.state();
+
+});
+
 
 
 cityHapps.formData = {};
@@ -139,11 +168,11 @@ cityHapps.factory("registerDataService", function(){
 });
 
 
-cityHapps.controller('loginController', function($scope, $http) {
+cityHapps.controller('loginController', function($scope, $http, Auth) {
 
 	$scope.formData = {};
 	$scope.currentUser = {};
-	$scope.currentUserSignedIn = false;
+	$scope.loggedOut = true;
 
 	$scope.loginUser =  function() {
 		$http({
@@ -158,22 +187,16 @@ cityHapps.controller('loginController', function($scope, $http) {
 			} else if(data) {
 				console.log("You are Logged in!!");
 				console.log(data);
-
-
 			
-				$scope.currentUserSignedIn = true;
-
-				console.log($scope.currentUserSignedIn);
-				$scope.currentUser.email = data.email;
+				$scope.loggedOut = false;
+				$scope.currentUser = data.email;
 			}
 		});
+
+		Auth.loggedIn(data);
 	};
 
-
-});
-
-
-cityHapps.controller('logoutController', function($scope, $http) {
+	
 
 	$scope.logoutUser = function() {
 		$http({
@@ -185,14 +208,38 @@ cityHapps.controller('logoutController', function($scope, $http) {
 
 			if (!data) {
 				console.log("There was an error logging you out");
+				$scope.loggedOut = false;
 			} else if(data) {
 				console.log("You have logged out");
+				$scope.loggedOut = true;
+				
 			}
 
 		});
 
 	};
+
+
 });
+
+cityHapps.factory('Auth', function(){
+	var user, loggedIn;
+
+	return {
+		loggedIn : function(user) {
+			if (user) {
+				var loggedIn = true;
+			}
+		},
+
+		state : function() {
+			return loggedIn;
+		}
+	}
+
+	
+});
+
  
 //handle all routing via anuglar templates
 
@@ -242,6 +289,22 @@ cityHapps.controller('mapViewController', function($scope){
 cityHapps.controller('calViewController', function($scope){
 
 });
+
+
+//Map Placeholder
+
+
+
+  function initialize() {
+    var mapCanvas = document.getElementById('map_canvas');
+    var mapOptions = {
+      center: new google.maps.LatLng( 33.7550, -84.3900),
+      zoom: 8,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(mapCanvas, mapOptions)
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
 
 
 

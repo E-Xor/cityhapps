@@ -3,6 +3,7 @@
 
 //Temp UX colors, grey
 
+$dark-grey: #2C2625;
 $grey: #404042;
 $light-grey: #D1D2D4;
 
@@ -20,11 +21,24 @@ body {
 	@extend .open-sans;
 }
 
-.bgContainer {
+.main-container {
+	background: rgba(45, 63, 90, 0.7);
+	z-index: 2;
+}
+	
+
+.overlay {
+	padding: 0;
 	background: url('/img/fullWidthBG.png') no-repeat #2c2625;
 	background-size: contain;
 	-moz-background-size: contain;
+	z-index: 1;
 }
+
+.grey-wide {
+	background: $dark-grey;
+}
+
 
 // .main {
 	
@@ -107,6 +121,28 @@ body {
 }
 
 
+
+.carousel-inner {
+	padding: 0 10%;
+}
+
+.day-slider {
+	max-width: 1170px;
+	margin: 0 auto;
+	height: auto;
+	padding: 0 40px;
+	color: #fff;
+}
+
+.day-slider-container {
+	margin: 20px 0;
+	background: #2C2625;
+	max-width: 100%;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+
+
 //view icons 
 .view-row {
 	margin: 20px 0;
@@ -139,6 +175,8 @@ body {
 .view-select {
 	height: 60px;
 	color: #fff;
+	margin: 0 auto;
+	max-width: 1170px;
 }
 
 .event {
@@ -180,6 +218,31 @@ body {
 	display: block;
 }
 
+.header-container {
+	max-width:1170px;
+	margin: 0 auto;
+}
+
+.event-counter {
+	padding: 60px 0;
+}
+
+// Map view 
+
+#map_canvas {
+	height: 600px;
+	width: 100%;
+}
+
+.tab-content {
+	position: absolute;
+	z-index: 1;
+	background: #eee;
+	color: #454546;
+	padding: 20px;
+
+}
+
 
 //Client Validation Styles 
 
@@ -196,6 +259,10 @@ body {
 
 //All purpose classes 
 
+.wide-kerning {
+	letter-spacing: .8em;
+}
+
 .uppercase {
 	text-transform: uppercase;
 }
@@ -206,6 +273,11 @@ body {
 
 .center {
 	text-align: center;
+	margin: 0 auto;
+}
+
+.white {
+	color: #fff;
 }
 
 .block {
@@ -218,13 +290,6 @@ body {
 
 .pointer {
 	cursor: pointer;
-}
-
-.day-slider {
-	// background: $light-grey;
-	height: auto;
-	padding: 0 40px;
-	color: #fff;
 }
 
 .right {

@@ -21,7 +21,8 @@
 					<span ng-show="registerForm.password2.$error.validator" class="block">Passwords do not match!</span>
 		        
 		        	<!-- ng-disabled="registerForm.$invalid" -->
-			        <button type="button" class="create-account" ng-click="categoriesOpen('md'); cancel(); getCategories()" >Next</button>
+		        	<!-- ng-click="categoriesOpen('md'); cancel(); -->
+			        <button type="button" class="create-account" ng-click="processForm()" >Next</button>
 		      </div>  
 		      {{formData}}
   		</div>

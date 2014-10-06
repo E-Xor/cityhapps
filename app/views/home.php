@@ -7,11 +7,12 @@
 		@import url(//fonts.googleapis.com/css?family=Lato:700);
 
 	</style>
-	<link rel="stylesheet" href="/css/style.css" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/style.css" />
 
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> <!-- load angular -->
@@ -30,8 +31,8 @@
 
 <body ng-app="cityHapps">
 	
-	<div class="bgContainer">	
-		<div class="container main">
+	<div class="overlay">	
+		<div class="main-container" ng-controller="appController">
 			
 			<div class="wide">
 				<div class='row wide-search'>
@@ -50,38 +51,24 @@
 							<input type="text" placholder="Find Events &amp; Activities" class="main-search" />
 
 						</div>
-						<div class="col-sm-3 col-sm-offset-1 left auth" ng-controller="modalController">
-							
-							<h4 class="uppercase" ng-click="registerOpen('md')">Create An Account</h4>
-							<h4 class="uppercase" ng-click="loginOpen('md')">Sign in</h4>
-		
-							<div ng-controller="logoutController">
-								<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
+							<div class="col-sm-3 col-sm-offset-1 left auth" ng-controller="modalController">
+								<div ng-controller="loginController">
+									<h4 class="uppercase" ng-click="registerOpen('md')" ng-show="Auth()" >Create An Account</h4>
+									<h4 class="uppercase" ng-click="loginOpen('md')" ng-show="Auth()">Sign in</h4>
+				
+										<h4 class="uppercase logout" ng-click="logoutUser()" ng-show="Auth()">Logout</h4>
 
-							<div ng-show="currentUserSignedIn">
-								Welcome, {{currentUser.email}} !	
+									<div ng-show="Auth()">
+										Welcome, {{currentUser}} !	
+									</div>
 
+								</div>
 							</div>
-							</div>
+
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="row day-slider">
-				<div class="row-sm-12 center">
-					<div class="col-sm-1 left">
-						<h1>&lsaquo;</h1>
-					</div>
-					<div class="col-sm-10">
-						<h3 class="uppercase bold">Wednesday, September 10, 2014</h3>
-					</div>
-					<div class="col-sm-1 left">
-						<h1>&rsaquo;</h1>
-					</div>
-					
-				</div>
-			</div><!-- Get the header partial -->
+			<!-- </div> -->
 		
 		<!-- Get the home body partial -->	
 		<div ng-view></div>
