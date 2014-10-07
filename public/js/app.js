@@ -23,6 +23,8 @@ cityHapps.controller("eventsController", function($scope, $http) {
 	// }
 });
 
+
+
 cityHapps.controller("sliderController", function($scope){
 
 	$scope.interval = 5000;
@@ -50,6 +52,8 @@ cityHapps.controller('registerFormController', function($scope, $http, registerD
 
 	$scope.formData = registerDataService.data;
 
+	// $scope.categoryService = categoryService.getCategories();
+
 	// console.log($scope.formData);
 
 	$scope.processForm = function() {
@@ -65,8 +69,7 @@ cityHapps.controller('registerFormController', function($scope, $http, registerD
 			} else if (data) {
 				console.log('successfully POSTang!');
 			}
-
-		
+	
 		// $scope.checkEmail = function() {
 		// 	$http({
 		// 		method: "POST", 
@@ -82,26 +85,46 @@ cityHapps.controller('registerFormController', function($scope, $http, registerD
 		});
 	};
 
-	$scope.getCategories = function() {
-		$http({
-			method: "GET", 
-			url: "/category", 
-			headers: {"Content-Type": "application/json"}
-		}).success(function(data){
-			if(!data) {
-			console.log('Unable to Get Categories');
-			} else if (data) {
-				console.log('successfully Getting Categories');
-				console.log(data);
-				$scope.categories = data;
-			}
-		});
-	}
+		$scope.alert = function(){
+
+			alert("firing");
+		}
+
+		$scope.fbLogin = function() {
+			$http({
+				method: "POST",
+				url: '/auth/login-fb',
+				// data: $scope.formData,
+				headers : {"Content-Type": "application/json"}
+			}).success(function(data){
+
+				if (!data) {
+					console.log("There was an error logging you into Facebook");
+					// $scope.loggedOut = false;
+				} else if(data) {
+					console.log("You are logged in with Facebook");
+					// $scope.loggedOut = true;
+				}
+
+			});
+
+		}
 
 });
 
 
-cityHapps.controller("modalController", function($scope, $modal){
+cityHapps.factory("registerDataService", function(){
+
+	var registerDataService = {};
+	registerDataService.data = {};
+
+	return registerDataService;
+
+
+});
+
+
+cityHapps.controller("modalController", function($scope, $modal, $http){
 
 	$scope.registerOpen = function(size) {
 
@@ -126,7 +149,7 @@ cityHapps.controller("modalController", function($scope, $modal){
 		var modalInstance = $modal.open({
 			templateUrl: "templates/categoriesModal.html",
 			controller: 'modalInstanceController',
-			size: size
+			size: size 
 		});
 	};
 
@@ -142,9 +165,29 @@ cityHapps.controller("modalController", function($scope, $modal){
 });
 
 
-cityHapps.controller("modalInstanceController", function($scope, $modalInstance, registerDataService){
+cityHapps.controller("modalInstanceController", function($scope, $modalInstance, $http, registerDataService){
 
 	$scope.formData = registerDataService.data;
+
+	$scope.getCategories = function() {
+		$http({
+			method: "GET", 
+			url: "/category", 
+			headers: {"Content-Type": "application/json"}
+		}).success(function(data) {
+			if(!data) {
+			console.log('Unable to Get Categories');
+			} else if (data) {
+				console.log('successfully Getting Categories');
+				console.log(data);				
+				$scope.categories = data;
+
+				// return $scope.categories;
+			}
+		});
+	};
+
+	$scope.getCategories();
 	
 	$scope.ok = function () {
 		$modalInstance.close($scope.selected.item);
@@ -153,17 +196,6 @@ cityHapps.controller("modalInstanceController", function($scope, $modalInstance,
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
 	};
-
-});
-
-
-cityHapps.factory("registerDataService", function(){
-
-	var registerDataService = {};
-	registerDataService.data = {};
-
-	return registerDataService;
-
 
 });
 
@@ -196,8 +228,6 @@ cityHapps.controller('loginController', function($scope, $http, Auth) {
 		Auth.loggedIn(data);
 	};
 
-	
-
 	$scope.logoutUser = function() {
 		$http({
 			method: "GET",
@@ -212,6 +242,8 @@ cityHapps.controller('loginController', function($scope, $http, Auth) {
 			} else if(data) {
 				console.log("You have logged out");
 				$scope.loggedOut = true;
+
+				categoryService.addCategory(data);
 				
 			}
 
@@ -219,8 +251,8 @@ cityHapps.controller('loginController', function($scope, $http, Auth) {
 
 	};
 
-
 });
+
 
 cityHapps.factory('Auth', function(){
 	var user, loggedIn;

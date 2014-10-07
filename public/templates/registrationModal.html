@@ -7,7 +7,7 @@
       </div>
 
       	<div class="modal-body" ng-controller="registerFormController">
-	        <div class="facebookButton">
+	        <div class="facebookButton" ng-click="fbLogin()">
 				<div class="lucida">Sign In With Facebook</div>
 	        </div>
 
@@ -22,7 +22,7 @@
 		        
 		        	<!-- ng-disabled="registerForm.$invalid" -->
 		        	<!-- ng-click="categoriesOpen('md'); cancel(); -->
-			        <button type="button" class="create-account" ng-click="processForm()" >Next</button>
+			        <button type="button" class="create-account" ng-click="categoriesOpen('md'); cancel(); getCategories()" >Next</button>
 		      </div>  
 		      {{formData}}
   		</div>

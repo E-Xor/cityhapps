@@ -42,6 +42,8 @@ Route::get('events', 'EventfulController@events');
 
 	Route::resource('category', 'CategoryController');
 
+	Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
+
 
 
 // Route::get("")

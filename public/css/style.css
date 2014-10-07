@@ -10,7 +10,8 @@
   background: url("/img/fullWidthBG.png") no-repeat #2c2625;
   background-size: contain;
   -moz-background-size: contain;
-  z-index: 1; }
+  z-index: 1;
+  min-height: 1000px; }
 
 .grey-wide {
   background: #2c2625; }
@@ -63,11 +64,18 @@
     background: #395467;
     color: #fff; }
 
+.category-item {
+  display: inline-block;
+  margin: 0 2px; }
+
 .register input, .login input {
   margin: 15px 0;
   width: 100%;
   height: 40px;
   padding: 10px 15px; }
+
+.event-slider {
+  padding: 0 10%; }
 
 .event-slider > .bx-wrapper > .bx-viewport {
   -moz-box-shadow: none;

@@ -29,6 +29,15 @@
 
 </head>
 
+<?php 
+
+	// $laravel = app();
+	// $version = $laravel::VERSION;
+
+	// echo $version;
+?>
+
+
 <body ng-app="cityHapps">
 	
 	<div class="overlay">	
@@ -53,12 +62,14 @@
 						</div>
 							<div class="col-sm-3 col-sm-offset-1 left auth" ng-controller="modalController">
 								<div ng-controller="loginController">
-									<h4 class="uppercase" ng-click="registerOpen('md')" ng-show="Auth()" >Create An Account</h4>
-									<h4 class="uppercase" ng-click="loginOpen('md')" ng-show="Auth()">Sign in</h4>
-				
-										<h4 class="uppercase logout" ng-click="logoutUser()" ng-show="Auth()">Logout</h4>
 
-									<div ng-show="Auth()">
+									<!-- ng-show="" -->
+									<h4 class="uppercase" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
+									<h4 class="uppercase" ng-click="loginOpen('md')">Sign in</h4>
+				
+										<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
+
+									<div>
 										Welcome, {{currentUser}} !	
 									</div>
 

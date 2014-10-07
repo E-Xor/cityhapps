@@ -33,16 +33,42 @@ class UserController extends \BaseController {
 	{
 		// return 'user created!!!! ';
 		
-		$json = Input::json()->all();
+		$json = Input::json()->only('email', 'password');
 
 		$user = new User;
 		// $user->username = $json['username'];
 		$user->email = $json['email'];
 
 		$user->password = Hash::make($json['password']);
-		$user->save();
+		$user->save(function(){
+
+			return $user["id"];
+
+			$categoryJson = Input::json()->only('category_name', 'user_id');
+			$user_category =  new User_Category;
+
+			$user_category->name = $categoryJson['category_name'];
+			$user_category->user_id = $user['id'];
+
+
+
+
+		});
+
+
+
+
+
+
 
 		return $user . " New User Created Successfully!";
+
+		//Add Users Categories 
+
+
+
+
+
 		
 	}
 

@@ -7,9 +7,11 @@
       </div>
 
       	<div class="modal-body" ng-controller="registerFormController">
-		        <div class="registerForm" ng-repeat="category in categories">
+		        <div class="registerForm">
 						
-						<label class="event-category" ng-model="formData.sports" btn-checkbox>{{category}}</label>
+					<div ng-repeat="category in categories" class="category-item">	
+						<label class="event-category" ng-model="formData[category.name]" btn-checkbox>{{category.name}}</label>
+					</div>
 			
 			        <button type="submit" ng-click="processForm(); confirmationOpen()" class="create-account" ng-disabled="registerForm.$invalid">Submit</button>
 		      </div>
