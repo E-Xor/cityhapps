@@ -134,7 +134,8 @@
   background: #3b5998 url("/img/facebookIcon.png") no-repeat 93% 12px/17.5px 35px;
   width: 100%;
   color: #fff;
-  padding: 12px; }
+  padding: 12px;
+  cursor: pointer; }
 
 .lucida {
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif; }

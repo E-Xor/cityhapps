@@ -17,12 +17,31 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> <!-- load angular -->
 	<script src="/js/angular-route.min.js"></script>
+	<script src="/js/angular-facebook.js"></script>
+
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
 	<script src="/js/jquery.bxslider.min.js"></script>
 	<script src="/js/app.js"></script>
 	<script src="/js/dom.js"></script>
 	
+	<script>
+	  window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '895139070496415',
+	      xfbml      : true,
+	      version    : 'v2.1'
+	    });
+	  };
+
+	  (function(d, s, id){
+	     var js, fjs = d.getElementsByTagName(s)[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement(s); js.id = id;
+	     js.src = "//connect.facebook.net/en_US/sdk.js";
+	     fjs.parentNode.insertBefore(js, fjs);
+	   }(document, 'script', 'facebook-jssdk'));
+	</script>
 	
 
 	<base href="/">
@@ -36,13 +55,20 @@
 
 	// echo $version;
 ?>
-
+<!-- <div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div> -->
 
 <body ng-app="cityHapps">
+
+
 	
 	<div class="overlay">	
-		<div class="main-container" ng-controller="appController">
-			
+		<div class="main-container">
+
 			<div class="wide">
 				<div class='row wide-search'>
 					<input type="text" placeholder="Search" class="search-large">
@@ -70,7 +96,7 @@
 										<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
 
 									<div>
-										Welcome, {{currentUser}} !	
+										Welcome, {{currentUser}} {{user.name}} !	
 									</div>
 
 								</div>
