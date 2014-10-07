@@ -155,7 +155,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
         if (data.status == 'connected') {
           $scope.$apply(function() {
             $scope.salutation = true;
-            $scope.byebye     = false;    
+            $scope.byebye     = false;   
           });
         } else {
           $scope.$apply(function() {
@@ -171,11 +171,6 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
         
         
       });
-
-
-    $scope.alert = function() {
-    	alert("firing");
-    }  
 
 	$scope.formData = registerDataService.data;
 
@@ -237,6 +232,7 @@ cityHapps.factory("registerDataService", function(){
 
 	var registerDataService = {};
 	registerDataService.data = {};
+	registerDataService.data.categories = {};
 
 	return registerDataService;
 
@@ -389,6 +385,22 @@ cityHapps.factory('Auth', function(){
 		}
 	}
 
+	/* 
+	var user;
+
+	var user.loggedIn = false;
+	var user.state = null;
+
+	if (user) {
+		user.loggedIn = true;
+	}
+
+	user.state = user.loggedIn;
+
+	return {
+		user;
+	}
+	*/
 	
 });
 

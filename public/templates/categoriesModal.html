@@ -10,7 +10,7 @@
 		        <div class="registerForm">
 						
 					<div ng-repeat="category in categories" class="category-item">	
-						<label class="event-category" ng-model="formData[category.name]" btn-checkbox>{{category.name}}</label>
+						<label class="event-category" ng-model="formData.categories[category.id]" btn-checkbox>{{category.name}}</label>
 					</div>
 			
 			        <button type="submit" ng-click="processForm(); confirmationOpen()" class="create-account" ng-disabled="registerForm.$invalid">Submit</button>

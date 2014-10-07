@@ -25,6 +25,6 @@ class Category extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('id');
+	//protected $hidden = array('id');
 
 }
