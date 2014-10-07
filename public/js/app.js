@@ -45,8 +45,6 @@ cityHapps.controller('appController', function($scope, Auth){
 
 
 
-cityHapps.formData = {};
-
 cityHapps.controller('registerFormController', function($scope, $http, registerDataService){
 
 
@@ -117,6 +115,7 @@ cityHapps.factory("registerDataService", function(){
 
 	var registerDataService = {};
 	registerDataService.data = {};
+	registerDataService.data.categories = {};
 
 	return registerDataService;
 
@@ -269,6 +268,22 @@ cityHapps.factory('Auth', function(){
 		}
 	}
 
+	/* 
+	var user;
+
+	var user.loggedIn = false;
+	var user.state = null;
+
+	if (user) {
+		user.loggedIn = true;
+	}
+
+	user.state = user.loggedIn;
+
+	return {
+		user;
+	}
+	*/
 	
 });
 

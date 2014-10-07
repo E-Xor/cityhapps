@@ -31,45 +31,43 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		// return 'user created!!!! ';
 		
-		$json = Input::json()->only('email', 'password');
+		$json = Input::only('email', 'password', 'categories');
 
 		$user = new User;
 		// $user->username = $json['username'];
 		$user->email = $json['email'];
 
 		$user->password = Hash::make($json['password']);
-		$user->save(function(){
+		$user->save();
 
-			return $user["id"];
+		$userID = $user["id"];
 
-			$categoryJson = Input::json()->only('category_name', 'user_id');
-			$user_category =  new User_Category;
+		/*
+		$categoryJson = Input::json()->only('category_name', 'user_id');
+		$user_category =  new User_Category;
 
-			$user_category->name = $categoryJson['category_name'];
-			$user_category->user_id = $user['id'];
+		$user_category->name = $categoryJson['category_name'];
+		$user_category->user_id = $user['id'];
+		*/
 
+		$categoriesPaired = $json['categories']; // array in "categoryID": true
 
+		if ($categoriesPaired != '') {
 
+			$categories = array();
 
-		});
+			foreach($categoriesPaired as $key => $value) {
+				if ($value == true) {
+					array_push($categories, $key);
+				}
+			}
 
-
-
-
-
-
+			$user->categories()->sync($categories);
+		}
 
 		return $user . " New User Created Successfully!";
 
-		//Add Users Categories 
-
-
-
-
-
-		
 	}
 
 
