@@ -11,7 +11,23 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		$this->call('CategoryTableSeeder');
 	}
 
+}
+
+class CategoryTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('categories')->delete();
+
+		Category::create(array('name' => 'Sports'));
+		Category::create(array('name' => 'Family'));
+		Category::create(array('name' => 'Educational'));
+		Category::create(array('name' => 'Sewing'));
+		Category::create(array('name' => 'Food'));
+		Category::create(array('name' => 'Patriotic'));
+		Category::create(array('name' => 'Misc'));
+	}
 }
