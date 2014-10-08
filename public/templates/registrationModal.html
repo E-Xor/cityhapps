@@ -11,20 +11,22 @@
       		<div class="facebookButton" ng-click="IntentLogin()">
 				<div class="lucida">Sign In With Facebook</div>
 	        </div>
-	        
-		        <div class="registerForm" ng-controller="modalController">
-					<input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
+	        	
+	        	<form name="register">
+			        <div class="registerForm" ng-controller="modalController">
+						<input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
 
-					<input type="password" placeholder="password" required class="registerPassword block" ng-model="formData.password">
-					
-					<input type="password" placeholder="password" name="password2" required ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "class="registerPassword2 block" ng-model="formData.password2">
+						<input type="password" placeholder="password" required class="registerPassword block" ng-model="formData.password">
+						
+						<input type="password" placeholder="password" name="password2" required ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "class="registerPassword2 block" ng-model="formData.password2">
 
-					<span ng-show="registerForm.password2.$error.validator" class="block">Passwords do not match!</span>
-		        
-		        	<!-- ng-disabled="registerForm.$invalid" -->
-		        	<!-- ng-click="categoriesOpen('md'); cancel(); -->
-			        <button type="button" class="create-account" ng-click="categoriesOpen('md'); cancel(); getCategories()" >Next</button>
-		      </div>  
+						<span ng-show="registerForm.password2.$error.validator" class="block">Passwords do not match!</span>
+			        
+			        	<!-- ng-disabled="registerForm.$invalid" -->
+			        	<!-- ng-click="categoriesOpen('md'); cancel(); -->
+				        <button type="button" class="create-account" ng-disabled="register.$invalid" ng-click="categoriesOpen('md'); cancel(); getCategories()" >Next</button>
+			      </div>  
+			   </form>
 		      {{formData}}
   		</div>
 

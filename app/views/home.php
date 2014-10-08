@@ -67,7 +67,7 @@
 
 	
 	<div class="overlay">	
-		<div class="main-container">
+		<div class="main-container" ng-controller="appController">
 
 			<div class="wide">
 				<div class='row wide-search'>
@@ -89,7 +89,7 @@
 							<div class="col-sm-3 col-sm-offset-1 left auth" ng-controller="modalController">
 								<div ng-controller="loginController">
 
-									<!-- ng-show="" -->
+									<!-- ng-show="showUser()" -->
 									<h4 class="uppercase" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
 									<h4 class="uppercase" ng-click="loginOpen('md')">Sign in</h4>
 				

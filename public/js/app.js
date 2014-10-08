@@ -53,16 +53,31 @@ cityHapps.config([
     }
  ]);
 
-// cityHapps.controller('appController', function($scope){
+cityHapps.controller('appController', ['$scope', 'Auth', function($scope, Auth){
 
-// 	//Handle Content based on User Auth Status here, pass in Auth Factory
 
-// });
+	if (Auth.loggedInUser === undefined) {
+		console.log("user isn't logged in");
+	} else {
+
+		console.log(Auth.loggedInUser);
+	}
+
+	$scope.show =  function() {
+		if (Auth.loggedInUser) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	}
+]);
 
 cityHapps.formData = {};
 
-cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDataService", "$timeout", "Facebook", 
-	function($scope, $http, registerDataService, $timeout, Facebook){
+cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDataService", "$timeout", "Facebook", "Auth",
+	function($scope, $http, registerDataService, $timeout, Facebook, Auth ){
 
 			//Facebook Auth 
 
@@ -171,6 +186,17 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
         
         
       });
+
+
+    $scope.checkButton = function() {
+
+    	if (!$scope.formData.categories) {
+    		return false;
+    	} else {
+    		return true;
+    	}
+
+    }  
 
 	$scope.formData = registerDataService.data;
 
@@ -319,7 +345,7 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 ]);
 
 
-cityHapps.controller('loginController', function($scope, $http, Auth) {
+cityHapps.controller('loginController', [ "$scope", "$http", "Auth", function($scope, $http, Auth) {
 
 	$scope.formData = {};
 	$scope.currentUser = {};
@@ -339,12 +365,14 @@ cityHapps.controller('loginController', function($scope, $http, Auth) {
 				console.log("You are Logged in!!");
 				console.log(data);
 			
-				$scope.loggedOut = false;
-				$scope.currentUser = data.email;
+				// $scope.loggedOut = false;
+				// $scope.currentUser = data.email;
+
+				data = Auth.loggedInUser;
 			}
 		});
 
-		Auth.loggedIn(data);
+		// Auth.auth(data);
 	};
 
 	$scope.logoutUser = function() {
@@ -367,41 +395,32 @@ cityHapps.controller('loginController', function($scope, $http, Auth) {
 
 	};
 
-});
+}
+
+]);
 
 
 cityHapps.factory('Auth', function(){
-	var user, loggedIn;
 
-	return {
-		loggedIn : function(user) {
-			if (user) {
-				var loggedIn = true;
-			}
-		},
 
-		state : function() {
-			return loggedIn;
-		}
-	}
+	var loggedInUser = {};
 
-	/* 
-	var user;
 
-	var user.loggedIn = false;
-	var user.state = null;
+	return loggedInUser;
 
-	if (user) {
-		user.loggedIn = true;
-	}
+	// var Auth = {};
+	// Auth.loggedIn = false;
+	// Auth.state = null;
+		
+	// 	if (user) {
+	// 		Auth.loggedIn = true;
+	// 	}
 
-	user.state = user.loggedIn;
+	// 	Auth.state = Auth.loggedIn;
 
-	return {
-		user;
-	}
-	*/
-	
+	// 	return Auth.state;
+
+	// }
 });
 
  
