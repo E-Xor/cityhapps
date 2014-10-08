@@ -55,28 +55,11 @@ cityHapps.config([
 
 cityHapps.controller('appController', ['$scope', 'Auth', function($scope, Auth){
 
+	$scope.authStatus = {};
 
-	// if (Auth.loggedInUser === undefined) {
-	// 	console.log("user isn't logged in");
-	// } else {
+	$scope.authStatus = Auth.status;
 
-	// 	console.log(Auth.loggedInUser);
-	// }
-
-	// $scope.show =  function() {
-	// 	if (Auth.loggedInUser) {
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-
-	// $scope.Auth = Auth;
-
-	// $scope.userStatus = Auth.getAuthStatus();
-
-	// console.log($scope.userStatus);
-	console.log(Auth.getAuthStatus());
+		console.log($scope.authStatus);
 
 	}
 ]);
@@ -426,7 +409,8 @@ cityHapps.factory('Auth', [ "$http", function($http){
 
 				// return $scope.categories;
 				Auth.status = data;
-				return Auth.status;
+				// return Auth.status;
+				// console.log(Auth.status);
 			}
 		});
 		
@@ -434,20 +418,7 @@ cityHapps.factory('Auth', [ "$http", function($http){
 
 	return Auth;
 
-	// var Auth = {};
-	// Auth.loggedIn = false;
-	// Auth.state = null;
-		
-	// 	if (user) {
-	// 		Auth.loggedIn = true;
-	// 	}
-
-	// 	Auth.state = Auth.loggedIn;
-
-	// 	return Auth.state;
-
-	// }
-}
+	}
 
 ]);
 
