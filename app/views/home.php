@@ -96,7 +96,7 @@
 										<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
 
 									<div>
-										Welcome, {{currentUser}} {{user.name}} !	
+										Welcome, {{loggedInUser}} {{user.name}} !	
 									</div>
 
 								</div>

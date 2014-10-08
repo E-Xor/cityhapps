@@ -56,20 +56,27 @@ cityHapps.config([
 cityHapps.controller('appController', ['$scope', 'Auth', function($scope, Auth){
 
 
-	if (Auth.loggedInUser === undefined) {
-		console.log("user isn't logged in");
-	} else {
+	// if (Auth.loggedInUser === undefined) {
+	// 	console.log("user isn't logged in");
+	// } else {
 
-		console.log(Auth.loggedInUser);
-	}
+	// 	console.log(Auth.loggedInUser);
+	// }
 
-	$scope.show =  function() {
-		if (Auth.loggedInUser) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	// $scope.show =  function() {
+	// 	if (Auth.loggedInUser) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
+
+	// $scope.Auth = Auth;
+
+	// $scope.userStatus = Auth.getAuthStatus();
+
+	// console.log($scope.userStatus);
+	console.log(Auth.getAuthStatus());
 
 	}
 ]);
@@ -368,7 +375,7 @@ cityHapps.controller('loginController', [ "$scope", "$http", "Auth", function($s
 				// $scope.loggedOut = false;
 				// $scope.currentUser = data.email;
 
-				data = Auth.loggedInUser;
+				// data = Auth.status;
 			}
 		});
 
@@ -400,13 +407,32 @@ cityHapps.controller('loginController', [ "$scope", "$http", "Auth", function($s
 ]);
 
 
-cityHapps.factory('Auth', function(){
+cityHapps.factory('Auth', [ "$http", function($http){
 
 
-	var loggedInUser = {};
+	var Auth = {};
+	
+	Auth.getAuthStatus = function() {
+		$http({
+			method: "GET", 
+			url: "/auth/status", 
+			headers: {"Content-Type": "application/json"}
+		}).success(function(data) {
+			if(!data) {
+			console.log('Unable to verify auth session');
+			} else if (data) {
+				console.log('successfully getting auth status');
+				console.log(data);				
 
+				// return $scope.categories;
+				Auth.status = data;
+				return Auth.status;
+			}
+		});
+		
+	}
 
-	return loggedInUser;
+	return Auth;
 
 	// var Auth = {};
 	// Auth.loggedIn = false;
@@ -421,7 +447,9 @@ cityHapps.factory('Auth', function(){
 	// 	return Auth.state;
 
 	// }
-});
+}
+
+]);
 
  
 //handle all routing via anuglar templates
