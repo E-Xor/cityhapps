@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
+			'host'      => 'CityHappsDev',
 			'database'  => 'vwd',
-			'username'  => 'root',
-			'password'  => 'root',
+			'username'  => 'forge',
+			'password'  => 'Zyp5TW1F9JNN45HsjgtF',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
