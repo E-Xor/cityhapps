@@ -95,14 +95,16 @@
 
 									<!-- ng-show="showUser()" -->
 									<!-- ng-if="userState() == 'false'" -->
-									<h4 class="uppercase"  ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
-									<h4 class="uppercase"  ng-click="loginOpen('md')">Sign in</h4>
+									<div ng-if="!user">
+										<h4 class="uppercase" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
+										<h4 class="uppercase" ng-click="loginOpen('md')">Sign in</h4>
+									</div>
 				
-										<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
 									
-									<!-- <div ng-if="userState() == 'true'"> -->
-										Welcome, {{user.data.email}} !	
-									<!-- </div> -->
+									<div ng-if="user">
+										<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
+										Welcome, {{user.data.email}} !		
+									</div>
 
 	
 								</div>

@@ -46,22 +46,15 @@ cityHapps.config([
     }
  ]);
 
-cityHapps.controller('appController', ['$scope', 'authService', 'userDetails', function($scope, authService, userDetails){
+cityHapps.controller('appController', ['$scope', 'authService', 'userData', function($scope, authService, userData){
+			
+		$scope.userString = localStorage.getItem('user');
+		$scope.user = angular.fromJson($scope.userString);
+		if ($scope.user) {
+			console.log($scope.user.data.email);	
+		}
 		
-		$scope.$on('event:auth-loginConfirmed', function(){
-			alert("youre logged in");
 
-			var user = localStorage.getItem('user');
-				console.log(user);
-
-				var userState = function() {
-					if(user) {
-						return true;
-					} else {
-						return false;
-					}
-				};
-		});
 	}
 ]);
 
@@ -337,21 +330,36 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 
 ]);
 
-cityHapps.factory('userDetails', function($rootScope){
+cityHapps.factory('userData', function($rootScope, authService){
 
-	var userDetails = {};
+	var userData = {};
 
-	userDetails.setUser = function(user) {
-		$rootScope.userDetails.email = user.email;
-		$rootScope.userDetails.id = user.id;
+	return {
+		get : function() {
+		$rootScope.$on('event:auth-loginConfirmed', function(){
+			alert("youre logged in");
+
+			userData.user = localStorage.getItem('user');
+			console.log(userData.user);
+
+			var userState = function() {
+				if(userData.user) {
+					userData.status = true;
+					return userData.status;
+				} else {
+					userData.status = false;
+					return userData.status;
+				}
+			};
+		});
+		
+		}
 	};
-
-	return userDetails;
 });
 
 
-cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", 'userDetails', 'authService',
-	function($rootScope, $scope, $http, userDetails, authService ) {
+cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", 'userData', 'authService',
+	function($rootScope, $scope, $http, userData, authService ) {
 
 	$scope.formData = {
 		email : '',
@@ -364,7 +372,11 @@ cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", 'user
 		$http.post('/auth/login', $scope.formData).then(function(res) {
 			console.log(res);
 			authService.loginConfirmed();
+
+			// alert(authService.loginConfirmed());
+			document.location.reload(true);
 			localStorage.setItem('user', JSON.stringify(res));
+			userData.get();
 		});
 	};
 
@@ -374,6 +386,8 @@ cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", 'user
 			url: '/auth/logout',
 			headers : {"Content-Type": "application/json"}
 		}).success(function(data){
+			localStorage.removeItem('user');
+			document.location.reload(true);
 			if (!data) {
 				console.log("There was an error logging you out");
 			} else if(data) {
