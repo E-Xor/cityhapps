@@ -69,7 +69,7 @@
 
 	
 	<div class="overlay">	
-		<div class="main-container" ng-controller="appController">
+		<div class="main-container" ng-controller="appController" ng-animate=" 'animate' ">
 
 
 
