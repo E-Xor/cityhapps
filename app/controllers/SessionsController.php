@@ -12,36 +12,25 @@ class SessionsController extends BaseController {
 
 
 	public function create() {
-
 		if (Auth::check()) {
 			return Redirect::to('/admin');	
 		}
-
 		return Redirect::to('/');
-
 	}
 
 	public function login() {
 
 		if (Auth::attempt(array('email' => Input::json('email'), 'password' => Input::json('password')))) {
-			
 			return Response::json(Auth::user());
-
 			// return Redirect::to('/admin');
 		} else {
-
 			return Response::json(array('flash' => 'Invalid username or password'), 500);	
-		}
-		
-		
+		}		
 	}
 
 	public function logout() {
-
 		Auth::logout();
-
 		return Response::json(array('flash' => 'Logged Out!'));
-
 	}
 
 	/**
@@ -87,59 +76,7 @@ class SessionsController extends BaseController {
 		    }
 
 		}
-
-	public function fbNewLogin() {
-
-
-
-		/**
-		 * Bootstrap the example
-		 */
-		// require_once __DIR__ . '/bootstrap.php';
-
-		// Session storage
-		$servicesCredentials = array(
-			'facebook' => array(
-	            'key'     => '895139070496415',
-	            'secret' => '72282e6b1707504649382bd8607312c5',
-	            'scope'         => array('read_friendslist')
-	        )
-        );		
-
-
-		$storage = new Session();
-
-		// Setup the credentials for the requests
-		$credentials = new Credentials(
-		    $servicesCredentials['facebook']['key'],
-		    $servicesCredentials['facebook']['secret'],
-		    $currentUri->getAbsoluteUri()
-		);
-
-		// Instantiate the Facebook service using the credentials, http client and storage mechanism for the token
-		/** @var $facebookService Facebook */
-		$facebookService = $serviceFactory->createService('facebook', $credentials, $storage, array());
-
-		if (!empty($_GET['code'])) {
-		    // This was a callback request from facebook, get the token
-		    $token = $facebookService->requestAccessToken($_GET['code']);
-
-		    // Send a request with it
-		    $result = json_decode($facebookService->request('/me'), true);
-
-		    // Show some of the resultant data
-		    echo 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
-
-		} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
-		    $url = $facebookService->getAuthorizationUri();
-		    header('Location: ' . $url);
-		} else {
-		    $url = $currentUri->getRelativeUri() . '?go=go';
-		    echo "<a href='$url'>Login with Facebook!</a>";
-		}
-	}
-
-		
+	
 	}
 
 

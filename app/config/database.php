@@ -52,12 +52,23 @@ return array(
 			'prefix'   => '',
 		),
 
+		// 'mysql' => array(
+		// 	'driver'    => 'mysql',
+		// 	'host'      => 'CityHappsDev',
+		// 	'database'  => 'vwd',
+		// 	'username'  => 'forge',
+		// 	'password'  => 'Zyp5TW1F9JNN45HsjgtF',
+		// 	'charset'   => 'utf8',
+		// 	'collation' => 'utf8_unicode_ci',
+		// 	'prefix'    => '',
+		// ),
+
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'CityHappsDev',
+			'host'      => 'localhost',
 			'database'  => 'vwd',
-			'username'  => 'forge',
-			'password'  => 'Zyp5TW1F9JNN45HsjgtF',
+			'username'  => 'root',
+			'password'  => 'root',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

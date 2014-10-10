@@ -18,6 +18,9 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> <!-- load angular -->
 	<script src="/js/angular-route.min.js"></script>
 	<script src="/js/angular-facebook.js"></script>
+	<script src="/js/http-auth-interceptor.js"></script>
+
+	
 
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
@@ -69,6 +72,8 @@
 	<div class="overlay">	
 		<div class="main-container" ng-controller="appController">
 
+
+
 			<div class="wide">
 				<div class='row wide-search'>
 					<input type="text" placeholder="Search" class="search-large">
@@ -90,15 +95,16 @@
 								<div ng-controller="loginController">
 
 									<!-- ng-show="showUser()" -->
-									<h4 class="uppercase" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
-									<h4 class="uppercase" ng-click="loginOpen('md')">Sign in</h4>
+									<h4 class="uppercase" ng-if="!currentUser" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
+									<h4 class="uppercase" ng-if="!currentUser" ng-click="loginOpen('md')">Sign in</h4>
 				
-										<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
-
-									<div>
-										Welcome, {{loggedInUser}} {{user.name}} !	
+										<h4 class="uppercase logout" ng-if="!currentUser" ng-click="logoutUser()">Logout</h4>
+									
+									<div ng-if="userState">
+										Welcome, {{user.data.email}} !	
 									</div>
 
+	
 								</div>
 							</div>
 

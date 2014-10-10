@@ -1,4 +1,4 @@
-var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate', 'facebook']);
+var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate', 'facebook', 'http-auth-interceptor']);
 
 cityHapps.controller("eventsController", function($scope, $http) {
 
@@ -41,33 +41,31 @@ cityHapps.config([
     function(FacebookProvider) {
      var myAppId = '895139070496415';
      
-     // You can set appId with setApp method
-     // FacebookProvider.setAppId('myAppId');
-     
-     /**
-      * After setting appId you need to initialize the module.
-      * You can pass the appId on the init method as a shortcut too.
-      */
      FacebookProvider.init(myAppId);
      
     }
  ]);
 
-cityHapps.controller('appController', ['$scope', 'Auth', function($scope, Auth){
+cityHapps.controller('appController', ['$scope', 'authService', 'userDetails', function($scope, authService, userDetails){
+		
+		$scope.$on('event:auth-loginConfirmed', function(){
+			alert("youre logged in");
 
-	$scope.authStatus = {};
 
-	$scope.authStatus = Auth.status;
+		});
 
-		console.log($scope.authStatus);
-
+		var userState = true;
+		var user = localStorage.getItem('user');
+		console.log(user);
 	}
 ]);
 
+
+
 cityHapps.formData = {};
 
-cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDataService", "$timeout", "Facebook", "Auth",
-	function($scope, $http, registerDataService, $timeout, Facebook, Auth ){
+cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDataService", "$timeout", "Facebook", "authService",
+	function($scope, $http, registerDataService, $timeout, Facebook, authService ){
 
 			//Facebook Auth 
 
@@ -334,93 +332,69 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 
 ]);
 
+cityHapps.factory('userDetails', function($rootScope){
 
-cityHapps.controller('loginController', [ "$scope", "$http", "Auth", function($scope, $http, Auth) {
+	var userDetails = {};
 
-	$scope.formData = {};
-	$scope.currentUser = {};
-	$scope.loggedOut = true;
+	userDetails.setUser = function(user) {
+		$rootScope.userDetails.email = user.email;
+		$rootScope.userDetails.id = user.id;
+	};
+
+	return userDetails;
+});
+
+
+cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", "authService", 'userDetails',
+	function($rootScope, $scope, $http, userDetails, authService) {
+
+	$scope.formData = {
+		email : '',
+		password: ''
+	};
+	// $scope.currentUser = {};
+	// $scope.loggedOut = true;
 
 	$scope.loginUser =  function() {
-		$http({
-			method: "POST",
-			url: '/auth/login',
-			data: $scope.formData,
-			headers : {"Content-Type": "application/json"}
-		}).success(function(data){
-
-			if (!data) {
-				console.log("There was an error logging you in");
-			} else if(data) {
-				console.log("You are Logged in!!");
-				console.log(data);
+		$http.post('/auth/login', $scope.formData).then(function(res) {
+			console.log(res);
 			
-				// $scope.loggedOut = false;
-				// $scope.currentUser = data.email;
-
-				// data = Auth.status;
-			}
+			localStorage.setItem('user', JSON.stringify(res));
 		});
-
-		// Auth.auth(data);
 	};
 
 	$scope.logoutUser = function() {
 		$http({
 			method: "GET",
 			url: '/auth/logout',
-			// data: $scope.formData,
 			headers : {"Content-Type": "application/json"}
 		}).success(function(data){
-
 			if (!data) {
 				console.log("There was an error logging you out");
-				$scope.loggedOut = false;
 			} else if(data) {
 				console.log("You have logged out");
-				$scope.loggedOut = true;				
 			}
-
-		});
-
+		});	
 	};
 
+	// console.log(authService.loginConfirmed());
 }
 
 ]);
 
+cityHapps.service('Session', function(){
 
-cityHapps.factory('Auth', [ "$http", function($http){
+	this.create = function(sessionId, userId) {
+		this.id = sessionId;
+		this.userId = userId;
+	};
 
+	this.destroy = function() {
+		this.id = null;
+		this.userId = null;
+	};
 
-	var Auth = {};
-	
-	Auth.getAuthStatus = function() {
-		$http({
-			method: "GET", 
-			url: "/auth/status", 
-			headers: {"Content-Type": "application/json"}
-		}).success(function(data) {
-			if(!data) {
-			console.log('Unable to verify auth session');
-			} else if (data) {
-				console.log('successfully getting auth status');
-				console.log(data);				
-
-				// return $scope.categories;
-				Auth.status = data;
-				// return Auth.status;
-				// console.log(Auth.status);
-			}
-		});
-		
-	}
-
-	return Auth;
-
-	}
-
-]);
+});
 
  
 //handle all routing via anuglar templates
