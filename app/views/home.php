@@ -20,8 +20,6 @@
 	<script src="/js/angular-facebook.js"></script>
 	<script src="/js/http-auth-interceptor.js"></script>
 
-	
-
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
 	<script src="/js/jquery.bxslider.min.js"></script>
@@ -95,12 +93,13 @@
 								<div ng-controller="loginController">
 
 									<!-- ng-show="showUser()" -->
-									<h4 class="uppercase" ng-if="!currentUser" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
-									<h4 class="uppercase" ng-if="!currentUser" ng-click="loginOpen('md')">Sign in</h4>
+									<!-- ng-if="userState() == 'false'" -->
+									<h4 class="uppercase"  ng-if="userState() == 'false'" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
+									<h4 class="uppercase"  ng-if="userState() == 'false'" ng-click="loginOpen('md')">Sign in</h4>
 				
-										<h4 class="uppercase logout" ng-if="!currentUser" ng-click="logoutUser()">Logout</h4>
+										<h4 class="uppercase logout" ng-if="userState() == 'true'" ng-click="logoutUser()">Logout</h4>
 									
-									<div ng-if="userState">
+									<div ng-if="userState() == 'true'">
 										Welcome, {{user.data.email}} !	
 									</div>
 

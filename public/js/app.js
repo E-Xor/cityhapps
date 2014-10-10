@@ -51,12 +51,17 @@ cityHapps.controller('appController', ['$scope', 'authService', 'userDetails', f
 		$scope.$on('event:auth-loginConfirmed', function(){
 			alert("youre logged in");
 
+			var user = localStorage.getItem('user');
+				console.log(user);
 
+				var userState = function() {
+					if(user) {
+						return true;
+					} else {
+						return false;
+					}
+				};
 		});
-
-		var userState = true;
-		var user = localStorage.getItem('user');
-		console.log(user);
 	}
 ]);
 
@@ -64,8 +69,8 @@ cityHapps.controller('appController', ['$scope', 'authService', 'userDetails', f
 
 cityHapps.formData = {};
 
-cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDataService", "$timeout", "Facebook", "authService",
-	function($scope, $http, registerDataService, $timeout, Facebook, authService ){
+cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDataService", "$timeout", "Facebook", 
+	function($scope, $http, registerDataService, $timeout, Facebook ){
 
 			//Facebook Auth 
 
@@ -345,8 +350,8 @@ cityHapps.factory('userDetails', function($rootScope){
 });
 
 
-cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", "authService", 'userDetails',
-	function($rootScope, $scope, $http, userDetails, authService) {
+cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", 'userDetails', 'authService',
+	function($rootScope, $scope, $http, userDetails, authService ) {
 
 	$scope.formData = {
 		email : '',
@@ -358,7 +363,7 @@ cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", "auth
 	$scope.loginUser =  function() {
 		$http.post('/auth/login', $scope.formData).then(function(res) {
 			console.log(res);
-			
+			authService.loginConfirmed();
 			localStorage.setItem('user', JSON.stringify(res));
 		});
 	};
