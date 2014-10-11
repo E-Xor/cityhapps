@@ -31,6 +31,23 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
+
+		//Add Laravel email validation check
+
+		$email = Input::only('email');
+		$rules = array('email' => 'unique:users,email');
+
+		$validator = Validator::make($email, $rules);
+
+		if ($validator->fails()) {
+			echo json_encode(array('isValid' => false,
+									'value' => 'oops'));
+		} else {
+			echo json_encode(array('isValid' => true, 
+									'value' => 'nice'));
+		}
+
+
 		
 		$json = Input::only('email', 'password', 'categories');
 

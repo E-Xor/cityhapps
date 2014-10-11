@@ -19,6 +19,9 @@
 	<script src="/js/angular-route.min.js"></script>
 	<script src="/js/angular-facebook.js"></script>
 	<script src="/js/http-auth-interceptor.js"></script>
+	<script src="/js/ngRemoteValidate.0.4.1.min.js"></script>
+
+	
 
 
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>

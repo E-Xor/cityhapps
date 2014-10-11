@@ -1,4 +1,5 @@
-var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate', 'facebook', 'http-auth-interceptor']);
+var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
+	'facebook', 'http-auth-interceptor', 'remoteValidation']);
 
 cityHapps.controller("eventsController", function($scope, $http) {
 
@@ -46,13 +47,28 @@ cityHapps.config([
     }
  ]);
 
-cityHapps.controller('appController', ['$scope', 'authService', 'userData', function($scope, authService, userData){
+cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$rootScope', function($scope, $rootScope, authService, userData){
 			
 		$scope.userString = localStorage.getItem('user');
 		$scope.user = angular.fromJson($scope.userString);
+
 		if ($scope.user) {
-			console.log($scope.user.data.email);	
+			console.log($scope.user.data.email);
 		}
+
+		$scope.$on('event:auth-loginConfirmed', function(){
+			alert("youre logged in");
+
+			//YESSSSS
+			// This is where we can fire events based on user, 
+			// GET requests for user based on category.
+
+		});
+
+		console.log($rootScope.userData);
+
+
+
 		
 
 	}
@@ -96,6 +112,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
       Facebook.getLoginStatus(function(response) {
         if (response.status == 'connected') {
           userIsConnected = true;
+
         }
       });
       
@@ -316,6 +333,11 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 			});
 		};
 
+		$scope.emailSetArgs = function( val, el, attrs, ngModel ) {
+    		return { email: val };
+		};
+
+
 		$scope.getCategories();
 		
 		$scope.ok = function () {
@@ -330,31 +352,25 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 
 ]);
 
+
+// This factory will do most of the data passing, getting, and setting
 cityHapps.factory('userData', function($rootScope, authService){
 
-	var userData = {};
-
-	return {
-		get : function() {
-		$rootScope.$on('event:auth-loginConfirmed', function(){
-			alert("youre logged in");
-
-			userData.user = localStorage.getItem('user');
-			console.log(userData.user);
-
-			var userState = function() {
-				if(userData.user) {
-					userData.status = true;
-					return userData.status;
-				} else {
-					userData.status = false;
-					return userData.status;
-				}
-			};
-		});
-		
-		}
+	var user = {};
+	
+	user.get = function() {
+		alert("dafuq?");
 	};
+
+	user.setFB = function(fbData) {
+		$rootScope.facebookData = fbData;
+	};
+
+	user.setUser = function(userData) {
+		$rootScope.userData = userData;
+	};
+
+	return user;
 });
 
 
@@ -371,12 +387,14 @@ cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", 'user
 	$scope.loginUser =  function() {
 		$http.post('/auth/login', $scope.formData).then(function(res) {
 			console.log(res);
-			authService.loginConfirmed();
 
+			authService.loginConfirmed();
+			
 			// alert(authService.loginConfirmed());
-			document.location.reload(true);
 			localStorage.setItem('user', JSON.stringify(res));
-			userData.get();
+			userData.setUser("Testerson");
+			// document.location.reload(true);
+
 		});
 	};
 

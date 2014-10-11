@@ -7,7 +7,7 @@ use OAuth\Common\Consumer\Credentials;
 class SessionsController extends BaseController {
 	
 	public function index() {
-		return Response::json(Auth::check());
+		return Response::json(Auth::user());
 	}
 
 
