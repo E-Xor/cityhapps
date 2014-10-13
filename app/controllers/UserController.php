@@ -32,17 +32,31 @@ class UserController extends \BaseController {
 	public function store()
 	{
 
+
+		Mail::send('emails.welcome', array('key' => 'value'), function($message){
+
+			$message->from('team@cityhapps.com', 'CityHapps');
+
+			$email = Input::get('email');
+
+			// return $email;
+
+			$message->to($email, $email)->subject('Welcome to CityHapps!');
+			//$json['email'], $json['email']
+		});
+
 		
 		$json = Input::only('email', 'password', 'categories');
 
 		$user = new User;
-		// $user->username = $json['username'];
-		$user->email = $json['email'];
 
+		$user->email = $json['email'];
 		$user->password = Hash::make($json['password']);
 		$user->save();
-
+		
 		$userID = $user["id"];
+
+
 
 		/*
 		$categoryJson = Input::json()->only('category_name', 'user_id');
