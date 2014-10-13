@@ -40,6 +40,8 @@ Route::get('events', 'EventfulController@events');
 
 	Route::resource('user', 'UserController');
 
+	Route::post('user/check', 'UserController@check');
+
 	Route::resource('category', 'CategoryController');
 
 	Route::post('auth/login-fb', 'SessionsController@fbNewLogin');

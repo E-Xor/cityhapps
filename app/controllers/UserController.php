@@ -32,24 +32,6 @@ class UserController extends \BaseController {
 	public function store()
 	{
 
-		//Add Laravel email validation check
-
-		$email = Input::only('email');
-		$rules = array('email' => 'unique:users,email');
-
-		$validator = Validator::make($email, $rules);
-
-		if ($validator->fails()) {
-			echo json_encode(array('isValid' => false,
-									'value' => 'oops'));
-			return;
-		} else {
-			echo json_encode(array('isValid' => true, 
-									'value' => 'nice'));
-			return;
-		}
-
-
 		
 		$json = Input::only('email', 'password', 'categories');
 
@@ -88,6 +70,29 @@ class UserController extends \BaseController {
 		return $user . " New User Created Successfully!";
 
 	}
+
+	public function check() 
+	{
+		//Add Laravel email validation check
+
+		$email = Input::only('email');
+		$rules = array('email' => 'unique:users,email');
+
+		$validator = Validator::make($email, $rules);
+
+		if ($validator->fails()) {
+			echo json_encode(array('isValid' => false,
+									'value' => 'oops'));
+			return;
+		} else {
+			echo json_encode(array('isValid' => true, 
+									'value' => 'nice'));
+			return;
+		}
+
+
+	}
+
 
 
 	/**

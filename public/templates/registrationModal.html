@@ -14,7 +14,7 @@
 	        	
 	        	<form name="register">
 			        <div class="registerForm" ng-controller="modalController">
-						<input type="email" placeholder="Email" ng-remote-validate="/user" ng-remote-method="POST" required name="email" class="registerEmail block" ng-model="formData.email">
+						<input type="email" placeholder="Email" ng-remote-validate="/user/check" ng-remote-method="POST" required name="email" class="registerEmail block" ng-model="formData.email">
 
 						    <span ng-if="register.email.$error.ngRemoteValidate" >
 						        This email already exists, choose another please.
