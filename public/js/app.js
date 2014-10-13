@@ -336,8 +336,7 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 		$scope.emailSetArgs = function( val, el, attrs, ngModel ) {
     		return { email: val };
 		};
-
-
+		
 		$scope.getCategories();
 		
 		$scope.ok = function () {
@@ -393,7 +392,7 @@ cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", 'user
 			// alert(authService.loginConfirmed());
 			localStorage.setItem('user', JSON.stringify(res));
 			userData.setUser("Testerson");
-			// document.location.reload(true);
+			document.location.reload(true);
 
 		});
 	};

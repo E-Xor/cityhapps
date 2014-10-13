@@ -42,9 +42,11 @@ class UserController extends \BaseController {
 		if ($validator->fails()) {
 			echo json_encode(array('isValid' => false,
 									'value' => 'oops'));
+			return;
 		} else {
 			echo json_encode(array('isValid' => true, 
 									'value' => 'nice'));
+			return;
 		}
 
 
