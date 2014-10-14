@@ -184,6 +184,9 @@
 .register input.ng-pristine {
   border: 1px solid #ddd; }
 
+button.create-account[disabled='disabled'] {
+  background: #a3a3a3; }
+
 .wide-kerning {
   letter-spacing: .8em; }
 

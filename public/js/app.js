@@ -133,6 +133,8 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
           if (response.status == 'connected') {
             $scope.logged = true;
             $scope.me();
+            console.log(response);
+            // registerUser(response) from factory 
           }
         
         });
@@ -148,6 +150,8 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
              */
             $scope.$apply(function() {
               $scope.user = response;
+
+
             });
             
           });
@@ -163,6 +167,18 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
             $scope.logged = false;
           });
         });
+      };
+
+      $scope.remove = function() {
+		Facebook.api(
+			"/me/permissions/user_profile",
+			"DELETE",
+			function (response) {
+			  if (response && !response.error) {
+			    alert('access revoked');
+			  }
+			}
+		);
       };
       
       /**
@@ -190,17 +206,6 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
         
       });
 
-
-    $scope.checkButton = function() {
-
-    	if (!$scope.formData.categories) {
-    		return false;
-    	} else {
-    		return true;
-    	}
-
-    }  
-
 	$scope.formData = registerDataService.data;
 
 	// $scope.categoryService = categoryService.getCategories();
@@ -214,23 +219,13 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 			data: $scope.formData,
 			headers: {"Content-Type": "application/json"}
 		}).success(function(data){
-
+			// login factory function goes here
 			if(!data) {
 				console.log('not working');
 			} else if (data) {
 				console.log('successfully POSTang!');
 			}
 	
-		// $scope.checkEmail = function() {
-		// 	$http({
-		// 		method: "POST", 
-		// 		url: "/user", 
-		// 		data: $scope.formData.email, 
-		// 		headers: {"Content-Type": "application/json"}
-		// 	}).success(function(data) {
-
-		// 	});
-		// }
 			console.log(data);
 
 		});
@@ -252,7 +247,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 					// $scope.loggedOut = true;
 				}
 			});
-		}
+		};
 	}
 ]);
 
@@ -333,10 +328,28 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 			});
 		};
 
+		$scope.checkCategories = function() {
+
+			// console.log($scope.formData.categories);
+
+			var obj = $scope.formData.categories;
+
+			for (var key in obj) {
+				if ( obj[key] === false ) {
+					return false;
+					console.log(false);
+				} else {
+					return true;
+					console.log(true);
+				}
+			}
+
+		};
+
 		$scope.emailSetArgs = function( val, el, attrs, ngModel ) {
     		return { email: val };
 		};
-		
+
 		$scope.getCategories();
 		
 		$scope.ok = function () {

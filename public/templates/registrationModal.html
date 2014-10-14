@@ -8,9 +8,11 @@
 		    
       	<div class="modal-body" ng-controller="registerFormController">
 
-      		<div class="facebookButton" ng-click="IntentLogin()">
+      		<div class="facebookButton" ng-click="login()">
 				<div class="lucida">Sign In With Facebook</div>
 	        </div>
+	        <button ng-click="logout()">Logout</button>
+	        <button ng-click="me()">Get User Info</button>
 	        	
 	        	<form name="register">
 			        <div class="registerForm" ng-controller="modalController">
