@@ -47,7 +47,8 @@ cityHapps.config([
     }
  ]);
 
-cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$rootScope', function($scope, $rootScope, authService, userData){
+cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$rootScope', 'authFactory', '$http',
+	function($scope, $rootScope, authService, userData, authFactory, $http){
 			
 		$scope.userString = localStorage.getItem('user');
 		$scope.user = angular.fromJson($scope.userString);
@@ -55,6 +56,11 @@ cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$ro
 		if ($scope.user) {
 			console.log($scope.user.data.email);
 		}
+
+		$scope.formData = {
+			email : '',
+			password: ''
+		};
 
 		$scope.$on('event:auth-loginConfirmed', function(){
 			alert("youre logged in");
@@ -66,11 +72,6 @@ cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$ro
 		});
 
 		console.log($rootScope.userData);
-
-
-
-		
-
 	}
 ]);
 
@@ -78,10 +79,10 @@ cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$ro
 
 cityHapps.formData = {};
 
-cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDataService", "$timeout", "Facebook", 
-	function($scope, $http, registerDataService, $timeout, Facebook ){
+cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDataService", "$timeout", "authFactory", "Facebook", 
+	function($scope, $http, registerDataService, $timeout, authFactory, Facebook ){
 
-			//Facebook Auth 
+	//Facebook Auth 
 
       // Define user empty data :/
       $scope.user = {};
@@ -115,48 +116,41 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 
         }
       });
-      
-      /**
-       * IntentLogin
-       */
+ 
       $scope.IntentLogin = function() {
         if(!userIsConnected) {
           $scope.login();
         }
       };
       
-      /**
-       * Login
-       */
-       $scope.login = function() {
-         Facebook.login(function(response) {
-          if (response.status == 'connected') {
-            $scope.logged = true;
-            $scope.me();
-            console.log(response);
-            // registerUser(response) from factory 
-          }
-        
-        });
-       };
-       
-       /**
-        * me 
-        */
-        $scope.me = function() {
-          Facebook.api('/me', function(response) {
-            /**
-             * Using $scope.$apply since this happens outside angular framework.
-             */
-            $scope.$apply(function() {
-              $scope.user = response;
 
+	$scope.login = function() {
+		Facebook.login(function(response) {
+			if (response.status == 'connected') {
+				$scope.logged = true;
+				$scope.user.token = response;
 
-            });
-            
-          });
-        };
-      
+				console.log($scope.user.token);
+
+				Facebook.api('/me', function(response) {
+					$scope.$apply(function() {
+
+						console.log(response);
+						$scope.user.info = response;
+
+						$scope.fbInfo = {
+							"email" : $scope.user.info.email,
+							"fb_token" : $scope.user.token.authResponse.accessToken,
+							"name" : $scope.user.info.name
+						};
+
+						$scope.processForm($scope.fbInfo);
+					});
+				});	
+			}
+		}, {scope: 'email'});
+	};
+             
       /**
        * Logout
        */
@@ -210,20 +204,37 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 
 	// $scope.categoryService = categoryService.getCategories();
 
-	// console.log($scope.formData);
+	var credentials = {
+		"email" :  $scope.formData.email, 
+		"password" : $scope.formData.password
+	}
 
-	$scope.processForm = function() {
+
+	$scope.processForm = function(formData) {
 		$http({
 			method: 'POST',
 			url: '/user',
-			data: $scope.formData,
+			data: formData,
 			headers: {"Content-Type": "application/json"}
 		}).success(function(data){
-			// login factory function goes here
+
+			console.log(data);
+			// if ($scope.formData == null) {
+				
+			// } else {
+			// 	authFactory.loginUser(credentials);
+			// }
+				
 			if(!data) {
 				console.log('not working');
 			} else if (data) {
-				console.log('successfully POSTang!');
+				var fbInfo = {
+					"email" : data.email,
+					"password" : data.fb_token
+				};
+
+				authFactory.loginUser(fbInfo);
+
 			}
 	
 			console.log(data);
@@ -247,7 +258,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 					// $scope.loggedOut = true;
 				}
 			});
-		};
+		};		
 	}
 ]);
 
@@ -264,7 +275,47 @@ cityHapps.factory("registerDataService", function(){
 });
 
 
-cityHapps.controller("modalController", function($scope, $modal, $http){
+cityHapps.factory('authFactory', function($http, authService){
+
+	var auth = {};
+
+
+	auth.loginUser =  function(formData) {
+			$http.post('/auth/login', formData).then(function(res) {
+				console.log(res);
+
+				authService.loginConfirmed();
+				
+				// alert(authService.loginConfirmed());
+				localStorage.setItem('user', JSON.stringify(res));
+				document.location.reload(true);
+
+			});
+		};
+
+	auth.logoutUser = function() {
+		$http({
+			method: "GET",
+			url: '/auth/logout',
+			headers : {"Content-Type": "application/json"}
+		}).success(function(data){
+			localStorage.removeItem('user');
+			document.location.reload(true);
+			if (!data) {
+				console.log("There was an error logging you out");
+			} else if(data) {
+				console.log("You have logged out");
+			}
+		});
+	};
+
+	return auth;
+
+
+});
+
+
+cityHapps.controller("modalController", function($scope, $modal, $http, authFactory){
 
 	$scope.registerOpen = function(size) {
 
@@ -302,11 +353,18 @@ cityHapps.controller("modalController", function($scope, $modal, $http){
 		});
 	};
 
+	$scope.logoutUser = function() {
+		authFactory.logoutUser();
+	}
+
+
+
+
 });
 
 
-cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService",
-		function($scope, $modalInstance, $http, registerDataService){
+cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory",
+		function($scope, $modalInstance, $http, registerDataService, authFactory){
 
 		$scope.formData = registerDataService.data;
 
@@ -323,10 +381,12 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 					console.log(data);				
 					$scope.categories = data;
 
-					// return $scope.categories;
+					return $scope.categories;
 				}
 			});
 		};
+
+		$scope.getCategories();
 
 		$scope.checkCategories = function() {
 
@@ -346,12 +406,12 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 
 		};
 
+		
+
 		$scope.emailSetArgs = function( val, el, attrs, ngModel ) {
     		return { email: val };
 		};
 
-		$scope.getCategories();
-		
 		$scope.ok = function () {
 			$modalInstance.close($scope.selected.item);
 		};
@@ -359,6 +419,10 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
 		};
+
+		$scope.loginUser = function() {
+			authFactory.loginUser($scope.formData);
+		}
 
 	}
 
@@ -386,47 +450,50 @@ cityHapps.factory('userData', function($rootScope, authService){
 });
 
 
-cityHapps.controller('loginController', [ "$rootScope", "$scope", "$http", 'userData', 'authService',
-	function($rootScope, $scope, $http, userData, authService ) {
+cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller", "$http", 'userData', 'authService',
+	function($rootScope, $scope, $http, userData, authService, $controller ) {
 
-	$scope.formData = {
-		email : '',
-		password: ''
-	};
-	// $scope.currentUser = {};
-	// $scope.loggedOut = true;
+		$controller('appController', {$scope:$scope});
 
-	$scope.loginUser =  function() {
-		$http.post('/auth/login', $scope.formData).then(function(res) {
-			console.log(res);
 
-			authService.loginConfirmed();
+		$scope.formData = {};
+
+		$scope.loginUser($scope.formData);
+
+// 	// $scope.currentUser = {};
+// 	// $scope.loggedOut = true;
+
+// 	$scope.loginUser =  function(formData) {
+// 		$http.post('/auth/login', formData).then(function(res) {
+// 			console.log(res);
+
+// 			authService.loginConfirmed();
 			
-			// alert(authService.loginConfirmed());
-			localStorage.setItem('user', JSON.stringify(res));
-			userData.setUser("Testerson");
-			document.location.reload(true);
+// 			// alert(authService.loginConfirmed());
+// 			localStorage.setItem('user', JSON.stringify(res));
+// 			userData.setUser("Testerson");
+// 			document.location.reload(true);
 
-		});
-	};
+// 		});
+// 	};
 
-	$scope.logoutUser = function() {
-		$http({
-			method: "GET",
-			url: '/auth/logout',
-			headers : {"Content-Type": "application/json"}
-		}).success(function(data){
-			localStorage.removeItem('user');
-			document.location.reload(true);
-			if (!data) {
-				console.log("There was an error logging you out");
-			} else if(data) {
-				console.log("You have logged out");
-			}
-		});	
-	};
+// 	$scope.logoutUser = function() {
+// 		$http({
+// 			method: "GET",
+// 			url: '/auth/logout',
+// 			headers : {"Content-Type": "application/json"}
+// 		}).success(function(data){
+// 			localStorage.removeItem('user');
+// 			document.location.reload(true);
+// 			if (!data) {
+// 				console.log("There was an error logging you out");
+// 			} else if(data) {
+// 				console.log("You have logged out");
+// 			}
+// 		});	
+// 	};
 
-	// console.log(authService.loginConfirmed());
+// 	// console.log(authService.loginConfirmed());
 }
 
 ]);

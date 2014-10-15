@@ -33,55 +33,75 @@ class UserController extends \BaseController {
 	{
 
 
-		Mail::send('emails.welcome', array('key' => 'value'), function($message){
+		//Dont Send email if Facebook user
+		if (Input::get('email') !== null) {
 
-			$message->from('team@cityhapps.com', 'CityHapps');
+			Mail::send('emails.welcome', array('key' => 'value'), function($message){
 
-			$email = Input::get('email');
+				$message->from('team@cityhapps.com', 'CityHapps');
 
-			// return $email;
+					$email = Input::get('email');
+				
+				// return $email;
 
-			$message->to($email, $email)->subject('Welcome to CityHapps!');
-			//$json['email'], $json['email']
-		});
-
-		
-		$json = Input::only('email', 'password', 'categories');
-
-		$user = new User;
-
-		$user->email = $json['email'];
-		$user->password = Hash::make($json['password']);
-		$user->save();
-		
-		$userID = $user["id"];
-
-
-
-		/*
-		$categoryJson = Input::json()->only('category_name', 'user_id');
-		$user_category =  new User_Category;
-
-		$user_category->name = $categoryJson['category_name'];
-		$user_category->user_id = $user['id'];
-		*/
-
-		$categoriesPaired = $json['categories']; // array in "categoryID": true
-
-		if ($categoriesPaired != '') {
-
-			$categories = array();
-
-			foreach($categoriesPaired as $key => $value) {
-				if ($value == true) {
-					array_push($categories, $key);
-				}
-			}
-
-			$user->categories()->sync($categories);
+				$message->to($email, $email)->subject('Welcome to CityHapps!');
+				//$json['email'], $json['email']
+			});
 		}
 
-		return $user . " New User Created Successfully!";
+		$json = Input::only('email', 'password', 'categories', 'fb_token', 'name');
+
+		if (Input::only('fb_token') && Input::only('name')) {
+
+			$fb_user = new User;
+
+			$fb_user->email  = $json['email'];
+			$fb_user->password = Hash::make($json['fb_token']);
+			$fb_user->fb_token = $json['fb_token'];
+			$fb_user->user_name = $json['name'];
+
+			$fb_user->save();
+
+		} else {
+
+			$user = new User;
+
+			$user->email = $json['email'];
+			$user->password = Hash::make($json['password']);
+			$user->save();
+			
+			$userID = $user["id"];
+		
+
+
+			$categoriesPaired = $json['categories']; // array in "categoryID": true
+
+			if ($categoriesPaired != '') {
+
+				$categories = array();
+
+				foreach($categoriesPaired as $key => $value) {
+					if ($value == true) {
+						array_push($categories, $key);
+					}
+				}
+
+				$user->categories()->sync($categories);
+			}
+		}
+
+		// if ($user !== 'undefined') {
+		// 	return $fb_user . " New FB User Created Successfully";
+		// } else {
+		// 	return $user . " New User Created Successfully!";	
+		// }
+
+		if ($fb_user) {
+			return $fb_user;
+		}
+
+
+		
 
 	}
 

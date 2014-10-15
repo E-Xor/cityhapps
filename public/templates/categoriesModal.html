@@ -14,7 +14,7 @@
 						<label class="event-category" ng-model="formData.categories[category.id]" btn-checkbox>{{category.name}}</label>
 					</div>
 			
-			        <button type="submit" ng-click="confirmationOpen('md'); processForm(); cancel()" class="create-account" ng-if="checkCategories()">Submit</button>
+			        <button type="submit" ng-click="confirmationOpen('md'); processForm(formData); cancel()" class="create-account" ng-if="checkCategories()">Submit</button>
 		      </div>
 		      {{formData}}
   		</div>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="cityHapps">
 <head>
 	<meta charset="UTF-8">
 	<title>City Happs</title>
@@ -67,12 +67,12 @@
   data-show-faces="true">
 </div> -->
 
-<body ng-app="cityHapps">
+<body ng-controller="appController">
 
 
 	
 	<div class="overlay">	
-		<div class="main-container" ng-controller="appController" ng-animate=" 'animate' ">
+		<div class="main-container" ng-animate=" 'animate' ">
 
 
 
@@ -94,7 +94,7 @@
 
 						</div>
 							<div class="col-sm-3 col-sm-offset-1 left auth" ng-controller="modalController">
-								<div ng-controller="loginController">
+								<!-- <div ng-controller="loginController"> -->
 
 									<!-- ng-show="showUser()" -->
 									<!-- ng-if="userState() == 'false'" -->
@@ -110,7 +110,7 @@
 									</div>
 
 	
-								</div>
+								<!-- </div> -->
 							</div>
 
 						</div>

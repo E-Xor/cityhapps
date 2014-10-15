@@ -4,13 +4,14 @@
         <h3 class="modal-title uppercase">Login</h3>
         <p>Lorem ipsum dolor sit amet, cu nec debet urbanitas, putent electram temporibus eos in</p>
       </div>
-      <div class="modal-body" ng-controller="loginController">
-        <form ng-submit="loginUser(formData)" class="loginForm">
+      <!--  -->
+      <div class="modal-body">
+        <form class="loginForm">
 			<input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
 			<input type="password" placeholder="password" class="registerPassword block" ng-model="formData.password">
 			<!-- <input type="password" placeholder="password" class="registerPassword left" ng-model="formData.password2"> -->
 	        <div>
-		        <button type="submit" class="btn btn-primary" ng-click="cancel()">Login</button>
+		        <button type="submit" class="btn btn-primary" ng-click="loginUser(formData); cancel()">Login</button>
 	      	</div>
           {{formData}}
       </form>
