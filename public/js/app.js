@@ -79,8 +79,8 @@ cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$ro
 
 cityHapps.formData = {};
 
-cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDataService", "$timeout", "authFactory", "Facebook", 
-	function($scope, $http, registerDataService, $timeout, authFactory, Facebook ){
+cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "registerDataService", "$timeout", "authFactory", "Facebook", 
+	function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook ){
 
 	//Facebook Auth 
 
@@ -139,6 +139,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 						$scope.user.info = response;
 
 						$scope.fbInfo = {
+							"categories" : {},
 							"email" : $scope.user.info.email,
 							"password" : $scope.user.token.authResponse.accessToken,
 							"name" : $scope.user.info.name
@@ -154,9 +155,20 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 							};
 
 							if (response.isValid == true ) {
-								$scope.processForm($scope.fbInfo);
+								registerDataService.data = $scope.fbInfo;
+
+								$modal.open({
+									templateUrl: "templates/categoriesModal.html",
+									controller: 'modalInstanceController'
+								});	
+
+
 							} else {
-								authFactory.loginUser($scope.fbUser);		
+								authFactory.loginUser($scope.fbUser);
+								// $modal.open({
+								// 	templateUrl: "templates/categoriesModal.html",
+								// 	controller: 'modalInstanceController'
+								// });	
 							}
 
 						});			
