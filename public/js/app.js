@@ -603,3 +603,26 @@ cityHapps.controller('calViewController', function($scope){
 // $scope.open();
 
 // });
+
+/* ***************************** */
+/* TEST HARNESS                  */
+/* -- Start --                   */
+/* ***************************** */
+cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $http) {
+		
+	$scope.showEvents = function(eventSource) {
+		
+		var events = $http.get('/events');
+
+		events.success(function(data) {
+			
+			$scope.eventData = data.events["event"];
+
+		});
+	};
+
+}]);
+/* ***************************** */
+/* TEST HARNESS                  */
+/* -- Stop --                   */
+/* ***************************** */

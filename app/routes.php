@@ -21,6 +21,8 @@ Route::get('admin', function() {
 
 Route::get('/', 'HomeController@showWelcome');
 
+Route::get('harness', 'HarnessController@showHarness');
+
 App::missing(function($exception) {
 
 	return View::make('home');
@@ -30,6 +32,7 @@ App::missing(function($exception) {
 
 Route::get('events', 'EventfulController@events');
 
+Route::get('storeEvents', 'EventfulController@storeEvents');
 
 
 	Route::get('auth/status', 'SessionsController@index');
