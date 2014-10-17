@@ -58,16 +58,42 @@
 	
 ?>
 
+<style>
+	th { background-color: #000000; color: #ffffff; }
+	th, td { border: 1px solid #000000; padding: 10px; }
+</style>
+
 <body ng-controller="harnessController">
 	<p>CityHapps Test Harness.</p>
 	
 	<button ng-click="showEvents('Eventful')">Eventful</button>
 			
-	<div ng-repeat="event in eventData">
-		<div>
-			{{event.title}}
-		</div>
-	</div>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Title</th>
+			<th>Venue</th>
+			<th>Address</th>
+			<th>Description</th>
+			<th>Start Time</th>
+			<th>Stop Time</th>
+			<th>All Day</th>
+			<th>Latitude</th>
+			<th>Longitude</th>
+		</tr>
+		<tr ng-repeat="event in eventData">
+			<td><a target="_blank" href="{{event.url}}">{{event.id}}</a></td>
+			<td>{{event.title}}</td>
+			<td><a target="_blank" href="{{event.venue_url}}">{{event.venue_name}}</a> pa</td>
+			<td>{{event.venue_address}} {{event.city_name}}, {{event.region_abbr}} {{event.postal_code}}</td>
+			<td>{{event.description}}</td>
+			<td>{{event.start_time}}</td>
+			<td>{{event.stop_time}}</td>
+			<td>{{event.all_day}}</td>
+			<td>{{event.latitude}}</td>
+			<td>{{event.longitude}}</td>
+		</tr>
+	</table>
 
 </body>
 </html>
