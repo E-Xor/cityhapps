@@ -140,11 +140,26 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 
 						$scope.fbInfo = {
 							"email" : $scope.user.info.email,
-							"fb_token" : $scope.user.token.authResponse.accessToken,
+							"password" : $scope.user.token.authResponse.accessToken,
 							"name" : $scope.user.info.name
 						};
 
-						$scope.processForm($scope.fbInfo);
+						authFactory.userCheck($scope.user.info.email, function(response){
+
+							console.log(response);
+
+							$scope.fbUser = {
+								"email" : $scope.fbInfo.email,
+								"password" : $scope.fbInfo.fb_token
+							};
+
+							if (response.isValid == true ) {
+								$scope.processForm($scope.fbInfo);
+							} else {
+								authFactory.loginUser($scope.fbUser);		
+							}
+
+						});			
 					});
 				});	
 			}
@@ -155,12 +170,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
        * Logout
        */
       $scope.logout = function() {
-        Facebook.logout(function() {
-          $scope.$apply(function() {
-            $scope.user   = {};
-            $scope.logged = false;
-          });
-        });
+        
       };
 
       $scope.remove = function() {
@@ -205,9 +215,9 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 	// $scope.categoryService = categoryService.getCategories();
 
 	var credentials = {
-		"email" :  $scope.formData.email, 
+		"email" :  $scope.formData.email,
 		"password" : $scope.formData.password
-	}
+	};
 
 
 	$scope.processForm = function(formData) {
@@ -219,12 +229,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 		}).success(function(data){
 
 			console.log(data);
-			// if ($scope.formData == null) {
-				
-			// } else {
-			// 	authFactory.loginUser(credentials);
-			// }
-				
+
 			if(!data) {
 				console.log('not working');
 			} else if (data) {
@@ -234,9 +239,8 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "registerDat
 				};
 
 				authFactory.loginUser(fbInfo);
-
 			}
-	
+
 			console.log(data);
 
 		});
@@ -281,6 +285,7 @@ cityHapps.factory('authFactory', function($http, authService){
 
 
 	auth.loginUser =  function(formData) {
+
 			$http.post('/auth/login', formData).then(function(res) {
 				console.log(res);
 
@@ -307,6 +312,23 @@ cityHapps.factory('authFactory', function($http, authService){
 				console.log("You have logged out");
 			}
 		});
+	};
+
+	auth.userCheck = function(email, callback ) {
+		$http({
+			method: "POST",
+			url: '/user/check',
+			data: { "email" : email },
+			headers : {"Content-Type": "application/json"}
+		}).success(function(data){
+			
+			console.log(data);			
+			if(typeof callback  === 'function') {
+				callback(data);
+			}
+
+		});
+
 	};
 
 	return auth;
@@ -455,46 +477,10 @@ cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller",
 
 		$controller('appController', {$scope:$scope});
 
-
 		$scope.formData = {};
 
 		$scope.loginUser($scope.formData);
-
-// 	// $scope.currentUser = {};
-// 	// $scope.loggedOut = true;
-
-// 	$scope.loginUser =  function(formData) {
-// 		$http.post('/auth/login', formData).then(function(res) {
-// 			console.log(res);
-
-// 			authService.loginConfirmed();
-			
-// 			// alert(authService.loginConfirmed());
-// 			localStorage.setItem('user', JSON.stringify(res));
-// 			userData.setUser("Testerson");
-// 			document.location.reload(true);
-
-// 		});
-// 	};
-
-// 	$scope.logoutUser = function() {
-// 		$http({
-// 			method: "GET",
-// 			url: '/auth/logout',
-// 			headers : {"Content-Type": "application/json"}
-// 		}).success(function(data){
-// 			localStorage.removeItem('user');
-// 			document.location.reload(true);
-// 			if (!data) {
-// 				console.log("There was an error logging you out");
-// 			} else if(data) {
-// 				console.log("You have logged out");
-// 			}
-// 		});	
-// 	};
-
-// 	// console.log(authService.loginConfirmed());
-}
+	}
 
 ]);
 

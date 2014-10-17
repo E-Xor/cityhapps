@@ -34,20 +34,20 @@ class UserController extends \BaseController {
 
 
 		//Dont Send email if Facebook user
-		if (Input::get('email') !== null) {
+		Input::get('email'); 
 
-			Mail::send('emails.welcome', array('key' => 'value'), function($message){
+		Mail::send('emails.welcome', array('key' => 'value'), function($message){
 
-				$message->from('team@cityhapps.com', 'CityHapps');
+			$message->from('team@cityhapps.com', 'CityHapps');
 
-					$email = Input::get('email');
-				
-				// return $email;
+				$email = Input::get('email');
+			
+			// return $email;
 
-				$message->to($email, $email)->subject('Welcome to CityHapps!');
-				//$json['email'], $json['email']
-			});
-		}
+			$message->to($email, $email)->subject('Welcome to CityHapps!');
+			//$json['email'], $json['email']
+		});
+		
 
 		$json = Input::only('email', 'password', 'categories', 'fb_token', 'name');
 
@@ -99,11 +99,9 @@ class UserController extends \BaseController {
 		if ($fb_user) {
 			return $fb_user;
 		}
-
-
-		
-
 	}
+
+
 
 	public function check() 
 	{
