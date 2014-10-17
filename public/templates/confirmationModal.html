@@ -9,7 +9,8 @@
 			
 			<h3 class="uppercase">Login by hitting the button Below!</h3>
 
-			<button type="button" class="create-account" ng-click="categoriesOpen('md'); " >Login</button>
+			<button type="button" class="create-account" ng-click="loginUser( {'email' : formData.email, 'password' : formData.password } )" >Login</button>
+			{{formData}}
 		</div>
 	</div>
 </div>

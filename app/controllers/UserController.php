@@ -51,7 +51,7 @@ class UserController extends \BaseController {
 
 		$json = Input::only('email', 'password', 'categories', 'fb_token', 'name');
 
-		if (Input::only('fb_token') && Input::only('name')) {
+		if (Input::only('password') == '') {
 
 			$fb_user = new User;
 
@@ -62,6 +62,8 @@ class UserController extends \BaseController {
 
 			$fb_user->save();
 
+			return $fb_user;
+
 		} else {
 
 			$user = new User;
@@ -69,6 +71,8 @@ class UserController extends \BaseController {
 			$user->email = $json['email'];
 			$user->password = Hash::make($json['password']);
 			$user->save();
+
+			return $user;
 			
 			$userID = $user["id"];
 		
@@ -90,14 +94,10 @@ class UserController extends \BaseController {
 			}
 		}
 
-		// if ($user !== 'undefined') {
-		// 	return $fb_user . " New FB User Created Successfully";
-		// } else {
-		// 	return $user . " New User Created Successfully!";	
-		// }
-
-		if ($fb_user) {
-			return $fb_user;
+		if ($user !== 'undefined') {
+			return $fb_user . " New FB User Created Successfully";
+		} else {
+			return $user . " New User Created Successfully!";	
 		}
 	}
 

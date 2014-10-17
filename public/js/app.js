@@ -62,6 +62,10 @@ cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$ro
 			password: ''
 		};
 
+		$scope.loginUser = function(formData) {
+			authFactory.loginUser(formData);
+		};
+
 		$scope.$on('event:auth-loginConfirmed', function(){
 			alert("youre logged in");
 
@@ -250,7 +254,12 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 					"password" : data.fb_token
 				};
 
-				authFactory.loginUser(fbInfo);
+				$modal.open({
+					templateUrl: "templates/confirmationModal.html",
+					controller: 'modalInstanceController',
+				});
+
+				
 			}
 
 			console.log(data);
@@ -349,7 +358,10 @@ cityHapps.factory('authFactory', function($http, authService){
 });
 
 
-cityHapps.controller("modalController", function($scope, $modal, $http, authFactory){
+cityHapps.controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
+
+
+	$scope.formData = registerDataService.data;
 
 	$scope.registerOpen = function(size) {
 
@@ -390,6 +402,10 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 	$scope.logoutUser = function() {
 		authFactory.logoutUser();
 	}
+
+	// $scope.loginUser = function() {
+	// 	authFactory.loginUser($scope.formData);
+	// }
 
 
 
@@ -439,7 +455,6 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 			}
 
 		};
-
 		
 
 		$scope.emailSetArgs = function( val, el, attrs, ngModel ) {
@@ -454,8 +469,14 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 			$modalInstance.dismiss('cancel');
 		};
 
-		$scope.loginUser = function() {
-			authFactory.loginUser($scope.formData);
+		$scope.loginInfo = {
+			"email" : $scope.formData.email,
+			"password" : $scope.formData.password
+		}
+
+
+		$scope.loginUser = function(data) {
+			authFactory.loginUser(data);
 		}
 
 	}
@@ -484,14 +505,13 @@ cityHapps.factory('userData', function($rootScope, authService){
 });
 
 
-cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller", "$http", 'userData', 'authService',
-	function($rootScope, $scope, $http, userData, authService, $controller ) {
+cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller", "registerDataService", "$http", 'userData', 'authService',
+	function($rootScope, $scope, $http, userData, registerDataService, authService, $controller ) {
 
 		$controller('appController', {$scope:$scope});
 
-		$scope.formData = {};
+		$scope.formData = registerDataService.data;
 
-		$scope.loginUser($scope.formData);
 	}
 
 ]);
