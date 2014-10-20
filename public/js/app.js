@@ -627,15 +627,52 @@ cityHapps.controller('calViewController', function($scope){
 /* ***************************** */
 cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $http) {
 		
+	$scope.showEventful = false;
+	$scope.showActive = false;
+
 	$scope.showEvents = function(eventSource) {
 		
-		var events = $http.get('/events');
+		$scope.eventData = null;
 
-		events.success(function(data) {
-			
-			$scope.eventData = data.events["event"];
+		$scope.showEventful = false;
+		$scope.showActive = false;
 
-		});
+		var eventRoute = '';
+
+		switch(eventSource) {
+			case "Eventful":
+				eventRoute = "eventfulEvents";
+				break;
+			case "Active":
+				eventRoute = "activeEvents";
+				break;
+			default:
+				// This should never happen
+		}
+
+		if (eventRoute != '') {
+
+			var events = $http.get('/' + eventRoute);
+
+			events.success(function(data) {
+				
+				console.log(data);
+
+				switch(eventSource) {
+					case "Eventful":
+						$scope.eventData = data.events["event"];
+						$scope.showEventful = true;
+						break;
+					case "Active":
+						$scope.eventData = data.results;
+						$scope.showActive = true;
+						break;
+					default:
+						// This should never happen
+				}
+
+			});
+		}
 	};
 
 }]);
