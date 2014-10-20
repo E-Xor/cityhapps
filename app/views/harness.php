@@ -68,6 +68,7 @@
 	
 	<button ng-click="showEvents('Eventful')">Eventful</button>
 	<button ng-click="showEvents('Active')">Active.com</button>
+	<button ng-click="showEvents('Meetup')">Meetup</button>
 			
 	<table>
 		<tr>
@@ -108,6 +109,19 @@
 			<td>{{event.assetImages[0].imageUrlAdr}}</td>
 			<td>{{event.place.geoPoint.lat}}</td>
 			<td>{{event.place.geoPoint.lon}}</td>
+		</tr>
+		<tr ng-show="showMeetup" ng-repeat="event in eventData">
+			<td><a target="_blank" href="{{event.event_url}}">{{event.id}}</a></td>
+			<td>{{event.name}}</td>
+			<td><a target="_blank">{{event.venue.name}}</a></td>
+			<td>{{event.venue.address_1}} {{event.venue.city}}, {{event.venue.state}} {{event.venue.zip}}</td>
+			<td>{{event.description}}</td>
+			<td>{{event.time}} ({{event.timezone}})</td>
+			<td>{{event.duration}}</td>
+			<td></td>
+			<td>{{event.photo_url}}</td>
+			<td>{{event.venue.lat}}</td>
+			<td>{{event.venue.lon}}</td>
 		</tr>
 	</table>
 

@@ -33,6 +33,7 @@ App::missing(function($exception) {
 Route::get('events', 'EventfulController@events');
 Route::get('eventfulEvents', 'EventfulController@events');
 Route::get('activeEvents', 'ActiveController@events');
+Route::get('meetupEvents', 'MeetupController@events');
 
 Route::get('storeEvents', 'EventfulController@storeEvents');
 
