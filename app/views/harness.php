@@ -84,7 +84,7 @@
 		<tr ng-repeat="event in eventData">
 			<td><a target="_blank" href="{{event.url}}">{{event.id}}</a></td>
 			<td>{{event.title}}</td>
-			<td><a target="_blank" href="{{event.venue_url}}">{{event.venue_name}}</a> pa</td>
+			<td><a target="_blank" href="{{event.venue_url}}">{{event.venue_name}}</a></td>
 			<td>{{event.venue_address}} {{event.city_name}}, {{event.region_abbr}} {{event.postal_code}}</td>
 			<td>{{event.description}}</td>
 			<td>{{event.start_time}}</td>
