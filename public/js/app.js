@@ -1,37 +1,54 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
 	'facebook', 'http-auth-interceptor', 'remoteValidation']);
 
-cityHapps.controller("eventsController", function($scope, $http) {
+
+// angular.module('customFilters', []).filter('modulo', function(){
+// 	return function(arr, div, val) {
+// 		return arr.filter(function(item, index){
+// 			return index % div === (val || 0);
+// 		});
+// 	};
+// });
+
+
+cityHapps.controller("eventsController", function($scope, $http, $filter) {
 
 	var events = $http.get('/events');
-	
+	var i,
+	first, second, third, fourth, slides;
+
 	events.success(function(data) {
 		
 		$scope.eventData = data.events["event"];
-		console.log($scope.eventData);
+
+		$scope.slideGroup = [];
+
+		for (i = 0; i < $scope.eventData.length; i += 4) {
+
+			slides = {
+				'first' : $scope.eventData[i],
+				'second' : $scope.eventData[i + 1],
+				'third' : $scope.eventData[i + 2],
+				'fourth' : $scope.eventData[i + 3]
+			};
+			console.log($scope.slideGroup);
+			$scope.slideGroup.push(slides);
+		}
 
 	});
 
-	// $scope.groupOfFour = function() {
-	// 	for (var i = 0; i < $scope.eventData.length; i++ ) {
 
-	// 	var four += 4;
-	// 	var fourMore += four;
-		
-	// 	return $scope.eventData.slice(four, fourMore);
-		
-	// 	}
-	// }
+	
+
+
 });
 
-
-
-cityHapps.controller("sliderController", function($scope){
+cityHapps.controller("sliderController", function($scope, $filter){
 
 	$scope.interval = 5000;
-	
+
 	$scope.getTimes=function(n){
-     return new Array(n);
+    return new Array(n);
 };
 
 

@@ -29,7 +29,7 @@
 .wide-search {
   height: 0px;
   display: none;
-  height: 137px; }
+  height: 112px; }
 
 .search-large {
   width: 100%;
@@ -84,9 +84,6 @@
   border: none;
   left: 0;
   background: none; }
-
-.carousel-inner {
-  padding: 0 10%; }
 
 .day-slider {
   max-width: 1170px;

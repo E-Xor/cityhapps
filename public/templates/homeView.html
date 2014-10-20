@@ -11,12 +11,39 @@
 <div class="row event-slider">
 	<div ng-controller="sliderController">
 		<carousel interval="interval" class="col-sm-12">
-			<slide class="col-sm-12">
-				<div class="col-sm-3 event" ng-repeat="event in eventData | limitTo:4">
+			<slide class="col-sm-12" ng-repeat="event in slideGroup">
+				<div class="col-sm-3 event">
 					<div class="event-inner">
-						<img ng-src="{{event.image.block250.url}}">
+						<img ng-src="{{event.first.image.block250.url}}">
 						<div class="event-details">
-							<h4 class="uppercase">{{event.title}}</h4>
+							<h4 class="uppercase">{{event.first.title}}</h4>
+							<!-- {{event.}} -->
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3 event">
+					<div class="event-inner">
+						<img ng-src="{{event.second.image.block250.url}}">
+						<div class="event-details">
+							<h4 class="uppercase">{{event.second.title}}</h4>
+							<!-- {{event.}} -->
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3 event">
+					<div class="event-inner">
+						<img ng-src="{{event.third.image.block250.url}}">
+						<div class="event-details">
+							<h4 class="uppercase">{{event.third.title}}</h4>
+							<!-- {{event.}} -->
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3 event">
+					<div class="event-inner">
+						<img ng-src="{{event.fourth.image.block250.url}}">
+						<div class="event-details">
+							<h4 class="uppercase">{{event.fourth.title}}</h4>
 							<!-- {{event.}} -->
 						</div>
 					</div>
