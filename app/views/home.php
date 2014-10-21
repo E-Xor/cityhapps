@@ -47,8 +47,15 @@
 	     fjs.parentNode.insertBefore(js, fjs);
 	   }(document, 'script', 'facebook-jssdk'));
 	</script>
-	
 
+	<script src="//use.typekit.net/zch6fnl.js"></script>
+	<script>try{Typekit.load();}catch(e){}</script>
+
+	<!-- Live site script includes.
+
+	<script src="//use.typekit.net/qhi7dcu.js"></script>
+	<script>try{Typekit.load();}catch(e){}</script> -->
+	
 	<base href="/">
 
 </head>
@@ -90,10 +97,10 @@
 						</div>
 						<div class="col-sm-4 center">
 							
-							<input type="text" placholder="Find Events &amp; Activities" class="main-search" />
+							<input type="text" placeholder="Find Events &amp; Activities" class="main-search" />
 
 						</div>
-							<div class="col-sm-3 col-sm-offset-1 left auth" ng-controller="modalController">
+							<div class="col-sm-4 left auth" ng-controller="modalController">
 								<!-- <div ng-controller="loginController"> -->
 
 									<!-- ng-show="showUser()" -->
@@ -105,8 +112,8 @@
 				
 									
 									<div ng-if="user">
-										<h4 class="uppercase logout" ng-click="logoutUser()">Logout</h4>
-										Welcome, {{user.data.email}} !		
+										{{user.data.email}}!
+										<p class="red logout" ng-click="logoutUser()">sign out</p>		
 									</div>
 
 	

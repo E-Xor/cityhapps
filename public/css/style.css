@@ -1,8 +1,11 @@
 .open-sans, html, body {
   font-family: 'Open Sans', sans-serif; }
 
+html {
+  background: #2c2625; }
+
 .main-container {
-  background: rgba(45, 63, 90, 0.7);
+  background: rgba(20, 35, 52, 0.6);
   z-index: 2; }
 
 .overlay {
@@ -16,15 +19,72 @@
 .grey-wide {
   background: #2c2625; }
 
+::-webkit-input-placeholder {
+  color: #fff;
+  font-size: 1.2em;
+  font-style: italic;
+  letter-spacing: .1em;
+  text-align: center;
+  font-weight: 300; }
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #fff;
+  font-size: 1.2em;
+  font-style: italic;
+  letter-spacing: .2em; }
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #fff;
+  font-size: 1.2em;
+  font-style: italic;
+  letter-spacing: .2em; }
+
+:-ms-input-placeholder {
+  color: #fff;
+  font-size: 1.2em;
+  font-style: italic;
+  letter-spacing: .2em; }
+
+.carousel-control.right {
+  background-image: none; }
+
+.carousel-control.left {
+  background-image: none; }
+
+.glyphicon.glyphicon-chevron-right {
+  height: 50px;
+  width: 100%;
+  right: 0; }
+  .glyphicon.glyphicon-chevron-right:before {
+    content: url("/img/sliderRight.png");
+    cursor: pointer; }
+
+.glyphicon.glyphicon-chevron-left {
+  height: 50px;
+  width: 100%;
+  left: 0; }
+  .glyphicon.glyphicon-chevron-left:before {
+    content: url("/img/sliderLeft.png");
+    cursor: pointer; }
+
+.carousel-indicators {
+  display: none; }
+
 .header-search {
   color: #fff;
-  padding: 20px; }
+  padding: 20px;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 20px 0;
+  text-align: center; }
   .header-search input {
     width: 100%;
-    height: 50px;
+    height: 60px;
     padding: 5px;
-    background: transparent;
-    border: 2px solid #fff; }
+    border: 2px solid #fff;
+    background: url("/img/searchIcon.png") 35px 16px/23px 26px no-repeat; }
 
 .wide-search {
   height: 0px;
@@ -85,6 +145,10 @@
   left: 0;
   background: none; }
 
+.carousel-inner {
+  max-width: 90%;
+  margin: 0 auto; }
+
 .day-slider {
   max-width: 1170px;
   margin: 0 auto;
@@ -118,6 +182,28 @@
 .cal-icon {
   background: url("/img/viewSelectSprite.png") no-repeat -119px 0; }
 
+.icons {
+  height: 41px;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 30px;
+  left: 30%; }
+
+.like-icon {
+  height: 41px;
+  width: 41px;
+  background: url("/img/likeIcon.png") no-repeat 0 0;
+  cursor: pointer;
+  float: left; }
+
+.dislike-icon {
+  height: 41px;
+  width: 41px;
+  background: url("/img/likeIcon.png") no-repeat -61px 0;
+  cursor: pointer;
+  float: right;
+  margin-left: 20px; }
+
 .view-select {
   height: 60px;
   color: #fff;
@@ -125,7 +211,7 @@
   max-width: 1170px; }
 
 .event {
-  padding: 20px; }
+  padding: 10px; }
 
 .facebookButton {
   background: #3b5998 url("/img/facebookIcon.png") no-repeat 93% 12px/17.5px 35px;
@@ -138,8 +224,8 @@
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif; }
 
 .event-inner {
-  background: #fff;
-  height: 400px; }
+  background: #f6efee;
+  height: 325px; }
   .event-inner img {
     width: 100%; }
 
@@ -196,6 +282,12 @@ button.create-account[disabled='disabled'] {
 .center {
   text-align: center;
   margin: 0 auto; }
+
+.red {
+  color: #FF5C50; }
+
+.summary {
+  margin-bottom: 80px; }
 
 .white {
   color: #fff; }

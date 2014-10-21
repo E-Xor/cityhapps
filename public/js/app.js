@@ -1,24 +1,15 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
 	'facebook', 'http-auth-interceptor', 'remoteValidation']);
 
-
-// angular.module('customFilters', []).filter('modulo', function(){
-// 	return function(arr, div, val) {
-// 		return arr.filter(function(item, index){
-// 			return index % div === (val || 0);
-// 		});
-// 	};
-// });
-
-
-cityHapps.controller("eventsController", function($scope, $http, $filter) {
+cityHapps.controller("eventsController", function($scope, $http, $filter, formatTime) {
 
 	var events = $http.get('/events');
-	var i,
-	first, second, third, fourth, slides;
+	var i;
 
 	events.success(function(data) {
-		
+
+		console.log(data);
+		$scope.data = data;
 		$scope.eventData = data.events["event"];
 
 		$scope.slideGroup = [];
@@ -35,17 +26,41 @@ cityHapps.controller("eventsController", function($scope, $http, $filter) {
 			$scope.slideGroup.push(slides);
 		}
 
+		$scope.formatAMPM = function(data) {
+			return formatTime.formatAMPM(data);
+		};
+
+
 	});
-
-
-	
-
 
 });
 
+
+cityHapps.factory('formatTime', function(){
+
+	var formatTime = {};
+
+	formatTime.formatAMPM = function(date) {
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var ampm = hours >= 12 ? 'pm' : 'am';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0'+minutes : minutes;
+		var strTime = date + hours + ':' + minutes + ' ' + ampm;
+		return strTime;		
+	}
+
+	return formatTime;
+
+});
+
+
+
+
 cityHapps.controller("sliderController", function($scope, $filter){
 
-	$scope.interval = 5000;
+	$scope.interval = 500000000000;
 
 	$scope.getTimes=function(n){
     return new Array(n);

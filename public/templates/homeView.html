@@ -1,53 +1,89 @@
 <!-- <script src="/js/slider.js"></script> -->
 
 <div class="event-counter" ng-controller="eventsController" ng-init="getCategories()">
-		<h2 class="center white"> {{eventData.length}} things to do in Atlanta </h2>
+		<h2 class="center white"> {{data.total_items}} things to do in Atlanta </h2>
 
 </div>
 
 
-<h4 class="uppercase center white">Recommendations</h4>
+<p class="uppercase center white wide-kerning">Recommendations</p>
 
 <div class="row event-slider">
 	<div ng-controller="sliderController">
 		<carousel interval="interval" class="col-sm-12">
 			<slide class="col-sm-12" ng-repeat="event in slideGroup">
 				<div class="col-sm-3 event">
-					<div class="event-inner">
-						<img ng-src="{{event.first.image.block250.url}}">
-						<div class="event-details">
-							<h4 class="uppercase">{{event.first.title}}</h4>
-							<!-- {{event.}} -->
+						<div class="event-inner" >
+							<div class="event-image" style="background-image: url('{{event.first.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.first.title | limitTo: 50}}</h4>
+								<p>{{event.first.start_date}}</p>
+								<p>{{event.first.venue_name}}</p>
+							</div>
+							<div class="icons">
+								<div class="like-icon">
+								</div>
+								<div class="dislike-icon">
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-3 event">
-					<div class="event-inner">
-						<img ng-src="{{event.second.image.block250.url}}">
-						<div class="event-details">
-							<h4 class="uppercase">{{event.second.title}}</h4>
-							<!-- {{event.}} -->
+					<div class="col-sm-3 event">
+						<div class="event-inner">
+							<div class="event-image" style="background-image: url('{{event.second.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.second.title | limitTo: 50}}</h4>
+								<p>{{event.second.start_date}}</p>
+								<p>{{event.second.venue_name}}</p>
+							</div>
+							<div class="icons">
+								<div class="like-icon">
+								</div>
+								<div class="dislike-icon">
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-3 event">
-					<div class="event-inner">
-						<img ng-src="{{event.third.image.block250.url}}">
-						<div class="event-details">
-							<h4 class="uppercase">{{event.third.title}}</h4>
-							<!-- {{event.}} -->
+					<div class="col-sm-3 event">
+						<div class="event-inner">
+							<div class="event-image" style="background-image: url('{{event.third.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.third.title | limitTo: 50}} </h4>
+								<p>{{event.third.start_date}}</p>
+								<p>{{event.third.venue_name}}</p>
+							</div>
+							<div class="icons">
+								<div class="like-icon">
+								</div>
+								<div class="dislike-icon">
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-3 event">
-					<div class="event-inner">
-						<img ng-src="{{event.fourth.image.block250.url}}">
-						<div class="event-details">
-							<h4 class="uppercase">{{event.fourth.title}}</h4>
-							<!-- {{event.}} -->
+					<div class="col-sm-3 event">
+						<div class="event-inner">
+							<div class="event-image" style="background-image: url('{{event.fourth.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.forth.title | limitTo: 50}}</h4>
+								<p>{{event.fourth.start_date}}</p>
+								<p>{{event.fourth.venue_name}}</p>
+							</div>
+							<div class="icons">
+								<div class="like-icon">
+								</div>
+								<div class="dislike-icon">
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
 			</slide>
 		</carousel>
 	</div>
@@ -98,19 +134,164 @@
 		<h5 class="uppercase white wide-kerning">Events</h5>
 	</div>
 
-	<div class="row event-slider">
-		<div class="bxslider">
-			<div class="col-sm-12">
-				<div class="col-sm-3 event" ng-repeat="event in eventData">
-					<div class="event-inner">
-						<img ng-src="{{event.image.block250.url}}">
-						<div class="event-details">
-							<h4 class="uppercase">{{event.title}}</h4>
-							<!-- {{event.}} -->
+	<div class="row event-slider summary">
+		<div ng-controller="sliderController">
+			<carousel interval="interval" class="col-sm-12">
+				<slide class="col-sm-12" ng-repeat="event in slideGroup">
+					<div class="col-sm-3 event">
+						<div class="event-inner" >
+							<div class="event-image" style="background-image: url('{{event.first.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.first.title | limitTo: 50}}</h4>
+								<p>{{event.first.start_date}}</p>
+								<p>{{event.first.venue_name}}</p>
+								<div class="icons">
+									<div class="like-icon">
+									</div>
+									<div class="dislike-icon">
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+					<div class="col-sm-3 event">
+						<div class="event-inner">
+							<div class="event-image" style="background-image: url('{{event.second.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.second.title | limitTo: 50}}</h4>
+								<p>{{event.second.start_date}}</p>
+								<p>{{event.second.venue_name}}</p>
+								<div class="icons">
+									<div class="like-icon">
+									</div>
+									<div class="dislike-icon">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3 event">
+						<div class="event-inner">
+							<div class="event-image" style="background-image: url('{{event.third.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.third.title | limitTo: 50}}</h4>
+								<p>{{event.third.start_date}}</p>
+								<p>{{event.third.venue_name}}</p>
+								<div class="icons">
+									<div class="like-icon">
+									</div>
+									<div class="dislike-icon">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3 event">
+						<div class="event-inner">
+							<div class="event-image" style="background-image: url('{{event.fourth.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.forth.title | limitTo: 50}}</h4>
+								<p>{{event.fourth.start_date}}</p>
+								<p>{{event.fourth.venue_name}}</p>
+								<div class="icons">
+									<div class="like-icon">
+									</div>
+									<div class="dislike-icon">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</slide>
+			</carousel>
+		</div>
+	</div>
+	<div class="row event-slider summary">
+		<div ng-controller="sliderController">
+			<carousel interval="interval" class="col-sm-12">
+				<slide class="col-sm-12" ng-repeat="event in slideGroup">
+					<div class="col-sm-3 event">
+						<div class="event-inner" >
+							<div class="event-image" style="background-image: url('{{event.first.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.first.title | limitTo: 50}}</h4>
+								<p>{{event.first.start_date}}</p>
+								<p>{{event.first.venue_name}}</p>
+								<div class="icons">
+									<div class="like-icon">
+									</div>
+									<div class="dislike-icon">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3 event">
+						<div class="event-inner">
+							<div class="event-image" style="background-image: url('{{event.second.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.second.title | limitTo: 50}}</h4>
+								<p>{{event.second.start_date}}</p>
+								<p>{{event.second.venue_name}}</p>
+								<div class="icons">
+									<div class="like-icon">
+									</div>
+									<div class="dislike-icon">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3 event">
+						<div class="event-inner">
+							<div class="event-image" style="background-image: url('{{event.third.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.third.title | limitTo: 50}}</h4>
+								<p>{{event.third.start_date}}</p>
+								<p>{{event.third.venue_name}}</p>
+								<div class="icons">
+									<div class="like-icon">
+									</div>
+									<div class="dislike-icon">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3 event">
+						<div class="event-inner">
+							<div class="event-image" style="background-image: url('{{event.fourth.image.block250.url}}'); background-size: cover; height: 125px;">
+								<!-- <img ng-src=""> -->
+							</div>
+							<div class="event-details">
+								<h4 class="">{{event.forth.title | limitTo: 50}}</h4>
+								<p>{{event.fourth.start_date}}</p>
+								<p>{{event.fourth.venue_name}}</p>
+								<div class="icons">
+									<div class="like-icon">
+									</div>
+									<div class="dislike-icon">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</slide>
+			</carousel>
 		</div>
 	</div>
 
