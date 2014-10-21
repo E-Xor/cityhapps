@@ -67,6 +67,8 @@
 	<p>CityHapps Test Harness.</p>
 	
 	<button ng-click="showEvents('Eventful')">Eventful</button>
+	<button ng-click="showEvents('Active')">Active.com</button>
+	<button ng-click="showEvents('Meetup')">Meetup</button>
 			
 	<table>
 		<tr>
@@ -78,10 +80,11 @@
 			<th>Start Time</th>
 			<th>Stop Time</th>
 			<th>All Day</th>
+			<th>Image</th>
 			<th>Latitude</th>
 			<th>Longitude</th>
 		</tr>
-		<tr ng-repeat="event in eventData">
+		<tr ng-show="showEventful" ng-repeat="event in eventData">
 			<td><a target="_blank" href="{{event.url}}">{{event.id}}</a></td>
 			<td>{{event.title}}</td>
 			<td><a target="_blank" href="{{event.venue_url}}">{{event.venue_name}}</a></td>
@@ -90,8 +93,35 @@
 			<td>{{event.start_time}}</td>
 			<td>{{event.stop_time}}</td>
 			<td>{{event.all_day}}</td>
+			<td>{{event.image}}</td>
 			<td>{{event.latitude}}</td>
 			<td>{{event.longitude}}</td>
+		</tr>
+		<tr ng-show="showActive" ng-repeat="event in eventData">
+			<td><a target="_blank" href="{{event.urlAdr}}">{{event.assetGuid}}</a></td>
+			<td>{{event.assetName}}</td>
+			<td><a target="_blank" href="{{event.place.placeUrlAdr}}">{{event.place.placeName}}</a></td>
+			<td>{{event.place.addressLine1Txt}} {{event.place.cityName}}, {{event.place.stateProvinceCode}} {{event.place.postalCode}}</td>
+			<td>{{event.assetDescriptions[0].description}}</td>
+			<td>{{event.activityStartDate}}</td>
+			<td>{{event.activityEndDate}}</td>
+			<td></td>
+			<td>{{event.assetImages[0].imageUrlAdr}}</td>
+			<td>{{event.place.geoPoint.lat}}</td>
+			<td>{{event.place.geoPoint.lon}}</td>
+		</tr>
+		<tr ng-show="showMeetup" ng-repeat="event in eventData">
+			<td><a target="_blank" href="{{event.event_url}}">{{event.id}}</a></td>
+			<td>{{event.name}}</td>
+			<td><a target="_blank">{{event.venue.name}}</a></td>
+			<td>{{event.venue.address_1}} {{event.venue.city}}, {{event.venue.state}} {{event.venue.zip}}</td>
+			<td>{{event.description}}</td>
+			<td>{{event.time}} ({{event.timezone}})</td>
+			<td>{{event.duration}}</td>
+			<td></td>
+			<td>{{event.photo_url}}</td>
+			<td>{{event.venue.lat}}</td>
+			<td>{{event.venue.lon}}</td>
 		</tr>
 	</table>
 
