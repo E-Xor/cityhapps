@@ -69,6 +69,7 @@
 	<button ng-click="showEvents('Eventful')">Eventful</button>
 	<button ng-click="showEvents('Active')">Active.com</button>
 	<button ng-click="showEvents('Meetup')">Meetup</button>
+	<button ng-click="showEvents('Eventbrite')">Eventbrite</button>
 			
 	<table>
 		<tr>
@@ -122,6 +123,19 @@
 			<td>{{event.photo_url}}</td>
 			<td>{{event.venue.lat}}</td>
 			<td>{{event.venue.lon}}</td>
+		</tr>
+		<tr ng-show="showEventbrite" ng-repeat="event in eventData">
+			<td><a target="_blank" href="{{event.url}}">{{event.id}}</a></td>
+			<td>{{event.name.text}}</td>
+			<td><a target="_blank" href="{{event.venue.resource_uri}}">{{event.venue.name}}</a></td>
+			<td>{{event.venue.location.address_1}} {{event.venue.location.city}}, {{event.venue.location.region}} {{event.venue.location.postal_code}}</td>
+			<td>{{event.description.text}}</td>
+			<td>{{event.start.local}}</td>
+			<td>{{event.end.local}}</td>
+			<td></td>
+			<td>{{event.logo_url}}</td>
+			<td>{{event.venue.location.latitude}}</td>
+			<td>{{event.venue.location.longitude}}</td>
 		</tr>
 	</table>
 
