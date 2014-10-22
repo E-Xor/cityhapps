@@ -12,24 +12,8 @@
 	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
 	<link rel="stylesheet" href="/css/style.css" />
 
-	<script src="https://maps.googleapis.com/maps/api/js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> <!-- load angular -->
-	<script src="/js/angular-route.min.js"></script>
-	<script src="/js/angular-facebook.js"></script>
-	<script src="/js/http-auth-interceptor.js"></script>
-	<script src="/js/ngRemoteValidate.0.4.1.min.js"></script>
-
-	
-
-
-	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
-	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
-	<script src="/js/jquery.bxslider.min.js"></script>
-	<script src="/js/app.js"></script>
-	<script src="/js/dom.js"></script>
-	
+	<!-- load angular from CDN-->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> 
 	<script>
 	  window.fbAsyncInit = function() {
 	    FB.init({
@@ -132,5 +116,25 @@
 
 	</div>
 	</div>
+
+	<!-- Non ng- scripts n thangs -->
+	<script src="/js/angular-route.min.js"></script>
+	<script src="/js/angular-facebook.js"></script>
+	<script src="/js/http-auth-interceptor.js"></script>
+	<script src="/js/ngRemoteValidate.0.4.1.min.js"></script>
+
+	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
+	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="/js/moment.min.js"></script>	
+
+	<script src="/js/app.js"></script>
+	<script src="/js/dom.js"></script>
+
+
+
 </body>
 </html>

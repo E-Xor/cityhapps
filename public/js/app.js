@@ -26,11 +26,18 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, format
 			$scope.slideGroup.push(slides);
 		}
 
-		$scope.formatAMPM = function(data) {
-			return formatTime.formatAMPM(data);
+		$scope.now = moment().format("dddd, MMMM Do");
+
+		var next = 0;
+		$scope.nextDay = function() {
+			next += 1;
+			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
 		};
-
-
+		
+		$scope.prevDay = function() {
+			next -= 1;
+			$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
+		};
 	});
 
 });

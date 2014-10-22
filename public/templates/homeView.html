@@ -18,9 +18,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.first.title | limitTo: 50}}</h4>
-								<p>{{event.first.start_date}}</p>
-								<p>{{event.first.venue_name}}</p>
+								<h4 class="">{{event.first.title | limitTo: 30}}</h4>
+								<p>{{event.first.start_time}}</p>
+								<p>{{event.first.venue_name | limitTo: 40}}</p>
 							</div>
 							<div class="icons">
 								<div class="like-icon">
@@ -36,9 +36,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.second.title | limitTo: 50}}</h4>
-								<p>{{event.second.start_date}}</p>
-								<p>{{event.second.venue_name}}</p>
+								<h4 class="">{{event.second.title | limitTo: 30}}</h4>
+								<p>{{event.second.start_time}}</p>
+								<p>{{event.second.venue_name | limitTo: 40}}</p>
 							</div>
 							<div class="icons">
 								<div class="like-icon">
@@ -54,9 +54,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.third.title | limitTo: 50}} </h4>
-								<p>{{event.third.start_date}}</p>
-								<p>{{event.third.venue_name}}</p>
+								<h4 class="">{{event.third.title | limitTo: 30}} </h4>
+								<p>{{event.third.start_time}}</p>
+								<p>{{event.third.venue_name | limitTo: 40}}</p>
 							</div>
 							<div class="icons">
 								<div class="like-icon">
@@ -72,9 +72,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.forth.title | limitTo: 50}}</h4>
-								<p>{{event.fourth.start_date}}</p>
-								<p>{{event.fourth.venue_name}}</p>
+								<h4 class="">{{event.forth.title | limitTo: 30}}</h4>
+								<p>{{event.fourth.start_time}}</p>
+								<p>{{event.fourth.venue_name | limitTo: 40}}</p>
 							</div>
 							<div class="icons">
 								<div class="like-icon">
@@ -93,14 +93,14 @@
 	<div class="day-slider-container">
 		<div class="row day-slider">
 			<div class="col-sm-12 center">
-				<div class="col-sm-1 left">
-					<h1>&lsaquo;</h1>
+				<div class="col-sm-1 left prev" ng-click="prevDay()">
+					
 				</div>
 				<div class="col-sm-10">
-					<h3 class="uppercase bold">Wednesday, September 10, 2014</h3>
+					<h3 class="uppercase bold main-date">{{now}}</h3>
 				</div>
-				<div class="col-sm-1 left">
-					<h1>&rsaquo;</h1>
+				<div class="col-sm-1 right next" ng-click="nextDay()">
+					
 				</div>
 				
 			</div>
@@ -130,8 +130,14 @@
 
 	</div>
 
-	<div class="header-container">
-		<h5 class="uppercase white wide-kerning">Events</h5>
+	<div class="header-container row">
+		<div class="col-sm-12">
+			<div class="col-sm-2">
+				<h5 class="uppercase white wide-kerning">Events</h5>
+			</div>
+			<div class="col-sm-10">
+			</div>
+		</div>
 	</div>
 
 	<div class="row event-slider summary">
@@ -144,9 +150,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.first.title | limitTo: 50}}</h4>
-								<p>{{event.first.start_date}}</p>
-								<p>{{event.first.venue_name}}</p>
+								<h4 class="">{{event.first.title | limitTo: 30}}</h4>
+								<p>{{event.first.start_time}}</p>
+								<p>{{event.first.venue_name | limitTo: 40}}</p>
 								<div class="icons">
 									<div class="like-icon">
 									</div>
@@ -162,9 +168,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.second.title | limitTo: 50}}</h4>
-								<p>{{event.second.start_date}}</p>
-								<p>{{event.second.venue_name}}</p>
+								<h4 class="">{{event.second.title | limitTo: 30}}</h4>
+								<p>{{event.second.start_time}}</p>
+								<p>{{event.second.venue_name | limitTo: 40}}</p>
 								<div class="icons">
 									<div class="like-icon">
 									</div>
@@ -180,9 +186,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.third.title | limitTo: 50}}</h4>
-								<p>{{event.third.start_date}}</p>
-								<p>{{event.third.venue_name}}</p>
+								<h4 class="">{{event.third.title | limitTo: 30}}</h4>
+								<p>{{event.third.start_time}}</p>
+								<p>{{event.third.venue_name | limitTo: 40}}</p>
 								<div class="icons">
 									<div class="like-icon">
 									</div>
@@ -198,9 +204,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.forth.title | limitTo: 50}}</h4>
-								<p>{{event.fourth.start_date}}</p>
-								<p>{{event.fourth.venue_name}}</p>
+								<h4 class="">{{event.forth.title | limitTo: 30}}</h4>
+								<p>{{event.fourth.start_time}}</p>
+								<p>{{event.fourth.venue_name | limitTo: 40}}</p>
 								<div class="icons">
 									<div class="like-icon">
 									</div>
@@ -224,9 +230,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.first.title | limitTo: 50}}</h4>
-								<p>{{event.first.start_date}}</p>
-								<p>{{event.first.venue_name}}</p>
+								<h4 class="">{{event.first.title | limitTo: 30}}</h4>
+								<p>{{event.first.start_time}}</p>
+								<p>{{event.first.venue_name | limitTo: 40}}</p>
 								<div class="icons">
 									<div class="like-icon">
 									</div>
@@ -242,9 +248,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.second.title | limitTo: 50}}</h4>
-								<p>{{event.second.start_date}}</p>
-								<p>{{event.second.venue_name}}</p>
+								<h4 class="">{{event.second.title | limitTo: 30}}</h4>
+								<p>{{event.second.start_time}}</p>
+								<p>{{event.second.venue_name | limitTo: 40}}</p>
 								<div class="icons">
 									<div class="like-icon">
 									</div>
@@ -260,9 +266,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.third.title | limitTo: 50}}</h4>
-								<p>{{event.third.start_date}}</p>
-								<p>{{event.third.venue_name}}</p>
+								<h4 class="">{{event.third.title | limitTo: 30}}</h4>
+								<p>{{event.third.start_time}}</p>
+								<p>{{event.third.venue_name | limitTo: 40}}</p>
 								<div class="icons">
 									<div class="like-icon">
 									</div>
@@ -278,9 +284,9 @@
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.forth.title | limitTo: 50}}</h4>
-								<p>{{event.fourth.start_date}}</p>
-								<p>{{event.fourth.venue_name}}</p>
+								<h4 class="">{{event.forth.title | limitTo: 30}}</h4>
+								<p>{{event.fourth.start_time}}</p>
+								<p>{{event.fourth.venue_name | limitTo: 40}}</p>
 								<div class="icons">
 									<div class="like-icon">
 									</div>

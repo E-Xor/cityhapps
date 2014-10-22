@@ -75,11 +75,12 @@ body {
 
 .carousel-control.right {
 	background-image: none;
+	margin-right: -5px;
 }
 
 .carousel-control.left {
 	background-image: none;
-
+	margin-left: -5px;
 }
 
 .glyphicon.glyphicon-chevron-right{
@@ -185,7 +186,8 @@ body {
 }
 
 .event-slider {
-	padding: 0 10%;
+	max-width: 1170px;
+	margin: 0 auto;
 }
 
 .event-slider > .bx-wrapper > .bx-viewport {
@@ -206,8 +208,24 @@ body {
 	max-width: 1170px;
 	margin: 0 auto;
 	height: auto;
-	padding: 0 40px;
+	padding: 10px 0;
 	color: #fff;
+}
+
+.main-date {
+	margin-top: 10px;
+}
+
+.prev {
+	height: 50px;
+	cursor: pointer;
+	background: url("/img/sliderLeft.png") no-repeat 14px 5px / 71px 40px;
+}
+
+.next {
+	height: 50px;
+	cursor: pointer;
+	background: url("/img/sliderRight.png") no-repeat 7px 5px / 71px 40px;
 }
 
 .day-slider-container {
@@ -272,13 +290,6 @@ body {
 	margin-left: 20px;
 }
 
-.view-select {
-	height: 60px;
-	color: #fff;
-	margin: 0 auto;
-	max-width: 1170px;
-}
-
 .event {
 	padding: 10px;
 }
@@ -305,6 +316,7 @@ body {
 
 .event-details {
 	padding: 10px 20px;
+	text-align: left;
 }
 
 .create-account {
@@ -319,9 +331,18 @@ body {
 	display: block;
 }
 
+.view-select {
+	height: 60px;
+	color: #fff;
+	margin: 0 auto;
+	padding: 0 5%;
+	max-width: 1170px;
+}
+
 .header-container {
 	max-width:1170px;
 	margin: 0 auto;
+	padding: 0 5%;
 }
 
 .event-counter {
