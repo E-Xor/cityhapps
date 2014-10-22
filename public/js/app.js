@@ -660,6 +660,7 @@ cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $
 		$scope.showEventful = false;
 		$scope.showActive = false;
 		$scope.showMeetup = false;
+		$scope.showEventbrite = false;
 
 		var eventRoute = '';
 
@@ -672,6 +673,9 @@ cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $
 				break;
 			case "Meetup":
 				eventRoute = "meetupEvents";
+				break;
+			case "Eventbrite":
+				eventRoute = "eventbriteEvents";
 				break;
 			default:
 				// This should never happen
@@ -697,6 +701,10 @@ cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $
 					case "Meetup":
 						$scope.eventData = data.results;
 						$scope.showMeetup = true;
+						break;
+					case "Eventbrite":
+						$scope.eventData = data.events;
+						$scope.showEventbrite = true;
 						break;
 					default:
 						// This should never happen
