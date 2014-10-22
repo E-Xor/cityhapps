@@ -1,7 +1,7 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
 	'facebook', 'http-auth-interceptor', 'remoteValidation']);
 
-cityHapps.controller("eventsController", function($scope, $http, $filter) {
+cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, getEvents) {
 
 	$scope.formatAMPM = function(date) {
 		var hours = date.getHours();
@@ -14,26 +14,20 @@ cityHapps.controller("eventsController", function($scope, $http, $filter) {
 		return strTime;		
 	};
 
-	var events = $http.get('/events');
-	var i;
 
-	events.success(function(data) {
+	
 
-		console.log(data);
-		$scope.data = data;
-		$scope.eventData = data.events["event"];
-
-		$scope.times = [];
-
-		$scope.eventData.forEach(function(time){
-			$scope.times.push($scope.formatAMPM(new Date(time['start_time'])));
-		});
+		var eventSuccess = function(data) {
+			$scope.eventData = data.events['event'];
+			console.log($scope.eventData.length);
 
 		$scope.slideGroup = [];
+		console.log($scope.slideGroup);
 
+		var i;
 		for (i = 0; i < $scope.eventData.length; i += 4) {
 
-			slides = {
+			var slides = {
 				'first' : $scope.eventData[i],
 				'second' : $scope.eventData[i + 1],
 				'third' : $scope.eventData[i + 2],
@@ -56,23 +50,63 @@ cityHapps.controller("eventsController", function($scope, $http, $filter) {
 			$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
 		};
 
-	});
+		$scope.eventModalFirst = function(data) {
 
+			$modal.open({
+				templateUrl: "templates/eventModal.html",
+				controller: 'modalInstanceController',
+			});
+		};
+
+		$scope.eventModalSecond = function() {
+
+			$modal.open({
+				templateUrl: "templates/eventModalSecond.html",
+				controller: 'modalInstanceController'
+			});
+		};
+
+		$scope.eventModalThird = function() {
+
+			$modal.open({
+				templateUrl: "templates/eventModalThird.html",
+				controller: 'modalInstanceController'
+			});
+		};
+
+		$scope.eventModalFourth= function() {
+
+			$modal.open({
+				templateUrl: "templates/eventModalFourth.html",
+				controller: 'modalInstanceController'
+			});
+		};
+			$scope.interval = 500000000000;
+
+
+		}
+
+	getEvents.events().success(eventSuccess);
+
+		
+
+});
+
+
+cityHapps.factory('getEvents', function($http){
+	return {
+		events : function() {
+			return $http.get('/events').success(function(data) {
+				console.log(data);
+			});
+		}
+	}
 });
 
 
 
 
-cityHapps.controller("sliderController", function($scope, $filter){
 
-	$scope.interval = 500000000000;
-
-	$scope.getTimes=function(n){
-    return new Array(n);
-};
-
-
-});
 
 cityHapps.config([
     'FacebookProvider',
@@ -192,7 +226,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 
 							$scope.fbUser = {
 								"email" : $scope.fbInfo.email,
-								"password" : $scope.fbInfo.fb_token
+								"password" : $scope.fbInfo.password
 							};
 
 							if (response.isValid == true ) {
@@ -206,10 +240,6 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 
 							} else {
 								authFactory.loginUser($scope.fbUser);
-								// $modal.open({
-								// 	templateUrl: "templates/categoriesModal.html",
-								// 	controller: 'modalInstanceController'
-								// });	
 							}
 
 						});			
@@ -331,6 +361,8 @@ cityHapps.factory("registerDataService", function(){
 	registerDataService.data = {};
 	registerDataService.data.categories = {};
 
+	registerDataService.modalData = {};
+
 	return registerDataService;
 
 
@@ -341,8 +373,7 @@ cityHapps.factory('authFactory', function($http, authService){
 
 	var auth = {};
 
-
-	auth.loginUser =  function(formData) {
+	auth.loginUser = function(formData) {
 
 			$http.post('/auth/login', formData).then(function(res) {
 				console.log(res);
@@ -397,6 +428,7 @@ cityHapps.factory('authFactory', function($http, authService){
 
 cityHapps.controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
 
+	$scope.modalData = registerDataService.modalData;
 
 	$scope.formData = registerDataService.data;
 

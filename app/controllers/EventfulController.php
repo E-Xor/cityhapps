@@ -8,7 +8,7 @@ class EventfulController extends BaseController {
 		// Enter your application key here. (See http://api.eventful.com/keys/)
 		// $app_key = 'pLB3SGLn9xSnfcg5';
 
-		$event = file_get_contents('http://api.eventful.com/json/events/search?location=Atlanta&date=Today&sort_direction=descending&image_sizes=block250&app_key=pLB3SGLn9xSnfcg5&sort_order=date');
+		$event = file_get_contents('http://api.eventful.com/json/events/search?location=Atlanta&date=today&sort_order=date&sort_direction=descending&app_key=pLB3SGLn9xSnfcg5');
 
 		return $event;
 	}

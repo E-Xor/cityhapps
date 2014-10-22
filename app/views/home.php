@@ -85,10 +85,7 @@
 
 						</div>
 							<div class="col-sm-4 left auth" ng-controller="modalController">
-								<!-- <div ng-controller="loginController"> -->
 
-									<!-- ng-show="showUser()" -->
-									<!-- ng-if="userState() == 'false'" -->
 									<div ng-if="!user">
 										<h4 class="uppercase" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
 										<h4 class="uppercase" ng-click="loginOpen('md')">Sign in</h4>

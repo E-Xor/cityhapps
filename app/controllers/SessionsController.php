@@ -23,13 +23,13 @@ class SessionsController extends BaseController {
 		if (Auth::attempt(array(
 			'email' => Input::json('email'), 
 			'password' => Input::json('password')
-			), true)) {
+			))) {
 			
-			if (Auth::viaRemember()) {
-				return Response::json(Auth::user());					
-			} else {
-				return Response::json(Auth::user());
-			}
+			// if (Auth::viaRemember()) {
+			// 	return Response::json(Auth::user());					
+			// } else {
+			// 	return Response::json(Auth::user());
+			// }
 			
 		} else {
 			return Response::json(array('flash' => 'Invalid username or password'), 500);	
