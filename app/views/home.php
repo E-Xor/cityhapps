@@ -32,7 +32,7 @@
 	   }(document, 'script', 'facebook-jssdk'));
 	</script>
 
-	<script src="//use.typekit.net/zch6fnl.js"></script>
+	<script src="//use.typekit.net/pzp3zgb.js"></script>
 	<script>try{Typekit.load();}catch(e){}</script>
 
 	<!-- Live site script includes.
@@ -63,7 +63,7 @@
 
 	
 	<div class="overlay">	
-		<div class="main-container" ng-animate=" 'animate' ">
+		<div class="main-container proxima" ng-animate=" 'animate' ">
 
 
 

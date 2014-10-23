@@ -7,6 +7,26 @@ $dark-grey: #2C2625;
 $grey: #404042;
 $light-grey: #D1D2D4;
 
+//Fonts 
+
+.proxima {
+	font-family: "proxima-nova",sans-serif;
+	font-style: normal;
+	font-weight: 400;
+} 
+
+.proximaItalic {
+	font-family: "proxima-nova",sans-serif;
+	font-style: italic;
+	font-weight: 400;
+}
+
+.proximaBold {
+	font-family: "proxima-nova",sans-serif;
+	font-style: normal;
+	font-weight: 700;
+}
+
 .open-sans {
 	font-family: 'Open Sans', sans-serif;
 }

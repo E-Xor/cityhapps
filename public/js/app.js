@@ -15,16 +15,18 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 	};
 
 
-	
-
 		var eventSuccess = function(data) {
-			$scope.eventData = data.events['event'];
-			console.log($scope.eventData.length);
+		
+		$scope.eventData = data.events['event'];
+		console.log($scope.eventData);
+
+		$scope.eventCount = data.total_items;
 
 		$scope.slideGroup = [];
 		console.log($scope.slideGroup);
 
 		var i;
+
 		for (i = 0; i < $scope.eventData.length; i += 4) {
 
 			var slides = {
@@ -33,8 +35,11 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 				'third' : $scope.eventData[i + 2],
 				'fourth' : $scope.eventData[i + 3]
 			};
+
 			console.log($scope.slideGroup);
 			$scope.slideGroup.push(slides);
+
+			registerDataService.modalData.push(slides);
 		}
 
 		$scope.now = moment().format("dddd, MMMM Do");
@@ -50,38 +55,24 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 			$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
 		};
 
-		$scope.eventModalFirst = function(data) {
+		$scope.eventModal = function(data, num) {
 
 			$modal.open({
 				templateUrl: "templates/eventModal.html",
-				controller: 'modalInstanceController',
+				controller: 'modalInstanceController', 
+				resolve: {
+					data: function() {
+						return data;
+					},
+					num : function() {
+						return num;
+					}
+				}
 			});
 		};
 
-		$scope.eventModalSecond = function() {
-
-			$modal.open({
-				templateUrl: "templates/eventModalSecond.html",
-				controller: 'modalInstanceController'
-			});
-		};
-
-		$scope.eventModalThird = function() {
-
-			$modal.open({
-				templateUrl: "templates/eventModalThird.html",
-				controller: 'modalInstanceController'
-			});
-		};
-
-		$scope.eventModalFourth= function() {
-
-			$modal.open({
-				templateUrl: "templates/eventModalFourth.html",
-				controller: 'modalInstanceController'
-			});
-		};
-			$scope.interval = 500000000000;
+		
+		$scope.interval = 500000000000;
 
 
 		}
@@ -361,7 +352,7 @@ cityHapps.factory("registerDataService", function(){
 	registerDataService.data = {};
 	registerDataService.data.categories = {};
 
-	registerDataService.modalData = {};
+	registerDataService.modalData = [];
 
 	return registerDataService;
 
@@ -482,10 +473,19 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 });
 
 
-cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory",
-		function($scope, $modalInstance, $http, registerDataService, authFactory){
+cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory", 'data', 'num',
+		function($scope, $modalInstance, $http, registerDataService, authFactory, data, num){
 
 		$scope.formData = registerDataService.data;
+		console.log(data);
+
+		$scope.data = data[num];
+
+
+
+		for(var i = 0; i < registerDataService.modalData; i++) {
+			$scope.modalData = registerDataService.modalData[i];
+		}
 
 		$scope.getCategories = function() {
 			$http({
