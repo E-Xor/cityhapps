@@ -38,8 +38,6 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 			console.log($scope.slideGroup);
 			$scope.slideGroup.push(slides);
-
-			registerDataService.modalData.push(slides);
 		}
 
 		$scope.now = moment().format("dddd, MMMM Do");
@@ -59,7 +57,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 			$modal.open({
 				templateUrl: "templates/eventModal.html",
-				controller: 'modalInstanceController', 
+				controller: 'eventModalInstanceController', 
 				resolve: {
 					data: function() {
 						return data;
@@ -352,8 +350,6 @@ cityHapps.factory("registerDataService", function(){
 	registerDataService.data = {};
 	registerDataService.data.categories = {};
 
-	registerDataService.modalData = [];
-
 	return registerDataService;
 
 
@@ -419,8 +415,6 @@ cityHapps.factory('authFactory', function($http, authService){
 
 cityHapps.controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
 
-	$scope.modalData = registerDataService.modalData;
-
 	$scope.formData = registerDataService.data;
 
 	$scope.registerOpen = function(size) {
@@ -472,20 +466,26 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 
 });
 
-
-cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory", 'data', 'num',
-		function($scope, $modalInstance, $http, registerDataService, authFactory, data, num){
-
-		$scope.formData = registerDataService.data;
-		console.log(data);
+cityHapps.controller("eventModalInstanceController", ["$scope", "$modalInstance", 'data', 'num',
+		function($scope, $modalInstance, data, num){
 
 		$scope.data = data[num];
 
+		$scope.ok = function () {
+			$modalInstance.close($scope.selected.item);
+		};
+
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+	}
+]);
 
 
-		for(var i = 0; i < registerDataService.modalData; i++) {
-			$scope.modalData = registerDataService.modalData[i];
-		}
+cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory", 
+		function($scope, $modalInstance, $http, registerDataService, authFactory ){
+
+		$scope.formData = registerDataService.data;
 
 		$scope.getCategories = function() {
 			$http({

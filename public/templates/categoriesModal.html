@@ -1,5 +1,5 @@
 	<div class="categories">
-		<h5 class="pointer" ng-controller="modalController" ng-click="cancel(); registerOpen()">Back</h5>
+		<h5 class="pointer"  ng-click="cancel(); registerOpen()">Back</h5>
       <div class="modal-header">
 	        <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	        <h3 class="modal-title uppercase">New Account</h3>
@@ -7,7 +7,7 @@
 	        <p>Please select at least one category</p>
       </div>
 
-      	<div class="modal-body" ng-controller="registerFormController">
+      	<div class="modal-body" >
 		        <div class="registerForm">
 						
 					<div ng-repeat="category in categories" class="category-item">	
