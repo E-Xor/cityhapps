@@ -63,17 +63,6 @@ return array(
 			'prefix'    => '',
 		),
 
-		// 'mysql' => array(
-		// 	'driver'    => 'mysql',
-		// 	'host'      => 'localhost',
-		// 	'database'  => 'vwd',
-		// 	'username'  => 'root',
-		// 	'password'  => 'root',
-		// 	'charset'   => 'utf8',
-		// 	'collation' => 'utf8_unicode_ci',
-		// 	'prefix'    => '',
-		// ),
-
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',

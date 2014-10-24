@@ -86,14 +86,14 @@
 						</div>
 							<div class="col-sm-4 left auth" ng-controller="modalController">
 
-									<div ng-if="!user">
+									<div ng-cloak ng-show="!user">
 										<h4 class="uppercase" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
 										<h4 class="uppercase" ng-click="loginOpen('md')">Sign in</h4>
 									</div>
 				
 									
-									<div ng-if="user">
-										{{user.data.email}}!
+									<div ng-cloak ng-show="user">
+										{{user.config.data.email}}
 										<p class="red logout" ng-click="logoutUser()">sign out</p>		
 									</div>
 
