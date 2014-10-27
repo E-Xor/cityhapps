@@ -30,12 +30,17 @@ App::missing(function($exception) {
 });
 
 
-Route::get('events', 'EventfulController@events');
+Route::get('events', 'EventController@events');
 Route::get('eventfulEvents', 'EventfulController@events');
 Route::get('activeEvents', 'ActiveController@events');
 Route::get('meetupEvents', 'MeetupController@events');
+Route::get('eventbriteEvents', 'EventbriteController@events');
 
-Route::get('storeEvents', 'EventfulController@storeEvents');
+Route::get('storeEvents', 'EventController@storeEvents');
+Route::get('storeEventfulEvents', 'EventfulController@storeEvents');
+Route::get('storeActiveEvents', 'ActiveController@storeEvents');
+Route::get('storeMeetupEvents', 'MeetupController@storeEvents');
+Route::get('storeEventbriteEvents', 'EventbriteController@storeEvents');
 
 
 	Route::get('auth/status', 'SessionsController@index');

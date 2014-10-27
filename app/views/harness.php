@@ -128,14 +128,14 @@
 			<td><a target="_blank" href="{{event.url}}">{{event.id}}</a></td>
 			<td>{{event.name.text}}</td>
 			<td><a target="_blank" href="{{event.venue.resource_uri}}">{{event.venue.name}}</a></td>
-			<td>{{event.venue.location.address_1}} {{event.venue.location.city}}, {{event.venue.location.region}} {{event.venue.location.postal_code}}</td>
+			<td>{{event.venue.address.address_1}} {{event.venue.address.city}}, {{event.venue.address.region}} {{event.venue.location.postal_code}}</td>
 			<td>{{event.description.text}}</td>
 			<td>{{event.start.local}}</td>
 			<td>{{event.end.local}}</td>
 			<td></td>
 			<td>{{event.logo_url}}</td>
-			<td>{{event.venue.location.latitude}}</td>
-			<td>{{event.venue.location.longitude}}</td>
+			<td>{{event.venue.address.latitude}}</td>
+			<td>{{event.venue.address.longitude}}</td>
 		</tr>
 	</table>
 

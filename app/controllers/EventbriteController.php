@@ -5,8 +5,8 @@ class EventbriteController extends BaseController {
 
 	public function events() {
 
-		// Enter your application key here. (See http://developer.active.com/io-docs)
-		// $app_key = 'f4kzrwzqywvtcyntepb9zt5f';
+		// (See http://developer.eventbrite.com/)
+		// $token = 'UKNDTMAVPK4A7ACVVLWF';
 
 		$event = file_get_contents('https://www.eventbriteapi.com/v3/events/search/?venue.city=Atlanta&venue.region=GA&venue.country=US&token=UKNDTMAVPK4A7ACVVLWF');
 
@@ -37,82 +37,61 @@ class EventbriteController extends BaseController {
 			}
 		}
 
-		// Enter your application key here. (See http://api.eventful.com/keys/)
-		// $app_key = 'pLB3SGLn9xSnfcg5';
+		// (See http://developer.eventbrite.com/)
+		// $token = 'UKNDTMAVPK4A7ACVVLWF';
 
-		$events = file_get_contents('http://api.eventful.com/json/events/search?location=Atlanta&image_sizes=block250&app_key="pLB3SGLn9xSnfcg5"&date=Future');
+		$events = file_get_contents('https://www.eventbriteapi.com/v3/events/search/?venue.city=Atlanta&venue.region=GA&venue.country=US&token=UKNDTMAVPK4A7ACVVLWF');
 
 		$jsonObj = json_decode( $events );  
 		$jsonArray = objectToArray($jsonObj);
 
-		$total = count($jsonArray['events']['event']);
+		$total = count($jsonArray['events']);
 		
 		for ($i = 1; $i < $total; $i++ ) {
 			//one of these fields is expecting a string and geting an array
 
-			print_r($jsonArray['events']['event'][$i]);
+			$eventRecord = new Eventbrite;
+
+			// $table->string('url'); // Event URL
+			// $table->string('source_id'); // Event ID (from source)
+			// $table->string('event_name'); // Event Name
+			// $table->string('venue_url'); // Event Venue URL
+			// $table->string('venue_name'); // Event Venue Name
+			// $table->string('address'); // Event Location Address
+			// $table->string('city'); // Event Location City
+			// $table->string('state'); // Event Location State
+			// $table->string('zip'); // Event Location Zip
+			// $table->string('description'); // Event Description
+			// $table->string('start_time'); // Event Start Date/Time
+			// $table->string('end_time'); // Event End Date/Time
+			// $table->string('all_day_flag'); // Event All Day Flag
+			// $table->string('event_image_url'); // Event Image
+			// $table->string('latitude'); // Event Latitude
+			// $table->string('longitude'); // Event Longitude
+
+			$eventRecord->url					=	$jsonArray['events'][$i]['url'];
+			$eventRecord->eventbriteID  		=	$jsonArray['events'][$i]['id'];
+			$eventRecord->name_text 			=	$jsonArray['events'][$i]['name']['text'];
+			$eventRecord->venue_resource_uri  	=	'';
+			$eventRecord->venue_name			=	$jsonArray['events'][$i]['venue']['name'];
+			$eventRecord->address_1				=	$jsonArray['events'][$i]['venue']['address']['address_1'];
+			$eventRecord->city					=	$jsonArray['events'][$i]['venue']['address']['city'];
+			$eventRecord->region				=	$jsonArray['events'][$i]['venue']['address']['region'];
+			$eventRecord->postal_code			=	$jsonArray['events'][$i]['venue']['address']['postal_code'];
+			$eventRecord->description_text		=	$jsonArray['events'][$i]['description']['text'];
+			$eventRecord->start_local			=	$jsonArray['events'][$i]['start']['local'];
+			$eventRecord->end_local				=	$jsonArray['events'][$i]['end']['local'];
+			$eventRecord->AllDayFlag			=	'';
+			$eventRecord->logo_url				=	$jsonArray['events'][$i]['logo_url'];
+			$eventRecord->latitude				=	$jsonArray['events'][$i]['venue']['address']['latitude'];
+			$eventRecord->longitude				=	$jsonArray['events'][$i]['venue']['address']['longitude'];
 			
-			$eventRecord = new EventRecord;
-
-			$eventRecord->watching_count	=	$jsonArray['events']['event'][$i]['watching_count'];
-			$eventRecord->olson_path  		=	$jsonArray['events']['event'][$i]['olson_path'];
-			$eventRecord->calendar_count 	=	$jsonArray['events']['event'][$i]['calendar_count'];
-			$eventRecord->comment_count  	=	$jsonArray['events']['event'][$i]['comment_count'];
-			$eventRecord->region_abbr		=	$jsonArray['events']['event'][$i]['region_abbr'];
-			$eventRecord->postal_code		=	$jsonArray['events']['event'][$i]['postal_code'];
-			$eventRecord->going_count		=	$jsonArray['events']['event'][$i]['going_count'];
-			$eventRecord->all_day			=	$jsonArray['events']['event'][$i]['all_day'];
-			$eventRecord->latitude			=	$jsonArray['events']['event'][$i]['latitude'];
-			$eventRecord->groups			=	$jsonArray['events']['event'][$i]['groups'];
-			$eventRecord->url				=	$jsonArray['events']['event'][$i]['url'];
-			$eventRecord->eventful_id		=	$jsonArray['events']['event'][$i]['id'];
-			$eventRecord->privacy			=	$jsonArray['events']['event'][$i]['privacy'];
-			$eventRecord->city_name			=	$jsonArray['events']['event'][$i]['city_name'];
-			$eventRecord->link_count		=	$jsonArray['events']['event'][$i]['link_count'];
-			$eventRecord->longitude			=	$jsonArray['events']['event'][$i]['longitude'];
-			$eventRecord->country_name		=	$jsonArray['events']['event'][$i]['country_name'];
-			$eventRecord->country_abbr		=	$jsonArray['events']['event'][$i]['country_abbr'];
-			$eventRecord->region_name		=	$jsonArray['events']['event'][$i]['region_name'];
-			$eventRecord->start_time		=	$jsonArray['events']['event'][$i]['start_time'];
-			$eventRecord->tz_id				=	$jsonArray['events']['event'][$i]['tz_id'];
-			$eventRecord->description		=	$jsonArray['events']['event'][$i]['description'];
-			$eventRecord->modified			=	$jsonArray['events']['event'][$i]['modified'];
-			$eventRecord->venue_display		=	$jsonArray['events']['event'][$i]['venue_display'];
-			$eventRecord->tz_country		=	$jsonArray['events']['event'][$i]['tz_country'];
-			
-			//Needle in haystack- This returned value is sometimes an array needs to be a string.
-			// $eventRecord->performers		=	$jsonArray['events']['event'][$i]['performers'];
-
-			$eventRecord->title				=	$jsonArray['events']['event'][$i]['title'];
-			$eventRecord->venue_address		=	$jsonArray['events']['event'][$i]['venue_address'];
-			$eventRecord->geocode_type		=	$jsonArray['events']['event'][$i]['geocode_type'];
-			$eventRecord->tz_olson_path		=	$jsonArray['events']['event'][$i]['tz_olson_path'];
-			$eventRecord->recur_string		=	$jsonArray['events']['event'][$i]['recur_string'];
-			$eventRecord->calendars			=	$jsonArray['events']['event'][$i]['calendars'];
-			$eventRecord->owner				=	$jsonArray['events']['event'][$i]['owner'];
-			$eventRecord->going				=	$jsonArray['events']['event'][$i]['going'];
-			$eventRecord->country_abbr2		=	$jsonArray['events']['event'][$i]['country_abbr2'];
-			// $eventRecord->image			=	$jsonArray['events']['event'][$i]['image'];
-			// $event->// caption		=		$jsonArray['events']['event'][$i]['caption'],
-			$eventRecord->created			=	$jsonArray['events']['event'][$i]['created'];
-			$eventRecord->venue_id			=	$jsonArray['events']['event'][$i]['venue_id'];
-			$eventRecord->tz_city			=	$jsonArray['events']['event'][$i]['tz_city'];
-			$eventRecord->stop_time			=	$jsonArray['events']['event'][$i]['stop_time'];
-			$eventRecord->venue_name		=	$jsonArray['events']['event'][$i]['venue_name'];
-			$eventRecord->venue_url			=	$jsonArray['events']['event'][$i]['venue_url'];
-
-
 			$eventRecord->save();
 
 		}
 
-		// print_r($eventCategories);
-
 	}
 
-	}
-	
-
-
+}
 
 ?>
