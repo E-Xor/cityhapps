@@ -226,9 +226,18 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 									controller: 'modalInstanceController'
 								});	
 
-
 							} else {
-								authFactory.loginUser($scope.fbUser);
+								console.log(response.id);
+								
+								$http({
+									method: 'PATCH',
+									url: '/user/' + response.id,
+									data: {"password" : $scope.fbUser.password},
+									headers: {"Content-Type": "application/json"}
+								}).success(function(data){
+									authFactory.loginUser($scope.fbUser);	
+								});
+									
 							}
 
 						});			
@@ -315,7 +324,8 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 					controller: 'modalInstanceController',
 				});
 
-				
+				$scope.id = data.id;					
+
 			}
 
 			console.log(data);
@@ -369,7 +379,7 @@ cityHapps.factory('authFactory', function($http, authService){
 				
 				// alert(authService.loginConfirmed());
 				localStorage.setItem('user', JSON.stringify(res));
-				document.location.reload(true);
+				// document.location.reload(true);
 
 			});
 		};

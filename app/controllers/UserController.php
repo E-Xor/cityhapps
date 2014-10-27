@@ -109,13 +109,18 @@ class UserController extends \BaseController {
 
 		$email = Input::only('email');
 		$rules = array('email' => 'unique:users,email');
+		
+		$userID = DB::table('users')->where('email', $email)->pluck('id');
 
 		$validator = Validator::make($email, $rules);
 
 		if ($validator->fails()) {
+
+			
 			echo json_encode(array('isValid' => false,
-									'value' => 'oops'));
+									'id' => $userID ));
 			return;
+
 		} else {
 			echo json_encode(array('isValid' => true, 
 									'value' => 'nice'));
@@ -159,7 +164,15 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+
+		$user = User::find($id);
+
+		$user->password = Hash::make(Input::get('password'));
+
+		$user->save();
+
+		return $user;
+
 	}
 
 
