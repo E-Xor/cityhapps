@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddEventsTable extends Migration {
+class AddEventfulTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class AddEventsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('events', function(Blueprint $table)
+		Schema::create('eventful', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->boolean('watching_count');
@@ -69,7 +69,7 @@ class AddEventsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('events');
+		Schema::drop('eventful');
 	}
 
 }
