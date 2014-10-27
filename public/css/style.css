@@ -1,4 +1,4 @@
-.proxima {
+.proxima, html, body {
   font-family: "proxima-nova",sans-serif;
   font-style: normal;
   font-weight: 400; }
@@ -12,9 +12,6 @@
   font-family: "proxima-nova",sans-serif;
   font-style: normal;
   font-weight: 700; }
-
-.open-sans, html, body {
-  font-family: 'Open Sans', sans-serif; }
 
 html {
   background: #2c2625; }
@@ -130,6 +127,37 @@ html {
   max-width: 500px;
   overflow-wrap: break-word; }
 
+.modal-body p {
+  margin: 0; }
+
+.modal-description {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #B1ADB1; }
+
+.modal-categories {
+  margin: 20px 0; }
+
+.category-box {
+  padding: 5px;
+  border: 1px solid #B1ADB1;
+  display: inline;
+  margin-right: 10px; }
+
+.modal-image {
+  height: 300px;
+  width: 100%;
+  background: url("http://placehold.it/500x300") no-repeat;
+  position: relative; }
+
+.modal-title-event {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: #fff; }
+
+.modal-header-event {
+  padding: 0; }
+
 .event-category {
   padding: 10px 5px;
   border: 2px solid #395467;
@@ -220,6 +248,17 @@ html {
   bottom: 30px;
   left: 30%; }
 
+.icons-modal {
+  height: 41px;
+  margin: 0 auto;
+  bottom: 30px;
+  float: left; }
+
+.event-price {
+  margin: 10px; }
+  .event-price h3 {
+    margin: 0; }
+
 .like-icon {
   height: 41px;
   width: 41px;
@@ -269,6 +308,16 @@ html {
   margin: 5px 0;
   display: block; }
 
+.buy {
+  padding: 10px 15px;
+  background: #FF5C50;
+  border: none;
+  display: block;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-shadow: 2px 1px 1px #E24B44; }
+
 .view-select {
   height: 60px;
   color: #fff;
@@ -284,7 +333,7 @@ html {
 .event-counter {
   padding: 60px 0; }
 
-#map_canvas {
+.angular-google-map-container {
   height: 600px;
   width: 100%; }
 
@@ -292,8 +341,15 @@ html {
   position: absolute;
   z-index: 1;
   background: #eee;
-  color: #454546;
-  padding: 20px; }
+  color: #454546; }
+
+.event-number {
+  height: 20px;
+  width: 20px; }
+
+.map-event {
+  padding: 10px 20px;
+  border-bottom: 1px solid #404042; }
 
 .register input.ng-invalid {
   border: 1px solid #FF5C50; }

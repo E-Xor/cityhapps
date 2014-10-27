@@ -27,19 +27,19 @@ $light-grey: #D1D2D4;
 	font-weight: 700;
 }
 
-.open-sans {
-	font-family: 'Open Sans', sans-serif;
-}
+// .open-sans {
+// 	font-family: 'Open Sans', sans-serif;
+// }
 
 //End Vars
 
 html {
-	@extend .open-sans;
+	@extend .proxima;
 	background: #2c2625;
 }
 
 body {
-	@extend .open-sans;
+	@extend .proxima;
 }
 
 .main-container {
@@ -176,6 +176,47 @@ body {
 	overflow-wrap:break-word;
 }
 
+.modal-body {
+	p {
+		margin: 0;
+	}
+}
+
+.modal-description {
+	padding-bottom: 20px;
+	border-bottom: 1px solid #B1ADB1;
+}
+
+.modal-categories {
+	margin: 20px 0;
+
+}
+
+.category-box {
+	padding: 5px;
+	border: 1px solid #B1ADB1;
+	display: inline;
+	margin-right: 10px;
+}
+
+.modal-image {
+	height: 300px;
+	width: 100%;
+	background: url("http://placehold.it/500x300") no-repeat;
+	position: relative;
+}
+
+.modal-title-event {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	color: #fff;
+}
+
+.modal-header-event {
+	padding: 0;
+}
+
 .event-category {
 	padding: 10px 5px;
 	border: 2px solid #395467;
@@ -293,6 +334,20 @@ body {
 	left: 30%;
 }
 
+.icons-modal {
+	height: 41px;
+	margin: 0 auto;
+	bottom: 30px;
+	float: left;
+}
+
+.event-price {
+	margin: 10px;
+	h3 {
+		margin: 0;
+	}
+}
+
 .like-icon {
 	height: 41px;
 	width: 41px;
@@ -351,6 +406,17 @@ body {
 	display: block;
 }
 
+.buy {
+	padding: 10px 15px;
+	background: #FF5C50;
+	border: none;
+	display: block;
+	color: #fff;
+	text-transform: uppercase;
+	font-weight: bold;
+	text-shadow: 2px 1px 1px #E24B44;
+}
+
 .view-select {
 	height: 60px;
 	color: #fff;
@@ -371,7 +437,7 @@ body {
 
 // Map view 
 
-#map_canvas {
+.angular-google-map-container {
 	height: 600px;
 	width: 100%;
 }
@@ -381,8 +447,17 @@ body {
 	z-index: 1;
 	background: #eee;
 	color: #454546;
-	padding: 20px;
+}
 
+.event-number {
+	height: 20px;
+	width: 20px;
+	//background: 
+}
+
+.map-event {
+	padding: 10px 20px;
+	border-bottom: 1px solid $grey;
 }
 
 

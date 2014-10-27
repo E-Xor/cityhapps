@@ -1,10 +1,15 @@
+<div ng-controller="mapController">
 <div class="row view-select">
 	<div class="col-sm-12 view-row">
-	<div class="col-sm-4" ng-controller="tabSetController">	
+	<div class="col-sm-4">	
 
 		<tabset>	
 			<tab ng-repeat="tab in tabs" heading='{{tab.title}}'>
-				{{tab.content}}
+				<div class="map-event" ng-repeat="event in tabEvents">
+					<div class="event-number left">{{$index + 1}}</div>	
+					<h4>{{event.title | limitTo:40}}</h4>
+					<p>{{event.start_time}}</p>
+				</div>
 			</tab>
 		</tabset>
 		
@@ -27,7 +32,12 @@
 </div>	
 
 <div class="row">
-	<div class="map">
-		<div id="map_canvas"></div>
+	<div id="map_canvas">
+		<ui-gmap-google-map center="map.center" zoom="map.zoom">
+			<ui-gmap-markers models="markers" coords="'self'" icon="'icon'">
+        	</ui-gmap-markers>
+
+		</ui-gmap-google-map>
 	</div>
+</div>
 </div>

@@ -1,19 +1,52 @@
 <div class="eventModal">
     <div ng-controller="eventsController">
-		<div class="modal-header">
+		<div class="modal-header-event">
 		    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 		    </button>
-		    	<h3 class="modal-title uppercase">{{data.title}}</h3>
-		    	<p>Stuff</p>
+
+		    <div class="modal-image">
+		    	<h3 class="modal-title-event">{{data.title}}</h3>
+		    </div>
 		</div>
 
 	      	<div class="modal-body">
 				
-				<h3 class="uppercase">Modal Details</h3>
+				<p>{{data.start_time}}</p>
+		    	<p>{{data.venue_name}}</p>
+		    	<p>{{data.venue_address}}</p>
 
+		    	<div class="modal-categories">
+					<div class="category-box">
+						<h5 class="uppercase inline">Category 1 </h5>
+					</div>
+					<div class="category-box">
+						<h5 class="uppercase inline">Category 2 </h5>
+					</div>
+					<div class="category-box">
+						<h5 class="uppercase inline">Category 3 </h5>
+					</div>
+				</div>
+				<p class="modal-description">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+				</p>
 
-				<button type="button" class="create-account" ng-click="" >Buy</button>
+				<div class="modal-footer">
 
+					<div class="icons-modal">
+						<div class="like-icon">
+						</div>
+						<div class="dislike-icon">
+						</div>
+					</div>
+					<div class="purcase-info right inline">
+						<div class="event-price left">
+							<h3>$12.99</h3>
+						</div>
+
+						<button type="button" class="buy right" ng-click="" >Buy</button>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>

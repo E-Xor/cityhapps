@@ -1,5 +1,5 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
-	'facebook', 'http-auth-interceptor', 'remoteValidation']);
+	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns()]);
 
 cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, getEvents) {
 
@@ -14,9 +14,11 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		return strTime;		
 	};
 
+		// getEvents.events();
+
 
 		var eventSuccess = function(data) {
-		
+
 		$scope.eventData = data.events['event'];
 		console.log($scope.eventData);
 
@@ -40,19 +42,6 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 			$scope.slideGroup.push(slides);
 		}
 
-		$scope.now = moment().format("dddd, MMMM Do");
-
-		var next = 0;
-		$scope.nextDay = function() {
-			next += 1;
-			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
-		};
-		
-		$scope.prevDay = function() {
-			next -= 1;
-			$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
-		};
-
 		$scope.eventModal = function(data, num) {
 
 			$modal.open({
@@ -68,14 +57,26 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 				}
 			});
 		};
-
 		
 		$scope.interval = 500000000000;
+		};
 
-
-		}
 
 	getEvents.events().success(eventSuccess);
+
+
+	$scope.now = moment().format("dddd, MMMM Do");
+
+		var next = 0;
+		$scope.nextDay = function() {
+			next += 1;
+			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
+		};
+		
+		$scope.prevDay = function() {
+			next -= 1;
+			$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
+		};
 
 		
 
@@ -106,6 +107,14 @@ cityHapps.config([
      
     }
  ]);
+
+cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
+    GoogleMapApi.configure({
+        //    key: 'your api key',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
+}]);
 
 cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$rootScope', 'authFactory', '$http',
 	function($scope, $rootScope, authService, userData, authFactory, $http){
@@ -377,9 +386,8 @@ cityHapps.factory('authFactory', function($http, authService){
 
 				authService.loginConfirmed();
 				
-				// alert(authService.loginConfirmed());
 				localStorage.setItem('user', JSON.stringify(res));
-				// document.location.reload(true);
+				document.location.reload(true);
 
 			});
 		};
@@ -616,11 +624,11 @@ cityHapps.config(function($routeProvider, $locationProvider){
 
 	$routeProvider
 		.when("/", {
-			controller: 'eventsController',
+			// controller: 'eventsController',
 			templateUrl: 'templates/homeView.html'
 		})
 		.when("/map", {
-			controller: 'mapViewController',
+			// controller: 'mapViewController',
 			templateUrl: 'templates/mapView.html'
 		})
 		.when("/calendar", {
@@ -634,46 +642,59 @@ cityHapps.config(function($routeProvider, $locationProvider){
 });
 
 
-cityHapps.controller("tabSetController", function($scope){
+cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', function ($scope, GoogleMapApi, getEvents) {
+	
+	//handle tabs inside mapController
 
-$scope.tabs = [
-    { title:'Events', content:'Dynamic content 1' },
-    { title:'Activities', content:'Dynamic content 2' }
-  ];
+	$scope.tabs = [
+		{ title:'Events', content:'Dynamic content 1' },
+		{ title:'Activities', content:'Dynamic content 2' }
+	];
 
- //  var tabEvents = $http.get('/events');
 
-	// tabEvents.success(function(data) {
 		
-	// });
+		getEvents.events().success(function(data){
+
+			$scope.markers = [];
+			// $scope.markers.id = [];
+
+			$scope.tabEvents = data.events.event;
+			console.log($scope.tabEvents);
+
+			for (var i = 0; i < $scope.tabEvents.length; i++ ) {
+				$scope.markers.push({
+					'latitude' : $scope.tabEvents[i].latitude,
+					'longitude' : $scope.tabEvents[i].longitude,
+					'id' : i
+				});
+			}
+
+		});
 
 
-});
 
+	$scope.map = {
+		center: {
+			latitude: 33.7550,
+			longitude: -84.3900
+		},
+		zoom: 8
+	};
 
-cityHapps.controller('mapViewController', function($scope){
+	
+	// $scope.$watch('markers', function(){
+	// 	return $scope.markers;
+	// }, true);
 
-});
+	
+
+	
+
+}]);
 
 cityHapps.controller('calViewController', function($scope){
 
 });
-
-
-//Map Placeholder
-
-
-
-  function initialize() {
-    var mapCanvas = document.getElementById('map_canvas');
-    var mapOptions = {
-      center: new google.maps.LatLng( 33.7550, -84.3900),
-      zoom: 8,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(mapCanvas, mapOptions)
-  }
-  google.maps.event.addDomListener(window, 'load', initialize);
 
 
 
