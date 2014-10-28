@@ -689,6 +689,10 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 		var drawEvents = function(data){
 
+					$scope.cool = function() {
+			alert('wow!');
+		}
+
 			$scope.markers = [];
 			// $scope.markers.id = [];
 
@@ -701,6 +705,10 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 					'longitude' : $scope.tabEvents[i].longitude,
 					'id' : i
 				});
+			}
+
+			$scope.returnMarkers = function() {
+				return $scope.markers;
 			}
 
 			$scope.mapEventModal = function(data) {
@@ -718,6 +726,18 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		};
 
 		getEvents.events().success(drawEvents);
+
+
+
+		$scope.iconPath = function() {
+			return "/img/marker.png";
+		}
+
+		$scope.idKey = function() {
+			for (var i = 0; i < $scope.tabEvents.length; i++) {
+				return i;
+			}
+		}
 
 
 	$scope.map = {
