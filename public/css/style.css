@@ -39,6 +39,9 @@ html {
   text-align: center;
   font-weight: 300; }
 
+.search-large::-webkit-input-placeholder {
+  text-align: left; }
+
 :-moz-placeholder {
   /* Firefox 18- */
   color: #fff;
@@ -116,7 +119,8 @@ html {
   position: absolute;
   width: 100%;
   left: 0;
-  padding: 0 50px; }
+  padding: 0 15%;
+  background: url("/img/searchIcon.png") 180px 50px/23px 26px no-repeat; }
   .search-large:focus {
     outline: none; }
 
