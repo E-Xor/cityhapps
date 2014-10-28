@@ -176,6 +176,13 @@ body {
 	overflow-wrap:break-word;
 }
 
+.modal-backdrop {
+	background-color: #1E405D;
+	&.in {
+		opacity: .7;
+	}
+}
+
 .modal-body {
 	p {
 		margin: 0;
@@ -476,6 +483,8 @@ body {
 		background: rgba(255, 255, 255, .2);
 	}
 }
+
+
 
 .nav-tabs>li>a {
 	background: transparent;

@@ -93,11 +93,6 @@ cityHapps.factory('getEvents', function($http){
 	}
 });
 
-
-
-
-
-
 cityHapps.config([
     'FacebookProvider',
     function(FacebookProvider) {
@@ -107,6 +102,7 @@ cityHapps.config([
      
     }
  ]);
+
 
 cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
     GoogleMapApi.configure({
@@ -487,7 +483,30 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 cityHapps.controller("eventModalInstanceController", ["$scope", "$modalInstance", 'data', 'num',
 		function($scope, $modalInstance, data, num){
 
-		$scope.data = data[num];
+		if (num === null) {
+			$scope.data = data;
+		} else {
+			$scope.data = data[num];	
+		}	
+		
+		console.log(data);
+
+		$scope.ok = function () {
+			$modalInstance.close($scope.selected.item);
+		};
+
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+	}
+]);
+
+cityHapps.controller("mapEventModalInstanceController", ["$scope", "$modalInstance", 'data',
+		function($scope, $modalInstance, data){
+			
+		$scope.data = data;	
+		
+		console.log(data);
 
 		$scope.ok = function () {
 			$modalInstance.close($scope.selected.item);
@@ -571,7 +590,7 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 ]);
 
 
-// This factory will do most of the data passing, getting, and setting
+// To be removed
 cityHapps.factory('userData', function($rootScope, authService){
 
 	var user = {};
@@ -642,7 +661,8 @@ cityHapps.config(function($routeProvider, $locationProvider){
 });
 
 
-cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', function ($scope, GoogleMapApi, getEvents) {
+cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal',
+	function ($scope, GoogleMapApi, getEvents, $modal) {
 	
 	//handle tabs inside mapController
 
@@ -665,8 +685,9 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		next -= 1;
 		$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
 	};
-	//end slooy code re-use
-		getEvents.events().success(function(data){
+	//end sloppy code re-use
+
+		var drawEvents = function(data){
 
 			$scope.markers = [];
 			// $scope.markers.id = [];
@@ -682,7 +703,22 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				});
 			}
 
-		});
+			$scope.mapEventModal = function(data) {
+
+				$modal.open({
+					templateUrl: "templates/eventModal.html",
+					controller: 'mapEventModalInstanceController', 
+					resolve: {
+						data: function() {
+							return data;
+						}		
+					}
+				});
+			};
+		};
+
+		getEvents.events().success(drawEvents);
+
 
 	$scope.map = {
 		center: {

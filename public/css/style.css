@@ -127,6 +127,11 @@ html {
   max-width: 500px;
   overflow-wrap: break-word; }
 
+.modal-backdrop {
+  background-color: #1E405D; }
+  .modal-backdrop.in {
+    opacity: .7; }
+
 .modal-body p {
   margin: 0; }
 
