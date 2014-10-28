@@ -50,7 +50,14 @@ class EventbriteController extends BaseController {
 		for ($i = 1; $i < $total; $i++ ) {
 			//one of these fields is expecting a string and geting an array
 
-			$eventRecord = new Eventbrite;
+			// $user = DB::table('users')->where('name', 'John')->first();
+
+			$checkExisting = Eventbrite::where('eventbriteID', '=', $jsonArray['events'][$i]['id']);
+			$eventRecords = $checkExisting->get();
+			
+			if ($eventRecords->count() < 1) {
+				$eventRecords->push(new Eventbrite);
+			}
 
 			// $table->string('url'); // Event URL
 			// $table->string('source_id'); // Event ID (from source)
@@ -69,24 +76,31 @@ class EventbriteController extends BaseController {
 			// $table->string('latitude'); // Event Latitude
 			// $table->string('longitude'); // Event Longitude
 
-			$eventRecord->url					=	$jsonArray['events'][$i]['url'];
-			$eventRecord->eventbriteID  		=	$jsonArray['events'][$i]['id'];
-			$eventRecord->name_text 			=	$jsonArray['events'][$i]['name']['text'];
-			$eventRecord->venue_resource_uri  	=	'';
-			$eventRecord->venue_name			=	$jsonArray['events'][$i]['venue']['name'];
-			$eventRecord->address_1				=	$jsonArray['events'][$i]['venue']['address']['address_1'];
-			$eventRecord->city					=	$jsonArray['events'][$i]['venue']['address']['city'];
-			$eventRecord->region				=	$jsonArray['events'][$i]['venue']['address']['region'];
-			$eventRecord->postal_code			=	$jsonArray['events'][$i]['venue']['address']['postal_code'];
-			$eventRecord->description_text		=	$jsonArray['events'][$i]['description']['text'];
-			$eventRecord->start_local			=	$jsonArray['events'][$i]['start']['local'];
-			$eventRecord->end_local				=	$jsonArray['events'][$i]['end']['local'];
-			$eventRecord->AllDayFlag			=	'';
-			$eventRecord->logo_url				=	$jsonArray['events'][$i]['logo_url'];
-			$eventRecord->latitude				=	$jsonArray['events'][$i]['venue']['address']['latitude'];
-			$eventRecord->longitude				=	$jsonArray['events'][$i]['venue']['address']['longitude'];
-			
-			$eventRecord->save();
+			foreach ($eventRecords as $eventRecord) {
+
+				$eventRecord->url					=	$jsonArray['events'][$i]['url'];
+				$eventRecord->eventbriteID  		=	$jsonArray['events'][$i]['id'];
+				$eventRecord->name_text 			=	$jsonArray['events'][$i]['name']['text'];
+				$eventRecord->venue_resource_uri  	=	'';
+				$eventRecord->venue_name			=	$jsonArray['events'][$i]['venue']['name'];
+				$eventRecord->address_1				=	$jsonArray['events'][$i]['venue']['address']['address_1'];
+				$eventRecord->city					=	$jsonArray['events'][$i]['venue']['address']['city'];
+				$eventRecord->region				=	$jsonArray['events'][$i]['venue']['address']['region'];
+				$eventRecord->postal_code			=	$jsonArray['events'][$i]['venue']['address']['postal_code'];
+				if ($jsonArray['events'][$i]['description']['text'] != '') {
+					$eventRecord->description_text		=	$jsonArray['events'][$i]['description']['text'];
+				} else {
+					$eventRecord->description_text = 'No Description';
+				}
+				$eventRecord->start_local			=	$jsonArray['events'][$i]['start']['local'];
+				$eventRecord->end_local				=	$jsonArray['events'][$i]['end']['local'];
+				$eventRecord->AllDayFlag			=	'';
+				$eventRecord->logo_url				=	$jsonArray['events'][$i]['logo_url'];
+				$eventRecord->latitude				=	$jsonArray['events'][$i]['venue']['address']['latitude'];
+				$eventRecord->longitude				=	$jsonArray['events'][$i]['venue']['address']['longitude'];
+				
+				$eventRecord->save();
+			}
 
 		}
 
