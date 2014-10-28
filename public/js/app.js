@@ -132,7 +132,7 @@ cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$ro
 		};
 
 		$scope.$on('event:auth-loginConfirmed', function(){
-			alert("youre logged in");
+			// alert("youre logged in");
 
 			//YESSSSS
 			// This is where we can fire events based on user, 
