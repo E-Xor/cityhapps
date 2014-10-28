@@ -1,14 +1,40 @@
+
 <div ng-controller="mapController">
+<div class="grey-wide">
+		<div class="day-slider-container map">
+			<div class="row day-slider">
+				<div class="col-sm-12 center">
+					<div class="col-sm-1 left prev" ng-click="prevDay()">
+						
+					</div>
+					<div class="col-sm-10">
+						<h3 class="uppercase main-date">{{now}}</h3>
+					</div>
+					<div class="col-sm-1 right next" ng-click="nextDay()">
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div class="map-controls">
 <div class="row view-select">
-	<div class="col-sm-12 view-row">
+
+	<div class="col-sm-12 view-row map-margin">
 	<div class="col-sm-4">	
 
 		<tabset>	
 			<tab ng-repeat="tab in tabs" heading='{{tab.title}}'>
 				<div class="map-event" ng-repeat="event in tabEvents">
-					<div class="event-number left">{{$index + 1}}</div>	
-					<h4>{{event.title | limitTo:40}}</h4>
-					<p>{{event.start_time}}</p>
+					<div class="inline">
+						<div class="event-number left">{{$index + 1}}</div>	
+					</div>
+					<div class="">
+						<h4>{{event.title | limitTo:40}}</h4>
+						<p class="blue">{{event.start_time}}</p>
+					</div>
 				</div>
 			</tab>
 		</tabset>
@@ -39,5 +65,6 @@
 
 		</ui-gmap-google-map>
 	</div>
+</div>
 </div>
 </div>

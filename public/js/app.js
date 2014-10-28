@@ -652,7 +652,20 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 	];
 
 
-		
+	//sloppy code re-use, but im doing it for demo
+	$scope.now = moment().format("dddd, MMMM Do");
+
+	var next = 0;
+	$scope.nextDay = function() {
+		next += 1;
+		$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
+	};
+	
+	$scope.prevDay = function() {
+		next -= 1;
+		$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
+	};
+	//end slooy code re-use
 		getEvents.events().success(function(data){
 
 			$scope.markers = [];
@@ -671,8 +684,6 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 		});
 
-
-
 	$scope.map = {
 		center: {
 			latitude: 33.7550,
@@ -680,15 +691,6 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		},
 		zoom: 8
 	};
-
-	
-	// $scope.$watch('markers', function(){
-	// 	return $scope.markers;
-	// }, true);
-
-	
-
-	
 
 }]);
 

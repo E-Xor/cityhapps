@@ -58,7 +58,7 @@ body {
 }
 
 .grey-wide {
-	background: $dark-grey;
+	background: rgba(30, 30, 30, 0.3);
 }
 
 //Main Search Placehodler Text
@@ -271,7 +271,10 @@ body {
 	height: auto;
 	padding: 10px 0;
 	color: #fff;
+	// background: rgba(30, 30, 30, 0.3);
 }
+
+
 
 .main-date {
 	margin-top: 10px;
@@ -291,12 +294,20 @@ body {
 
 .day-slider-container {
 	margin: 20px 0;
-	background: #2C2625;
+	background: rgba(30, 30, 30, 0.3);
 	max-width: 100%;
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid #fff;
 }
 
+
+.map {
+	margin-bottom: 0;
+}
+
+.map-controls {
+	background: rgba(30, 30, 30, 0.3);
+}
 
 //view icons 
 .view-row {
@@ -425,6 +436,10 @@ body {
 	max-width: 1170px;
 }
 
+.map-margin {
+	margin: 40px 0 0 0;
+}
+
 .header-container {
 	max-width:1170px;
 	margin: 0 auto;
@@ -438,26 +453,63 @@ body {
 // Map view 
 
 .angular-google-map-container {
-	height: 600px;
+	height: 820px;
 	width: 100%;
 }
 
 .tab-content {
 	position: absolute;
 	z-index: 1;
-	background: #eee;
+	background: #F6EFEE;
 	color: #454546;
 }
 
-.event-number {
-	height: 20px;
-	width: 20px;
-	//background: 
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+	background: transparent;
+	font-size: 1.4em;
+	text-transform: uppercase;
+	color: #FF5C50;
+	border: 1px solid #FF5C50;
+	padding: 20px 15px;
+	cursor: pointer;
+	&:hover {
+		background: rgba(255, 255, 255, .2);
+	}
 }
+
+.nav-tabs>li>a {
+	background: transparent;
+	font-size: 1.4em;
+	text-transform: uppercase;
+	color: #fff;
+	border: 1px solid #fff;
+	padding: 20px 15px;
+	cursor: pointer;
+	&:hover {
+		background: rgba(255, 255, 255, .2);
+	}
+}
+
+.event-number {
+	height: 37px;
+	width: 27px;
+	padding: 5px 9px;
+	color: #fff;
+	float: left;
+	height: 50px;
+	margin: 10px;
+	background: url('/img/marker.png') no-repeat 0 0 / 27px 37px;
+}
+
+
+
 
 .map-event {
 	padding: 10px 20px;
 	border-bottom: 1px solid $grey;
+	h4 {
+		margin: 2px 0;
+	}
 }
 
 
@@ -494,6 +546,10 @@ button.create-account[disabled='disabled'] {
 .center {
 	text-align: center;
 	margin: 0 auto;
+}
+
+.blue {
+	color: #47ACF4
 }
 
 .red {

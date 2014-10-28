@@ -29,7 +29,7 @@ html {
   min-height: 1000px; }
 
 .grey-wide {
-  background: #2c2625; }
+  background: rgba(30, 30, 30, 0.3); }
 
 ::-webkit-input-placeholder {
   color: #fff;
@@ -217,10 +217,16 @@ html {
 
 .day-slider-container {
   margin: 20px 0;
-  background: #2C2625;
+  background: rgba(30, 30, 30, 0.3);
   max-width: 100%;
   border-top: 1px solid #fff;
   border-bottom: 1px solid #fff; }
+
+.map {
+  margin-bottom: 0; }
+
+.map-controls {
+  background: rgba(30, 30, 30, 0.3); }
 
 .view-row {
   margin: 20px 0; }
@@ -325,6 +331,9 @@ html {
   padding: 0 5%;
   max-width: 1170px; }
 
+.map-margin {
+  margin: 40px 0 0 0; }
+
 .header-container {
   max-width: 1170px;
   margin: 0 auto;
@@ -334,22 +343,52 @@ html {
   padding: 60px 0; }
 
 .angular-google-map-container {
-  height: 600px;
+  height: 820px;
   width: 100%; }
 
 .tab-content {
   position: absolute;
   z-index: 1;
-  background: #eee;
+  background: #F6EFEE;
   color: #454546; }
 
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  background: transparent;
+  font-size: 1.4em;
+  text-transform: uppercase;
+  color: #FF5C50;
+  border: 1px solid #FF5C50;
+  padding: 20px 15px;
+  cursor: pointer; }
+  .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:hover:hover, .nav-tabs > li.active > a:focus:hover {
+    background: rgba(255, 255, 255, 0.2); }
+
+.nav-tabs > li > a {
+  background: transparent;
+  font-size: 1.4em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 20px 15px;
+  cursor: pointer; }
+  .nav-tabs > li > a:hover {
+    background: rgba(255, 255, 255, 0.2); }
+
 .event-number {
-  height: 20px;
-  width: 20px; }
+  height: 37px;
+  width: 27px;
+  padding: 5px 9px;
+  color: #fff;
+  float: left;
+  height: 50px;
+  margin: 10px;
+  background: url("/img/marker.png") no-repeat 0 0/27px 37px; }
 
 .map-event {
   padding: 10px 20px;
   border-bottom: 1px solid #404042; }
+  .map-event h4 {
+    margin: 2px 0; }
 
 .register input.ng-invalid {
   border: 1px solid #FF5C50; }
@@ -372,6 +411,9 @@ button.create-account[disabled='disabled'] {
 .center {
   text-align: center;
   margin: 0 auto; }
+
+.blue {
+  color: #47acf4; }
 
 .red {
   color: #FF5C50; }
