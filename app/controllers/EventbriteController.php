@@ -48,10 +48,7 @@ class EventbriteController extends BaseController {
 		$total = count($jsonArray['events']);
 		
 		for ($i = 1; $i < $total; $i++ ) {
-			//one of these fields is expecting a string and geting an array
-
-			// $user = DB::table('users')->where('name', 'John')->first();
-
+			
 			$checkExisting = Eventbrite::where('eventbriteID', '=', $jsonArray['events'][$i]['id']);
 			$eventRecords = $checkExisting->get();
 			
@@ -87,11 +84,7 @@ class EventbriteController extends BaseController {
 				$eventRecord->city					=	$jsonArray['events'][$i]['venue']['address']['city'];
 				$eventRecord->region				=	$jsonArray['events'][$i]['venue']['address']['region'];
 				$eventRecord->postal_code			=	$jsonArray['events'][$i]['venue']['address']['postal_code'];
-				if ($jsonArray['events'][$i]['description']['text'] != '') {
-					$eventRecord->description_text		=	$jsonArray['events'][$i]['description']['text'];
-				} else {
-					$eventRecord->description_text = 'No Description';
-				}
+				$eventRecord->description_text		=	$jsonArray['events'][$i]['description']['text'];
 				$eventRecord->start_local			=	$jsonArray['events'][$i]['start']['local'];
 				$eventRecord->end_local				=	$jsonArray['events'][$i]['end']['local'];
 				$eventRecord->AllDayFlag			=	'';

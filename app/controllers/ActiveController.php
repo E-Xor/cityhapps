@@ -48,10 +48,14 @@ class ActiveController extends BaseController {
 		$total = count($jsonArray['results']);
 		
 		for ($i = 1; $i < $total; $i++ ) {
-			//one of these fields is expecting a string and geting an array
-
-			$eventRecord = new Active;
-
+			
+			$checkExisting = Active::where('assetGuid', '=', $jsonArray['results'][$i]['assetGuid']);
+			$eventRecords = $checkExisting->get();
+			
+			if ($eventRecords->count() < 1) {
+				$eventRecords->push(new Active);
+			}
+			
 			// $table->string('url'); // Event URL
 			// $table->string('source_id'); // Event ID (from source)
 			// $table->string('event_name'); // Event Name
@@ -69,32 +73,34 @@ class ActiveController extends BaseController {
 			// $table->string('latitude'); // Event Latitude
 			// $table->string('longitude'); // Event Longitude
 
-			$eventRecord->urlAdr			=	$jsonArray['results'][$i]['urlAdr'];
-			$eventRecord->assetGuid  		=	$jsonArray['results'][$i]['assetGuid'];
-			$eventRecord->assetName 		=	$jsonArray['results'][$i]['assetName'];
-			$eventRecord->placeUrlAdr  		=	$jsonArray['results'][$i]['place']['placeUrlAdr'];
-			$eventRecord->placeName			=	$jsonArray['results'][$i]['place']['placeName'];
-			$eventRecord->addressLine1Txt	=	$jsonArray['results'][$i]['place']['addressLine1Txt'];
-			$eventRecord->cityName			=	$jsonArray['results'][$i]['place']['cityName'];
-			$eventRecord->stateProvinceCode	=	$jsonArray['results'][$i]['place']['stateProvinceCode'];
-			$eventRecord->postalCode		=	$jsonArray['results'][$i]['place']['postalCode'];
-			
-			if (count($jsonArray['results'][$i]['assetDescriptions']) > 0) {
-				$eventRecord->description		=	$jsonArray['results'][$i]['assetDescriptions'][0]['description'];
-			}
+			foreach ($eventRecords as $eventRecord) {
+				$eventRecord->urlAdr			=	$jsonArray['results'][$i]['urlAdr'];
+				$eventRecord->assetGuid  		=	$jsonArray['results'][$i]['assetGuid'];
+				$eventRecord->assetName 		=	$jsonArray['results'][$i]['assetName'];
+				$eventRecord->placeUrlAdr  		=	$jsonArray['results'][$i]['place']['placeUrlAdr'];
+				$eventRecord->placeName			=	$jsonArray['results'][$i]['place']['placeName'];
+				$eventRecord->addressLine1Txt	=	$jsonArray['results'][$i]['place']['addressLine1Txt'];
+				$eventRecord->cityName			=	$jsonArray['results'][$i]['place']['cityName'];
+				$eventRecord->stateProvinceCode	=	$jsonArray['results'][$i]['place']['stateProvinceCode'];
+				$eventRecord->postalCode		=	$jsonArray['results'][$i]['place']['postalCode'];
+				
+				if (count($jsonArray['results'][$i]['assetDescriptions']) > 0) {
+					$eventRecord->description		=	$jsonArray['results'][$i]['assetDescriptions'][0]['description'];
+				}
 
-			$eventRecord->activityStartDate	=	$jsonArray['results'][$i]['activityStartDate'];
-			$eventRecord->activityEndDate	=	$jsonArray['results'][$i]['activityEndDate'];
-			$eventRecord->AllDayFlag		=	'';
-			
-			if (count($jsonArray['results'][$i]['assetImages']) > 0) {
-				$eventRecord->imageUrlAdr		=	$jsonArray['results'][$i]['assetImages'][0]['imageUrlAdr'];
-			}
+				$eventRecord->activityStartDate	=	$jsonArray['results'][$i]['activityStartDate'];
+				$eventRecord->activityEndDate	=	$jsonArray['results'][$i]['activityEndDate'];
+				$eventRecord->AllDayFlag		=	'';
+				
+				if (count($jsonArray['results'][$i]['assetImages']) > 0) {
+					$eventRecord->imageUrlAdr		=	$jsonArray['results'][$i]['assetImages'][0]['imageUrlAdr'];
+				}
 
-			$eventRecord->lat				=	$jsonArray['results'][$i]['place']['geoPoint']['lat'];
-			$eventRecord->lon				=	$jsonArray['results'][$i]['place']['geoPoint']['lon'];
-			
-			$eventRecord->save();
+				$eventRecord->lat				=	$jsonArray['results'][$i]['place']['geoPoint']['lat'];
+				$eventRecord->lon				=	$jsonArray['results'][$i]['place']['geoPoint']['lon'];
+				
+				$eventRecord->save();
+			}
 
 		}
 
