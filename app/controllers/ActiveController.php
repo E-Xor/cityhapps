@@ -74,7 +74,12 @@ class ActiveController extends BaseController {
 			// $table->string('longitude'); // Event Longitude
 
 			foreach ($eventRecords as $eventRecord) {
-				$eventRecord->urlAdr			=	$jsonArray['results'][$i]['urlAdr'];
+				if (count($jsonArray['results'][$i]['assetSeoUrls']) > 0) {
+					$eventRecord->urlAdr			=	$jsonArray['results'][$i]['assetSeoUrls'][0]['urlAdr'];
+				} else {
+					$eventRecord->urlAdr			=	$jsonArray['results'][$i]['urlAdr'];
+				}
+				
 				$eventRecord->assetGuid  		=	$jsonArray['results'][$i]['assetGuid'];
 				$eventRecord->assetName 		=	$jsonArray['results'][$i]['assetName'];
 				$eventRecord->placeUrlAdr  		=	$jsonArray['results'][$i]['place']['placeUrlAdr'];
