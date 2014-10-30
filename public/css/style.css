@@ -280,6 +280,8 @@ html {
   background: url("/img/likeIcon.png") no-repeat 0 0;
   cursor: pointer;
   float: left; }
+  .like-icon.active {
+    background: #fff; }
 
 .dislike-icon {
   height: 41px;
@@ -288,6 +290,8 @@ html {
   cursor: pointer;
   float: right;
   margin-left: 20px; }
+  .dislike-icon.active {
+    background: #fff; }
 
 .event {
   padding: 10px; }

@@ -377,6 +377,9 @@ body {
 	background: url('/img/likeIcon.png') no-repeat 0 0;
 	cursor: pointer;
 	float: left;
+	&.active {
+		background: #fff;
+	}
 }
 
 .dislike-icon {
@@ -386,6 +389,9 @@ body {
 	cursor: pointer;
 	float: right;
 	margin-left: 20px;
+	&.active {
+		background: #fff;
+	}
 }
 
 .event {

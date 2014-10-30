@@ -38,9 +38,25 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 				'fourth' : $scope.eventData[i + 3]
 			};
 
+			$scope.eventData[i].upvoted = "";
+
 			console.log($scope.slideGroup);
 			$scope.slideGroup.push(slides);
 		}
+
+		// $scope.upVote = function(event, num) {
+		// 	alert("This" + JSON.stringify(event[num])  + "has been upvoted");
+		// 	event[num].upvoted = true;
+		// 	$scope.upvoted = true;
+		// }
+
+		// $scope.downVote = function(event, num) {
+		// 	alert("This" + JSON.stringify(event[num])  + "has been downvoted");
+		// 	event[num].upvoted = false;
+		// 	$scope.upvoted = false;
+		// }
+
+		// $scope.upvoted = '';
 
 		$scope.eventModal = function(data, num) {
 
@@ -63,6 +79,8 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 
 	getEvents.events().success(eventSuccess);
+
+
 
 
 	$scope.now = moment().format("dddd, MMMM Do");
@@ -112,11 +130,11 @@ cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
     });
 }]);
 
-cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$rootScope', 'authFactory', '$http',
-	function($scope, $rootScope, authService, userData, authFactory, $http){
+cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$rootScope', 'authFactory', '$http', '$modal',
+	function($scope, $rootScope, authService, userData, authFactory, $http, $modal){
 			
-		$scope.userString = localStorage.getItem('user');
-		$scope.user = angular.fromJson($scope.userString);
+		
+		$scope.user = '';
 
 		if ($scope.user) {
 			console.log($scope.user.data.email);
@@ -131,12 +149,41 @@ cityHapps.controller('appController', ['$scope', 'authService', 'userData', '$ro
 			authFactory.loginUser(formData);
 		};
 
-		$scope.$on('event:auth-loginConfirmed', function(){
+
+		$scope.upVote = function(event) {
+			$modal.open({
+				templateUrl: "templates/registrationModal.html",
+				controller: 'modalInstanceController'
+			});
+		}
+
+		$scope.downVote = function(event) {
+			$modal.open({
+				templateUrl: "templates/registrationModal.html",
+				controller: 'modalInstanceController'
+			});
+		}
+
+
+
+
+		$scope.$on('event:loginConfirmed', function(){
 			// alert("youre logged in");
 
-			//YESSSSS
-			// This is where we can fire events based on user, 
-			// GET requests for user based on category.
+			$scope.upVote = function(event) {
+				alert("This" + JSON.stringify(event)  + "has been upvoted");
+			
+				$scope.$emit('upvote', 'true');
+			}
+
+			$scope.downVote = function(event) {
+				alert("This" + JSON.stringify(event)  + "has been downvoted");
+
+				$scope.$emit('downvote', true);
+			}
+
+			$scope.userString = localStorage.getItem('user');
+			$scope.user = angular.fromJson($scope.userString);
 
 		});
 
@@ -371,7 +418,7 @@ cityHapps.factory("registerDataService", function(){
 });
 
 
-cityHapps.factory('authFactory', function($http, authService){
+cityHapps.factory('authFactory', function($http, authService, $rootScope){
 
 	var auth = {};
 
@@ -381,9 +428,10 @@ cityHapps.factory('authFactory', function($http, authService){
 				console.log(res);
 
 				authService.loginConfirmed();
-				
 				localStorage.setItem('user', JSON.stringify(res));
-				document.location.reload(true);
+				$rootScope.$broadcast('event:loginConfirmed');
+			
+				// document.location.reload(true);
 
 			});
 		};
@@ -474,10 +522,6 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 	// $scope.loginUser = function() {
 	// 	authFactory.loginUser($scope.formData);
 	// }
-
-
-
-
 });
 
 cityHapps.controller("eventModalInstanceController", ["$scope", "$modalInstance", 'data', 'num',
@@ -489,7 +533,7 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "$modalInstance"
 			$scope.data = data[num];	
 		}	
 		
-		console.log(data);
+		// console.log(data);
 
 		$scope.ok = function () {
 			$modalInstance.close($scope.selected.item);
@@ -689,9 +733,9 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 		var drawEvents = function(data){
 
-					$scope.cool = function() {
-			alert('wow!');
-		}
+		// $scope.cool = function() {
+		// 	alert('wow!');
+		// }
 
 			$scope.markers = [];
 			// $scope.markers.id = [];
@@ -718,6 +762,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 					controller: 'mapEventModalInstanceController', 
 					resolve: {
 						data: function() {
+							// alert('this is firing');
 							return data;
 						}		
 					}
