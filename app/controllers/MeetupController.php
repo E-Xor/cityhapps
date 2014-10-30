@@ -50,7 +50,12 @@ class MeetupController extends BaseController {
 		for ($i = 1; $i < $total; $i++ ) {
 			//one of these fields is expecting a string and geting an array
 
-			$eventRecord = new Meetup;
+			$checkExisting = Meetup::where('meetupID', '=', $jsonArray['results'][$i]['id']);
+			$eventRecords = $checkExisting->get();
+			
+			if ($eventRecords->count() < 1) {
+				$eventRecords->push(new Meetup);
+			}
 
 			// $table->string('url'); // Event URL
 			// $table->string('source_id'); // Event ID (from source)
@@ -69,25 +74,58 @@ class MeetupController extends BaseController {
 			// $table->string('latitude'); // Event Latitude
 			// $table->string('longitude'); // Event Longitude
 
-			$eventRecord->event_url		=	$jsonArray['results'][$i]['event_url'];
-			$eventRecord->meetupID  	=	$jsonArray['results'][$i]['id'];
-			$eventRecord->name 			=	$jsonArray['results'][$i]['name'];
-			$eventRecord->venueURL  	=	'';
-			$eventRecord->venueName		=	$jsonArray['results'][$i]['venue']['name'];
-			$eventRecord->address_1		=	$jsonArray['results'][$i]['venue']['address_1'];
-			$eventRecord->city			=	$jsonArray['results'][$i]['venue']['city'];
-			$eventRecord->state			=	$jsonArray['results'][$i]['venue']['state'];
-			$eventRecord->zip			=	$jsonArray['results'][$i]['venue']['zip'];
-			$eventRecord->description	=	$jsonArray['results'][$i]['description'];
-			$eventRecord->time			=	$jsonArray['results'][$i]['time'];
-			$eventRecord->timezone		=	$jsonArray['results'][$i]['timezone'];
-			$eventRecord->duration		=	$jsonArray['results'][$i]['duration'];
-			$eventRecord->AllDayFlag	=	'';
-			$eventRecord->photo_url		=	$jsonArray['results'][$i]['photo_url'];
-			$eventRecord->lat			=	$jsonArray['results'][$i]['venue']['lat'];
-			$eventRecord->lon			=	$jsonArray['results'][$i]['venue']['lon'];
-			
-			$eventRecord->save();
+			foreach ($eventRecords as $eventRecord) {
+
+				$eventRecord->meetupID  	=	$jsonArray['results'][$i]['id'];
+				if (isset($jsonArray['results'][$i]['event_url'])) {
+					$eventRecord->event_url		=	$jsonArray['results'][$i]['event_url'];
+				}
+				if (isset($jsonArray['results'][$i]['name'])) {
+					$eventRecord->name 			=	$jsonArray['results'][$i]['name'];
+				}
+				if (isset($jsonArray['results'][$i]['venueURL'])) {
+					$eventRecord->venueURL  	=	'';
+				}
+				if (isset($jsonArray['results'][$i]['venue']['name'])) {
+					$eventRecord->venueName		=	$jsonArray['results'][$i]['venue']['name'];
+				}
+				if (isset($jsonArray['results'][$i]['venue']['address_1'])) {
+					$eventRecord->address_1		=	$jsonArray['results'][$i]['venue']['address_1'];
+				}
+				if (isset($jsonArray['results'][$i]['venue']['city'])) {
+					$eventRecord->city			=	$jsonArray['results'][$i]['venue']['city'];
+				}
+				if (isset($jsonArray['results'][$i]['venue']['state'])) {
+					$eventRecord->state			=	$jsonArray['results'][$i]['venue']['state'];
+				}
+				if (isset($jsonArray['results'][$i]['venue']['zip'])) {
+					$eventRecord->zip			=	$jsonArray['results'][$i]['venue']['zip'];
+				}
+				if (isset($jsonArray['results'][$i]['description'])) {
+					$eventRecord->description	=	$jsonArray['results'][$i]['description'];
+				}
+				if (isset($jsonArray['results'][$i]['time'])) {
+					$eventRecord->time			=	$jsonArray['results'][$i]['time'];
+				}
+				if (isset($jsonArray['results'][$i]['timezone'])) {
+					$eventRecord->timezone		=	$jsonArray['results'][$i]['timezone'];
+				}
+				if (isset($jsonArray['results'][$i]['duration'])) {
+					$eventRecord->duration		=	$jsonArray['results'][$i]['duration'];
+				}
+				$eventRecord->AllDayFlag	=	'';
+				if (isset($jsonArray['results'][$i]['photo_url'])) {
+					$eventRecord->photo_url		=	$jsonArray['results'][$i]['photo_url'];
+				}
+				if (isset($jsonArray['results'][$i]['venue']['lat'])) {
+					$eventRecord->lat			=	$jsonArray['results'][$i]['venue']['lat'];
+				}
+				if (isset($jsonArray['results'][$i]['venue']['lon'])) {
+					$eventRecord->lon			=	$jsonArray['results'][$i]['venue']['lon'];
+				}
+
+				$eventRecord->save();
+			}
 
 		}
 
