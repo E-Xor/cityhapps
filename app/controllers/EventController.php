@@ -3,6 +3,12 @@
 
 class EventController extends BaseController { 
 
+	public function eventsNew() {
+
+		$events = EventRecord::all()->toJson();
+		return $events;
+	}
+
 	public function storeEvents() {
 
 		$this->storeActiveEvents();
@@ -175,7 +181,7 @@ class EventController extends BaseController {
 
 
 
-	public function eventsOld() {
+	public function events() {
 
 		// Enter your application key here. (See http://api.eventful.com/keys/)
 		// $app_key = 'pLB3SGLn9xSnfcg5';
