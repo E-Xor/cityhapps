@@ -19,18 +19,18 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 		var eventSuccess = function(data) {
 
-		$scope.eventData = data.events['event'];
+		$scope.eventData = data;
 		console.log($scope.eventData);
 
-		$scope.eventCount = data.total_items;
+		$scope.eventCount = data.length;
 
 		$scope.slideGroup = [];
-		console.log($scope.slideGroup);
+		//console.log($scope.slideGroup);
 
 		var i;
 
 		for (i = 0; i < $scope.eventData.length; i += 4) {
-
+		
 			var slides = {
 				'first' : $scope.eventData[i],
 				'second' : $scope.eventData[i + 1],
@@ -40,7 +40,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 			$scope.eventData[i].upvoted = "";
 
-			console.log($scope.slideGroup);
+			//console.log($scope.slideGroup);
 			$scope.slideGroup.push(slides);
 		}
 
@@ -105,7 +105,7 @@ cityHapps.factory('getEvents', function($http){
 	return {
 		events : function() {
 			return $http.get('/events').success(function(data) {
-				console.log(data);
+				//console.log(data);
 			});
 		}
 	}
@@ -740,7 +740,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			$scope.markers = [];
 			// $scope.markers.id = [];
 
-			$scope.tabEvents = data.events.event;
+			$scope.tabEvents = data;
 			console.log($scope.tabEvents);
 
 			for (var i = 0; i < $scope.tabEvents.length; i++ ) {

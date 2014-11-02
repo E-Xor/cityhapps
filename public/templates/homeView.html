@@ -16,11 +16,11 @@
 				<div class="col-sm-3 event">
 						<div class="event-inner" >
 								<div ng-click="eventModal(event, 'first')">
-									<div class="event-image" style="background-image: url('{{event.first.image.block250.url}}'); background-size: cover; height: 125px;">
+									<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
 										<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
-										<h4 class="">{{event.first.title }}</h4>
+										<h4 class="">{{event.first.event_name | limitTo: 30 }}</h4>
 										<p>{{event.first.start_time}}</p>
 										<p>{{event.first.venue_name | limitTo: 40}}</p>
 									</div>
@@ -36,11 +36,11 @@
 					<div class="col-sm-3 event" > 
 						<div class="event-inner">
 								<div ng-click="eventModal(event, 'second')">	
-									<div class="event-image" style="background-image: url('{{event.second.image.block250.url}}'); background-size: cover; height: 125px;">
+									<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 125px;">
 										<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
-										<h4 class="">{{event.second.title | limitTo: 30}}</h4>
+										<h4 class="">{{event.second.event_name | limitTo: 30}}</h4>
 										<p>{{event.second.start_time}}</p>
 										<p>{{event.second.venue_name | limitTo: 40}}</p>
 									</div>
@@ -55,11 +55,11 @@
 					</div>
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'third')">
 						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.third.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.third.title | limitTo: 30}} </h4>
+								<h4 class="">{{event.third.event_name | limitTo: 30}} </h4>
 								<p>{{event.third.start_time}}</p>
 								<p>{{event.third.venue_name | limitTo: 40}}</p>
 							</div>
@@ -73,11 +73,11 @@
 					</div>
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'fourth')">
 						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.fourth.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.fourth.title | limitTo: 30}}</h4>
+								<h4 class="">{{event.fourth.event_name | limitTo: 30}}</h4>
 								<p>{{event.fourth.start_time}}</p>
 								<p>{{event.fourth.venue_name | limitTo: 40}}</p>
 							</div>
@@ -151,11 +151,11 @@
 				<slide class="col-sm-12" ng-repeat="event in slideGroup">
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'first')" >
 						<div class="event-inner" >
-							<div class="event-image" style="background-image: url('{{event.first.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.first.title }}</h4>
+								<h4 class="">{{event.first.event_name }}</h4>
 								<p>{{event.first.start_time}}</p>
 								<p>{{event.first.venue_name | limitTo: 40}}</p>
 							</div>
@@ -169,11 +169,11 @@
 					</div>
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'second')"> 
 						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.second.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.second.title | limitTo: 30}}</h4>
+								<h4 class="">{{event.second.event_name | limitTo: 30}}</h4>
 								<p>{{event.second.start_time}}</p>
 								<p>{{event.second.venue_name | limitTo: 40}}</p>
 							</div>
@@ -187,11 +187,11 @@
 					</div>
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'third')">
 						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.third.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.third.event_image_url}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.third.title | limitTo: 30}} </h4>
+								<h4 class="">{{event.third.event_name | limitTo: 30}} </h4>
 								<p>{{event.third.start_time}}</p>
 								<p>{{event.third.venue_name | limitTo: 40}}</p>
 							</div>
@@ -205,11 +205,11 @@
 					</div>
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'fourth')">
 						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.fourth.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.fourth.title | limitTo: 30}}</h4>
+								<h4 class="">{{event.fourth.event_name | limitTo: 30}}</h4>
 								<p>{{event.fourth.start_time}}</p>
 								<p>{{event.fourth.venue_name | limitTo: 40}}</p>
 							</div>
@@ -231,11 +231,11 @@
 				<slide class="col-sm-12" ng-repeat="event in slideGroup">
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'first')" >
 						<div class="event-inner" >
-							<div class="event-image" style="background-image: url('{{event.first.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.first.title }}</h4>
+								<h4 class="">{{event.first.event_name }}</h4>
 								<p>{{event.first.start_time}}</p>
 								<p>{{event.first.venue_name | limitTo: 40}}</p>
 							</div>
@@ -249,11 +249,11 @@
 					</div>
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'second')"> 
 						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.second.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.second.title | limitTo: 30}}</h4>
+								<h4 class="">{{event.second.event_name | limitTo: 30}}</h4>
 								<p>{{event.second.start_time}}</p>
 								<p>{{event.second.venue_name | limitTo: 40}}</p>
 							</div>
@@ -267,11 +267,11 @@
 					</div>
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'third')">
 						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.third.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.third.title | limitTo: 30}} </h4>
+								<h4 class="">{{event.third.event_name | limitTo: 30}} </h4>
 								<p>{{event.third.start_time}}</p>
 								<p>{{event.third.venue_name | limitTo: 40}}</p>
 							</div>
@@ -285,11 +285,11 @@
 					</div>
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'fourth')">
 						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.fourth.image.block250.url}}'); background-size: cover; height: 125px;">
+							<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
-								<h4 class="">{{event.fourth.title | limitTo: 30}}</h4>
+								<h4 class="">{{event.fourth.event_name | limitTo: 30}}</h4>
 								<p>{{event.fourth.start_time}}</p>
 								<p>{{event.fourth.venue_name | limitTo: 40}}</p>
 							</div>
