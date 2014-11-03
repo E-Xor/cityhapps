@@ -29,6 +29,8 @@ App::missing(function($exception) {
 
 });
 
+Route::get('testEvents', 'EventController@testEvents'); // TODO: Kill this one in production
+
 
 Route::get('events', 'EventController@events');
 Route::get('eventfulEvents', 'EventfulController@events');
