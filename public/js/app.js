@@ -1,7 +1,7 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
 	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns()]);
 
-cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, getEvents, $window) {
+cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, $window) {
 
 	$scope.formatAMPM = function(date) {
 		var hours = date.getHours();
@@ -16,10 +16,11 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 		// getEvents.events();
 
+		alert('eventsController');
 
 		var eventSuccess = function(data) {
 
-		$scope.eventData = data;
+		$scope.eventData = data.data;
 		console.log($scope.eventData);
 
 		$scope.eventCount = data.length;
@@ -67,8 +68,6 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 			$scope.slideGroup.push(slides);
 		}
 
-		$scope.vote = '';
-
 		$scope.mapEventModal = function(data) {
 
 				$modal.open({
@@ -87,7 +86,13 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 				});
 			};
 
-		$scope.eventModal = function(data, num, vote) {
+		$scope.vote = voteService.vote;
+
+		console.log(voteService.vote);
+
+		$scope.eventModal = function(data, num) {
+
+			alert(voteService.vote);
 
 			$modal.open({
 				templateUrl: "templates/eventModal.html",
@@ -100,7 +105,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 						return num;
 					},
 					vote : function() {
-						return vote;
+						return voteService.vote;
 					} 	
 				}
 			});
@@ -111,9 +116,6 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 
 	getEvents.events().success(eventSuccess);
-
-
-
 
 	$scope.now = moment().format("dddd, MMMM Do");
 
@@ -132,11 +134,23 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 });
 
+cityHapps.factory('voteService', function(){
+
+	var vote = {};
+
+	return {
+		getData: function() {
+			return vote;
+		}
+	};
+
+});
+
 
 cityHapps.factory('getEvents', function($http){
 	return {
 		events : function() {
-			return $http.get('/events').success(function(data) {
+			return $http.get('/events?page=1').success(function(data) {
 				//console.log(data);
 			});
 		}
@@ -162,8 +176,8 @@ cityHapps.config([
 	    });
 	}]);
 
-cityHapps.controller('appController', ['$scope', 'authService', 'registerDataService', 'userData', '$rootScope', 'authFactory', '$http', '$modal',
-	function($scope, $rootScope, authService, registerDataService, userData, authFactory, $http, $modal){
+cityHapps.controller('appController', ['$scope', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal',
+	function($scope, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal){
 			
 		
 		$scope.userString = localStorage.getItem('user');
@@ -171,15 +185,18 @@ cityHapps.controller('appController', ['$scope', 'authService', 'registerDataSer
 
 		if ($scope.userString) {
 
-			$scope.upVote = function(event, num) {
+			$scope.upVote = function(event, num, vote) {
 				alert("This" + JSON.stringify(event[num])  + "has been upvoted");
+
+				voteService.vote = vote;
+				alert(voteService.vote);
 				
 			};
 
-			$scope.downVote = function(event, num) {
+			$scope.downVote = function(event, num, vote) {
 				alert("This" + JSON.stringify(event[num])  + "has been downvoted");
 
-				$scope.upvoted = false;
+				voteService.vote = vote;
 			};
 
 		} else {
@@ -199,8 +216,7 @@ cityHapps.controller('appController', ['$scope', 'authService', 'registerDataSer
 			}
 		}
 
-
-
+		console.log(registerDataService.vote);
 
 		if ($scope.user) {
 			console.log($scope.user.data.email);
@@ -565,17 +581,22 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 	// }
 });
 
-cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", "$modalInstance", 'data', 'num', 'vote',
-		function($scope, registerDataService, $modalInstance, data, num, vote){
+cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", 'voteService', "$modalInstance", 'data', 'num', 'vote', 
+		function($scope, registerDataService, voteService, $modalInstance, data, num, vote){
 
 		if (num === null) {
 			$scope.data = data;
+			// $scope.data.vote = voteService.vote;
+			
 		} else {
 			$scope.data = data[num];	
+			// $scope.data.vote = voteService.vote;
 		}	
 		
-		// console.log(data);
-		$scope.vote = vote;
+		alert('eventModalInstanceController');
+		console.log(JSON.stringify(vote));
+
+		$scope.vote = voteService.getData();
 
 		$scope.ok = function () {
 			$modalInstance.close($scope.selected.item);
@@ -587,10 +608,12 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 	}
 ]);
 
-cityHapps.controller("mapEventModalInstanceController", ["$scope", "$modalInstance", 'data', 
-		function($scope, $modalInstance, data){
+cityHapps.controller("mapEventModalInstanceController", ["$scope", "$modalInstance", 'data', 'voteService', 
+		function($scope, $modalInstance, data, voteService){
 			
 		$scope.data = data;	
+
+		$scope.vote = voteService.vote;
 		
 		console.log(data);
 
@@ -754,7 +777,9 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 	$scope.tabs = [
 		{ title:'Events', content:'Dynamic content 1' },
-		{ title:'Activities', content:'Dynamic content 2' }
+		
+		// Activities tab if we need it
+		// { title:'Activities', content:'Dynamic content 2' }
 	];
 
 

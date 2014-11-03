@@ -3,10 +3,12 @@
 		<div class="modal-header-event">
 		    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 		    </button>
-
-		    <div class="modal-image">
-		    	<h3 class="modal-title-event">{{data.event_name}}</h3>
-		    </div>
+				
+				<div class="modal-image" style="background-image: url('{{data.event_image_url}}'); background-size: cover;">
+				    <div class="modal-image-wrapper">
+				    	<h3 class="modal-title-event">{{data.event_name}}</h3>
+				    </div>
+				</div>
 		</div>
 
 	      	<div class="modal-body">
