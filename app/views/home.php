@@ -16,7 +16,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> 
 	<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
-
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 
 	<script>
@@ -84,12 +84,12 @@
 							<a href="/"><img src="/img/logo.png"></a>
 
 						</div>
-						<div class="col-sm-4 center">
+						<div class="col-sm-4 center logo">
 							
 							<input type="text" placeholder="Find Events &amp; Activities" class="main-search" />
 
 						</div>
-							<div class="col-sm-4 left auth" ng-controller="modalController">
+							<div class="col-sm-4 auth" ng-controller="modalController">
 
 									<div ng-cloak ng-show="!user">
 										<h4 class="uppercase" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>

@@ -1,5 +1,5 @@
 <div class="eventModal">
-    <div ng-controller="mapController">
+    <div ng-controller="eventsController">
 		<div class="modal-header-event">
 		    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 		    </button>
@@ -32,11 +32,9 @@
 
 				<div class="modal-footer">
 
-					<div class="icons-modal">
-<!-- 							<div ng-class="{'like-icon' : !upVote(data), 'like-icon active': upVote(data) }" ng-init="!upVote(data)" ng-click="upVote(data); ">
-							</div>
-							<div ng-class="{'dislike-icon': !downVote(data), 'dislike-icon active': downVote(data) }" ng-init="!downVote(data)" ng-click="downVote(data); ">
-							</div> -->
+					<div class="icons-modal">	
+						<label class="like-icon" ng-model="vote" btn-radio="'upVote'"></label>
+				        <label class="dislike-icon" ng-model="vote" btn-radio="'downVote'"></label>		
 					</div>
 					<div class="purcase-info right inline">
 						<div class="event-price left">

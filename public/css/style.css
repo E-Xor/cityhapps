@@ -131,6 +131,19 @@ html {
   max-width: 500px;
   overflow-wrap: break-word; }
 
+.close {
+  float: right;
+  font-size: 31px;
+  font-weight: 700;
+  line-height: 1;
+  color: #0D0C0C;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: .5;
+  z-index: 10;
+  position: relative;
+  margin-right: 10px; }
+
 .modal-backdrop {
   background-color: #1E405D; }
   .modal-backdrop.in {
@@ -453,5 +466,15 @@ button.create-account[disabled='disabled'] {
   float: left; }
 
 @media screen and (max-width: 768px) {
-  .event-inner {
-    height: 100%; } }
+  .logo {
+    margin: 20px 0; }
+
+  .header-search input {
+    background: url("/img/searchIcon.png") 8px 16px/23px 26px no-repeat; }
+
+  .overlay {
+    background-size: inherit; }
+
+  .modal-image {
+    height: 175px;
+    background-size: contain; } }
