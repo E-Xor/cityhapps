@@ -87,7 +87,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 				});
 			};
 
-		$scope.eventModal = function(data, num) {
+		$scope.eventModal = function(data, num, vote) {
 
 			$modal.open({
 				templateUrl: "templates/eventModal.html",
@@ -100,7 +100,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 						return num;
 					},
 					vote : function() {
-						return $scope.vote;
+						return vote;
 					} 	
 				}
 			});
@@ -781,6 +781,9 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				$modal.open({
 					templateUrl: "templates/eventModal.html",
 					controller: 'mapEventModalInstanceController',
+
+
+
 					resolve: {
 						data: function() {
 							// alert('this is firing');
