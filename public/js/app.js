@@ -67,7 +67,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 			$scope.slideGroup.push(slides);
 		}
 
-		$scope.vote = {};
+		$scope.vote = '';
 
 		$scope.mapEventModal = function(data) {
 
@@ -79,7 +79,8 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 							// alert('this is firing');
 							return data;
 						},
-						vote : function() {
+						vote: function() {
+							alert($scope.vote);
 							return $scope.vote;
 						} 		
 					}
@@ -774,17 +775,32 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 		var drawEvents = function(data){
 
-		// $scope.cool = function() {
-		// 	alert('wow!');
-		// }
+			
+			$scope.mapMarkerModal = function(data) {
+
+				$modal.open({
+					templateUrl: "templates/eventModal.html",
+					controller: 'mapEventModalInstanceController',
+					resolve: {
+						data: function() {
+							// alert('this is firing');
+							return data;
+						}		
+					}
+				});
+			} 
 
 			$scope.markers = [];
-			// $scope.markers.id = [];
+			$scope.markers.id = [];
+
 
 			$scope.tabEvents = data;
 			console.log($scope.tabEvents);
 
-			for (var i = 0; i < $scope.tabEvents.length; i++ ) {
+			// $scope.tabEvents.length
+			// need to limit to 10 from server 
+
+			for (var i = 0; i < 10 ; i++ ) {
 				$scope.markers.push({
 					'latitude' : $scope.tabEvents[i].latitude,
 					'longitude' : $scope.tabEvents[i].longitude,

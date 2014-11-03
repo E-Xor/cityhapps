@@ -27,7 +27,7 @@
 
 			<tabset>	
 				<tab ng-repeat="tab in tabs" heading='{{tab.title}}'>
-					<div class="map-event" ng-repeat="event in tabEvents">
+					<div class="map-event" ng-repeat="event in tabEvents | limitTo: 10">
 						<div ng-click="mapEventModal(event)">
 							<div class="inline">
 								<div class="event-number left">{{$index + 1}}</div>	
@@ -62,11 +62,8 @@
 	<div class="row">
 		<div id="map_canvas">
 			<ui-gmap-google-map center="map.center" zoom="map.zoom">
-				
-					<ui-gmap-markers models="markers" click="cool()" coords="'self'" icon="'iconPath()'">
+					<ui-gmap-markers models="markers" click="mapMarkerModal" coords="'self'" icon="iconPath">
 		        	</ui-gmap-markers>
-		        
-
 			</ui-gmap-google-map>
 		</div>
 	</div>
