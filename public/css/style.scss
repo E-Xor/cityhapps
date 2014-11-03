@@ -637,6 +637,18 @@ button.create-account[disabled='disabled'] {
 		height: 175px;
 		background-size: contain;
 	}
+
+	.prev {
+	height: 50px;
+	cursor: pointer;
+	background: url("/img/sliderLeft.png") no-repeat 0px 5px / 71px 40px;
+	}
+
+	.next {
+		height: 50px;
+		cursor: pointer;
+		background: url("/img/sliderRight.png") no-repeat 0px 5px / 71px 40px;
+	}
 	
 
 }
