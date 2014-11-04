@@ -924,13 +924,14 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		if ($scope.map.dragging == true) {
 			alert("dragging");
 		}
-		// $scope.$change($scope.map.center, function(newVal, oldVal){
-		// 	alert('what');
-		google.maps.event.addListener($scope.map, 'dragend', function(){
-			alert('dragged map');
-		});
 
-		// });
+		$scope.mapEvents = {
+			'alert' : alert('great'),
+			dragstart : function(returnVal) {
+				alert('wow');
+			}
+		}
+		
 
 }]);
 
