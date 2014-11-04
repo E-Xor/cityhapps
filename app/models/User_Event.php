@@ -11,7 +11,7 @@ class User_Event extends Eloquent implements UserInterface, RemindableInterface 
 
 	// public $timestamps = false;
 
-	protected $fillable = ['user_id', 'category_id'];
+	protected $fillable = ['user_id', 'event_id'];
 
 	/**
 	 * The database table used by the model.
