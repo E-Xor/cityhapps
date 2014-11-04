@@ -16,7 +16,7 @@ class AddTableUserEvent extends Migration {
 		{
 			$table->increments('id');
 			$table->boolean('upvote')->default(false); // Event URL
-			$table->string('downvote')->default(false); // Event ID (from source)
+			$table->string('downvote')->default(false); // Event ID (from source) -- cpk : huh???
 			$table->timestamps();
 		});
 	}

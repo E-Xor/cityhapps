@@ -50,7 +50,8 @@
 				<div class="col-sm-3 event">
 						<div class="event-inner" >
 								<div ng-click="eventModal(event, 'first')">
-									<div class="event-image" style="background-image: url('{{event.first.event_image_url}}') no-repeat;  background-size: cover; height: 125px;">
+
+									<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
 										<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
@@ -65,9 +66,9 @@
 								<div ng-class="{'dislike-icon': !isActiveDown, 'dislike-icon active': isActiveDown }" ng-init="isActiveDown = false" ng-click="downVote(event, 'first'); ">
 								</div> -->
 								    <div class="btn-group">
-								        <label class="like-icon" ng-model="vote" ng-click="upVote(event, 'first', 'upVote')" btn-radio="'upVote'"></label>
+								        <label class="like-icon" ng-model="vote" ng-click="upVote(event, 'first', 'true')" btn-radio="'upVote'"></label>
 
-								        <label class="dislike-icon" ng-model="vote" ng-click="downVote(event, 'first', 'downVote')" btn-radio="'downVote'"></label>
+								        <label class="dislike-icon" ng-model="vote" ng-click="downVote(event, 'first', 'true')" btn-radio="'downVote'"></label>
 								    </div>
 								    {{vote}}
 							</div>

@@ -190,6 +190,24 @@ cityHapps.controller('appController', ['$scope', 'authService', 'registerDataSer
 
 				voteService.vote = vote;
 				alert(voteService.vote);
+
+
+				//needs to be broken into a factory/ service soon
+				$http({
+					method: "POST",
+					url: '/user_event',
+					data: {'upVote' : vote },
+					headers : {"Content-Type": "application/json"}
+				}).success(function(data){
+
+					if (!data) {
+						console.log("no vote, man");
+						// $scope.loggedOut = false;
+					} else if(data) {
+						console.log(data);
+						// $scope.loggedOut = true;
+					}
+				});
 				
 			};
 

@@ -44,6 +44,7 @@ Route::get('storeActiveEvents', 'ActiveController@storeEvents');
 Route::get('storeMeetupEvents', 'MeetupController@storeEvents');
 Route::get('storeEventbriteEvents', 'EventbriteController@storeEvents');
 
+Route::post('user_event', 'UserEventController@store');
 
 	Route::get('auth/status', 'SessionsController@index');
 
