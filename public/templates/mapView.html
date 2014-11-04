@@ -60,11 +60,14 @@
 	</div>	
 
 	<div class="row">
+		<div style="color:#fff;">{{map.center}}</div>
 		<div id="map_canvas">
-			<ui-gmap-google-map center="map.center" zoom="map.zoom">
-					<ui-gmap-markers models="markers" click="mapMarkerModal" coords="'self'" icon="iconPath">
-		        	</ui-gmap-markers>
+			<ui-gmap-google-map center="map.center" zoom="map.zoom" bounds="map.bounds" dragging="map.dragging">
+					<ui-gmap-marker ng-repeat="event in tabEvents | limitTo: 10" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}" >
+					<!-- icon="markers.icon" -->
+		        	</ui-gmap-marker>
 			</ui-gmap-google-map>
+
 		</div>
 	</div>
 	</div>

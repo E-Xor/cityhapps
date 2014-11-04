@@ -20,7 +20,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 		var eventSuccess = function(data) {
 
-		$scope.eventData = data.data;
+		$scope.eventData = data;
 		console.log($scope.eventData);
 
 		$scope.eventCount = data.length;
@@ -67,24 +67,6 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 			//console.log($scope.slideGroup);
 			$scope.slideGroup.push(slides);
 		}
-
-		$scope.mapEventModal = function(data) {
-
-				$modal.open({
-					templateUrl: "templates/eventModal.html",
-					controller: 'mapEventModalInstanceController', 
-					resolve: {
-						data: function() {
-							// alert('this is firing');
-							return data;
-						},
-						vote: function() {
-							alert($scope.vote);
-							return $scope.vote;
-						} 		
-					}
-				});
-			};
 
 		$scope.vote = voteService.vote;
 
@@ -629,7 +611,7 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 cityHapps.controller("mapEventModalInstanceController", ["$scope", "$modalInstance", 'data', 'voteService', 
 		function($scope, $modalInstance, data, voteService){
 			
-		$scope.data = data;	
+		$scope.data = data;
 
 		$scope.vote = voteService.vote;
 		
@@ -800,6 +782,28 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		// { title:'Activities', content:'Dynamic content 2' }
 	];
 
+		$scope.showEvents = function() {
+			console.log($scope.tabEvents);
+		}
+
+		$scope.mapEventModal = function(data) {
+
+			$modal.open({
+				templateUrl: "templates/eventModal.html",
+				controller: 'mapEventModalInstanceController', 
+				resolve: {
+					data: function() {
+						// alert('this is firing');
+						return data;
+					},
+					vote: function() {
+						alert($scope.vote);
+						return $scope.vote;
+					} 		
+				}
+			});
+		};
+
 
 	//sloppy code re-use, but im doing it for demo
 	$scope.now = moment().format("dddd, MMMM Do");
@@ -818,19 +822,30 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 		var drawEvents = function(data){
 
+
+
 			
 			$scope.mapMarkerModal = function(data) {
 
+				$scope.mapMarkerEvents = data;
 				$modal.open({
 					templateUrl: "templates/eventModal.html",
 					controller: 'mapEventModalInstanceController',
-
-
-
 					resolve: {
 						data: function() {
-							// alert('this is firing');
+							// $scope.mapMarkerModalData = [];
+							// 	alert("firing");
+							
+							// for (var i = 0; i < $scope.mapMarkerEvents.length; i++) {
+								
+							// 	$scope.mapMarkerModalData.push($scope.mapMarkerEvents[i]);
+							// }
+							
+							// console.log(JSON.stringify($scope.mapMarkerModalData));
+							// return $scope.mapMarkerModalData;
+
 							return data;
+
 						}		
 					}
 				});
@@ -839,6 +854,9 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			$scope.markers = [];
 			$scope.markers.id = [];
 
+			// $scope.markers.icon = {
+			// 	"icon" : '../img/marker.png'
+			// }
 
 			$scope.tabEvents = data;
 			console.log($scope.tabEvents);
@@ -850,7 +868,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				$scope.markers.push({
 					'latitude' : $scope.tabEvents[i].latitude,
 					'longitude' : $scope.tabEvents[i].longitude,
-					'id' : i
+					
 				});
 			}
 
@@ -888,13 +906,31 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		}
 
 
-	$scope.map = {
-		center: {
-			latitude: 33.7550,
-			longitude: -84.3900
-		},
-		zoom: 8
-	};
+		$scope.dragging = function() {
+			alert('we are dragging the map');
+		}
+
+		$scope.map = {
+			center: {
+				latitude: 33.7550,
+				longitude: -84.3900
+			},
+			zoom: 13, 
+			dragging: 'true'
+		};
+
+		$scope.dragging = '';
+
+		if ($scope.map.dragging == true) {
+			alert("dragging");
+		}
+		// $scope.$change($scope.map.center, function(newVal, oldVal){
+		// 	alert('what');
+		google.maps.event.addListener($scope.map, 'dragend', function(){
+			alert('dragged map');
+		});
+
+		// });
 
 }]);
 

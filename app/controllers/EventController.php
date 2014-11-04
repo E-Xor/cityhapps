@@ -5,7 +5,9 @@ class EventController extends BaseController {
 
 	public function events() {
 
-		$events = EventRecord::paginate(10);
+		// $events = EventRecord::paginate(10);
+
+		$events = EventRecord::all()->toJson();
 		return $events;
 	}
 
