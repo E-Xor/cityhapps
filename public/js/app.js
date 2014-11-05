@@ -16,8 +16,6 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 		// getEvents.events();
 
-		alert('eventsController');
-
 		var eventSuccess = function(data) {
 
 		$scope.eventData = data;
@@ -414,9 +412,6 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 			data: formData,
 			headers: {"Content-Type": "application/json"}
 		}).success(function(data){
-
-			console.log(data);
-
 			if(!data) {
 				console.log('not working');
 			} else if (data) {
@@ -425,19 +420,17 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 					"password" : data.fb_token
 				};
 
-				$modal.open({
-					templateUrl: "templates/confirmationModal.html",
-					controller: 'modalInstanceController',
-				});
+				$scope.id = data.id;	
 
-				$scope.id = data.id;					
-
+				authFactory.loginUser({"email":formData.email, "password":formData.password});			
 			}
 
-			console.log(data);
 
+			console.log(data);
+	
 		});
 	};
+
 
 		$scope.fbLogin = function() {
 			$http({
@@ -576,9 +569,6 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 		authFactory.logoutUser();
 	}
 
-	// $scope.loginUser = function() {
-	// 	authFactory.loginUser($scope.formData);
-	// }
 });
 
 cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", 'voteService', "$modalInstance", 'data', 'num', 'vote', 
@@ -690,9 +680,9 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 		}
 
 
-		$scope.loginUser = function(data) {
-			authFactory.loginUser(data);
-		}
+		// $scope.loginUser = function(data) {
+		// 	authFactory.loginUser(data);
+		// }
 
 	}
 
@@ -893,7 +883,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				latitude: 33.7550,
 				longitude: -84.3900
 			},
-			zoom: 14, 
+			zoom: 15, 
 			events: {
 				tilesloaded: function (map) {
 					$scope.$apply(function () {
@@ -903,14 +893,15 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 					});
 				}, 
 				dragend: function(){
+
+					$scope.markers = [];
+
 					$log.info($scope.map.center);
 
 					$http.post('/geoEvents', $scope.map.center)
 						.success(function(newData){
 							$log.info(newData);
 							$scope.tabEvents = newData;
-
-							$scope.markers = [];
 
 								for(var i=0; i < newData.length; i++) {
 									$scope.markers.push(newData[i]);

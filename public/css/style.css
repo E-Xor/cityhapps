@@ -3,6 +3,9 @@
   font-style: normal;
   font-weight: 400; }
 
+.proxima-light {
+  font-weight: 200; }
+
 .proximaItalic {
   font-family: "proxima-nova",sans-serif;
   font-style: italic;
@@ -17,7 +20,7 @@ html {
   background: #2c2625; }
 
 .main-container {
-  background: rgba(20, 35, 52, 0.6);
+  background: rgba(20, 35, 52, 0.4);
   z-index: 2; }
 
 .overlay {
@@ -44,14 +47,12 @@ html {
 
 :-moz-placeholder {
   /* Firefox 18- */
-  color: #fff;
   font-size: 1.2em;
   font-style: italic;
   letter-spacing: .2em; }
 
 ::-moz-placeholder {
   /* Firefox 19+ */
-  color: #fff;
   font-size: 1.2em;
   font-style: italic;
   letter-spacing: .2em; }
@@ -192,24 +193,41 @@ html {
 
 .event-category {
   padding: 10px 5px;
-  border: 2px solid #395467;
-  color: #395467;
+  border: 2px solid #BEB9BD;
+  color: #BEB9BD;
   background: #fff;
-  border-radius: 15px;
-  cursor: pointer; }
+  cursor: pointer;
+  text-transform: uppercase; }
   .event-category.active {
-    background: #395467;
-    color: #fff; }
+    background: #fff;
+    color: #FF5C50;
+    border: 2px solid #FF5C50; }
 
 .category-item {
   display: inline-block;
   margin: 0 2px; }
 
-.register input, .login input {
-  margin: 15px 0;
-  width: 100%;
-  height: 40px;
-  padding: 10px 15px; }
+.categories {
+  background: #f7eeef;
+  padding: 0 50px; }
+
+.register, .login {
+  background: #f7eeef;
+  padding: 0 40px; }
+  .register input, .login input {
+    margin: 15px 0;
+    width: 100%;
+    height: 50px;
+    padding: 10px 15px; }
+  .register ::-webkit-input-placeholder, .login ::-webkit-input-placeholder {
+    color: #BCBABD;
+    text-align: left; }
+  .register ::-moz-input-placeholder, .login ::-moz-input-placeholder {
+    color: #BCBABD;
+    text-align: left; }
+  .register :-moz-input-placeholder, .login :-moz-input-placeholder {
+    color: #BCBABD;
+    text-align: left; }
 
 .event-slider {
   max-width: 1170px;
@@ -327,7 +345,8 @@ html {
   cursor: pointer; }
 
 .lucida {
-  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif; }
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+  font-size: 1.4em; }
 
 .event-inner {
   background: #f6efee;
@@ -342,13 +361,19 @@ html {
 .create-account {
   padding: 10px 15px;
   background: #FF5C50;
-  border-radius: 20px;
   border: none;
   text-transform: uppercase;
   font-weight: bold;
   color: #fff;
-  margin: 5px 0;
+  margin: 10px 0;
   display: block; }
+
+.accountCreate {
+  padding-right: 15px;
+  border-right: 1px solid #fff; }
+
+.accountSignIn {
+  margin-left: 10px; }
 
 .buy {
   padding: 10px 15px;
@@ -426,11 +451,14 @@ html {
   .map-event h4 {
     margin: 2px 0; }
 
-.register input.ng-invalid {
+.register input.ng-invalid.ng-dirty {
   border: 1px solid #FF5C50; }
 
-.register input.ng-pristine {
-  border: 1px solid #ddd; }
+.register input.ng-pristine.ng-invalid {
+  border: none; }
+
+.ng-pristine .ng-invalid-required {
+  box-shadow: none; }
 
 button.create-account[disabled='disabled'] {
   background: #a3a3a3; }
@@ -443,6 +471,9 @@ button.create-account[disabled='disabled'] {
 
 .inline {
   display: inline; }
+
+.italic {
+  font-style: italic; }
 
 .center {
   text-align: center;
@@ -459,6 +490,9 @@ button.create-account[disabled='disabled'] {
 
 .white {
   color: #fff; }
+
+.margin {
+  margin: 10px 0; }
 
 .block {
   display: block; }

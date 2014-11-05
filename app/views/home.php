@@ -92,8 +92,9 @@
 							<div class="col-sm-4 auth" ng-controller="modalController">
 
 									<div ng-cloak ng-show="!user">
-										<h4 class="uppercase" ng-click="registerOpen('md'); getCategories() ">Create An Account</h4>
-										<h4 class="uppercase" ng-click="loginOpen('md')">Sign in</h4>
+										<h4 class="proxima-light" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
+										<h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
+										<h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
 									</div>
 				
 									

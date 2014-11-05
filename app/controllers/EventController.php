@@ -24,6 +24,8 @@ class EventController extends BaseController {
 
 			->take(10)->get();
 
+		return $getClosest;	
+
 
 		//DO NOT REMOVE CODE BELOW
 		//	
@@ -47,7 +49,7 @@ class EventController extends BaseController {
 
 		// return $returnArray;
 
-			return $getClosest;
+			
 		
 	}
 
