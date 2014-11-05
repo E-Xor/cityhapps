@@ -132,7 +132,7 @@ cityHapps.factory('voteService', function(){
 cityHapps.factory('getEvents', function($http){
 	return {
 		events : function() {
-			return $http.get('/events?page=1').success(function(data) {
+			return $http.get('/events').success(function(data) {
 				//console.log(data);
 			});
 		}
@@ -770,8 +770,8 @@ cityHapps.config(function($routeProvider, $locationProvider){
 });
 
 
-cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal',
-	function ($scope, GoogleMapApi, getEvents, $modal) {
+cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal', '$log', '$http',
+	function($scope, GoogleMapApi, getEvents, $modal, $log, $http) {
 	
 	//handle tabs inside mapController
 
@@ -821,9 +821,6 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 	//end sloppy code re-use
 
 		var drawEvents = function(data){
-
-
-
 			
 			$scope.mapMarkerModal = function(data) {
 
@@ -833,19 +830,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 					controller: 'mapEventModalInstanceController',
 					resolve: {
 						data: function() {
-							// $scope.mapMarkerModalData = [];
-							// 	alert("firing");
-							
-							// for (var i = 0; i < $scope.mapMarkerEvents.length; i++) {
-								
-							// 	$scope.mapMarkerModalData.push($scope.mapMarkerEvents[i]);
-							// }
-							
-							// console.log(JSON.stringify($scope.mapMarkerModalData));
-							// return $scope.mapMarkerModalData;
-
 							return data;
-
 						}		
 					}
 				});
@@ -893,8 +878,6 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 		getEvents.events().success(drawEvents);
 
-
-
 		$scope.iconPath = function() {
 			return "/img/marker.png";
 		}
@@ -905,34 +888,41 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			}
 		}
 
-
-		$scope.dragging = function() {
-			alert('we are dragging the map');
-		}
-
 		$scope.map = {
 			center: {
 				latitude: 33.7550,
 				longitude: -84.3900
 			},
-			zoom: 13, 
-			dragging: 'true'
-		};
+			zoom: 14, 
+			events: {
+				tilesloaded: function (map) {
+					$scope.$apply(function () {
+						$log.info('this is the map instance', map);
+						$scope.mapInstance = map;
+						console.log($scope.mapInstance);
+					});
+				}, 
+				dragend: function(){
+					$log.info($scope.map.center);
 
-		$scope.dragging = '';
+					$http.post('/geoEvents', $scope.map.center)
+						.success(function(newData){
+							$log.info(newData);
+							$scope.tabEvents = newData;
 
-		if ($scope.map.dragging == true) {
-			alert("dragging");
-		}
+							$scope.markers = [];
 
-		$scope.mapEvents = {
-			'alert' : alert('great'),
-			dragstart : function(returnVal) {
-				alert('wow');
+								for(var i=0; i < newData.length; i++) {
+									$scope.markers.push(newData[i]);
+								}
+							// getEvents.events().success(drawEvents);
+						});
+				}
 			}
-		}
-		
 
+			
+		};
+	
 }]);
 
 cityHapps.controller('calViewController', function($scope){

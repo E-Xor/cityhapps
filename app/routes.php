@@ -33,6 +33,8 @@ Route::get('testEvents', 'EventController@testEvents'); // TODO: Kill this one i
 
 
 Route::get('events', 'EventController@events');
+Route::post('geoEvents', 'EventController@geoEvents');
+
 Route::get('eventfulEvents', 'EventfulController@events');
 Route::get('activeEvents', 'ActiveController@events');
 Route::get('meetupEvents', 'MeetupController@events');
