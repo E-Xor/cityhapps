@@ -5,27 +5,38 @@ class EventController extends BaseController {
 
 	public function events() {
 
-		// $events = EventRecord::paginate(10);
-
 		$events = EventRecord::all()->toJson();
 		return $events;
 	}
+
+	public function eventsPaged() {
+
+		$events = EventRecord::paginate(10);
+		return $events;
+
+	}
+
 
 	public function geoEvents() {
 
 		$currentLat = Input::get('latitude');
 		$currentLong = Input::get('longitude');
 
-			$getClosest = DB::table('events')
-				->where('latitude', '<', $currentLat)->orderBy('latitude', "desc")
-				->orWhere('latitude', '>', $currentLat)->orderBy('latitude', "asc")
-				->orWhere('longitude', '<', $currentLong)->orderBy('longitude', "desc")
-				->orWhere('longitude', '>', $currentLong)->orderBy('longitude', "asc")
+		// 	$getClosest = DB::table('events')
+		// 		->where('latitude', '<', $currentLat)->orderBy('latitude', "desc")
+		// 		->orWhere('latitude', '>', $currentLat)->orderBy('latitude', "asc")
+		// 		->orWhere('longitude', '<', $currentLong)->orderBy('longitude', "desc")
+		// 		->orWhere('longitude', '>', $currentLong)->orderBy('longitude', "asc")
 
-			->take(10)->get();
+		// 	->take(10)->get();
 
-		return $getClosest;	
+		
 
+		$findClosest = Haversine::closestCoords($currentLat, $currentLong);
+
+		// DB::enableQueryLog();
+		
+		return $findClosest;
 
 		//DO NOT REMOVE CODE BELOW
 		//	

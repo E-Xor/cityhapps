@@ -21,8 +21,11 @@
 						    <span ng-if="register.email.$error.ngRemoteValidate" >
 						        This email already exists, choose another please.
 						    </span>
+							<span ng-if="register.password.$error.minlength" >
+						        Please use a minumum of 8 characters.
+						    </span>
 
-						<input type="password" placeholder="Password" required class="registerPassword block" ng-model="formData.password">
+						<input type="password" placeholder="Password" name="password" ng-minlength='8' required class="registerPassword block" ng-model="formData.password">
 						
 						<input type="password" placeholder="Re-enter Password" name="password2" required ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "class="registerPassword2 block" ng-model="formData.password2">
 

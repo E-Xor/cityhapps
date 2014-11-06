@@ -64,18 +64,10 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 			}
 
 			$scope.eventData[i].upvoted = "";
-
-			//console.log($scope.slideGroup);
 			
 		}
 
-		$scope.vote = voteService.vote;
-
-		console.log(voteService.vote);
-
-		$scope.eventModal = function(data, num) {
-
-			alert(voteService.vote);
+		$scope.eventModal = function(data, num, vote) {
 
 			$modal.open({
 				templateUrl: "templates/eventModal.html",
@@ -88,7 +80,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 						return num;
 					},
 					vote : function() {
-						return voteService.vote;
+						return vote;
 					} 	
 				}
 			});
@@ -171,9 +163,7 @@ cityHapps.controller('appController', ['$scope', 'authService', 'registerDataSer
 			$scope.upVote = function(event, num, vote) {
 				alert("This" + JSON.stringify(event[num])  + "has been upvoted");
 
-				voteService.vote = vote;
-				alert(voteService.vote);
-
+				// voteService.vote = vote;
 
 				//needs to be broken into a factory/ service soon
 				$http({
@@ -579,18 +569,22 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
 		if (num === null) {
 			$scope.data = data;
-			// $scope.data.vote = voteService.vote;
+			// $scope.data.status = voteService.vote;
 			
 		} else {
 			$scope.data = data[num];	
 			// $scope.data.vote = voteService.vote;
 		}	
+
+		$scope.vote = {};
+
+		//THIS IS WORKING AND REFLECTING VOTE IN MODAL, NEED TO DO THE OPPOSITE
+		//The 'vote' service being registered in the controller is what is being resolved by firing the modal, 
+		//thus giving the new template access to it
+
+
+		$scope.vote.status = vote;
 		
-		alert('eventModalInstanceController');
-		console.log(JSON.stringify(vote));
-
-		$scope.vote = voteService.getData();
-
 		$scope.ok = function () {
 			$modalInstance.close($scope.selected.item);
 		};
@@ -606,8 +600,6 @@ cityHapps.controller("mapEventModalInstanceController", ["$scope", "$modalInstan
 			
 		$scope.data = data;
 
-		$scope.vote = voteService.vote;
-		
 		console.log(data);
 
 		$scope.ok = function () {
@@ -868,6 +860,36 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				});
 			};
 		};
+
+		var pageCount = 0
+		$scope.getNextEvents = function() {
+			pageCount++;
+			$scope.tabEvents = {};
+
+			$http.get('/eventsPaged?page='+ pageCount).success(function(pagedEvents){
+				$log.info(pagedEvents.data);
+				$scope.tabEvents = pagedEvents.data;
+			});
+		}
+
+		$scope.getPrevEvents = function() {
+			pageCount--;
+
+			if (pageCount < 1) {
+				$scope.disablePrev = true;
+			}
+
+			// $scope.tabEvents = {};
+
+			$http.get('/eventsPaged?page='+ pageCount).success(function(pagedEvents){
+				$log.info(pagedEvents.data);
+				$scope.tabEvents = pagedEvents.data;
+
+				// return $scope.tabEvents;
+			});
+		}
+
+		$scope.disablePrev = {}
 
 		getEvents.events().success(drawEvents);
 

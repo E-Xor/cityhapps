@@ -55,6 +55,9 @@ html {
   /* IE6-9 */
   margin-top: 25px; }
 
+.grey-wide-map {
+  background: rgba(0, 0, 0, 0.35); }
+
 ::-webkit-input-placeholder {
   color: #fff;
   font-size: 1.2em;
@@ -416,6 +419,19 @@ html {
   margin: 40px auto 0;
   padding: 0 5%;
   max-width: 1170px; }
+  .view-select.map {
+    margin: 0 auto; }
+
+.map-ctrl {
+  padding: 25px 40px;
+  color: #47ACF4;
+  text-transform: uppercase; }
+  .map-ctrl.prev-ctrl {
+    background: url("/img/prevIcon.png") 20px 25px/11px 18px no-repeat;
+    cursor: pointer; }
+  .map-ctrl.next-ctrl {
+    background: url("/img/nextIcon.png") 85px 25px/11px 18px no-repeat;
+    cursor: pointer; }
 
 .map-margin {
   margin: 40px 0 0 0; }
@@ -469,6 +485,8 @@ html {
   height: 50px;
   margin: 10px;
   background: url("/img/marker.png") no-repeat 0 0/27px 37px; }
+  .event-number:nth-child(10) {
+    padding: 5px; }
 
 .map-event {
   padding: 10px 20px;

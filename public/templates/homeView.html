@@ -48,7 +48,7 @@
 			<slide class="col-sm-12" ng-repeat="event in slideGroup">
 				<div class="col-sm-3 event">
 						<div class="event-inner">
-								<div ng-click="eventModal(event, 'first')">
+								<div ng-click="eventModal(event, 'first', vote.status)">
 
 									<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
 										<!-- <img ng-src=""> -->
@@ -65,17 +65,17 @@
 								<div ng-class="{'dislike-icon': !isActiveDown, 'dislike-icon active': isActiveDown }" ng-init="isActiveDown = false" ng-click="downVote(event, 'first'); ">
 								</div> -->
 								    <div class="btn-group">
-								        <label class="like-icon" ng-model="vote" ng-click="upVote(event, 'first', 'true')" btn-radio="'upVote'"></label>
+								        <label class="like-icon" ng-model="vote.status" ng-click="upVote(event, 'first', vote.status)" btn-radio="'upVote'"></label>
 
-								        <label class="dislike-icon" ng-model="vote" ng-click="downVote(event, 'first', 'true')" btn-radio="'downVote'"></label>
+								        <label class="dislike-icon" ng-model="vote.status" ng-click="downVote(event, 'first', vote.status)" btn-radio="'downVote'"></label>
 								    </div>
-								    {{vote}}
+								    {{vote.status}}
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-3 event" > 
 						<div class="event-inner">
-								<div ng-click="eventModal(event, 'second', event.second.vote)">	
+								<div ng-click="eventModal(event, 'second', vote.status)">	
 									<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 125px;">
 										<!-- <img ng-src=""> -->
 									</div>
@@ -233,87 +233,6 @@
 					<div class="col-sm-3 event" ng-click="eventModal(event, 'third')">
 						<div class="event-inner">
 							<div class="event-image" style="background-image: url('{{event.third.event_image_url}'); background-size: cover; height: 125px;">
-								<!-- <img ng-src=""> -->
-							</div>
-							<div class="event-details">
-								<h4 class="">{{event.third.event_name | limitTo: 30}} </h4>
-								<p>{{event.third.start_time}}</p>
-								<p>{{event.third.venue_name | limitTo: 40}}</p>
-							</div>
-							<div class="icons">
-								<div class="like-icon" ng-click="upVote(event, 'third')">
-								</div>
-								<div class="dislike-icon" ng-click="downVote(event, 'third')">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3 event" ng-click="eventModal(event, 'fourth')">
-						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 125px;">
-								<!-- <img ng-src=""> -->
-							</div>
-							<div class="event-details">
-								<h4 class="">{{event.fourth.event_name | limitTo: 30}}</h4>
-								<p>{{event.fourth.start_time}}</p>
-								<p>{{event.fourth.venue_name | limitTo: 40}}</p>
-							</div>
-							<div class="icons">
-								<div class="like-icon" ng-click="upVote(event, 'fourth')">
-								</div>
-								<div class="dislike-icon" ng-click="downVote(event, 'fourth')">
-								</div>
-							</div>
-						</div>
-					</div>
-				</slide>
-			</carousel>
-		</div>
-	</div>
-
-	<div class="row event-slider summary">
-		<div>
-			<carousel interval="interval" class="col-sm-12">
-				<slide class="col-sm-12" ng-repeat="event in slideGroup">
-					<div class="col-sm-3 event" ng-click="eventModal(event, 'first')" >
-						<div class="event-inner" >
-							<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
-								<!-- <img ng-src=""> -->
-							</div>
-							<div class="event-details">
-								<h4 class="">{{event.first.event_name }}</h4>
-								<p>{{event.first.start_time}}</p>
-								<p>{{event.first.venue_name | limitTo: 40}}</p>
-							</div>
-							<div class="icons">
-								<div class="like-icon" ng-click="upVote(event, 'first')">
-								</div>
-								<div class="dislike-icon" ng-click="downVote(event, 'first')">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3 event" ng-click="eventModal(event, 'second')"> 
-						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 125px;">
-								<!-- <img ng-src=""> -->
-							</div>
-							<div class="event-details">
-								<h4 class="">{{event.second.event_name | limitTo: 30}}</h4>
-								<p>{{event.second.start_time}}</p>
-								<p>{{event.second.venue_name | limitTo: 40}}</p>
-							</div>
-							<div class="icons">
-								<div class="like-icon" ng-click="upVote(event, 'second')">
-								</div>
-								<div class="dislike-icon" ng-click="downVote(event, 'second')">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3 event" ng-click="eventModal(event, 'third')">
-						<div class="event-inner">
-							<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
 							</div>
 							<div class="event-details">
