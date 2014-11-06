@@ -1,5 +1,5 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
-	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns()]);
+	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch']);
 
 cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, $window) {
 
@@ -14,7 +14,18 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		return strTime;		
 	};
 
-		// getEvents.events();
+
+		$scope.mobile = function() {
+			if ($window.innerWidth <= 768 ) {
+
+				return true;
+			} else {
+
+				return false;
+			}
+		};
+
+		getEvents.events();
 
 		var eventSuccess = function(data) {
 
@@ -32,26 +43,9 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 		$scope.isMobile = '';
 
-		$scope.mobile = function() {
-			if ($window.innerWidth <= 768 ) {
-
-				return true;
-			} else {
-				return false;
-			}
-		};
-
-		
-		if ($window.innerWidth <= 768 ) {
-			slideCount = 1;
-			console.log(slideCount);
-		} else {
-			slideCount = 4;
-		}
-
 		// console.log(slideCount);
 
-		for (i = 0; i < $scope.eventData.length; i += slideCount) {
+		for (i = 0; i < $scope.eventData.length; i += 4) {
 
 			var slides = {
 				'first' : $scope.eventData[i],
@@ -60,10 +54,19 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 				'fourth' : $scope.eventData[i + 3]
 			};
 
+			var mobileSlides = $scope.eventData[i];
+		
+			if ($window.innerWidth <= 768 ) {
+				$scope.slideGroup.push(mobileSlides);
+				
+			} else {
+				$scope.slideGroup.push(slides);
+			}
+
 			$scope.eventData[i].upvoted = "";
 
 			//console.log($scope.slideGroup);
-			$scope.slideGroup.push(slides);
+			
 		}
 
 		$scope.vote = voteService.vote;

@@ -67,7 +67,7 @@
 
 
 	
-	<div class="overlay">	
+	<div class="bg-image">	
 		<div class="main-container proxima" ng-animate=" 'animate' ">
 
 
@@ -123,6 +123,7 @@
 	<!-- Non ng- scripts n thangs -->
 	<script src="/js/angular-route.min.js"></script>
 	<script src="/js/angular-facebook.js"></script>
+	<script src="/js/angular-touch.js"></script>
 	<script src="/js/http-auth-interceptor.js"></script>
 	<script src="/js/ngRemoteValidate.0.4.1.min.js"></script>
 

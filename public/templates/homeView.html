@@ -11,44 +11,43 @@
 
 <div class="row event-slider">
 	<div>
-		<carousel interval="interval" class="col-sm-12">
+		<!-- <carousel interval="interval" class="col-sm-12"> -->
 
 		<!-- MOBILE / PHONE slide view -->
-	<!-- 	<div ng-show="mobile()">
-
-			<slide class="col-sm-12" ng-repeat="event in slideGroup">			
-				<div class="col-sm-3 event">
-					<div class="event-inner" >
-							<div ng-click="eventModal(event)">
-								<div class="event-image" style="background-image: url('{{event.first.image.block250.url}}'); background-size: cover; height: 125px;">
-									
+		
+		<div ng-if='mobile()'>
+			<carousel interval="interval" class="col-sm-12">
+				<slide class="col-sm-12" ng-repeat="event in slideGroup | limitTo: 10">			
+					<div class="col-sm-3 event">
+						<div class="event-inner" >
+								<div ng-click="eventModal(event)">
+									<div class="event-image" style="background-image: url('{{event.event_image_url}}'); background-size: cover; height: 125px;">
+										
+									</div>
+									<div class="event-details">
+										<h4 class="">{{event.event_name }}</h4>
+										<p>{{event.start_time}}</p>
+										<p>{{event.venue_name | limitTo: 40}}</p>
+									</div>
 								</div>
-								<div class="event-details">
-									<h4 class="">{{event.first.title }}</h4>
-									<p>{{event.first.start_time}}</p>
-									<p>{{event.first.venue_name | limitTo: 40}}</p>
+							<div class="icons">
+								<div ng-class="{'like-icon' : !upvoted, 'like-icon active': upvoted }" ng-init="upvoted = false" ng-click="upVote(event, 'first'); ">
 								</div>
-							</div>
-						<div class="icons">
-							<div ng-class="{'like-icon' : !upvoted, 'like-icon active': upvoted }" ng-init="upvoted = false" ng-click="upVote(event, 'first'); ">
-							</div>
-							<div ng-class="{'dislike-icon': !isActiveDown, 'dislike-icon active': isActiveDown }" ng-init="isActiveDown = false" ng-click="downVote(event, 'first'); ">
+								<div ng-class="{'dislike-icon': !isActiveDown, 'dislike-icon active': isActiveDown }" ng-init="isActiveDown = false" ng-click="downVote(event, 'first'); ">
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</slide>
-
-		</div> -->
+				</slide>
+			<carousel>
+		</div>
 		
-
-
-
-		<!-- <div ng-show="!mobile()"> -->
-
+	<div ng-if="!mobile()">
+					
+			<carousel interval="interval" class="col-sm-12">
 			<slide class="col-sm-12" ng-repeat="event in slideGroup">
 				<div class="col-sm-3 event">
-						<div class="event-inner" >
+						<div class="event-inner">
 								<div ng-click="eventModal(event, 'first')">
 
 									<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
@@ -132,10 +131,13 @@
 					</div>
 			</slide>
 		</carousel>
+		</div>
 	</div>
 </div>
 
+
 <div class="grey-wide">
+	<div class="day-slider-border"></div>
 	<div class="day-slider-container">
 		<div class="row day-slider">
 			<div class="col-sm-12 center">
@@ -152,6 +154,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="day-slider-border"></div>
 
 
 	<div class="row view-select">
@@ -185,6 +188,7 @@
 			</div>
 		</div>
 	</div>
+
 
 	<div class="row event-slider summary">
 		<div>
@@ -266,6 +270,7 @@
 			</carousel>
 		</div>
 	</div>
+
 	<div class="row event-slider summary">
 		<div>
 			<carousel interval="interval" class="col-sm-12">
