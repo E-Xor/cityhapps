@@ -11,4 +11,9 @@ class Eventful extends Eloquent {
 
 	protected $table = 'eventful';
 
+	public function eventfulCategories()
+	{
+		return $this->belongsToMany('EventfulCategory', 'eventful_eventfulCategories', 'eventful_id', 'eventfulCategories_id');
+	}
+
 }

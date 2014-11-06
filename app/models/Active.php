@@ -11,4 +11,9 @@ class Active extends Eloquent {
 
 	protected $table = 'active';
 
+	public function activeCategories()
+	{
+		return $this->belongsToMany('ActiveCategory', 'active_activeCategories', 'active_id', 'activeCategories_id');
+	}
+
 }

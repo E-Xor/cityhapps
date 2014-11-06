@@ -46,6 +46,8 @@ class EventbriteController extends BaseController {
 		$jsonArray = objectToArray($jsonObj);
 
 		$total = count($jsonArray['events']);
+
+		$eventbriteCategories = EventbriteCategory::all();
 		
 		for ($i = 1; $i < $total; $i++ ) {
 			
@@ -93,7 +95,38 @@ class EventbriteController extends BaseController {
 				$eventRecord->longitude				=	$jsonArray['events'][$i]['venue']['address']['longitude'];
 				
 				$eventRecord->save();
+
+				// EventbriteCategories
+				if ($jsonArray['events'][$i]['category'] != null) {
+	
+					$eventbriteCategoryID = null;
+
+					foreach ($eventbriteCategories as $eventbriteCategory) {
+						if (strtolower($eventbriteCategory->name) == strtolower($jsonArray['events'][$i]['category']['short_name'])) {
+							$eventbriteCategoryID = $eventbriteCategory->id;
+							break;
+						}
+					}
+					
+					if ($eventbriteCategoryID != null) {
+						$checkExistingCategories = EventbriteEventbriteCategory::where('eventbriteCategories_id', '=', $eventbriteCategoryID)->where('eventbrite_id', '=', $eventRecord->id);
+						$categoryRecords = $checkExistingCategories->get();
+						
+						if ($categoryRecords->count() < 1) {
+							$categoryRecords->push(new EventbriteEventbriteCategory);
+						}
+
+						foreach ($categoryRecords as $categoryRecord) {
+							$categoryRecord->eventbrite_id = $eventRecord->id;
+							$categoryRecord->eventbriteCategories_id = $eventbriteCategoryID;
+						}
+
+						$categoryRecord->save();
+					}
+				}
 			}
+
+
 
 		}
 

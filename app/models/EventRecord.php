@@ -16,4 +16,9 @@ class EventRecord extends Eloquent {
 		return $this->belongsToMany('User', 'user_event', 'event_id', 'user_id');
 	}
 
+	public function categories()
+	{
+		return $this->belongsToMany('Category', 'event_category', 'event_id', 'category_id');
+	}
+
 }

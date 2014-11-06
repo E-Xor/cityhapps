@@ -11,4 +11,9 @@ class Meetup extends Eloquent {
 
 	protected $table = 'meetup';
 
+	public function meetupCategories()
+	{
+		return $this->belongsToMany('MeetupCategory', 'meetup_meetupCategories', 'meetup_id', 'meetupCategories_id');
+	}
+
 }

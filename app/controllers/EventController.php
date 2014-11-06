@@ -107,6 +107,23 @@ class EventController extends BaseController {
 				$eventRecord->longitude = $event->lon;
 
 				$eventRecord->save();
+
+				foreach ($event->activeCategories as $category) {
+
+					$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+					$categoryRecords = $categoryExisting->get();
+					
+					if ($categoryRecords->count() < 1) {
+						$categoryRecords->push(new EventCategory);
+					}
+
+					foreach ($categoryRecords as $categoryRecord) {
+						$categoryRecord->category_id = $category->category_id;
+						$categoryRecord->event_id = $eventRecord->id;
+						$categoryRecord->save();
+					}
+				}
+
 			}
 
 		} 
@@ -147,6 +164,22 @@ class EventController extends BaseController {
 				$eventRecord->longitude = $event->longitude;
 
 				$eventRecord->save();
+
+				foreach ($event->eventbriteCategories as $category) {
+
+					$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+					$categoryRecords = $categoryExisting->get();
+					
+					if ($categoryRecords->count() < 1) {
+						$categoryRecords->push(new EventCategory);
+					}
+
+					foreach ($categoryRecords as $categoryRecord) {
+						$categoryRecord->category_id = $category->category_id;
+						$categoryRecord->event_id = $eventRecord->id;
+						$categoryRecord->save();
+					}
+				}
 			}
 
 		} 
@@ -187,6 +220,22 @@ class EventController extends BaseController {
 				$eventRecord->longitude = $event->longitude;
 
 				$eventRecord->save();
+
+				foreach ($event->eventfulCategories as $category) {
+
+					$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+					$categoryRecords = $categoryExisting->get();
+					
+					if ($categoryRecords->count() < 1) {
+						$categoryRecords->push(new EventCategory);
+					}
+
+					foreach ($categoryRecords as $categoryRecord) {
+						$categoryRecord->category_id = $category->category_id;
+						$categoryRecord->event_id = $eventRecord->id;
+						$categoryRecord->save();
+					}
+				}
 			}
 
 		} 
@@ -228,6 +277,22 @@ class EventController extends BaseController {
 				$eventRecord->longitude = $event->lon;
 
 				$eventRecord->save();
+
+				foreach ($event->meetupCategories as $category) {
+
+					$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+					$categoryRecords = $categoryExisting->get();
+					
+					if ($categoryRecords->count() < 1) {
+						$categoryRecords->push(new EventCategory);
+					}
+
+					foreach ($categoryRecords as $categoryRecord) {
+						$categoryRecord->category_id = $category->category_id;
+						$categoryRecord->event_id = $eventRecord->id;
+						$categoryRecord->save();
+					}
+				}
 			}
 
 		} 

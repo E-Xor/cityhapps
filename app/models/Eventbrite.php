@@ -11,4 +11,9 @@ class Eventbrite extends Eloquent {
 
 	protected $table = 'eventbrite';
 
+	public function eventbriteCategories()
+	{
+		return $this->belongsToMany('EventbriteCategory', 'eventbrite_eventbriteCategories', 'eventbrite_id', 'eventbriteCategories_id');
+	}
+
 }

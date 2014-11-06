@@ -8,7 +8,7 @@ class ActiveController extends BaseController {
 		// Active.com API Search v2 (http://api.amp.active.com/v2/search)
 		// API Key = 'f4kzrwzqywvtcyntepb9zt5f';
 
-		$event = file_get_contents('http://api.amp.active.com/v2/search/?near=Atlanta%2CGA%2CUS&current_page=1&per_page=10&sort=distance&exclude_children=true&api_key=f4kzrwzqywvtcyntepb9zt5f');
+		$event = file_get_contents('http://api.amp.active.com/v2/search/?near=Atlanta%2CGA%2CUS&current_page=1&per_page=100&sort=distance&exclude_children=true&api_key=f4kzrwzqywvtcyntepb9zt5f');
 
 		return $event;
 	}
@@ -40,12 +40,14 @@ class ActiveController extends BaseController {
 		// Active.com API Events Search (http://api.amp.active.com/v2/search)
 		// API Key = 'f4kzrwzqywvtcyntepb9zt5f';
 
-		$events = file_get_contents('http://api.amp.active.com/v2/search/?near=Atlanta%2CGA%2CUS&current_page=1&per_page=10&sort=distance&exclude_children=true&api_key=f4kzrwzqywvtcyntepb9zt5f');
+		$events = file_get_contents('http://api.amp.active.com/v2/search/?near=Atlanta%2CGA%2CUS&current_page=1&per_page=1000&sort=distance&exclude_children=true&api_key=f4kzrwzqywvtcyntepb9zt5f');
 
 		$jsonObj = json_decode( $events );  
 		$jsonArray = objectToArray($jsonObj);
 
 		$total = count($jsonArray['results']);
+
+		$activeCategories = ActiveCategory::all();
 		
 		for ($i = 1; $i < $total; $i++ ) {
 			
@@ -105,6 +107,39 @@ class ActiveController extends BaseController {
 				$eventRecord->lon				=	$jsonArray['results'][$i]['place']['geoPoint']['lon'];
 				
 				$eventRecord->save();
+
+				// ActiveCategories
+				if (count($jsonArray['results'][$i]['assetCategories']) > 0) {
+
+					for ($j = 0; $j < count($jsonArray['results'][$i]['assetCategories']); $j++) {
+						
+						$activeCategoryID = null;
+
+						foreach ($activeCategories as $activeCategory) {
+							if (strtolower($activeCategory->name) == strtolower($jsonArray['results'][$i]['assetCategories'][$j]['category']['categoryName'])) {
+								$activeCategoryID = $activeCategory->id;
+								break;
+							}
+						}
+						
+						if ($activeCategoryID != null) {
+							$checkExistingCategories = ActiveActiveCategory::where('activeCategories_id', '=', $activeCategoryID)->where('active_id', '=', $eventRecord->id);
+							$categoryRecords = $checkExistingCategories->get();
+							
+							if ($categoryRecords->count() < 1) {
+								$categoryRecords->push(new ActiveActiveCategory);
+							}
+
+							foreach ($categoryRecords as $categoryRecord) {
+								$categoryRecord->active_id = $eventRecord->id;
+								$categoryRecord->activeCategories_id = $activeCategoryID;
+							}
+
+							$categoryRecord->save();
+						}
+					}
+				}
+
 			}
 
 		}
