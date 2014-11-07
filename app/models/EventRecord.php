@@ -21,6 +21,39 @@ class EventRecord extends Eloquent {
 		return $this->belongsToMany('Category', 'event_category', 'event_id', 'category_id');
 	}
 
+	public static function selectEvents($eventParams) {
+		/*
+		eventID, 
+		eventName, 
+		venueName, 
+		venueAddress, 
+		venueCity, 
+		venueState, 
+		venueZip, 
+		description, 
+		startTime, 
+		startDate, 
+		endDate, 
+		latitude, 
+		longitude, 
+		category, 
+		createdAt, 
+		updatedAt, 
+		source, 
+		pageSize, 
+		pageCount
+		*/
+
+		//$events = EventRecord::where('id', '=', $eventParams['eventID'])->get();
+		$events = EventRecord::eventName($eventParams['eventName'])->get();
+		return $events;
+
+	}
+
+	public function scopeEventName($query, $eventName) {
+		return $query->where('event_name', 'like', '%'.$eventName.'%');
+	}
+
 	public static function storeEvents() {
 
 		Active::storeEvents();
