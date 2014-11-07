@@ -34,7 +34,7 @@ Route::get('testEvents', 'EventController@testEvents'); // TODO: Kill this one i
 
 Route::get('events', 'EventController@events');
 Route::get('eventsPaged', 'EventController@eventsPaged');
-
+Route::post('dayEvents', 'EventController@dayEvents');
 Route::post('geoEvents', 'EventController@geoEvents');
 
 Route::get('eventfulEvents', 'EventfulController@events');

@@ -28,7 +28,7 @@
          *  @param float $lng longitude of the point of interest
          *  @return array
          */
-        public static function closestCoords( $lat, $lng, $max_distance = 2, $max_locations = 10, $units = 'miles', $fields = false )
+        public static function closestCoords( $lat, $lng, $max_distance = 10, $max_locations = 10, $units = 'miles', $fields = false )
         {
             /*
              *  Allow for changing of units of measurement
@@ -47,30 +47,43 @@
              *  Support the selection of certain fields
              */
             if( ! $fields ) {
-                $fields =  '*';
+                $fields =  array('id', 'url', 'source_id', 'latitude', 'longitude', 'event_name', 'venue_name', 'address', 
+                                'description', 'start_time', 'event_image_url', 
+                                );
             }
             /*
              *  Generate the select field for disctance
              */
-            $distance_select = sprintf(
-                    "( %d * acos( cos( radians(%s) ) " .
-                            " * cos( radians( lat ) ) " .
-                            " * cos( radians( lng ) - radians(%s) ) " .
-                            " + sin( radians(%s) ) * sin( radians( lat ) ) " .
-                        ") " . 
-                    ") " . 
-                    "AS distance",
-                    $gr_circle_radius,               
-                    $lat,
-                    $lng,
-                    $lat
-                );
+                   $distance_select = sprintf(           
+                        "ROUND(( %d * acos( cos( radians(%s) ) " .
+                                " * cos( radians( latitude ) ) " .
+                                " * cos( radians( longitude ) - radians(%s) ) " .
+                                " + sin( radians(%s) ) * sin( radians( latitude ) ) " .
+                            " ) " . 
+                        ")
+                        , 2 ) " . 
+                        "AS distance
+                        ",
+                        $gr_circle_radius,               
+                        $lat,
+                        $lng,
+                        $lat
+                       );
 
-            return DB::table('events')
-                ->having( 'distance', '<', 20 )
-                ->take( $max_locations )
-                ->orderBy( 'distance', 'asc' )
-                ->get( array($fields, $distance_select) );                
+            $data = DB::table('events')
+                ->select( DB::raw( implode( ',' ,  $fields ) . ',' .  $distance_select  ) )
+                ->having( 'distance', '<=', $max_distance )
+                ->orderBy( 'distance', 'ASC' )
+                ->get();
+
+            return $data;
+
+
+            // return DB::table('events')
+            //     ->having( 'distance', '<', 20 )
+            //     ->take( $max_locations )
+            //     ->orderBy( 'distance', 'asc' )
+            //     ->get( array($fields, $distance_select) );                
         
             // dd(DB::getQueryLog());    
 

@@ -1,7 +1,14 @@
 <?php 
 
+// require 'vendor/autoload.php';
+
+use Carbon\Carbon;
+
+
 
 class EventController extends BaseController { 
+
+	public static $dayCount = 0;	
 
 	public function events() {
 
@@ -22,47 +29,28 @@ class EventController extends BaseController {
 		$currentLat = Input::get('latitude');
 		$currentLong = Input::get('longitude');
 
-		// 	$getClosest = DB::table('events')
-		// 		->where('latitude', '<', $currentLat)->orderBy('latitude', "desc")
-		// 		->orWhere('latitude', '>', $currentLat)->orderBy('latitude', "asc")
-		// 		->orWhere('longitude', '<', $currentLong)->orderBy('longitude', "desc")
-		// 		->orWhere('longitude', '>', $currentLong)->orderBy('longitude', "asc")
-
-		// 	->take(10)->get();
-
-		
-
 		$findClosest = Haversine::closestCoords($currentLat, $currentLong);
-
-		// DB::enableQueryLog();
 		
-		return $findClosest;
-
-		//DO NOT REMOVE CODE BELOW
-		//	
-
-
-		// 	$getClosestLatOver = EventRecord::where('latitude', '>', $currentLat)->take(3)->get();
-
-		// 		$getClosestLat = array();
-		// 		array_push($getClosestLat, $getClosestLatUnder, $getClosestLatOver);
-
-		// 	$getClosestLongUnder = EventRecord::where('longitude', '<', $currentLong)->take(3)->get();
-		// 	$getClosestLongOver = EventRecord::where('longitude', '>', $currentLong)->take(3)->get();
-
-		// 		$getClosestLong = array();
-		// 		array_push($getClosestLong, $getClosestLongUnder, $getClosestLongOver);
-		
-			
-		// $returnArray = array();
-		// array_push($returnArray, $getClosestLat, $getClosestLong);
-
-
-		// return $returnArray;
-
-			
-		
+		return $findClosest;		
 	}
+
+	
+
+	public function dayEvents() {
+
+		$count = Input::get('next');
+
+		$today = Carbon::today('America/Chicago')->addDays($count);
+		$tomorrow = Carbon::tomorrow('America/Chicago')->addDays($count);	
+
+		$timeEvents = EventRecord::where('start_time', ">", $today )
+									->where('start_time', '<', $tomorrow)
+									->get();
+
+		return $timeEvents;
+
+	}
+
 
 	public function storeEvents() {
 

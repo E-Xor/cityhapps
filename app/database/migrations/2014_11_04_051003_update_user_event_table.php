@@ -12,7 +12,7 @@ class UpdateUserEventTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::drop('user_event');
+		// Schema::drop('user_event');
 
 		Schema::create('user_event', function(Blueprint $table)
 		{

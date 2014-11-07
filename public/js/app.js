@@ -93,16 +93,31 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 	getEvents.events().success(eventSuccess);
 
 	$scope.now = moment().format("dddd, MMMM Do");
+	$scope.nowPost = moment().format();
 
 		var next = 0;
+
 		$scope.nextDay = function() {
+			
 			next += 1;
 			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
+
+			$http.post('/dayEvents', {'next' : next})
+				.success(function(data){
+					$scope.eventData = data;
+					eventSuccess(data);
+			});
 		};
 		
 		$scope.prevDay = function() {
 			next -= 1;
 			$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
+			
+			$http.post('/dayEvents', {'next' : next})
+				.success(function(data){
+					$scope.eventData = data;	
+					eventSuccess(data);
+			});
 		};
 
 		
@@ -894,7 +909,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		getEvents.events().success(drawEvents);
 
 		$scope.iconPath = function() {
-			return "/img/marker.png";
+			return "../img/marker.png";
 		}
 
 		$scope.idKey = function() {

@@ -549,17 +549,26 @@ body {
 	}
 }
 
+.map-ctrls {
+
+}
+
+
 .map-ctrl {
 	padding: 25px 40px;
 	color: #47ACF4;
 	text-transform: uppercase;
 	&.prev-ctrl {
-		background: url('/img/prevIcon.png') 20px 25px/11px 18px no-repeat;
+		background: url('/img/prevIcon.png') #F6EFEE 20px 25px/11px 18px no-repeat;
 		cursor: pointer;
+		position: absolute;
+		left: 0;
 	}
 	&.next-ctrl {
-		background: url("/img/nextIcon.png") 85px 25px/11px 18px no-repeat;
+		background: url("/img/nextIcon.png") #F6EFEE 85px 25px/11px 18px no-repeat;
 		cursor: pointer;
+		position: absolute;
+		right: 0;
 	}
 }
 
