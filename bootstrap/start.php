@@ -26,8 +26,8 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array("cpk.local")
-	// 'local' => array("NowlinCrispyMacbookAir.local")
+	// 'local' => array("cpk.local")
+	'local' => array("NowlinCrispyMacbookAir.local")
 
 ));
 
