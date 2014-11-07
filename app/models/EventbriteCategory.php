@@ -5,26 +5,26 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class User_Event extends Eloquent implements UserInterface, RemindableInterface {
+class EventbriteCategory extends Eloquent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
 	// public $timestamps = false;
 
-	protected $fillable = ['user_id', 'event_id'];
+	protected $fillable = ['category_id', 'name', 'long_name', 'source_category_id'];
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'user_event';
+	protected $table = 'eventbriteCategories';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('id');
+	//protected $hidden = array('id');
 
 }
