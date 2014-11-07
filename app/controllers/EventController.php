@@ -15,8 +15,34 @@ class EventController extends BaseController {
 
 	public function events() {
 
-		$events = EventRecord::all()->toJson();
-		return $events;
+		$eventParams = array();
+
+		$eventID = Input::get('id');
+		$eventName = Input::get('name');
+		$venueName = Input::get('venue_name');
+		$venueAddress = Input::get('venue_address');
+		$venueCity = Input::get('venue_city');
+		$venueState = Input::get('venue_state');
+		$venueZip = Input::get('venue_zip');
+		$description = Input::get('description');
+		$startTime = Input::get('start_time');
+		$startDate = Input::get('start_date');
+		$endDate = Input::get('end_date');
+		$latitude = Input::get('latitude');
+		$longitude = Input::get('longitude');
+		$category = Input::get('category');
+		$createdAt = Input::get('created_at');
+		$updatedAt = Input::get('updated_at');
+		$source = Input::get('source');
+
+		$pageSize = Input::get('page_size');
+		$pageCount = Input::get('page_count');
+
+		$eventParams['eventID'] = $eventID;
+		$eventParams['eventName'] = $eventName;
+
+		$events = EventRecord::selectEvents($eventParams);
+		return json_encode($events);
 	}
 
 	public function eventsPaged() {
