@@ -555,7 +555,6 @@ body {
 
 
 .map-ctrl {
-	padding: 25px 40px;
 	color: #47ACF4;
 	text-transform: uppercase;
 	&.prev-ctrl {
@@ -563,12 +562,16 @@ body {
 		cursor: pointer;
 		position: absolute;
 		left: 0;
+		width: 50%;
+		padding: 25px 40px;
 	}
 	&.next-ctrl {
-		background: url("/img/nextIcon.png") #F6EFEE 85px 25px/11px 18px no-repeat;
+		background: url("/img/nextIcon.png") #F6EFEE 120px 25px/11px 18px no-repeat;
 		cursor: pointer;
 		position: absolute;
 		right: 0;
+		width: 50%;
+		padding: 25px 75px;
 	}
 }
 
@@ -652,6 +655,19 @@ body {
 	h4 {
 		margin: 2px 0;
 	}
+}
+
+
+
+//Calendar Styles
+
+.calendar {
+	max-width: 1170px;
+	margin: 0 auto;
+}
+
+.fc td {
+	background: #fff;
 }
 
 

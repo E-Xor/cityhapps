@@ -10,6 +10,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/fullcalendar.css" />
 	<link rel="stylesheet" href="/css/style.css" />
 
 	<!-- load angular from CDN-->
@@ -69,9 +70,6 @@
 	
 	<div class="bg-image">	
 		<div class="main-container proxima" ng-animate=" 'animate' ">
-
-
-
 			<div class="wide">
 				<div class='row wide-search'>
 					<input type="text" placeholder="Search" class="search-large">
@@ -130,8 +128,10 @@
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="/js/moment.min.js"></script>	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/fullcalendar.js"></script>
+	<script type="text/javascript" src="/js/calendar.js"></script>
 
 	<script src="/js/lodash.min.js"></script>
 	<script src="/js/bluebird.js"></script> 

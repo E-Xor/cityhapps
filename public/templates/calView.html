@@ -1,26 +1,28 @@
-<div class="row view-select">
-	<div class="col-sm-12 view-row">
-		<div class="col-sm-2">
-			All Categories
-				
+<div ng-controller="calController">	
+	<div class="row view-select">
+		<div class="col-sm-12 view-row">
+			<div class="col-sm-2">
+				All Categories
+					
+			</div>	
+			<div class="col-sm-2">
+				Most Recent
+
+			</div>	
+			<div class="col-sm-3 col-sm-offset-5">
+				<a class="list-icon" href=""></a>
+				<a class="map-icon" href="#/map"></a>
+				<a class="cal-icon" href="#/calendar"></a>
+
+			</div>	
 		</div>	
-		<div class="col-sm-2">
-			Most Recent
+	</div>
 
-		</div>	
-		<div class="col-sm-3 col-sm-offset-5">
-			<a class="list-icon" href=""></a>
-			<a class="map-icon" href="#/map"></a>
-			<a class="cal-icon" href="#/calendar"></a>
+	<div class="row	">
+		<div class="calendar">
+			
+			<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="events"></div> 
 
-		</div>	
-	</div>	
-</div>
-
-<div class="row	">
-	<div class="calendar">
-		
-		Calendar View will go here. Use js fullCalendar 
-
+		</div>
 	</div>
 </div>

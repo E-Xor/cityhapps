@@ -1,5 +1,5 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
-	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch']);
+	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch', 'ui.calendar']);
 
 cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, $window) {
 
@@ -98,7 +98,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		var next = 0;
 
 		$scope.nextDay = function() {
-			
+			// debugger;
 			next += 1;
 			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
 
@@ -760,7 +760,7 @@ cityHapps.config(function($routeProvider, $locationProvider){
 			templateUrl: 'templates/mapView.html'
 		})
 		.when("/calendar", {
-			controller: "calViewController",
+			// controller: "calController",
 			templateUrl: "templates/calView.html"
 		})
 		.otherwise({redirectTo: "/"});
@@ -956,7 +956,46 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 	
 }]);
 
-cityHapps.controller('calViewController', function($scope){
+cityHapps.controller('calController', function($scope, getEvents, $http){
+
+	$scope.events = [];
+
+	$http.get('/events').success(function(data){
+
+		for (var i = 0; i < data.length; i++) {
+
+			$scope.data = data;	
+
+			$scope.events.push({
+					title : $scope.data[i].event_name, 
+					start : $scope.data[i].start_time, 
+					end : $scope.data[i].end_time
+			});
+		}
+	});
+
+
+
+	// var eventSuccess = function(data) {		
+
+	// 	for (var i = 0; i < data.length; i++) {
+
+	// 		console.log(data[i].event_name);
+
+	// 		$scope.events.push({
+	// 				title : data[i].event_name, 
+	// 				start : data[i].start_time, 
+	// 				end : data[i].end_time
+	// 		});
+	// 	}
+	// }
+
+	// getEvents.events().success(eventSuccess);
+	console.log($scope.events);
+
+	
+
+	
 
 });
 
