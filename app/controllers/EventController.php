@@ -48,6 +48,7 @@ class EventController extends BaseController {
 
 		$timeEvents = EventRecord::where('start_time', ">", $today )
 									->where('start_time', '<', $tomorrow)
+									->orderBy('start_time', 'asc')
 									->get();
 
 		return $timeEvents;
