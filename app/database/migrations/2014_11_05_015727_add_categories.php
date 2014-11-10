@@ -12,7 +12,7 @@ class AddCategories extends Migration {
 	 */
 	public function up()
 	{
-		DB::table('Categories')->delete();
+		DB::table('categories')->delete();
 
 		Category::create(array('name' => 'Arts, Creative, Culture'));
 		Category::create(array('name' => 'Business & Networking'));

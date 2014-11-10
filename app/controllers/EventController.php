@@ -11,6 +11,20 @@ class EventController extends BaseController {
 
 	public function testEvents() {
 		
+		$testDate = '2014-11-08 20:00:00';
+		echo("Date: " . $testDate . "<br />");
+		echo(date_format(date_create($testDate), "Y-m-d"));
+		//print_r(date_parse($testDate));
+		
+
+		/*
+		$testDate = '1414684800000';
+		$utcOffset = '-14400000';
+		echo("Date: " . $testDate . "<br />");
+		
+		$seconds = ($testDate + $utcOffset) / 1000;
+		echo(date("Y-m-d", $seconds) . " " . date("H:i:s", $seconds));
+		*/
 	}
 
 	public function events() {
