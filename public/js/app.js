@@ -140,7 +140,11 @@ cityHapps.factory('voteService', function(){
 cityHapps.factory('getEvents', function($http){
 	return {
 		events : function() {
-			return $http.get('/events').success(function(data) {
+
+			var today = new Date();
+			var startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+			return $http.get('/events?start_date=' + startDate).success(function(data) {
 				//console.log(data);
 			});
 		}

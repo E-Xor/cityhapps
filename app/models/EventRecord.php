@@ -53,6 +53,9 @@ class EventRecord extends Eloquent {
 				->venueName($eventParams['venueZip'])
 				->description($eventParams['description'])
 				->startTime($eventParams['startTime'])
+				->startDate($eventParams['startDate'])
+				->orderBy('event_date', 'asc')
+				->orderBy('start_time', 'asc')
 				->get();
 
 		return $events;
@@ -131,9 +134,9 @@ class EventRecord extends Eloquent {
 		}
 	}
 
-	public function scopeStateDate($query, $startDate) {
+	public function scopeStartDate($query, $startDate) {
 		if ($startDate != null) {
-			return $query->where('start_time', '>=', $startDate);
+			return $query->where('event_date', '>=', $startDate);
 		} else {
 			return $query;
 		}
@@ -157,11 +160,10 @@ class EventRecord extends Eloquent {
 		echo("Active events added to Events table.<br />");
 		EventRecord::storeEventbriteEvents();
 		echo("Eventbrite events added to Events table.<br />");
-		//EventRecord::storeEventfulEvents();
-		//echo("Eventful events added to Events table.<br />");
-		
-		//EventRecord::storeMeetupEvents();
-		//echo("Meetup events added to Events table.<br />");
+		EventRecord::storeEventfulEvents();
+		echo("Eventful events added to Events table.<br />");
+		EventRecord::storeMeetupEvents();
+		echo("Meetup events added to Events table.<br />");
 		
 		echo("All events stored and updated.");
 		
