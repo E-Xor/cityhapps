@@ -131,6 +131,10 @@ class Meetup extends Eloquent {
 						$eventRecord->lon			=	$jsonArray['results'][$i]['venue']['lon'];
 					}
 
+					if (isset($jsonArray['results'][$i]['utc_offset'])) {
+						$eventRecord->utc_offset	=	$jsonArray['results'][$i]['utc_offset'];
+					}
+
 					$eventRecord->save();
 
 					// MeetupCategories

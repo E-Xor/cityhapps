@@ -52,6 +52,10 @@ class EventRecord extends Eloquent {
 				->venueName($eventParams['venueState'])
 				->venueName($eventParams['venueZip'])
 				->description($eventParams['description'])
+				->startTime($eventParams['startTime'])
+				->startDate($eventParams['startDate'])
+				->orderBy('event_date', 'asc')
+				->orderBy('start_time', 'asc')
 				->get();
 
 		return $events;
@@ -122,6 +126,21 @@ class EventRecord extends Eloquent {
 		}
 	}
 
+	public function scopeStartTime($query, $startTime) {
+		if ($startTime != null) {
+			return $query;
+		} else {
+			return $query;
+		}
+	}
+
+	public function scopeStartDate($query, $startDate) {
+		if ($startDate != null) {
+			return $query->where('event_date', '>=', $startDate);
+		} else {
+			return $query;
+		}
+	}
 	
 
 	public static function storeEvents() {
@@ -130,10 +149,12 @@ class EventRecord extends Eloquent {
 		echo("Active events stored.<br />");
 		Eventbrite::storeEvents();
 		echo("Eventbrite events stored.<br />");
-		Eventful::storeEvents();
-		echo("Eventful events stored.<br />");
-		Meetup::storeEvents();
-		echo("Meetup events stored.<br />");
+		//Eventful::storeEvents();
+		//echo("Eventful events stored.<br />");
+		
+		//Meetup::storeEvents();
+		//echo("Meetup events stored.<br />");
+		
 
 		EventRecord::storeActiveEvents();
 		echo("Active events added to Events table.<br />");
@@ -143,7 +164,7 @@ class EventRecord extends Eloquent {
 		echo("Eventful events added to Events table.<br />");
 		EventRecord::storeMeetupEvents();
 		echo("Meetup events added to Events table.<br />");
-
+		
 		echo("All events stored and updated.");
 		
 	}
@@ -174,12 +195,21 @@ class EventRecord extends Eloquent {
 				$eventRecord->state = $event->stateProvinceCode;
 				$eventRecord->zip = $event->postalCode;
 				$eventRecord->description = $event->description;
-				$eventRecord->start_time = $event->activityStartDate;
+				
 				$eventRecord->end_time = $event->activityEndDate;
 				$eventRecord->all_day_flag = $event->AllDayFlag;
 				$eventRecord->event_image_url = $event->imageUrlAdr;
 				$eventRecord->latitude = $event->lat;
 				$eventRecord->longitude = $event->lon;
+
+				if ($event->activityStartDate != null) {
+					$eventRecord->event_date = date_format(date_create($event->activityStartDate), "Y-m-d");
+					$eventRecord->start_time = date_format(date_create($event->activityStartDate), "Y-m-d H:i:s");
+				}
+
+				if ($event->activityEndDate != null) {
+					$eventRecord->end_time = date_format(date_create($event->activityEndDate), "Y-m-d H:i:s");
+				}
 
 				$eventRecord->save();
 
@@ -231,12 +261,19 @@ class EventRecord extends Eloquent {
 				$eventRecord->state = $event->region;
 				$eventRecord->zip = $event->postal_code;
 				$eventRecord->description = $event->description_text;
-				$eventRecord->start_time = $event->start_local;
-				$eventRecord->end_time = $event->end_local;
 				$eventRecord->all_day_flag = $event->AllDayFlag;
 				$eventRecord->event_image_url = $event->logo_url;
 				$eventRecord->latitude = $event->latitude;
 				$eventRecord->longitude = $event->longitude;
+
+				if ($event->start_local != null) {
+					$eventRecord->event_date = date_format(date_create($event->start_local), "Y-m-d");
+					$eventRecord->start_time = date_format(date_create($event->start_local), "Y-m-d H:i:s");
+				}
+
+				if ($event->end_local != null) {
+					$eventRecord->end_time = date_format(date_create($event->end_local), "Y-m-d H:i:s");
+				}
 
 				$eventRecord->save();
 
@@ -288,11 +325,20 @@ class EventRecord extends Eloquent {
 				$eventRecord->zip = $event->postal_code;
 				$eventRecord->description = $event->description;
 				$eventRecord->start_time = $event->start_time;
-				$eventRecord->end_time = $event->stop_local;
+				$eventRecord->end_time = $event->stop_time;
 				$eventRecord->all_day_flag = $event->all_day;
 				$eventRecord->event_image_url = $event->image;
 				$eventRecord->latitude = $event->latitude;
 				$eventRecord->longitude = $event->longitude;
+
+				if ($event->start_time != null) {
+					$eventRecord->event_date = date_format(date_create($event->start_time), "Y-m-d");
+					$eventRecord->start_time = date_format(date_create($event->start_time), "Y-m-d H:i:s");
+				}
+
+				if ($event->stop_time != null) {
+					$eventRecord->end_time = date_format(date_create($event->stop_time), "Y-m-d H:i:s");
+				}
 
 				$eventRecord->save();
 
@@ -350,6 +396,21 @@ class EventRecord extends Eloquent {
 				$eventRecord->event_image_url = $event->photo_url;
 				$eventRecord->latitude = $event->lat;
 				$eventRecord->longitude = $event->lon;
+
+				if ($event->time != null) {
+					if ($event->utc_offset != null) {
+						$seconds = ($event->time + $event->utc_offset) / 1000;
+					} else {
+						$seconds = $event->time / 1000;
+					}
+					$eventRecord->event_date = date("Y-m-d", $seconds);
+					$eventRecord->start_time = date("Y-m-d H:i:s", $seconds);
+
+					if ($event->duration != null) {
+						$endSeconds = $seconds + ($event->duration / 1000);
+						$eventRecord->end_time = date("Y-m-d H:i:s", $endSeconds);
+					}
+				}
 
 				$eventRecord->save();
 
