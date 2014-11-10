@@ -335,6 +335,9 @@ body {
 .event-slider {
 	max-width: 1170px;
 	margin: 0 auto;
+	-webkit-transition:all linear 0.5s;
+	transition:all linear 0.5s;
+	-moz-transition: all linear 0.5s;
 }
 
 .event-slider > .bx-wrapper > .bx-viewport {

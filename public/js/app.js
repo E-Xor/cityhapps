@@ -690,9 +690,9 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 		}
 
 
-		// $scope.loginUser = function(data) {
-		// 	authFactory.loginUser(data);
-		// }
+		$scope.loginUser = function(data) {
+			authFactory.loginUser(data);
+		}
 
 	}
 
@@ -958,9 +958,32 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 cityHapps.controller('calController', function($scope, getEvents, $http){
 
+	$scope.eventModal = function(data) {
+
+		$modal.open({
+			templateUrl: "templates/eventModal.html",
+			controller: 'eventModalInstanceController', 
+			resolve: {
+				data: function() {
+					return data;
+				}
+			}
+		});
+	};
+
+	$scope.alertTest = function() {
+		alert('firing on click');
+	}
+
+	$scope.uiConfig = {
+		eventClick: $scope.alertTest()
+	}
+
 	$scope.events = [];
 
 	$http.get('/events').success(function(data){
+
+		console.log(data);
 
 		for (var i = 0; i < data.length; i++) {
 
@@ -972,7 +995,10 @@ cityHapps.controller('calController', function($scope, getEvents, $http){
 					end : $scope.data[i].end_time
 			});
 		}
+
 	});
+
+	$scope.eventSources = [$scope.events];
 
 
 
