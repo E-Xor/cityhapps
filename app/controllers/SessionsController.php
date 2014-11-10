@@ -24,6 +24,8 @@ class SessionsController extends BaseController {
 			'email' => Input::json('email'), 
 			'password' => Input::json('password')
 			))) {
+
+			return Auth::user();
 			
 			// if (Auth::viaRemember()) {
 			// 	return Response::json(Auth::user());					

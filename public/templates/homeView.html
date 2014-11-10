@@ -46,7 +46,7 @@
 					
 			<carousel interval="interval" class="col-sm-12">
 			<slide class="col-sm-12" ng-repeat="event in slideGroup">
-				<div class="col-sm-3 event">
+				<div class="col-sm-3 event" ng-if="event.first.event_name">
 						<div class="event-inner">
 								<div ng-click="eventModal(event, 'first', vote.status)">
 
@@ -65,15 +65,15 @@
 								<div ng-class="{'dislike-icon': !isActiveDown, 'dislike-icon active': isActiveDown }" ng-init="isActiveDown = false" ng-click="downVote(event, 'first'); ">
 								</div> -->
 								    <div class="btn-group">
-								        <label class="like-icon" ng-model="vote.status" ng-click="upVote(event, 'first', vote.status)" btn-radio="'upVote'"></label>
+								        <label class="like-icon" ng-model="vote.upVote" ng-click="upVote(event, 'first', vote)" btn-checkbox></label>
 
-								        <label class="dislike-icon" ng-model="vote.status" ng-click="downVote(event, 'first', vote.status)" btn-radio="'downVote'"></label>
+								        <label class="dislike-icon" ng-model="vote.downVote" ng-click="downVote(event, 'first', vote)" btn-checkbox></label>
 								    </div>
-								    {{vote.status}}
+								    {{vote}}
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-3 event" > 
+					<div class="col-sm-3 event" ng-if="event.second.event_name"> 
 						<div class="event-inner">
 								<div ng-click="eventModal(event, 'second', vote.status)">	
 									<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 125px;">
@@ -93,7 +93,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-3 event" ng-click="eventModal(event, 'third')">
+					<div class="col-sm-3 event" ng-if="event.third.event_name" ng-click="eventModal(event, 'third')">
 						<div class="event-inner">
 							<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->
@@ -111,7 +111,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-3 event" ng-click="eventModal(event, 'fourth')">
+					<div class="col-sm-3 event" ng-if="event.fourth.event_name" ng-click="eventModal(event, 'fourth')">
 						<div class="event-inner">
 							<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 125px;">
 								<!-- <img ng-src=""> -->

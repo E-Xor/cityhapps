@@ -173,18 +173,24 @@ cityHapps.controller('appController', ['$scope', 'authService', 'registerDataSer
 		$scope.userString = localStorage.getItem('user');
 		$scope.user = angular.fromJson($scope.userString);
 
+
+
 		if ($scope.userString) {
 
 			$scope.upVote = function(event, num, vote) {
-				alert("This" + JSON.stringify(event[num])  + "has been upvoted");
 
-				// voteService.vote = vote;
+				alert("This" + JSON.stringify(event[num])  + "has been upvoted");
 
 				//needs to be broken into a factory/ service soon
 				$http({
 					method: "POST",
 					url: '/user_event',
-					data: {'upVote' : vote },
+					data: {
+						'user_id' : $scope.user.data.id,
+						'event_id' : event[num].id, 
+						'vote' : 1,
+					},
+
 					headers : {"Content-Type": "application/json"}
 				}).success(function(data){
 
@@ -201,6 +207,28 @@ cityHapps.controller('appController', ['$scope', 'authService', 'registerDataSer
 
 			$scope.downVote = function(event, num, vote) {
 				alert("This" + JSON.stringify(event[num])  + "has been downvoted");
+
+				$http({
+					method: "POST",
+					url: '/user_event',
+					data: {
+						'user_id' : $scope.user.data.id,
+						'event_id' : event[num].id, 
+						'vote' : 0
+					},
+
+					headers : {"Content-Type": "application/json"}
+				}).success(function(data){
+
+					if (!data) {
+						console.log("no vote, man");
+						// $scope.loggedOut = false;
+					} else if(data) {
+						console.log(data);
+						// $scope.loggedOut = true;
+					}
+				});
+
 
 				voteService.vote = vote;
 			};
@@ -484,7 +512,9 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope){
 			$http.post('/auth/login', formData).then(function(res) {
 				console.log(res);
 
+				delete res.password;
 				localStorage.setItem('user', JSON.stringify(res));
+
 
 				authService.loginConfirmed();
 				$rootScope.$broadcast('event:loginConfirmed');
@@ -691,7 +721,11 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 
 
 		$scope.loginUser = function(data) {
-			authFactory.loginUser(data);
+			if (data) {
+				authFactory.loginUser(data);
+			} else {
+				authFactory.loginUser($scope.formData);
+			}
 		}
 
 	}
@@ -876,27 +910,27 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			};
 		};
 
-		var pageCount = 0
+		$scope.pageCount = 0
 		$scope.getNextEvents = function() {
-			pageCount++;
+			$scope.pageCount++;
 			$scope.tabEvents = {};
 
-			$http.get('/eventsPaged?page='+ pageCount).success(function(pagedEvents){
+			$http.get('/eventsPaged?page='+ $scope.pageCount).success(function(pagedEvents){
 				$log.info(pagedEvents.data);
 				$scope.tabEvents = pagedEvents.data;
 			});
 		}
 
 		$scope.getPrevEvents = function() {
-			pageCount--;
+			$scope.pageCount--;
 
-			if (pageCount < 1) {
+			if ($scope.pageCount < 1) {
 				$scope.disablePrev = true;
 			}
 
 			// $scope.tabEvents = {};
 
-			$http.get('/eventsPaged?page='+ pageCount).success(function(pagedEvents){
+			$http.get('/eventsPaged?page='+ $scope.pageCount).success(function(pagedEvents){
 				$log.info(pagedEvents.data);
 				$scope.tabEvents = pagedEvents.data;
 
@@ -909,7 +943,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		getEvents.events().success(drawEvents);
 
 		$scope.iconPath = function() {
-			return "../img/marker.png";
+			return "/img/marker.png";
 		}
 
 		$scope.idKey = function() {
@@ -917,6 +951,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				return i;
 			}
 		}
+
 
 		$scope.map = {
 			center: {

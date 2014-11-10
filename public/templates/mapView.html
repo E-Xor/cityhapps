@@ -32,7 +32,9 @@
 					<div class="map-event" ng-repeat="event in tabEvents | limitTo: 10">
 						<div ng-click="mapEventModal(event)">
 							<div class="inline">
-								<div class="event-number left">{{$index + 1}}</div>	
+								<div class="event-number left" ng-if="pageCount == 0">{{$index + 1}}</div>	
+
+								<div class="event-number left" ng-if="pageCount > 0">{{($index + 1) * (pageCount + 1)}}</div>	
 							</div>
 							<div class="">
 								<h4>{{event.event_name | limitTo:40}}</h4>
@@ -70,10 +72,11 @@
 	</div>	
 
 	<div class="row">
-		<div style="color:#fff;">{{map.center}}</div>
+		<!-- Lat / Long display -->
+		<!-- <div style="color:#fff;">{{map.center}}</div> -->
 		<div id="map_canvas">
 			<ui-gmap-google-map id="map" center="map.center" zoom="map.zoom" bounds="map.bounds" events="map.events">
-					<ui-gmap-marker ng-repeat="event in tabEvents | limitTo: 10" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}">
+					<ui-gmap-marker ng-repeat="event in tabEvents | limitTo: 10" options="{labelContent: $index * pageCount, labelClass: 'markerLabel', labelInBackground: false}" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" icon="'/img/marker.png'" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}">
 					<!-- icon="markers.icon" -->
 		        	</ui-gmap-marker>
 			</ui-gmap-google-map>

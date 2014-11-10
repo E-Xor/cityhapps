@@ -58,7 +58,23 @@ html {
 .grey-wide-map {
   background: rgba(0, 0, 0, 0.35); }
 
-::-webkit-input-placeholder {
+.search-search::-moz-placeholder {
+  color: #fff;
+  font-size: 1.2em;
+  font-style: italic;
+  letter-spacing: .1em;
+  text-align: left;
+  font-weight: 300; }
+
+.search-large::-webkit-input-placeholder {
+  color: #fff;
+  font-size: 1.2em;
+  font-style: italic;
+  letter-spacing: .1em;
+  text-align: left;
+  font-weight: 300; }
+
+.main-search::-webkit-input-placeholder {
   color: #fff;
   font-size: 1.2em;
   font-style: italic;
@@ -66,26 +82,16 @@ html {
   text-align: center;
   font-weight: 300; }
 
-.search-large::-webkit-input-placeholder {
-  text-align: left; }
-
-:-moz-placeholder {
-  /* Firefox 18- */
+.main-search::-moz-placeholder {
+  color: #fff !important;
   font-size: 1.2em;
   font-style: italic;
-  letter-spacing: .2em; }
+  letter-spacing: .1em;
+  text-align: center;
+  font-weight: 300; }
 
-::-moz-placeholder {
-  /* Firefox 19+ */
-  font-size: 1.2em;
-  font-style: italic;
-  letter-spacing: .2em; }
-
-:-ms-input-placeholder {
-  color: #fff;
-  font-size: 1.2em;
-  font-style: italic;
-  letter-spacing: .2em; }
+.main-search {
+  color: #fff; }
 
 .carousel-control.right {
   background-image: none;
@@ -149,7 +155,7 @@ html {
   .search-large:focus {
     outline: none; }
 
-.auth > div, h4 {
+.header-search .auth {
   cursor: pointer; }
 
 .modal-dialog {
@@ -252,6 +258,8 @@ html {
   .register :-moz-input-placeholder, .login :-moz-input-placeholder {
     color: #BCBABD;
     text-align: left; }
+  .register .center.margin, .login .center.margin {
+    cursor: default; }
 
 .event-slider {
   max-width: 1170px;
@@ -308,6 +316,11 @@ html {
 
 .map-controls {
   background: rgba(30, 30, 30, 0.3); }
+
+.markerLabel {
+  color: #fff;
+  text-shadow: 2px 1px 1px #E24B44;
+  font-size: 1.2em; }
 
 .view-row {
   margin: 20px 0; }
@@ -470,7 +483,8 @@ html {
   text-transform: uppercase;
   color: #FF5C50;
   border: 1px solid #FF5C50;
-  padding: 20px 15px;
+  padding: 20px 15px 35px;
+  border-radius: 0;
   cursor: pointer; }
   .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:hover:hover, .nav-tabs > li.active > a:focus:hover {
     background: rgba(255, 255, 255, 0.2); }
@@ -481,8 +495,9 @@ html {
   text-transform: uppercase;
   color: #fff;
   border: 1px solid #fff;
-  padding: 20px 15px;
-  cursor: pointer; }
+  padding: 20px 15px 35px;
+  cursor: pointer;
+  border-radius: 0; }
   .nav-tabs > li > a:hover {
     background: rgba(255, 255, 255, 0.2); }
 
@@ -500,7 +515,7 @@ html {
 
 .map-event {
   padding: 10px 20px;
-  border-bottom: 1px solid #404042; }
+  border-bottom: 1px solid #BDB9BD; }
   .map-event h4 {
     margin: 2px 0; }
 
