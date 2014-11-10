@@ -17,29 +17,26 @@ class EventController extends BaseController {
 
 		$eventParams = array();
 
-		$eventID = Input::get('id');
-		$eventName = Input::get('name');
-		$venueName = Input::get('venue_name');
-		$venueAddress = Input::get('venue_address');
-		$venueCity = Input::get('venue_city');
-		$venueState = Input::get('venue_state');
-		$venueZip = Input::get('venue_zip');
-		$description = Input::get('description');
-		$startTime = Input::get('start_time');
-		$startDate = Input::get('start_date');
-		$endDate = Input::get('end_date');
-		$latitude = Input::get('latitude');
-		$longitude = Input::get('longitude');
-		$category = Input::get('category');
-		$createdAt = Input::get('created_at');
-		$updatedAt = Input::get('updated_at');
-		$source = Input::get('source');
+		$eventParams['eventID'] = Input::get('id');
+		$eventParams['eventName'] = Input::get('name');
+		$eventParams['venueName'] = Input::get('venue_name');
+		$eventParams['venueAddress'] = Input::get('venue_address');
+		$eventParams['venueCity'] = Input::get('venue_city');
+		$eventParams['venueState'] = Input::get('venue_state');
+		$eventParams['venueZip'] = Input::get('venue_zip');
+		$eventParams['description'] = Input::get('description');
+		$eventParams['startTime'] = Input::get('start_time');
+		$eventParams['startDate'] = Input::get('start_date');
+		$eventParams['endDate'] = Input::get('end_date');
+		$eventParams['latitude'] = Input::get('latitude');
+		$eventParams['longitude'] = Input::get('longitude');
+		$eventParams['category'] = Input::get('category');
+		$eventParams['createdAt'] = Input::get('created_at');
+		$eventParams['updatedAt'] = Input::get('updated_at');
+		$eventParams['source'] = Input::get('source');
 
-		$pageSize = Input::get('page_size');
-		$pageCount = Input::get('page_count');
-
-		$eventParams['eventID'] = $eventID;
-		$eventParams['eventName'] = $eventName;
+		$eventParams['pageSize'] = Input::get('page_size');
+		$eventParams['pageCount'] = Input::get('page_count');
 
 		$events = EventRecord::selectEvents($eventParams);
 		return json_encode($events);

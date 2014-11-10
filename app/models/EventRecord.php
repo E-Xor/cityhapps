@@ -44,15 +44,85 @@ class EventRecord extends Eloquent {
 		pageCount
 		*/
 
-		//$events = EventRecord::where('id', '=', $eventParams['eventID'])->get();
-		$events = EventRecord::eventName($eventParams['eventName'])->get();
+		$events = EventRecord::eventID($eventParams['eventID'])
+				->eventName($eventParams['eventName'])
+				->venueName($eventParams['venueName'])
+				->venueAddress($eventParams['venueAddress'])
+				->venueName($eventParams['venueCity'])
+				->venueName($eventParams['venueState'])
+				->venueName($eventParams['venueZip'])
+				->description($eventParams['description'])
+				->get();
+
 		return $events;
 
 	}
 
-	public function scopeEventName($query, $eventName) {
-		return $query->where('event_name', 'like', '%'.$eventName.'%');
+	public function scopeEventID($query, $eventID) {
+		if ($eventID != null) {
+			return $query->where('id', '=', $eventID);
+		} else {
+			return $query;
+		}
 	}
+
+	public function scopeEventName($query, $eventName) {
+		if ($eventName != null) {
+			return $query->where('event_name', 'like', '%'.$eventName.'%');
+		} else {
+			return $query;
+		}
+	}
+
+	public function scopeVenueName($query, $venueName) {
+		if ($venueName != null) {
+			return $query->where('venue_name', 'like', '%'.$venueName.'%');
+		} else {
+			return $query;
+		}
+	}
+
+	public function scopeVenueAddress($query, $venueAddress) {
+		if ($venueAddress != null) {
+			return $query->where('address', 'like', '%'.$venueAddress.'%');
+		} else {
+			return $query;
+		}
+	}
+
+	public function scopeVenueCity($query, $venueCity) {
+		if ($venueCity != null) {
+			return $query->where('city', 'like', '%'.$venueCity.'%');
+		} else {
+			return $query;
+		}
+	}
+
+	public function scopeVenueState($query, $venueState) {
+		if ($venueState != null) {
+			return $query->where('state', 'like', '%'.$venueState.'%');
+		} else {
+			return $query;
+		}
+	}
+
+	public function scopeVenueZip($query, $venueZip) {
+		if ($venueZip != null) {
+			return $query->where('zip', 'like', '%'.$venueZip.'%');
+		} else {
+			return $query;
+		}
+	}
+
+	public function scopeDescription($query, $description) {
+		if ($description != null) {
+			return $query->where('description', 'like', '%'.$description.'%');
+		} else {
+			return $query;
+		}
+	}
+
+	
 
 	public static function storeEvents() {
 
