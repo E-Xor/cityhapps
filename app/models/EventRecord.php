@@ -142,26 +142,26 @@ class EventRecord extends Eloquent {
 
 	public static function storeEvents() {
 
-		//Active::storeEvents();
-		//echo("Active events stored.<br />");
-		//Eventbrite::storeEvents();
-		//echo("Eventbrite events stored.<br />");
+		Active::storeEvents();
+		echo("Active events stored.<br />");
+		Eventbrite::storeEvents();
+		echo("Eventbrite events stored.<br />");
 		//Eventful::storeEvents();
 		//echo("Eventful events stored.<br />");
 		
-		Meetup::storeEvents();
-		echo("Meetup events stored.<br />");
+		//Meetup::storeEvents();
+		//echo("Meetup events stored.<br />");
 		
 
-		//EventRecord::storeActiveEvents();
-		//echo("Active events added to Events table.<br />");
-		//EventRecord::storeEventbriteEvents();
-		//echo("Eventbrite events added to Events table.<br />");
+		EventRecord::storeActiveEvents();
+		echo("Active events added to Events table.<br />");
+		EventRecord::storeEventbriteEvents();
+		echo("Eventbrite events added to Events table.<br />");
 		//EventRecord::storeEventfulEvents();
 		//echo("Eventful events added to Events table.<br />");
 		
-		EventRecord::storeMeetupEvents();
-		echo("Meetup events added to Events table.<br />");
+		//EventRecord::storeMeetupEvents();
+		//echo("Meetup events added to Events table.<br />");
 		
 		echo("All events stored and updated.");
 		
