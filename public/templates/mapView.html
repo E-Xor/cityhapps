@@ -36,13 +36,13 @@
 
 								<div class="event-number left" ng-if="pageCount > 0">{{($index * pageCount)}}</div>	
 							</div>
-							<div class="">
-								<h4>{{event.event_name | limitTo:40}}</h4>
-								<p class="blue">{{event.start_time}}</p>
+							<div class="tab-event-title">
+								<h4>{{event.event_name | limitTo: 20}}</h4>
+								<p class="blue">{{event.event_date}}</p>
 							</div>							
 						</div>
 					</div>
-					<div class="map-ctrls">
+					<div class="map-ctrls" ng-show="tabEvents">
 						<div class="left map-ctrl prev-ctrl" ng-click="getPrevEvents()" ng-disabled="disablePrev">
 							Previous
 						</div>

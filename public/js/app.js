@@ -142,7 +142,7 @@ cityHapps.factory('getEvents', function($http){
 		events : function() {
 
 			var today = new Date();
-			var startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+			var startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + (today.getDate() - 1);
 
 			// '?start_date=' + startDate
 			return $http.get('/events?start_date=' + startDate).success(function(data) {
@@ -847,20 +847,34 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			});
 		};
 
-
 	//sloppy code re-use, but im doing it for demo
 	$scope.now = moment().format("dddd, MMMM Do");
 
 	var next = 0;
 	$scope.nextDay = function() {
-		next += 1;
-		$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
-	};
-	
-	$scope.prevDay = function() {
-		next -= 1;
-		$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
-	};
+			// debugger;
+			next += 1;
+			$scope.now = moment().add((next),'days').format("dddd, MMMM Do");
+			$scope.nowGet = moment().add(next,'days').format();
+
+			$http.get('/events?start_date=' + $scope.nowGet)
+				.success(function(data){
+					$scope.eventData = data;
+					drawEvents(data);
+			});
+		};
+		
+		$scope.prevDay = function() {
+			next -= 1;
+			$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
+			$scope.nowGet = moment().add(next,'days').format();
+			
+			$http.get('/events?start_date=' + $scope.nowGet)
+				.success(function(data){
+					$scope.eventData = data;
+					drawEvents(data);
+			});
+		};
 	//end sloppy code re-use
 
 		var drawEvents = function(data){
@@ -914,15 +928,15 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			};
 		};
 
-
-
-
 		$scope.pageCount = 0
 		$scope.getNextEvents = function() {
 			$scope.pageCount++;
 			$scope.tabEvents = {};
 
-			$http.get('/eventsPaged?page='+ $scope.pageCount).success(function(pagedEvents){
+			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
+			$scope.nowGet = moment().add(next,'days').format();
+
+			$http.get('/eventsPaged?start_date='+ $scope.nowGet + "&page=" + $scope.pageCount ).success(function(pagedEvents){
 				$log.info(pagedEvents.data);
 				$scope.tabEvents = pagedEvents.data;
 			});
@@ -935,9 +949,12 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				$scope.disablePrev = true;
 			}
 
+			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
+			$scope.nowGet = moment().add(next,'days').format();
+
 			// $scope.tabEvents = {};
 
-			$http.get('/eventsPaged?page='+ $scope.pageCount).success(function(pagedEvents){
+			$http.get('/eventsPaged?start_date='+ $scope.nowGet + "?page=" + $scope.pageCount ).success(function(pagedEvents){
 				$log.info(pagedEvents.data);
 				$scope.tabEvents = pagedEvents.data;
 
@@ -945,7 +962,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			});
 		}
 
-		$scope.disablePrev = {}
+		$scope.disablePrev = '';
 
 		getEvents.events().success(drawEvents);
 

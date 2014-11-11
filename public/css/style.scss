@@ -590,7 +590,7 @@ body {
 }
 
 .map-ctrls {
-
+	height: 70px;
 }
 
 
@@ -646,9 +646,17 @@ body {
 }
 
 .tab-pane {
-	-webkit-box-shadow: 11px 3px 15px 3px rgba(0,0,0,0.35);
-	-moz-box-shadow: 11px 3px 15px 3px rgba(0,0,0,0.35);
-	box-shadow: 11px 3px 15px 3px rgba(0,0,0,0.35);
+	-webkit-box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
+	-moz-box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
+	box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
+
+	min-width: 300px;	
+}
+
+.tab-event-title h4 {
+		&:after {
+		content: "..."
+	}
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
@@ -688,7 +696,7 @@ body {
 	color: #fff;
 	float: left;
 	height: 50px;
-	margin: 10px;
+	margin: 0px 10px;
 	background: url('/img/marker.png') no-repeat 0 0 / 27px 37px;
 	&:nth-child(10) {
 		padding: 5px;
@@ -697,7 +705,7 @@ body {
 
 
 .map-event {
-	padding: 10px 20px;
+	padding: 10px;
 	border-bottom: 1px solid #BDB9BD;
 	h4 {
 		margin: 2px 0;

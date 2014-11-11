@@ -1,5 +1,5 @@
 .proxima, html, body {
-  font-family: "proxima-nova",sans-serif;
+  font-family: "proxima-nova", sans-serif;
   font-style: normal;
   font-weight: 400; }
 
@@ -7,12 +7,12 @@
   font-weight: 200; }
 
 .proximaItalic {
-  font-family: "proxima-nova",sans-serif;
+  font-family: "proxima-nova", sans-serif;
   font-style: italic;
   font-weight: 400; }
 
 .proximaBold {
-  font-family: "proxima-nova",sans-serif;
+  font-family: "proxima-nova", sans-serif;
   font-style: normal;
   font-weight: 700; }
 
@@ -452,6 +452,9 @@ html {
   .view-select.map {
     margin: 0 auto; }
 
+.map-ctrls {
+  height: 70px; }
+
 .map-ctrl {
   color: #47ACF4;
   text-transform: uppercase; }
@@ -492,6 +495,15 @@ html {
   background: #F6EFEE;
   color: #454546; }
 
+.tab-pane {
+  -webkit-box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
+  min-width: 300px; }
+
+.tab-event-title h4:after {
+  content: "..."; }
+
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   background: transparent;
   font-size: 1.4em;
@@ -523,13 +535,13 @@ html {
   color: #fff;
   float: left;
   height: 50px;
-  margin: 10px;
+  margin: 0px 10px;
   background: url("/img/marker.png") no-repeat 0 0/27px 37px; }
   .event-number:nth-child(10) {
     padding: 5px; }
 
 .map-event {
-  padding: 10px 20px;
+  padding: 10px;
   border-bottom: 1px solid #BDB9BD; }
   .map-event h4 {
     margin: 2px 0; }
