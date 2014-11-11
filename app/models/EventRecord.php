@@ -44,7 +44,8 @@ class EventRecord extends Eloquent {
 		pageCount
 		*/
 
-		$events = EventRecord::eventID($eventParams['eventID'])
+		$events = EventRecord::with('categories')
+				->eventID($eventParams['eventID'])
 				->eventName($eventParams['eventName'])
 				->venueName($eventParams['venueName'])
 				->venueAddress($eventParams['venueAddress'])
