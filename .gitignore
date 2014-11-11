@@ -9,3 +9,5 @@ composer.lock
 .DS_Store
 Thumbs.db
 
+/bootstrap/start.php
+bootstrap/start.php

@@ -14,6 +14,11 @@ class AddEventDateYetAgain extends Migration {
 	{
 		Schema::table('events', function(Blueprint $table)
 		{
+			$table->dropColumn('event_date');
+		});
+
+		Schema::table('events', function(Blueprint $table)
+		{
 			$table->date('event_date')->nullable();
 		});
 	}

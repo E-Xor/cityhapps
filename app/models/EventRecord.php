@@ -55,6 +55,7 @@ class EventRecord extends Eloquent {
 				->description($eventParams['description'])
 				->startTime($eventParams['startTime'])
 				->startDate($eventParams['startDate'])
+				->withCategory($eventParams['category'])
 				->orderBy('event_date', 'asc')
 				->orderBy('start_time', 'asc')
 				->getPage($eventParams['pageSize'], $eventParams['pageCount'])
@@ -141,6 +142,14 @@ class EventRecord extends Eloquent {
 			return $query->where('event_date', '>=', $startDate);
 		} else {
 			return $query;
+		}
+	}
+
+	public function scopeWithCategory($query, $category) {
+		if ($category != null) {
+			return $query->whereHas('categories', function($q) use ($category) {
+				$q->where('category_id', '=', $category);
+			});
 		}
 	}
 
