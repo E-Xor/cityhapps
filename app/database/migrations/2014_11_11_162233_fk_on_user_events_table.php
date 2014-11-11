@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddEventIdCol extends Migration {
+class FkOnUserEventsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,9 +14,17 @@ class AddEventIdCol extends Migration {
 	{
 		Schema::table('user_event', function(Blueprint $table)
 		{
-			$table->integer('event_id');
-			
-			$table->unique(array('event_id', 'user_id'));
+			$table->dropColumn('user_id');
+		});
+
+		Schema::table('user_event', function(Blueprint $table)
+		{
+			$table->integer('user_id')->unsigned();
+
+
+			//Seems to clash with being unique related to event_id
+
+			// $table->foreign('user_id')->references('id')->on('users');
 		});
 	}
 

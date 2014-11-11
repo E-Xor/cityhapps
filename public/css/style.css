@@ -251,13 +251,22 @@ html {
     padding: 10px 15px; }
   .register ::-webkit-input-placeholder, .login ::-webkit-input-placeholder {
     color: #BCBABD;
-    text-align: left; }
+    text-align: left;
+    font-style: italic;
+    font-size: 1.2em;
+    font-weight: 200; }
   .register ::-moz-input-placeholder, .login ::-moz-input-placeholder {
     color: #BCBABD;
-    text-align: left; }
+    text-align: left;
+    font-style: italic;
+    font-size: 1.4em;
+    font-weight: 200; }
   .register :-moz-input-placeholder, .login :-moz-input-placeholder {
     color: #BCBABD;
-    text-align: left; }
+    text-align: left;
+    font-style: italic;
+    font-size: 1.2em;
+    font-weight: 200; }
   .register .center.margin, .login .center.margin {
     cursor: default; }
 
@@ -320,7 +329,9 @@ html {
 .markerLabel {
   color: #fff;
   text-shadow: 2px 1px 1px #E24B44;
-  font-size: 1.2em; }
+  font-size: 1.4em;
+  top: -30px;
+  position: absolute; }
 
 .view-row {
   margin: 20px 0; }
@@ -412,6 +423,9 @@ html {
   margin: 10px 0;
   display: block; }
 
+.recs {
+  margin-left: 20px; }
+
 .accountCreate {
   padding-right: 15px;
   border-right: 1px solid #fff; }
@@ -469,7 +483,8 @@ html {
 
 .angular-google-map-container {
   height: 820px;
-  width: 100%; }
+  width: 100%;
+  float: left; }
 
 .tab-content {
   position: absolute;
@@ -559,6 +574,9 @@ button.create-account[disabled='disabled'] {
 
 .red {
   color: #FF5C50; }
+
+.pointer {
+  cursor: pointer; }
 
 .summary {
   margin-bottom: 80px; }

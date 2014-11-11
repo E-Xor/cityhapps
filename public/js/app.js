@@ -144,8 +144,9 @@ cityHapps.factory('getEvents', function($http){
 			var today = new Date();
 			var startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
+			// '?start_date=' + startDate
 			return $http.get('/events?start_date=' + startDate).success(function(data) {
-				//console.log(data);
+			
 			});
 		}
 	}
@@ -172,7 +173,6 @@ cityHapps.config([
 
 cityHapps.controller('appController', ['$scope', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal',
 	function($scope, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal){
-			
 		
 		$scope.userString = localStorage.getItem('user');
 		$scope.user = angular.fromJson($scope.userString);
@@ -820,6 +820,11 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		// { title:'Activities', content:'Dynamic content 2' }
 	];
 
+
+	$scope.scrollTop = function() {
+		document.body.scrollTop = 0;
+	};
+
 		$scope.showEvents = function() {
 			console.log($scope.tabEvents);
 		}
@@ -877,10 +882,6 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			$scope.markers = [];
 			$scope.markers.id = [];
 
-			// $scope.markers.icon = {
-			// 	"icon" : '../img/marker.png'
-			// }
-
 			$scope.tabEvents = data;
 			console.log($scope.tabEvents);
 
@@ -891,7 +892,6 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				$scope.markers.push({
 					'latitude' : $scope.tabEvents[i].latitude,
 					'longitude' : $scope.tabEvents[i].longitude,
-					
 				});
 			}
 
@@ -913,6 +913,9 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				});
 			};
 		};
+
+
+
 
 		$scope.pageCount = 0
 		$scope.getNextEvents = function() {
@@ -946,6 +949,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 		getEvents.events().success(drawEvents);
 
+
 		$scope.iconPath = function() {
 			return "/img/marker.png";
 		}
@@ -968,6 +972,17 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 					$scope.$apply(function () {
 						$log.info('this is the map instance', map);
 						$scope.mapInstance = map;
+
+							// $(document).ready(function(){
+							// 	var label = $('.markerLabel')
+							// 		label.css('top', function(i,current) { 
+							// 			return (parseInt(current) - 35 );
+							// 		});
+							// 		label.css('left', function(i, current) {
+							// 			return (parseInt(current) - 5 );
+							// 		});
+							// });
+
 						console.log($scope.mapInstance);
 					});
 				}, 
@@ -985,15 +1000,26 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 								for(var i=0; i < newData.length; i++) {
 									$scope.markers.push(newData[i]);
 								}
+								$(document).ready(function(){
+									var label = $('.markerLabel')
+										label.css('top', function(i,current) { 
+											return (parseInt(current) - 35 );
+										});	
+										label.css('left', function(i, current) {
+											return (parseInt(current) - 5 );
+										});
+								});
+
 							// getEvents.events().success(drawEvents);
 						});
 				}
 			}
-
-			
 		};
 	
 }]);
+
+
+
 
 cityHapps.controller('calController', function($scope, getEvents, $http){
 
@@ -1039,28 +1065,7 @@ cityHapps.controller('calController', function($scope, getEvents, $http){
 
 	$scope.eventSources = [$scope.events];
 
-
-
-	// var eventSuccess = function(data) {		
-
-	// 	for (var i = 0; i < data.length; i++) {
-
-	// 		console.log(data[i].event_name);
-
-	// 		$scope.events.push({
-	// 				title : data[i].event_name, 
-	// 				start : data[i].start_time, 
-	// 				end : data[i].end_time
-	// 		});
-	// 	}
-	// }
-
-	// getEvents.events().success(eventSuccess);
 	console.log($scope.events);
-
-	
-
-	
 
 });
 

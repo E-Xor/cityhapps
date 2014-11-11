@@ -1,6 +1,6 @@
 
 <div ng-controller="mapController">
-	<div class="grey-wide-map">
+	<div class="grey-wide-map" ng-init="scrollTop()">
 		<div class="day-slider-border"></div>
 			<div class="day-slider-container map">
 				<div class="row day-slider">
@@ -34,7 +34,7 @@
 							<div class="inline">
 								<div class="event-number left" ng-if="pageCount == 0">{{$index + 1}}</div>	
 
-								<div class="event-number left" ng-if="pageCount > 0">{{($index + 1) * (pageCount + 1)}}</div>	
+								<div class="event-number left" ng-if="pageCount > 0">{{($index * pageCount)}}</div>	
 							</div>
 							<div class="">
 								<h4>{{event.event_name | limitTo:40}}</h4>
@@ -76,7 +76,7 @@
 		<!-- <div style="color:#fff;">{{map.center}}</div> -->
 		<div id="map_canvas">
 			<ui-gmap-google-map id="map" center="map.center" zoom="map.zoom" bounds="map.bounds" events="map.events">
-					<ui-gmap-marker ng-repeat="event in tabEvents | limitTo: 10" options="{labelContent: $index * pageCount, labelClass: 'markerLabel', labelInBackground: false}" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" icon="'/img/marker.png'" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}">
+					<ui-gmap-marker ng-repeat="event in tabEvents | limitTo: 10" ng-init="map.init()" options="{labelContent: $index, labelClass: 'markerLabel', labelInBackground: true}" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" icon="'/img/marker.png'" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}">
 					<!-- icon="markers.icon" -->
 		        	</ui-gmap-marker>
 			</ui-gmap-google-map>

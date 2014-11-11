@@ -10,7 +10,7 @@ $tan: #F7EEEF;
 //Fonts 
 
 .proxima {
-	font-family: "proxima-nova",sans-serif;
+	font-family: "proxima-nova", sans-serif;
 	font-style: normal;
 	font-weight: 400;
 } 
@@ -20,13 +20,13 @@ $tan: #F7EEEF;
 }
 
 .proximaItalic {
-	font-family: "proxima-nova",sans-serif;
+	font-family: "proxima-nova", sans-serif;
 	font-style: italic;
 	font-weight: 400;
 }
 
 .proximaBold {
-	font-family: "proxima-nova",sans-serif;
+	font-family: "proxima-nova", sans-serif;
 	font-style: normal;
 	font-weight: 700;
 }
@@ -328,14 +328,23 @@ body {
 	::-webkit-input-placeholder {
 		color: #BCBABD;
 		text-align: left;
+		font-style: italic;
+		font-size: 1.2em;
+		font-weight: 200;
 	}
 	::-moz-input-placeholder {
 		color: #BCBABD;
 		text-align: left;
+		font-style: italic;
+		font-size: 1.4em;
+		font-weight: 200;
 	}
 	:-moz-input-placeholder {
 		color: #BCBABD;
 		text-align: left;
+		font-style: italic;
+		font-size: 1.2em;
+		font-weight: 200;
 	
 	}
 
@@ -417,6 +426,7 @@ body {
 	margin-bottom: 0;
 }
 
+
 .map-controls {
 	background: rgba(30, 30, 30, 0.3);
 }
@@ -424,7 +434,9 @@ body {
 .markerLabel {
 	color: #fff;
 	text-shadow: 2px 1px 1px #E24B44;
-	font-size: 1.2em;	
+	font-size: 1.4em;	
+	top: -30px;
+	position: absolute;
 }
 
 
@@ -542,6 +554,10 @@ body {
 	display: block;
 }
 
+.recs {
+	margin-left: 20px;
+}
+
 .accountCreate {
 	padding-right: 15px;
 	border-right: 1px solid #fff;
@@ -619,6 +635,7 @@ body {
 .angular-google-map-container {
 	height: 820px;
 	width: 100%;
+	float: left;
 }
 
 .tab-content {
@@ -626,6 +643,12 @@ body {
 	z-index: 1;
 	background: #F6EFEE;
 	color: #454546;
+}
+
+.tab-pane {
+	-webkit-box-shadow: 11px 3px 15px 3px rgba(0,0,0,0.35);
+	-moz-box-shadow: 11px 3px 15px 3px rgba(0,0,0,0.35);
+	box-shadow: 11px 3px 15px 3px rgba(0,0,0,0.35);
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
@@ -744,6 +767,10 @@ button.create-account[disabled='disabled'] {
 
 .red {
 	color: #FF5C50;
+}
+
+.pointer {
+	cursor: pointer;
 }
 
 .summary {

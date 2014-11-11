@@ -21,6 +21,9 @@
 	
 
 	<script>
+
+	document.body.scrollTop = 0;
+
 	  window.fbAsyncInit = function() {
 	    FB.init({
 	      appId      : '895139070496415',
@@ -38,7 +41,12 @@
 	   }(document, 'script', 'facebook-jssdk'));
 	</script>
 
+	<!--local typeKit -->
 	<script src="//use.typekit.net/pzp3zgb.js"></script>
+	<script>try{Typekit.load();}catch(e){}</script>
+
+	<!-- live typeKit -->
+	<script src="//use.typekit.net/kgx2bhp.js"></script>
 	<script>try{Typekit.load();}catch(e){}</script>
 
 	<!-- Live site script includes.
@@ -90,7 +98,7 @@
 							<div class="col-sm-4 auth" ng-controller="modalController">
 
 									<div ng-cloak ng-show="!user">
-										<h4 class="proxima-light" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
+										<h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
 										<h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
 										<h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
 									</div>

@@ -12,6 +12,14 @@ class UpdateEventsTableDatetime extends Migration {
 	 */
 	public function up()
 	{
+
+		Schema::table('events', function(Blueprint $table)
+		{
+			$table->dropColumn('event_date');
+
+		});
+
+
 		Schema::table('events', function(Blueprint $table)
 		{
 			$table->dateTime('event_date')->nullable();

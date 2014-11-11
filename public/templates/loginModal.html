@@ -1,17 +1,19 @@
 	<div class="login">
       <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h3 class="modal-title uppercase">Login</h3>
-        <p>Lorem ipsum dolor sit amet, cu nec debet urbanitas, putent electram temporibus eos in</p>
+        <h3 class="modal-title uppercase center margin">Sign In</h3>
+        <div class="facebookButton" ng-click="login()">
+          <div class="lucida">Sign in with Facebook</div>
+        </div>
       </div>
       <!--  -->
       <div class="modal-body">
         <form class="loginForm">
 			<input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
-			<input type="password" placeholder="password" class="registerPassword block" ng-model="formData.password">
+			<input type="password" placeholder="Password" class="registerPassword block" ng-model="formData.password">
 			<!-- <input type="password" placeholder="password" class="registerPassword left" ng-model="formData.password2"> -->
 	        <div>
-		        <button type="submit" class="btn btn-primary" ng-click="loginUser(formData); cancel()">Login</button>
+		        <button type="submit" class="create-account center" ng-click="loginUser(formData); cancel()">Login</button>
 	      	</div>
           <!-- {{formData}} -->
       </form>
