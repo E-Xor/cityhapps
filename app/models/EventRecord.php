@@ -57,6 +57,7 @@ class EventRecord extends Eloquent {
 				->startDate($eventParams['startDate'])
 				->orderBy('event_date', 'asc')
 				->orderBy('start_time', 'asc')
+				->getPage($eventParams['pageSize'], $eventParams['pageCount'])
 				->get();
 
 		return $events;
@@ -138,6 +139,14 @@ class EventRecord extends Eloquent {
 	public function scopeStartDate($query, $startDate) {
 		if ($startDate != null) {
 			return $query->where('event_date', '>=', $startDate);
+		} else {
+			return $query;
+		}
+	}
+
+	public function scopeGetPage($query, $pageSize, $pageCount) {
+		if (($pageSize != null) && ($pageCount != null)) {
+			return $query->skip($pageSize * ($pageCount - 1))->take($pageSize);
 		} else {
 			return $query;
 		}
