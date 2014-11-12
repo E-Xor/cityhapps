@@ -14,17 +14,6 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		return strTime;		
 	};
 
-
-		$scope.mobile = function() {
-			if ($window.innerWidth <= 768 ) {
-
-				return true;
-			} else {
-
-				return false;
-			}
-		};
-
 		getEvents.events();
 
 		var eventSuccess = function(data) {
@@ -58,6 +47,20 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		
 			if ($window.innerWidth <= 768 ) {
 				$scope.slideGroup.push(mobileSlides);
+
+				$scope.eventModalMobile = function(data) {
+
+				$modal.open({
+					templateUrl: "templates/eventModal.html",
+					controller: 'simpleModalInstanceController', 
+					resolve: {
+						data: function() {
+							return data;
+						},  
+					}
+				});
+			};
+
 				
 			} else {
 				$scope.slideGroup.push(slides);
@@ -171,13 +174,19 @@ cityHapps.config([
 	    });
 	}]);
 
-cityHapps.controller('appController', ['$scope', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal',
-	function($scope, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal){
+cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal',
+	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal){
 		
+		$scope.mobile = function() {
+			if ($window.innerWidth <= 768 ) {
+				return true;
+			} else {
+				return false;
+			}
+		};		
+
 		$scope.userString = localStorage.getItem('user');
 		$scope.user = angular.fromJson($scope.userString);
-
-
 
 		if ($scope.userString) {
 
@@ -616,14 +625,15 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", 'voteService', "$modalInstance", 'data', 'num', 'vote', 
 		function($scope, registerDataService, voteService, $modalInstance, data, num, vote){
 
-		if (num === null) {
+		if (num === null || num === undefined) {
 			$scope.data = data;
 			// $scope.data.status = voteService.vote;
-			
-		} else {
-			$scope.data = data[num];	
+		} else if (num) {
+			$scope.data = data[num];
 			// $scope.data.vote = voteService.vote;
-		}	
+		} else {
+			$scope.data = data;
+		}
 
 		$scope.vote = {};
 
@@ -644,7 +654,7 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 	}
 ]);
 
-cityHapps.controller("mapEventModalInstanceController", ["$scope", "$modalInstance", 'data', 'voteService', 
+cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance", 'data', 'voteService', 
 		function($scope, $modalInstance, data, voteService){
 			
 		$scope.data = data;
@@ -833,7 +843,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 			$modal.open({
 				templateUrl: "templates/eventModal.html",
-				controller: 'mapEventModalInstanceController', 
+				controller: 'simpleModalInstanceController', 
 				resolve: {
 					data: function() {
 						// alert('this is firing');
@@ -884,7 +894,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				$scope.mapMarkerEvents = data;
 				$modal.open({
 					templateUrl: "templates/eventModal.html",
-					controller: 'mapEventModalInstanceController',
+					controller: 'simpleModalInstanceController',
 					resolve: {
 						data: function() {
 							return data;
@@ -917,7 +927,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 				$modal.open({
 					templateUrl: "templates/eventModal.html",
-					controller: 'mapEventModalInstanceController', 
+					controller: 'simpleModalInstanceController', 
 					resolve: {
 						data: function() {
 							// alert('this is firing');
@@ -990,15 +1000,15 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 						$log.info('this is the map instance', map);
 						$scope.mapInstance = map;
 
-							// $(document).ready(function(){
-							// 	var label = $('.markerLabel')
-							// 		label.css('top', function(i,current) { 
-							// 			return (parseInt(current) - 35 );
-							// 		});
-							// 		label.css('left', function(i, current) {
-							// 			return (parseInt(current) - 5 );
-							// 		});
-							// });
+							$(document).ready(function(){
+								var label = $('.markerLabel')
+									label.css('top', function(i,current) { 
+										return (parseInt(current) - 35 );
+									});
+									label.css('left', function(i, current) {
+										return (parseInt(current) - 5 );
+									});
+							});
 
 						console.log($scope.mapInstance);
 					});
@@ -1017,18 +1027,20 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 								for(var i=0; i < newData.length; i++) {
 									$scope.markers.push(newData[i]);
 								}
-								$(document).ready(function(){
-									var label = $('.markerLabel')
-										label.css('top', function(i,current) { 
-											return (parseInt(current) - 35 );
-										});	
-										label.css('left', function(i, current) {
-											return (parseInt(current) - 5 );
-										});
-								});
 
-							// getEvents.events().success(drawEvents);
+						// getEvents.events().success(drawEvents);
+					}).then(function(){
+						$(document).ready(function(){
+							var label = $('.markerLabel')
+								label.css('top', function(i,current) { 
+									return (parseInt(current) - 35 );
+								});	
+								label.css('left', function(i, current) {
+									return (parseInt(current) - 5 );
+								});
 						});
+
+					});
 				}
 			}
 		};

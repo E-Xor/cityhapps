@@ -76,7 +76,7 @@
 		<!-- <div style="color:#fff;">{{map.center}}</div> -->
 		<div id="map_canvas">
 			<ui-gmap-google-map id="map" center="map.center" zoom="map.zoom" bounds="map.bounds" events="map.events">
-					<ui-gmap-marker ng-repeat="event in tabEvents | limitTo: 10" ng-init="map.init()" options="{labelContent: $index, labelClass: 'markerLabel', labelInBackground: true}" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" icon="'/img/marker.png'" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}">
+					<ui-gmap-marker ng-repeat="event in tabEvents | limitTo: 10" ng-init="map.init()" options="{labelContent: $index, labelClass: 'markerLabel'}" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" icon="'/img/marker.png'" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}">
 					<!-- icon="markers.icon" -->
 		        	</ui-gmap-marker>
 			</ui-gmap-google-map>
