@@ -53,7 +53,14 @@ class EventController extends BaseController {
 		$eventParams['pageCount'] = Input::get('page_count');
 
 		$events = EventRecord::selectEvents($eventParams);
-		return json_encode($events);
+		
+		$meta = array();
+		$count = EventRecord::eventCount();
+		$meta["count"] = $count;
+
+		$results = array("meta" => $meta, "events" => $events);;
+		
+		return json_encode($results);
 	}
 
 

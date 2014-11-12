@@ -21,6 +21,11 @@ class EventRecord extends Eloquent {
 		return $this->belongsToMany('Category', 'event_category', 'event_id', 'category_id');
 	}
 
+	public static function eventCount()
+	{
+		return EventRecord::all()->count();
+	}
+
 	public static function selectEvents($eventParams) {
 		/*
 		eventID, 
@@ -155,9 +160,13 @@ class EventRecord extends Eloquent {
 
 	public function scopeGetPage($query, $pageSize, $pageCount) {
 		if (($pageSize != null) && ($pageCount != null)) {
-			return $query->skip($pageSize * ($pageCount - 1))->take($pageSize);
+			if ($pageSize == '-1') {
+				return $query; // returns all records
+			} else {
+				return $query->skip($pageSize * ($pageCount - 1))->take($pageSize);
+			}
 		} else {
-			return $query;
+			return $query->take(100);
 		}
 	}
 	

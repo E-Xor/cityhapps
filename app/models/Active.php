@@ -42,7 +42,12 @@ class Active extends Eloquent {
 		// Active.com API Events Search (http://api.amp.active.com/v2/search)
 		// API Key = 'f4kzrwzqywvtcyntepb9zt5f';
 
-		$events = file_get_contents('http://api.amp.active.com/v2/search/?near=Atlanta%2CGA%2CUS&current_page=1&per_page=1000&sort=distance&exclude_children=true&api_key=f4kzrwzqywvtcyntepb9zt5f');
+		$today = new DateTime();
+
+		$start_date = date_sub($today, date_interval_create_from_date_string("30 days"))->format('Y-m-d');
+		//$end_date = date_add($today, date_interval_create_from_date_string("90 days"))->format('Y-m-d');
+
+		$events = file_get_contents('http://api.amp.active.com/v2/search/?start_date='.$start_date.'..&near=Atlanta%2CGA%2CUS&current_page=1&per_page=1000&sort=distance&exclude_children=true&api_key=f4kzrwzqywvtcyntepb9zt5f');
 
 		$jsonObj = json_decode( $events );  
 		$jsonArray = activeObjectToArray($jsonObj);
