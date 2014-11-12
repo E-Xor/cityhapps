@@ -63,6 +63,13 @@ class EventController extends BaseController {
 		return json_encode($results);
 	}
 
+	public function eventsPaged() {
+
+		$events = EventRecord::paginate(10);
+		return $events;
+
+	}
+
 
 	public function geoEvents() {
 

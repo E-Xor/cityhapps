@@ -141,7 +141,7 @@ html {
 
 .search-large {
   width: 100%;
-  height: 137px;
+  height: 109px;
   padding: 10px;
   font-size: 1.6em;
   background: transparent;
@@ -151,7 +151,7 @@ html {
   width: 100%;
   left: 0;
   padding: 0 15%;
-  background: url("/img/searchIcon.png") 180px 55px/23px 26px no-repeat; }
+  background: url("/img/searchIcon.png") 180px 48px/23px 26px no-repeat; }
   .search-large:focus {
     outline: none; }
 
@@ -193,7 +193,7 @@ html {
 .category-box {
   padding: 5px;
   border: 1px solid #B1ADB1;
-  display: inline;
+  display: inline-block;
   margin-right: 10px; }
 
 .modal-image-wrapper {
@@ -387,6 +387,25 @@ html {
   float: right;
   margin-left: 20px; }
   .dislike-icon.active {
+    background: url("/img/likeIconActive.png") no-repeat -61px 0; }
+
+.like-icon-mobile {
+  height: 41px;
+  width: 41px;
+  background: url("/img/mobileLikeIcon.png") no-repeat 0 0;
+  cursor: pointer;
+  float: left; }
+  .like-icon-mobile.active {
+    background: url("/img/likeIconActive.png") no-repeat 0 0; }
+
+.dislike-icon-mobile {
+  height: 41px;
+  width: 41px;
+  background: url("/img/mobileLikeIcon.png") no-repeat 0 -80px;
+  cursor: pointer;
+  float: right;
+  margin-left: 20px; }
+  .dislike-icon-mobile.active {
     background: url("/img/likeIconActive.png") no-repeat -61px 0; }
 
 .event {
@@ -650,20 +669,50 @@ button.create-account[disabled='disabled'] {
       content: url("/img/sliderLeft.png");
       cursor: pointer; }
 
+  .event-slider {
+    margin-bottom: 52px; }
+
+  .mobile-large-num {
+    font-size: 5em;
+    display: block; }
+
+  .mobile-search {
+    background: url("/img/searchIcon.png") 20px 10px/23px 26px no-repeat;
+    width: 20%;
+    height: 38px;
+    display: inline; }
+
+  .mobile-menu {
+    background: url("/img/menuIcon.png") 18px 10px/26px 26px no-repeat;
+    width: 20%;
+    height: 38px;
+    display: inline; }
+
+  .mobile-logo {
+    width: 60%; }
+
+  .mobile-event {
+    background: #fff;
+    margin: 10px;
+    padding: 20px;
+    float: left; }
+
+  .mobile-event-details {
+    width: 70%; }
+
   .header-search input {
     background: url("/img/searchIcon.png") 8px 16px/23px 26px no-repeat; }
+
+  .event-counter {
+    padding: 10px 0; }
 
   .bg-image {
     background-size: inherit; }
 
-  .modal-image {
-    height: 175px;
-    background-size: contain; }
-
   .prev {
     height: 50px;
     cursor: pointer;
-    background: url("/img/sliderLeft.png") no-repeat 0px 5px/71px 40px; }
+    background: url("/img/sliderLeft.png") no-repeat 0px 20px/40px 22px; }
 
   .event-inner {
     height: 425px; }
@@ -671,4 +720,4 @@ button.create-account[disabled='disabled'] {
   .next {
     height: 50px;
     cursor: pointer;
-    background: url("/img/sliderRight.png") no-repeat 0px 5px/71px 40px; } }
+    background: url("/img/sliderRight.png") no-repeat 0px 20px/40px 22px; } }
