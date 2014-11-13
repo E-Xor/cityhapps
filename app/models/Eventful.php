@@ -40,6 +40,10 @@ class Eventful extends Eloquent {
 			}
 		}
 
+		$today = new DateTime();
+
+		$start_date = date_sub($today, date_interval_create_from_date_string("30 days"))->format('Y-m-d');
+
 		// Enter your application key here. (See http://api.eventful.com/keys/)
 		// $app_key = 'pLB3SGLn9xSnfcg5';
 

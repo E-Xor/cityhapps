@@ -40,10 +40,14 @@ class Eventbrite extends Eloquent {
 			}
 		}
 
+		$today = new DateTime();
+
+		$start_date = date_sub($today, date_interval_create_from_date_string("30 days"))->format('Y-m-d');
+
 		// (See http://developer.eventbrite.com/)
 		// $token = 'UKNDTMAVPK4A7ACVVLWF';
 
-		$events = file_get_contents('https://www.eventbriteapi.com/v3/events/search/?venue.city=Atlanta&venue.region=GA&venue.country=US&token=UKNDTMAVPK4A7ACVVLWF');
+		$events = file_get_contents('https://www.eventbriteapi.com/v3/events/search/?start_date.range_start='.$start_date.'T00:00:00Z&venue.city=Atlanta&venue.region=GA&venue.country=US&token=UKNDTMAVPK4A7ACVVLWF');
 
 		$jsonObj = json_decode( $events );  
 		$jsonArray = eventbriteObjectToArray($jsonObj);

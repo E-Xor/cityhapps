@@ -14,14 +14,24 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		return strTime;		
 	};
 
-		//getEvents.events();
+		$scope.mobile = function() {
+			if ($window.innerWidth <= 768 ) {
+
+				return true;
+			} else {
+
+				return false;
+			}
+		};
+
+
 
 		var eventSuccess = function(data) {
 
-		$scope.eventData = data;
+		$scope.eventData = data.events;
 		console.log($scope.eventData);
 
-		$scope.eventCount = data.length;
+		$scope.eventCount = data.meta.count;
 
 		$scope.slideGroup = [];
 		//console.log($scope.slideGroup);
@@ -928,7 +938,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			$scope.markers = [];
 			$scope.markers.id = [];
 
-			$scope.tabEvents = data;
+			$scope.tabEvents = data.events;
 			console.log($scope.tabEvents);
 
 			// $scope.tabEvents.length
