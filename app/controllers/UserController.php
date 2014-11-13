@@ -32,6 +32,7 @@ class UserController extends \BaseController {
 	public function store()
 	{
 
+		$returnUser = '';
 
 		//Dont Send email if Facebook user
 		Input::get('email'); 
@@ -40,14 +41,11 @@ class UserController extends \BaseController {
 
 			$message->from('team@cityhapps.com', 'CityHapps');
 
-				$email = Input::get('email');
+			$email = Input::get('email');
 			
-			// return $email;
-
 			$message->to($email, $email)->subject('Welcome to CityHapps!');
-			//$json['email'], $json['email']
+
 		});
-		
 
 		$json = Input::only('email', 'password', 'categories', 'fb_token', 'name');
 
@@ -62,8 +60,6 @@ class UserController extends \BaseController {
 
 			$fb_user->save();
 
-			return $fb_user;
-
 		} else {
 
 			$user = new User;
@@ -71,12 +67,8 @@ class UserController extends \BaseController {
 			$user->email = $json['email'];
 			$user->password = Hash::make($json['password']);
 			$user->save();
-
-			return $user;
 			
 			$userID = $user["id"];
-		
-
 
 			$categoriesPaired = $json['categories']; // array in "categoryID": true
 
@@ -94,7 +86,7 @@ class UserController extends \BaseController {
 			}
 		}
 
-		if ($user !== 'undefined') {
+		if ($user === 'undefined') {
 			return $fb_user . " New FB User Created Successfully";
 		} else {
 			return $user . " New User Created Successfully!";	

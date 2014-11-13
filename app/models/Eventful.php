@@ -119,6 +119,14 @@ class Eventful extends Eloquent {
 					$eventRecord->venue_name		=	$jsonArray['events']['event'][$i]['venue_name'];
 					$eventRecord->venue_url			=	$jsonArray['events']['event'][$i]['venue_url'];
 
+					if (isset($jsonArray['events']['event'][$i]['image'])) {
+						if (isset($jsonArray['events']['event'][$i]['image']['block250'])) {
+							if (isset($jsonArray['events']['event'][$i]['image']['block250']['url'])) {
+								$eventRecord->image  	=	$jsonArray['events']['event'][$i]['image']['block250']['url'];
+							}
+						}
+					}
+
 					$eventRecord->save();
 
 					// Eventful Category

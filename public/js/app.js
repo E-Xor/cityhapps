@@ -483,6 +483,8 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 
 
 	$scope.processForm = function(formData) {
+
+
 		$http({
 			method: 'POST',
 			url: '/user',
@@ -753,7 +755,6 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 		$scope.checkCategories = function() {
 
 			// console.log($scope.formData.categories);
-
 			var obj = $scope.formData.categories;
 
 			for (var key in obj) {
