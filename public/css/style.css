@@ -151,7 +151,7 @@ html {
   width: 100%;
   left: 0;
   padding: 0 15%;
-  background: url("/img/searchIcon.png") 180px 48px/23px 26px no-repeat; }
+  background: url("/img/searchIcon.png") 180px 40px/23px 26px no-repeat; }
   .search-large:focus {
     outline: none; }
 
@@ -217,6 +217,35 @@ html {
   bottom: 10px;
   left: 10px;
   color: #fff; }
+
+.share {
+  width: 21px;
+  height: 29px;
+  background: url("/img/shareIcon.png") 0 0/21px 29px no-repeat;
+  right: 15px;
+  position: absolute;
+  bottom: 15px;
+  cursor: pointer; }
+
+.share-overlay {
+  width: 100%;
+  background: #fff;
+  height: 80%;
+  display: none;
+  padding: 5%; }
+
+.share-icon {
+  height: 76px;
+  width: 76px;
+  background-size: cover;
+  display: inline-block;
+  margin-right: 10px; }
+  .share-icon.fb-share {
+    background: url("/img/shareIcons.png") no-repeat 0 0/259px 76px; }
+  .share-icon.twitter-share {
+    background: url("/img/shareIcons.png") no-repeat -91px 0/259px 76px; }
+  .share-icon.pinterest-share {
+    background: url("/img/shareIcons.png") no-repeat -183px 0/259px 76px; }
 
 .modal-header-event {
   padding: 0; }
@@ -333,6 +362,11 @@ html {
   top: -30px;
   position: absolute; }
 
+.animate-enter {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+  -moz-transition: all linear 0.5s; }
+
 .view-row {
   margin: 20px 0; }
 
@@ -390,23 +424,36 @@ html {
     background: url("/img/likeIconActive.png") no-repeat -61px 0; }
 
 .like-icon-mobile {
-  height: 41px;
-  width: 41px;
-  background: url("/img/mobileLikeIcon.png") no-repeat 0 0;
-  cursor: pointer;
-  float: left; }
-  .like-icon-mobile.active {
-    background: url("/img/likeIconActive.png") no-repeat 0 0; }
-
-.dislike-icon-mobile {
-  height: 41px;
-  width: 41px;
-  background: url("/img/mobileLikeIcon.png") no-repeat 0 -80px;
+  height: 31px;
+  width: 31px;
+  background: url("/img/mobileLikeIcon.png") no-repeat 0 0/31px 31px;
   cursor: pointer;
   float: right;
-  margin-left: 20px; }
+  background-size: cover; }
+  .like-icon-mobile.active {
+    background: url("/img/likeIconActive.png") no-repeat 0px 0/31px 31px;
+    height: 31px;
+    width: 31px;
+    background-size: cover; }
+
+.dislike-icon-mobile {
+  height: 31px;
+  width: 31px;
+  background: url("/img/mobileLikeIcon.png") no-repeat 0px -53px/31px 31px;
+  background-size: cover;
+  cursor: pointer;
+  float: right; }
   .dislike-icon-mobile.active {
-    background: url("/img/likeIconActive.png") no-repeat -61px 0; }
+    background: url("/img/likeIconActive.png") no-repeat -46px 0/31px 31px;
+    height: 31px;
+    width: 31px;
+    background-size: cover; }
+
+.mobile-vote-icons {
+  width: 12%;
+  float: left;
+  display: inline-block;
+  margin: 13px 20px; }
 
 .event {
   padding: 10px; }
@@ -606,6 +653,9 @@ button.create-account[disabled='disabled'] {
 .red {
   color: #FF5C50; }
 
+.ellipsis:after {
+  content: "..."; }
+
 .pointer {
   cursor: pointer; }
 
@@ -620,6 +670,9 @@ button.create-account[disabled='disabled'] {
 
 .block {
   display: block; }
+
+.dark {
+  color: #2c2625; }
 
 .bold {
   font-weight: bold; }
@@ -692,13 +745,24 @@ button.create-account[disabled='disabled'] {
     width: 60%; }
 
   .mobile-event {
+    width: 100%;
     background: #fff;
-    margin: 10px;
-    padding: 20px;
+    margin: 10px 0;
+    padding: 0;
+    float: left; }
+
+  .mobile-event-image {
+    background-size: cover;
+    width: 30%;
+    height: 100px;
+    display: inline-block;
     float: left; }
 
   .mobile-event-details {
-    width: 70%; }
+    width: 43%;
+    padding: 10px;
+    display: inline-block;
+    float: left; }
 
   .header-search input {
     background: url("/img/searchIcon.png") 8px 16px/23px 26px no-repeat; }

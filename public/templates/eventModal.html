@@ -6,7 +6,27 @@
 				
 				<div class="modal-image" style="background-image: url('{{data.event_image_url}}'); background-size: cover;">
 				    <div class="modal-image-wrapper">
+                        <div class="share-overlay">
+                            <h4 class="wide-kerning uppercase">Share</h4>
+                            <h3 class="dark">{{data.event_name}}</h3>
+                             <!-- fb-share-button -->
+                            <div class="share-icon fb-share"
+                                 data-href="{{data.url}}" data-layout="">
+
+                            </div>
+
+                            <a href="" class="share-icon twitter-share">
+
+                            </a>
+                            <a href="" class="share-icon pinterest-share">
+
+                            </a>
+                        </div>
 				    	<h3 class="modal-title-event">{{data.event_name}}</h3>
+                            <div class="share right" ng-click="shareReveal()">
+
+                            </div>
+                        </div>
 				    </div>
 				</div>
 		</div>
@@ -39,11 +59,11 @@
 					</div>
 					{{vote}}
 					<div class="purcase-info right inline">
-						<div class="event-price left">
+						<!-- <div class="event-price left">
 							<h3>$12.99</h3>
-						</div>
+						</div> -->
 
-						<button type="button" class="buy right" ng-click="" >Buy</button>
+						<a class="buy right" ng-href="{{data.url}}">Buy</a>
 					</div>
 
 				</div>

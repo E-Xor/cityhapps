@@ -14,7 +14,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		return strTime;		
 	};
 
-		getEvents.events();
+		//getEvents.events();
 
 		var eventSuccess = function(data) {
 
@@ -28,13 +28,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 		var i;
 
-		var slideCount = '';
-
-		$scope.isMobile = '';
-
-		// console.log(slideCount);
-
-		for (i = 0; i < $scope.eventData.length; i += 4) {
+            for (i = 0; i < $scope.eventData.length; i += 4) {
 
 			var slides = {
 				'first' : $scope.eventData[i],
@@ -145,7 +139,8 @@ cityHapps.factory('getEvents', function($http){
 		events : function() {
 
 			var today = new Date();
-			var startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + (today.getDate() - 1);
+			//var startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + (today.getDate() - 1);
+            var startDate = moment().format();
 
 			// '?start_date=' + startDate
 			return $http.get('/events?start_date=' + startDate).success(function(data) {
@@ -190,7 +185,9 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
 		if ($scope.userString) {
 
-			$scope.upVote = function(event, num, vote) {
+			$scope.voteEvent = function(event, num, vote) {
+				
+				alert(vote);
 
 				alert("This" + JSON.stringify(event[num])  + "has been upvoted");
 
@@ -201,7 +198,7 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 					data: {
 						'user_id' : $scope.user.data.id,
 						'event_id' : event[num].id, 
-						'vote' : 1,
+						'vote' : vote[upVote]
 					},
 
 					headers : {"Content-Type": "application/json"}
@@ -209,7 +206,7 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
 					if (!data) {
 						console.log("no vote, man");
-						// $scope.loggedOut = false;
+						// $scope.loggedOut = false;;
 					} else if(data) {
 						console.log(data);
 						// $scope.loggedOut = true;
@@ -218,33 +215,33 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 				
 			};
 
-			$scope.downVote = function(event, num, vote) {
-				alert("This" + JSON.stringify(event[num])  + "has been downvoted");
+			// $scope.downVote = function(event, num, vote) {
+			// 	alert("This" + JSON.stringify(event[num])  + "has been downvoted");
 
-				$http({
-					method: "POST",
-					url: '/user_event',
-					data: {
-						'user_id' : $scope.user.data.id,
-						'event_id' : event[num].id, 
-						'vote' : 0
-					},
+			// 	$http({
+			// 		method: "POST",
+			// 		url: '/user_event',
+			// 		data: {
+			// 			'user_id' : $scope.user.data.id,
+			// 			'event_id' : event[num].id, 
+			// 			'vote' : vote
+			// 		},
 
-					headers : {"Content-Type": "application/json"}
-				}).success(function(data){
+			// 		headers : {"Content-Type": "application/json"}
+			// 	}).success(function(data){
 
-					if (!data) {
-						console.log("no vote, man");
-						// $scope.loggedOut = false;
-					} else if(data) {
-						console.log(data);
-						// $scope.loggedOut = true;
-					}
-				});
+			// 		if (!data) {
+			// 			console.log("no vote, man");
+			// 			// $scope.loggedOut = false;
+			// 		} else if(data) {
+			// 			console.log(data);
+			// 			// $scope.loggedOut = true;
+			// 		}
+			// 	});
 
 
-				voteService.vote = vote;
-			};
+				// voteService.vote = vote;
+			// };
 
 		} else {
 
@@ -637,6 +634,31 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
 		$scope.vote = {};
 
+        $scope.shareReveal =  function() {
+
+            $('.share-overlay').fadeToggle();
+        }
+
+        FB.init({
+            appId      : '{895139070496415}',
+            status     : true,
+            xfbml      : true,
+            version    : 'v2.0'
+        });
+
+        $scope.fbShare = function(url) {
+            FB.ui({
+                method: 'share',
+                href: url
+            }, function(response){
+                if (response && !response.error_code) {
+                    alert('Posting completed.');
+                } else {
+                    alert('Error while posting.');
+                }
+            });
+        }
+
 		//THIS IS WORKING AND REFLECTING VOTE IN MODAL, NEED TO DO THE OPPOSITE
 		//The 'vote' service being registered in the controller is what is being resolved by firing the modal, 
 		//thus giving the new template access to it
@@ -938,7 +960,12 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			};
 		};
 
-		$scope.pageCount = 0
+		$scope.pageCount = 1;
+
+        if ($scope.pageCount <= 1) {
+            $scope.disablePrev = true;
+        }
+
 		$scope.getNextEvents = function() {
 			$scope.pageCount++;
 			$scope.tabEvents = {};
@@ -946,27 +973,23 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
 			$scope.nowGet = moment().add(next,'days').format();
 
-			$http.get('/eventsPaged?start_date='+ $scope.nowGet + "&page=" + $scope.pageCount ).success(function(pagedEvents){
-				$log.info(pagedEvents.data);
-				$scope.tabEvents = pagedEvents.data;
+			$http.get('/events?start_date=' + $scope.nowGet + '&page_size=10&page_count='+ $scope.pageCount).success(function(pagedEvents){
+				console.log(pagedEvents.data);
+				$scope.tabEvents = pagedEvents;
 			});
 		}
 
 		$scope.getPrevEvents = function() {
 			$scope.pageCount--;
 
-			if ($scope.pageCount < 1) {
-				$scope.disablePrev = true;
-			}
-
 			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
 			$scope.nowGet = moment().add(next,'days').format();
 
 			// $scope.tabEvents = {};
 
-			$http.get('/eventsPaged?start_date='+ $scope.nowGet + "?page=" + $scope.pageCount ).success(function(pagedEvents){
+			$http.get('/events?start_date=' + $scope.nowGet + '&page_size=10&page_count='+ $scope.pageCount).success(function(pagedEvents){
 				$log.info(pagedEvents.data);
-				$scope.tabEvents = pagedEvents.data;
+				$scope.tabEvents = pagedEvents;
 
 				// return $scope.tabEvents;
 			});

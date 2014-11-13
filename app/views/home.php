@@ -61,8 +61,8 @@
   data-width="450"
   data-show-faces="true">
 </div> -->
-
 	<body ng-controller="appController">
+    <div id="fb-root"></div>
 		<div ng-if="!mobile()">
 			<div class="bg-image">	
 				<div class="main-container proxima" ng-animate=" 'animate' ">

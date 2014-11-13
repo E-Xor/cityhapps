@@ -8,32 +8,31 @@
 	
 			
 			<!-- MOBILE / PHONE slide view -->
-		<div ng-if='mobile()'>
+		<div ng-if = 'mobile()'>
 			<div class="row event-slider">
 				<carousel interval="interval" class="col-sm-12">
 					<slide class="col-sm-12" ng-repeat="event in slideGroup | limitTo: 10">			
 						<div class="col-sm-3 event">
 							<div class="event-inner" >
 									<div ng-click="eventModalMobile(event)">
-										<div class="event-image" style="background-image: url('{{event.event_image_url}}'); background-size: cover; height: 125px;">
+										<div class="event-image" style="background-image: 'url('{{event.event_image_url}}')'; background-size: cover; height: 125px;" >
 											
 										</div>
 										<div class="event-details">
 											<h4 class="">{{event.event_name | limitTo: 25 }}</h4>
-											<p>{{event.start_time}}</p>
-											<p>{{event.venue_name | limitTo: 40}}</p>
-										</div>
+
+                                            <p>{{event.start_time}}{{event.venue_name | limitTo: 40}}</p>
+                                        </div>
 									</div>
 								<div class="icons">
-									<div ng-class="{'like-icon' : !upvoted, 'like-icon active': upvoted }" ng-init="upvoted = false" ng-click="upVote(event, 'first'); ">
-									</div>
-									<div ng-class="{'dislike-icon': !isActiveDown, 'dislike-icon active': isActiveDown }" ng-init="isActiveDown = false" ng-click="downVote(event, 'first'); ">
-									</div>
+									<label class="like-icon" ng-model="vote.upVote" ng-click="upVote(event, vote)" btn-checkbox></label>
+
+									<label class="dislike-icon" ng-model="vote.downVote" ng-click="downVote(event, vote)" btn-checkbox></label>
 								</div>
 							</div>
 						</div>
 					</slide>
-				<carousel>
+				</carousel>
 			</div>
 					
 			<div class="day-slider-border"></div>
@@ -55,31 +54,34 @@
 				</div>
 			<div class="day-slider-border"></div>
 
-			<div class="col-sm-12" ng-repeat="event in slideGroup">
-				<div class="mobile-event" ng-click="eventModalMobile(event)">
-					<div class="mobile-event-image col-xs-3" style="background-image: url('{{event.event_image_url}}'); background-size: cover;">
-					</div>	
-					<div class="mobile-event-details col-xs-7">
-						<div class="bold">{{event.event_name | limitTo: 40}}</div>
-						{{event.start_date}}
-						{{event.venue_name}}
-					</div>
-					<div class="col-xs-2">
-						<div class="mobile-vote-icons">
-							<label class="like-icon-mobile" ng-model="vote.upVote" ng-click="upVote(event, 'first', vote)" btn-checkbox></label>
+            <!--<div class="mobile-event-container">-->
+                <div class="col-sm-12" ng-repeat="event in slideGroup">
+                    <div class="mobile-event" ng-click="eventModalMobile(event)">
+                        <div class="mobile-event-image" style="background-image: url('{{event.event_image_url}}'); ">
+                        </div>
+                        <div class="mobile-event-details">
+                            <div class="bold ellipsis">{{event.event_name | limitTo: 30}}</div>
+                            {{event.start_date}}
+                            {{event.venue_name}}
+                        </div>
+                        <div class="">
+                            <div class="mobile-vote-icons">
+                                <label class="like-icon-mobile" ng-model="vote.upVote" ng-click="upVote(event, 'first', vote.upVote)" btn-checkbox></label>
 
-							<label class="dislike-icon-mobile" ng-model="vote.downVote" ng-click="downVote(event, 'first', vote)" btn-checkbox></label>
-						</div>
-					</div>
+                                <label class="dislike-icon-mobile" ng-model="vote.downVote" ng-click="downVote(event, 'first', vote.upVote)" btn-checkbox></label>
+                            </div>
+                        </div>
 
-				</div>
-			</div>	
+                    </div>
+                </div>
+            <!--</div>-->
+
 
 
 		</div>
 			
-	<div ng-if="!mobile()">		
-		<div class="row event-slider">	
+	<div ng-if="!mobile()">
+		<div class="row event-slider">
 			<carousel interval="interval" class="col-sm-12">
 				<slide class="col-sm-12" ng-repeat="event in slideGroup">
 					<!-- hide card with no title ths doesn exist ng-if="event.first.event_name" -->
@@ -96,9 +98,9 @@
 									</div>
 									<div class="icons">
 									    <div class="btn-group">
-									        <label class="like-icon" ng-model="vote.upVote" ng-click="upVote(event, 'first', vote)" btn-checkbox></label>
+									        <label class="like-icon" ng-model="vote.upVote" ng-click="voteEvent(event, 'first', vote)" btn-checkbox></label>
 
-									        <label class="dislike-icon" ng-model="vote.downVote" ng-click="downVote(event, 'first', vote)" btn-checkbox></label>
+									        <label class="dislike-icon" ng-model="vote.downVote" ng-click="voteEvent(event, 'first', vote)" btn-checkbox></label>
 									    </div>
 										    {{vote}}
 									</div>
@@ -262,7 +264,7 @@
 						</div>
 						<div class="col-sm-3 event" ng-click="eventModal(event, 'third')">
 							<div class="event-inner">
-								<div class="event-image" style="background-image: url('{{event.third.event_image_url}'); background-size: cover; height: 125px;">
+								<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 125px;">
 									<!-- <img ng-src=""> -->
 								</div>
 								<div class="event-details">
