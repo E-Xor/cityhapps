@@ -27,27 +27,6 @@ class EventRecord extends Eloquent {
 	}
 
 	public static function selectEvents($eventParams) {
-		/*
-		eventID, 
-		eventName, 
-		venueName, 
-		venueAddress, 
-		venueCity, 
-		venueState, 
-		venueZip, 
-		description, 
-		startTime, 
-		startDate, 
-		endDate, 
-		latitude, 
-		longitude, 
-		category, 
-		createdAt, 
-		updatedAt, 
-		source, 
-		pageSize, 
-		pageCount
-		*/
 
 		$events = EventRecord::with('categories')
 				->eventID($eventParams['eventID'])
@@ -63,7 +42,7 @@ class EventRecord extends Eloquent {
 				->withCategory($eventParams['category'])
 				->orderBy('event_date', 'asc')
 				->orderBy('start_time', 'asc')
-				->getPage($eventParams['pageSize'], $eventParams['pageCount'])
+				->getPage($eventParams['pageSize'], $eventParams['pageCount'], $eventParams['pageShift'])
 				->get();
 
 		return $events;
@@ -158,12 +137,16 @@ class EventRecord extends Eloquent {
 		}
 	}
 
-	public function scopeGetPage($query, $pageSize, $pageCount) {
+	public function scopeGetPage($query, $pageSize, $pageCount, $pageShift) {
 		if (($pageSize != null) && ($pageCount != null)) {
 			if ($pageSize == '-1') {
 				return $query; // returns all records
 			} else {
-				return $query->skip($pageSize * ($pageCount - 1))->take($pageSize);
+				if ($pageShift != null) {
+					return $query->skip(($pageSize * ($pageCount - 1)) + $pageShift)->take($pageSize);
+				} else {
+					return $query->skip($pageSize * ($pageCount - 1))->take($pageSize);
+				}
 			}
 		} else {
 			return $query->take(100);
