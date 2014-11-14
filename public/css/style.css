@@ -225,7 +225,8 @@ html {
   right: 15px;
   position: absolute;
   bottom: 15px;
-  cursor: pointer; }
+  cursor: pointer;
+  z-index: 5; }
 
 .share-overlay {
   width: 100%;
@@ -304,15 +305,8 @@ html {
   margin: 0 auto;
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s;
-  -moz-transition: all linear 0.5s; }
-
-.event-slider > .bx-wrapper > .bx-viewport {
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border: none;
-  left: 0;
-  background: none; }
+  -moz-transition: all linear 0.5s;
+  min-height: 325px; }
 
 .carousel-inner {
   max-width: 90%;
@@ -363,6 +357,11 @@ html {
   position: absolute; }
 
 .animate-enter {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+  -moz-transition: all linear 0.5s; }
+
+.animate-leave {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s;
   -moz-transition: all linear 0.5s; }
@@ -615,9 +614,16 @@ html {
 .calendar {
   max-width: 1170px;
   margin: 0 auto; }
+  .calendar table {
+    border-collapse: separate;
+    border-spacing: 20px; }
 
-.fc td {
+.fc-row .fc-content-skeleton td {
   background: #fff; }
+
+.fc-row .fc-content-skeleton tbody td {
+  min-height: 200px;
+  max-height: 300px; }
 
 .register input.ng-invalid.ng-dirty {
   border: 1px solid #FF5C50; }
@@ -721,6 +727,13 @@ button.create-account[disabled='disabled'] {
     .glyphicon.glyphicon-chevron-left:before {
       content: url("/img/sliderLeft.png");
       cursor: pointer; }
+
+  .time {
+    float: left;
+    margin: 10px 0;
+    width: 100%;
+    text-align: center;
+    color: #fff; }
 
   .event-slider {
     margin-bottom: 52px; }

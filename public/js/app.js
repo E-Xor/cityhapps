@@ -24,6 +24,9 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 			}
 		};
 
+        $scope.fadeIn = function(speed) {
+            $('.carousel-inner').fadeIn(speed);
+        }
 
 
 		var eventSuccess = function(data) {
@@ -100,35 +103,53 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 	getEvents.events().success(eventSuccess);
 
 	$scope.now = moment().format("dddd, MMMM Do");
-	$scope.nowPost = moment().format();
+	//$scope.nowPost = moment().format();
 
 		var next = 0;
 
-		$scope.nextDay = function() {
-			// debugger;
-			next += 1;
-			$scope.now = moment().add(next,'days').format("dddd, MMMM Do");
+        var next = 0;
+        $scope.nextDay = function() {
+            // debugger;
+            next += 1;
+            $scope.now = moment().add((next),'days').format("dddd, MMMM Do");
+            $scope.nowGet = moment().add(next,'days').format();
 
-			$http.post('/dayEvents', {'next' : next})
-				.success(function(data){
-					$scope.eventData = data;
-					eventSuccess(data);
-			});
-		};
-		
-		$scope.prevDay = function() {
-			next -= 1;
-			$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
-			
-			$http.post('/dayEvents', {'next' : next})
-				.success(function(data){
-					$scope.eventData = data;	
-					eventSuccess(data);
-			});
-		};
+            $http.get('/events?start_date=' + $scope.nowGet)
+                .success(function(data){
+                    $scope.eventData = data;
+                    eventSuccess(data);
+                });
+        };
 
-		
+        $scope.prevDay = function() {
+            next -= 1;
+            $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
+            $scope.nowGet = moment().add(next,'days').format();
 
+            $http.get('/events?start_date=' + $scope.nowGet)
+                .success(function(data){
+                    $scope.eventData = data;
+                    eventSuccess(data);
+                });
+        };
+        //end sloppy code re-use
+});
+
+cityHapps.filter('dateToISO', function() {
+    return function(input) {
+        input = new Date(input).toISOString();
+        return input;
+    };
+});
+
+cityHapps.filter('uniqueHour', function() {
+    var prevVal = null;
+    return function(input) {
+        if (prevVal !== input) {
+            prevVal = input;
+            return prevVal;
+        }
+    };
 });
 
 cityHapps.factory('voteService', function(){
@@ -939,7 +960,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			$scope.markers.id = [];
 
 			$scope.tabEvents = data.events;
-			console.log($scope.tabEvents);
+			console.table($scope.tabEvents);
 
 			// $scope.tabEvents.length
 			// need to limit to 10 from server 
@@ -1099,7 +1120,7 @@ cityHapps.controller('calController', function($scope, getEvents, $http){
 	};
 
 	$scope.alertTest = function() {
-		alert('firing on click');
+		//alert('firing on click');
 	}
 
 	$scope.uiConfig = {
@@ -1108,26 +1129,28 @@ cityHapps.controller('calController', function($scope, getEvents, $http){
 
 	$scope.events = [];
 
-	$http.get('/events').success(function(data){
+	var calEvents = function(data) {
 
 		console.log(data);
 
-		for (var i = 0; i < data.length; i++) {
+		for (var i = 0; i < data.events.length; i++) {
 
-			$scope.data = data;	
+			$scope.data = data.events;
 
 			$scope.events.push({
-					title : $scope.data[i].event_name, 
-					start : $scope.data[i].start_time, 
+					title : $scope.data[i].event_name,
+					start : $scope.data[i].start_time,
 					end : $scope.data[i].end_time
 			});
 		}
 
-	});
+	};
+
+    getEvents.events().success(calEvents);
 
 	$scope.eventSources = [$scope.events];
 
-	console.log($scope.events);
+	console.table($scope.events);
 
 });
 

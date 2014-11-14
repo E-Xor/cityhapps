@@ -19,9 +19,10 @@
 											
 										</div>
 										<div class="event-details">
-											<h4 class="">{{event.event_name | limitTo: 25 }}</h4>
+											<h4 class="ellipsis">{{event.event_name | limitTo: 25 }}</h4>
 
-                                            <p>{{event.start_time}}{{event.venue_name | limitTo: 40}}</p>
+                                            <p>{{event.start_time}}
+                                                {{event.venue_name | limitTo: 40}}</p>
                                         </div>
 									</div>
 								<div class="icons">
@@ -56,13 +57,16 @@
 
             <!--<div class="mobile-event-container">-->
                 <div class="col-sm-12" ng-repeat="event in slideGroup">
+                    <!--<div ng if=""></div>-->
+                    <div class="time">{{event.start_time | dateToISO | date: 'h:mm a' | uniqueHour}}</div>
                     <div class="mobile-event" ng-click="eventModalMobile(event)">
                         <div class="mobile-event-image" style="background-image: url('{{event.event_image_url}}'); ">
                         </div>
                         <div class="mobile-event-details">
                             <div class="bold ellipsis">{{event.event_name | limitTo: 30}}</div>
-                            {{event.start_date}}
+                            <!--{{event.start_time | date: 'h:mm'}}-->
                             {{event.venue_name}}
+                            {{event.start_time |  date: 'mediumDate'}}
                         </div>
                         <div class="">
                             <div class="mobile-vote-icons">
@@ -79,20 +83,21 @@
 
 
 		</div>
-			
+
+    <!-- Desktop Tablet > 768px -->
 	<div ng-if="!mobile()">
 		<div class="row event-slider">
-			<carousel interval="interval" class="col-sm-12">
-				<slide class="col-sm-12" ng-repeat="event in slideGroup">
+			<carousel interval="interval" class="col-sm-12" >
+				<slide ng-animate="'animate'" class="col-sm-12" ng-repeat="event in slideGroup" ng-init="fadeIn('slow')">
 					<!-- hide card with no title ths doesn exist ng-if="event.first.event_name" -->
 					<div class="col-sm-3 event" >
-							<div class="event-inner">
+							<div class="event-inner" ng-animate="'animate'">
 									<div ng-click="eventModal(event, 'first', vote.status)">
 										<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
 										</div>
 										<div class="event-details">
-											<h4 class="">{{event.first.event_name | limitTo: 30 }}</h4>
-											<p>{{event.first.start_time}}</p>
+											<h4 class="ellipsis">{{event.first.event_name | limitTo: 30 }}</h4>
+											<p class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate' }}</p>
 											<p>{{event.first.venue_name | limitTo: 40}}</p>
 										</div>
 									</div>
@@ -113,8 +118,8 @@
 										<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 125px;">
 										</div>
 										<div class="event-details">
-											<h4 class="">{{event.second.event_name | limitTo: 30}}</h4>
-											<p>{{event.second.start_time}}</p>
+											<h4 class="ellipsis">{{event.second.event_name | limitTo: 30}}</h4>
+											<p class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</p>
 											<p>{{event.second.venue_name | limitTo: 40}}</p>
 										</div>
 									</div>
@@ -132,8 +137,8 @@
 									<!-- <img ng-src=""> -->
 								</div>
 								<div class="event-details">
-									<h4 class="">{{event.third.event_name | limitTo: 30}} </h4>
-									<p>{{event.third.start_time}}</p>
+									<h4 class="ellipsis">{{event.third.event_name | limitTo: 30}} </h4>
+									<p class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</p>
 									<p>{{event.third.venue_name | limitTo: 40}}</p>
 								</div>
 								<div class="icons">
@@ -150,8 +155,8 @@
 									<!-- <img ng-src=""> -->
 								</div>
 								<div class="event-details">
-									<h4 class="">{{event.fourth.event_name | limitTo: 30}}</h4>
-									<p>{{event.fourth.start_time}}</p>
+									<h4 class="ellipsis">{{event.fourth.event_name | limitTo: 30}}</h4>
+									<p class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</p>
 									<p>{{event.fourth.venue_name | limitTo: 40}}</p>
 								</div>
 								<div class="icons">
@@ -233,7 +238,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="">{{event.first.event_name }}</h4>
-									<p>{{event.first.start_time}}</p>
+									<p class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate'}}</p>
 									<p>{{event.first.venue_name | limitTo: 40}}</p>
 								</div>
 								<div class="icons">
@@ -251,7 +256,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="">{{event.second.event_name | limitTo: 30}}</h4>
-									<p>{{event.second.start_time}}</p>
+									<p class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</p>
 									<p>{{event.second.venue_name | limitTo: 40}}</p>
 								</div>
 								<div class="icons">
@@ -269,7 +274,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="">{{event.third.event_name | limitTo: 30}} </h4>
-									<p>{{event.third.start_time}}</p>
+									<p class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</p>
 									<p>{{event.third.venue_name | limitTo: 40}}</p>
 								</div>
 								<div class="icons">
@@ -287,7 +292,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="">{{event.fourth.event_name | limitTo: 30}}</h4>
-									<p>{{event.fourth.start_time}}</p>
+									<p class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</p>
 									<p>{{event.fourth.venue_name | limitTo: 40}}</p>
 								</div>
 								<div class="icons">
