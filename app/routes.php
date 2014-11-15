@@ -30,6 +30,10 @@ App::missing(function($exception) {
 });
 
 Route::get('testEvents', 'EventController@testEvents'); // TODO: Kill this one in production
+Route::get('testShare', 'SharedEventController@testShare'); // TODO: Kill this one in production
+
+Route::get('sharedEventPosition', 'SharedEventController@sharedEventPosition');
+Route::resource('sharedEvent', 'SharedEventController');
 
 
 Route::get('events', 'EventController@events');
