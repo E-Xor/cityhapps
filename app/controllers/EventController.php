@@ -11,20 +11,10 @@ class EventController extends BaseController {
 
 	public function testEvents() {
 		
-		$testDate = '2014-11-08 20:00:00';
-		echo("Date: " . $testDate . "<br />");
-		echo(date_format(date_create($testDate), "Y-m-d"));
-		//print_r(date_parse($testDate));
-		
+		$user = User::find(9);
+		$eventID = '6709';
 
-		/*
-		$testDate = '1414684800000';
-		$utcOffset = '-14400000';
-		echo("Date: " . $testDate . "<br />");
-		
-		$seconds = ($testDate + $utcOffset) / 1000;
-		echo(date("Y-m-d", $seconds) . " " . date("H:i:s", $seconds));
-		*/
+		$user->events()->attach($eventID, array('vote' => '1'));
 	}
 
 	public function events() {
@@ -51,6 +41,7 @@ class EventController extends BaseController {
 
 		$eventParams['pageSize'] = Input::get('page_size');
 		$eventParams['pageCount'] = Input::get('page_count');
+		$eventParams['pageShift'] = Input::get('page_shift');
 
 		$events = EventRecord::selectEvents($eventParams);
 		
