@@ -809,7 +809,24 @@ body {
 	margin: 0 auto;
   table {
     border-collapse: separate;
-    border-spacing: 20px;
+    border-spacing: 20px 45px;
+  }
+  td {
+    padding: 0 0 210px 110px;
+    background: #fff;
+  }
+  .day-contents {
+    background: #FF5C50;
+    padding: 10px;
+    color: #fff;
+    font-size: 1.2em;
+    text-shadow: 2px 1px 1px #E24B44;
+  }
+  .header-days {
+    display: none;
+  }
+  .last-month {
+    opacity: .5;
   }
 }
 

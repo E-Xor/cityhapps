@@ -616,7 +616,20 @@ html {
   margin: 0 auto; }
   .calendar table {
     border-collapse: separate;
-    border-spacing: 20px; }
+    border-spacing: 20px 45px; }
+  .calendar td {
+    padding: 0 0 210px 110px;
+    background: #fff; }
+  .calendar .day-contents {
+    background: #FF5C50;
+    padding: 10px;
+    color: #fff;
+    font-size: 1.2em;
+    text-shadow: 2px 1px 1px #E24B44; }
+  .calendar .header-days {
+    display: none; }
+  .calendar .last-month {
+    opacity: .5; }
 
 .fc-row .fc-content-skeleton td {
   background: #fff; }

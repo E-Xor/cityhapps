@@ -135,7 +135,7 @@
 		</div>
 	<!-- </div> -->
 
-	<!-- Non ng- scripts n thangs -->
+	<!-- ng- scripts n thangs -->
 	<script src="/js/angular-route.min.js"></script>
 	<script src="/js/angular-facebook.js"></script>
 	<script src="/js/angular-touch.js"></script>
@@ -146,9 +146,13 @@
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
 
-	<script src="/js/moment.min.js"></script>	
-	<script type="text/javascript" src="/js/fullcalendar.js"></script>
-	<script type="text/javascript" src="/js/calendar.js"></script>
+    <!--	<script type="text/javascript" src="/js/fullcalendar.js"></script>-->
+    <!--	<script type="text/javascript" src="/js/calendar.js"></script>-->
+
+	<script src="/js/moment.min.js"></script>
+    <script src="/js/clndr.js"></script>
+    <script src="/js/angular-clndr.js"></script>
+
 
 
 	<script src="/js/lodash.min.js"></script>

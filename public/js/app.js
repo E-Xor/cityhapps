@@ -1,5 +1,5 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
-	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch', 'ui.calendar']);
+	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch', 'tien.clndr']);
 
 cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, $window) {
 
@@ -1139,18 +1139,48 @@ cityHapps.controller('calController', function($scope, getEvents, $http){
 
 			$scope.events.push({
 					title : $scope.data[i].event_name,
-					start : $scope.data[i].start_time,
-					end : $scope.data[i].end_time
+					//start : $scope.data[i].start_time,
+					//end : $scope.data[i].end_time
+                    date: $scope.data[i].start_time
 			});
 		}
+        $scope.eventSource = data.events;
+        //
+        //$scope.days = [{
+        //    day: 7,
+        //    classes: "day",
+        //    events: data.events
+        //}];
+
+
+
+        //$scope.events = {
+        //    events: data.events
+        //}
 
 	};
 
+    $scope.eventSource = [$scope.events];
+
+    //$('.calendar').clndr({
+    //    template: $('.calendar').html(),
+    //    events: $scope.events,
+    //    daysOfTheWeek: ['D'],
+    //    clickEvents: {
+    //        click: function(target){
+    //            console.log(target)
+    //        }
+    //    }
+    //
+    //});
+
+
+
     getEvents.events().success(calEvents);
 
-	$scope.eventSources = [$scope.events];
+    $scope.daysOfTheWeek = ['D'];
 
-	console.table($scope.events);
+	//console.table($scope.events);
 
 });
 
