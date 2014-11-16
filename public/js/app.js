@@ -1007,7 +1007,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 			$http.get('/events?start_date=' + $scope.nowGet + '&page_size=10&page_count='+ $scope.pageCount).success(function(pagedEvents){
 				console.log(pagedEvents.data);
-				$scope.tabEvents = pagedEvents;
+				$scope.tabEvents = pagedEvents.data;
 			});
 		}
 
@@ -1021,7 +1021,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 			$http.get('/events?start_date=' + $scope.nowGet + '&page_size=10&page_count='+ $scope.pageCount).success(function(pagedEvents){
 				$log.info(pagedEvents.data);
-				$scope.tabEvents = pagedEvents;
+				$scope.tabEvents = pagedEvents.data;
 
 				// return $scope.tabEvents;
 			});
@@ -1145,35 +1145,31 @@ cityHapps.controller('calController', function($scope, getEvents, $http){
                     date: $scope.data[i].start_time
 			});
 		}
-        $scope.eventSource = data.events;
         //
-        //$scope.days = [{
-        //    day: 7,
-        //    classes: "day",
-        //    events: data.events
-        //}];
-
-
-
-        //$scope.events = {
-        //    events: data.events
-        //}
+        var days = [{
+            day: 7,
+            classes: "day",
+            events: data.events
+        }];
+        $scope.events = {
+            events: data.events
+        }
 
 	};
 
     $scope.eventSource = [$scope.events];
 
-    //$('.calendar').clndr({
-    //    template: $('.calendar').html(),
-    //    events: $scope.events,
-    //    daysOfTheWeek: ['D'],
-    //    clickEvents: {
-    //        click: function(target){
-    //            console.log(target)
-    //        }
-    //    }
-    //
-    //});
+    $('.calendar').clndr({
+        template: $('.calendar-template').html(),
+        events: $scope.events,
+        daysOfTheWeek: ['D'],
+        clickEvents: {
+            click: function(target){
+                alert("going to " + target.element + " this day");
+            }
+        }
+
+    });
 
 
 
