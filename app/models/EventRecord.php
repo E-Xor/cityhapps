@@ -39,6 +39,7 @@ class EventRecord extends Eloquent {
 				->description($eventParams['description'])
 				->startTime($eventParams['startTime'])
 				->startDate($eventParams['startDate'])
+				->imageRequired($eventParams['imageRequired'])
 				->withCategory($eventParams['category'])
 				->orderBy('event_date', 'asc')
 				->orderBy('start_time', 'asc')
@@ -127,6 +128,16 @@ class EventRecord extends Eloquent {
 		} else {
 			return $query;
 		}
+	}
+
+	public function scopeImageRequired($query, $imageRequired) {
+		if ($imageRequired != null) {
+			if ($imageRequired == 'no') {
+				return $query; // Stop processing WHERE clause addition and return
+			}
+		}
+		// If the image_required parameter was not set to "no", return only events with an image by default
+		return $query->whereNotNull('event_image_url');
 	}
 
 	public function scopeWithCategory($query, $category) {
