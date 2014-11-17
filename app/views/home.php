@@ -150,6 +150,9 @@
     <script src="/js/moment.min.js"></script>
     <script type="text/javascript" src="/js/fullcalendar.js"></script>
     <script type="text/javascript" src="/js/calendar.js"></script>
+    <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+
+    <script type="text/javascript" src="/js/angular-filter.js"></script>
 
 	<script src="/js/lodash.min.js"></script>
 	<script src="/js/bluebird.js"></script> 

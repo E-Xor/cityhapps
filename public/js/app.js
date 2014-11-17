@@ -1,5 +1,6 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
-	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch', 'ui.calendar']);
+	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch',
+    'ui.calendar', 'angular.filter', 'ngSanitize']);
 
 cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, $window) {
 
@@ -33,6 +34,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 		$scope.eventData = data.events;
 		console.log($scope.eventData);
+
 
 		$scope.eventCount = data.meta.count;
 
@@ -713,8 +715,14 @@ cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance
 		function($scope, $modalInstance, data, voteService){
 			
 		$scope.data = data;
+        $scope.description = data.description;
 
 		console.log(data);
+
+        $scope.shareReveal =  function() {
+
+            $('.share-overlay').fadeToggle();
+        }
 
 		$scope.ok = function () {
 			$modalInstance.close($scope.selected.item);
@@ -865,9 +873,9 @@ cityHapps.config(function($routeProvider, $locationProvider){
 			// controller: "calController",
 			templateUrl: "templates/calView.html"
 		})
-        .when("/calendar2", {
+        .when("/day", {
             // controller: "calController",
-            templateUrl: "templates/calView2.html"
+            templateUrl: "templates/dayView.html"
         })
 		.otherwise({redirectTo: "/"});
 
@@ -1106,13 +1114,43 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 	
 }]);
 
-cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal){
+cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal, $http){
 
 	$scope.alertTest = function() {
 		//alert('firing on click');
 	}
 
-	$scope.uiConfig = {
+    //Needs to be broken out into a factory
+    $scope.now = moment().format("dddd, MMMM Do");
+
+    var next = 0;
+    $scope.nextDay = function() {
+        // debugger;
+        next += 1;
+        $scope.now = moment().add((next),'days').format("dddd, MMMM Do");
+        $scope.nowGet = moment().add(next,'days').format();
+
+        $http.get('/events?start_date=' + $scope.nowGet)
+            .success(function(data){
+                $scope.eventData = data;
+                calEvents(data);
+            });
+    };
+
+    $scope.prevDay = function() {
+        next -= 1;
+        $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
+        $scope.nowGet = moment().add(next,'days').format();
+
+        $http.get('/events?start_date=' + $scope.nowGet)
+            .success(function(data){
+                $scope.eventData = data;
+                calEvents(data);
+            });
+    };
+
+
+    $scope.uiConfig = {
 		eventClick: $scope.alertTest()
 	}
 
@@ -1134,24 +1172,6 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
                     allData : data.events[i]
 			});
 		}
-
-        //var cal = $('.calendar').clndr({
-        //    template: $('.calendar-template').html(),
-        //    //events: events,
-        //    daysOfTheWeek: ['Sun', 'Mon', 'Tue', 'Wed', "Thu", 'Fri', 'Sat' ],
-        //    dateParameter: "date",
-        //    multiDayEvents: {
-        //        startDate: 'startDate',
-        //        endDate: 'endDate'
-        //    }
-            //clickEvents: {
-            //    click: function(target){
-            //        alert("going to " + target.element + " this day");
-            ////    }
-            //}
-        //});
-
-
 	};
 
     $scope.uiConfig = {
@@ -1200,6 +1220,13 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
                     $(this).one().prepend("<div class='event-count'>" +  eventCount + "</div>");
 
                 });
+            },
+            //lazyFetching : true,
+            dayClick : function(date, jsEVent, view) {
+
+                alert('Taking you to day view ' + date);
+                //window.location.href("/")
+
             }
         }
     }
@@ -1209,6 +1236,72 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
     $scope.eventSource =[$scope.events];
 
 	//console.table($scope.events);
+
+});
+
+cityHapps.controller("dayController", function($scope, getEvents, $modal, $http) {
+
+    //Needs to be broken out into a factory
+    $scope.now = moment().format("dddd, MMMM Do");
+
+    var next = 0;
+    $scope.nextDay = function() {
+        // debugger;
+        next += 1;
+        $scope.now = moment().add((next),'days').format("dddd, MMMM Do");
+        $scope.nowGet = moment().add(next,'days').format();
+
+        $http.get('/events?start_date=' + $scope.nowGet)
+            .success(function(data){
+                $scope.eventData = data;
+                dayEvents(data);
+            });
+    };
+
+    $scope.prevDay = function() {
+        next -= 1;
+        $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
+        $scope.nowGet = moment().add(next,'days').format();
+
+        $http.get('/events?start_date=' + $scope.nowGet)
+            .success(function(data){
+                $scope.eventData = data;
+                dayEvents(data);
+            });
+    };
+
+    $scope.eventModal = function(data, vote) {
+
+        $modal.open({
+            templateUrl: "templates/eventModal.html",
+            controller: 'simpleModalInstanceController',
+            resolve: {
+                data: function() {
+                    return data;
+                },
+                vote : function() {
+                    return vote;
+                }
+            }
+        });
+    };
+
+    var dayEvents = function(data) {
+        $scope.dayEvents = data.events;
+        $scope.eventGroup =  [];
+
+        $(document).ready(function(){
+            $('.event-time').each(function(){
+                console.log($(this));
+                if ($(this).text() == $(this).text().prev()) {
+                    $(this).text("");
+                }
+            });
+        });
+
+    }
+
+    getEvents.events().success(dayEvents);
 
 });
 

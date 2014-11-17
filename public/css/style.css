@@ -308,6 +308,13 @@ html {
   -moz-transition: all linear 0.5s;
   min-height: 325px; }
 
+.event-slider-day {
+  max-width: 1070px;
+  margin: 0 auto; }
+
+.event-time {
+  padding: 10px; }
+
 .carousel-inner {
   max-width: 90%;
   margin: 0 auto; }

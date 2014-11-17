@@ -401,15 +401,14 @@ body {
   min-height: 325px;
 }
 
-//.event-slider > .bx-wrapper > .bx-viewport {
-//	-moz-box-shadow: none;
-//	-webkit-box-shadow: none;
-//	box-shadow: none;
-//	border:  none;
-//	left: 0;
-//	background: none;
-//    min-height: 325px;
-//}
+.event-slider-day {
+  max-width: 1070px;
+  margin: 0 auto;
+}
+
+.event-time {
+  padding: 10px;
+}
 
 .carousel-inner {
 	max-width: 90%;
