@@ -38,7 +38,7 @@ class EventController extends BaseController {
 		$eventParams['createdAt'] = Input::get('created_at');
 		$eventParams['updatedAt'] = Input::get('updated_at');
 		$eventParams['source'] = Input::get('source');
-
+		$eventParams['imageRequired'] = Input::get('image_required');
 		$eventParams['pageSize'] = Input::get('page_size');
 		$eventParams['pageCount'] = Input::get('page_count');
 		$eventParams['pageShift'] = Input::get('page_shift');
