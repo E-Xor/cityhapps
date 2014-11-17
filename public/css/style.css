@@ -612,31 +612,55 @@ html {
     margin: 2px 0; }
 
 .calendar {
-  max-width: 1170px;
-  margin: 0 auto; }
-  .calendar table {
+  max-width: 1070px;
+  margin: 0 auto;
+  overflow: visible; }
+  .calendar .fc table {
     border-collapse: separate;
-    border-spacing: 20px 45px; }
-  .calendar td {
-    padding: 0 0 210px 110px;
+    border-spacing: 10px 20px;
+    min-height: 300px; }
+  .calendar td.fc-day {
     background: #fff; }
-  .calendar .day-contents {
+  .calendar .fc td {
+    border: none; }
+  .calendar .fc-widget-header {
+    display: none; }
+  .calendar tr td.fc-event-container {
+    padding: 5px 0;
+    height: 10px; }
+  .calendar td.fc-day-number {
+    padding: 7px;
+    font-weight: bold;
+    color: #2c2625; }
+    .calendar td.fc-day-number.fc-today {
+      border-width: 5px 5px 0 5px;
+      border-color: #5DD49C;
+      border-style: solid; }
+  .calendar td.fc-day.fc-today {
+    border-width: 0 5px 5px 5px;
+    border-color: #5DD49C;
+    border-style: solid; }
+    .calendar td.fc-day.fc-today .event-count {
+      background: #5DD49C;
+      text-shadow: 2px 1px 1px #3BA572; }
+  .calendar td.fc-day-number {
+    height: 10px; }
+  .calendar td.fc-more-cell {
+    height: 10px; }
+  .calendar .fc-other-month {
+    opacity: .6; }
+  .calendar .fc-day-grid-container {
+    height: 2000px !important; }
+  .calendar .fc-ltr .fc-basic-view .fc-day-number {
+    text-align: left; }
+  .calendar .event-count {
     background: #FF5C50;
-    padding: 10px;
+    padding: 10px 15px;
     color: #fff;
     font-size: 1.2em;
-    text-shadow: 2px 1px 1px #E24B44; }
-  .calendar .header-days {
-    display: none; }
-  .calendar .last-month {
-    opacity: .5; }
-
-.fc-row .fc-content-skeleton td {
-  background: #fff; }
-
-.fc-row .fc-content-skeleton tbody td {
-  min-height: 200px;
-  max-height: 300px; }
+    text-shadow: 2px 1px 1px #E24B44;
+    width: 11px;
+    float: right; }
 
 .register input.ng-invalid.ng-dirty {
   border: 1px solid #FF5C50; }

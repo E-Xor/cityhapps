@@ -805,39 +805,115 @@ body {
 //Calendar Styles
 
 .calendar {
-	max-width: 1170px;
+	max-width: 1070px;
 	margin: 0 auto;
-  table {
-    border-collapse: separate;
-    border-spacing: 20px 45px;
-  }
-  td {
-    padding: 0 0 210px 110px;
-    background: #fff;
-  }
-  .day-contents {
-    background: #FF5C50;
-    padding: 10px;
-    color: #fff;
-    font-size: 1.2em;
-    text-shadow: 2px 1px 1px #E24B44;
-  }
-  .header-days {
-    display: none;
-  }
-  .last-month {
-    opacity: .5;
-  }
+    overflow: visible;
+    .fc table {
+        border-collapse: separate;
+        border-spacing: 10px 20px;
+        min-height: 300px;
+    }
+    td.fc-day {
+        background: #fff;
+    }
+    .fc td {
+        border: none;
+    }
+    .fc-widget-header {
+        display: none;
+    }
+    tr {
+      td.fc-event-container {
+        padding: 5px 0;
+        height: 10px;
+      }
+    }
+
+    td.fc-day-number {
+        padding: 7px;
+        font-weight: bold;
+        color: $dark-grey;
+        &.fc-today {
+            border-width: 5px 5px 0 5px;
+            border-color: #5DD49C;
+            border-style: solid;
+        }
+    }
+
+    td.fc-day.fc-today {
+      border-width: 0 5px 5px 5px;
+      border-color: #5DD49C;
+      border-style: solid;
+      .event-count {
+        background: #5DD49C;
+        text-shadow: 2px 1px 1px #3BA572;
+      }
+    }
+
+    td.fc-day-number {
+      height: 10px;
+    }
+    td.fc-more-cell {
+      height: 10px;
+    }
+    .fc-other-month {
+      opacity: .6;
+    }
+    .fc-day-grid-container {
+      height: 2000px !important;
+    }
+
+    .fc-ltr .fc-basic-view .fc-day-number {
+      text-align: left;
+    }
+
+  .event-count {
+      background: #FF5C50;
+      padding: 10px 15px;
+      color: #fff;
+      font-size: 1.2em;
+      text-shadow: 2px 1px 1px #E24B44;
+      width: 11px;
+      float: right;
+      }
 }
 
-.fc-row .fc-content-skeleton td {
-	background: #fff;
-}
-
-.fc-row .fc-content-skeleton tbody td {
-  min-height: 200px;
-  max-height: 300px;
-}
+//  table {
+//    border-collapse: separate;
+//    border-spacing: 20px 45px;
+//  }
+//  td {
+//    padding: 0 0 210px 110px;
+//    background: #fff;
+//  }
+//  .day-contents {
+//    background: #FF5C50;
+//    padding: 10px;
+//    color: #fff;
+//    font-size: 1.2em;
+//    text-shadow: 2px 1px 1px #E24B44;
+//  }
+//  .header-days {
+//    display: none;
+//  }
+//  .last-month {
+//    opacity: .5;
+//  }
+//  .day {
+//    width: 132px;
+//    height: 250px;
+//    background: #fff;
+//    display: inline-block;
+//    margin: 16px 5px;
+//  }
+//.fc-row .fc-content-skeleton td {
+//	background: #fff;
+//}
+//
+//.fc-row .fc-content-skeleton tbody td {
+//  min-height: 200px;
+//  max-height: 300px;
+//}
 
 
 

@@ -25,9 +25,10 @@ $app = new Illuminate\Foundation\Application;
 */
 
 $env = $app->detectEnvironment(array(
+    // I think this is the best way to do it
 
-	'local' => array("cpk.local")
-	// 'local' => array("NowlinCrispyMacbookAir.local")
+	'local-cpk' => array("cpk.local"),
+	'local-mike' => array("NowlinCrispyMacbookAir.local")
 
 ));
 

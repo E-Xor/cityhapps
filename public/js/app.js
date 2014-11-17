@@ -1,5 +1,5 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
-	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch', 'tien.clndr']);
+	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch', 'ui.calendar']);
 
 cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, $window) {
 
@@ -865,6 +865,10 @@ cityHapps.config(function($routeProvider, $locationProvider){
 			// controller: "calController",
 			templateUrl: "templates/calView.html"
 		})
+        .when("/calendar2", {
+            // controller: "calController",
+            templateUrl: "templates/calView2.html"
+        })
 		.otherwise({redirectTo: "/"});
 
 		// use the HTML5 History API
@@ -1102,23 +1106,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 	
 }]);
 
-
-
-
-cityHapps.controller('calController', function($scope, getEvents, $http){
-
-	$scope.eventModal = function(data) {
-
-		$modal.open({
-			templateUrl: "templates/eventModal.html",
-			controller: 'eventModalInstanceController', 
-			resolve: {
-				data: function() {
-					return data;
-				}
-			}
-		});
-	};
+cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal){
 
 	$scope.alertTest = function() {
 		//alert('firing on click');
@@ -1128,54 +1116,97 @@ cityHapps.controller('calController', function($scope, getEvents, $http){
 		eventClick: $scope.alertTest()
 	}
 
-	$scope.events = [];
+    $scope.alert = function(stuff) {
+        alert(stuff);
+    }
+
+    $scope.events = [];
 
 	var calEvents = function(data) {
 
 		console.log(data);
 
 		for (var i = 0; i < data.events.length; i++) {
-
-			$scope.data = data.events;
-
 			$scope.events.push({
-					title : $scope.data[i].event_name,
-					//start : $scope.data[i].start_time,
-					//end : $scope.data[i].end_time
-                    date: $scope.data[i].start_time
+					title : data.events[i].event_name,
+                    start: data.events[i].start_time,
+                    end : data.events[i].end_time,
+                    allData : data.events[i]
 			});
 		}
-        //
-        var days = [{
-            day: 7,
-            classes: "day",
-            events: data.events
-        }];
-        $scope.events = {
-            events: data.events
-        }
+
+        //var cal = $('.calendar').clndr({
+        //    template: $('.calendar-template').html(),
+        //    //events: events,
+        //    daysOfTheWeek: ['Sun', 'Mon', 'Tue', 'Wed', "Thu", 'Fri', 'Sat' ],
+        //    dateParameter: "date",
+        //    multiDayEvents: {
+        //        startDate: 'startDate',
+        //        endDate: 'endDate'
+        //    }
+            //clickEvents: {
+            //    click: function(target){
+            //        alert("going to " + target.element + " this day");
+            ////    }
+            //}
+        //});
+
 
 	};
 
-    $scope.eventSource = [$scope.events];
+    $scope.uiConfig = {
+        calendar: {
+            //height: 850
+            eventLimit: {
+                month : 5,
+                default: true
+            },
+            header : {
+               left: "",
+               center: "",
+               right: ""
+            },
+            eventClick: function(calEvent, jsEvent, view) {
+               //alert(JSON.stringify(calEvent.allData));
+                $modal.open({
+                    templateUrl: "templates/eventModal.html",
+                    controller: 'simpleModalInstanceController',
+                    resolve: {
+                        data: function() {
+                            return calEvent.allData;
+                        },
+                    }
+                });
+            },
+            viewRender : function(view) {
+                $('td.fc-day-number').each(function () {
+                    var day = $(this)[0].className.substr(17, 20)
+                        .split(" ");
 
-    $('.calendar').clndr({
-        template: $('.calendar-template').html(),
-        events: $scope.events,
-        daysOfTheWeek: ['D'],
-        clickEvents: {
-            click: function(target){
-                alert("going to " + target.element + " this day");
+                    var dayShort = day[0].charAt(0).toUpperCase() + day[0].slice(1);
+                    console.log(dayShort);
+
+                    //$(dayShort + " ").before($(this));
+                    $(this).one().prepend(dayShort + " ");
+                    //
+
+                });
+
+                $(".fc-day").each(function () {
+                    console.log($(this));
+                    var eventCount = $(this).children()
+                                    .find('.fc-event-container').length;
+
+                    $(this).one().prepend("<div class='event-count'>" +  eventCount + "</div>");
+
+                });
             }
         }
-
-    });
-
-
+    }
 
     getEvents.events().success(calEvents);
 
-    $scope.daysOfTheWeek = ['D'];
+    $scope.eventSource =[$scope.events];
 
 	//console.table($scope.events);
 

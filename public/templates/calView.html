@@ -1,4 +1,5 @@
-<div ng-controller="calController">	
+<!-- Cal View 2 using Angular UI Calendar -->
+<div ng-controller="calController">
 	<div class="row view-select">
 		<div class="col-sm-12 view-row">
 			<div class="col-sm-2">
@@ -18,49 +19,10 @@
 		</div>	
 	</div>
 
-	<div class="row	">
-		<div class="calendar">
-            <div class="calendar-template">
-                <div class="day" ng-repeat="day in daysOfTheWeek">
-                    <div class="cal-events" ng-repeat="event in eventSource">
-                        {{event.title}}
-                    </div>
-                    {{day}}
-                    <!--{{events}}-->
-                </div>
-            </div>
+    <div class="calendar">
+        <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSource">
 
+        </div>
+    </div>
 
-			
-			<!--<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div> -->
-
-            <!--<tien-clndr class="clndr" tien-clndr-object="clndr" tien-clndr-events="events">-->
-                <!--<div class="clndr-controls">-->
-                    <!--<div class="clndr-previous-button" ng-click="clndr.back()">-->
-                        <!--&lsaquo;-->
-                    <!--</div>-->
-                    <!--<div class="month">-->
-                        <!--{{month}}-->
-                    <!--</div>-->
-                    <!--<div class="clndr-next-button" ng-click="clndr.forward()">-->
-                        <!--&rsaquo;-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="clndr-grid">-->
-                    <!--<div class="days-of-the-week">-->
-                        <!--<div class="header-day" ng-repeat="day in daysOfTheWeek track by $index">-->
-                            <!--{{day}}-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="days">-->
-                        <!--<div class="{{day.classes}}" ng-repeat="day in days">-->
-                            <!--<div class="event-indicator" ng-show="day.events" ng-click="showEvents(day.events)">{{day.events.length}}</div>-->
-                            <!--{{day.day}}-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</tien-clndr>-->
-
-		</div>
-	</div>
 </div>
