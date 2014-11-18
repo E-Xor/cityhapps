@@ -46,7 +46,7 @@ class EventRecord extends Eloquent {
 				->venueName($eventParams['venueZip'])
 				->description($eventParams['description'])
 				->startTime($eventParams['startTime'])
-				->startDate($eventParams['startDate'])
+				->dateRange($eventParams['startDate'], $eventParams['endDate'])
 				->imageRequired($eventParams['imageRequired'])
 				->eventSearch($eventParams['search'])
 				->withCategory($eventParams['category'])
@@ -131,12 +131,16 @@ class EventRecord extends Eloquent {
 		}
 	}
 
-	public function scopeStartDate($query, $startDate) {
+	public function scopeDateRange($query, $startDate, $endDate) {
 		if ($startDate != null) {
-			return $query->where('event_date', '>=', $startDate);
-		} else {
-			return $query;
+			$query->where('event_date', '>=', $startDate);
+		} 
+
+		if ($endDate != null) {
+			$query->where('event_date', '<=', $endDate);
 		}
+
+		return $query;
 	}
 
 	public function scopeImageRequired($query, $imageRequired) {
