@@ -254,33 +254,31 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 				
 			};
 
-			// $scope.downVote = function(event, num, vote) {
-			// 	alert("This" + JSON.stringify(event[num])  + "has been downvoted");
+			$scope.downVote = function(event, num, vote) {
+				alert("This" + JSON.stringify(event[num])  + "has been downvoted");
 
-			// 	$http({
-			// 		method: "POST",
-			// 		url: '/user_event',
-			// 		data: {
-			// 			'user_id' : $scope.user.data.id,
-			// 			'event_id' : event[num].id, 
-			// 			'vote' : vote
-			// 		},
+				$http({
+					method: "POST",
+					url: '/user_event',
+					data: {
+						'user_id' : $scope.user.data.id,
+						'event_id' : event[num].id,
+						'vote' : vote
+					},
 
-			// 		headers : {"Content-Type": "application/json"}
-			// 	}).success(function(data){
+					headers : {"Content-Type": "application/json"}
+				}).success(function(data){
 
-			// 		if (!data) {
-			// 			console.log("no vote, man");
-			// 			// $scope.loggedOut = false;
-			// 		} else if(data) {
-			// 			console.log(data);
-			// 			// $scope.loggedOut = true;
-			// 		}
-			// 	});
-
-
+					if (!data) {
+						console.log("no vote, man");
+						// $scope.loggedOut = false;
+					} else if(data) {
+						console.log(data);
+						// $scope.loggedOut = true;
+					}
+				});
 				// voteService.vote = vote;
-			// };
+			};
 
 		} else {
 
