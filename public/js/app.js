@@ -766,21 +766,29 @@ cityHapps.factory('getCategories', function($http){
 });
 
 
-cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory", 
+cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory", "getCategories",
 		function($scope, $modalInstance, $http, registerDataService, authFactory){
 
 		$scope.formData = registerDataService.data;
 
         //
-        $scope.getCategories = function() {
-            $(".categoriesDropdown").fadeToggle();
+            $scope.getCategories = function() {
+                $http({
+                    method: "GET",
+                    url: "/category",
+                    headers: {"Content-Type": "application/json"}
+                }).success(function(data) {
+                    if(!data) {
+                        console.log('Unable to Get Categories');
+                    } else if (data) {
+                        console.log('successfully Getting Categories');
+                        console.log(data);
+                        $scope.categories = data;
 
-            getCategories.success(function(data){
-                $scope.categories = data;
-
-                return $scope.categories;
-            });
-        }
+                        return $scope.categories;
+                    }
+                });
+            };
 
 		$scope.getCategories();
 
@@ -1275,7 +1283,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
         }
     }
 
-    var start = moment.format()
+    //var start = moment.format()
 
     getEvents.events().success(calEvents);
 
