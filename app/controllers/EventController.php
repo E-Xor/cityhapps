@@ -49,6 +49,7 @@ class EventController extends BaseController {
 		$eventParams['pageSize'] = Input::get('page_size');
 		$eventParams['pageCount'] = Input::get('page_count');
 		$eventParams['pageShift'] = Input::get('page_shift');
+		$eventParams['maxPerDay'] = Input::get('max_per_day');
 
 		$events = EventRecord::selectEvents($eventParams);
 

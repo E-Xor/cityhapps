@@ -36,6 +36,7 @@ class EventRecord extends Eloquent {
 	public static function selectEvents($eventParams) {
 
 		$events = EventRecord::with('categories')
+				->maxPerDay($eventParams['maxPerDay'])
 				->eventID($eventParams['eventID'])
 				->eventName($eventParams['eventName'])
 				->venueName($eventParams['venueName'])
@@ -168,6 +169,22 @@ class EventRecord extends Eloquent {
 			}
 		} else {
 			return $query->take(100);
+		}
+	}
+
+	public function scopeMaxPerDay($query, $maxPerDay) {
+		if ($maxPerDay != null) {
+			$topFiveJoin = '(SELECT @position_num := IF(@event_date = event_date, @position_num + 1, 1) AS position, @event_date := event_date AS match_date, e.event_date AS sort_date, e.start_time AS sort_time, e.id AS match_id FROM events e ORDER BY e.event_date ASC, e.start_time ASC) five_events';
+
+			$eventCountJoin = '(SELECT event_date AS count_date, COUNT(*) AS date_event_count FROM events GROUP BY event_date ORDER BY event_date) count_events';
+
+			$joined = $query->join(DB::raw($topFiveJoin), 'five_events.match_id', '=', 'events.id')
+							->join(DB::raw($eventCountJoin), 'count_events.count_date', '=', 'events.event_date')
+							->where('five_events.position', '<=', $maxPerDay);
+
+			return $joined;
+		} else {
+			return $query;
 		}
 	}
 	
