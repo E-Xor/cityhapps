@@ -148,12 +148,24 @@ class EventRecord extends Eloquent {
 		return $query->whereNotNull('event_image_url');
 	}
 
-	public function scopeWithCategory($query, $category) {
-		if ($category != null) {
-			return $query->whereHas('categories', function($q) use ($category) {
-				$q->where('category_id', '=', $category);
-			});
+	public function scopeWithCategory($query, $categories) {
+		if ($categories != null) {
+			
+			// categories should be an array
+			if ((count($categories) > 0) && is_array($categories)) {
+
+				$categoryIDs = implode(',', $categories);
+
+				return $query->whereHas('categories', function($q) use ($categories) {
+					$q->whereIn('category_id', $categories);
+				});
+
+			}
+
 		}
+
+		// If no relevant categories were found, return base query
+		return $query;
 	}
 
 	public function scopeGetPage($query, $pageSize, $pageCount, $pageShift) {

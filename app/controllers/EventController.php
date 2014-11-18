@@ -11,10 +11,19 @@ class EventController extends BaseController {
 
 	public function testEvents() {
 		
-		$today = new DateTime();
-		$startDate = $today->format('Y-m-d');
-		return EventRecord::where('event_date', '=', $startDate)->count();
+		$inputs = Input::only('category');
 		
+		if (count($inputs) > 0) {
+
+			$categories = $inputs['category'];
+
+			if ((count($categories) > 0) && is_array($categories)) {
+
+				echo (implode(",", $categories));
+
+			}
+
+		}
 
 		/*
 		$user = User::find(9);
