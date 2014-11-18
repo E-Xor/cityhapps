@@ -40,7 +40,7 @@
 							</div>
 							<div class="tab-event-title">
 								<h4>{{event.event_name | limitTo: 20}}</h4>
-								<p class="blue">{{event.event_date}}</p>
+								<p class="blue">{{event.start_time | dateToISO | date:"yyyy-MM-d" }}</p>
 							</div>							
 						</div>
 					</div>
