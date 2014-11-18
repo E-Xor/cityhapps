@@ -228,7 +228,7 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 				
 				alert(vote);
 
-				alert("This" + JSON.stringify(event[num])  + "has been upvoted");
+				alert("This" + JSON.stringify(event[num])  + "has been upvoted by user " + $scope.user.data.id);
 
 				//needs to be broken into a factory/ service soon
 				$http({

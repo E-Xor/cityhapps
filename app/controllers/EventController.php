@@ -11,10 +11,17 @@ class EventController extends BaseController {
 
 	public function testEvents() {
 		
+		$today = new DateTime();
+		$startDate = $today->format('Y-m-d');
+		return EventRecord::where('event_date', '=', $startDate)->count();
+		
+
+		/*
 		$user = User::find(9);
 		$eventID = '6709';
 
 		$user->events()->attach($eventID, array('vote' => '1'));
+		*/
 	}
 
 	public function events() {
@@ -44,9 +51,9 @@ class EventController extends BaseController {
 		$eventParams['pageShift'] = Input::get('page_shift');
 
 		$events = EventRecord::selectEvents($eventParams);
-		
+
 		$meta = array();
-		$count = EventRecord::eventCount();
+		$count = EventRecord::eventCount($eventParams['startDate']);
 		$meta["count"] = $count;
 
 		$results = array("meta" => $meta, "events" => $events);;
