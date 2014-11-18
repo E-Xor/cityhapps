@@ -11,19 +11,10 @@ class EventController extends BaseController {
 
 	public function testEvents() {
 		
-		$inputs = Input::only('category');
-		
-		if (count($inputs) > 0) {
+		$search = Input::get('search');
+		$searchTerms = explode(' ', $search);
 
-			$categories = $inputs['category'];
-
-			if ((count($categories) > 0) && is_array($categories)) {
-
-				echo (implode(",", $categories));
-
-			}
-
-		}
+	    var_dump($searchTerms);
 
 		/*
 		$user = User::find(9);
@@ -50,7 +41,7 @@ class EventController extends BaseController {
 		$eventParams['endDate'] = Input::get('end_date');
 		$eventParams['latitude'] = Input::get('latitude');
 		$eventParams['longitude'] = Input::get('longitude');
-		$eventParams['category'] = Input::get('category');
+		$eventParams['category'] = Input::get('category'); // Note that this will be an array of values called category[]
 		$eventParams['createdAt'] = Input::get('created_at');
 		$eventParams['updatedAt'] = Input::get('updated_at');
 		$eventParams['source'] = Input::get('source');
@@ -59,6 +50,8 @@ class EventController extends BaseController {
 		$eventParams['pageCount'] = Input::get('page_count');
 		$eventParams['pageShift'] = Input::get('page_shift');
 		$eventParams['maxPerDay'] = Input::get('max_per_day');
+
+		$eventParams['search'] = Input::get('search'); // This is a space-delimited "omni search" term, like "dogs atlanta april"
 
 		$events = EventRecord::selectEvents($eventParams);
 

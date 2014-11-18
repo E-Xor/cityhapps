@@ -48,6 +48,7 @@ class EventRecord extends Eloquent {
 				->startTime($eventParams['startTime'])
 				->startDate($eventParams['startDate'])
 				->imageRequired($eventParams['imageRequired'])
+				->eventSearch($eventParams['search'])
 				->withCategory($eventParams['category'])
 				->orderBy('event_date', 'asc')
 				->orderBy('start_time', 'asc')
@@ -124,7 +125,7 @@ class EventRecord extends Eloquent {
 
 	public function scopeStartTime($query, $startTime) {
 		if ($startTime != null) {
-			return $query;
+			return $query; // Nothing happening here yet
 		} else {
 			return $query;
 		}
@@ -154,7 +155,7 @@ class EventRecord extends Eloquent {
 			// categories should be an array
 			if ((count($categories) > 0) && is_array($categories)) {
 
-				$categoryIDs = implode(',', $categories);
+				//$categoryIDs = implode(',', $categories);
 
 				return $query->whereHas('categories', function($q) use ($categories) {
 					$q->whereIn('category_id', $categories);
@@ -198,6 +199,32 @@ class EventRecord extends Eloquent {
 		} else {
 			return $query;
 		}
+	}
+
+	public function scopeEventSearch($query, $search) {
+		if ($search != null) {
+
+			$searchTerms = explode(' ', $search);
+
+    		foreach($searchTerms as $term) {
+		        $query->where(function($q) use ($term) {
+					
+					$q->orWhere('event_name', 'LIKE', '%'. $term .'%')
+					->orWhere('venue_name', 'LIKE', '%'. $term .'%')
+					->orWhere('address', 'LIKE', '%'. $term .'%')
+					->orWhere('city', 'LIKE', '%'. $term .'%')
+					->orWhere('state', 'LIKE', '%'. $term .'%')
+					->orWhere('zip', 'LIKE', '%'. $term .'%')
+					->orWhere('description', 'LIKE', '%'. $term .'%')
+					
+					->orWhereHas('categories', function($c) use ($term) {
+						$c->where('name', 'LIKE', '%'. $term .'%');
+					});
+				});
+		    }
+		}
+
+		return $query;
 	}
 	
 
