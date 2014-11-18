@@ -20,10 +20,15 @@
     <div class="row view-select">
 
         <div class="col-sm-12">
-            <div class="col-sm-2">
+            <div class="col-sm-2 margin categoryToggle" ng-click="categoryToggle()">
                 All Categories
-
             </div>
+            <div class="categoriesDropdown" ng-init="getCategories()">
+                <div ng-repeat="category in categories">
+                    <label class="event-category" ng-click="filterCategory(category.name)" ng-model="eventTypes" btn-checkbox>{{category.name}}</label>
+                </div>
+            </div>
+
             <div class="col-sm-2">
                 Most Recent
 

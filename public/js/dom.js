@@ -35,9 +35,9 @@ $(function(){
 $(document).ready(function(){
     //Share overlay
 
-    $(".share").on('click', function(){
-        alert('firing');
-        $('.share-overlay').toggle();
-    });
+    //$(".share").on('click', function(){
+    //    alert('firing');
+    //    $('.share-overlay').toggle();
+    //});
 
 });

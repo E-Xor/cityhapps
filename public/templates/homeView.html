@@ -1,12 +1,14 @@
-<div ng-controller="eventsController">
+<div ng-controller="eventsController" class="imageContainer">
 	<div class="event-counter" ng-init="getCategories()">
-		<h2 class="center white"> <div class="mobile-large-num">{{eventCount}}</div>things to do in Atlanta </h2>
+		<h2 class="center white totalEvents">
+            <div ng-if="mobile()" class="mobile-large-num">{{eventCount}}</div>
+            <div ng-if="!mobile()" class="inline" >{{eventCount}}</div>
+            things to do in Atlanta
+        </h2>
 	</div>
 
 	<p class="uppercase center white wide-kerning">Recommendations</p>
 
-	
-			
 			<!-- MOBILE / PHONE slide view -->
 		<div ng-if = 'mobile()'>
 			<div class="row event-slider">
@@ -37,7 +39,7 @@
 			</div>
 					
 			<div class="day-slider-border"></div>
-				<div class="day-slider-container">
+				<div class="day-slider-container-home">
 					<div class="row day-slider">
 						<div class="col-sm-12 center">
 							<div class="col-sm-1 col-xs-2 left prev" ng-click="prevDay()">
@@ -175,7 +177,7 @@
 	<div ng-if="!mobile()">
 	<div class="grey-wide">
 		<div class="day-slider-border"></div>
-			<div class="day-slider-container">
+			<div class="day-slider-container-home">
 				<div class="row day-slider">
 					<div class="col-sm-12 center">
 						<div class="col-sm-1 col-xs-3 left prev" ng-click="prevDay()">

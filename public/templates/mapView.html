@@ -45,7 +45,7 @@
 						</div>
 					</div>
 					<div class="map-ctrls" ng-show="tabEvents">
-						<div class="left map-ctrl prev-ctrl" ng-click="getPrevEvents()" ng-disabled="disablePrev">
+						<div class="left map-ctrl prev-ctrl" ng-click="getPrevEvents()" ng-if="pageCount > 1">
 							Previous
 						</div>
 						<div class="right map-ctrl next-ctrl" ng-click="getNextEvents()">
@@ -56,10 +56,15 @@
 			</tabset>
 			
 		</div>
-			<div class="col-sm-2">
-				All Categories
-					
-			</div>	
+            <div class="col-sm-2 margin categoryToggle" ng-click="categoryToggle()">
+                All Categories
+            </div>
+            <div class="categoriesDropdown" ng-init="getCategories()">
+                <div ng-repeat="category in categories">
+                    <label class="event-category" ng-model="categories" btn-checkbox>{{category.name}}</label>
+                </div>
+            </div>
+
 			<div class="col-sm-2">
 				Most Recent
 

@@ -75,31 +75,21 @@
 
 							<div class="row-sm-12">
 								<div class="col-sm-4 center">
-
 									<a href="/"><img src="/img/logo.png"></a>
-
 								</div>
 								<div class="col-sm-4 center logo">
-									
 									<input type="text" placeholder="Find Events &amp; Activities" class="main-search" />
-
 								</div>
 									<div class="col-sm-4 auth" ng-controller="modalController">
-
-											<div ng-cloak ng-show="!user">
-												<h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
-												<h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
-												<h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
-											</div>
-						
-											
-											<div ng-cloak ng-show="user">
-												{{user.config.data.email}}
-												<p class="red logout" ng-click="logoutUser()">sign out</p>		
-											</div>
-
-			
-										<!-- </div> -->
+                                        <div ng-cloak ng-show="!user">
+                                            <h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
+                                            <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
+                                            <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
+                                        </div>
+                                        <div ng-cloak ng-show="user">
+                                            {{user.config.data.email}}
+                                            <p class="red logout" ng-click="logoutUser()">sign out</p>
+                                        </div>
 									</div>
 
 								</div>
@@ -110,8 +100,6 @@
 			<div ng-view></div>
 			</div>
 		</div>
-
-
 		<!-- if mobile -->
 		<div ng-if="mobile()">
 			<div class="bg-image">	
