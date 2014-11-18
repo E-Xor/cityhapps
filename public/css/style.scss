@@ -293,7 +293,7 @@ body {
     }
   &:after, &:before {
     bottom: 100%;
-    left: 20%;
+    left: 25%;
     border: solid transparent;
     content: " ";
     height: 0;
@@ -407,6 +407,10 @@ body {
 		color: #FF5C50;
 		border: 2px solid #FF5C50;
 	}
+}
+
+.categoryToggle {
+  cursor: pointer;
 }
 
 .category-item {

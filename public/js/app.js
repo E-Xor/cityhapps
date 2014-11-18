@@ -2,7 +2,7 @@ var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.vali
 	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch',
     'ui.calendar', 'angular.filter', 'ngSanitize']);
 
-cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, $window) {
+cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, $window, getCategories) {
 
 	$scope.formatAMPM = function(date) {
 		var hours = date.getHours();
@@ -14,13 +14,10 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		var strTime = hours + ':' + minutes + ' ' + ampm;
 		return strTime;		
 	};
-
 		$scope.mobile = function() {
 			if ($window.innerWidth <= 768 ) {
-
 				return true;
 			} else {
-
 				return false;
 			}
 		};
@@ -28,8 +25,6 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
         $scope.fadeIn = function(speed) {
             $('.carousel-inner').fadeIn(speed);
         }
-
-
 		var eventSuccess = function(data) {
 
 		$scope.eventData = data.events;
@@ -42,9 +37,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		//console.log($scope.slideGroup);
 
 		var i;
-
             for (i = 0; i < $scope.eventData.length; i += 4) {
-
 			var slides = {
 				'first' : $scope.eventData[i],
 				'second' : $scope.eventData[i + 1],
@@ -57,7 +50,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 			if ($window.innerWidth <= 768 ) {
 				$scope.slideGroup.push(mobileSlides);
 
-				$scope.eventModalMobile = function(data) {
+                $scope.eventModalMobile = function(data) {
 
 				$modal.open({
 					templateUrl: "templates/eventModal.html",
@@ -65,12 +58,11 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 					resolve: {
 						data: function() {
 							return data;
-						},  
+						},
 					}
 				});
 			};
 
-				
 			} else {
 				$scope.slideGroup.push(slides);
 			}
@@ -100,6 +92,23 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 		
 		$scope.interval = 500000000000;
 		};
+
+    $scope.categoryToggle = function() {
+        $(".categoriesDropdown").fadeToggle();
+
+        getCategories.success(function(data){
+            $scope.categories = data;
+            eventSuccess(data);
+        });
+    }
+
+    $scope.filterCategory = function(cat) {
+        console.log($scope.eventTypes);
+        $http.get("/events?category="+cat)
+            .success(function(data){
+                eventSuccess(data);
+            });
+    }
 
 
 	getEvents.events().success(eventSuccess);
@@ -170,9 +179,6 @@ cityHapps.factory('voteService', function(){
 cityHapps.factory('getEvents', function($http){
 	return {
 		events : function() {
-
-			var today = new Date();
-			//var startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + (today.getDate() - 1);
             var startDate = moment().format();
 
 			// '?start_date=' + startDate
@@ -757,23 +763,15 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 		$scope.formData = registerDataService.data;
 
         //
-		$scope.getCategories = function() {
-			$http({
-				method: "GET",
-				url: "/category",
-				headers: {"Content-Type": "application/json"}
-			}).success(function(data) {
-				if(!data) {
-				console.log('Unable to Get Categories');
-				} else if (data) {
-					console.log('successfully Getting Categories');
-					console.log(data);
-					$scope.categories = data;
+        $scope.getCategories = function() {
+            $(".categoriesDropdown").fadeToggle();
 
-					return $scope.categories;
-				}
-			});
-		};
+            getCategories.success(function(data){
+                $scope.categories = data;
+
+                return $scope.categories;
+            });
+        }
 
 		$scope.getCategories();
 
@@ -1177,6 +1175,14 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
         });
     }
 
+    $scope.filterCategory = function(cat) {
+        console.log($scope.eventTypes);
+        $http.get("/events?category="+cat)
+            .success(function(data){
+                dayEvents(data);
+            });
+    }
+
     $scope.uiConfig = {
 		eventClick: $scope.alertTest()
 	}
@@ -1310,7 +1316,7 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
     $scope.filterCategory = function(cat) {
         console.log($scope.eventTypes);
-        $http.get("/events?category=comedy")
+        $http.get("/events?category="+cat)
             .success(function(data){
                dayEvents(data);
             });
