@@ -102,12 +102,28 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
         });
     }
 
-    $scope.filterCategory = function(cat) {
-        console.log($scope.eventTypes);
-        $http.get("/events?category="+cat)
+    $scope.filterData = {};
+    $scope.filterData.categories = {};
+
+    $scope.filterCategory = function() {
+
+        var queryString = '';
+
+        for (var i in $scope.filterData.categories){
+            console.log(i);
+            if ($scope.filterData.categories[i] == true) {
+                queryString += "category=[]" + i;
+                //+ "&";
+            }
+        }
+
+        $http.get("/events?" + queryString)
             .success(function(data){
                 eventSuccess(data);
+                console.log(data);
             });
+
+        console.log($scope.filterData.categories);
     }
 
 
@@ -916,8 +932,8 @@ cityHapps.config(function($routeProvider, $locationProvider){
 });
 
 
-cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal', '$log', '$http',
-	function($scope, GoogleMapApi, getEvents, $modal, $log, $http) {
+cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal', '$log', '$http', 'getCategories',
+	function($scope, GoogleMapApi, getEvents, $modal, $log, $http, getCategories) {
 	
 	//handle tabs inside mapController
 
@@ -1090,6 +1106,39 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			}
 		}
 
+        $scope.categoryToggle = function() {
+            $(".categoriesDropdown").fadeToggle();
+
+            getCategories.success(function(data){
+                $scope.categories = data;
+            });
+        }
+
+        $scope.filterData = {};
+        $scope.filterData.categories = {};
+
+        $scope.filterCategory = function(cat) {
+
+            var queryString = '';
+
+            for (var i in $scope.filterData.categories){
+                console.log(i);
+                if ($scope.filterData.categories[i] == true) {
+                    queryString += "category[]=" + i + "&";
+                }
+            }
+
+            $http.get("/events?" + queryString)
+                .success(function(data){
+                    $scope.tabEvents = data;
+                    drawEvents(data);
+
+                    console.log(data);
+                });
+
+            console.log($scope.filterData.categories);
+        }
+
 
 		$scope.map = {
 			center: {
@@ -1159,6 +1208,8 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
     $scope.now = moment().format("dddd, MMMM Do");
 
     var next = 0;
+
+    //How will this functinon in Cal View? Is is necessary?
     $scope.nextDay = function() {
         // debugger;
         next += 1;
@@ -1192,12 +1243,30 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
         });
     }
 
+    $scope.filterData = {};
+    $scope.filterData.categories = {};
+    var firstOfMonth = moment().startOf('month').format();
+
     $scope.filterCategory = function(cat) {
-        console.log($scope.eventTypes);
-        $http.get("/events?category="+cat)
+
+        var queryString = '';
+
+        for (var i in $scope.filterData.categories){
+            console.log(i);
+            if ($scope.filterData.categories[i] == true) {
+                queryString += "category[]=" + i;
+                //+ "&";
+            }
+        }
+
+        $http.get("/events?start_time="+firstOfMonth + queryString)
             .success(function(data){
-                dayEvents(data);
+                $scope.eventData = data;
+                calEvents(data);
+                console.log(data);
             });
+
+        console.log($scope.filterData.categories);
     }
 
     $scope.uiConfig = {
@@ -1210,9 +1279,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
     $scope.events = [];
 
-
-
-	var calEvents = function(data) {
+	$http.get('/events?start_date='+ firstOfMonth).success(function(data) {
 
 		console.log(data);
 
@@ -1224,7 +1291,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
                     allData : data.events[i]
 			});
 		}
-	};
+	});
 
     $scope.uiConfig = {
         calendar: {
@@ -1285,7 +1352,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
     //var start = moment.format()
 
-    getEvents.events().success(calEvents);
+    //getEvents.events().success(calEvents);
 
     $scope.eventSource =[$scope.events];
 
@@ -1330,22 +1397,33 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
         getCategories.success(function(data){
             $scope.categories = data;
         });
+
+
     }
 
+    $scope.filterData = {};
+    $scope.filterData.categories = {};
 
-    $scope.categories = {};
-
+    //should also be a factory instead of being repeated everywhere
     $scope.filterCategory = function(cat) {
-        console.log($scope.eventTypes);
-        $http.get("/events?category="+cat)
+
+        var queryString = '';
+
+        for (var i in $scope.filterData.categories){
+            console.log(i);
+            if ($scope.filterData.categories[i] == true) {
+                queryString += "category=[]" + i + "&";
+            }
+        }
+
+        $http.get("/events?" + queryString)
             .success(function(data){
                dayEvents(data);
+                console.log(data);
             });
+
+        console.log($scope.filterData.categories);
     }
-
-    $scope.categories = {};
-
-    console.log($scope.categories);
 
     $scope.eventModal = function(data, vote) {
 

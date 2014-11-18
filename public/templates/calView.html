@@ -31,10 +31,10 @@
                 </div>
                 <div class="categoriesDropdown" ng-init="getCategories()">
                     <div ng-repeat="category in categories">
-                        <label class="event-category" ng-click="filterCategory(category.name)"
-                               ng-model="categories" btn-checkbox>{{category.name}}</label>
+                        <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory(filterData.categories[category.id])" btn-checkbox>{{category.name}}</label>
                     </div>
                 </div>
+
 
                 <div class="col-sm-2 margin">
                     Most Recent
@@ -44,6 +44,7 @@
                     <a class="list-icon" href=""></a>
                     <a class="map-icon" href="#/map"></a>
                     <a class="cal-icon" href="#/calendar"></a>
+                    <a class="day-icon" href="#/calendar"></a>
 
                 </div>
             </div>

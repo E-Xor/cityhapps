@@ -110,7 +110,7 @@ class Eventful extends Eloquent {
 					$eventRecord->owner				=	$jsonArray['events']['event'][$i]['owner'];
 					$eventRecord->going				=	$jsonArray['events']['event'][$i]['going'];
 					$eventRecord->country_abbr2		=	$jsonArray['events']['event'][$i]['country_abbr2'];
-					$eventRecord->image			    =	$jsonArray['events']['event'][$i]['image'];
+					// $eventRecord->image			    =	$jsonArray['events']['event'][$i]['image'];
 					// $event->// caption		=		$jsonArray['events']['event'][$i]['caption'],
 					$eventRecord->created			=	$jsonArray['events']['event'][$i]['created'];
 					$eventRecord->venue_id			=	$jsonArray['events']['event'][$i]['venue_id'];

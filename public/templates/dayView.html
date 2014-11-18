@@ -25,7 +25,7 @@
             </div>
             <div class="categoriesDropdown" ng-init="getCategories()">
                 <div ng-repeat="category in categories">
-                    <label class="event-category" ng-click="filterCategory(category.name)" ng-model="categories" btn-checkbox>{{category.name}}</label>
+                    <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory(filterData.categories[category.id])" btn-checkbox>{{category.name}}</label>
                 </div>
             </div>
 
