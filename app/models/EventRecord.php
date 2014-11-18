@@ -21,9 +21,16 @@ class EventRecord extends Eloquent {
 		return $this->belongsToMany('Category', 'event_category', 'event_id', 'category_id');
 	}
 
-	public static function eventCount()
+	public static function eventCount($startDate)
 	{
-		return EventRecord::all()->count();
+
+		if ($startDate != null) {
+			$date = new DateTime($startDate);
+		} else {
+			$date = new DateTime();
+		}
+
+		return EventRecord::where('event_date', '=', $date->format('Y-m-d'))->count();
 	}
 
 	public static function selectEvents($eventParams) {
