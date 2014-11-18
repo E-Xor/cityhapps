@@ -189,6 +189,17 @@ cityHapps.factory('getEvents', function($http){
 	}
 });
 
+cityHapps.factory('getEventsByTime', function($http){
+   return  {
+       events : function(start, end){
+           return $http.get('/events?start_date='+ start).success(function(data){
+
+           });
+       }
+   }
+
+});
+
 cityHapps.config([
     'FacebookProvider',
     function(FacebookProvider) {
@@ -1191,6 +1202,8 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
     $scope.events = [];
 
+
+
 	var calEvents = function(data) {
 
 		console.log(data);
@@ -1261,6 +1274,8 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
             }
         }
     }
+
+    var start = moment.format()
 
     getEvents.events().success(calEvents);
 
