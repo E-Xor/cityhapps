@@ -74,6 +74,7 @@
                 ->select( DB::raw( implode( ',' ,  $fields ) . ',' .  $distance_select  ) )
                 ->having( 'distance', '<=', $max_distance )
                 ->orderBy( 'distance', 'ASC' )
+                ->take(10)
                 ->get();
 
             return $data;
