@@ -205,10 +205,12 @@ cityHapps.factory('getEvents', function($http){
 	}
 });
 
-cityHapps.factory('getEventsByTime', function($http){
+var firstOfMonth = moment().startOf('month').format();
+
+cityHapps.factory('getEventsMonthStart', function($http){
    return  {
-       events : function(start, end){
-           return $http.get('/events?start_date='+ start).success(function(data){
+       events : function(){
+           return $http.get('/events?start_date='+ firstOfMonth).success(function(data){
 
            });
        }
@@ -235,8 +237,21 @@ cityHapps.config([
 	    });
 	}]);
 
-cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal',
-	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal){
+cityHapps.factory('search', function($http){
+    return {
+        searchData : function(query){
+            return $http.get("/events?search="+ query)
+                .success(function(data, scope){
+                  console.log(data);
+
+            });
+        }
+    };
+
+});
+
+cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'search',
+	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal, $location, search){
 		
 		$scope.mobile = function() {
 			if ($window.innerWidth <= 768 ) {
@@ -244,7 +259,14 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 			} else {
 				return false;
 			}
-		};		
+		};
+
+        $scope.search = function(query) {
+            $location.path('/day');
+            search.searchData(query).success(function(data){
+                $scope.$broadcast('search', data);
+            });
+        };
 
 		$scope.userString = localStorage.getItem('user');
 		$scope.user = angular.fromJson($scope.userString);
@@ -364,14 +386,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 
       // Define user empty data :/
       $scope.user = {};
-      
-      // Defining user logged status
-      $scope.logged = false;
-      
-      // And some fancy flags to display messages upon user status change
-      $scope.byebye = false;
-      $scope.salutation = false;
-      
+
       /**
        * Watch for Facebook to be ready.
        * There's also the event that could be used
@@ -681,7 +696,7 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 
 	$scope.logoutUser = function() {
 		authFactory.logoutUser();
-	}
+	};
 
 });
 
@@ -1198,7 +1213,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 	
 }]);
 
-cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal, $http, getCategories){
+cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal, $http, getCategories, getEventsMonthStart){
 
 	$scope.alertTest = function() {
 		//alert('firing on click');
@@ -1259,7 +1274,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
             }
         }
 
-        $http.get("/events?start_time="+firstOfMonth + queryString)
+        $http.get("/events?start_time="+firstOfMonth+"&"+ queryString)
             .success(function(data){
                 $scope.eventData = data;
                 calEvents(data);
@@ -1273,25 +1288,20 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 		eventClick: $scope.alertTest()
 	}
 
-    $scope.alert = function(stuff) {
-        alert(stuff);
-    }
-
     $scope.events = [];
 
-	$http.get('/events?start_date='+ firstOfMonth).success(function(data) {
+    var calEvents = function(data) {
 
-		console.log(data);
 
-		for (var i = 0; i < data.events.length; i++) {
-			$scope.events.push({
-					title : data.events[i].event_name,
-                    start: data.events[i].start_time,
-                    end : data.events[i].end_time,
-                    allData : data.events[i]
-			});
-		}
-	});
+        for (var i = 0; i < data.events.length; i++) {
+            $scope.events.push({
+                title : data.events[i].event_name,
+                start: data.events[i].start_time,
+                end : data.events[i].end_time,
+                allData : data.events[i]
+            });
+        }
+    }
 
     $scope.uiConfig = {
         calendar: {
@@ -1352,7 +1362,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
     //var start = moment.format()
 
-    //getEvents.events().success(calEvents);
+    getEventsMonthStart.events().success(calEvents);
 
     $scope.eventSource =[$scope.events];
 
@@ -1360,7 +1370,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
 });
 
-cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories) {
+cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, $rootScope) {
 
     //Needs to be broken out into a factory
     $scope.now = moment().format("dddd, MMMM Do");
@@ -1405,7 +1415,7 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
     $scope.filterData.categories = {};
 
     //should also be a factory instead of being repeated everywhere
-    $scope.filterCategory = function(cat) {
+    $scope.filterCategory = function() {
 
         var queryString = '';
 
@@ -1440,12 +1450,17 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
             }
         });
     };
+    $scope.$on('search', function(info, data){
+        console.log(data);
+        $scope.dayEvents = data.events;
+    })
+
 
     var dayEvents = function(data) {
         $scope.dayEvents = data.events;
         $scope.eventGroup =  [];
+    };
 
-    }
 
     getEvents.events().success(dayEvents);
 

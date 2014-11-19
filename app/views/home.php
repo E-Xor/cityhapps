@@ -62,14 +62,17 @@
   data-width="450"
   data-show-faces="true">
 </div> -->
-	<body ng-controller="appController">
+	<body ng-controller="appController" ng-cloak>
     <div id="fb-root"></div>
 		<div ng-if="!mobile()">
 			<div class="bg-image">	
 				<div class="main-container proxima" ng-animate=" 'animate' ">
 					<div class="wide">
 						<div class='row wide-search'>
-							<input type="text" placeholder="Search" class="search-large">
+                            <form ng-submit="search(query)">
+                                <input type="text" placeholder="Search" ng-model="query" class="search-large">
+                                <input type="submit" style="display: none;">
+                            </form>
 						</div>
 						<div class="row header-search">
 
@@ -78,7 +81,10 @@
 									<a href="/"><img src="/img/logo.png"></a>
 								</div>
 								<div class="col-sm-4 center logo">
-									<input type="text" placeholder="Find Events &amp; Activities" class="main-search" />
+                                    <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
+                                        <input type="text" placeholder="Find Events &amp; Activities" ng-model="query" class="main-search" />
+                                    </form>
+
 								</div>
 									<div class="col-sm-4 auth" ng-controller="modalController">
                                         <div ng-cloak ng-show="!user">
