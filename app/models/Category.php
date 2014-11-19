@@ -27,4 +27,14 @@ class Category extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	//protected $hidden = array('id');
 
+	public function users()
+	{
+		return $this->belongsToMany('User', 'user_categories', 'category_id', 'user_id');
+	}
+
+	public function events()
+	{
+		return $this->belongsToMany('EventRecord', 'event_category', 'category_id', 'event_id');
+	}
+
 }

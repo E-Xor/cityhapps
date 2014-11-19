@@ -11,11 +11,6 @@ class EventController extends BaseController {
 
 	public function testEvents() {
 		
-		$search = Input::get('search');
-		$searchTerms = explode(' ', $search);
-
-	    var_dump($searchTerms);
-
 		/*
 		$user = User::find(9);
 		$eventID = '6709';
@@ -58,6 +53,29 @@ class EventController extends BaseController {
 		$meta = array();
 		$count = EventRecord::eventCount($eventParams['startDate']);
 		$meta["count"] = $count;
+
+		$results = array("meta" => $meta, "events" => $events);;
+		
+		return json_encode($results);
+	}
+
+	public function recommendedEvents() {
+		
+		$eventParams = array();
+
+		$eventParams['userID'] = Input::get('user_id');
+		$eventParams['startTime'] = Input::get('start_time');
+		$eventParams['startDate'] = Input::get('start_date');
+		$eventParams['endDate'] = Input::get('end_date');
+		$eventParams['imageRequired'] = Input::get('image_required');
+		$eventParams['pageSize'] = Input::get('page_size');
+		$eventParams['pageCount'] = Input::get('page_count');
+		$eventParams['pageShift'] = Input::get('page_shift');
+
+		$events = EventRecord::recommendedEvents($eventParams);
+
+		$meta = array();
+		$meta["user_id"] = $eventParams['userID'];
 
 		$results = array("meta" => $meta, "events" => $events);;
 		

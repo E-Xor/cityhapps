@@ -37,6 +37,7 @@ Route::resource('sharedEvent', 'SharedEventController');
 
 
 Route::get('events', 'EventController@events');
+Route::get('recommendedEvents', 'EventController@recommendedEvents');
 Route::get('eventsPaged', 'EventController@eventsPaged');
 Route::post('dayEvents', 'EventController@dayEvents');
 Route::post('geoEvents', 'EventController@geoEvents');

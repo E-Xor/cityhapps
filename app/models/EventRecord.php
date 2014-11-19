@@ -59,6 +59,34 @@ class EventRecord extends Eloquent {
 
 	}
 
+	public static function recommendedEvents($eventParams) {
+
+		$userID = $eventParams['userID'];
+
+		if ($userID != null) {
+
+			$events = EventRecord::with('categories')
+					
+					->userCategory($userID)
+					->startTime($eventParams['startTime'])
+					->dateRange($eventParams['startDate'], $eventParams['endDate'])
+					->imageRequired($eventParams['imageRequired'])
+					
+					->orderBy('event_date', 'asc')
+					->orderBy('start_time', 'asc')
+					
+					->getPage($eventParams['pageSize'], $eventParams['pageCount'], $eventParams['pageShift'])
+					
+					->get();
+
+			return $events;
+
+		} else {
+			return null;
+		}
+
+	}
+
 	public function scopeEventID($query, $eventID) {
 		if ($eventID != null) {
 			return $query->where('id', '=', $eventID);
@@ -231,6 +259,14 @@ class EventRecord extends Eloquent {
 		return $query;
 	}
 	
+	public function scopeUserCategory($query, $userID) {
+		
+		$joined = $query->join('event_category', 'events.id', '=', 'event_category.event_id')
+						->join('user_categories', 'user_categories.category_id', '=', 'event_category.category_id')
+						->where('user_categories.user_id', '=', $userID);
+
+		return $joined;
+	}
 
 	public static function storeEvents() {
 
