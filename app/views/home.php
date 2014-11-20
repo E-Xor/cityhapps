@@ -27,14 +27,14 @@
 
 	document.body.scrollTop = 0;
 
-	  window.fbAsyncInit = function() {
-	    FB.init({
-            appId      : '914175305259458',
-            status     : true,
-            xfbml      : true,
-            version    : 'v2.0'
-	    });
-	  };
+//	  window.fbAsyncInit = function() {
+//	    FB.init({
+//            appId      : '914175305259458',
+//            status     : true,
+//            xfbml      : true,
+//            version    : 'v2.0'
+//	    });
+//	  };
 
 	<!--local typeKit -->
     </script>
@@ -46,19 +46,6 @@
 
 </head>
 
-<?php 
-
-	// $laravel = app();
-	// $version = $laravel::VERSION;
-
-	// echo $version;
-?>
-<!-- <div
-  class="fb-like"
-  data-share="true"
-  data-width="450"
-  data-show-faces="true">
-</div> -->
 	<body ng-controller="appController" ng-cloak>
     <div id="fb-root"></div>
 

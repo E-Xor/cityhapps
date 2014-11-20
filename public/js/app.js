@@ -230,7 +230,7 @@ cityHapps.factory('getEventsMonthStart', function($http){
 cityHapps.config([
     'FacebookProvider',
     function(FacebookProvider) {
-     var myAppId = '895139070496415';
+     var myAppId = '914175305259458';
      
      FacebookProvider.init(myAppId);
      
