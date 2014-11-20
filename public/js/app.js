@@ -231,11 +231,11 @@ cityHapps.config([
     'FacebookProvider',
     function(FacebookProvider) {
      var myAppId = '914175305259458';
-     
+
      FacebookProvider.init(myAppId);
-     
+
     }
- ]);
+]);
 
 
 	cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
@@ -261,7 +261,8 @@ cityHapps.factory('search', function($http){
 
 cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'search',
 	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal, $location, search){
-		
+
+
 		$scope.mobile = function() {
 			if ($window.innerWidth <= 768 ) {
 				return true;
@@ -710,14 +711,13 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
         $scope.shareReveal =  function() {
 
             $('.share-overlay').fadeToggle();
-        }
-        //
-        //FB.init({
-        //
-        //});
+        };
+
+        $scope.currentURL =  document.URL + "share/";
 
         $scope.fbShare = function(url) {
-            //alert(url);
+
+            alert(url);
             FB.ui({
                 method: 'share',
                 href: url,
@@ -767,7 +767,24 @@ cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
 		};
-	}
+
+            $scope.currentURL =  document.URL + "share/";
+
+        $scope.fbShare = function(url) {
+            alert(url);
+            FB.ui({
+                method: 'share',
+                href: url,
+            }, function(response){
+                if (response && !response.error_code) {
+                    alert(response);
+                } else {
+                    alert('Error while posting.');
+                }
+            });
+        }
+
+        }
 ]);
 
 cityHapps.factory('getCategories', function($http){
@@ -857,6 +874,8 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 			}
 		}
 
+
+
 	}
 
 ]);
@@ -936,6 +955,9 @@ cityHapps.config(function($routeProvider, $locationProvider){
 		})
         .when("/day", {
             // controller: "calController",
+            templateUrl: "templates/dayView.html"
+        })
+        .when('/share/:id', {
             templateUrl: "templates/dayView.html"
         })
 		.otherwise({redirectTo: "/"});
