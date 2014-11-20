@@ -9,10 +9,8 @@
                         <div class="share-overlay">
                             <h4 class="wide-kerning uppercase">Share</h4>
                             <h3 class="dark">{{data.event_name}}</h3>
-                             <!-- fb-share-button -->
-                            <div class="share-icon fb-share"
-                                 data-href="{{data.url}}" data-layout="">
 
+                            <div class="share-icon fb-share fb-share-button" ng-click="fbShare('http://cityhapps.dev/' + data.id)">
                             </div>
 
                             <a href="" class="share-icon twitter-share">
@@ -32,23 +30,20 @@
 		</div>
 
 	      	<div class="modal-body">
-				<p>{{data.start_time}}</p>
+				<p class="blue">{{data.start_time | dateToISO | date: 'MMM d h:mm a'}}</p>
 		    	<p>{{data.venue_name}}</p>
 		    	<p>{{data.venue_address}}</p>
 
-		    	<div class="modal-categories">
-					<div class="category-box">
-						<h5 class="uppercase inline">Category 1 </h5>
-					</div>
-					<div class="category-box">
-						<h5 class="uppercase inline">Category 2 </h5>
-					</div>
-					<div class="category-box">
-						<h5 class="uppercase inline">Category 3 </h5>
+		    	<div class="margin20">
+                    <div ng-repeat="category in data.categories" class="inline">
+                        <div class="event-category inline-block margin-top-5 ">
+                            {{category.name}}
+                        </div>
 					</div>
 				</div>
+
 				<div class="modal-description">
-					<p ng-bind-html="description"></p>
+					<p ng-if="description" ng-bind-html="description"></p>
                     <p ng-if="data.description">{{data.description}}</p>
                     <!--| limitTo: 300-->
 				</div>

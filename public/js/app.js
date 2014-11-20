@@ -424,7 +424,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
           $scope.login();
         }
       };
-      
+
 
 	$scope.login = function() {
 		Facebook.login(function(response) {
@@ -462,29 +462,29 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 								$modal.open({
 									templateUrl: "templates/categoriesModal.html",
 									controller: 'modalInstanceController'
-								});	
+								});
 
 							} else {
 								console.log(response.id);
-								
+
 								$http({
 									method: 'PATCH',
 									url: '/user/' + response.id,
 									data: {"password" : $scope.fbUser.password},
 									headers: {"Content-Type": "application/json"}
 								}).success(function(data){
-									authFactory.loginUser($scope.fbUser);	
+									authFactory.loginUser($scope.fbUser);
 								});
-									
+
 							}
 
-						});			
+						});
 					});
-				});	
+				});
 			}
 		}, {scope: 'email'});
 	};
-             
+
       /**
        * Logout
        */
@@ -539,9 +539,8 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 	};
 
 
+
 	$scope.processForm = function(formData) {
-
-
 		$http({
 			method: 'POST',
 			url: '/user',
@@ -555,36 +554,15 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 					"email" : data.email,
 					"password" : data.fb_token
 				};
-
 				$scope.id = data.id;	
 
 				authFactory.loginUser({"email":formData.email, "password":formData.password});			
 			}
-
-
 			console.log(data);
-	
 		});
 	};
 
 
-		$scope.fbLogin = function() {
-			$http({
-				method: "POST",
-				url: '/auth/login-fb',
-				// data: $scope.formData,
-				headers : {"Content-Type": "application/json"}
-			}).success(function(data){
-
-				if (!data) {
-					console.log("There was an error logging you into Facebook");
-					// $scope.loggedOut = false;
-				} else if(data) {
-					console.log("You are logged in with Facebook");
-					// $scope.loggedOut = true;
-				}
-			});
-		};		
 	}
 ]);
 
@@ -662,6 +640,11 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope){
 
 });
 
+cityHapps.factory("FBLogin", function($http){
+
+
+})
+
 
 cityHapps.controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
 
@@ -728,21 +711,19 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
             $('.share-overlay').fadeToggle();
         }
+        //
+        //FB.init({
+        //
+        //});
 
-        FB.init({
-            appId      : '{895139070496415}',
-            status     : true,
-            xfbml      : true,
-            version    : 'v2.0'
-        });
-
-        $scope.fbShare = function(url) {
+        $scope.fbShare = function() {
+            //alert(url);
             FB.ui({
                 method: 'share',
-                href: url
+                href: document.URL,
             }, function(response){
                 if (response && !response.error_code) {
-                    alert('Posting completed.');
+                    alert(response);
                 } else {
                     alert('Error while posting.');
                 }
@@ -902,10 +883,18 @@ cityHapps.factory('userData', function($rootScope, authService){
 });
 
 
-cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller", "registerDataService", "$http", 'userData', 'authService',
-	function($rootScope, $scope, $http, userData, registerDataService, authService, $controller ) {
+cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller", "registerDataService", "$http", 'userData', 'authService', '$modal', function($rootScope, $scope, $http, userData, registerDataService, authService, $controller, $modal) {
 
-		$controller('appController', {$scope:$scope});
+		//$controller('appController', {$scope:$scope});
+
+        $scope.registerOpen = function(size) {
+
+            var modalInstance = $modal.open({
+                templateUrl: "templates/registrationModal.html",
+                controller: 'modalInstanceController',
+                size: size
+            });
+        };
 
 		$scope.formData = registerDataService.data;
 
@@ -1026,6 +1015,14 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			});
 		};
 	//end sloppy code re-use
+
+        //$scope.marker = {
+        //    options: {
+        //        labelContent: ($index + 1) + (10 * (pageCount - 1)),
+        //        labelAnchor: (25, 0),
+        //        labelClass: 'markerLabel'
+        //    }
+        //}
 
 		var drawEvents = function(data){
 			
@@ -1179,17 +1176,6 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 					$scope.$apply(function () {
 						$log.info('this is the map instance', map);
 						$scope.mapInstance = map;
-
-							$(document).ready(function(){
-								var label = $('.markerLabel')
-									label.css('top', function(i,current) { 
-										return (parseInt(current) - 35 );
-									});
-									label.css('left', function(i, current) {
-										return (parseInt(current) - 5 );
-									});
-							});
-
 						console.log($scope.mapInstance);
 					});
 				}, 
@@ -1207,17 +1193,6 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 								for(var i=0; i < newData.length; i++) {
 									$scope.markers.push(newData[i]);
 								}
-
-					}).then(function(){
-						$(document).ready(function(){
-							var label = $('.markerLabel')
-								label.css('top', function(i,current) { 
-									return (parseInt(current) - 35 );
-								});	
-								label.css('left', function(i, current) {
-									return (parseInt(current) - 5 );
-								});
-						});
 
 					});
 				}

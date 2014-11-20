@@ -45,6 +45,10 @@
 html {
   background: #2c2625; }
 
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
 .main-container {
   z-index: 2;
   background: rgba(11, 38, 60, 0.54); }
@@ -171,10 +175,10 @@ html {
 
 .close {
   float: right;
-  font-size: 31px;
-  font-weight: 700;
+  font-size: 57px;
+  font-weight: 100;
   line-height: 1;
-  color: #0D0C0C;
+  color: #0C0C0C;
   text-shadow: 0 1px 0 #fff;
   filter: alpha(opacity=20);
   opacity: .5;
@@ -187,12 +191,21 @@ html {
   .modal-backdrop.in {
     opacity: .7; }
 
-.modal-body p {
-  margin: 0; }
+.modal-body {
+  padding: 15px 30px 0 30px; }
+  .modal-body p {
+    margin: 0; }
+
+.modal-body-sign-in {
+  padding: 0 30px 0 30px; }
+
+.modal-content {
+  border-radius: 0; }
 
 .modal-description {
   padding-bottom: 20px;
-  border-bottom: 1px solid #B1ADB1; }
+  border-bottom: 1px solid #B1ADB1;
+  line-height: 1.7em; }
 
 .categoriesDropdown {
   display: none;
@@ -203,19 +216,8 @@ html {
   padding: 20px;
   border: 4px solid #FF5C50;
   top: 45px; }
-  .categoriesDropdown .event-category {
-    padding: 10px 5px;
-    border: 2px solid #BEBABB;
-    color: #BEBABB;
-    background: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    display: inline;
-    float: left;
-    font-size: 12px;
-    margin-left: 5px; }
-    .categoriesDropdown .event-category.active {
-      background: none; }
+  .categoriesDropdown .active.event-category {
+    background: none; }
   .categoriesDropdown:after, .categoriesDropdown:before {
     bottom: 100%;
     left: 25%;
@@ -264,8 +266,12 @@ html {
 .modal-title-event {
   position: absolute;
   bottom: 10px;
-  left: 10px;
-  color: #fff; }
+  left: 30px;
+  color: #fff;
+  font-weight: 600; }
+
+.modal-footer {
+  padding: 20px 0; }
 
 .share {
   width: 21px;
@@ -300,17 +306,22 @@ html {
 .modal-header-event {
   padding: 0; }
 
-.event-category {
+.event-category, .categoriesDropdown .event-category {
   padding: 10px 5px;
-  border: 2px solid #BEB9BD;
-  color: #BEB9BD;
-  background: #fff;
+  border: 2px solid #BEBABB;
+  color: #BEBABB;
+  background: none;
   cursor: pointer;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  display: inline;
+  float: left;
+  font-size: 12px;
+  margin-right: 5px; }
   .event-category.active {
-    background: #fff;
     color: #FF5C50;
-    border: 2px solid #FF5C50; }
+    border: 2px solid #FF5C50;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease; }
 
 .categoryToggle {
   cursor: pointer; }
@@ -323,14 +334,23 @@ html {
   background: #f7eeef;
   padding: 0 50px; }
 
+.categories-modal {
+  padding: 0;
+  background: #f7eeef; }
+
+.login .modal-header {
+  border-bottom: none; }
+
 .register, .login {
+  height: 100%;
   background: #f7eeef;
   padding: 0 40px; }
   .register input, .login input {
     margin: 15px 0;
     width: 100%;
     height: 50px;
-    padding: 10px 15px; }
+    padding: 10px 15px;
+    border: none; }
   .register ::-webkit-input-placeholder, .login ::-webkit-input-placeholder {
     color: #BCBABD;
     text-align: left;
@@ -558,13 +578,14 @@ html {
   margin-left: 10px; }
 
 .buy {
-  padding: 10px 15px;
+  padding: 9px 27px;
   background: #FF5C50;
   border: none;
   display: block;
+  font-size: 1.3em;
   color: #fff;
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 700;
   text-shadow: 2px 1px 1px #E24B44; }
 
 .viewContainer {
@@ -578,7 +599,8 @@ html {
   padding: 20px;
   max-width: 1070px; }
   .view-select.map {
-    margin: 0 auto; }
+    margin: 0 auto;
+    padding: 0px 20px 0 20px; }
 
 .fc-toolbar {
   display: none; }
@@ -663,12 +685,13 @@ html {
 .event-number {
   height: 37px;
   width: 27px;
-  padding: 5px 9px;
+  padding: 5px 0px;
   color: #fff;
   float: left;
   height: 50px;
   margin: 0px 10px;
-  background: url("/img/marker.png") no-repeat 0 0/27px 37px; }
+  background: url("/img/marker.png") no-repeat 0 0/27px 37px;
+  text-align: center; }
   .event-number:nth-child(10) {
     padding: 5px; }
 
@@ -750,6 +773,9 @@ button.create-account[disabled='disabled'] {
 .inline {
   display: inline; }
 
+.inline-block {
+  display: inline-block; }
+
 .italic {
   font-style: italic; }
 
@@ -777,6 +803,17 @@ button.create-account[disabled='disabled'] {
 
 .margin {
   margin: 10px 0; }
+
+.margin5 {
+  margin: 5px 0; }
+
+.margin-top-5 {
+  margin-top: 5px; }
+
+.margin20 {
+  margin: 20px 0;
+  float: left;
+  width: 100%; }
 
 .block {
   display: block; }

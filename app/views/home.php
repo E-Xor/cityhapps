@@ -21,13 +21,18 @@
  	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script>
 
+//    <meta property="og:site_name" content="CityHapps"/>
+//    <meta property="fb:app_id" content="895139070496415" />
+
+
 	document.body.scrollTop = 0;
 
 	  window.fbAsyncInit = function() {
 	    FB.init({
-	      appId      : '895139070496415',
-	      xfbml      : true,
-	      version    : 'v2.1'
+            appId      : '914175305259458',
+            status     : true,
+            xfbml      : true,
+            version    : 'v2.0'
 	    });
 	  };
 
@@ -64,6 +69,13 @@
 </div> -->
 	<body ng-controller="appController" ng-cloak>
     <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=895139070496415&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 		<div ng-if="!mobile()">
 			<div class="bg-image">	
 				<div class="main-container proxima" ng-animate=" 'animate' ">
