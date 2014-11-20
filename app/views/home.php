@@ -19,8 +19,10 @@
 	<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
  	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--    <meta property="og:site_name" content="CityHapps"/>-->
+
 <!--    <meta property="fb:app_id" content="895139070496415"/>-->
+<!--    <meta property="og:site_name" content="CityHapps"/>-->
+
 	<script>
 
 
@@ -38,23 +40,6 @@
 <div id="fb-root"></div>
 
 <!--    <script>-->
-<!--        window.fbAsyncInit = function() { -->
-<!--            FB.init({-->
-<!--                appId : '895139070496415',-->
-<!--                status : true,-->
-<!--                xfbml : true-->
-<!--            });-->
-<!--        };-->
-
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=895139070496415&version=v2.0";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>
-
 
 	<body ng-controller="appController" ng-cloak>
 		<div ng-if="!mobile()">

@@ -25,10 +25,10 @@ class SharedEventController extends \BaseController {
 	}
 
 
-	public function sharedEventPosition() {
-		
-		$shareLinkKey = Input::get('share_link_key');
+	public function sharedEventPosition($id) {
+		echo $id;
 
+		$shareLinkKey = $id;
 		$position = SharedEvent::getEventPosition($shareLinkKey);
 		
 		return json_encode($position);

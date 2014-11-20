@@ -693,8 +693,8 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 
 });
 
-cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", 'voteService', "$modalInstance", 'data', 'num', 'vote', 
-		function($scope, registerDataService, voteService, $modalInstance, data, num, vote){
+cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", 'voteService', "$modalInstance", 'data', 'num', 'vote', 'Facebook',
+		function($scope, registerDataService, voteService, $modalInstance, data, num, vote, Facebook){
 
 		if (num === null || num === undefined) {
 			$scope.data = data;
@@ -715,17 +715,16 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
         $scope.currentURL =  document.URL + "share/";
 
-        $scope.fbShare = function(url) {
-
-            alert(url);
-            FB.ui({
-                method: 'share',
-                href: url,
+        $scope.fbShare = function(url, title) {
+            Facebook.ui({
+                method: 'feed',
+                link: url,
+                caption: title
             }, function(response){
                 if (response && !response.error_code) {
-                    alert(response);
+                    //alert(response);
                 } else {
-                    alert('Error while posting.');
+                    //alert('Error while posting.');
                 }
             });
         }
