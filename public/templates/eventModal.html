@@ -10,7 +10,7 @@
                             <h4 class="wide-kerning uppercase">Share</h4>
                             <h3 class="dark">{{data.event_name}}</h3>
 
-                            <div class="share-icon fb-share fb-share-button" ng-click="fbShare(data.id)">
+                            <div class="share-icon fb-share fb-share-button" ng-click="fbShare(document.URL + data.id)">
                             </div>
 
                             <a href="" class="share-icon twitter-share">
@@ -34,7 +34,7 @@
 		    	<p>{{data.venue_name}}</p>
 		    	<p>{{data.venue_address}}</p>
 
-		    	<div class="margin20">
+		    	<div class="margin20 left">
                     <div ng-repeat="category in data.categories" class="inline">
                         <div class="event-category inline-block margin-top-5 ">
                             {{category.name}}

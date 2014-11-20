@@ -716,11 +716,11 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
         //
         //});
 
-        $scope.fbShare = function(id) {
+        $scope.fbShare = function(url) {
             //alert(url);
             FB.ui({
                 method: 'share',
-                href: document.URL + id,
+                href: url,
             }, function(response){
                 if (response && !response.error_code) {
                     alert(response);
