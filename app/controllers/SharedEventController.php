@@ -43,7 +43,22 @@ class SharedEventController extends \BaseController {
 	 */
 	public function create()
 	{
-		return "Posted a Shared Event";
+		$sharedEvent = Input::get('sharedEvent');
+
+        $sharedEventRecord = new SharedEvent;
+
+        $sharedEventRecord->user_id = $sharedEvent['user_id'];
+        $sharedEventRecord->event_id = $sharedEvent['event_id'];
+        $sharedEventRecord->share_link_key = $sharedEvent['text'];
+        $sharedEventRecord->share_target_platform = $sharedEvnet['target'];
+
+        $sharedEventRecord->save();
+
+
+        return "Posted a Shared Event";
+
+
+
 	}
 
 

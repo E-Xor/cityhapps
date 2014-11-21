@@ -825,8 +825,8 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 
 });
 
-cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", 'voteService', "$modalInstance", 'data', 'num', 'vote', 'Facebook',
-		function($scope, registerDataService, voteService, $modalInstance, data, num, vote, Facebook){
+cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", 'voteService', "$http", "$modalInstance", 'data', 'num', 'vote', 'ipCookie', 'Facebook',
+		function($scope, registerDataService, voteService, $http, $modalInstance, data, num, vote, ipCookie, Facebook){
 
 		if (num === null || num === undefined) {
 			$scope.data = data;
@@ -870,7 +870,35 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
             $scope.socialShare = function(url, name, size) {
                 window.open(url, name, size);
+            }
+
+            $scope.sharedPush =  function(event_id, target) {
+
+                var text = "";
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                for( var i=0; i < 5; i++ )
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                var sharedEvent;
+
+                var userID = ipCookie('user');
+                console.log(userID.data.id);
+
+                var sharedEvent = {
+                    'user_id' : userID.data.id,
+                    'event_id' : event_id,
+                    'share_link_key' : text,
+                    'share_target_platform' : target
+                }
+
+                $http.post("/sharedEvent", sharedEvent).success(function(data){
+
+                    alert(data);
+
+                });
             };
+
 
            //$scope.left = (screen.width/2)-(w/2);
            // $scope.top = (screen.height/2)-(h/2);
@@ -1516,7 +1544,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
             lazyFetching : true,
             dayClick : function(date, jsEVent, view) {
 
-                alert('Taking you to day view ' + date);
+                //alert('Taking you to day view ' + date);
                 //window.location.href("/")
 
             }
@@ -1618,7 +1646,7 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
     $scope.$on('search', function(info, data){
         console.log(data);
         $scope.dayEvents = data.events;
-    })
+    });
 
 
     var dayEvents = function(data) {

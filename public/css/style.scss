@@ -396,6 +396,9 @@ body {
   &.pinterest-share {
     background: url('/img/shareIcons.png') no-repeat -183px 0/259px 76px;
   }
+  span {
+    display: none;
+  }
 
 }
 

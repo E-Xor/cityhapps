@@ -302,6 +302,8 @@ body {
     background: url("/img/shareIcons.png") no-repeat -91px 0/259px 76px; }
   .share-icon.pinterest-share, .twitter-share-button.pinterest-share {
     background: url("/img/shareIcons.png") no-repeat -183px 0/259px 76px; }
+  .share-icon span, .twitter-share-button span {
+    display: none; }
 
 @media (min-width: 0) {
   a#b.btn {
