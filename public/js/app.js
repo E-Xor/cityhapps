@@ -2,7 +2,7 @@ var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.vali
 	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch',
     'ui.calendar', 'angular.filter', 'ngSanitize']);
 
-cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, $window, getCategories) {
+cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, getRecommendedEvents, $window, getCategories) {
 
 	$scope.formatAMPM = function(date) {
 		var hours = date.getHours();
@@ -24,6 +24,54 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
         $scope.fadeIn = function(speed) {
             $('.carousel-inner').fadeIn(speed);
+        }
+
+        var recommendedEventSuccess = function(data) {
+        	$scope.recommendedEventData = data.events;
+        	console.log($scope.recommendedEventData);
+
+        	if ($scope.recommendedEventData != undefined) {
+
+        		$scope.recSlideGroup = [];
+
+        		var rec;
+	            for (rec = 0; rec < $scope.recommendedEventData.length; rec += 4) {
+				
+					var recSlides = {
+						'first' : $scope.recommendedEventData[rec],
+						'second' : $scope.recommendedEventData[rec + 1],
+						'third' : $scope.recommendedEventData[rec + 2],
+						'fourth' : $scope.recommendedEventData[rec + 3]
+					};
+
+					var mobileRecSlides = $scope.recommendedEventData[rec];
+			
+					if ($window.innerWidth <= 768 ) {
+						$scope.recSlideGroup.push(mobileRecSlides);
+
+		                /*
+		                $scope.recEventModalMobile = function(data) {
+
+							$modal.open({
+								templateUrl: "templates/eventModal.html",
+								controller: 'simpleModalInstanceController', 
+								resolve: {
+									data: function() {
+										return data;
+									},
+								}
+							});
+						};
+						*/
+
+					} else {
+						$scope.recSlideGroup.push(recSlides);
+					}
+
+					$scope.recommendedEventData[rec].upvoted = "";
+				}
+			}
+
         }
 		
 		var eventSuccess = function(data) {
@@ -132,6 +180,7 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 
 
 	getEvents.events().success(eventSuccess);
+	getRecommendedEvents.events().success(recommendedEventSuccess);
 
 	$scope.now = moment().format("dddd, MMMM Do");
 	//$scope.nowPost = moment().format();
@@ -206,6 +255,23 @@ cityHapps.factory('getEvents', function($http){
 
 			// '?start_date=' + startDate
 			return $http.get('/events?start_date=' + startDate + '&start_time=' + startTime).success(function(data) {
+			
+			});
+		}
+	}
+});
+
+cityHapps.factory('getRecommendedEvents', function($http) {
+	return {
+		events : function() {
+			var userString = localStorage.getItem('user');
+			var user = angular.fromJson(userString);
+			var userID = user.data.id;
+
+			var startDate = moment().format('YYYY-MM-DD');
+            var startTime = moment().format();
+
+			return $http.get('/recommendedEvents?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime).success(function(data) {
 			
 			});
 		}

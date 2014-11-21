@@ -13,7 +13,7 @@
 		<div ng-if = 'mobile()'>
 			<div class="row event-slider">
 				<carousel interval="interval" class="col-sm-12">
-					<slide class="col-sm-12" ng-repeat="event in slideGroup | limitTo: 10">			
+					<slide class="col-sm-12" ng-repeat="event in recSlideGroup | limitTo: 10">			
 						<div class="col-sm-3 event">
 							<div class="event-inner" >
 									<div ng-click="eventModalMobile(event)">
@@ -90,7 +90,7 @@
 	<div ng-if="!mobile()">
 		<div class="row event-slider">
 			<carousel interval="interval" class="col-sm-12" >
-				<slide ng-animate="'animate'" class="col-sm-12" ng-repeat="event in slideGroup" ng-init="fadeIn('slow')">
+				<slide ng-animate="'animate'" class="col-sm-12" ng-repeat="event in recSlideGroup" ng-init="fadeIn('slow')">
 					<!-- hide card with no title ths doesn exist ng-if="event.first.event_name" -->
 					<div class="col-sm-3 event" >
 							<div class="event-inner" ng-animate="'animate'">
