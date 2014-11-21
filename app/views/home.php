@@ -17,17 +17,10 @@
 	<!-- load angular from CDN-->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> 
 	<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
-
  	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!--    <meta property="fb:app_id" content="895139070496415"/>-->
-<!--    <meta property="og:site_name" content="CityHapps"/>-->
-
 	<script>
-
-
-//	document.body.scrollTop = 0;
-
+    //	document.body.scrollTop = 0;
 	<!--local typeKit -->
     </script>
 
@@ -109,7 +102,10 @@
 	<!-- </div> -->
 
 	<!-- ng- scripts n thangs -->
-	<script src="/js/angular-route.min.js"></script>
+    <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+    <script src="http://platform.twitter.com/widgets.js"></script>
+
+    <script src="/js/angular-route.min.js"></script>
 	<script src="/js/angular-facebook.js"></script>
 	<script src="/js/angular-touch.js"></script>
 	<script src="/js/http-auth-interceptor.js"></script>

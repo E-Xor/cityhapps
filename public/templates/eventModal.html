@@ -8,9 +8,7 @@
 }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<script type="text/javascript">
-    window.twttr=(function(d,s,id){var t,js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return}js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);return window.twttr||(t={_e:[],ready:function(f){t._e.push(f)}})}(document,"script","twitter-wjs"));
-</script>
+
 
 
 <div class="eventModal">
@@ -25,14 +23,13 @@
                             <h4 class="wide-kerning uppercase">Share</h4>
                             <h3 class="dark">{{data.event_name}}</h3>
 
-                            <div class="share-icon fb-share fb-share-button" data-href="cityhapps.dev" ng-click="fbShare(currentURL + data.id, data.event_name)">
-                            </div>
-
-                            <a href="" class="share-icon twitter-share twitter-share-button">
-
+                            <a class="share-icon fb-share fb-share-button" data-href="cityhapps.dev" ng-click="fbShare(currentURL + data.id, data.event_name)">
                             </a>
-                            <a href="" class="share-icon pinterest-share">
 
+                            <a class="share-icon twitter-share" ng-click="socialShare('https://twitter.com/intent/tweet?text={{data.event_name}}&url={{currentURL + data.id}}', 'Twitter Share', 'width=600, height=400')">
+                            </a>
+
+                            <a class="share-icon pinterest-share" ng-click="socialShare('http://www.pinterest.com/pin/create/button/?url={{currentURL + data.id}}&description={{data.event_name}}&media={{data.event_image_url}}','Pinterest Share','width=600, height=400' )">
                             </a>
                         </div>
 				    	<h3 class="modal-title-event">{{data.event_name}}</h3>

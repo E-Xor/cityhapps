@@ -713,9 +713,14 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
             $('.share-overlay').fadeToggle();
         };
 
-        $scope.currentURL =  document.URL + "share/";
+            //var path = window.location.href.split("/");
+            //var protocol = path[0];
+            //var host = path[2];
+
+        $scope.currentURL = "http://" + window.location.host + "/share/";
 
         $scope.fbShare = function(url, title) {
+            alert(url);
             Facebook.ui({
                 method: 'feed',
                 link: url,
@@ -727,7 +732,15 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
                     //alert('Error while posting.');
                 }
             });
-        }
+        };
+
+            $scope.socialShare = function(url, name, size) {
+
+                window.open(url, name, size);
+            };
+
+           //$scope.left = (screen.width/2)-(w/2);
+           // $scope.top = (screen.height/2)-(h/2);
 
 		//THIS IS WORKING AND REFLECTING VOTE IN MODAL, NEED TO DO THE OPPOSITE
 		//The 'vote' service being registered in the controller is what is being resolved by firing the modal, 
@@ -746,8 +759,28 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 	}
 ]);
 
-cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance", 'data', 'voteService', 
-		function($scope, $modalInstance, data, voteService){
+cityHapps.directive('twitter', [
+    function() {
+        return {
+            link: function(scope, element, attr) {
+                setTimeout(function() {
+                    twttr.widgets.createShareButton(
+                        attr.url,
+                        element[0],
+                        function(el) {}, {
+                            count: 'none',
+                            text: attr.text
+                        }
+                    );
+                });
+            }
+        }
+    }
+]);
+
+
+cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance", 'data', 'voteService', 'Facebook',
+		function($scope, $modalInstance, data, voteService, Facebook){
 			
 		$scope.data = data;
         $scope.description = data.description;
@@ -767,21 +800,26 @@ cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance
 			$modalInstance.dismiss('cancel');
 		};
 
-            $scope.currentURL =  document.URL + "share/";
+            $scope.currentURL = "http://" + window.location.host + "/share/";
 
-        $scope.fbShare = function(url) {
-            alert(url);
-            FB.ui({
-                method: 'share',
-                href: url,
-            }, function(response){
-                if (response && !response.error_code) {
-                    alert(response);
-                } else {
-                    alert('Error while posting.');
-                }
-            });
-        }
+            $scope.fbShare = function(url, title) {
+                alert(url);
+                Facebook.ui({
+                    method: 'feed',
+                    link: url,
+                    caption: title
+                }, function(response){
+                    if (response && !response.error_code) {
+                        //alert(response);
+                    } else {
+                        //alert('Error while posting.');
+                    }
+                });
+            };
+
+            $scope.socialShare = function(url, name, size) {
+                window.open(url, name, size);
+            };
 
         }
 ]);
