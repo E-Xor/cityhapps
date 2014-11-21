@@ -11,7 +11,7 @@
 
 			<!-- MOBILE / PHONE slide view -->
 		<div ng-if = 'mobile()'>
-			<div class="row event-slider">
+			<div class="row event-slider" ng-if="user">
 				<carousel interval="interval" class="col-sm-12">
 					<slide class="col-sm-12" ng-repeat="event in recSlideGroup | limitTo: 10">			
 						<div class="col-sm-3 event">
@@ -88,7 +88,7 @@
 
     <!-- Desktop Tablet > 768px -->
 	<div ng-if="!mobile()">
-		<div class="row event-slider">
+		<div class="row event-slider" ng-if="user">
 			<carousel interval="interval" class="col-sm-12" >
 				<slide ng-animate="'animate'" class="col-sm-12" ng-repeat="event in recSlideGroup" ng-init="fadeIn('slow')">
 					<!-- hide card with no title ths doesn exist ng-if="event.first.event_name" -->

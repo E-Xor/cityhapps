@@ -110,6 +110,7 @@
 	<script src="/js/angular-touch.js"></script>
 	<script src="/js/http-auth-interceptor.js"></script>
 	<script src="/js/ngRemoteValidate.0.4.1.min.js"></script>
+    <script src="/js/angular-cookie.min.js"></script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>

@@ -1,8 +1,8 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
 	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch',
-    'ui.calendar', 'angular.filter', 'ngSanitize']);
+    'ui.calendar', 'angular.filter', 'ngSanitize', 'ipCookie']);
 
-cityHapps.controller("eventsController", function($scope, $http, $filter, $modal, registerDataService, voteService, getEvents, getRecommendedEvents, $window, getCategories) {
+cityHapps.controller("eventsController", function($scope, $rootScope, $http, $filter, $modal, registerDataService, voteService, ipCookie, getEvents, getRecommendedEvents, $window, getCategories) {
 
 	$scope.formatAMPM = function(date) {
 		var hours = date.getHours();
@@ -27,34 +27,34 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
         }
 
         var recommendedEventSuccess = function(data) {
-        	$scope.recommendedEventData = data.events;
-        	console.log($scope.recommendedEventData);
+        	$scope.eventData = data.events;
+        	console.log($scope.eventData);
 
-        	if ($scope.recommendedEventData != undefined) {
+        	if ($scope.eventData != undefined) {
 
         		$scope.recSlideGroup = [];
 
         		var rec;
-	            for (rec = 0; rec < $scope.recommendedEventData.length; rec += 4) {
+	            for (rec = 0; rec < $scope.eventData.length; rec += 4) {
 				
 					var recSlides = {
-						'first' : $scope.recommendedEventData[rec],
-						'second' : $scope.recommendedEventData[rec + 1],
-						'third' : $scope.recommendedEventData[rec + 2],
-						'fourth' : $scope.recommendedEventData[rec + 3]
+						'first' : $scope.eventData[rec],
+						'second' : $scope.eventData[rec + 1],
+						'third' : $scope.eventData[rec + 2],
+						'fourth' : $scope.eventData[rec + 3]
 					};
 
-					var mobileRecSlides = $scope.recommendedEventData[rec];
+					var mobileRecSlides = $scope.recSlideGroup[rec];
 			
 					if ($window.innerWidth <= 768 ) {
 						$scope.recSlideGroup.push(mobileRecSlides);
 
-		                /*
-		                $scope.recEventModalMobile = function(data) {
+
+                        $scope.recEventModalMobile = function(data) {
 
 							$modal.open({
 								templateUrl: "templates/eventModal.html",
-								controller: 'simpleModalInstanceController', 
+								controller: 'simpleModalInstanceController',
 								resolve: {
 									data: function() {
 										return data;
@@ -62,13 +62,34 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
 								}
 							});
 						};
-						*/
+
+                        $scope.eventModal = function(data, num, vote) {
+
+                            $modal.open({
+                                templateUrl: "templates/eventModal.html",
+                                controller: 'eventModalInstanceController',
+                                resolve: {
+                                    data: function() {
+                                        return data;
+                                    },
+                                    num : function() {
+                                        return num;
+                                    },
+                                    vote : function() {
+                                        return vote;
+                                    }
+                                }
+                            });
+                        };
+
+                        $scope.interval = 500000000000;
+
 
 					} else {
 						$scope.recSlideGroup.push(recSlides);
 					}
 
-					$scope.recommendedEventData[rec].upvoted = "";
+					$scope.eventData[rec].upvoted = "";
 				}
 			}
 
@@ -178,9 +199,18 @@ cityHapps.controller("eventsController", function($scope, $http, $filter, $modal
         console.log($scope.filterData.categories);
     }
 
+    var cookie = ipCookie('user');
 
-	getEvents.events().success(eventSuccess);
-	getRecommendedEvents.events().success(recommendedEventSuccess);
+    $scope.$on('event:loginConfirmed', function(){
+        getRecommendedEvents.events().success(recommendedEventSuccess);
+    });
+
+    if (cookie) {
+        getRecommendedEvents.events().success(recommendedEventSuccess);
+        getEvents.events().success(eventSuccess);
+    } else {
+        getEvents.events().success(eventSuccess);
+    }
 
 	$scope.now = moment().format("dddd, MMMM Do");
 	//$scope.nowPost = moment().format();
@@ -272,7 +302,7 @@ cityHapps.factory('getRecommendedEvents', function($http) {
             var startTime = moment().format();
 
 			return $http.get('/recommendedEvents?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime).success(function(data) {
-			
+
 			});
 		}
 	}
@@ -322,11 +352,16 @@ cityHapps.factory('search', function($http){
             });
         }
     };
-
 });
 
-cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'search',
-	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal, $location, search){
+
+cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'search', 'ipCookie',
+	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal, $location, search, ipCookie){
+
+        //authFactory.userStatus();
+
+        $scope.user = ipCookie('user');
+        //alert($scope.user);
 
 
 		$scope.mobile = function() {
@@ -344,10 +379,11 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
             });
         };
 
-		$scope.userString = localStorage.getItem('user');
-		$scope.user = angular.fromJson($scope.userString);
+		$rootScope.userString = localStorage.getItem('user');
+        $rootScope.user = {};
+		$rootScope.user.creds = angular.fromJson($rootScope.userString);
 
-		if ($scope.userString) {
+		if ($rootScope.user.creds) {
 
 			$scope.voteEvent = function(event, num, vote) {
 				
@@ -424,9 +460,9 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
 		console.log(registerDataService.vote);
 
-		if ($scope.user) {
-			console.log($scope.user.data.email);
-		}
+		//if ($scope.user) {
+		//	console.log($scope.user.data.email);
+		//}f
 
 		$scope.formData = {
 			email : '',
@@ -648,7 +684,7 @@ cityHapps.factory("registerDataService", function(){
 });
 
 
-cityHapps.factory('authFactory', function($http, authService, $rootScope){
+cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal, ipCookie){
 
 	var auth = {};
 
@@ -660,10 +696,16 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope){
 				delete res.password;
 				localStorage.setItem('user', JSON.stringify(res));
 
+                //$cookieStore.put('user', res);
+                ipCookie('user', res, {expires: 8, expirationUnit: 'hours'});
+
+                var userString = localStorage.getItem('user');
+                var user = angular.fromJson(userString);
 
 				authService.loginConfirmed();
-				$rootScope.$broadcast('event:loginConfirmed');
-			
+                //$rootScope.$broadcast('event:loginConfirmed');
+                //$rootScope.user = user;
+
 				document.location.reload(true);
 
 			});
@@ -675,7 +717,9 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope){
 			url: '/auth/logout',
 			headers : {"Content-Type": "application/json"}
 		}).success(function(data){
-			localStorage.removeItem('user');
+			//$cookieStore.remove('user');
+            ipCookie.remove("user");
+
 			document.location.reload(true);
 			if (!data) {
 				console.log("There was an error logging you out");
@@ -685,6 +729,7 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope){
 		});
 	};
 
+    //for checking emails on registration
 	auth.userCheck = function(email, callback ) {
 		$http({
 			method: "POST",
@@ -701,6 +746,27 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope){
 		});
 
 	};
+
+    //AUTH CHECK
+    // This is how we should do this. Check against /auth/status on every request and if empty pop the modal,
+    // this way Laravel is completely in charge of handling the session cookie.
+    // A lot of SPAs dont account for page reload, but we should for this site.
+
+    //auth.userStatus = function() {
+    //    $rootScope.user = {}
+    //
+    //        $http.get("/auth/status").success(function(data){
+    //            if (data === {}){
+    //                alert('session has expired, please log back in');
+    //            } else {
+    //                $rootScope.$broadcast('loggedIn', data);
+    //                return $rootScope.user;
+    //            }
+    //        }).
+    //        error(function(data){
+    //            alert(data);
+    //        });
+    //};
 
 	return auth;
 
@@ -783,6 +849,8 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
             //var protocol = path[0];
             //var host = path[2];
 
+
+
         $scope.currentURL = "http://" + window.location.host + "/share/";
 
         $scope.fbShare = function(url, title) {
@@ -801,7 +869,6 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
         };
 
             $scope.socialShare = function(url, name, size) {
-
                 window.open(url, name, size);
             };
 
@@ -823,25 +890,6 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 			$modalInstance.dismiss('cancel');
 		};
 	}
-]);
-
-cityHapps.directive('twitter', [
-    function() {
-        return {
-            link: function(scope, element, attr) {
-                setTimeout(function() {
-                    twttr.widgets.createShareButton(
-                        attr.url,
-                        element[0],
-                        function(el) {}, {
-                            count: 'none',
-                            text: attr.text
-                        }
-                    );
-                });
-            }
-        }
-    }
 ]);
 
 
