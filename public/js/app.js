@@ -44,7 +44,71 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 						'fourth' : $scope.eventData[rec + 3]
 					};
 
-					var mobileRecSlides = $scope.recSlideGroup[rec];
+					if (recSlides['first'] != undefined) {
+						recSlides['first'].vote = {
+							upVote: false, 
+							downVote: false
+						};
+						if (recSlides['first'].recommended_votes.length > 0) {
+							if (recSlides['first'].recommended_votes[0].vote == '1') {
+								recSlides['first'].vote.upVote = true;
+							}
+
+							if (recSlides['first'].recommended_votes[0].vote == '0') {
+								recSlides['first'].vote.downVote = true;
+							}
+						}
+					};
+
+					if (recSlides['second'] != undefined) {
+						recSlides['second'].vote = {
+							upVote: false, 
+							downVote: false
+						};
+						if (recSlides['second'].recommended_votes.length > 0) {
+							if (recSlides['second'].recommended_votes[0].vote == '1') {
+								recSlides['second'].vote.upVote = true;
+							}
+
+							if (recSlides['second'].recommended_votes[0].vote == '0') {
+								recSlides['second'].vote.downVote = true;
+							}
+						}
+					};
+
+					if (recSlides['third'] != undefined) {
+						recSlides['third'].vote = {
+							upVote: false, 
+							downVote: false
+						};
+						if (recSlides['third'].recommended_votes.length > 0) {
+							if (recSlides['third'].recommended_votes[0].vote == '1') {
+								recSlides['third'].vote.upVote = true;
+							}
+
+							if (recSlides['third'].recommended_votes[0].vote == '0') {
+								recSlides['third'].vote.downVote = true;
+							}
+						}
+					};
+
+					if (recSlides['fourth'] != undefined) {
+						recSlides['fourth'].vote = {
+							upVote: false, 
+							downVote: false
+						};
+						if (recSlides['fourth'].recommended_votes.length > 0) {
+							if (recSlides['fourth'].recommended_votes[0].vote == '1') {
+								recSlides['fourth'].vote.upVote = true;
+							}
+
+							if (recSlides['fourth'].recommended_votes[0].vote == '0') {
+								recSlides['fourth'].vote.downVote = true;
+							}
+						}
+					};
+
+					var mobileRecSlides = $scope.recSlideGroup[rec]; // TODO: This makes no sense. $scope.recSlideGroup[rec] does not exist.
 			
 					if ($window.innerWidth <= 768 ) {
 						$scope.recSlideGroup.push(mobileRecSlides);
@@ -89,7 +153,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 						$scope.recSlideGroup.push(recSlides);
 					}
 
-					$scope.eventData[rec].upvoted = "";
+					//$scope.eventData[rec].upvoted = "";
 				}
 			}
 
@@ -117,6 +181,70 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 					'fourth' : $scope.eventData[i + 3]
 				};
 
+				if (slides['first'] != undefined) {
+					slides['first'].vote = {
+						upVote: false, 
+						downVote: false
+					};
+					if (slides['first'].votes.length > 0) {
+						if (slides['first'].votes[0].vote == '1') {
+							slides['first'].vote.upVote = true;
+						}
+
+						if (slides['first'].votes[0].vote == '0') {
+							slides['first'].vote.downVote = true;
+						}
+					}
+				};
+
+				if (slides['second'] != undefined) {
+					slides['second'].vote = {
+						upVote: false, 
+						downVote: false
+					};
+					if (slides['second'].votes.length > 0) {
+						if (slides['second'].votes[0].vote == '1') {
+							slides['second'].vote.upVote = true;
+						}
+
+						if (slides['second'].votes[0].vote == '0') {
+							slides['second'].vote.downVote = true;
+						}
+					}
+				};
+
+				if (slides['third'] != undefined) {
+					slides['third'].vote = {
+						upVote: false, 
+						downVote: false
+					};
+					if (slides['third'].votes.length > 0) {
+						if (slides['third'].votes[0].vote == '1') {
+							slides['third'].vote.upVote = true;
+						}
+
+						if (slides['third'].votes[0].vote == '0') {
+							slides['third'].vote.downVote = true;
+						}
+					}
+				};
+
+				if (slides['fourth'] != undefined) {
+					slides['fourth'].vote = {
+						upVote: false, 
+						downVote: false
+					};
+					if (slides['fourth'].votes.length > 0) {
+						if (slides['fourth'].votes[0].vote == '1') {
+							slides['fourth'].vote.upVote = true;
+						}
+
+						if (slides['fourth'].votes[0].vote == '0') {
+							slides['fourth'].vote.downVote = true;
+						}
+					}
+				};
+
 				var mobileSlides = $scope.eventData[i];
 			
 				if ($window.innerWidth <= 768 ) {
@@ -139,7 +267,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 					$scope.slideGroup.push(slides);
 				}
 
-				$scope.eventData[i].upvoted = "";
 			}
 			
 		}
@@ -277,26 +404,36 @@ cityHapps.factory('voteService', function(){
 });
 
 
-cityHapps.factory('getEvents', function($http){
+cityHapps.factory('getEvents', function($http, ipCookie){
 	return {
 		events : function() {
+			var userID = null;
+
+			var cookie = ipCookie('user');
+			if (cookie) {
+                userID = cookie.data.id;
+            }
+
 			var startDate = moment().format('YYYY-MM-DD');
             var startTime = moment().format();
 
 			// '?start_date=' + startDate
-			return $http.get('/events?start_date=' + startDate + '&start_time=' + startTime).success(function(data) {
+			return $http.get('/events?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime).success(function(data) {
 			
 			});
 		}
 	}
 });
 
-cityHapps.factory('getRecommendedEvents', function($http) {
+cityHapps.factory('getRecommendedEvents', function($http, ipCookie) {
 	return {
 		events : function() {
-			var userString = localStorage.getItem('user');
-			var user = angular.fromJson(userString);
-			var userID = user.data.id;
+			var userID = null;
+
+			var cookie = ipCookie('user');
+			if (cookie) {
+                userID = cookie.data.id;
+            }
 
 			var startDate = moment().format('YYYY-MM-DD');
             var startTime = moment().format();
@@ -385,20 +522,38 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
 		if ($rootScope.user.creds) {
 
-			$scope.voteEvent = function(event, num, vote) {
+			$scope.voteEvent = function(event, num, action) {
 				
-				alert(vote);
+				var eventID = event[num].event_id;
+				if (eventID == undefined) {
+					eventID = event[num].id; // Recommended events have event_id, regular events have id
+				}
 
-				alert("This" + JSON.stringify(event[num])  + "has been upvoted by user " + $scope.user.data.id);
+				var userID = $scope.user.data.id;
+				var upVote = event[num].vote.upVote;
+				var downVote = event[num].vote.downVote;
+				
+				var eventVote = -1;
 
-				//needs to be broken into a factory/ service soon
+				if (action == 'up') {
+					event[num].vote.downVote = false;
+					if (upVote == true) {
+						eventVote = 1;
+					}
+				} else { // Downvote changed
+					event[num].vote.upVote = false;
+					if (downVote == true) {
+						eventVote = 0;
+					}
+				}
+
 				$http({
 					method: "POST",
-					url: '/user_event',
+					url: '/userEvent',
 					data: {
-						'user_id' : $scope.user.data.id,
-						'event_id' : event[num].id, 
-						'vote' : vote[upVote]
+						'user_id' : userID,
+						'event_id' : eventID, 
+						'vote' : eventVote
 					},
 
 					headers : {"Content-Type": "application/json"}
@@ -413,32 +568,6 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 					}
 				});
 				
-			};
-
-			$scope.downVote = function(event, num, vote) {
-				alert("This" + JSON.stringify(event[num])  + "has been downvoted");
-
-				$http({
-					method: "POST",
-					url: '/user_event',
-					data: {
-						'user_id' : $scope.user.data.id,
-						'event_id' : event[num].id,
-						'vote' : vote
-					},
-
-					headers : {"Content-Type": "application/json"}
-				}).success(function(data){
-
-					if (!data) {
-						console.log("no vote, man");
-						// $scope.loggedOut = false;
-					} else if(data) {
-						console.log(data);
-						// $scope.loggedOut = true;
-					}
-				});
-				// voteService.vote = vote;
 			};
 
 		} else {
