@@ -32,47 +32,15 @@ class UserEventController extends \BaseController {
 	 */
 	public function store()
 	{
-		$user_id = Input::get('user_id');
-		$event_id = Input::get('event_id');
-		$vote = Input::get('vote');
-		
-		$findUserEvent = UserEvent::where('event_id', '=', $event_id)->first();
+		$eventParams = array();
 
-		if ($findUserEvent) {
-			$findUserEvent->vote = $vote;
+		$eventParams['userID'] = Input::get('user_id');
+		$eventParams['eventID'] = Input::get('event_id');
+		$eventParams['vote'] = Input::get('vote');
 
-			$findUserEvent->save();
+		$events = UserEvent::storeUserEventVote($eventParams);
 
-			return $findUserEvent;
-
-		} else {
-			$userEvent = new UserEvent;
-		
-			$userEvent->user_id = $user_id;
-			$userEvent->event_id = $event_id;
-			$userEvent->vote = $vote;	
-
-			$userEvent->save();
-
-			return $userEvent;
-		}
-
-		// if ($userEvent->upvote == null) {
-		// 	$userEvent->upvote = false;
-		// } else {
-		// 	$userEvent->upvote = $upVote;
-		// }
-
-		// if ($userEvent->downvote == null){
-		// 	$userEvent->downvote = false; 			
-		// } else {
-		// 	$userEvent->downvote = $downVote;	
-		// }
-
-		
-
-		
-
+		return json_encode($events);
 		
 	}
 

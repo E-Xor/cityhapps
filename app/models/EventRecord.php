@@ -21,6 +21,16 @@ class EventRecord extends Eloquent {
 		return $this->belongsToMany('Category', 'event_category', 'event_id', 'category_id');
 	}
 
+	public function votes()
+	{
+		return $this->hasMany('UserEvent', 'event_id', 'id');
+	}
+
+	public function recommendedVotes()
+	{
+		return $this->hasMany('UserEvent', 'event_id', 'event_id');
+	}
+
 	public static function eventCount($startDate)
 	{
 
@@ -50,6 +60,7 @@ class EventRecord extends Eloquent {
 				->imageRequired($eventParams['imageRequired'])
 				->eventSearch($eventParams['search'])
 				->withCategory($eventParams['category'])
+				->withUserEvent($eventParams['userID'])
 				->orderBy('event_date', 'asc')
 				->orderBy('start_time', 'asc')
 				->getPage($eventParams['pageSize'], $eventParams['pageCount'], $eventParams['pageShift'])
@@ -66,11 +77,12 @@ class EventRecord extends Eloquent {
 		if ($userID != null) {
 
 			$events = EventRecord::with('categories')
-					
 					->userCategory($userID)
 					->startTime($eventParams['startTime'])
 					->dateRange($eventParams['startDate'], $eventParams['endDate'])
 					->imageRequired($eventParams['imageRequired'])
+
+					->withRecommendedUserEvent($eventParams['userID'])
 					
 					->orderBy('event_date', 'asc')
 					->orderBy('start_time', 'asc')
@@ -153,7 +165,7 @@ class EventRecord extends Eloquent {
 
 	public function scopeStartTime($query, $startTime) {
 		if ($startTime != null) {
-			return $query; // Nothing happening here yet
+			return $query; //->where('end_time', '>', $startTime); // Nothing happening here yet
 		} else {
 			return $query;
 		}
@@ -199,6 +211,38 @@ class EventRecord extends Eloquent {
 
 		// If no relevant categories were found, return base query
 		return $query;
+	}
+
+	public function scopeWithUserEvent($query, $userID) {
+		if ($userID != null) {
+
+			$joined = $query->with(array('votes' => function($q) use ($userID) {
+				$q->where('user_id', '=', $userID);
+			})); // use User ID?
+
+			return $joined;
+
+		} else {
+
+			return $query;
+
+		}
+	}
+
+	public function scopeWithRecommendedUserEvent($query, $userID) {
+		if ($userID != null) {
+
+			$joined = $query->with(array('recommendedVotes' => function($q) use ($userID) {
+				$q->where('user_id', '=', $userID);
+			})); // use User ID?
+
+			return $joined;
+
+		} else {
+
+			return $query;
+
+		}
 	}
 
 	public function scopeGetPage($query, $pageSize, $pageCount, $pageShift) {
@@ -261,9 +305,9 @@ class EventRecord extends Eloquent {
 	
 	public function scopeUserCategory($query, $userID) {
 		
-		$joined = $query->join('event_category', 'events.id', '=', 'event_category.event_id')
-						->join('user_categories', 'user_categories.category_id', '=', 'event_category.category_id')
-						->where('user_categories.user_id', '=', $userID);
+		$joined = $query->join('event_category as ec', 'events.id', '=', 'ec.event_id')
+						->join('user_categories as uc', 'uc.category_id', '=', 'ec.category_id')
+						->where('uc.user_id', '=', $userID);
 
 		return $joined;
 	}
