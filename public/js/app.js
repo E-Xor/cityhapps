@@ -166,6 +166,8 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 		$scope.interval = 500000000000;
 	};
 
+
+
     $scope.categoryToggle = function() {
         $(".categoriesDropdown").fadeToggle();
 
@@ -599,9 +601,7 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 		}, {scope: 'email'});
 	};
 
-      /**
-       * Logout
-       */
+
       $scope.logout = function() {
         
       };
@@ -617,10 +617,17 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 			}
 		);
       };
+
+        $scope.registerOpen = function(size) {
+
+            var modalInstance = $modal.open({
+                templateUrl: "templates/registrationModal.html",
+                controller: 'modalInstanceController',
+                size: size
+            });
+        };
       
-      /**
-       * Taking approach of Events :D
-       */
+
       $scope.$on('Facebook:statusChange', function(ev, data) {
         console.log('Status: ', data);
         if (data.status == 'connected') {
@@ -1098,15 +1105,6 @@ cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller",
 
 		//$controller('appController', {$scope:$scope});
 
-        $scope.registerOpen = function(size) {
-
-            var modalInstance = $modal.open({
-                templateUrl: "templates/registrationModal.html",
-                controller: 'modalInstanceController',
-                size: size
-            });
-        };
-
 		$scope.formData = registerDataService.data;
 
 	}
@@ -1419,7 +1417,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 					$log.info($scope.map.center);
 
-					$http.post('/geoEvents', $scope.map.center)
+					$http.post('/geoEvents?' + "start_date="+ $scope.nowDateGet, $scope.map.center)
 						.success(function(newData){
 							$log.info(newData);
 							$scope.tabEvents = newData;

@@ -106,6 +106,7 @@ class EventController extends BaseController {
 
 		$count = Input::get('next');
 
+
 		$today = Carbon::today('America/Chicago')->addDays($count);
 		$tomorrow = Carbon::tomorrow('America/Chicago')->addDays($count);	
 
