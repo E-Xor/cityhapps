@@ -73,6 +73,7 @@
             $data = DB::table('events')
                 ->select( DB::raw( implode( ',' ,  $fields ) . ',' .  $distance_select  ) )
                 ->having( 'distance', '<=', $max_distance )
+//                ->orderBy('start_time', 'ASC')
                 ->orderBy( 'distance', 'ASC' )
                 ->take(10)
                 ->get();

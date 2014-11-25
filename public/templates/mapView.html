@@ -29,7 +29,7 @@
 
 			<tabset>	
 				<tab ng-repeat="tab in tabs" heading='{{tab.title}}' >
-					<div class="map-event" ng-repeat="event in tabEvents | limitTo: 10" ng-animate="{enter: 'animate-enter' }">
+					<div class="map-event pointer" ng-repeat="event in tabEvents | limitTo: 10" ng-animate="{enter: 'animate-enter' }">
 						<div ng-click="mapEventModal(event)">
 							<div class="inline">
 								<div class="event-number left" ng-if="pageCount > 1">
@@ -59,7 +59,12 @@
             <div class="col-sm-2 margin categoryToggle" ng-click="categoryToggle()">
                 All Categories
             </div>
-            <div class="categoriesDropdown" ng-init="getCategories()">
+            <div class="categoriesDropdownMap" ng-init="getCategories()">
+                <div class="toggle-controls">
+                    <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
+                    <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
+                </div>
+
                 <div ng-repeat="category in categories">
                     <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory(filterData.categories[category.id])" btn-checkbox>{{category.name}}</label>
                 </div>

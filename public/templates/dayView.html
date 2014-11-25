@@ -24,6 +24,10 @@
                 All Categories
             </div>
             <div class="categoriesDropdown" ng-init="getCategories()">
+                <div class="toggle-controls">
+                    <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
+                    <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
+                </div>
                 <div ng-repeat="category in categories">
                     <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory(filterData.categories[category.id])" btn-checkbox>{{category.name}}</label>
                 </div>

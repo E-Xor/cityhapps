@@ -64,7 +64,7 @@
                                             <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
                                         </div>
                                         <div ng-cloak ng-show="user">
-                                            {{user.config.data.email}}
+                                            {{user.email}}
                                             <p class="red logout" ng-click="logoutUser()">sign out</p>
                                         </div>
 									</div>

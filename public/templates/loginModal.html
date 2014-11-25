@@ -9,16 +9,17 @@
                   <div class="lucida">Sign in with Facebook</div>
               </div>
               <h4 class="center margin20">or</h4>
-              <form class="loginForm">
+              <div class="red center margin20" ng-if="loginError">{{loginError}}</div>
+              <form class="loginForm" ng-submit="cancel()">
                   <input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email">
                   <input type="password" placeholder="Password" class="registerPassword block" ng-model="formData.password">
                   <!-- <input type="password" placeholder="password" class="registerPassword left" ng-model="formData.password2"> -->
                   <div class="margin20 center">
-                      <a class="red italic" href="#">Forgot Passord?</a>
+                      <a class="red italic forgot" href="#">Forgot Password?</a>
                   </div>
 
                   <div>
-                      <button type="submit" class="create-account center" ng-click="loginUser(formData); cancel()">Sign In</button>
+                      <button type="submit" class="create-account center" ng-click="loginUser(formData)">Sign In</button>
                   </div>
 
                   <div class="margin20 center">

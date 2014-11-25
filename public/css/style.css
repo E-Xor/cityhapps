@@ -207,7 +207,7 @@ body {
   border-bottom: 1px solid #B1ADB1;
   line-height: 1.7em; }
 
-.categoriesDropdown {
+.categoriesDropdown, .categoriesDropdownMap {
   display: none;
   width: 500px;
   position: absolute;
@@ -216,9 +216,9 @@ body {
   padding: 20px;
   border: 4px solid #FF5C50;
   top: 45px; }
-  .categoriesDropdown .active.event-category {
+  .categoriesDropdown .active.event-category, .categoriesDropdownMap .active.event-category {
     background: none; }
-  .categoriesDropdown:after, .categoriesDropdown:before {
+  .categoriesDropdown:after, .categoriesDropdown:before, .categoriesDropdownMap:after, .categoriesDropdownMap:before {
     bottom: 100%;
     left: 25%;
     border: solid transparent;
@@ -227,16 +227,24 @@ body {
     width: 0;
     position: absolute;
     pointer-events: none; }
-  .categoriesDropdown:after {
+  .categoriesDropdown:after, .categoriesDropdownMap:after {
     border-color: rgba(69, 69, 70, 0);
     border-bottom-color: #454546;
     border-width: 10px;
     margin-left: -10px; }
-  .categoriesDropdown:before {
+  .categoriesDropdown:before, .categoriesDropdownMap:before {
     border-color: rgba(255, 92, 80, 0);
     border-bottom-color: #FF5C50;
     border-width: 16px;
     margin-left: -16px; }
+
+.categoriesDropdownMap:after, .categoriesDropdownMap:before {
+  left: 95%; }
+
+.toggle-controls {
+  float: left;
+  height: 30px;
+  width: 100%; }
 
 .modal-categories {
   margin: 20px 0; }
@@ -319,7 +327,7 @@ body {
 .modal-header-event {
   padding: 0; }
 
-.event-category, .categoriesDropdown .event-category {
+.event-category, .categoriesDropdown .event-category, .categoriesDropdownMap .event-category {
   padding: 10px 5px;
   border: 2px solid #BEBABB;
   color: #BEBABB;
@@ -354,6 +362,9 @@ body {
 .login .modal-header {
   border-bottom: none; }
 
+.forgot {
+  font-size: 1.2em; }
+
 .register, .login {
   height: 100%;
   background: #f7eeef;
@@ -369,19 +380,22 @@ body {
     text-align: left;
     font-style: italic;
     font-size: 1.2em;
-    font-weight: 200; }
+    font-weight: 200;
+    -webkit-font-smoothing: antialiased; }
   .register ::-moz-input-placeholder, .login ::-moz-input-placeholder {
     color: #BCBABD;
     text-align: left;
     font-style: italic;
-    font-size: 1.4em;
-    font-weight: 200; }
+    font-size: 1.2em;
+    font-weight: 200;
+    -moz-osx-font-smoothing: grayscale; }
   .register :-moz-input-placeholder, .login :-moz-input-placeholder {
     color: #BCBABD;
     text-align: left;
     font-style: italic;
     font-size: 1.2em;
-    font-weight: 200; }
+    font-weight: 200;
+    -moz-osx-font-smoothing: grayscale; }
   .register .center.margin, .login .center.margin {
     cursor: default; }
 

@@ -279,7 +279,7 @@ body {
     line-height: 1.7em;
 }
 
-.categoriesDropdown {
+.categoriesDropdown, .categoriesDropdownMap {
     display: none;
     width: 500px;
     position: absolute;
@@ -317,6 +317,18 @@ body {
     border-width: 16px;
     margin-left: -16px;
   }
+}
+
+.categoriesDropdownMap {
+  &:after, &:before {
+    left: 95%;
+  }
+}
+
+.toggle-controls {
+  float: left;
+  height: 30px;
+  width:100%;
 }
 
 
@@ -468,6 +480,10 @@ body {
   }
 }
 
+.forgot {
+  font-size: 1.2em;
+}
+
 
 .register, .login {
     height: 100%;
@@ -487,13 +503,15 @@ body {
 		font-style: italic;
 		font-size: 1.2em;
 		font-weight: 200;
+        -webkit-font-smoothing: antialiased;
 	}
 	::-moz-input-placeholder {
 		color: #BCBABD;
 		text-align: left;
 		font-style: italic;
-		font-size: 1.4em;
+		font-size: 1.2em;
 		font-weight: 200;
+        -moz-osx-font-smoothing: grayscale;
 	}
 	:-moz-input-placeholder {
 		color: #BCBABD;
@@ -501,6 +519,7 @@ body {
 		font-style: italic;
 		font-size: 1.2em;
 		font-weight: 200;
+      -moz-osx-font-smoothing: grayscale;
 	
 	}
 
