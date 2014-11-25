@@ -58,12 +58,12 @@
 
 								</div>
 									<div class="col-sm-4 auth" ng-controller="modalController">
-                                        <div ng-cloak ng-show="!user">
+                                        <div ng-cloak ng-show="!user" class="margin">
                                             <h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
                                             <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
                                             <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
                                         </div>
-                                        <div ng-cloak ng-show="user">
+                                        <div ng-cloak ng-show="user" class="margin">
                                             {{user.email}}
                                             <p class="red logout" ng-click="logoutUser()">sign out</p>
                                         </div>

@@ -412,7 +412,7 @@ cityHapps.factory('getEvents', function($http, ipCookie){
 
 			var cookie = ipCookie('user');
 			if (cookie) {
-                userID = cookie.data.id;
+                userID = cookie.id;
             }
 
 			var startDate = moment().format('YYYY-MM-DD');
@@ -444,7 +444,7 @@ cityHapps.factory('getRecommendedEvents', function($http, ipCookie) {
 
 			var cookie = ipCookie('user');
 			if (cookie) {
-                userID = cookie.data.id;
+                userID = cookie.id;
             }
 
 			var startDate = moment().format('YYYY-MM-DD');
@@ -529,11 +529,9 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
             });
         };
 
-		$rootScope.userString = localStorage.getItem('user');
-        $rootScope.user = {};
-		$rootScope.user.creds = angular.fromJson($rootScope.userString);
+		$rootScope.user = ipCookie('user');
 
-		if ($rootScope.user.creds) {
+		if ($rootScope.user) {
 
 			$scope.voteEvent = function(event, num, action) {
 				
@@ -542,7 +540,7 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 					eventID = event[num].id; // Recommended events have event_id, regular events have id
 				}
 
-				var userID = $scope.user.data.id;
+				var userID = $scope.user.id;
 				var upVote = event[num].vote.upVote;
 				var downVote = event[num].vote.downVote;
 				
@@ -585,14 +583,7 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
 		} else {
 
-			$scope.upVote = function(event) {
-				$modal.open({
-					templateUrl: "templates/registrationModal.html",
-					controller: 'modalInstanceController', 
-				});
-			}
-
-			$scope.downVote = function(event) {
+			$scope.voteEvent = function(event) {
 				$modal.open({
 					templateUrl: "templates/registrationModal.html",
 					controller: 'modalInstanceController', 
@@ -831,7 +822,7 @@ cityHapps.factory("registerDataService", function(){
 });
 
 
-cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal, ipCookie){
+cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal, ipCookie, $modalStack){
 
 	var auth = {};
 
@@ -850,8 +841,8 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal
                 var user = angular.fromJson(userString);
 
 				authService.loginConfirmed();
-                //$rootScope.$broadcast('event:loginConfirmed');
-                //$rootScope.user = user;
+
+                $modalStack.dismissAll('submit');
 
 				document.location.reload(true);
 
@@ -1500,7 +1491,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
         $scope.filterData = {};
         $scope.filterData.categories = {};
 
-        $scope.filterCategory = function(cat) {
+        $scope.filterCategory = function() {
 
             $scope.pageCount = 1;
 
@@ -1613,7 +1604,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
     $scope.filterData.categories = {};
     var firstOfMonth = moment().startOf('month').format();
 
-    $scope.filterCategory = function(cat) {
+    $scope.filterCategory = function() {
 
         var queryString = '';
 
@@ -1727,40 +1718,53 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
     //Needs to be broken out into a factory
     $scope.nowGet = moment().format();
     $scope.nowDateGet = moment().format('YYYY-MM-DD');
-    $scope.endDate = moment().add(1, 'days').format('YYYY-MM-DD');
+
+
+    $scope.queryString = null;
 
     var next = 0;
 
-    if ($scope.queryString !== null) {
-        var string = "&" + $scope.queryString;
-    } else if ($scope.queryString == null) {
-        string = "";
-    }
-
     $scope.nextDay = function() {
+
+        if ($scope.queryString !== null) {
+            var string = "&" + $scope.queryString;
+        } else if ($scope.queryString == null) {
+            string = "";
+        }
+
+
         // debugger;
         next += 1;
         $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
         $scope.nowGet = moment().add(next,'days').format();
         $scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
+        $scope.endDate = moment().add(next + 1, 'days').format('YYYY-MM-DD');
 
-        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + $scope.queryString)
+        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + $scope.endDate + string)
             .success(function(data){
-                //$scope.dayEvents = data.events;
-                dayEvents(data);
+                $scope.dayEvents = data.events;
+                console.log(data);
             });
     };
 
     $scope.prevDay = function() {
+
+        if ($scope.queryString !== null) {
+            var string = "&" + $scope.queryString;
+        } else if ($scope.queryString == null) {
+            string = "";
+        }
+
         next -= 1;
         $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
         $scope.nowGet = moment().add(next,'days').format();
         $scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
+        $scope.endDate = moment().add(next + 1, 'days').format('YYYY-MM-DD');
 
-        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + $scope.queryString)
+        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + $scope.endDate + string)
             .success(function(data){
-                //$scope.eventData = data.events;
-                dayEvents(data);
+                $scope.dayEvents = data.events;
+                console.log(data);
             });
     };
 
@@ -1788,7 +1792,7 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
         }
 
         $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet +
-        "&page_size=10&" + "end_time=" + $scope.endDate + $scope.queryString)
+        "&page_size=10&" + "end_date=" + $scope.endDate + "&" + $scope.queryString)
             .success(function(data){
                 dayEvents(data);
                 console.log(data);
@@ -1805,7 +1809,7 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
         //+ '&page_size=10&page_count=1'
 
-        $http.get("/events?start_time="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet)
+        $http.get("/events?start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + $scope.endDate + "&")
             .success(function(data){
                 //$scope.tabEvents = data.events;
                 dayEvents(data);

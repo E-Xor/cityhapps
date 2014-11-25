@@ -31,10 +31,10 @@
 
 						<span ng-show="registerForm.password2.$error.validator" class="block">Passwords do not match!</span>
 			        
-			        	<!-- ng-disabled="registerForm.$invalid" -->
+
 			        	<!-- ng-click="categoriesOpen('md'); cancel(); -->
 			        	<!-- ng-disabled="register.$invalid" -->
-				        <button type="button" class="create-account center" ng-click="categoriesOpen('md'); cancel(); getCategories()" >Next</button>
+				        <button type="button" class="create-account center" ng-disabled="register.$invalid" ng-click="categoriesOpen('md'); cancel(); getCategories()" >Next</button>
 				        <h5 class="center red margin pointer" ng-click="cancel(); loginOpen('md')">Already have an account?</h5>
 			      </div>  
 			   </form>
