@@ -304,7 +304,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 			
 		}
 
-		$scope.eventModal = function(data, num, vote) {
+		$scope.eventModal = function(data, num) {
 
 			$modal.open({
 				templateUrl: "templates/eventModal.html",
@@ -317,7 +317,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 						return num;
 					},
 					vote : function() {
-						return vote;
+						return data[num].vote;
 					} 	
 				}
 			});
@@ -1134,7 +1134,8 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 		//thus giving the new template access to it
 
 
-		$scope.vote.status = vote;
+		//$scope.vote.status = vote;
+		$scope.vote = vote;
 		
 		$scope.ok = function () {
 			$modalInstance.close($scope.selected.item);
