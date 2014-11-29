@@ -9,6 +9,7 @@
 	</style>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/angular-snap.min.css" />
 	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
 
 	<link rel="stylesheet" href="/css/style.css" />
@@ -37,15 +38,15 @@
 	<body ng-controller="appController" ng-cloak>
 		<div ng-if="!mobile()">
 			<div class="bg-image">	
-				<div class="main-container proxima" ng-animate=" 'animate' ">
+				<div class="main-container proxima" ng-animate=" 'animate' " snap-content>
 					<div class="wide">
-						<div class='row wide-search'>
+						<div class='wide-search'>
                             <form ng-submit="search(query)">
                                 <input type="text" placeholder="Search" ng-model="query" class="search-large">
                                 <input type="submit" style="display: none;">
                             </form>
 						</div>
-						<div class="row header-search">
+						<div class="header-search">
 
 							<div class="row-sm-12">
 								<div class="col-sm-4 center">
@@ -79,17 +80,23 @@
 		</div>
 		<!-- if mobile -->
 		<div ng-if="mobile()">
-			<div class="bg-image">	
+            <div snap-drawer="right">
+                <p>Hi! I'm a right-aligned drawer!</p>
+            </div>
+			<div class="bg-image" snap-content>
 				<div class="main-container proxima" ng-animate=" 'animate' ">
 					<div class="wide">
-						<div class='row wide-search'>
-							<input type="text" placeholder="Search" class="search-large">
+						<div class='wide-search'>
+                            <form ng-submit="search(query)">
+                                <input type="text" placeholder="Search" ng-model="query" class="search-large">
+                                <input type="submit" style="display: none;">
+                            </form>
 						</div>
-						<div class="row header-search">
+						<div class="header-search">
 							<div class="mobile-header">
 								<div class="mobile-search left"></div>	
 								<a href="/"><img class="mobile-logo" src="/img/logo.png"></a>
-								<div class="mobile-menu right"></div>
+								<div class="mobile-menu right" snap-toggle="right"></div>
 							</div>
 
 							</div>
@@ -105,6 +112,7 @@
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <script src="http://platform.twitter.com/widgets.js"></script>
 
+
     <script src="/js/angular-route.min.js"></script>
 	<script src="/js/angular-facebook.js"></script>
 	<script src="/js/angular-touch.js"></script>
@@ -113,6 +121,7 @@
     <script src="/js/angular-cookie.min.js"></script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
 
@@ -120,6 +129,8 @@
     <script type="text/javascript" src="/js/fullcalendar.js"></script>
     <script type="text/javascript" src="/js/calendar.js"></script>
     <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="/js/snap.min.js"></script>
+    <script type="text/javascript" src="/js/angular-snap.min.js"></script>
 
     <script type="text/javascript" src="/js/angular-filter.js"></script>
 

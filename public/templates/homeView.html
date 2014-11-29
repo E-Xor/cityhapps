@@ -16,7 +16,8 @@
 					<slide class="col-sm-12" ng-repeat="event in recSlideGroup | limitTo: 10">			
 						<div class="col-sm-3 event">
 							<div class="event-inner" >
-									<div ng-click="eventModalMobile(event)">
+									<div ng-click="recEventModalMobile(event)">
+
 										<div class="event-image" style="background-image: 'url('{{event.event_image_url}}')'; background-size: cover; height: 125px;" >
 											
 										</div>
@@ -28,9 +29,9 @@
                                         </div>
 									</div>
 								<div class="icons">
-									<label class="like-icon" ng-model="vote.upVote" ng-change="upVote(event, vote)" btn-checkbox></label>
+									<label class="like-icon" ng-model="event.vote.upVote" ng-change="voteEvent(event, 'up')" btn-checkbox></label>
 
-									<label class="dislike-icon" ng-model="vote.downVote" ng-change="downVote(event, vote)" btn-checkbox></label>
+									<label class="dislike-icon" ng-model="event.vote.downVote" ng-change="voteEvent(event, 'down')" btn-checkbox></label>
 								</div>
 							</div>
 						</div>
@@ -57,30 +58,28 @@
 				</div>
 			<div class="day-slider-border"></div>
 
-            <!--<div class="mobile-event-container">-->
-                <div class="col-sm-12" ng-repeat="event in slideGroup">
+            <div class="row">
+                <div class="col-sm-12 event-loop" ng-repeat="event in slideGroup">
                     <!--<div ng if=""></div>-->
                     <div class="time">{{event.start_time | dateToISO | date: 'h:mm a' | uniqueHour}}</div>
-                    <div class="mobile-event" ng-click="eventModalMobile(event)">
-                        <div class="mobile-event-image" style="background-image: url('{{event.event_image_url}}'); ">
-                        </div>
-                        <div class="mobile-event-details">
-                            <div class="bold ellipsis">{{event.event_name | limitTo: 30}}</div>
-                            <!--{{event.start_time | date: 'h:mm'}}-->
-                            {{event.venue_name}}
-                            {{event.start_time |  date: 'mediumDate'}}
-                        </div>
-                        <div class="">
-                            <div class="mobile-vote-icons">
-                                <label class="like-icon-mobile" ng-model="vote.upVote" ng-click="upVote(event, 'first', vote.upVote)" btn-checkbox></label>
-
-                                <label class="dislike-icon-mobile" ng-model="vote.downVote" ng-click="downVote(event, 'first', vote.upVote)" btn-checkbox></label>
+                    <div class="mobile-event">
+                        <div ng-click="eventModalMobile(event)">
+                            <div class="mobile-event-image" style="background-image: url('{{event.event_image_url}}'); ">
+                            </div>
+                            <div class="mobile-event-details">
+                                <div class="bold ellipsis">{{event.event_name | limitTo: 20}}</div>
+                                {{event.start_time | dateToISO | date: 'mediumDate'}}
+                                {{event.venue_name}}
                             </div>
                         </div>
+                            <div class="mobile-vote-icons">
+                                <label class="like-icon-mobile" ng-model="event.vote.upVote" ng-change="voteEvent(event, 'up')" btn-checkbox></label>
 
+                                <label class="dislike-icon-mobile" ng-model="event.vote.downVote" ng-change="voteEvent(event, 'down')" btn-checkbox></label>
+                            </div>
                     </div>
                 </div>
-            <!--</div>-->
+            </div>
 
 
 

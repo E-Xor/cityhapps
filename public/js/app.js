@@ -1,6 +1,6 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
 	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch',
-    'ui.calendar', 'angular.filter', 'ngSanitize', 'ipCookie']);
+    'ui.calendar', 'angular.filter', 'ngSanitize', 'ipCookie', 'snap']);
 
 cityHapps.controller("eventsController", function($scope, $rootScope, $http, $filter, $modal, registerDataService, voteService, ipCookie, getEvents, getRecommendedEvents, $window, getCategories) {
 
@@ -22,6 +22,13 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 			}
 		};
 
+        //will only happen on mobile
+        $scope.$on('search', function(info, data){
+            console.log(data);
+            recommendedEventSuccess(data);
+            eventSuccess(data);
+        });
+
         $scope.fadeIn = function(speed) {
             $('.carousel-inner').fadeIn(speed);
         }
@@ -30,7 +37,45 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
         	$scope.eventData = data.events;
         	console.log($scope.eventData);
 
-        	if ($scope.eventData != undefined) {
+            if ($window.innerWidth <= 768 ) {
+
+                $scope.recSlideGroup = [];
+
+                for (rec = 0; rec < $scope.eventData.length; rec ++) {
+
+                    var mobileRecSlides = $scope.eventData[rec];
+                    $scope.recSlideGroup.push(mobileRecSlides);
+                }
+
+                $scope.voteEvent = function() {
+                    $modal.open({
+                        templateUrl: "templates/registrationModal.html",
+                        controller: 'modalInstanceController',
+                    });
+                };
+
+
+                $scope.recEventModalMobile = function(data) {
+
+                    $modal.open({
+                        templateUrl: "templates/eventModal.html",
+                        controller: 'simpleModalInstanceController',
+                        resolve: {
+                            data: function() {
+                                return data;
+                            },
+                            vote : function() {
+                                return vote;
+                            }
+                        }
+                    });
+                };
+
+                $scope.interval = 500000000000;
+
+            }
+
+        	if ($scope.eventData != undefined && $window.innerWidth > 768) {
 
         		$scope.recSlideGroup = [];
 
@@ -108,50 +153,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 						}
 					};
 
-					var mobileRecSlides = $scope.recSlideGroup[rec]; // TODO: This makes no sense. $scope.recSlideGroup[rec] does not exist.
-			
-					if ($window.innerWidth <= 768 ) {
-						$scope.recSlideGroup.push(mobileRecSlides);
-
-
-                        $scope.recEventModalMobile = function(data) {
-
-							$modal.open({
-								templateUrl: "templates/eventModal.html",
-								controller: 'simpleModalInstanceController',
-								resolve: {
-									data: function() {
-										return data;
-									},
-								}
-							});
-						};
-
-                        $scope.eventModal = function(data, num, vote) {
-
-                            $modal.open({
-                                templateUrl: "templates/eventModal.html",
-                                controller: 'eventModalInstanceController',
-                                resolve: {
-                                    data: function() {
-                                        return data;
-                                    },
-                                    num : function() {
-                                        return num;
-                                    },
-                                    vote : function() {
-                                        return vote;
-                                    }
-                                }
-                            });
-                        };
-
-                        $scope.interval = 500000000000;
-
-
-					} else {
-						$scope.recSlideGroup.push(recSlides);
-					}
+					//var mobileRecSlides = $scope.recSlideGroup[rec]; // TODO: This makes no sense. $scope.recSlideGroup[rec] does not exist.
 
 					//$scope.eventData[rec].upvoted = "";
 				}
@@ -164,12 +166,53 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 			$scope.eventData = data.events;
 			console.log($scope.eventData);
 
-			if ($scope.eventData != undefined) {
+            if ($window.innerWidth <= 768 ) {
+
+                $scope.slideGroup = [];
+
+                for (rec = 0; rec < $scope.eventData.length; rec ++) {
+
+                    var mobileRecSlides = $scope.eventData[rec];
+                    $scope.slideGroup.push(mobileRecSlides);
+                }
+
+                $scope.voteEvent = function() {
+
+                    $modal.open({
+                        templateUrl: "templates/registrationModal.html",
+                        controller: 'modalInstanceController',
+                    });
+                };
+
+                $scope.eventModalMobile = function(data, vote) {
+
+
+
+                    $modal.open({
+                        templateUrl: "templates/eventModal.html",
+                        controller: 'simpleModalInstanceController',
+                        resolve: {
+                            data: function() {
+                                return data;
+                            },
+                            vote : function() {
+                                return vote;
+                            }
+                        }
+                    });
+                };
+
+                $scope.interval = 500000000000;
+
+            }
+
+
+
+			if ($scope.eventData != undefined && $window.innerWidth > 768) {
 				
 				$scope.eventCount = data.meta.count;
-
 				$scope.slideGroup = [];
-				//console.log($scope.slideGroup);
+
 
 				var i;
 	            for (i = 0; i < $scope.eventData.length; i += 4) {
@@ -180,6 +223,28 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 					'third' : $scope.eventData[i + 2],
 					'fourth' : $scope.eventData[i + 3]
 				};
+
+                var mobileSlides = $scope.eventData[i];
+
+                if ($window.innerWidth <= 768 ) {
+                    $scope.slideGroup.push(mobileSlides);
+
+                    $scope.eventModalMobile = function(data) {
+
+                        $modal.open({
+                            templateUrl: "templates/eventModal.html",
+                            controller: 'simpleModalInstanceController',
+                            resolve: {
+                                data: function() {
+                                    return data;
+                                },
+                            }
+                        });
+                    };
+
+                } else {
+                    $scope.slideGroup.push(slides);
+                }
 
 				if (slides['first'] != undefined) {
 					slides['first'].vote = {
@@ -244,28 +309,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 						}
 					}
 				};
-
-				var mobileSlides = $scope.eventData[i];
-			
-				if ($window.innerWidth <= 768 ) {
-					$scope.slideGroup.push(mobileSlides);
-
-	                $scope.eventModalMobile = function(data) {
-
-						$modal.open({
-							templateUrl: "templates/eventModal.html",
-							controller: 'simpleModalInstanceController', 
-							resolve: {
-								data: function() {
-									return data;
-								},
-							}
-						});
-					};
-
-				} else {
-					$scope.slideGroup.push(slides);
-				}
 
 			}
 			
@@ -523,10 +566,17 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 		};
 
         $scope.search = function(query) {
-            $location.path('/day');
-            search.searchData(query).success(function(data){
-                $scope.$broadcast('search', data);
-            });
+            if ($window.innerWidth <= 768) {
+                search.searchData(query).success(function(data){
+                    $scope.$broadcast('search', data);
+                });
+            } else {
+                $location.path('/day');
+                search.searchData(query).success(function(data){
+                    $scope.$broadcast('search', data);
+                });
+            }
+
         };
 
 		$rootScope.user = ipCookie('user');
@@ -627,7 +677,44 @@ cityHapps.formData = {};
 cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "registerDataService", "$timeout", "authFactory", "Facebook", 
 	function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook ){
 
-	//Facebook Auth 
+        $(function(){
+            //$(".register input").on("click", function(){
+            //    alert('this is firing');
+            //});
+
+            if( navigator.userAgent.match(/iPhone|iPad|iPod/i) ) {
+
+                var scrollLocation = $(window).scrollTop();
+
+                $('.modal').on('shown.bs.modal', function() {
+                    $('.modal').removeClass("fade");
+                    setTimeout(function () {
+                        $('.modal')
+                            .addClass('modal-ios')
+                            .height($(window).height())
+                            .css({'margin-top': scrollLocation + 'px'});
+                    }, 0);
+                });
+
+                $('input').on('blur', function(){
+                    setTimeout(function() {
+                        // This causes iOS to refresh, fixes problems when virtual keyboard closes
+                        $(window).scrollLeft(0);
+
+                        var $focused = $(':focus');
+                        // Needed in case user clicks directly from one input to another
+                        if(!$focused.is('input')) {
+                            // Otherwise reset the scoll to the top of the modal
+                            $(window).scrollTop(scrollLocation);
+                        }
+                    }, 0);
+                })
+
+            }
+        });
+
+
+	//Facebook Auth
 
       // Define user empty data :/
       $scope.user = {};

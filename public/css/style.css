@@ -162,7 +162,7 @@ body {
   width: 100%;
   left: 0;
   padding: 0 15%;
-  background: url("/img/searchIcon.png") 180px 40px/23px 26px no-repeat; }
+  background: url("/img/searchIcon.png") 13% 50%/23px 26px no-repeat; }
   .search-large:focus {
     outline: none; }
 
@@ -185,6 +185,15 @@ body {
   z-index: 10;
   position: relative;
   margin-right: 10px; }
+
+.modal-ios {
+  position: absolute;
+  overflow: visible;
+  overflow-x: visible;
+  overflow-y: visible; }
+
+.modal-backdrop-ios {
+  position: absolute; }
 
 .modal-backdrop {
   background-color: #1E405D; }
@@ -367,6 +376,7 @@ body {
 
 .register, .login {
   height: 100%;
+  z-index: 10000;
   background: #f7eeef;
   padding: 0 40px; }
   .register input, .login input {
@@ -408,7 +418,7 @@ body {
   min-height: 325px; }
 
 .event-slider-day {
-  max-width: 1070px;
+  max-width: 970px;
   margin: 0 auto; }
 
 .event-time {
@@ -509,6 +519,10 @@ body {
   .event-price h3 {
     margin: 0; }
 
+.event-loop {
+  float: left;
+  width: 100%; }
+
 .like-icon {
   height: 41px;
   width: 41px;
@@ -529,39 +543,44 @@ body {
     background: url("/img/likeIconActive.png") no-repeat -61px 0; }
 
 .like-icon-mobile {
-  height: 31px;
-  width: 31px;
-  background: url("/img/mobileLikeIcon.png") no-repeat 0 0/31px 31px;
+  height: 25px;
+  width: 25px;
+  background: url("/img/mobileLikeIcon.png") no-repeat 0 0/25px 25px;
   cursor: pointer;
   float: right;
-  background-size: cover; }
+  background-size: cover;
+  margin-bottom: 15px; }
   .like-icon-mobile.active {
-    background: url("/img/likeIconActive.png") no-repeat 0px 0/31px 31px;
-    height: 31px;
-    width: 31px;
+    background: url("/img/likeIconActive.png") no-repeat 0px 0/25px 25px;
+    height: 25px;
+    width: 25px;
     background-size: cover; }
 
 .dislike-icon-mobile {
-  height: 31px;
-  width: 31px;
-  background: url("/img/mobileLikeIcon.png") no-repeat 0px -53px/31px 31px;
+  height: 25px;
+  width: 25px;
+  background: url("/img/mobileLikeIcon.png") no-repeat 0px -43px/25px 25px;
   background-size: cover;
   cursor: pointer;
   float: right; }
   .dislike-icon-mobile.active {
-    background: url("/img/likeIconActive.png") no-repeat -46px 0/31px 31px;
-    height: 31px;
-    width: 31px;
+    background: url("/img/likeIconActive.png") no-repeat -37px 0/25px 25px;
+    height: 25px;
+    width: 25px;
     background-size: cover; }
 
 .mobile-vote-icons {
-  width: 12%;
+  width: 11%;
   float: left;
-  display: inline-block;
-  margin: 13px 20px; }
+  display: inline;
+  height: 100%;
+  margin: 13px 1px; }
 
 .event {
   padding: 10px; }
+
+.register {
+  padding: 0 5px; }
 
 .facebookButton {
   background: #3b5998 url("/img/facebookIcon.png") no-repeat 93% 12px/17.5px 35px;
@@ -915,11 +934,17 @@ button.create-account[disabled='disabled'] {
     height: 38px;
     display: inline; }
 
+  .search-large {
+    background: url("/img/searchIcon.png") 15px 40px/23px 26px no-repeat; }
+
   .mobile-menu {
     background: url("/img/menuIcon.png") 18px 10px/26px 26px no-repeat;
     width: 20%;
     height: 38px;
     display: inline; }
+
+  .snap-drawer {
+    background: #2E2526; }
 
   .mobile-logo {
     width: 60%; }
@@ -931,6 +956,13 @@ button.create-account[disabled='disabled'] {
     padding: 0;
     float: left; }
 
+  .register {
+    padding: 0 5px; }
+
+  .facebookButton {
+    background: #3b5998 url("/img/facebookIcon.png") no-repeat 93% 13px/17.5px 35px;
+    font-size: .8em; }
+
   .mobile-event-image {
     background-size: cover;
     width: 30%;
@@ -939,7 +971,7 @@ button.create-account[disabled='disabled'] {
     float: left; }
 
   .mobile-event-details {
-    width: 43%;
+    width: 56%;
     padding: 10px;
     display: inline-block;
     float: left; }
