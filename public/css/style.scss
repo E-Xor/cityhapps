@@ -63,12 +63,14 @@ $tan: #F7EEEF;
 html {
 	@extend .proxima;
 	background: #2c2625;
+    overflow: visible;
 }
 
 body {
 	@extend .proxima;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow: visible;
 }
 
 .main-container {
@@ -1216,6 +1218,15 @@ button.create-account[disabled='disabled'] {
 //Mobile
 
 @media screen and (max-width: 768px) {
+    html, body {
+      overflow: hidden;
+    }
+
+
+    .row {
+      margin-right: 0;
+      margin-left: 0;
+    }
 
 	.event {
 		padding: 0;
@@ -1301,6 +1312,35 @@ button.create-account[disabled='disabled'] {
 
   .snap-drawer {
     background: #2E2526;
+    right: 0;
+    width: 100%;
+    max-width: 265px;
+  }
+
+  .categoriesDropdown {
+    &.drawer {
+      width: 100%;
+      position: absolute;
+      background: #454546;
+      z-index: 3;
+      padding: 20px;
+      border: 4px solid #FF5C50;
+      top: 215px;
+      left: 0;
+
+    }
+  }
+
+
+  li {
+    list-style: none;
+    padding: 15px 0;
+    a {
+      padding: 10px 5px;
+      &.drawer-link {
+        color: #fff;
+      }
+    }
   }
 
 	.mobile-logo {

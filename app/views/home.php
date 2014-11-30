@@ -9,6 +9,7 @@
 	</style>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="/css/angular-snap.min.css" />
 	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
 
@@ -37,8 +38,9 @@
 
 	<body ng-controller="appController" ng-cloak>
 		<div ng-if="!mobile()">
-			<div class="bg-image">	
-				<div class="main-container proxima" ng-animate=" 'animate' " snap-content>
+			<div class="bg-image">
+                <!-- if mobile add snap-content -->
+                <div class="main-container proxima">
 					<div class="wide">
 						<div class='wide-search'>
                             <form ng-submit="search(query)">
@@ -47,8 +49,7 @@
                             </form>
 						</div>
 						<div class="header-search">
-
-							<div class="row-sm-12">
+							<div class="row sm-12">
 								<div class="col-sm-4 center">
 									<a href="/"><img src="/img/logo.png"></a>
 								</div>
@@ -81,10 +82,28 @@
 		<!-- if mobile -->
 		<div ng-if="mobile()">
             <div snap-drawer="right">
-                <p>Hi! I'm a right-aligned drawer!</p>
+               <ul>
+                   <li><a class="drawer-link" href="" ng-if="user">{{user.email}}</a></li>
+                   <li><a class="drawer-link"  ng-controller="modalController" ng-if="!user" ng-click="loginOpen('md')">Log In</a></li>
+                   <li><a class="drawer-link" ng-if="user" href="">Recommendations Today</a></li>
+                   <li><a class="drawer-link" href="">Sort by Distance</a></li>
+                   <li ng-controller="eventsController">
+                       <a class="drawer-link" href="" ng-click="categoryToggle()">Show All Categories</a>
+                       <div class="categoriesDropdown drawer" ng-init="getCategories()">
+                           <div class="toggle-controls">
+                               <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
+                               <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
+                           </div>
+                           <div ng-repeat="category in categories">
+                               <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory(filterData.categories[category.id])" btn-checkbox>{{category.name}}</label>
+                           </div>
+                       </div>
+
+                   </li>
+               </ul>
             </div>
 			<div class="bg-image" snap-content>
-				<div class="main-container proxima" ng-animate=" 'animate' ">
+				<div class="main-container proxima" ng-animate=" 'animate' " >
 					<div class="wide">
 						<div class='wide-search'>
                             <form ng-submit="search(query)">
@@ -112,7 +131,6 @@
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <script src="http://platform.twitter.com/widgets.js"></script>
 
-
     <script src="/js/angular-route.min.js"></script>
 	<script src="/js/angular-facebook.js"></script>
 	<script src="/js/angular-touch.js"></script>
@@ -129,6 +147,7 @@
     <script type="text/javascript" src="/js/fullcalendar.js"></script>
     <script type="text/javascript" src="/js/calendar.js"></script>
     <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+
     <script type="text/javascript" src="/js/snap.min.js"></script>
     <script type="text/javascript" src="/js/angular-snap.min.js"></script>
 

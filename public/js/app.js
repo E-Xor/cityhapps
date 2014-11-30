@@ -351,6 +351,9 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
     $scope.filterCategory = function() {
 
+        $scope.nowGet = moment().format();
+        $scope.nowDateGet = moment().format('YYYY-MM-DD');
+
         var queryString = '';
 
         for (var i in $scope.filterData.categories){
@@ -361,9 +364,15 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
             }
         }
 
-        $http.get("/events?" + queryString)
+        $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
             .success(function(data){
+                //$scope.eventData = data.events;
+                //$scope.slideGroup = data.events;
+
+                //$scope.recSlideGroup = data;
                 eventSuccess(data);
+                recommendedEventSuccess(data);
+
                 console.log(data);
             });
 
@@ -388,7 +397,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
 		var next = 0;
 
-        var next = 0;
         $scope.nextDay = function() {
             // debugger;
             next += 1;
@@ -567,6 +575,7 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
         $scope.search = function(query) {
             if ($window.innerWidth <= 768) {
+                $(".search-large").blur();
                 search.searchData(query).success(function(data){
                     $scope.$broadcast('search', data);
                 });
@@ -1591,8 +1600,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
                 }
             }
 
-            $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=" + $scope.pageCount +
-            "&page_size=10&" + $scope.queryString)
+            $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=" + $scope.pageCount + "&page_size=10&" + $scope.queryString)
                 .success(function(data){
                     $scope.tabEvents = data.events;
                     //drawEvents(data.events);
