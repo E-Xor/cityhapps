@@ -152,10 +152,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 							}
 						}
 					};
-
-					//var mobileRecSlides = $scope.recSlideGroup[rec]; // TODO: This makes no sense. $scope.recSlideGroup[rec] does not exist.
-
-					//$scope.eventData[rec].upvoted = "";
 				}
 			}
 
@@ -186,8 +182,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
                 $scope.eventModalMobile = function(data, vote) {
 
-
-
                     $modal.open({
                         templateUrl: "templates/eventModal.html",
                         controller: 'simpleModalInstanceController',
@@ -201,12 +195,8 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                         }
                     });
                 };
-
                 $scope.interval = 500000000000;
-
             }
-
-
 
 			if ($scope.eventData != undefined && $window.innerWidth > 768) {
 				
@@ -366,10 +356,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
         $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
             .success(function(data){
-                //$scope.eventData = data.events;
-                //$scope.slideGroup = data.events;
-
-                //$scope.recSlideGroup = data;
+                $scope.eventData = data.events
                 eventSuccess(data);
                 recommendedEventSuccess(data);
 
