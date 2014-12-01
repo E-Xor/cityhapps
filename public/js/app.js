@@ -74,9 +74,9 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                 $scope.interval = 500000000000;
 
             }
-
-        	if ($scope.eventData != undefined && $window.innerWidth > 768) {
-
+            
+            if ($scope.eventData != undefined && $window.innerWidth > 768) {
+        		
         		$scope.recSlideGroup = [];
 
         		var rec;
@@ -152,6 +152,8 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 							}
 						}
 					};
+
+					$scope.recSlideGroup.push(recSlides);
 				}
 			}
 
