@@ -356,7 +356,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
         $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
             .success(function(data){
-                $scope.eventData = data.events
+                $scope.eventData = data
                 eventSuccess(data);
                 recommendedEventSuccess(data);
 
