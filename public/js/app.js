@@ -154,7 +154,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 					};
 				}
 			}
-
         }
 		
 		var eventSuccess = function(data) {
@@ -198,11 +197,11 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                 $scope.interval = 500000000000;
             }
 
-			if ($scope.eventData != undefined && $window.innerWidth > 768) {
-				
-				$scope.eventCount = data.meta.count;
-				$scope.slideGroup = [];
+            $scope.eventCount = data.meta.count;
 
+			if ($scope.eventData != undefined && $window.innerWidth > 768) {
+
+				$scope.slideGroup = [];
 
 				var i;
 	            for (i = 0; i < $scope.eventData.length; i += 4) {
@@ -234,71 +233,73 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
                 } else {
                     $scope.slideGroup.push(slides);
+
+                    if (slides['first'] != undefined) {
+                        slides['first'].vote = {
+                            upVote: false,
+                            downVote: false
+                        };
+                        if (slides['first'].vote.length > 0) {
+                            if (slides['first'].votes[0].vote == '1') {
+                                slides['first'].vote.upVote = true;
+                            }
+
+                            if (slides['first'].votes[0].vote == '0') {
+                                slides['first'].vote.downVote = true;
+                            }
+                        }
+                    };
+
+                    if (slides['second'] != undefined) {
+                        slides['second'].vote = {
+                            upVote: false,
+                            downVote: false
+                        };
+                        if (slides['second'].vote.length > 0) {
+                            if (slides['second'].votes[0].vote == '1') {
+                                slides['second'].vote.upVote = true;
+                            }
+
+                            if (slides['second'].votes[0].vote == '0') {
+                                slides['second'].vote.downVote = true;
+                            }
+                        }
+                    };
+
+                    if (slides['third'] != undefined) {
+                        slides['third'].vote = {
+                            upVote: false,
+                            downVote: false
+                        };
+                        if (slides['third'].vote.length > 0) {
+                            if (slides['third'].votes[0].vote == '1') {
+                                slides['third'].vote.upVote = true;
+                            }
+
+                            if (slides['third'].votes[0].vote == '0') {
+                                slides['third'].vote.downVote = true;
+                            }
+                        }
+                    };
+
+                    if (slides['fourth'] != undefined) {
+                        slides['fourth'].vote = {
+                            upVote: false,
+                            downVote: false
+                        };
+                        if (slides['fourth'].vote.length > 0) {
+                            if (slides['fourth'].votes[0].vote == '1') {
+                                slides['fourth'].vote.upVote = true;
+                            }
+
+                            if (slides['fourth'].votes[0].vote == '0') {
+                                slides['fourth'].vote.downVote = true;
+                            }
+                        }
+                    };
                 }
 
-				if (slides['first'] != undefined) {
-					slides['first'].vote = {
-						upVote: false, 
-						downVote: false
-					};
-					if (slides['first'].votes.length > 0) {
-						if (slides['first'].votes[0].vote == '1') {
-							slides['first'].vote.upVote = true;
-						}
 
-						if (slides['first'].votes[0].vote == '0') {
-							slides['first'].vote.downVote = true;
-						}
-					}
-				};
-
-				if (slides['second'] != undefined) {
-					slides['second'].vote = {
-						upVote: false, 
-						downVote: false
-					};
-					if (slides['second'].votes.length > 0) {
-						if (slides['second'].votes[0].vote == '1') {
-							slides['second'].vote.upVote = true;
-						}
-
-						if (slides['second'].votes[0].vote == '0') {
-							slides['second'].vote.downVote = true;
-						}
-					}
-				};
-
-				if (slides['third'] != undefined) {
-					slides['third'].vote = {
-						upVote: false, 
-						downVote: false
-					};
-					if (slides['third'].votes.length > 0) {
-						if (slides['third'].votes[0].vote == '1') {
-							slides['third'].vote.upVote = true;
-						}
-
-						if (slides['third'].votes[0].vote == '0') {
-							slides['third'].vote.downVote = true;
-						}
-					}
-				};
-
-				if (slides['fourth'] != undefined) {
-					slides['fourth'].vote = {
-						upVote: false, 
-						downVote: false
-					};
-					if (slides['fourth'].votes.length > 0) {
-						if (slides['fourth'].votes[0].vote == '1') {
-							slides['fourth'].vote.upVote = true;
-						}
-
-						if (slides['fourth'].votes[0].vote == '0') {
-							slides['fourth'].vote.downVote = true;
-						}
-					}
-				};
 
 			}
 			
@@ -520,14 +521,18 @@ cityHapps.config([
     }
 ]);
 
+cityHapps.config(function(snapRemoteProvider) {
+    snapRemoteProvider.globalOptions.disable = 'left';
+});
 
-	cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
-	    GoogleMapApi.configure({
-	        //    key: 'your api key',
-	        v: '3.17',
-	        libraries: 'weather,geometry,visualization'
-	    });
-	}]);
+
+cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
+    GoogleMapApi.configure({
+        //    key: 'your api key',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
+}]);
 
 
 cityHapps.factory('search', function($http){

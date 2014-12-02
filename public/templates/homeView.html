@@ -1,13 +1,12 @@
 <div ng-controller="eventsController" class="imageContainer">
 	<div class="event-counter" ng-init="getCategories()">
 		<h2 class="center white totalEvents">
-            <div ng-if="mobile()" class="mobile-large-num">{{eventCount}}</div>
-            <div ng-if="!mobile()" class="inline" >{{eventCount}}</div>
+            <div class="inline mobile-large-num" >{{eventCount}}</div>
             things to do in Atlanta
         </h2>
 	</div>
 
-	<p class="uppercase center white wide-kerning">Recommendations</p>
+	<p ng-if="recSlideGroup" class="uppercase center white wide-kerning">Recommendations</p>
 
 			<!-- MOBILE / PHONE slide view -->
 		<div ng-if = 'mobile()'>

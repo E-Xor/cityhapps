@@ -1,4 +1,5 @@
-<div ng-controller="dayController" class="main-container">
+<div ng-controller="dayController" class="grey-wide">
+    <div class="grey-wide">
     <div class="day-slider-border"></div>
     <div class="day-slider-container">
         <div class="row day-slider">
@@ -17,69 +18,71 @@
         </div>
     </div>
     <div class="day-slider-border"></div>
-    <div class="row view-select">
+    <!--<div class="grey-wide">-->
+        <div class="row view-select">
 
-        <div class="col-sm-12">
-            <div class="col-sm-2 margin categoryToggle" ng-click="categoryToggle()">
-                All Categories
-            </div>
-            <div class="categoriesDropdown" ng-init="getCategories()">
-                <div class="toggle-controls">
-                    <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
-                    <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
+            <div class="col-sm-12">
+                <div class="col-sm-2 margin categoryToggle" ng-click="categoryToggle()">
+                    All Categories
                 </div>
-                <div ng-repeat="category in categories">
-                    <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory(filterData.categories[category.id])" btn-checkbox>{{category.name}}</label>
+                <div class="categoriesDropdown" ng-init="getCategories()">
+                    <div class="toggle-controls">
+                        <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
+                        <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
+                    </div>
+                    <div ng-repeat="category in categories">
+                        <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory(filterData.categories[category.id])" btn-checkbox>{{category.name}}</label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-sm-2 margin">
-                    <!-- Additional filtration like most recent to go here -->
-            </div>
-            <div class="col-sm-3 col-sm-offset-5">
-                <a class="list-icon" href="#/"></a>
-                <a class="map-icon" href="#/map"></a>
-                <a class="cal-icon" href="#/calendar"></a>
+                <div class="col-sm-2 margin">
+                        <!-- Additional filtration like most recent to go here -->
+                </div>
+                <div class="col-sm-3 col-sm-offset-5">
+                    <a class="list-icon" href="#/"></a>
+                    <a class="map-icon" href="#/map"></a>
+                    <a class="cal-icon" href="#/calendar"></a>
+
+                </div>
 
             </div>
 
         </div>
+        <div class="day-slider-border"></div>
 
-    </div>
-    <div class="day-slider-border"></div>
+        <div class="row event-slider-day">
+            <div class="time-group" ng-repeat="event in dayEvents">
+                <div ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour">
+                    <div class="clearfix">
 
-    <div class="row event-slider-day">
-        <div class="time-group" ng-repeat="event in dayEvents">
-            <div ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour">
-                <div class="clearfix">
+                    </div>
+                    <div class="white event-time"> {{ event.start_time | dateToISO | date: 'h:mm a' }}</div>
 
                 </div>
-                <div class="white event-time"> {{ event.start_time | dateToISO | date: 'h:mm a' }}</div>
+                <div class="col-sm-3 event">
 
-            </div>
-            <div class="col-sm-3 event">
+                    <div class="event-inner" ng-animate="'animate'">
+                        <div ng-click="eventModal(event, vote.status)">
+                            <div class="event-image" style="background-image: url('{{event.event_image_url}}'); background-size: cover; height: 125px;">
+                            </div>
+                            <div class="event-details">
+                                <h4 class="ellipsis">{{event.event_name | limitTo: 30 }}</h4>
+                                <p class="blue">{{event.start_time | dateToISO | date: 'mediumDate' }}</p>
+                                <p>{{event.first.venue_name | limitTo: 40}}</p>
+                            </div>
+                        </div>
+                        <div class="icons">
+                            <div class="btn-group">
+                                <label class="like-icon" ng-model="vote.upVote" ng-click="voteEvent(event, vote)" btn-checkbox></label>
 
-                <div class="event-inner" ng-animate="'animate'">
-                    <div ng-click="eventModal(event, vote.status)">
-                        <div class="event-image" style="background-image: url('{{event.event_image_url}}'); background-size: cover; height: 125px;">
+                                <label class="dislike-icon" ng-model="vote.downVote" ng-click="voteEvent(event, vote)" btn-checkbox></label>
+                            </div>
+                            {{vote}}
                         </div>
-                        <div class="event-details">
-                            <h4 class="ellipsis">{{event.event_name | limitTo: 30 }}</h4>
-                            <p class="blue">{{event.start_time | dateToISO | date: 'mediumDate' }}</p>
-                            <p>{{event.first.venue_name | limitTo: 40}}</p>
-                        </div>
-                    </div>
-                    <div class="icons">
-                        <div class="btn-group">
-                            <label class="like-icon" ng-model="vote.upVote" ng-click="voteEvent(event, vote)" btn-checkbox></label>
-
-                            <label class="dislike-icon" ng-model="vote.downVote" ng-click="voteEvent(event, vote)" btn-checkbox></label>
-                        </div>
-                        {{vote}}
                     </div>
                 </div>
+                    <div ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour"></div></div>
             </div>
-                <div ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour"></div></div>
         </div>
     </div>
 
