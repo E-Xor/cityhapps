@@ -74,9 +74,9 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                 $scope.interval = 500000000000;
 
             }
-
-        	if ($scope.eventData != undefined && $window.innerWidth > 768) {
-
+            
+            if ($scope.eventData != undefined && $window.innerWidth > 768) {
+        		
         		$scope.recSlideGroup = [];
 
         		var rec;
@@ -152,6 +152,8 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 							}
 						}
 					};
+
+					$scope.recSlideGroup.push(recSlides);
 				}
 			}
         }
@@ -305,7 +307,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 			
 		}
 
-		$scope.eventModal = function(data, num, vote) {
+		$scope.eventModal = function(data, num) {
 
 			$modal.open({
 				templateUrl: "templates/eventModal.html",
@@ -318,7 +320,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 						return num;
 					},
 					vote : function() {
-						return vote;
+						return data[num].vote;
 					} 	
 				}
 			});
@@ -1138,8 +1140,8 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 		//The 'vote' service being registered in the controller is what is being resolved by firing the modal, 
 		//thus giving the new template access to it
 
-
-		$scope.vote.status = vote;
+		//$scope.vote.status = vote;
+		$scope.vote = vote;
 		
 		$scope.ok = function () {
 			$modalInstance.close($scope.selected.item);
@@ -1157,8 +1159,9 @@ cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance
 			
 		$scope.data = data;
         $scope.description = data.description;
+        $scope.vote = data.vote;
 
-		console.log(data);
+        console.log(data);
 
         $scope.shareReveal =  function() {
 
@@ -1386,14 +1389,14 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			console.log($scope.tabEvents);
 		}
 
+		/*
 		$scope.mapEventModal = function(data) {
-
 			$modal.open({
 				templateUrl: "templates/eventModal.html",
 				controller: 'simpleModalInstanceController', 
 				resolve: {
 					data: function() {
-						// alert('this is firing');
+						alert('Fire 1');
 						return data;
 					},
 					vote: function() {
@@ -1403,6 +1406,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				}
 			});
 		};
+		*/
 
 	//sloppy code re-use, but im doing it for demo
 	$scope.now = moment().format("dddd, MMMM Do");
@@ -1461,6 +1465,22 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			$scope.tabEvents = data.events;
 			console.table($scope.tabEvents);
 
+			for (var tab = 0; tab < $scope.tabEvents.length; tab++) {
+				$scope.tabEvents[tab].vote = {
+					upVote: false, 
+					downVote: false
+				};
+				if ($scope.tabEvents[tab].votes.length > 0) {
+					if ($scope.tabEvents[tab].votes[0].vote == '1') {
+						$scope.tabEvents[tab].vote.upVote = true;
+					}
+
+					if ($scope.tabEvents[tab].votes[0].vote == '0') {
+						$scope.tabEvents[tab].vote.downVote = true;
+					}
+				}
+			}
+
 			// $scope.tabEvents.length
 			// need to limit to 10 from server 
 
@@ -1482,7 +1502,6 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 					controller: 'simpleModalInstanceController', 
 					resolve: {
 						data: function() {
-							// alert('this is firing');
 							return data;
 						}		
 					}
