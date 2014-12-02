@@ -17,6 +17,7 @@ class EventController extends BaseController {
 
 		$user->events()->attach($eventID, array('vote' => '1'));
 		*/
+		echo ("hi there");
 	}
 
 	public function events() {

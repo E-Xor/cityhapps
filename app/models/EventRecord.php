@@ -327,15 +327,9 @@ class EventRecord extends Eloquent {
 		
 
 		EventRecord::storeActiveEvents();
-		echo("Active events added to Events table.<br />");
 		EventRecord::storeEventbriteEvents();
-		echo("Eventbrite events added to Events table.<br />");
 		EventRecord::storeEventfulEvents();
-		echo("Eventful events added to Events table.<br />");
 		EventRecord::storeMeetupEvents();
-		echo("Meetup events added to Events table.<br />");
-		
-		echo("All events stored and updated.");
 		
 	}
 
