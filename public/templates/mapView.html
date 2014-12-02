@@ -75,10 +75,10 @@
                 <!-- Additional filtration like most recent to go here -->
 			</div>	
 			<div class="col-sm-3 col-sm-offset-1">
-				<a class="list-icon" href="#/"></a>
-				<a class="map-icon" href="#/map"></a>
-				<a class="cal-icon" href="#/calendar"></a>
-
+                <a ng-if="currentPath !== '/'" ng-class="{active:active('/')}" class="list-icon" href="#/"></a>
+                <a ng-if="currentPath !== '/calendar'" ng-class="{active:active('/calendar')}" class="cal-icon" href="#/calendar"></a>
+                <a ng-if="currentPath !== '/map'"  ng-class="{active:active('/map')}" class="map-icon" href="#/map"></a>
+                <a ng-if="currentPath !== '/day'" ng-class="{active:active('/day')}" ng-click="toggleActive()" class="day-icon" href="#/day"></a>
 			</div>	
 		</div>
 	</div>	
@@ -87,7 +87,7 @@
 		<!-- Lat / Long display -->
 		<!-- <div style="color:#fff;">{{map.center}}</div> -->
 		<div id="map_canvas">
-			<ui-gmap-google-map id="map" center="map.center" zoom="map.zoom" bounds="map.bounds" events="map.events">
+			<ui-gmap-google-map id="map" center="map.center" zoom="map.zoom" options= "{scrollwheel : false}" draggable="true" bounds="map.bounds" events="map.events">
 					<ui-gmap-marker ng-repeat="event in tabEvents | limitTo: 10" ng-init="map.init()" options="{labelContent: ($index + 1) + (10 * (pageCount - 1)), labelAnchor: '8 35', labelClass: 'markerLabel' }" doCluster="'true'" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" icon="'/img/marker.png'" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}">
 					<!-- icon="markers.icon" -->
 		        	</ui-gmap-marker>

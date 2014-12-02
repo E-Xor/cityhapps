@@ -220,11 +220,13 @@
                     <!-- Additional filtration like most recent to go here -->
                 </div>
 				<div class="col-sm-3 col-sm-offset-5">
-					<a class="list-icon" href="#/"></a>
-					<a class="map-icon" href="#/map"></a>
-					<a class="cal-icon" href="#/calendar"></a>
 
-				</div>
+                    <a ng-if="currentPath !== '/'" ng-class="{active:active('/')}" class="list-icon" href="#/"></a>
+                    <a ng-if="currentPath !== '/calendar'" ng-class="{active:active('/calendar')}" class="cal-icon" href="#/calendar"></a>
+                    <a ng-if="currentPath !== '/map'"  ng-class="{active:active('/map')}" class="map-icon" href="#/map"></a>
+                    <a ng-if="currentPath !== '/day'" ng-class="{active:active('/day')}" ng-click="toggleActive()" class="day-icon" href="#/day"></a>
+
+                </div>
 
 			</div>	
 
@@ -249,7 +251,7 @@
 						<div class="col-sm-3 event" >
 							<div class="event-inner" ng-animate="'animate'">
 								<div ng-click="eventModal(event, 'first')">
-									<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
+									<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 229px;">
 										<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
@@ -271,7 +273,7 @@
 						<div class="col-sm-3 event" >
 							<div class="event-inner" ng-animate="'animate'">
 								<div ng-click="eventModal(event, 'second')">
-									<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 125px;">
+									<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 229px;">
 										<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
@@ -293,7 +295,7 @@
 						<div class="col-sm-3 event" >
 							<div class="event-inner" ng-animate="'animate'">
 								<div ng-click="eventModal(event, 'third')">
-									<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 125px;">
+									<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 229px;">
 									<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
@@ -315,7 +317,7 @@
 						<div class="col-sm-3 event" >
 							<div class="event-inner" ng-animate="'animate'">
 								<div ng-click="eventModal(event, 'fourth')">
-									<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 125px;">
+									<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 229px;">
 									<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">

@@ -272,10 +272,10 @@ body {
   background: -ms-linear-gradient(top, rgba(3, 3, 3, 0) 0%, rgba(0, 0, 0, 0.59) 98%, rgba(0, 0, 0, 0.6) 100%);
   background: linear-gradient(to bottom, rgba(3, 3, 3, 0) 0%, rgba(0, 0, 0, 0.59) 98%, rgba(0, 0, 0, 0.6) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#030303', endColorstr='#000000', GradientType=0 );
-  height: 300px; }
+  height: 498px; }
 
 .modal-image {
-  height: 300px;
+  height: 498px;
   width: 100%;
   position: relative; }
 
@@ -302,7 +302,7 @@ body {
 .share-overlay {
   width: 100%;
   background: #fff;
-  height: 80%;
+  height: 50%;
   display: none;
   padding: 5%; }
 
@@ -450,6 +450,8 @@ body {
 
 .day-slider-container {
   max-width: 100%; }
+  .day-slider-container.map {
+    background: rgba(0, 0, 0, 0.4); }
 
 .day-slider-container-home {
   max-width: 100%; }
@@ -484,21 +486,32 @@ body {
   transition: all linear 0.5s;
   -moz-transition: all linear 0.5s; }
 
-.icon, .list-icon, .map-icon, .cal-icon {
+.icon, .list-icon, .map-icon, .cal-icon, .day-icon {
   width: 40px;
   height: 40px;
   display: block;
   float: left;
-  margin: 0 10px; }
+  margin: 0 7px; }
 
 .list-icon {
-  background: url("/img/viewSelectSprite.png") no-repeat 0 0; }
+  background: url("/img/viewSelectSprite.png") no-repeat 0 2px; }
+  .list-icon.active {
+    background: url("/img/viewSelectSprite.png") no-repeat 0 -37px; }
 
 .map-icon {
-  background: url("/img/viewSelectSprite.png") no-repeat -69px 0; }
+  background: url("/img/viewSelectSprite.png") no-repeat -107px 2px; }
+  .map-icon.active {
+    background: url("/img/viewSelectSprite.png") no-repeat -107px -37px; }
 
 .cal-icon {
-  background: url("/img/viewSelectSprite.png") no-repeat -119px 0; }
+  background: url("/img/viewSelectSprite.png") no-repeat -50px 2px; }
+  .cal-icon.active {
+    background: url("/img/viewSelectSprite.png") no-repeat -50px -37px; }
+
+.day-icon {
+  background: url("/img/viewSelectSprite.png") no-repeat -165px 2px; }
+  .day-icon.active {
+    background: url("/img/viewSelectSprite.png") no-repeat -165px -37px; }
 
 .icons {
   height: 41px;
@@ -594,7 +607,7 @@ body {
 
 .event-inner {
   background: #f6efee;
-  height: 325px; }
+  height: 425px; }
   .event-inner img {
     width: 100%; }
 

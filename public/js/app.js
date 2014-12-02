@@ -209,11 +209,11 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 	            for (i = 0; i < $scope.eventData.length; i += 4) {
 				
 					var slides = {
-					'first' : $scope.eventData[i],
-					'second' : $scope.eventData[i + 1],
-					'third' : $scope.eventData[i + 2],
-					'fourth' : $scope.eventData[i + 3]
-				};
+                        'first' : $scope.eventData[i],
+                        'second' : $scope.eventData[i + 1],
+                        'third' : $scope.eventData[i + 2],
+                        'fourth' : $scope.eventData[i + 3]
+                    };
 
                 var mobileSlides = $scope.eventData[i];
 
@@ -554,6 +554,10 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal, $location, search, ipCookie){
 
         //authFactory.userStatus();
+
+        $scope.active = function(route) {
+            return route === $location.path();
+        }
 
         $scope.user = ipCookie('user');
         console.log($scope.user);
@@ -1628,7 +1632,8 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 				latitude: 33.7550,
 				longitude: -84.3900
 			},
-			zoom: 15, 
+			zoom: 14,
+            scrollwheel: false,
 			events: {
 				tilesloaded: function (map) {
 					$scope.$apply(function () {
