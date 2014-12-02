@@ -672,7 +672,7 @@ body {
 	@extend .icon;
 	background: url('/img/viewSelectSprite.png') no-repeat 0 2px;
     &.active {
-      background: url('/img/viewSelectSprite.png') no-repeat 0 -37px;
+      background: url('/img/viewSelectSprite.png') no-repeat 0 -36px;
     }
 }
 
@@ -680,7 +680,7 @@ body {
 	@extend .icon;
 	background: url('/img/viewSelectSprite.png') no-repeat  -107px 2px;
     &.active {
-      background: url('/img/viewSelectSprite.png') no-repeat  -107px -37px;
+      background: url('/img/viewSelectSprite.png') no-repeat  -107px -36px;
     }
 }
 
@@ -688,7 +688,7 @@ body {
 	@extend .icon;
 	background: url('/img/viewSelectSprite.png') no-repeat -50px 2px;
     &.active {
-      background: url('/img/viewSelectSprite.png') no-repeat -50px -37px;
+      background: url('/img/viewSelectSprite.png') no-repeat -50px -36px;
     }
 }
 
@@ -696,7 +696,7 @@ body {
     @extend .icon;
     background: url('/img/viewSelectSprite.png') no-repeat -165px 2px;
     &.active {
-      background: url('/img/viewSelectSprite.png') no-repeat -165px -37px;
+      background: url('/img/viewSelectSprite.png') no-repeat -165px -36px;
     }
 }
 
@@ -1046,6 +1046,8 @@ body {
 
   .fc-event {
     cursor: pointer;
+    border: none;
+    font-size: 1em;
   }
 
     td.fc-day.fc-today {

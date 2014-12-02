@@ -496,22 +496,22 @@ body {
 .list-icon {
   background: url("/img/viewSelectSprite.png") no-repeat 0 2px; }
   .list-icon.active {
-    background: url("/img/viewSelectSprite.png") no-repeat 0 -37px; }
+    background: url("/img/viewSelectSprite.png") no-repeat 0 -36px; }
 
 .map-icon {
   background: url("/img/viewSelectSprite.png") no-repeat -107px 2px; }
   .map-icon.active {
-    background: url("/img/viewSelectSprite.png") no-repeat -107px -37px; }
+    background: url("/img/viewSelectSprite.png") no-repeat -107px -36px; }
 
 .cal-icon {
   background: url("/img/viewSelectSprite.png") no-repeat -50px 2px; }
   .cal-icon.active {
-    background: url("/img/viewSelectSprite.png") no-repeat -50px -37px; }
+    background: url("/img/viewSelectSprite.png") no-repeat -50px -36px; }
 
 .day-icon {
   background: url("/img/viewSelectSprite.png") no-repeat -165px 2px; }
   .day-icon.active {
-    background: url("/img/viewSelectSprite.png") no-repeat -165px -37px; }
+    background: url("/img/viewSelectSprite.png") no-repeat -165px -36px; }
 
 .icons {
   height: 41px;
@@ -785,7 +785,9 @@ body {
       border-color: #5DD49C;
       border-style: solid; }
   .calendar .fc-event {
-    cursor: pointer; }
+    cursor: pointer;
+    border: none;
+    font-size: 1em; }
   .calendar td.fc-day.fc-today {
     border-width: 0 5px 5px 5px;
     border-color: #5DD49C;

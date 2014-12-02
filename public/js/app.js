@@ -1763,6 +1763,8 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
                 month : 5,
                 default: true
             },
+            eventTextColor: '#2C2625',
+            eventBackgroundColor: 'transparent',
             header : {
                left: "",
                center: "",
