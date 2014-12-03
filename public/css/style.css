@@ -483,15 +483,14 @@ body {
   top: -30px;
   position: absolute; }
 
-.animate-enter {
-  -webkit-transition: all linear 0.5s;
-  transition: all linear 0.5s;
-  -moz-transition: all linear 0.5s; }
+.animate {
+  -webkit-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+  -moz-transition: 0.5s linear all;
+  opacity: 0; }
 
-.animate-leave {
-  -webkit-transition: all linear 0.5s;
-  transition: all linear 0.5s;
-  -moz-transition: all linear 0.5s; }
+.animate-active {
+  opacity: 1; }
 
 .icon, .list-icon, .map-icon, .cal-icon, .day-icon {
   width: 40px;

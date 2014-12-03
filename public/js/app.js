@@ -555,6 +555,8 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
         //authFactory.userStatus();
 
+
+
         $scope.active = function(route) {
             return route === $location.path();
         }
@@ -1784,7 +1786,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
                 $(".fc-day").each(function () {
                     console.log($(this));
-                    var eventCount = $(this).children()jir
+                    var eventCount = $(this).children()
                                     .find('.fc-event-container').length;
 
                     $(this).one().prepend("<div class='event-count'>" +  eventCount + "</div>");

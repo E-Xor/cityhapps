@@ -122,8 +122,9 @@
 							</div>
 						</div>
 					</div>
-			<!-- Get the home body partial -->	
-			<div ng-view></div>
+			<!-- Get the home body partial -->
+
+			<div ng-view ng-animate="{enter: 'animate', leave: 'animate'}"></div>
 			</div>
 		</div>
 	<!-- </div> -->
