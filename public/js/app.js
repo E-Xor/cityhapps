@@ -1120,14 +1120,26 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
                 var sharedEvent;
 
                 var userID = ipCookie('user');
-                console.log(userID.data.id);
+                console.log(userID);
 
-                var sharedEvent = {
-                    'user_id' : userID.data.id,
-                    'event_id' : event_id,
-                    'share_link_key' : text,
-                    'share_target_platform' : target
+
+                if ($scope.user) {
+                    var sharedEvent = {
+                        'user_id' : userID.id,
+                        'event_id' : event_id,
+                        'share_link_key' : text,
+                        'share_target_platform' : target
+                    }
                 }
+
+                //else {
+                //    sharedEvent = {
+                //        //'user_id' : userID.id,
+                //        'event_id' : event_id,
+                //        'share_link_key' : text,
+                //        'share_target_platform' : target
+                //    }
+                //}
 
                 $http.post("/sharedEvent", sharedEvent).success(function(data){
 
@@ -1376,6 +1388,9 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 	function($scope, GoogleMapApi, getEvents, $modal, $log, $http, getCategories) {
 	
 	//handle tabs inside mapController
+    $scope.ifLimit = function(length) {
+        return length >= 20;
+    }
 
 	$scope.tabs = [
 		{ title:'Events', content:'Dynamic content 1' },
@@ -1648,7 +1663,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 					$log.info($scope.map.center);
 
-					$http.post('/geoEvents?' + "start_date="+ $scope.nowDateGet, $scope.map.center)
+					$http.post('/geoEvents', $scope.map.center)
 						.success(function(newData){
 							$log.info(newData);
 							$scope.tabEvents = newData;
@@ -1671,37 +1686,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 	}
 
     //Needs to be broken out into a factory
-    $scope.now = moment().format("dddd, MMMM Do");
 
-    var next = 0;
-
-    //How will this functinon in Cal View? Is is necessary?
-    $scope.nextDay = function() {
-        // debugger;
-        next += 1;
-        $scope.now = moment().add((next),'days').format("dddd, MMMM Do");
-        $scope.nowGet = moment().add(next,'days').format();
-        $scope.nowDateGet = moment().add(next, 'days').format("YYYY-MM-DD");
-
-        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet)
-            .success(function(data){
-                $scope.eventData = data;
-                calEvents(data);
-            });
-    };
-
-    $scope.prevDay = function() {
-        next -= 1;
-        $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
-        $scope.nowGet = moment().add(next,'days').format();
-        $scope.nowDateGet = moment().add(next, 'days').format("YYYY-MM-DD");
-
-        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet)
-            .success(function(data){
-                $scope.eventData = data;
-                calEvents(data);
-            });
-    };
 
     $scope.categoryToggle = function() {
         $(".categoriesDropdown").fadeToggle();
@@ -1763,13 +1748,13 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
                 month : 5,
                 default: true
             },
+            header : {
+                left: 'prev',
+                center: 'title',
+                right: 'next'
+            },
             eventTextColor: '#2C2625',
             eventBackgroundColor: 'transparent',
-            header : {
-               left: "",
-               center: "",
-               right: ""
-            },
             eventClick: function(calEvent, jsEvent, view) {
                //alert(JSON.stringify(calEvent.allData));
                 $modal.open({
@@ -1783,6 +1768,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
                 });
             },
             viewRender : function(view) {
+                //ugly but works by getting the date abbreviation from the classname and adding it to each cal day cell.
                 $('td.fc-day-number').each(function () {
                     var day = $(this)[0].className.substr(17, 20)
                         .split(" ");
@@ -1798,12 +1784,55 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
                 $(".fc-day").each(function () {
                     console.log($(this));
-                    var eventCount = $(this).children()
+                    var eventCount = $(this).children()jir
                                     .find('.fc-event-container').length;
 
                     $(this).one().prepend("<div class='event-count'>" +  eventCount + "</div>");
 
                 });
+
+
+                $scope.now = moment().format("MMMM");
+
+                var next = 0;
+
+                //How will this functinon in Cal View? Is is necessary?
+
+                    $('.fc-right').on('click', function(){
+
+                        next += 1;
+                        $scope.now = moment().add((next),'months').format("MMMM");
+                        $scope.nowGet = moment().add(next,'months').date(1).format();
+                        $scope.nowDateGet = moment().add(next, 'months').date(1).format("YYYY-MM-DD");
+
+                        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&end_date=' + moment().add((next + 1),                                                              'months').date(1).format("YYYY-MM-DD") + '&max_per_day=5')
+                            .success(function(data){
+                                $scope.eventData = data;
+                                calEvents(data);
+                            });
+                    });
+                //});
+
+                // debugger;
+
+
+
+                $('.fc-left').on('click', function(){
+                    next -= 1;
+                    $scope.now = moment().add(next, 'months').format("MMMM");
+                    $scope.nowGet = moment().add(next,'months').date(1).format();
+                    $scope.nowDateGet = moment().add(next, 'months').date(1).format("YYYY-MM-DD");
+
+                    $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&end_date=' + moment().add((next + 1),                                                              'months').date(1).format("YYYY-MM-DD") + '&max_per_day=5')
+                        .success(function(data){
+                            $scope.eventData = data;
+                            calEvents(data);
+                        });
+                });
+
+
+
+
             },
             lazyFetching : true,
             dayClick : function(date, jsEVent, view) {

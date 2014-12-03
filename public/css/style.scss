@@ -412,7 +412,7 @@ body {
 .share-overlay {
     width: 100%;
     background: #fff;
-    height: 50%;
+    height: 60%;
     display: none;
     padding: 5%;
 }
@@ -618,6 +618,12 @@ body {
   max-width: 100%;
 }
 
+.month-slider-container {
+  max-width: 100%;
+  background: rgba(0,0,0,.4);
+}
+
+
 .day-slider-border {
 	border-top: 1px solid #fff;
 	transform: scaleY(.5);
@@ -674,7 +680,7 @@ body {
  
 .list-icon {
 	@extend .icon;
-	background: url('/img/viewSelectSprite.png') no-repeat 0 2px;
+	background: url('/img/viewSelectSprite.png') no-repeat 0 3px;
     &.active {
       background: url('/img/viewSelectSprite.png') no-repeat 0 -36px;
     }
@@ -682,7 +688,7 @@ body {
 
 .map-icon {
 	@extend .icon;
-	background: url('/img/viewSelectSprite.png') no-repeat  -107px 2px;
+	background: url('/img/viewSelectSprite.png') no-repeat  -107px 3px;
     &.active {
       background: url('/img/viewSelectSprite.png') no-repeat  -107px -36px;
     }
@@ -690,7 +696,7 @@ body {
 
 .cal-icon {
 	@extend .icon;
-	background: url('/img/viewSelectSprite.png') no-repeat -50px 2px;
+	background: url('/img/viewSelectSprite.png') no-repeat -50px 3px;
     &.active {
       background: url('/img/viewSelectSprite.png') no-repeat -50px -36px;
     }
@@ -698,7 +704,7 @@ body {
 
 .day-icon {
     @extend .icon;
-    background: url('/img/viewSelectSprite.png') no-repeat -165px 2px;
+    background: url('/img/viewSelectSprite.png') no-repeat -165px 3px;
     &.active {
       background: url('/img/viewSelectSprite.png') no-repeat -165px -36px;
     }
@@ -881,9 +887,57 @@ body {
 	}
 }
 
-.fc-toolbar {
-  display: none;
+.cal-controls {
+  height: 50px;
 }
+
+.fc-toolbar {
+    margin-top: -138px;
+    .fc-left {
+      margin-left: -20px;
+      margin-top: -122px;
+    }
+
+    .fc-right {
+      margin-right: -20px;
+      margin-top: -122px;
+    }
+    h2 {
+      font-size: 22px;
+      text-transform: uppercase;
+      margin: 10px 0;
+      color: #fff;
+    }
+    .fc-icon {
+      display: none;
+    }
+}
+
+.fc button {
+  height: 50px;
+}
+
+.fc-button {
+  height: 50px;
+  cursor: pointer;
+  width: 79px;
+  &.fc-state-default {
+//    background: url("/img/sliderRight.png") no-repeat 7px 5px/71px 40px;
+    border: none;
+    text-shadow: none;
+    box-shadow: none;
+  }
+}
+
+.fc-next-button.fc-state-default {
+  background: url("/img/sliderRight.png") no-repeat 7px 5px/71px 40px;
+}
+
+.fc-prev-button.fc-state-default {
+  background: url("/img/sliderLeft.png") no-repeat 7px 5px/71px 40px;
+}
+
+
 
 .map-ctrls {
 	height: 70px;

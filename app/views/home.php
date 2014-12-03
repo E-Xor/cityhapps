@@ -13,8 +13,9 @@
     <link rel="stylesheet" href="/css/angular-snap.min.css" />
 	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
 
-	<link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/fullcalendar.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+
 
 	<!-- load angular from CDN-->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> 

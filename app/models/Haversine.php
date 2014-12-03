@@ -9,6 +9,9 @@
      *  @copyright 2012 Douglas Grubba
      *  @link http://douggdev.me
 	*/
+
+    use Carbon\Carbon;
+
     class Haversine extends Eloquent {
         /**
          * name of the table
@@ -73,8 +76,9 @@
             $data = DB::table('events')
                 ->select( DB::raw( implode( ',' ,  $fields ) . ',' .  $distance_select  ) )
                 ->having( 'distance', '<=', $max_distance )
-                ->orderBy( 'distance', 'ASC' )
-//                ->orderBy('start_time', 'ASC')
+                ->orderBy( 'distance', 'asc' )
+                ->orderBy('start_time', 'asc')
+                ->where('start_time', ">=", Carbon::now())
                 ->take(10)
                 ->get();
 
