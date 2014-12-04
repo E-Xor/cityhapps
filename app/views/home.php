@@ -68,11 +68,19 @@
                                             <h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
                                             <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
                                             <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
-                                            <h5 class="red italic inline accountSignIn" ng-click="helpFade()">help</h5>
+<!--                                            <h5 class="red italic inline accountSignIn" ng-click="helpFade()">help</h5>-->
                                         </div>
-                                        <div ng-cloak ng-show="user" class="margin">
-                                            {{user.email}}
-                                            <p class="red logout" ng-click="logoutUser()">sign out</p>
+                                        <div ng-cloak ng-show="user">
+                                            <div class="user-info">
+                                                <h5 class="red italic inline accountSignIn" ng-click="helpFade()">help</h5>
+                                                <div>
+                                                    {{user.email}}
+                                                </div>
+                                                <p class="red logout" ng-click="logoutUser()">sign out</p>
+                                            </div>
+                                        </div>
+                                        <div class="rec-arrow" ng-cloak ng-show="user" ng-click="recToggle()">
+                                            {{recEventCount}}
                                         </div>
 									</div>
 

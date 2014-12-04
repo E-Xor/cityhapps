@@ -22,7 +22,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 			}
 		};
 
-        //will only happen on mobile
+        //will only happen on mobile because desktop version redirects to day view
         $scope.$on('search', function(info, data){
             console.log(data);
             recommendedEventSuccess(data);
@@ -34,6 +34,9 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
         }
 
         var recommendedEventSuccess = function(data) {
+
+            $rootScope.recEventCount = data.events.length;
+
         	$scope.eventData = data.events;
         	console.log($scope.eventData);
 
@@ -538,9 +541,11 @@ cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
 
 
 cityHapps.factory('search', function($http){
+    var now = moment().format();
+
     return {
         searchData : function(query){
-            return $http.get("/events?search="+ query)
+            return $http.get("/events?start_time=" + now + "&search="+ query )
                 .success(function(data, scope){
                   console.log(data);
 
@@ -553,9 +558,18 @@ cityHapps.factory('search', function($http){
 cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'search', 'ipCookie',
 	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal, $location, search, ipCookie){
 
+        //$scope.recEventCount = registerDataService.recEventCount;
+
+        console.log(registerDataService.recEventCount);
+
         $scope.helpFade = function() {
             $('.help-overlay').fadeToggle();
         };
+
+        $scope.recToggle = function() {
+            $('.rec').fadeToggle();
+            $('.rec-arrow').toggleClass("down");
+        }
 
         $('div').fadeIn('fast');
 
@@ -911,6 +925,8 @@ cityHapps.factory("registerDataService", function(){
 	var registerDataService = {};
 	registerDataService.data = {};
 	registerDataService.data.categories = {};
+
+    registerDataService.recEventCount = {};
 
 	registerDataService.vote = {};
 

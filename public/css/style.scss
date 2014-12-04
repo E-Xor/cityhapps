@@ -233,8 +233,28 @@ body {
 	}
 }
 
+.user-info {
+  text-align: right;
+  width: 210px;
+}
+
 .header-search .auth {
 	cursor: pointer;
+    .rec-arrow {
+      position: absolute;
+      width: 68px;
+      height: 70px;
+      background: url("/img/recArrow.png") no-repeat;
+      right: 87px;
+      top: 5px;
+      padding: 16px 0;
+      font-size: 1.3em;
+      color: #FF5C50;
+      font-weight: bold;
+      &.down {
+        background: url("/img/recArrowDown.png") no-repeat;
+      }
+    }
 }
 
 .modal {
@@ -1556,10 +1576,6 @@ button.create-account[disabled='disabled'] {
       padding: 10px;
       display: inline-block;
       float: left;
-	}
-
-	.header-search input {
-		background: url("/img/searchIcon.png") 8px 16px/23px 26px no-repeat;
 	}
 
 	.event-counter {

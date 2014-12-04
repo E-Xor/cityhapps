@@ -43,7 +43,7 @@
 
 	      	<div class="modal-body">
 				<p class="blue">{{data.start_time | dateToISO | date: 'MMM d h:mm a'}}</p>
-		    	<p>{{data.venue_name}}</p>
+		    	<a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a>
 		    	<p>{{data.address}}, {{data.city}}, {{data.state}}</p>
 
 		    	<div class="margin20 left">
@@ -78,7 +78,7 @@
 							<h3>$12.99</h3>
 						</div> -->
 
-						<a class="buy right" href="{{data.url}}">Buy</a>
+						<a class="buy right" href="{{data.url}}" target="_blank">Buy</a>
 					</div>
 
 				</div>

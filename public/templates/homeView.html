@@ -1,49 +1,4 @@
 <div ng-controller="eventsController" class="imageContainer">
-
-<carousel interval="interval" class="help-overlay">
-    <slide class="help-slide">
-        <div class="center white tut">
-            <h1 class="uppercase header">How it Works</h1>
-            <p class="red center number">1</p>
-            <h4 class="center margin20 callout">Sign up and tell us what kidn of things you like to do.</h4>
-            <div class="tut-categories">
-                <label class="event-category large">Movies</label>
-                <label class="event-category large">Kids</label>
-                <label class="event-category large">Family</label>
-                <label class="event-category large">Concerts</label>
-                <label class="event-category large active" >Shopping</label>
-                <label class="event-category large">Bars</label>
-            </div>
-        </div>
-    </slide>
-    <slide class="help-slide">
-        <div class="center white tut">
-            <h1 class="uppercase header">How it Works</h1>
-            <p class="red center number">2</p>
-            <h4 class="center margin20 callout">Use the thumbs-up/thumbs-down buttons to indicate if you like or dislike this kind of activity</h4>
-            <div class="btn-group">
-                <label class="like-icon large"></label>
-                <label class="dislike-icon large"></label>
-            </div>
-        </div>
-    </slide>
-    <slide class="help-slide">
-        <div class="center white tut">
-            <h1 class="uppercase header">How it Works</h1>
-            <p class="red center number">3</p>
-            <h4 class="center margin20 callout">Come back daily to get your City Happs recommendations</h4>
-            <div class="btn-group">
-                <div class="question-box">?</div>
-                <div class="question-box">?</div>
-                <div class="question-box">?</div>
-                <div class="question-box">?</div>
-
-            </div>
-        </div>
-    </slide>
-</carousel>
-
-
 	<div class="event-counter" ng-init="getCategories()">
 		<h2 class="center white totalEvents">
             <div class="inline mobile-large-num" >{{eventCount}}</div>
@@ -51,11 +6,12 @@
         </h2>
 	</div>
 
-	<p ng-if="recSlideGroup" class="uppercase center white wide-kerning">Recommendations</p>
+
 
 			<!-- MOBILE / PHONE slide view -->
 		<div ng-if = 'mobile()'>
 			<div class="row event-slider" ng-if="user">
+                <p ng-if="recSlideGroup" class="uppercase center white wide-kerning">Recommendations</p>
 				<carousel interval="interval" class="col-sm-12">
 					<slide class="col-sm-12" ng-animate=" 'animate' " ng-repeat="event in recSlideGroup | limitTo: 10">
 						<div class="col-sm-3 event">
@@ -69,7 +25,8 @@
 											<h4 class="ellipsis">{{event.event_name | limitTo: 25 }}</h4>
 
                                             <p>{{event.start_time}}
-                                                {{event.venue_name | limitTo: 40}}</p>
+                                                <a href="{{event.venue_url}}" target="_blank">{{event.venue_name | limitTo: 40}}</a>
+                                            </p>
                                         </div>
 									</div>
 								<div class="icons">
@@ -113,7 +70,7 @@
                             <div class="mobile-event-details">
                                 <div class="bold ellipsis">{{event.event_name | limitTo: 20}}</div>
                                 {{event.start_time | dateToISO | date: 'mediumDate'}}
-                                {{event.venue_name}}
+                                <a href="{{event.venue_url}}" target="_blank">{{event.venue_name}}</a>
                             </div>
                         </div>
                             <div class="mobile-vote-icons">
@@ -131,19 +88,20 @@
 
     <!-- Desktop Tablet > 768px -->
 	<div ng-if="!mobile()">
-		<div class="row event-slider" ng-if="user">
+		<div class="row event-slider rec" ng-if="user">
+            <p ng-if="recSlideGroup" class="uppercase center white wide-kerning">Recommendations</p>
 			<carousel interval="interval" class="col-sm-12" >
 				<slide ng-animate="'animate'" class="col-sm-12"  ng-animate=" 'animate' " ng-repeat="event in recSlideGroup">
 					<!-- hide card with no title ths doesn exist ng-if="event.first.event_name" -->
 					<div class="col-sm-3 event" >
 						<div class="event-inner" ng-animate="'animate'">
 							<div ng-click="eventModal(event, 'first')">
-								<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 125px;">
+								<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 225px;">
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.first.event_name | limitTo: 30 }}</h4>
 									<p class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate' }}</p>
-									<p>{{event.first.venue_name | limitTo: 40}}</p>
+                                    <a href="{{event.first.venue_url}}" target="_blank"><p>{{event.first.venue_name | limitTo: 40}}</p></a>
 								</div>
 							</div>
 							<div class="icons">
@@ -159,12 +117,12 @@
 					<div class="col-sm-3 event" >
 						<div class="event-inner" ng-animate="'animate'">
 							<div ng-click="eventModal(event, 'second')">	
-								<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 125px;">
+								<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 225px;">
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.second.event_name | limitTo: 30}}</h4>
 									<p class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</p>
-									<p>{{event.second.venue_name | limitTo: 40}}</p>
+                                    <a href="{{event.second.venue_url}}" target="_blank"><p>{{event.second.venue_name | limitTo: 40}}</p></a>
 								</div>
 							</div>
 							<div class="icons">
@@ -180,12 +138,12 @@
 					<div class="col-sm-3 event" >
 						<div class="event-inner" ng-animate="'animate'">
 							<div ng-click="eventModal(event, 'third')">
-								<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 125px;">
+								<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 225px;">
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.third.event_name | limitTo: 30}} </h4>
 									<p class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</p>
-									<p>{{event.third.venue_name | limitTo: 40}}</p>
+                                    <a href="{{event.third.venue_url}}" target="_blank"><p>{{event.third.venue_name | limitTo: 40}}</p></a>
 								</div>
 							</div>
 							<div class="icons">
@@ -201,12 +159,12 @@
 					<div class="col-sm-3 event" >
 						<div class="event-inner" ng-animate="'animate'">
 							<div ng-click="eventModal(event, 'fourth')">
-								<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 125px;">
+								<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 225px;">
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.fourth.event_name | limitTo: 30}}</h4>
 									<p class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</p>
-									<p>{{event.fourth.venue_name | limitTo: 40}}</p>
+                                    <a href="{{event.fourth.venue_url}}" target="_blank"><p>{{event.fourth.venue_name | limitTo: 40}}</p></a>
 								</div>
 							</div>
 							<div class="icons">
@@ -300,7 +258,7 @@
 									<div class="event-details">
 										<h4 class="">{{event.first.event_name | limitTo: 30}}</h4>
 										<p class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate'}}</p>
-										<p>{{event.first.venue_name | limitTo: 40}}</p>
+                                        <a href="{{event.first.venue_url}}" target="_blank"><p>{{event.first.venue_name | limitTo: 40}}</p></a>
 									</div>
 								</div>
 								<div class="icons">
@@ -322,7 +280,7 @@
 									<div class="event-details">
 										<h4 class="">{{event.second.event_name | limitTo: 30}}</h4>
 										<p class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</p>
-										<p>{{event.second.venue_name | limitTo: 40}}</p>
+                                        <a href="{{event.second.venue_url}}" target="_blank"><p>{{event.second.venue_name | limitTo: 40}}</p></a>
 									</div>
 								</div>
 								<div class="icons">
@@ -344,7 +302,7 @@
 									<div class="event-details">
 										<h4 class="">{{event.third.event_name | limitTo: 30}} </h4>
 										<p class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</p>
-										<p>{{event.third.venue_name | limitTo: 40}}</p>
+                                        <a href="{{event.venue_url}}" target="_blank"><p>{{event.third.venue_name | limitTo: 40}}</p></a>
 									</div>
 								</div>
 								<div class="icons">
@@ -366,7 +324,7 @@
 									<div class="event-details">
 										<h4 class="">{{event.fourth.event_name | limitTo: 30}}</h4>
 										<p class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</p>
-										<p>{{event.fourth.venue_name | limitTo: 40}}</p>
+                                        <a href="{{event.venue_url}}" target="_blank"><p>{{event.fourth.venue_name | limitTo: 40}}</p></a>
 									</div>
 								</div>
 								<div class="icons">
