@@ -553,9 +553,11 @@ cityHapps.factory('search', function($http){
 cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'search', 'ipCookie',
 	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal, $location, search, ipCookie){
 
-        //authFactory.userStatus();
+        $scope.helpFade = function() {
+            $('.help-overlay').fadeToggle();
+        };
 
-
+        $('div').fadeIn('fast');
 
         $scope.active = function(route) {
             return route === $location.path();

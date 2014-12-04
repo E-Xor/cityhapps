@@ -51,7 +51,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: visible; }
 
-.main-container {
+.header-container {
   z-index: 2;
   background: rgba(11, 38, 60, 0.54); }
 
@@ -354,6 +354,17 @@ body {
     border: 2px solid #FF5C50;
     -webkit-transition: all .2s ease;
     -moz-transition: all .2s ease; }
+  .event-category.large {
+    font-size: 20px;
+    color: #fff;
+    border: 2px #fff solid;
+    display: inline-block;
+    float: none;
+    margin: 7px;
+    padding: 8px 15px; }
+    .event-category.large.active {
+      border: 2px #FF5C50 solid;
+      color: #FF5C50; }
 
 .categoryToggle {
   cursor: pointer; }
@@ -429,7 +440,8 @@ body {
 
 .carousel-inner {
   max-width: 90%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  height: inherit; }
 
 .day-slider {
   max-width: 1170px;
@@ -443,13 +455,11 @@ body {
 
 .prev {
   height: 50px;
-  cursor: pointer;
-  background: url("/img/sliderLeft.png") no-repeat 14px 5px/71px 40px; }
+  cursor: pointer; }
 
 .next {
   height: 50px;
-  cursor: pointer;
-  background: url("/img/sliderRight.png") no-repeat 7px 5px/71px 40px; }
+  cursor: pointer; }
 
 .day-slider-container {
   max-width: 100%; }
@@ -483,13 +493,19 @@ body {
   top: -30px;
   position: absolute; }
 
-.animate {
-  -webkit-transition: 0.5s linear all;
-  transition: 0.5s linear all;
-  -moz-transition: 0.5s linear all;
+.ng-enter {
+  -webkit-transition: 1s linear all;
+  /* Chrome */
+  transition: 1s linear all;
   opacity: 0; }
 
-.animate-active {
+.ng-leave {
+  -webkit-transition: 1s linear all;
+  /* Chrome */
+  transition: 1s linear all;
+  opacity: 1; }
+
+.animate-enter.animate-enter-active {
   opacity: 1; }
 
 .icon, .list-icon, .map-icon, .cal-icon, .day-icon {
@@ -547,6 +563,10 @@ body {
   background: url("/img/likeIcon.png") no-repeat 0 0;
   cursor: pointer;
   float: left; }
+  .like-icon.large {
+    height: 80px;
+    width: 80px;
+    background: url("/img/likeIcon.png") no-repeat 0px 0/197px 80px; }
   .like-icon.active {
     background: url("/img/likeIconActive.png") no-repeat 0 0; }
 
@@ -557,6 +577,10 @@ body {
   cursor: pointer;
   float: right;
   margin-left: 20px; }
+  .dislike-icon.large {
+    height: 80px;
+    width: 80px;
+    background: url("/img/likeIcon.png") no-repeat -117px 0/197px 80px; }
   .dislike-icon.active {
     background: url("/img/likeIconActive.png") no-repeat -61px 0; }
 
@@ -727,10 +751,55 @@ body {
 .map-margin {
   margin: 20px 0 0 0; }
 
+.tut {
+  padding: 0 300px; }
+  .tut h1.header {
+    font-size: 64px;
+    font-weight: bold; }
+  .tut .number {
+    border: 5px solid;
+    padding: 6px 0;
+    width: 70px;
+    border-radius: 50%;
+    height: 70px;
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 30px; }
+  .tut .tut-categories {
+    padding: 0 20px;
+    text-align: center;
+    margin: 0 auto; }
+  .tut .callout {
+    padding: 0 30px;
+    font-size: 22px; }
+  .tut .question-box {
+    width: 30px;
+    display: inline-table;
+    border: 4px solid #fff;
+    padding: 13px 27px;
+    font-size: 60px;
+    margin: 20px 10px;
+    font-weight: bold;
+    text-align: center; }
+
+.help-overlay {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  display: none; }
+
+.padding80 {
+  padding: 0 85px; }
+
 .header-container {
-  max-width: 1170px;
   margin: 0 auto;
   padding: 0 5%; }
+
+.main-content {
+  display: block; }
 
 .event-counter {
   padding: 60px 0; }
@@ -794,7 +863,7 @@ body {
     padding: 5px; }
 
 .map-event {
-  padding: 10px;
+  padding: 3.15%;
   border-bottom: 1px solid #BDB9BD; }
   .map-event h4 {
     margin: 2px 0; }

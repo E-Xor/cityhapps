@@ -39,9 +39,12 @@
 
 	<body ng-controller="appController" ng-cloak>
 		<div ng-if="!mobile()">
+
+<!--<ng-include src="/public/templates/helpSlider.html"></ng-include>-->
+
 			<div class="bg-image">
                 <!-- if mobile add snap-content -->
-                <div class="main-container proxima">
+                <header class="header-container proxima">
 					<div class="wide">
 						<div class='wide-search'>
                             <form ng-submit="search(query)">
@@ -65,6 +68,7 @@
                                             <h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
                                             <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
                                             <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
+                                            <h5 class="red italic inline accountSignIn" ng-click="helpFade()">help</h5>
                                         </div>
                                         <div ng-cloak ng-show="user" class="margin">
                                             {{user.email}}
@@ -75,9 +79,53 @@
 								</div>
 							</div>
 						</div>
-					</div>
+
+                    <!-- Help Section -->
+                    <carousel interval="interval" class="help-overlay">
+                        <slide class="help-slide">
+                            <div class="center white tut">
+                                <h1 class="uppercase header">How it Works</h1>
+                                <p class="red center number">1</p>
+                                <h4 class="center margin20 callout">Sign up and tell us what kidn of things you like to do.</h4>
+                                <div class="tut-categories">
+                                    <label class="event-category large">Movies</label>
+                                    <label class="event-category large">Kids</label>
+                                    <label class="event-category large">Family</label>
+                                    <label class="event-category large">Concerts</label>
+                                    <label class="event-category large active" >Shopping</label>
+                                    <label class="event-category large">Bars</label>
+                                </div>
+                            </div>
+                        </slide>
+                        <slide class="help-slide">
+                            <div class="center white tut">
+                                <h1 class="uppercase header">How it Works</h1>
+                                <p class="red center number">2</p>
+                                <h4 class="center margin20 callout">Use the thumbs-up/thumbs-down buttons to indicate if you like or dislike this kind of activity</h4>
+                                <div class="btn-group">
+                                    <label class="like-icon large"></label>
+                                    <label class="dislike-icon large"></label>
+                                </div>
+                            </div>
+                        </slide>
+                        <slide class="help-slide">
+                            <div class="center white tut">
+                                <h1 class="uppercase header">How it Works</h1>
+                                <p class="red center number">3</p>
+                                <h4 class="center margin20 callout">Come back daily to get your City Happs recommendations</h4>
+                                <div class="btn-group">
+                                    <div class="question-box">?</div>
+                                    <div class="question-box">?</div>
+                                    <div class="question-box">?</div>
+                                    <div class="question-box">?</div>
+
+                                </div>
+                            </div>
+                        </slide>
+                    </carousel>
+					</header>
 			<!-- Get the home body partial -->	
-			<div ng-view></div>
+			<div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
 			</div>
 		</div>
 		<!-- if mobile -->
@@ -104,7 +152,7 @@
                </ul>
             </div>
 			<div class="bg-image" snap-content>
-				<div class="main-container proxima" ng-animate=" 'animate' " >
+				<header class="header-container proxima" ng-animate=" 'animate' " >
 					<div class="wide">
 						<div class='wide-search'>
                             <form ng-submit="search(query)">
@@ -121,10 +169,13 @@
 
 							</div>
 						</div>
-					</div>
-			<!-- Get the home body partial -->
+					</header>
+            <!--Get the help section-->
+<!--            <ng-include src="/templates/helpSlider.html"></ng-include>-->
 
-			<div ng-view ng-animate="{enter: 'animate', leave: 'animate'}"></div>
+
+			<!-- Get the home body partial -->
+			<div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
 			</div>
 		</div>
 	<!-- </div> -->
