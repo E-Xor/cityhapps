@@ -675,6 +675,15 @@ body {
   text-transform: uppercase;
   font-weight: 700;
   text-shadow: 2px 1px 1px #E24B44; }
+  .buy:hover {
+    color: #fff; }
+  .buy.tutorial {
+    max-width: 200px;
+    padding: 4px 10px;
+    margin: 0 auto;
+    cursor: pointer; }
+    .buy.tutorial:hover {
+      color: #fff; }
 
 .viewContainer {
   background: rgba(0, 0, 0, 0.5); }

@@ -118,8 +118,10 @@
                                     <div class="question-box">?</div>
                                     <div class="question-box">?</div>
                                     <div class="question-box">?</div>
-
                                 </div>
+                                <a class="buy tutorial" ng-controller="modalController" ng-click="registerOpen('md')">
+                                    Create Account
+                                </a>
                             </div>
                         </slide>
                     </carousel>
