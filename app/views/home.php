@@ -86,7 +86,7 @@
                             <div class="center white tut">
                                 <h1 class="uppercase header">How it Works</h1>
                                 <p class="red center number">1</p>
-                                <h4 class="center margin20 callout">Sign up and tell us what kidn of things you like to do.</h4>
+                                <h4 class="center margin20 callout">Sign up and tell us what kind of things you like to do.</h4>
                                 <div class="tut-categories">
                                     <label class="event-category large">Movies</label>
                                     <label class="event-category large">Kids</label>
