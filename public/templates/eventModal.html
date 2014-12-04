@@ -66,9 +66,9 @@
 					<div class="icons-modal">
 
 						<div class="btn-group">
-					        <label class="like-icon" ng-model="vote.upVote" ng-change="voteEvent(event, num, 'up')" btn-checkbox></label>
+					        <label class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></label>
 
-					        <label class="dislike-icon" ng-model="vote.downVote" ng-change="voteEvent(event, num, 'down')" btn-checkbox></label>
+					        <label class="dislike-icon" ng-model="data.vote.downVote" ng-change="simpleVoteEvent(data, 'down')" btn-checkbox></label>
 					    </div>
 
 					</div>

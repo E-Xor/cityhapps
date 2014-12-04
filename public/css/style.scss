@@ -626,17 +626,23 @@ body {
 	margin-top: 10px;
 }
 
-.prev {
-	height: 50px;
-	cursor: pointer;
-//	background: url("/img/sliderLeft.png") no-repeat 14px 5px / 71px 40px;
+.left {
+  &.prev {
+    height: 50px;
+    cursor: pointer;
+    background: url("/img/sliderLeft.png") no-repeat 14px 5px / 71px 40px;
+  }
 }
 
-.next {
-	height: 50px;
-	cursor: pointer;
-//	background: url("/img/sliderRight.png") no-repeat 7px 5px / 71px 40px;
+
+.right {
+  &.next {
+    height: 50px;
+    cursor: pointer;
+    background: url("/img/sliderRight.png") no-repeat 7px 5px / 71px 40px;
+  }
 }
+
 
 .day-slider-container {
 	max-width: 100%;

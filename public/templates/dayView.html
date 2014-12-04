@@ -68,14 +68,14 @@
                             <div class="event-details">
                                 <h4 class="ellipsis">{{event.event_name | limitTo: 30 }}</h4>
                                 <p class="blue">{{event.start_time | dateToISO | date: 'mediumDate' }}</p>
-                                <p>{{event.first.venue_name | limitTo: 40}}</p>
+                                <a href="{{event.venue_url}}" target="_blank"><p>{{event.venue_name | limitTo: 40}}</p></a>
                             </div>
                         </div>
                         <div class="icons">
                             <div class="btn-group">
-                                <label class="like-icon" ng-model="vote.upVote" ng-click="voteEvent(event, vote)" btn-checkbox></label>
+                                <label class="like-icon" ng-model="event.vote.upVote" ng-change="simpleVoteEvent(event, 'up')" btn-checkbox></label>
 
-                                <label class="dislike-icon" ng-model="vote.downVote" ng-click="voteEvent(event, vote)" btn-checkbox></label>
+                                <label class="dislike-icon" ng-model="event.vote.downVote" ng-change="simpleVoteEvent(event, 'down')" btn-checkbox></label>
                             </div>
                             {{vote}}
                         </div>

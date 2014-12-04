@@ -218,6 +218,70 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                         'fourth' : $scope.eventData[i + 3]
                     };
 
+                    if (slides['first'] != undefined) {
+                        slides['first'].vote = {
+                            upVote: false,
+                            downVote: false
+                        };
+                        if (slides['first'].votes.length > 0) {
+                            if (slides['first'].votes[0].vote == '1') {
+                                slides['first'].vote.upVote = true;
+                            }
+
+                            if (slides['first'].votes[0].vote == '0') {
+                                slides['first'].vote.downVote = true;
+                            }
+                        }
+                    };
+
+                    if (slides['second'] != undefined) {
+                        slides['second'].vote = {
+                            upVote: false,
+                            downVote: false
+                        };
+                        if (slides['second'].votes.length > 0) {
+                            if (slides['second'].votes[0].vote == '1') {
+                                slides['second'].vote.upVote = true;
+                            }
+
+                            if (slides['second'].votes[0].vote == '0') {
+                                slides['second'].vote.downVote = true;
+                            }
+                        }
+                    };
+
+                    if (slides['third'] != undefined) {
+                        slides['third'].vote = {
+                            upVote: false,
+                            downVote: false
+                        };
+                        if (slides['third'].votes.length > 0) {
+                            if (slides['third'].votes[0].vote == '1') {
+                                slides['third'].vote.upVote = true;
+                            }
+
+                            if (slides['third'].votes[0].vote == '0') {
+                                slides['third'].vote.downVote = true;
+                            }
+                        }
+                    };
+
+                    if (slides['fourth'] != undefined) {
+                        slides['fourth'].vote = {
+                            upVote: false,
+                            downVote: false
+                        };
+                        if (slides['fourth'].votes.length > 0) {
+                            if (slides['fourth'].votes[0].vote == '1') {
+                                slides['fourth'].vote.upVote = true;
+                            }
+
+                            if (slides['fourth'].votes[0].vote == '0') {
+                                slides['fourth'].vote.downVote = true;
+                            }
+                        }
+                    };
+
                 var mobileSlides = $scope.eventData[i];
 
                 if ($window.innerWidth <= 768 ) {
@@ -397,7 +461,9 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
             $scope.nowGet = moment().add(next,'days').format();
         	$scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
 
-            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet)
+            var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
+
+            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
                 .success(function(data){
                     $scope.eventData = data;
                     eventSuccess(data);
@@ -410,7 +476,9 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
             $scope.nowGet = moment().add(next,'days').format();
         	$scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
 
-            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet)
+            var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
+
+            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
                 .success(function(data){
                     $scope.eventData = data;
                     eventSuccess(data);
@@ -469,12 +537,16 @@ cityHapps.factory('getEvents', function($http, ipCookie){
 		},
         eventsDay : function() {
             var startDate = moment().format('YYYY-MM-DD');
-            var endDate = moment().add('1', 'day').format('YYYY-MM-DD');
             var startTime = moment().format();
 
-            // '?start_date=' + startDate
-            //+ '&start_time=' + startTime
-            return $http.get('/events?start_date=' + startDate + "&end_date=" + endDate).success(function(data) {
+            var end = moment().endOf('day').format('YYYY-MM-DD');
+
+            var cookie = ipCookie('user');
+            if (cookie) {
+                userID = cookie.id;
+            }
+
+            return $http.get('/events?user_id='+ userID +'&start_date=' + startDate + "&end_date=" + end).success(function(data) {
                 console.log(data);
             });
         }
@@ -555,8 +627,8 @@ cityHapps.factory('search', function($http){
 });
 
 
-cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', 'userData', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'search', 'ipCookie',
-	function($scope, $window, $rootScope, authService, registerDataService, voteService, userData, authFactory, $http, $modal, $location, search, ipCookie){
+cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'search', 'ipCookie',
+	function($scope, $window, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, search, ipCookie){
 
         //$scope.recEventCount = registerDataService.recEventCount;
 
@@ -609,16 +681,18 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 		if ($rootScope.user) {
 
 			$scope.voteEvent = function(event, num, action) {
-				
+
 				var eventID = event[num].event_id;
 				if (eventID == undefined) {
 					eventID = event[num].id; // Recommended events have event_id, regular events have id
 				}
 
+                console.log(event);
+
 				var userID = $scope.user.id;
 				var upVote = event[num].vote.upVote;
 				var downVote = event[num].vote.downVote;
-				
+
 				var eventVote = -1;
 
 				if (action == 'up') {
@@ -638,7 +712,7 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 					url: '/userEvent',
 					data: {
 						'user_id' : userID,
-						'event_id' : eventID, 
+						'event_id' : eventID,
 						'vote' : eventVote
 					},
 
@@ -653,18 +727,61 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 						// $scope.loggedOut = true;
 					}
 				});
-				
+
 			};
+
+            $scope.simpleVoteEvent = function(event, action) {
+
+                var eventID = event.id;
+
+                console.log(event.vote);
+
+                var userID = $scope.user.id;
+                var upVote = event.vote.upVote;
+                var downVote = event.vote.downVote;
+
+                var eventVote = -1;
+
+                if (action == 'up') {
+                    event.vote.downVote = false;
+                    if (upVote == true) {
+                        eventVote = 1;
+                    }
+                } else { // Downvote changed
+                    event.vote.upVote = false;
+                    if (downVote == true) {
+                        eventVote = 0;
+                    }
+                }
+                $http({
+                    method: "POST",
+                    url: '/userEvent',
+                    data: {
+                        'user_id' : userID,
+                        'event_id' : eventID,
+                        'vote' : eventVote
+                    },
+                    headers : {"Content-Type": "application/json"}
+                }).success(function(data){
+                    if (!data) {
+                        console.log("no vote, man");
+                    } else if(data) {
+                        console.log(data);
+                    }
+                });
+
+            };
 
 		} else {
 
 			$scope.voteEvent = function(event) {
 				$modal.open({
 					templateUrl: "templates/registrationModal.html",
-					controller: 'modalInstanceController', 
+					controller: 'modalInstanceController',
 				});
 			}
 		}
+
 
 		console.log(registerDataService.vote);
 
@@ -1004,27 +1121,6 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal
 
 	};
 
-    //AUTH CHECK
-    // This is how we should do this. Check against /auth/status on every request and if empty pop the modal,
-    // this way Laravel is completely in charge of handling the session cookie.
-    // A lot of SPAs dont account for page reload, but we should for this site.
-
-    //auth.userStatus = function() {
-    //    $rootScope.user = {}
-    //
-    //        $http.get("/auth/status").success(function(data){
-    //            if (data === {}){
-    //                alert('session has expired, please log back in');
-    //            } else {
-    //                $rootScope.$broadcast('loggedIn', data);
-    //                return $rootScope.user;
-    //            }
-    //        }).
-    //        error(function(data){
-    //            alert(data);
-    //        });
-    //};
-
 	return auth;
 
 
@@ -1082,8 +1178,11 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 
 });
 
-cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", 'voteService', "$http", "$modalInstance", 'data', 'num', 'vote', 'ipCookie', 'Facebook',
-		function($scope, registerDataService, voteService, $http, $modalInstance, data, num, vote, ipCookie, Facebook){
+//
+//Handles homepage event modals
+//
+cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", '$rootScope', 'voteService', "$http", "$modalInstance", 'data', 'num', 'vote', 'ipCookie', 'Facebook',
+		function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, ipCookie, Facebook){
 
 		if (num === null || num === undefined) {
 			$scope.data = data;
@@ -1097,16 +1196,72 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
 		$scope.vote = {};
 
-        $scope.shareReveal =  function() {
+            $rootScope.user = ipCookie('user');
 
+            if ($rootScope.user) {
+
+                $scope.voteEvent = function(event, num, action) {
+
+                    var eventID = event.event_id;
+                    if (eventID == undefined) {
+                        eventID = event.id; // Recommended events have event_id, regular events have id
+                    }
+
+                    var userID = $scope.user.id;
+                    var upVote = event.vote.upVote;
+                    var downVote = event.vote.downVote;
+
+                    var eventVote = -1;
+
+                    if (action == 'up') {
+                        event.vote.downVote = false;
+                        if (upVote == true) {
+                            eventVote = 1;
+                        }
+                    } else { // Downvote changed
+                        event.vote.upVote = false;
+                        if (downVote == true) {
+                            eventVote = 0;
+                        }
+                    }
+
+                    $http({
+                        method: "POST",
+                        url: '/userEvent',
+                        data: {
+                            'user_id' : userID,
+                            'event_id' : eventID,
+                            'vote' : eventVote
+                        },
+
+                        headers : {"Content-Type": "application/json"}
+                    }).success(function(data){
+
+                        if (!data) {
+                            console.log("no vote, man");
+                            // $scope.loggedOut = false;;
+                        } else if(data) {
+                            console.log(data);
+                            // $scope.loggedOut = true;
+                        }
+                    });
+
+                };
+
+            } else {
+
+                $scope.voteEvent = function(event) {
+                    $modal.open({
+                        templateUrl: "templates/registrationModal.html",
+                        controller: 'modalInstanceController',
+                    });
+                }
+            }
+
+
+            $scope.shareReveal =  function() {
             $('.share-overlay').fadeToggle();
         };
-
-            //var path = window.location.href.split("/");
-            //var protocol = path[0];
-            //var host = path[2];
-
-
 
         $scope.currentURL = "http://" + window.location.host + "/share/";
 
@@ -1176,7 +1331,6 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 		//The 'vote' service being registered in the controller is what is being resolved by firing the modal, 
 		//thus giving the new template access to it
 
-		//$scope.vote.status = vote;
 		$scope.vote = vote;
 		
 		$scope.ok = function () {
@@ -1190,14 +1344,84 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 ]);
 
 
-cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance", 'data', 'voteService', 'Facebook',
-		function($scope, $modalInstance, data, voteService, Facebook){
+//
+//Handles All event modals not on homepage
+//
+cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance", 'data', '$http', '$rootScope', 'ipCookie', 'voteService', 'Facebook', '$modal',
+		function($scope, $modalInstance, data, $http, $rootScope, ipCookie, voteService, Facebook, $modal){
 			
 		$scope.data = data;
         $scope.description = data.description;
-        $scope.vote = data.vote;
+        //$scope.vote = data.vote;
 
         console.log(data);
+            $rootScope.user = ipCookie('user');
+
+            if ($rootScope.user) {
+                $scope.simpleVoteEvent = function(event, action) {
+
+                    var eventID = event.id;
+
+                    console.log(event.vote);
+
+                    var userID = $scope.user.id;
+                    var upVote = event.vote.upVote;
+                    var downVote = event.vote.downVote;
+
+                    var eventVote = -1;
+
+                    if (action == 'up') {
+                        event.vote.downVote = false;
+                        if (upVote == true) {
+                            eventVote = 1;
+                        }
+                    } else { // Downvote changed
+                        event.vote.upVote = false;
+                        if (downVote == true) {
+                            eventVote = 0;
+                        }
+                    }
+                    $http({
+                        method: "POST",
+                        url: '/userEvent',
+                        data: {
+                            'user_id' : userID,
+                            'event_id' : eventID,
+                            'vote' : eventVote
+                        },
+                        headers : {"Content-Type": "application/json"}
+                    }).success(function(data){
+                        if (!data) {
+                            console.log("no vote, man");
+                        } else if(data) {
+                            console.log(data);
+                        }
+                    });
+
+                };
+
+            } else {
+                $scope.voteEvent = function(event) {
+                    $modal.open({
+                        templateUrl: "templates/registrationModal.html",
+                        controller: 'modalInstanceController',
+                    });
+                }
+            }
+            //if (slides['first'] != undefined) {
+            //    slides['first'].vote = {
+            //        upVote: false,
+            //        downVote: false
+            //    };
+            //    if ($scope.vote.length > 0) {
+            //        if ($scope.vote == '1') {
+            //            $scope.vote.upVote = true;
+            //        }
+            //        if ($scope.vote == '0') {
+            //            slides['first'].vote.downVote = true;
+            //        }
+            //    }
+            //};
 
         $scope.shareReveal =  function() {
 
@@ -1232,7 +1456,6 @@ cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance
             $scope.socialShare = function(url, name, size) {
                 window.open(url, name, size);
             };
-
         }
 ]);
 
@@ -1252,13 +1475,14 @@ cityHapps.factory('getCategories', function($http){
         });
 });
 
-
+//
+//Handles Log in and registration modals
+//
 cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory", "getCategories",
 		function($scope, $modalInstance, $http, registerDataService, authFactory){
 
 		$scope.formData = registerDataService.data;
 
-        //
             $scope.getCategories = function() {
                 $http({
                     method: "GET",
@@ -1327,28 +1551,7 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 ]);
 
 
-// To be removed
-cityHapps.factory('userData', function($rootScope, authService){
-
-	var user = {};
-	
-	user.get = function() {
-		alert("dafuq?");
-	};
-
-	user.setFB = function(fbData) {
-		$rootScope.facebookData = fbData;
-	};
-
-	user.setUser = function(userData) {
-		$rootScope.userData = userData;
-	};
-
-	return user;
-});
-
-
-cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller", "registerDataService", "$http", 'userData', 'authService', '$modal', function($rootScope, $scope, $http, userData, registerDataService, authService, $controller, $modal) {
+cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller", "registerDataService", "$http", 'authService', '$modal', function($rootScope, $scope, $http, registerDataService, authService, $controller, $modal) {
 
 		//$controller('appController', {$scope:$scope});
 
@@ -1458,7 +1661,9 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			$scope.nowGet = moment().add(next,'days').format();
 			$scope.nowDateGet = moment().add(next, 'days').format('YYYY-MM-DD');
 
-			$http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet)
+            var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
+
+			$http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
 				.success(function(data){
 					$scope.eventData = data;
 					drawEvents(data);
@@ -1470,8 +1675,10 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			$scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
 			$scope.nowGet = moment().add(next,'days').format();
 			$scope.nowDateGet = moment().add(next, 'days').format('YYYY-MM-DD');
+
+            var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
 			
-			$http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet)
+			$http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end )
 				.success(function(data){
 					$scope.eventData = data;
 					drawEvents(data);
@@ -1876,6 +2083,8 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
 cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, $rootScope) {
 
+
+
     $scope.now = moment().format("dddd, MMMM Do");
     //Needs to be broken out into a factory
     $scope.nowGet = moment().format();
@@ -1894,15 +2103,15 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
             string = "";
         }
 
-
         // debugger;
         next += 1;
         $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
         $scope.nowGet = moment().add(next,'days').format();
         $scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
-        $scope.endDate = moment().add(next + 1, 'days').format('YYYY-MM-DD');
 
-        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + $scope.endDate + string)
+        var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
+
+        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end + string)
             .success(function(data){
                 $scope.dayEvents = data.events;
                 console.log(data);
@@ -1921,9 +2130,10 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
         $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
         $scope.nowGet = moment().add(next,'days').format();
         $scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
-        $scope.endDate = moment().add(next + 1, 'days').format('YYYY-MM-DD');
 
-        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + $scope.endDate + string)
+        var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
+
+        $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end + string)
             .success(function(data){
                 $scope.dayEvents = data.events;
                 console.log(data);
@@ -1965,7 +2175,6 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
     $scope.clearAll = function() {
         $scope.filterData.categories = {};
-
         $scope.queryString = null;
         $scope.pageCount = 1;
 
@@ -2005,6 +2214,15 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
     var dayEvents = function(data) {
         $scope.dayEvents = data.events;
         $scope.eventGroup =  [];
+        if (data.events.vote.length > 0) {
+            if (data.events.vote == '1') {
+                data.events.vote.upVote = true;
+            }
+
+            if (data.events.vote == '0') {
+                data.events.vote.downVote = true;
+            }
+        }
     };
 
 
