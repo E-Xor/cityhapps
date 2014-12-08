@@ -914,8 +914,7 @@ body {
   .calendar .fc-widget-header {
     display: none; }
   .calendar tr td.fc-event-container {
-    padding: 5px 0;
-    height: 10px; }
+    height: inherit; }
   .calendar td.fc-day-number {
     padding: 7px;
     font-weight: bold;
@@ -942,7 +941,7 @@ body {
   .calendar .fc-other-month {
     opacity: .6; }
   .calendar .fc-day-grid-container {
-    height: 2000px !important; }
+    height: inherit !important; }
   .calendar .fc-ltr .fc-basic-view .fc-day-number {
     text-align: left; }
   .calendar .event-count {

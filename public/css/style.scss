@@ -1209,8 +1209,7 @@ body {
     }
     tr {
       td.fc-event-container {
-        padding: 5px 0;
-        height: 10px;
+        height: inherit;
       }
     }
 
@@ -1251,7 +1250,7 @@ body {
       opacity: .6;
     }
     .fc-day-grid-container {
-      height: 2000px !important;
+      height: inherit !important;
     }
 
     .fc-ltr .fc-basic-view .fc-day-number {
