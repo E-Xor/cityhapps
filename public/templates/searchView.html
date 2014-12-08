@@ -1,24 +1,26 @@
-<div class="grey-wide">
+<div ng-controller="dayController" class="grey-wide">
     <div class="grey-wide">
-    <div class="day-slider-border"></div>
-    <div class="day-slider-container">
-        <div class="row day-slider">
-            <div class="col-sm-12 center">
-                <div class="col-sm-1 col-xs-2 left prev" ng-click="prevDay()">
+        <div class="day-slider-border"></div>
+        <div class="day-slider-container">
+            <div class="row day-slider">
+                <div class="col-sm-12 center">
+                    <div class="col-sm-1 col-xs-2 left prev" ng-click="prevDay()">
+                    </div>
+                    <div class="col-sm-10 col-xs-8">
+                        <div class="search-details">
+                            <h3 class="uppercase main-date inline margin20">{{searchAmount}}</h3>
+                            <h3 class="uppercase inline red main-date margin20">{{searchQuery}}</h3>
+                        </div>
+                    </div>
+                    <div class="col-sm-1 col-xs-2 right next" ng-click="nextDay()">
+
+                    </div>
 
                 </div>
-                <div class="col-sm-10 col-xs-8">
-                    <h3 class="uppercase main-date">{{now}}</h3>
-                </div>
-                <div class="col-sm-1 col-xs-2 right next" ng-click="nextDay()">
-
-                </div>
-
             </div>
         </div>
-    </div>
-    <div class="day-slider-border"></div>
-    <!--<div class="grey-wide">-->
+        <div class="day-slider-border"></div>
+        <!--<div class="grey-wide">-->
         <div class="row view-select">
 
             <div class="col-sm-12">
@@ -36,7 +38,7 @@
                 </div>
 
                 <div class="col-sm-2 margin">
-                        <!-- Additional filtration like most recent to go here -->
+                    <!-- Additional filtration like most recent to go here -->
                 </div>
                 <div class="col-sm-3 col-sm-offset-5">
                     <a ng-if="currentPath !== '/'" ng-class="{active:active('/')}" class="list-icon" href="#/"></a>
@@ -52,14 +54,15 @@
 
         <div class="row event-slider-day">
             <div class="time-group" ng-repeat="event in dayEvents">
-                <div ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour">
-                    <div class="clearfix">
+
+                <div class="col-sm-3 event">
+                    <div class="inline" ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour">
+                        <!--<div class="clearfix">-->
+
+                        <!--</div>-->
+                        <div class="white event-time inline"> {{ event.start_time | dateToISO | date: 'h:mm a' }}</div>
 
                     </div>
-                    <div class="white event-time"> {{ event.start_time | dateToISO | date: 'h:mm a' }}</div>
-
-                </div>
-                <div class="col-sm-3 event">
 
                     <div class="event-inner" ng-animate="'animate'">
                         <div ng-click="eventModal(event, vote.status)">
@@ -81,8 +84,8 @@
                         </div>
                     </div>
                 </div>
-                    <div ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour"></div></div>
-            </div>
+                <div ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour"></div></div>
         </div>
     </div>
+</div>
 

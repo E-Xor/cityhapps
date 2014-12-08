@@ -144,6 +144,9 @@ body {
     border: 2px solid #fff;
     background: url("/img/searchIcon.png") 35px 16px/23px 26px no-repeat; }
 
+.search-details {
+  padding: 10px; }
+
 .wide-search {
   height: 0px;
   display: none;
@@ -950,6 +953,15 @@ body {
     text-shadow: 2px 1px 1px #E24B44;
     width: 11px;
     float: right; }
+
+.fc-content-skeleton tr td {
+  cursor: pointer; }
+.fc-content-skeleton thead {
+  cursor: pointer; }
+
+.fc-day-grid-event > .fc-content {
+  white-space: inherit;
+  background: #FF5C50; }
 
 .register input.ng-invalid.ng-dirty {
   border: 1px solid #FF5C50; }
