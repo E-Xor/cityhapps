@@ -15,7 +15,34 @@ class EventfulController extends BaseController {
 	}
 
 	public function storeEvents() {
-		Eventful::storeEvents();
+		$response = '';
+
+		$eventParams = array();
+
+		$eventParams['page_size'] = '100';
+		$eventParams['page_number'] = '1';
+
+		$pageCount = Eventful::storeEvents($eventParams);
+		$pageCount = 10;
+
+		if ($pageCount != null) {
+			if ((int)$pageCount > 1) {
+				for ($i = 2; $i <= (int)$pageCount; $i++) {
+					$eventParams['page_number'] = $i;
+					$newPageCount = Eventful::storeEvents($eventParams);
+
+					if ($newPageCount != null) {
+						if ((int)$newPageCount != (int)$pageCount) {
+							//$pageCount = $newPageCount;
+						}
+					}
+
+					$response .= $i . "<br />";
+				}
+			}
+		}
+
+		echo $response;
 	}
 
 }

@@ -37,14 +37,39 @@ class StoreEventsCommand extends Command {
 	 */
 	public function fire()
 	{
-		Active::storeEvents();
-		$this->info('Active events stored.');
-		Eventbrite::storeEvents();
-		$this->info('Eventbrite events stored.');
-		Eventful::storeEvents();
+		//Active::storeEvents();
+		//$this->info('Active events stored.');
+		//Eventbrite::storeEvents();
+		//$this->info('Eventbrite events stored.');
+		//Meetup::storeEvents();
+		//$this->info('Meetup events stored.');
+		
+		$eventParams = array();
+
+		$eventParams['page_size'] = '100';
+		$eventParams['page_number'] = '1';
+
+		$pageCount = Eventful::storeEvents($eventParams);
+		$pageCount = 10;
+
+		if ($pageCount != null) {
+			if ((int)$pageCount > 1) {
+				for ($i = 2; $i <= (int)$pageCount; $i++) {
+					$eventParams['page_number'] = $i;
+					$newPageCount = Eventful::storeEvents($eventParams);
+
+					if ($newPageCount != null) {
+						if ((int)$newPageCount != (int)$pageCount) {
+							//$pageCount = $newPageCount;
+						}
+					}
+				}
+			}
+		}
+
 		$this->info('Eventful events stored.');
-		Meetup::storeEvents();
-		$this->info('Meetup events stored.');
+		
+
 		EventRecord::storeEvents();
 		$this->info('All events stored in the Events table.');
 	}
