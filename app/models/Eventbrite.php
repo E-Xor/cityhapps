@@ -16,29 +16,30 @@ class Eventbrite extends Eloquent {
 		return $this->belongsToMany('EventbriteCategory', 'eventbrite_eventbriteCategories', 'eventbrite_id', 'eventbriteCategories_id');
 	}
 
-	public static function storeEvents() {
-
-		//Eventful will return an object but we need an array 
-		function eventbriteObjectToArray($d) {
-			if (is_object($d)) {
-				// Gets the properties of the given object
-				// with get_object_vars function
-				$d = get_object_vars($d);	
-			}
-	 
-			if (is_array($d)) {
-				/*
-				* Return array converted to object
-				* Using __FUNCTION__ (Magic constant)
-				* for recursive call
-				*/
-				return array_map(__FUNCTION__, $d);
-			}
-			else {
-				// Return array
-				return $d;
-			}
+	public static function eventbriteObjectToArray($d) {
+		if (is_object($d)) {
+			// Gets the properties of the given object
+			// with get_object_vars function
+			$d = get_object_vars($d);	
 		}
+ 
+		if (is_array($d)) {
+			/*
+			* Return array converted to object
+			* Using __FUNCTION__ (Magic constant)
+			* for recursive call
+			*/
+			return array_map('Eventbrite::eventbriteObjectToArray', $d);
+		}
+		else {
+			// Return array
+			return $d;
+		}
+	}
+
+	public static function storeEvents($eventParams) {
+
+		$response = '';
 
 		$today = new DateTime();
 
@@ -47,12 +48,21 @@ class Eventbrite extends Eloquent {
 		// (See http://developer.eventbrite.com/)
 		// $token = 'UKNDTMAVPK4A7ACVVLWF';
 
-		$events = file_get_contents('https://www.eventbriteapi.com/v3/events/search/?start_date.range_start='.$start_date.'T00:00:00Z&venue.city=Atlanta&venue.region=GA&venue.country=US&token=UKNDTMAVPK4A7ACVVLWF');
+		$pageNum = 1;
+
+		if ($eventParams['page_number'] != null) {
+			$pageNum = $eventParams['page_number'];
+		}
+
+		//$events = file_get_contents($url);
+
+		$events = file_get_contents('https://www.eventbriteapi.com/v3/events/search/?start_date.range_start='.$start_date.'T00:00:00Z&venue.city=Atlanta&venue.region=GA&venue.country=US&token=UKNDTMAVPK4A7ACVVLWF&page=' . $pageNum);
 
 		$jsonObj = json_decode( $events );  
-		$jsonArray = eventbriteObjectToArray($jsonObj);
+		$jsonArray = Eventbrite::eventbriteObjectToArray($jsonObj);
 
 		$total = count($jsonArray['events']);
+		$response = $jsonArray['pagination']['page_count'];
 
 		$eventbriteCategories = EventbriteCategory::all();
 		
@@ -64,23 +74,6 @@ class Eventbrite extends Eloquent {
 			if ($eventRecords->count() < 1) {
 				$eventRecords->push(new Eventbrite);
 			}
-
-			// $table->string('url'); // Event URL
-			// $table->string('source_id'); // Event ID (from source)
-			// $table->string('event_name'); // Event Name
-			// $table->string('venue_url'); // Event Venue URL
-			// $table->string('venue_name'); // Event Venue Name
-			// $table->string('address'); // Event Location Address
-			// $table->string('city'); // Event Location City
-			// $table->string('state'); // Event Location State
-			// $table->string('zip'); // Event Location Zip
-			// $table->string('description'); // Event Description
-			// $table->string('start_time'); // Event Start Date/Time
-			// $table->string('end_time'); // Event End Date/Time
-			// $table->string('all_day_flag'); // Event All Day Flag
-			// $table->string('event_image_url'); // Event Image
-			// $table->string('latitude'); // Event Latitude
-			// $table->string('longitude'); // Event Longitude
 
 			foreach ($eventRecords as $eventRecord) {
 
@@ -136,6 +129,8 @@ class Eventbrite extends Eloquent {
 
 
 		}
+
+		return $response;
 
 	}
 

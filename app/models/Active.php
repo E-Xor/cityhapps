@@ -16,28 +16,30 @@ class Active extends Eloquent {
 		return $this->belongsToMany('ActiveCategory', 'active_activeCategories', 'active_id', 'activeCategories_id');
 	}
 
-	public static function storeEvents() {
-
-		function activeObjectToArray($d) {
-			if (is_object($d)) {
-				// Gets the properties of the given object
-				// with get_object_vars function
-				$d = get_object_vars($d);	
-			}
-	 
-			if (is_array($d)) {
-				/*
-				* Return array converted to object
-				* Using __FUNCTION__ (Magic constant)
-				* for recursive call
-				*/
-				return array_map(__FUNCTION__, $d);
-			}
-			else {
-				// Return array
-				return $d;
-			}
+	public static function activeObjectToArray($d) {
+		if (is_object($d)) {
+			// Gets the properties of the given object
+			// with get_object_vars function
+			$d = get_object_vars($d);	
 		}
+ 
+		if (is_array($d)) {
+			/*
+			* Return array converted to object
+			* Using __FUNCTION__ (Magic constant)
+			* for recursive call
+			*/
+			return array_map('Active::activeObjectToArray', $d);
+		}
+		else {
+			// Return array
+			return $d;
+		}
+	}
+
+	public static function storeEvents($eventParams) {
+
+		$response = '';
 
 		// Active.com API Events Search (http://api.amp.active.com/v2/search)
 		// API Key = 'f4kzrwzqywvtcyntepb9zt5f';
@@ -47,12 +49,32 @@ class Active extends Eloquent {
 		$start_date = date_sub($today, date_interval_create_from_date_string("30 days"))->format('Y-m-d');
 		//$end_date = date_add($today, date_interval_create_from_date_string("90 days"))->format('Y-m-d');
 
-		$events = file_get_contents('http://api.amp.active.com/v2/search/?start_date='.$start_date.'..&near=Atlanta%2CGA%2CUS&current_page=1&per_page=1000&sort=distance&exclude_children=true&api_key=f4kzrwzqywvtcyntepb9zt5f');
+		$url = 'http://api.amp.active.com/v2/search/?';
+		$url .= 'start_date='.$start_date.'..';
+		$url .= '&near=Atlanta%2CGA%2CUS';
+		$url .= '&sort=distance';
+		$url .= '&exclude_children=true';
+		$url .= '&api_key=f4kzrwzqywvtcyntepb9zt5f';
+
+		if ($eventParams['page_size'] != null) {
+			$url .= '&per_page=' . $eventParams['page_size'];
+		} else {
+			$url .= '&per_page=100';
+		}
+
+		if ($eventParams['page_number'] != null) {
+			$url .= '&current_page=' + $eventParams['page_number'];
+		}
+
+		$events = file_get_contents($url);
+
+		//$events = file_get_contents('http://api.amp.active.com/v2/search/?start_date='.$start_date.'..&near=Atlanta%2CGA%2CUS&current_page=1&per_page=1000&sort=distance&exclude_children=true&api_key=f4kzrwzqywvtcyntepb9zt5f');
 
 		$jsonObj = json_decode( $events );  
-		$jsonArray = activeObjectToArray($jsonObj);
+		$jsonArray = Active::activeObjectToArray($jsonObj);
 
 		$total = count($jsonArray['results']);
+		$response = $jsonArray['total_results'];
 
 		$activeCategories = ActiveCategory::all();
 		
@@ -133,6 +155,8 @@ class Active extends Eloquent {
 			}
 
 		}
+
+		return $response;
 
 	}
 

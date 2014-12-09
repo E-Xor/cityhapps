@@ -18,25 +18,25 @@ class Eventful extends Eloquent {
 
 	//Eventful will return an object but we need an array 
 	public static function eventfulObjectToArray($d) {
-			if (is_object($d)) {
-				// Gets the properties of the given object
-				// with get_object_vars function
-				$d = get_object_vars($d);	
-			}
-	 
-			if (is_array($d)) {
-				/*
-				* Return array converted to object
-				* Using __FUNCTION__ (Magic constant)
-				* for recursive call
-				*/
-				return array_map('Eventful::eventfulObjectToArray', $d);
-			}
-			else {
-				// Return array
-				return $d;
-			}
+		if (is_object($d)) {
+			// Gets the properties of the given object
+			// with get_object_vars function
+			$d = get_object_vars($d);	
 		}
+ 
+		if (is_array($d)) {
+			/*
+			* Return array converted to object
+			* Using __FUNCTION__ (Magic constant)
+			* for recursive call
+			*/
+			return array_map('Eventful::eventfulObjectToArray', $d);
+		}
+		else {
+			// Return array
+			return $d;
+		}
+	}
 
 	public static function storeEvents($eventParams) {
 

@@ -23,7 +23,6 @@ class EventfulController extends BaseController {
 		$eventParams['page_number'] = '1';
 
 		$pageCount = Eventful::storeEvents($eventParams);
-		$pageCount = 10;
 
 		if ($pageCount != null) {
 			if ((int)$pageCount > 1) {
@@ -33,7 +32,7 @@ class EventfulController extends BaseController {
 
 					if ($newPageCount != null) {
 						if ((int)$newPageCount != (int)$pageCount) {
-							//$pageCount = $newPageCount;
+							$pageCount = $newPageCount;
 						}
 					}
 
