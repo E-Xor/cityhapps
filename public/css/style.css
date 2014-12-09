@@ -240,7 +240,8 @@ body {
   .modal-description img {
     width: 100%; }
 
-.categoriesDropdown, .categoriesDropdownMap {
+.categoriesDropdown, .categoriesDropdownMap,
+.categoriesDropdownUser {
   display: none;
   width: 500px;
   position: absolute;
@@ -249,9 +250,12 @@ body {
   padding: 20px;
   border: 4px solid #FF5C50;
   top: 45px; }
-  .categoriesDropdown .active.event-category, .categoriesDropdownMap .active.event-category {
+  .categoriesDropdown .active.event-category, .categoriesDropdownMap .active.event-category,
+  .categoriesDropdownUser .active.event-category {
     background: none; }
-  .categoriesDropdown:after, .categoriesDropdown:before, .categoriesDropdownMap:after, .categoriesDropdownMap:before {
+  .categoriesDropdown:after, .categoriesDropdown:before, .categoriesDropdownMap:after, .categoriesDropdownMap:before,
+  .categoriesDropdownUser:after,
+  .categoriesDropdownUser:before {
     bottom: 100%;
     left: 25%;
     border: solid transparent;
@@ -260,12 +264,14 @@ body {
     width: 0;
     position: absolute;
     pointer-events: none; }
-  .categoriesDropdown:after, .categoriesDropdownMap:after {
+  .categoriesDropdown:after, .categoriesDropdownMap:after,
+  .categoriesDropdownUser:after {
     border-color: rgba(69, 69, 70, 0);
     border-bottom-color: #454546;
     border-width: 10px;
     margin-left: -10px; }
-  .categoriesDropdown:before, .categoriesDropdownMap:before {
+  .categoriesDropdown:before, .categoriesDropdownMap:before,
+  .categoriesDropdownUser:before {
     border-color: rgba(255, 92, 80, 0);
     border-bottom-color: #FF5C50;
     border-width: 16px;
@@ -361,7 +367,8 @@ body {
 .modal-header-event {
   padding: 0; }
 
-.event-category, .categoriesDropdown .event-category, .categoriesDropdownMap .event-category {
+.event-category, .categoriesDropdown .event-category, .categoriesDropdownMap .event-category,
+.categoriesDropdownUser .event-category {
   padding: 10px 5px;
   border: 2px solid #BEBABB;
   color: #BEBABB;
@@ -477,7 +484,7 @@ body {
   color: #fff; }
 
 .main-date {
-  margin-top: 10px; }
+  margin-top: 14px; }
 
 .left.prev {
   height: 50px;
@@ -706,8 +713,6 @@ body {
   text-transform: uppercase;
   font-weight: 700;
   text-shadow: 2px 1px 1px #E24B44; }
-  .buy:hover {
-    color: #fff; }
   .buy.tutorial {
     max-width: 200px;
     padding: 4px 10px;
@@ -742,7 +747,7 @@ body {
     margin-right: -20px;
     margin-top: -122px; }
   .fc-toolbar h2 {
-    font-size: 22px;
+    font-size: 24px;
     text-transform: uppercase;
     margin: 10px 0;
     color: #fff; }
@@ -1080,7 +1085,7 @@ button.create-account[disabled='disabled'] {
     margin-left: 0; }
 
   .carousel-control.right {
-    margin-left: 0; }
+    margin-right: 0; }
 
   .uppercase.center.white.wide-kerning {
     margin: 10px 0;
@@ -1177,13 +1182,23 @@ button.create-account[disabled='disabled'] {
     display: inline-block;
     float: left; }
 
+  .scrollable {
+    overflow: auto;
+    -webkit-transition-property: top, bottom;
+    transition-property: top, bottom;
+    -webkit-transition-duration: .2s, .2s;
+    transition-duration: .2s, .2s;
+    -webkit-transition-timing-function: linear, linear;
+    transition-timing-function: linear, linear;
+    -webkit-overflow-scrolling: touch; }
+
   .event-counter {
     padding: 10px 0; }
 
   .bg-image {
     background-size: inherit; }
 
-  .prev {
+  .left.prev {
     height: 50px;
     cursor: pointer;
     background: url("/img/sliderLeft.png") no-repeat 0px 20px/40px 22px; }
@@ -1191,7 +1206,7 @@ button.create-account[disabled='disabled'] {
   .event-inner {
     height: 425px; }
 
-  .next {
+  .right.next {
     height: 50px;
     cursor: pointer;
     background: url("/img/sliderRight.png") no-repeat 0px 20px/40px 22px; } }

@@ -57,7 +57,7 @@
 						<div class="header-search">
 							<div class="row sm-12">
 								<div class="col-sm-4 center">
-									<a href="/"><img src="/img/logo.png"></a>
+									<a href="#/"><img src="/img/logo.png"></a>
 								</div>
 								<div class="col-sm-4 center logo">
                                     <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
@@ -75,10 +75,17 @@
                                         <div ng-cloak ng-show="user">
                                             <div class="user-info">
                                                 <h5 class="red italic inline accountSignIn" ng-click="helpFade()">help</h5>
-                                                <div>
-                                                    {{user.email}}
-                                                </div>
-                                                <p class="red logout" ng-click="logoutUser()">sign out</p>
+                                                    <div ng-click="categoryToggle()"> {{user.email}} </div>
+                                                    <div class="categoriesDropdownUser" ng-init="getCategoriesUser()">
+                                                        <div class="toggle-controls">
+                                                            <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
+                                                            <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
+                                                        </div>
+                                                        <div ng-repeat="userCategory in userCategories">
+                                                            <label class="event-category" ng-model="filterData.categories[userCategory.id]" ng-change="filterCategoryUser(filterData.categories[userCategory.id])" btn-checkbox>{{category.name}}</label>
+                                                        </div>
+                                                    </div>
+                                                <a class="red logout" ng-click="logoutUser()">sign out</a>
                                             </div>
                                         </div>
                                         <div class="rec-arrow" ng-cloak ng-show="user" ng-click="recToggle()">
@@ -143,12 +150,14 @@
 		<!-- if mobile -->
 		<div ng-if="mobile()">
             <div snap-drawer="right">
-               <ul>
-                   <li><a class="drawer-link" href="" ng-if="user">{{user.email}}</a></li>
-                   <li><a class="drawer-link"  ng-controller="modalController" ng-if="!user" ng-click="loginOpen('md')">Log In</a></li>
-                   <li><a class="drawer-link" ng-if="user" href="">Recommendations Today</a></li>
-                   <li><a class="drawer-link" href="">Sort by Distance</a></li>
-                   <li ng-controller="eventsController">
+               <ul ng-controller="modalController">
+                    <li><a class="drawer-link" href="" ng-click="userCategoryToggle()" ng-if="user">{{user.email}}</a></li>
+                    <li><a class="drawer-link" ng-if="user" ng-click="logoutUser()">sign out</a></li>
+                    <li><a class="drawer-link"  ng-controller="modalController" ng-if="!user" ng-click="registerOpen('md')">Sign Up</a></li>
+                    <li><a class="drawer-link"  ng-controller="modalController" ng-if="!user" ng-click="loginOpen('md')">Log In</a></li>
+                    <li><a class="drawer-link" ng-if="user" href="">Recommendations Today</a></li>
+                    <li><a class="drawer-link" href="">Sort by Distance</a></li>
+                        <li ng-controller="eventsController">
                        <a class="drawer-link" href="" ng-click="categoryToggle()">Show All Categories</a>
                        <div class="categoriesDropdown drawer" ng-init="getCategories()">
                            <div class="toggle-controls">
@@ -163,7 +172,7 @@
                    </li>
                </ul>
             </div>
-			<div class="bg-image" snap-content>
+			<div class="bg-image scrollable" snap-content>
 				<header class="header-container proxima" ng-animate=" 'animate' " >
 					<div class="wide">
 						<div class='wide-search'>
@@ -175,7 +184,7 @@
 						<div class="header-search">
 							<div class="mobile-header">
 								<div class="mobile-search left"></div>	
-								<a href="/"><img class="mobile-logo" src="/img/logo.png"></a>
+								<a href="#/"><img class="mobile-logo" src="/img/logo.png"></a>
 								<div class="mobile-menu right" snap-toggle="right"></div>
 							</div>
 
@@ -188,7 +197,7 @@
 
 			<!-- Get the home body partial -->
 			<div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
-            
+
 			</div>
 		</div>
 	<!-- </div> -->

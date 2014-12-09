@@ -330,7 +330,8 @@ body {
     }
 }
 
-.categoriesDropdown, .categoriesDropdownMap {
+.categoriesDropdown, .categoriesDropdownMap,
+.categoriesDropdownUser {
     display: none;
     width: 500px;
     position: absolute;
@@ -635,7 +636,7 @@ body {
 }
 
 .main-date {
-	margin-top: 10px;
+	margin-top: 14px;
 }
 
 .left {
@@ -935,9 +936,9 @@ body {
     text-transform: uppercase;
     font-weight: 700;
     text-shadow: 2px 1px 1px #E24B44;
-    &:hover {
-      color: #fff;
-    }
+    // &:hover {
+      // color: #fff;
+    // }
     &.tutorial {
       max-width: 200px;
       padding: 4px 10px;
@@ -981,7 +982,7 @@ body {
       margin-top: -122px;
     }
     h2 {
-      font-size: 22px;
+      font-size: 24px;
       text-transform: uppercase;
       margin: 10px 0;
       color: #fff;
@@ -1455,7 +1456,7 @@ button.create-account[disabled='disabled'] {
 	}
 
 	.carousel-control.right {
-		margin-left: 0;
+    margin-right: 0;
 	}
 
 	.uppercase.center.white.wide-kerning {
@@ -1579,6 +1580,17 @@ button.create-account[disabled='disabled'] {
       float: left;
 	}
 
+  .scrollable {
+    overflow: auto;
+    -webkit-transition-property: top, bottom;
+    transition-property: top, bottom;
+    -webkit-transition-duration: .2s, .2s;
+    transition-duration: .2s, .2s;
+    -webkit-transition-timing-function: linear, linear;
+    transition-timing-function: linear, linear;
+    -webkit-overflow-scrolling: touch;
+  }
+
 	.event-counter {
 		padding: 10px 0;
 	}
@@ -1587,7 +1599,7 @@ button.create-account[disabled='disabled'] {
 		background-size: inherit;
 	}
 
-	.prev {
+	.left.prev {
 		height: 50px;
 		cursor: pointer;
 		background: url("/img/sliderLeft.png") no-repeat 0px 20px / 40px 22px;
@@ -1597,7 +1609,7 @@ button.create-account[disabled='disabled'] {
 		height: 425px;
 	}
 
-	.next {
+	.right.next {
 		height: 50px;
 		cursor: pointer;
 		background: url("/img/sliderRight.png") no-repeat 0px 20px / 40px 22px;
