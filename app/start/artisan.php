@@ -12,3 +12,4 @@
 */
 
 Artisan::add(new StoreEventsCommand);
+Artisan::add(new ConvertEventsCommand);

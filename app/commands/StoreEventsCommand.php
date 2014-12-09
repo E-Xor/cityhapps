@@ -37,12 +37,14 @@ class StoreEventsCommand extends Command {
 	 */
 	public function fire()
 	{
+		$this->info("Start time: " . (string)date('l jS \of F Y h:i:s A'));
+		
 		$response = '';
 
 		/* ACTIVE */
 		$eventParams = array();
 
-		$eventParams['page_size'] = '50';
+		$eventParams['page_size'] = '100';
 		$eventParams['page_number'] = '1';
 
 		$loopIndex = 0;
@@ -64,14 +66,14 @@ class StoreEventsCommand extends Command {
 		try {
 			$activeTotalResults = Active::storeEvents($eventParams);
 			if ($activeTotalResults != null) {
-				$activePageCount = Ceil((int)$activeTotalResults / 50);
+				$activePageCount = Ceil((int)$activeTotalResults / 100);
 			}
 			if ($activePageCount <= 1) {
 				$activeComplete = true;
 			}
 		} catch (Exception $e) {
 			$activeComplete = true;
-			$response .= "Active failed at 1<br />";
+			$this->error("Active failed at 1. " . $e->getMessage());
 		}
 
 		try {
@@ -81,7 +83,7 @@ class StoreEventsCommand extends Command {
 			}
 		} catch (Exception $e) {
 			$eventbriteComplete = true;
-			$response .= "Eventbrite failed at 1<br />";
+			$this->error("Eventbrite failed at 1. " . $e->getMessage());
 		}
 
 		try {
@@ -91,20 +93,20 @@ class StoreEventsCommand extends Command {
 			}
 		} catch (Exception $e) {
 			$eventfulComplete = true;
-			$response .= "Eventful failed at 1<br />";
+			$this->error("Eventful failed at 1. " . $e->getMessage());
 		}
 
 		try {
 			$meetupTotalResults = Meetup::storeEvents($eventParams);
 			if ($meetupTotalResults != null) {
-				$meetupPageCount = Ceil((int)$meetupTotalResults / 50);
+				$meetupPageCount = Ceil((int)$meetupTotalResults / 100);
 			}
 			if ($meetupPageCount <= 1) {
 				$meetupComplete = true;
 			}
 		} catch (Exception $e) {
 			$meetupComplete = true;
-			$response .= "Meetup failed at 1<br />";
+			$this->error("Meetup failed at 1. " . $e->getMessage());
 		}
 
 		$loopIndex = $activePageCount;
@@ -118,7 +120,8 @@ class StoreEventsCommand extends Command {
 			$loopIndex = $meetupPageCount;
 		}
 
-		$response .= "A: " . $activePageCount . " EB: " . $eventbritePageCount . " EF: " . $eventfulPageCount . " M: " . $meetupPageCount . "<br />";
+		$this->info("Active pages: " . $activePageCount . " Eventbrite pages: " . $eventbritePageCount . " Eventful pages: " . $eventfulPageCount . " Meetup pages: " . $meetupPageCount);
+		
 		if (!$activeComplete || !$eventbriteComplete || !$eventfulComplete || !$meetupComplete) {
 				
 			for ($i = 2; $i <= (int)$loopIndex; $i++) {
@@ -130,13 +133,12 @@ class StoreEventsCommand extends Command {
 					try {
 						$temp = Active::storeEvents($eventParams);
 
-						$response .= "Active " . $i . "<br />";
-
 						if ($activePageCount <= $i) {
 							$activeComplete = true;
+							$this->info("Active completed at " . $i);
 						}
 					} catch (Exception $e) {
-						$response .= "Active failed at " . $i . "<br />";
+						$this->error("Active FAILED at " . $i . ". " . $e->getMessage());
 						$activeComplete = true;
 					}
 				}
@@ -146,13 +148,12 @@ class StoreEventsCommand extends Command {
 					try {
 						$temp = Eventbrite::storeEvents($eventParams);
 
-						$response .= "Eventbrite " . $i . "<br />";
-
 						if ($eventbritePageCount <= $i) {
 							$eventbriteComplete = true;
+							$this->info("Eventbrite completed at " . $i);
 						}
 					} catch (Exception $e) {
-						$response .= "Eventbrite failed at " . $i . "<br />";
+						$this->error("Eventbrite FAILED at " . $i . ". " . $e->getMessage());
 						$eventbriteComplete = true;
 					}
 				}
@@ -162,13 +163,12 @@ class StoreEventsCommand extends Command {
 					try {
 						$temp = Eventful::storeEvents($eventParams);
 
-						$response .= "Eventful " . $i . "<br />";
-
 						if ($eventfulPageCount <= $i) {
 							$eventfulComplete = true;
+							$this->info("Eventful completed at " . $i);
 						}
 					} catch (Exception $e) {
-						$response .= "Eventful failed at " . $i . "<br />";
+						$this->error("Eventful FAILED at " . $i . ". " . $e->getMessage());
 						$eventfulComplete = true;
 					}
 				}
@@ -178,23 +178,29 @@ class StoreEventsCommand extends Command {
 					try {
 						$temp = Meetup::storeEvents($eventParams);
 
-						$response .= "Meetup " . $i . "<br />";
-
 						if ($meetupPageCount <= $i) {
 							$meetupComplete = true;
+							$this->info("Meetup completed at " . $i);
 						}
 					} catch (Exception $e) {
-						$response .= "Meetup failed at " . $i . "<br />";
+						$this->error("Meetup FAILED at " . $i . ". " . $e->getMessage());
 						$meetupComplete = true;
 					}
 				}
+
+				$this->info("Completed page loads for: " . (string)$i . " at " . (string)date('l jS \of F Y h:i:s A'));
 			}
 
 		}
-		
 
-		//EventRecord::storeEvents();
-		//$this->info('All events stored in the Events table.');
+		$this->info("API loading completed at: " . (string)date('l jS \of F Y h:i:s A'));
+		
+		try {
+			EventRecord::storeEvents();
+			$this->info('All events stored in the Events table at: ' . (string)date('l jS \of F Y h:i:s A'));
+		} catch (Exception $e) {
+			$this->error("EventRecord storeEvents failed to complete. " . $e->getMessage());
+		}
 	}
 
 }

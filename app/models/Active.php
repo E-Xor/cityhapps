@@ -63,7 +63,7 @@ class Active extends Eloquent {
 		}
 
 		if ($eventParams['page_number'] != null) {
-			$url .= '&current_page=' + $eventParams['page_number'];
+			$url .= '&current_page=' . $eventParams['page_number'];
 		}
 
 		$events = file_get_contents($url);

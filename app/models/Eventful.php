@@ -65,7 +65,7 @@ class Eventful extends Eloquent {
 		}
 
 		if ($eventParams['page_number'] != null) {
-			$url .= '&page_number=' + $eventParams['page_number'];
+			$url .= '&page_number=' . $eventParams['page_number'];
 		}
 
 		$events = file_get_contents($url);

@@ -25,9 +25,13 @@ class MeetupController extends BaseController {
 		$totalResults = Meetup::storeEvents($eventParams);
 		$pageCount = null;
 
+		$response .= "Total results: " . (string)$totalResults . "<br />";
+
 		if ($totalResults != null) {
 			$pageCount = Ceil((int)$totalResults / 50);
 		}
+
+		$response .= "Page count: " . (string)$pageCount . "<br />";
 
 		if ($pageCount != null) {
 			if ((int)$pageCount > 1) {
@@ -36,6 +40,8 @@ class MeetupController extends BaseController {
 					$newTotalResults = Meetup::storeEvents($eventParams);
 
 					$response .= $i . "<br />";
+
+					sleep(5);
 				}
 			}
 		}
