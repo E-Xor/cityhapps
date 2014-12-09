@@ -325,7 +325,6 @@ class EventRecord extends Eloquent {
 		echo("Meetup events stored.<br />");
 		*/
 		
-
 		EventRecord::storeActiveEvents();
 		EventRecord::storeEventbriteEvents();
 		EventRecord::storeEventfulEvents();
@@ -333,7 +332,7 @@ class EventRecord extends Eloquent {
 		
 	}
 
-	private static function storeActiveEvents() {
+	public static function storeActiveEvents() {
 
 		$events = Active::all();
 
@@ -402,7 +401,7 @@ class EventRecord extends Eloquent {
 
 	}
 
-	private static function storeEventbriteEvents() {
+	public static function storeEventbriteEvents() {
 
 		$events = Eventbrite::all();
 
@@ -468,7 +467,7 @@ class EventRecord extends Eloquent {
 
 	}
 
-	private static function storeEventfulEvents() {
+	public static function storeEventfulEvents() {
 
 		$events = Eventful::all();
 
@@ -536,7 +535,7 @@ class EventRecord extends Eloquent {
 
 	}
 
-	private static function storeMeetupEvents() {
+	public static function storeMeetupEvents() {
 
 		$events = Meetup::all();
 

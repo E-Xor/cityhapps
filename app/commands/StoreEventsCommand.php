@@ -71,7 +71,7 @@ class StoreEventsCommand extends Command {
 			}
 		} catch (Exception $e) {
 			$activeComplete = true;
-			$response .= "Active failed at 1<br />";
+			$this->error("Active failed at 1. " . $e->getMessage());
 		}
 
 		try {
@@ -81,7 +81,7 @@ class StoreEventsCommand extends Command {
 			}
 		} catch (Exception $e) {
 			$eventbriteComplete = true;
-			$response .= "Eventbrite failed at 1<br />";
+			$this->error("Eventbrite failed at 1. " . $e->getMessage());
 		}
 
 		try {
@@ -91,7 +91,7 @@ class StoreEventsCommand extends Command {
 			}
 		} catch (Exception $e) {
 			$eventfulComplete = true;
-			$response .= "Eventful failed at 1<br />";
+			$this->error("Eventful failed at 1. " . $e->getMessage());
 		}
 
 		try {
@@ -104,7 +104,7 @@ class StoreEventsCommand extends Command {
 			}
 		} catch (Exception $e) {
 			$meetupComplete = true;
-			$response .= "Meetup failed at 1<br />";
+			$this->error("Meetup failed at 1. " . $e->getMessage());
 		}
 
 		$loopIndex = $activePageCount;
@@ -136,7 +136,7 @@ class StoreEventsCommand extends Command {
 							$this->info("Active completed at " . $i);
 						}
 					} catch (Exception $e) {
-						$this->info("Active FAILED at " . $i);
+						$this->error("Active FAILED at " . $i . ". " . $e->getMessage());
 						$activeComplete = true;
 					}
 				}
@@ -151,7 +151,7 @@ class StoreEventsCommand extends Command {
 							$this->info("Eventbrite completed at " . $i);
 						}
 					} catch (Exception $e) {
-						$this->info("Eventbrite FAILED at " . $i);
+						$this->error("Eventbrite FAILED at " . $i . ". " . $e->getMessage());
 						$eventbriteComplete = true;
 					}
 				}
@@ -166,7 +166,7 @@ class StoreEventsCommand extends Command {
 							$this->info("Eventful completed at " . $i);
 						}
 					} catch (Exception $e) {
-						$this->info("Eventful FAILED at " . $i);
+						$this->error("Eventful FAILED at " . $i . ". " . $e->getMessage());
 						$eventfulComplete = true;
 					}
 				}
@@ -181,7 +181,7 @@ class StoreEventsCommand extends Command {
 							$this->info("Meetup completed at " . $i);
 						}
 					} catch (Exception $e) {
-						$this->info("Meetup FAILED at " . $i);
+						$this->error("Meetup FAILED at " . $i . ". " . $e->getMessage());
 						$meetupComplete = true;
 					}
 				}
@@ -193,8 +193,12 @@ class StoreEventsCommand extends Command {
 
 		$this->info("API loading completed at: " . (string)date('l jS \of F Y h:i:s A'));
 		
-		EventRecord::storeEvents();
-		$this->info('All events stored in the Events table at: ' . (string)date('l jS \of F Y h:i:s A'));
+		try {
+			EventRecord::storeEvents();
+			$this->info('All events stored in the Events table at: ' . (string)date('l jS \of F Y h:i:s A'));
+		} catch (Exception $e) {
+			$this->error("EventRecord storeEvents failed to complete. " . $e->getMessage());
+		}
 	}
 
 }

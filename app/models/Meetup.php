@@ -49,7 +49,7 @@ class Meetup extends Eloquent {
 		$url = 'https://api.meetup.com/2/open_events.json?';
 		$url .= 'city=atlanta&state=GA&country=US';
 		$url .= '&key=45246f1914773661d4c48611911505b';
-		$url .= '&fields=category';
+		$url .= '&fields=category,group_photo';
 
 		if ($eventParams['page_size'] != null) {
 			$url .= '&page=' . $eventParams['page_size'];
@@ -121,9 +121,13 @@ class Meetup extends Eloquent {
 					$eventRecord->duration		=	$jsonArray['results'][$i]['duration'];
 				}
 				$eventRecord->AllDayFlag	=	'';
-				if (isset($jsonArray['results'][$i]['photo_url'])) {
+				
+				if (isset($jsonArray['results'][$i]['group']['group_photo']['highres_link'])) {
+					$eventRecord->photo_url		=	$jsonArray['results'][$i]['group']['group_photo']['highres_link'];
+				} elseif (isset($jsonArray['results'][$i]['photo_url'])) {
 					$eventRecord->photo_url		=	$jsonArray['results'][$i]['photo_url'];
 				}
+				
 				if (isset($jsonArray['results'][$i]['venue']['lat'])) {
 					$eventRecord->lat			=	$jsonArray['results'][$i]['venue']['lat'];
 				}
