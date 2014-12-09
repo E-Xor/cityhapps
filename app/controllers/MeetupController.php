@@ -14,7 +14,33 @@ class MeetupController extends BaseController {
 	}
 
 	public function storeEvents() {
-		Meetup::storeEvents();
+		
+		$response = '';
+
+		$eventParams = array();
+
+		$eventParams['page_size'] = '50';
+		$eventParams['page_number'] = '1';
+
+		$totalResults = Meetup::storeEvents($eventParams);
+		$pageCount = null;
+
+		if ($totalResults != null) {
+			$pageCount = Ceil((int)$totalResults / 50);
+		}
+
+		if ($pageCount != null) {
+			if ((int)$pageCount > 1) {
+				for ($i = 2; $i < (int)$pageCount; $i++) {
+					$eventParams['page_number'] = $i;
+					$newTotalResults = Meetup::storeEvents($eventParams);
+
+					$response .= $i . "<br />";
+				}
+			}
+		}
+
+		echo $response;
 	}
 
 }

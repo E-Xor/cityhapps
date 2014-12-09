@@ -14,7 +14,38 @@ class ActiveController extends BaseController {
 	}
 
 	public function storeEvents() {
-		Active::storeEvents();
+		
+		$response = '';
+
+		$eventParams = array();
+
+		$eventParams['page_size'] = '50';
+		$eventParams['page_number'] = '1';
+
+		$totalResults = Active::storeEvents($eventParams);
+		$pageCount = null;
+
+		if ($totalResults != null) {
+			$pageCount = Ceil((int)$totalResults / 50);
+		}
+
+		if ($pageCount != null) {
+			if ((int)$pageCount > 1) {
+				for ($i = 2; $i <= (int)$pageCount; $i++) {
+					$eventParams['page_number'] = $i;
+					try {
+						$newTotalResults = Active::storeEvents($eventParams);
+
+						$response .= $i . "<br />";
+					} catch (Exception $e) {
+						$response .= 'Skipped ' . $i . "<br />";
+					}
+				}
+			}
+		}
+
+		echo $response;
+
 	}
 
 }
