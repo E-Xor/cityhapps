@@ -59,7 +59,7 @@ class Meetup extends Eloquent {
 
 		if ($eventParams['page_number'] != null) {
 			$offset = (int)$eventParams['page_number'] - 1;
-			$url .= '&offset=' + $offset;
+			$url .= '&offset=' . $offset;
 		}
 
 		$events = file_get_contents($url);
@@ -73,8 +73,7 @@ class Meetup extends Eloquent {
 		$response = $jsonArray['meta']['total_count'];
 	
 		for ($i = 1; $i < $total; $i++ ) {
-			//one of these fields is expecting a string and geting an array
-
+			
 			$checkExisting = Meetup::where('meetupID', '=', $jsonArray['results'][$i]['id']);
 			$eventRecords = $checkExisting->get();
 			

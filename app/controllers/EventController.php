@@ -11,13 +11,7 @@ class EventController extends BaseController {
 
 	public function testEvents() {
 		
-		/*
-		$user = User::find(9);
-		$eventID = '6709';
-
-		$user->events()->attach($eventID, array('vote' => '1'));
-		*/
-		echo ("hi there");
+		EventRecord::storeEvents();
 	}
 
 	public function events() {
