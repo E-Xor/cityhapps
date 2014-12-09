@@ -334,279 +334,285 @@ class EventRecord extends Eloquent {
 
 	public static function storeActiveEvents() {
 
-		$events = Active::all();
+		Active::chunk(200, function($events) {
 
-		foreach ($events as $event) {
+			foreach ($events as $event) {
 
-			if ($event->imageUrlAdr != null) {
+				if ($event->imageUrlAdr != null) {
 
-				$checkExisting = EventRecord::where('source_id', '=', $event->assetGuid);
-				$eventRecords = $checkExisting->get();
-				
-				if ($eventRecords->count() < 1) {
-					$eventRecords->push(new EventRecord);
-				}
-
-				foreach ($eventRecords as $eventRecord) {
+					$checkExisting = EventRecord::where('source_id', '=', $event->assetGuid);
+					$eventRecords = $checkExisting->get();
 					
-					$eventRecord->source = 'Active';
-					$eventRecord->url = $event->urlAdr;
-					$eventRecord->source_id = $event->assetGuid;
-					$eventRecord->event_name = $event->assetName;
-					$eventRecord->venue_url = $event->placeUrlAdr;
-					$eventRecord->venue_name = $event->placeName;
-					$eventRecord->address = $event->addressLine1Txt;
-					$eventRecord->city = $event->cityName;
-					$eventRecord->state = $event->stateProvinceCode;
-					$eventRecord->zip = $event->postalCode;
-					$eventRecord->description = $event->description;
-					
-					$eventRecord->end_time = $event->activityEndDate;
-					$eventRecord->all_day_flag = $event->AllDayFlag;
-					$eventRecord->event_image_url = $event->imageUrlAdr;
-					$eventRecord->latitude = $event->lat;
-					$eventRecord->longitude = $event->lon;
-
-					if ($event->activityStartDate != null) {
-						$eventRecord->event_date = date_format(date_create($event->activityStartDate), "Y-m-d");
-						$eventRecord->start_time = date_format(date_create($event->activityStartDate), "Y-m-d H:i:s");
+					if ($eventRecords->count() < 1) {
+						$eventRecords->push(new EventRecord);
 					}
 
-					if ($event->activityEndDate != null) {
-						$eventRecord->end_time = date_format(date_create($event->activityEndDate), "Y-m-d H:i:s");
-					}
-
-					$eventRecord->save();
-
-					foreach ($event->activeCategories as $category) {
-
-						$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
-						$categoryRecords = $categoryExisting->get();
+					foreach ($eventRecords as $eventRecord) {
 						
-						if ($categoryRecords->count() < 1) {
-							$categoryRecords->push(new EventCategory);
+						$eventRecord->source = 'Active';
+						$eventRecord->url = $event->urlAdr;
+						$eventRecord->source_id = $event->assetGuid;
+						$eventRecord->event_name = $event->assetName;
+						$eventRecord->venue_url = $event->placeUrlAdr;
+						$eventRecord->venue_name = $event->placeName;
+						$eventRecord->address = $event->addressLine1Txt;
+						$eventRecord->city = $event->cityName;
+						$eventRecord->state = $event->stateProvinceCode;
+						$eventRecord->zip = $event->postalCode;
+						$eventRecord->description = $event->description;
+						
+						$eventRecord->end_time = $event->activityEndDate;
+						$eventRecord->all_day_flag = $event->AllDayFlag;
+						$eventRecord->event_image_url = $event->imageUrlAdr;
+						$eventRecord->latitude = $event->lat;
+						$eventRecord->longitude = $event->lon;
+
+						if ($event->activityStartDate != null) {
+							$eventRecord->event_date = date_format(date_create($event->activityStartDate), "Y-m-d");
+							$eventRecord->start_time = date_format(date_create($event->activityStartDate), "Y-m-d H:i:s");
 						}
 
-						foreach ($categoryRecords as $categoryRecord) {
-							$categoryRecord->category_id = $category->category_id;
-							$categoryRecord->event_id = $eventRecord->id;
-							$categoryRecord->save();
+						if ($event->activityEndDate != null) {
+							$eventRecord->end_time = date_format(date_create($event->activityEndDate), "Y-m-d H:i:s");
 						}
+
+						$eventRecord->save();
+
+						foreach ($event->activeCategories as $category) {
+
+							$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+							$categoryRecords = $categoryExisting->get();
+							
+							if ($categoryRecords->count() < 1) {
+								$categoryRecords->push(new EventCategory);
+							}
+
+							foreach ($categoryRecords as $categoryRecord) {
+								$categoryRecord->category_id = $category->category_id;
+								$categoryRecord->event_id = $eventRecord->id;
+								$categoryRecord->save();
+							}
+						}
+
 					}
-
 				}
-			}
 
-		} 
+			} 
+		});
 
 	}
 
 	public static function storeEventbriteEvents() {
 
-		$events = Eventbrite::all();
+		Eventbrite::chunk(200, function($events) {
 
-		foreach ($events as $event) {
+			foreach ($events as $event) {
 
-			if ($event->logo_url != null) {
+				if ($event->logo_url != null) {
 
-				$checkExisting = EventRecord::where('source_id', '=', $event->eventbriteID);
-				$eventRecords = $checkExisting->get();
-				
-				if ($eventRecords->count() < 1) {
-					$eventRecords->push(new EventRecord);
-				}
-
-				foreach ($eventRecords as $eventRecord) {
+					$checkExisting = EventRecord::where('source_id', '=', $event->eventbriteID);
+					$eventRecords = $checkExisting->get();
 					
-					$eventRecord->source = 'Eventbrite';
-					$eventRecord->url = $event->url;
-					$eventRecord->source_id = $event->eventbriteID;
-					$eventRecord->event_name = $event->name_text;
-					$eventRecord->venue_url = $event->venue_resource_uri;
-					$eventRecord->venue_name = $event->venue_name;
-					$eventRecord->address = $event->address_1;
-					$eventRecord->city = $event->city;
-					$eventRecord->state = $event->region;
-					$eventRecord->zip = $event->postal_code;
-					$eventRecord->description = $event->description_text;
-					$eventRecord->all_day_flag = $event->AllDayFlag;
-					$eventRecord->event_image_url = $event->logo_url;
-					$eventRecord->latitude = $event->latitude;
-					$eventRecord->longitude = $event->longitude;
-
-					if ($event->start_local != null) {
-						$eventRecord->event_date = date_format(date_create($event->start_local), "Y-m-d");
-						$eventRecord->start_time = date_format(date_create($event->start_local), "Y-m-d H:i:s");
+					if ($eventRecords->count() < 1) {
+						$eventRecords->push(new EventRecord);
 					}
 
-					if ($event->end_local != null) {
-						$eventRecord->end_time = date_format(date_create($event->end_local), "Y-m-d H:i:s");
-					}
-
-					$eventRecord->save();
-
-					foreach ($event->eventbriteCategories as $category) {
-
-						$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
-						$categoryRecords = $categoryExisting->get();
+					foreach ($eventRecords as $eventRecord) {
 						
-						if ($categoryRecords->count() < 1) {
-							$categoryRecords->push(new EventCategory);
+						$eventRecord->source = 'Eventbrite';
+						$eventRecord->url = $event->url;
+						$eventRecord->source_id = $event->eventbriteID;
+						$eventRecord->event_name = $event->name_text;
+						$eventRecord->venue_url = $event->venue_resource_uri;
+						$eventRecord->venue_name = $event->venue_name;
+						$eventRecord->address = $event->address_1;
+						$eventRecord->city = $event->city;
+						$eventRecord->state = $event->region;
+						$eventRecord->zip = $event->postal_code;
+						$eventRecord->description = $event->description_text;
+						$eventRecord->all_day_flag = $event->AllDayFlag;
+						$eventRecord->event_image_url = $event->logo_url;
+						$eventRecord->latitude = $event->latitude;
+						$eventRecord->longitude = $event->longitude;
+
+						if ($event->start_local != null) {
+							$eventRecord->event_date = date_format(date_create($event->start_local), "Y-m-d");
+							$eventRecord->start_time = date_format(date_create($event->start_local), "Y-m-d H:i:s");
 						}
 
-						foreach ($categoryRecords as $categoryRecord) {
-							$categoryRecord->category_id = $category->category_id;
-							$categoryRecord->event_id = $eventRecord->id;
-							$categoryRecord->save();
+						if ($event->end_local != null) {
+							$eventRecord->end_time = date_format(date_create($event->end_local), "Y-m-d H:i:s");
+						}
+
+						$eventRecord->save();
+
+						foreach ($event->eventbriteCategories as $category) {
+
+							$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+							$categoryRecords = $categoryExisting->get();
+							
+							if ($categoryRecords->count() < 1) {
+								$categoryRecords->push(new EventCategory);
+							}
+
+							foreach ($categoryRecords as $categoryRecord) {
+								$categoryRecord->category_id = $category->category_id;
+								$categoryRecord->event_id = $eventRecord->id;
+								$categoryRecord->save();
+							}
 						}
 					}
 				}
-			}
 
-		} 
+			} 
+		});
 
 	}
 
 	public static function storeEventfulEvents() {
+		DB::connection()->disableQueryLog();
+		//$events = Eventful::all();
 
-		$events = Eventful::all();
+		Eventful::chunk(200, function($events) {
 
-		foreach ($events as $event) {
+			foreach ($events as $event) {
 
-			if ($event->image != null) {
+				if ($event->image != null) {
 
-				$checkExisting = EventRecord::where('source_id', '=', $event->eventful_id);
-				$eventRecords = $checkExisting->get();
-				
-				if ($eventRecords->count() < 1) {
-					$eventRecords->push(new EventRecord);
-				}
-
-				foreach ($eventRecords as $eventRecord) {
+					$checkExisting = EventRecord::where('source_id', '=', $event->eventful_id);
+					$eventRecords = $checkExisting->get();
 					
-					$eventRecord->source = 'Eventful';
-					$eventRecord->url = $event->url;
-					$eventRecord->source_id = $event->eventful_id;
-					$eventRecord->event_name = $event->title;
-					$eventRecord->venue_url = $event->venue_url;
-					$eventRecord->venue_name = $event->venue_name;
-					$eventRecord->address = $event->venue_address;
-					$eventRecord->city = $event->city_name;
-					$eventRecord->state = $event->region_abbr;
-					$eventRecord->zip = $event->postal_code;
-					$eventRecord->description = $event->description;
-					$eventRecord->start_time = $event->start_time;
-					$eventRecord->end_time = $event->stop_time;
-					$eventRecord->all_day_flag = $event->all_day;
-					$eventRecord->event_image_url = $event->image;
-					$eventRecord->latitude = $event->latitude;
-					$eventRecord->longitude = $event->longitude;
-
-					if ($event->start_time != null) {
-						$eventRecord->event_date = date_format(date_create($event->start_time), "Y-m-d");
-						$eventRecord->start_time = date_format(date_create($event->start_time), "Y-m-d H:i:s");
+					if ($eventRecords->count() < 1) {
+						$eventRecords->push(new EventRecord);
 					}
 
-					if ($event->stop_time != null) {
-						$eventRecord->end_time = date_format(date_create($event->stop_time), "Y-m-d H:i:s");
-					}
-
-					$eventRecord->save();
-
-					foreach ($event->eventfulCategories as $category) {
-
-						$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
-						$categoryRecords = $categoryExisting->get();
+					foreach ($eventRecords as $eventRecord) {
 						
-						if ($categoryRecords->count() < 1) {
-							$categoryRecords->push(new EventCategory);
+						$eventRecord->source = 'Eventful';
+						$eventRecord->url = $event->url;
+						$eventRecord->source_id = $event->eventful_id;
+						$eventRecord->event_name = $event->title;
+						$eventRecord->venue_url = $event->venue_url;
+						$eventRecord->venue_name = $event->venue_name;
+						$eventRecord->address = $event->venue_address;
+						$eventRecord->city = $event->city_name;
+						$eventRecord->state = $event->region_abbr;
+						$eventRecord->zip = $event->postal_code;
+						$eventRecord->description = $event->description;
+						$eventRecord->start_time = $event->start_time;
+						$eventRecord->end_time = $event->stop_time;
+						$eventRecord->all_day_flag = $event->all_day;
+						$eventRecord->event_image_url = $event->image;
+						$eventRecord->latitude = $event->latitude;
+						$eventRecord->longitude = $event->longitude;
+
+						if ($event->start_time != null) {
+							$eventRecord->event_date = date_format(date_create($event->start_time), "Y-m-d");
+							$eventRecord->start_time = date_format(date_create($event->start_time), "Y-m-d H:i:s");
 						}
 
-						foreach ($categoryRecords as $categoryRecord) {
-							$categoryRecord->category_id = $category->category_id;
-							$categoryRecord->event_id = $eventRecord->id;
-							$categoryRecord->save();
+						if ($event->stop_time != null) {
+							$eventRecord->end_time = date_format(date_create($event->stop_time), "Y-m-d H:i:s");
+						}
+
+						$eventRecord->save();
+
+						foreach ($event->eventfulCategories as $category) {
+
+							$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+							$categoryRecords = $categoryExisting->get();
+							
+							if ($categoryRecords->count() < 1) {
+								$categoryRecords->push(new EventCategory);
+							}
+
+							foreach ($categoryRecords as $categoryRecord) {
+								$categoryRecord->category_id = $category->category_id;
+								$categoryRecord->event_id = $eventRecord->id;
+								$categoryRecord->save();
+							}
 						}
 					}
 				}
-			}
 
-		} 
+			} 
+		});
 
 	}
 
 	public static function storeMeetupEvents() {
 
-		$events = Meetup::all();
+		Meetup::chunk(200, function($events) {
 
-		foreach ($events as $event) {
+			foreach ($events as $event) {
 
-			if ($event->photo_url != null) {
+				if ($event->photo_url != null) {
 
-				$checkExisting = EventRecord::where('source_id', '=', $event->meetupID)
-										->where('source', '=', 'Meetup');
-				$eventRecords = $checkExisting->get();
-				
-				if ($eventRecords->count() < 1) {
-					$eventRecords->push(new EventRecord);
-				}
-
-				foreach ($eventRecords as $eventRecord) {
+					$checkExisting = EventRecord::where('source_id', '=', $event->meetupID)
+											->where('source', '=', 'Meetup');
+					$eventRecords = $checkExisting->get();
 					
-					$eventRecord->source = 'Meetup';
-					$eventRecord->url = $event->event_url;
-					$eventRecord->source_id = $event->meetupID;
-					$eventRecord->event_name = $event->name;
-					$eventRecord->venue_url = $event->venueURL;
-					$eventRecord->venue_name = $event->venueName;
-					$eventRecord->address = $event->address_1;
-					$eventRecord->city = $event->city;
-					$eventRecord->state = $event->state;
-					$eventRecord->zip = $event->zip;
-					$eventRecord->description = $event->description;
-					$eventRecord->start_time = $event->time;
-					$eventRecord->end_time = ''; // Need to use time, timezone, and duration
-					$eventRecord->all_day_flag = $event->all_day;
-					$eventRecord->event_image_url = $event->photo_url;
-					$eventRecord->latitude = $event->lat;
-					$eventRecord->longitude = $event->lon;
-
-					if ($event->time != null) {
-						if ($event->utc_offset != null) {
-							$seconds = ($event->time + $event->utc_offset) / 1000;
-						} else {
-							$seconds = $event->time / 1000;
-						}
-						$eventRecord->event_date = date("Y-m-d", $seconds);
-						$eventRecord->start_time = date("Y-m-d H:i:s", $seconds);
-
-						if ($event->duration != null) {
-							$endSeconds = $seconds + ($event->duration / 1000);
-							$eventRecord->end_time = date("Y-m-d H:i:s", $endSeconds);
-						}
+					if ($eventRecords->count() < 1) {
+						$eventRecords->push(new EventRecord);
 					}
 
-					$eventRecord->save();
-
-					foreach ($event->meetupCategories as $category) {
-
-						$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
-						$categoryRecords = $categoryExisting->get();
+					foreach ($eventRecords as $eventRecord) {
 						
-						if ($categoryRecords->count() < 1) {
-							$categoryRecords->push(new EventCategory);
+						$eventRecord->source = 'Meetup';
+						$eventRecord->url = $event->event_url;
+						$eventRecord->source_id = $event->meetupID;
+						$eventRecord->event_name = $event->name;
+						$eventRecord->venue_url = $event->venueURL;
+						$eventRecord->venue_name = $event->venueName;
+						$eventRecord->address = $event->address_1;
+						$eventRecord->city = $event->city;
+						$eventRecord->state = $event->state;
+						$eventRecord->zip = $event->zip;
+						$eventRecord->description = $event->description;
+						$eventRecord->start_time = $event->time;
+						$eventRecord->end_time = ''; // Need to use time, timezone, and duration
+						$eventRecord->all_day_flag = $event->all_day;
+						$eventRecord->event_image_url = $event->photo_url;
+						$eventRecord->latitude = $event->lat;
+						$eventRecord->longitude = $event->lon;
+
+						if ($event->time != null) {
+							if ($event->utc_offset != null) {
+								$seconds = ($event->time + $event->utc_offset) / 1000;
+							} else {
+								$seconds = $event->time / 1000;
+							}
+							$eventRecord->event_date = date("Y-m-d", $seconds);
+							$eventRecord->start_time = date("Y-m-d H:i:s", $seconds);
+
+							if ($event->duration != null) {
+								$endSeconds = $seconds + ($event->duration / 1000);
+								$eventRecord->end_time = date("Y-m-d H:i:s", $endSeconds);
+							}
 						}
 
-						foreach ($categoryRecords as $categoryRecord) {
-							$categoryRecord->category_id = $category->category_id;
-							$categoryRecord->event_id = $eventRecord->id;
-							$categoryRecord->save();
+						$eventRecord->save();
+
+						foreach ($event->meetupCategories as $category) {
+
+							$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+							$categoryRecords = $categoryExisting->get();
+							
+							if ($categoryRecords->count() < 1) {
+								$categoryRecords->push(new EventCategory);
+							}
+
+							foreach ($categoryRecords as $categoryRecord) {
+								$categoryRecord->category_id = $category->category_id;
+								$categoryRecord->event_id = $eventRecord->id;
+								$categoryRecord->save();
+							}
 						}
 					}
 				}
-			}
 
-		} 
+			} 
+		});
 
 	}
 

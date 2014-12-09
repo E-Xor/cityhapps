@@ -37,6 +37,8 @@ class StoreEventsCommand extends Command {
 	 */
 	public function fire()
 	{
+		$this->info("Start time: " . (string)date('l jS \of F Y h:i:s A'));
+		
 		$response = '';
 
 		/* ACTIVE */
@@ -118,8 +120,8 @@ class StoreEventsCommand extends Command {
 			$loopIndex = $meetupPageCount;
 		}
 
-		$this->info("Start time: " . (string)date('l jS \of F Y h:i:s A'));
 		$this->info("Active pages: " . $activePageCount . " Eventbrite pages: " . $eventbritePageCount . " Eventful pages: " . $eventfulPageCount . " Meetup pages: " . $meetupPageCount);
+		
 		if (!$activeComplete || !$eventbriteComplete || !$eventfulComplete || !$meetupComplete) {
 				
 			for ($i = 2; $i <= (int)$loopIndex; $i++) {
