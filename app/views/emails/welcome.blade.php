@@ -4,10 +4,14 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h2>Welcome To CityHapps!</h2>
-
+		<h2>Hello!</h2>
+ 
 		<div>
-			Glad you joined!
+			You have successfully created an account! Thanks! <br><br>
 		</div>
+		<div>
+			-Team CityHapps
+		</div>
+
 	</body>
 </html>

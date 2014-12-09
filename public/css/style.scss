@@ -209,6 +209,10 @@ body {
 	}
 }
 
+.nonUniqueHour {
+  height: 20px;
+}
+
 .search-details {
   padding: 10px;
 }
@@ -545,6 +549,10 @@ body {
   font-size: 1.2em;
 }
 
+.finalStep {
+  padding-bottom: 20px;
+}
+
 
 .register, .login {
     height: 100%;
@@ -869,6 +877,10 @@ body {
 	color: #fff;
 	padding: 12px;
 	cursor: pointer;
+}
+
+.fb_iframe_widget span {
+  display: none !important;
 }
 
 .lucida {

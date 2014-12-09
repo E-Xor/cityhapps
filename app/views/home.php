@@ -35,9 +35,11 @@
 </head>
 <div id="fb-root"></div>
 
-<!--    <script>-->
 
-	<body ng-controller="appController" ng-cloak>
+   <!-- default is set to 120 minutes, which our angular cookie is synced to --> 
+    <!-- echo(Config::get('session.lifetime')); -->
+	
+    <body ng-controller="appController" ng-cloak>
 		<div ng-if="!mobile()">
 
 <!--<ng-include src="/public/templates/helpSlider.html"></ng-include>-->
@@ -186,6 +188,7 @@
 
 			<!-- Get the home body partial -->
 			<div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
+            
 			</div>
 		</div>
 	<!-- </div> -->

@@ -29,7 +29,7 @@ App::missing(function($exception) {
 
 });
 
-Route::get('share/{id}', 'SharedEventController@sharedEventPosition' );
+// Route::get('share/{id}', 'SharedEventController@sharedEventPosition' );
 
 Route::get('testEvents', 'EventController@testEvents'); // TODO: Kill this one in production
 Route::get('testShare', 'SharedEventController@testShare'); // TODO: Kill this one in production

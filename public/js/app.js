@@ -505,6 +505,17 @@ cityHapps.filter('uniqueHour', function() {
     };
 });
 
+
+cityHapps.filter('nonUniqueHour', function() {
+    var prevVal = null;
+    return function(input) {
+        if (input == null) {
+            return false;
+        }
+    };
+});
+
+
 cityHapps.factory('voteService', function(){
 
 	var vote = {};
@@ -536,18 +547,18 @@ cityHapps.factory('getEvents', function($http, ipCookie){
 			
 			});
 		},
-        eventsDay : function() {
+        eventsDay : function(time) {
             var startDate = moment().format('YYYY-MM-DD');
             var startTime = moment().format();
 
-            var end = moment().endOf('day').format('YYYY-MM-DD');
+            var end = moment(time).endOf('day').format('YYYY-MM-DD');
 
             var cookie = ipCookie('user');
             if (cookie) {
                 var userID = cookie.id;
             }
 
-            return $http.get('/events?user_id='+ userID +'&start_date=' + startDate + "&end_date=" + end).success(function(data) {
+            return $http.get('/events?user_id='+ userID +'&start_date=' + time + "&end_date=" + end).success(function(data) {
                 console.log(data);
                 //if (data.events.votes.length > 0) {
                 //    if (data.events.vote == '1') {
@@ -623,11 +634,11 @@ cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
 
 
 cityHapps.factory('search', function($http){
-    var now = moment().format('YYYY-MM-d');
+    var now = moment().format('YYYY-MM-DD');
 
     return {
         searchData : function(query){
-            return $http.get("/events?search=" + query + "&start_date=" + now  )
+            return $http.get("/events?search=" + query + "&start_date=" + now )
                 .success(function(data, scope){
                   console.log(data);
 
@@ -696,7 +707,8 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
                 $location.path('/search');
                 search.searchData(query).success(function(data){
                     $scope.$broadcast('search', data);
-                    $scope.searchAmount = data.events.length + " results for ";
+                    $scope.searchAmount = data.events.length +  " results for ";
+                    $scope.searchLength = data.events.length;
                     $scope.searchQuery = query;
                 });
             }
@@ -1051,7 +1063,7 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal
 				localStorage.setItem('user', JSON.stringify(res));
 
                 //$cookieStore.put('user', res);
-                ipCookie('user', res, {expires: 8, expirationUnit: 'hours'});
+                ipCookie('user', res, {expires: 2, expirationUnit: 'hours'});
 
                 var userString = localStorage.getItem('user');
                 var user = angular.fromJson(userString);
@@ -1273,27 +1285,16 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
                 var sharedEvent;
 
-                var userID = ipCookie('user');
-                console.log(userID);
-
+                $scope.user = ipCookie('user');
 
                 if ($scope.user) {
                     var sharedEvent = {
-                        'user_id' : userID.id,
+                        'user_id' : $scope.user.id,
                         'event_id' : event_id,
                         'share_link_key' : text,
                         'share_target_platform' : target
                     }
-                }
-
-                //else {
-                //    sharedEvent = {
-                //        //'user_id' : userID.id,
-                //        'event_id' : event_id,
-                //        'share_link_key' : text,
-                //        'share_target_platform' : target
-                //    }
-                //}
+                } 
 
                 $http.post("/sharedEvent", sharedEvent).success(function(data){
 
@@ -1321,6 +1322,11 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 		};
 	}
 ]);
+
+// cityHapps.controller("shareController", function($scope, $modal, $http, $rootScope, $location, $routeParams){
+
+    
+// });
 
 
 //
@@ -1603,7 +1609,8 @@ cityHapps.config(function($routeProvider, $locationProvider){
             // controller: "calController",
             templateUrl: "templates/searchView.html"
         })
-        .when('/share/:id', {
+        .when("/share/:id", {
+            controller: "dayController",
             templateUrl: "templates/dayView.html"
         })
 		.otherwise({redirectTo: "/"});
@@ -2086,19 +2093,49 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
 });
 
-cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, $rootScope, $location, calDayClick) {
 
 
 
-    var dayEvents = function(data) {
 
-        $scope.dayEvents = data.events;
-        $scope.eventGroup =  [];
+cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, daySliderFactory, $rootScope, $location, calDayClick, $routeParams) {
 
-        $scope.now = moment().format("dddd, MMMM Do");
+
+        $rootScope.now = moment().format("dddd, MMMM, Do");
+
+
+        if ($location.path().indexOf('share') > -1) {
+
+            $http.get("/events?id=" + $routeParams.id).success(function(data){
+
+                $modal.open({
+                    templateUrl: "templates/eventModal.html",
+                    controller: 'simpleModalInstanceController',
+                    resolve: {
+                        data: function() {
+                            return data.events[0];
+                        }
+                    }
+                });
+
+                $rootScope.now = moment(data.events[0].event_date).format("dddd, MMMM, Do");
+                $rootScope.nowShareDate = moment(data.events[0].event_date).format("YYYY-MM-DD");
+
+                    var dayEvents = function(data) {
+                        $scope.dayEvents = data.events;
+                        $scope.eventGroup =  [];
+                    };
+                    
+                getEvents.eventsDay(data.events[0].event_date).success(dayEvents);
+            });
+        } else {
+            $scope.nowGet = moment().format();
+        }
+
+
+        // $scope.now = moment().format("dddd, MMMM Do");
         //Needs to be broken out into a factory
-        $scope.nowGet = moment().format();
-        $scope.nowDateGet = moment().format('YYYY-MM-DD');
+
+        $rootScope.nowDate = moment().format('YYYY-MM-DD');
 
 
         $scope.queryString = null;
@@ -2107,46 +2144,53 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
         $scope.nextDay = function() {
 
+            next += 1;
+
             if ($scope.queryString !== null) {
                 var string = "&" + $scope.queryString;
             } else if ($scope.queryString == null) {
                 string = "";
             }
 
-            next += 1;
-            $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
-            $scope.nowGet = moment().add(next,'days').format();
-            $scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
-
-            var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
-
-            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end + string)
-                .success(function(data){
+             if ($location.path().indexOf('share') > -1) {
+            
+                daySliderFactory.nextDay($rootScope.nowShareDate, next, string).success(function(data, time){
                     $scope.dayEvents = data.events;
-                    console.log(data);
                 });
+
+            } else {
+                daySliderFactory.nextDay($rootScope.nowDate, next, string).success(function(data, time){
+                    $scope.dayEvents = data.events;
+                });
+
+            }
+            
         };
 
         $scope.prevDay = function() {
 
+            next -= 1;
+
             if ($scope.queryString !== null) {
                 var string = "&" + $scope.queryString;
             } else if ($scope.queryString == null) {
                 string = "";
             }
 
-            next -= 1;
-            $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
-            $scope.nowGet = moment().add(next,'days').format();
-            $scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
-
-            var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
-
-            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end + string)
-                .success(function(data){
+            if ($location.path().indexOf('share') > -1) {
+            
+                daySliderFactory.nextDay($rootScope.nowShareDate, next, string).success(function(data, time){
                     $scope.dayEvents = data.events;
-                    console.log(data);
                 });
+
+            } else {
+                daySliderFactory.nextDay($rootScope.nowDate, next, string).success(function(data, time){
+                    $scope.dayEvents = data.events;
+                });
+
+            }
+
+
         };
 
         $scope.categoryToggle = function() {
@@ -2172,14 +2216,18 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
                 }
             }
 
-            $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet +
-            "&page_size=10&" + "end_date=" + $scope.endDate + "&" + $scope.queryString)
-                .success(function(data){
-                    dayEvents(data);
-                    console.log(data);
+            if ($location.path().indexOf('share') > -1) {
+            
+                daySliderFactory.nextDay($rootScope.nowShareDate, next, $scope.queryString).success(function(data, time){
+                    $scope.dayEvents = data.events;
                 });
 
-            console.log($scope.filterData.categories);
+            } else {
+                daySliderFactory.nextDay($rootScope.nowDate, next, $scope.queryString).success(function(data, time){
+                    $scope.dayEvents = data.events;
+                });
+
+            }
         };
 
         $scope.clearAll = function() {
@@ -2189,13 +2237,18 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
             //+ '&page_size=10&page_count=1'
 
-            $http.get("/events?start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + $scope.endDate + "&")
-                .success(function(data){
-                    //$scope.tabEvents = data.events;
-                    dayEvents(data);
-
-                    console.log(data);
+            if ($location.path().indexOf('share') > -1) {
+            
+                daySliderFactory.nextDay($rootScope.nowShareDate, next, $scope.queryString).success(function(data, time){
+                    $scope.dayEvents = data.events;
                 });
+
+            } else {
+                daySliderFactory.nextDay($rootScope.nowDate, next, $scope.queryString).success(function(data, time){
+                    $scope.dayEvents = data.events;
+                });
+
+            }
         };
 
 
@@ -2214,15 +2267,15 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
                 }
             });
         };
-    // $scope.$on('search', function(info, data){
-    //     console.log(data);
-    //     $scope.dayEvents = data.events;
-
-    // });
 
 
 
-    };
+        var dayEvents = function(data) {
+
+            $scope.dayEvents = data.events;
+            $scope.eventGroup =  [];
+
+        };
 
     // $rootScope.$on('calDay', function(info, formatDate){
 
@@ -2231,29 +2284,61 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
     // });
 
 
-    getEvents.eventsDay().success(dayEvents);
-
-
-
-    
-
+    getEvents.eventsDay($rootScope.nowDate).success(dayEvents);
 
 });
 
 
-cityHapps.controller("calDayController", function($scope, getEvents, $modal, $http, getCategories, $rootScope, $location, calDayClick, $routeParams) {
+
+cityHapps.factory("daySliderFactory", function($http, $rootScope){
+    
+    return {
+        nextDay : function(time, next, queryString) {
+            $rootScope.now = moment(time).add(next, 'days').format("dddd, MMMM Do");
+        
+            var startTime = moment(time).add(next,'days').format();
+            var startDate = moment(time).add(next,'days').format('YYYY-MM-DD');
+
+            var end = moment(time).add(next ,'days').endOf('day').format('YYYY-MM-DD');
+
+            return $http.get('/events?start_date=' + startDate + '&start_time=' + startTime + "&end_date=" + end + queryString)
+                .success(function(data){
+
+                    
+                    console.log(data);
+                });
+        }, 
+
+        prevDay : function(time, next, queryString) {
+        
+            $rootScope.now = moment(time).add(next, 'days').format("dddd, MMMM Do");
+
+            var startTime = moment(time).add(next,'days').format();
+            var startDate = moment(time).add(next,'days').format('YYYY-MM-DD');
+
+            var end = moment(time).add(next ,'days').endOf('day').format('YYYY-MM-DD');
+
+            return $http.get('/events?start_date=' + startDate + '&start_time=' + startTime + "&end_date=" + end + queryString)
+                .success(function(data){
+
+                    console.log(data);
+                });
+        }, 
+
+    }
+});
 
 
+cityHapps.controller("calDayController", function($scope, getEvents, $modal, $http, getCategories, $rootScope, $location, $location, 
+    calDayClick, $routeParams, $window, daySliderFactory) {
 
     var dayEvents = function(data) {
 
         $scope.dayEvents = data.events;
         $scope.eventGroup =  [];
-
-        $scope.now = moment($routeParams.date).format("dddd, MMMM Do");
+        $rootScope.now = moment($routeParams.date).format("dddd, MMMM Do");
+        
         //Needs to be broken out into a factory
-        $scope.nowGet = moment($routeParams.date).format();
-        $scope.nowDateGet = moment($routeParams.date).format('YYYY-MM-DD');
 
 
         $scope.queryString = null;
@@ -2262,46 +2347,34 @@ cityHapps.controller("calDayController", function($scope, getEvents, $modal, $ht
 
         $scope.nextDay = function() {
 
+            next += 1;
+
             if ($scope.queryString !== null) {
                 var string = "&" + $scope.queryString;
             } else if ($scope.queryString == null) {
                 string = "";
             }
 
-            next += 1;
-            $scope.now = moment($routeParams.date).add(next, 'days').format("dddd, MMMM Do");
-            $scope.nowGet = moment($routeParams.date).add(next,'days').format();
-            $scope.nowDateGet = moment($routeParams.date).add(next,'days').format('YYYY-MM-DD');
-
-            var end = moment($routeParams.date).add(next ,'days').endOf('day').format('YYYY-MM-DD');
-
-            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end + string)
-                .success(function(data){
-                    $scope.dayEvents = data.events;
-                    console.log(data);
-                });
+            daySliderFactory.nextDay($routeParams.date, next, string).success(function(data, time){
+                $scope.dayEvents = data.events;
+            });
+            
         };
 
         $scope.prevDay = function() {
 
+            next -= 1;
+
             if ($scope.queryString !== null) {
                 var string = "&" + $scope.queryString;
             } else if ($scope.queryString == null) {
                 string = "";
             }
 
-            next -= 1;
-            $scope.now = moment($routeParams.date).add(next, 'days').format("dddd, MMMM Do");
-            $scope.nowGet = moment($routeParams.date).add(next,'days').format();
-            $scope.nowDateGet = moment($routeParams.date).add(next,'days').format('YYYY-MM-DD');
-
-            var end = moment($routeParams.date).add(next ,'days').endOf('day').format('YYYY-MM-DD');
-
-            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end + string)
-                .success(function(data){
-                    $scope.dayEvents = data.events;
-                    console.log(data);
-                });
+            
+            daySliderFactory.prevDay($routeParams.date, next, string).success(function(data, time){
+                $scope.dayEvents = data.events;
+            });
         };
 
         $scope.categoryToggle = function() {
@@ -2369,11 +2442,6 @@ cityHapps.controller("calDayController", function($scope, getEvents, $modal, $ht
                 }
             });
         };
-    // $scope.$on('search', function(info, data){
-    //     console.log(data);
-    //     $scope.dayEvents = data.events;
-
-    // });
 
     };
 

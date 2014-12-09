@@ -62,6 +62,7 @@ class UserController extends \BaseController {
 
 		} else {
 
+
 			$user = new User;
 
 			$user->email = $json['email'];

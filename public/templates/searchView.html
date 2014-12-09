@@ -11,6 +11,9 @@
                             <h3 class="uppercase main-date inline margin20">{{searchAmount}}</h3>
                             <h3 class="uppercase inline red main-date margin20">{{searchQuery}}</h3>
                         </div>
+
+
+
                     </div>
                     <div class="col-sm-1 col-xs-2 right next" ng-click="nextDay()">
 
@@ -51,18 +54,23 @@
 
         </div>
         <div class="day-slider-border"></div>
+        
+        <div ng-if="searchLength == 0">
+            <h1 class="center white margin20 uppercase">No results found</h1>
+        </div>
 
         <div class="row event-slider-day">
-            <div class="time-group" ng-repeat="event in dayEvents">
+            <div class="time-group" ng-repeat="event in dayEvents" >
 
-                <div class="col-sm-3 event">
+                <div class="col-sm-3 event" ng-class=" {'uniqueEvent' : event[$index-1].start_time !== event[$index].start_time }">
+
                     <div class="inline" ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour">
-                        <!--<div class="clearfix">-->
-
-                        <!--</div>-->
-                        <div class="white event-time inline"> {{ event.start_time | dateToISO | date: 'h:mm a' }}</div>
-
+                        <div class="white event-time inline" ng-model="uniqueHour"> {{ event.start_time | dateToISO | date: 'h:mm a' }}</div>
                     </div>
+
+                    <div class="nonUniqueHour" ng-switch-="event.start_time | dateToISO | date: 'h:mm a' | nonUniqueHour">
+                    </div>
+
 
                     <div class="event-inner" ng-animate="'animate'">
                         <div ng-click="eventModal(event, vote.status)">
@@ -87,5 +95,6 @@
                 <div ng-if="event.start_time | dateToISO | date: 'h:mm a' | uniqueHour"></div></div>
         </div>
     </div>
+    <a href="mailto:info@cityhapps.com"><h3 class="center white italic margin20">contact</h3></a>
 </div>
 

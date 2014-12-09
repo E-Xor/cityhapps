@@ -144,6 +144,9 @@ body {
     border: 2px solid #fff;
     background: url("/img/searchIcon.png") 35px 16px/23px 26px no-repeat; }
 
+.nonUniqueHour {
+  height: 20px; }
+
 .search-details {
   padding: 10px; }
 
@@ -407,6 +410,9 @@ body {
 .forgot {
   font-size: 1.2em; }
 
+.finalStep {
+  padding-bottom: 20px; }
+
 .register, .login {
   height: 100%;
   z-index: 10000;
@@ -652,6 +658,9 @@ body {
   color: #fff;
   padding: 12px;
   cursor: pointer; }
+
+.fb_iframe_widget span {
+  display: none !important; }
 
 .lucida {
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
