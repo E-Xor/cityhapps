@@ -99,7 +99,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 							upVote: false, 
 							downVote: false
 						};
-						if (recSlides['first'].recommended_votes.length > 0) {
+						if (recSlides['first'].recommended_votes && recSlides['first'].recommended_votes.length > 0) {
 							if (recSlides['first'].recommended_votes[0].vote == '1') {
 								recSlides['first'].vote.upVote = true;
 							}
@@ -115,7 +115,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 							upVote: false, 
 							downVote: false
 						};
-						if (recSlides['second'].recommended_votes.length > 0) {
+						if (recSlides['second'].recommended_votes && recSlides['second'].recommended_votes.length > 0) {
 							if (recSlides['second'].recommended_votes[0].vote == '1') {
 								recSlides['second'].vote.upVote = true;
 							}
@@ -131,7 +131,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 							upVote: false, 
 							downVote: false
 						};
-						if (recSlides['third'].recommended_votes.length > 0) {
+						if (recSlides['third'].recommended_votes && recSlides['third'].recommended_votes.length > 0) {
 							if (recSlides['third'].recommended_votes[0].vote == '1') {
 								recSlides['third'].vote.upVote = true;
 							}
@@ -147,7 +147,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 							upVote: false, 
 							downVote: false
 						};
-						if (recSlides['fourth'].recommended_votes.length > 0) {
+						if (recSlides['fourth'].recommended_votes && recSlides['fourth'].recommended_votes.length > 0) {
 							if (recSlides['fourth'].recommended_votes[0].vote == '1') {
 								recSlides['fourth'].vote.upVote = true;
 							}
@@ -241,12 +241,12 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                         }
                     };
 
-                    if (slides['second'].votes && slides['second'] !== undefined) {
+                    if (slides['second'] !== undefined) {
                         slides['second'].vote = {
                             upVote: false,
                             downVote: false
                         };
-                        if (slides['second'].votes.length > 0) {
+                        if (slides['second'].votes && slides['second'].votes.length > 0) {
                             if (slides['second'].votes[0].vote == '1') {
                                 slides['second'].vote.upVote = true;
                             }
@@ -257,12 +257,12 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                         }
                     };
 
-                    if (slides['third'].votes && slides['third'] !== undefined) {
+                    if (slides['third'] !== undefined) {
                         slides['third'].vote = {
                             upVote: false,
                             downVote: false
                         };
-                        if (slides['third'].votes.length > 0) {
+                        if (slides['third'].votes &&  slides['third'].votes.length > 0) {
                             if (slides['third'].votes[0].vote == '1') {
                                 slides['third'].vote.upVote = true;
                             }
@@ -273,12 +273,12 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                         }
                     };
 
-                    if (slides['fourth'].votes && slides['fourth'] !== undefined) {
+                    if ( slides['fourth'] !== undefined) {
                         slides['fourth'].vote = {
                             upVote: false,
                             downVote: false
                         };
-                        if (slides['fourth'].votes.length > 0) {
+                        if (slides['fourth'].votes && slides['fourth'].votes.length > 0) {
                             if (slides['fourth'].votes[0].vote == '1') {
                                 slides['fourth'].vote.upVote = true;
                             }
@@ -414,8 +414,22 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
         });
     };
 
-    $scope.filterData = {};
-    $scope.filterData.categories = {};
+    $scope.clearAll = function() {
+        
+        $scope.filterData.categories = {};
+        $scope.filterData = {};
+
+        $scope.queryString = null;
+        $scope.pageCount = 1;
+
+        $http.get("/events?start_time="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count=1')
+            .success(function(data){
+                eventSuccess(data);
+                recommendedEventSuccess(data);
+
+                console.log(data);
+            });
+    }
 
     $scope.filterCategory = function() {
 
@@ -427,16 +441,19 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
         for (var i in $scope.filterData.categories){
             console.log(i);
             if ($scope.filterData.categories[i] == true) {
-                queryString += "category=[]" + i;
+                queryString += "&category=[]" + i ;
                 //+ "&";
             }
         }
 
         $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
             .success(function(data){
-                $scope.eventData = data
+                // $scope.eventData = data;
                 eventSuccess(data);
-                recommendedEventSuccess(data);
+                if ($rootScope.user) {
+                    recommendedEventSuccess(data);   
+                }
+                
 
                 console.log(data);
             });
