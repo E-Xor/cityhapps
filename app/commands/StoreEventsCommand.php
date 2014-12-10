@@ -188,7 +188,7 @@ class StoreEventsCommand extends Command {
 					}
 				}
 
-				$this->info("Completed page loads for: " . (string)$i . " at " . (string)date('l jS \of F Y h:i:s A'));
+				//$this->info("Completed page loads for: " . (string)$i . " at " . (string)date('l jS \of F Y h:i:s A'));
 			}
 
 		}
