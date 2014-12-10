@@ -67,6 +67,9 @@ Route::post('userEvent', 'UserEventController@store');
 
 	Route::post('user/check', 'UserController@check');
 
+	Route::post('updateUserCategories', 'UserController@updateCategories');
+	Route::get('getUserCategories', 'UserController@getUserCategories');
+
 	Route::resource('category', 'CategoryController');
 
 	Route::post('auth/login-fb', 'SessionsController@fbNewLogin');

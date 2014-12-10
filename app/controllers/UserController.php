@@ -95,6 +95,43 @@ class UserController extends \BaseController {
 	}
 
 
+	public function updateCategories()
+	{
+
+		$returnUser = '';
+
+		$json = Input::only('id', 'categories');
+
+		$user = User::find($json['id']);
+
+		$categoriesPaired = $json['categories']; // array in "categoryID": true
+
+		if ($categoriesPaired != '') {
+
+			$categories = array();
+
+			foreach($categoriesPaired as $key => $value) {
+				if ($value == true) {
+					array_push($categories, $key);
+				}
+			}
+
+			$user->categories()->sync($categories);
+		}
+
+	}
+
+	public function getUserCategories()
+	{
+
+		$id = Input::only('id');
+
+		$user = User::with('categories')->find($id);
+
+		return json_encode($user);
+
+	}
+
 
 	public function check() 
 	{
