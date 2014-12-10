@@ -265,9 +265,15 @@ body {
     }
 }
 
-.modal {
-//  position: absolute;
-}
+// .modal { 
+//     position: absolute; 
+//     top: 20px !important; 
+//     right: 3%; 
+//     left: 3%;
+//     width: auto; 
+//     margin: 0; 
+// }
+
 
 .modal-dialog {
 	max-width: 500px;
@@ -1556,7 +1562,7 @@ button.create-account[disabled='disabled'] {
 		float: left;
 	}
 
-  .register {
+  .register, .login {
     padding: 0 5px;
   }
 

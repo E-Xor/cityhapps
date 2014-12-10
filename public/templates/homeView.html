@@ -18,13 +18,13 @@
 							<div class="event-inner" >
 									<div ng-click="recEventModalMobile(event)">
 
-										<div class="event-image" style="background-image: 'url('{{event.event_image_url}}')'; background-size: cover; height: 125px;" >
+										<div class="event-image" style="background-image: url('{{event.event_image_url}}'); background-size: cover; height: 225px;" >
 											
 										</div>
 										<div class="event-details">
 											<h4 class="ellipsis">{{event.event_name | limitTo: 25 }}</h4>
 
-                                            <p>{{event.start_time}}
+                                            <p>{{event.start_time | dateToISO | date: 'h:mm a' | uniqueHour}}
                                                 <a href="{{event.venue_url}}" target="_blank">{{event.venue_name | limitTo: 40}}</a>
                                             </p>
                                         </div>

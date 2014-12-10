@@ -1162,7 +1162,7 @@ button.create-account[disabled='disabled'] {
     padding: 0;
     float: left; }
 
-  .register {
+  .register, .login {
     padding: 0 5px; }
 
   .facebookButton {

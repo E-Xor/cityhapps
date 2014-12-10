@@ -16,7 +16,7 @@
 	        		<div ng-show="register.$invalid && register.$dirty" class="center italic red">Fields in red contain errors</div>
 			        
 			        <div class="registerForm" ng-controller="modalController">
-						<input type="email" placeholder="Email Address" autocomplete="off" ng-remote-validate="/user/check" ng-remote-method="POST" required name="email" class="registerEmail block" ng-model="formData.email">
+						<input type="email" placeholder="Email Address" autocomplete="off" ng-remote-validate="/user/check" ng-remote-method="POST" required name="email" class="registerEmail block" ng-model="formData.email" ng-model-onblur>
 
 						    <span ng-if="register.email.$error.ngRemoteValidate" >
 						        This email already exists, choose another please.
@@ -25,9 +25,9 @@
 						        Please use a minumum of 8 characters.
 						    </span>
 
-						<input type="password" placeholder="Password" name="password" ng-minlength='8' required class="registerPassword block" ng-model="formData.password">
+						<input type="password" placeholder="Password" name="password" ng-minlength='8' required class="registerPassword block" ng-model="formData.password" ng-model-onblur>
 						
-						<input type="password" placeholder="Re-enter Password" name="password2" required ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "class="registerPassword2 block" ng-model="formData.password2">
+						<input type="password" placeholder="Re-enter Password" name="password2" required ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "class="registerPassword2 block" ng-model="formData.password2" ng-model-onblur>
 
 						<span ng-show="registerForm.password2.$error.validator" class="block">Passwords do not match!</span>
 			        

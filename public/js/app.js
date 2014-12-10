@@ -1,5 +1,5 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
-	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 'ngTouch',
+	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 
     'ui.calendar', 'angular.filter', 'ngSanitize', 'ipCookie', 'snap']);
 
 
@@ -441,7 +441,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
         for (var i in $scope.filterData.categories){
             console.log(i);
             if ($scope.filterData.categories[i] == true) {
-                queryString += "&category=[]" + i ;
+                queryString += "&category[]=" + i ;
                 //+ "&";
             }
         }
@@ -631,6 +631,26 @@ cityHapps.factory('getEventsMonthStart', function($http){
    }
 
 });
+
+cityHapps.directive('ngModelOnblur', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        priority: 1, // needed for angular 1.2.x
+        link: function(scope, elm, attr, ngModelCtrl) {
+            if (attr.type === 'radio' || attr.type === 'checkbox') return;
+
+            elm.unbind('input').unbind('keydown').unbind('change');
+            elm.bind('blur', function() {
+                scope.$apply(function() {
+                    ngModelCtrl.$setViewValue(elm.val());
+                });         
+            });
+        }
+    };
+});
+
+
 
 cityHapps.config([
     'FacebookProvider',
