@@ -100,7 +100,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.first.event_name | limitTo: 30 }}</h4>
-									<p class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate' }}</p>
+									<div class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate' }}</div>
                                     <a href="{{event.first.venue_url}}" target="_blank"><p>{{event.first.venue_name | limitTo: 40}}</p></a>
 								</div>
 							</div>
@@ -121,7 +121,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.second.event_name | limitTo: 30}}</h4>
-									<p class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</p>
+									<div class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</div>
                                     <a href="{{event.second.venue_url}}" target="_blank"><p>{{event.second.venue_name | limitTo: 40}}</p></a>
 								</div>
 							</div>
@@ -142,7 +142,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.third.event_name | limitTo: 30}} </h4>
-									<p class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</p>
+									<div class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</div>
                                     <a href="{{event.third.venue_url}}" target="_blank"><p>{{event.third.venue_name | limitTo: 40}}</p></a>
 								</div>
 							</div>
@@ -163,7 +163,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.fourth.event_name | limitTo: 30}}</h4>
-									<p class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</p>
+									<div class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</div>
                                     <a href="{{event.fourth.venue_url}}" target="_blank"><p>{{event.fourth.venue_name | limitTo: 40}}</p></a>
 								</div>
 							</div>
@@ -257,7 +257,7 @@
 									</div>
 									<div class="event-details">
 										<h4 class="">{{event.first.event_name | limitTo: 30}}</h4>
-										<p class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate'}}</p>
+										<div class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate'}}</div>
                                         <a href="{{event.first.venue_url}}" target="_blank"><p>{{event.first.venue_name | limitTo: 40}}</p></a>
 									</div>
 								</div>
@@ -279,7 +279,7 @@
 									</div>
 									<div class="event-details">
 										<h4 class="">{{event.second.event_name | limitTo: 30}}</h4>
-										<p class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</p>
+										<div class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</div>
                                         <a href="{{event.second.venue_url}}" target="_blank"><p>{{event.second.venue_name | limitTo: 40}}</p></a>
 									</div>
 								</div>
@@ -301,7 +301,7 @@
 									</div>
 									<div class="event-details">
 										<h4 class="">{{event.third.event_name | limitTo: 30}} </h4>
-										<p class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</p>
+										<div class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</div>
                                         <a href="{{event.venue_url}}" target="_blank"><p>{{event.third.venue_name | limitTo: 40}}</p></a>
 									</div>
 								</div>
@@ -323,7 +323,7 @@
 									</div>
 									<div class="event-details">
 										<h4 class="">{{event.fourth.event_name | limitTo: 30}}</h4>
-										<p class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</p>
+										<div class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</div>
                                         <a href="{{event.venue_url}}" target="_blank"><p>{{event.fourth.venue_name | limitTo: 40}}</p></a>
 									</div>
 								</div>

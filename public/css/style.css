@@ -208,15 +208,6 @@ body {
   position: relative;
   margin-right: 10px; }
 
-.modal-ios {
-  position: absolute;
-  overflow: visible;
-  overflow-x: visible;
-  overflow-y: visible; }
-
-.modal-backdrop-ios {
-  position: absolute; }
-
 .modal-backdrop {
   background-color: #1E405D; }
   .modal-backdrop.in {
@@ -232,6 +223,8 @@ body {
 
 .modal-content {
   border-radius: 0; }
+  .modal-content .event-category {
+    cursor: default; }
 
 .modal-description {
   padding-bottom: 20px;
@@ -343,7 +336,8 @@ body {
   width: 76px;
   background-size: cover;
   display: inline-block;
-  margin-right: 10px; }
+  margin-right: 10px;
+  cursor: pointer; }
   .share-icon.fb-share, .twitter-share-button.fb-share {
     background: url("/img/shareIcons.png") no-repeat 0 0/259px 76px; }
   .share-icon.twitter-share, .share-icon .twitter-share-button, .twitter-share-button.twitter-share, .twitter-share-button .twitter-share-button {
@@ -694,13 +688,18 @@ body {
   display: block; }
 
 .recs {
-  margin: 0 0 4px 26px; }
+  margin: 0 0 4px 83px; }
 
 .accountCreate {
   padding-right: 15px;
   border-right: 1px solid #fff; }
 
 .accountSignIn {
+  margin-left: 10px;
+  padding-right: 15px;
+  border-right: 1px solid #fff; }
+
+.accountHelp {
   margin-left: 10px; }
 
 .buy {

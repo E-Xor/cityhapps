@@ -5,17 +5,6 @@ var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.vali
 
 cityHapps.controller("eventsController", function($scope, $rootScope, $http, $filter, $modal, registerDataService, voteService, ipCookie, getEvents, getRecommendedEvents, $window, getCategories) {
 
-
-	$scope.formatAMPM = function(date) {
-		var hours = date.getHours();
-		var minutes = date.getMinutes();
-		var ampm = hours >= 12 ? 'pm' : 'am';
-		hours = hours % 12;
-		hours = hours ? hours : 12; // the hour '0' should be '12'
-		minutes = minutes < 10 ? '0'+minutes : minutes;
-		var strTime = hours + ':' + minutes + ' ' + ampm;
-		return strTime;		
-	};
 		$scope.mobile = function() {
 			if ($window.innerWidth <= 768 ) {
 				return true;
@@ -911,65 +900,6 @@ cityHapps.formData = {};
 
 cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "registerDataService", "$timeout", "authFactory", "Facebook", 
 	function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook ){
-
-        //modal inputs on mobile
-
-        $(function(){
-            //$(".register input").on("click", function(){
-            //    alert('this is firing');
-            //});
-
-            if( navigator.userAgent.match(/iPhone|iPad|iPod/i) ) {
-
-                var scrollLocation = $(window).scrollTop();
-
-                $('.modal').on('shown.bs.modal', function() {
-                    $('.modal').removeClass("fade");
-                    setTimeout(function () {
-                        $('.modal')
-                            .addClass('modal-ios')
-                            .height($(window).height())
-                            .css({'margin-top': scrollLocation + 'px'});
-                    }, 0);
-                });
-
-                $('input').on('blur', function(){
-                    setTimeout(function() {
-                        // This causes iOS to refresh, fixes problems when virtual keyboard closes
-                        $(window).scrollLeft(0);
-
-                        var $focused = $(':focus');
-                        // Needed in case user clicks directly from one input to another
-                        if(!$focused.is('input')) {
-                            // Otherwise reset the scoll to the top of the modal
-                            $(window).scrollTop(scrollLocation);
-                        }
-                    }, 0);
-                })
-
-            }
-        });
-
-        if ('createTouch' in document)
-        {
-            try
-            {
-                var ignore = /:hover/;
-                for (var i=0; i<document.styleSheets.length; i++)
-                {
-                    var sheet = document.styleSheets[i];
-                    for (var j=sheet.cssRules.length-1; j>=0; j--)
-                    {
-                        var rule = sheet.cssRules[j];
-                        if (rule.type === CSSRule.STYLE_RULE && ignore.test(rule.selectorText))
-                        {
-                            sheet.deleteRule(j);
-                        }
-                    }
-                }
-            }
-            catch(e){}
-        }
 
 
 	//Facebook Auth

@@ -72,7 +72,7 @@
                                             <h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
                                             <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
                                             <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
-                                            <h5 class="red italic inline accountSignIn" ng-click="helpFade()">help</h5>
+                                            <h5 class="red italic inline accountHelp" ng-click="helpFade()">help</h5>
                                         </div>
                                         <div ng-cloak ng-show="user">
                                             <div class="user-info">
