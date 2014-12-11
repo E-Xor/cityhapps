@@ -164,14 +164,17 @@ class EventRecord extends Eloquent {
 	}
 
 	public function scopeStartTime($query, $startTime) {
+		/*
 		if ($startTime != null) {
-			return $query; //->where('end_time', '>', $startTime); // Nothing happening here yet
+			return $query->where('end_time', '>=', $startTime);
 		} else {
 			return $query;
 		}
+		*/
 	}
 
 	public function scopeDateRange($query, $startDate, $endDate) {
+
 		if ($startDate != null) {
 			$query->where('event_date', '>=', $startDate);
 		} 
@@ -588,6 +591,10 @@ class EventRecord extends Eloquent {
 							if ($event->duration != null) {
 								$endSeconds = $seconds + ($event->duration / 1000);
 								$eventRecord->end_time = date("Y-m-d H:i:s", $endSeconds);
+							} else {
+								// According to Meetup documentation, events with no duration should be assumed to be 3 hours long
+								$endSeconds = $seconds + (3*60*60);
+								$eventRecord->end_time = $eventRecord->end_time = date("Y-m-d H:i:s", $endSeconds);
 							}
 						}
 
