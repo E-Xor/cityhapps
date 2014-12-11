@@ -221,9 +221,9 @@ body {
 .modal-body-sign-in {
   padding: 0 30px 0 30px; }
 
-.modal-content {
+.event-modal {
   border-radius: 0; }
-  .modal-content .event-category {
+  .event-modal .event-category {
     cursor: default; }
 
 .modal-description {
@@ -1056,6 +1056,9 @@ button.create-account[disabled='disabled'] {
 .left {
   float: left; }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .user-info {
+    width: 130px; } }
 @media screen and (max-width: 768px) {
   html, body {
     overflow: hidden; }

@@ -81,6 +81,7 @@
                                                     <div class="categoriesDropdownUser">
                                                         <div class="toggle-controls">
                                                             <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
+                                                            <div class="left red uppercase bold pointer">Edit your categories here</div>
                                                         </div>
                                                         <div ng-repeat="category in categories">
                                                             <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>

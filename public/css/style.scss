@@ -313,7 +313,7 @@ body {
   padding: 0 30px 0 30px;
 }
 
-.modal-content {
+.event-modal {
   border-radius: 0;
   .event-category {
     cursor: default;
@@ -1415,6 +1415,14 @@ button.create-account[disabled='disabled'] {
 
 .left {
 	float: left;
+}
+
+//iPad
+
+@media screen and (min-width : 768px) and (max-width : 1024px) {
+  .user-info {
+    width: 130px;
+  }
 }
 
 
