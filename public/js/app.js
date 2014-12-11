@@ -13,6 +13,15 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 			}
 		};
 
+        var userID = null;
+
+        var cookie = ipCookie('user');
+        if (cookie) {
+            userID = cookie.id;
+        }
+
+        $scope.userID = userID;
+
         //will only happen on mobile because desktop version redirects to day view
         $scope.$on('search', function(info, data){
             console.log(data);
@@ -196,7 +205,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
             $scope.eventCount = data.meta.count;
 
 			if ($window.innerWidth > 768) {
-
+                
 				$scope.slideGroup = [];
 
 				var i;
@@ -278,95 +287,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                         }
                     };
 
-                var mobileSlides = $scope.eventData[i];
-
-                if ($window.innerWidth <= 768 ) {
-                    $scope.slideGroup.push(mobileSlides);
-
-                    $scope.eventModalMobile = function(data) {
-
-                        $modal.open({
-                            templateUrl: "templates/eventModal.html",
-                            controller: 'simpleModalInstanceController',
-                            resolve: {
-                                data: function() {
-                                    return data;
-                                },
-                            }
-                        });
-                    };
-
-                } else {
-
-                    // $scope.slideGroup.push(slides);
-
-                    if (slides['first'] != undefined) {
-                        slides['first'].vote = {
-                            upVote: false,
-                            downVote: false
-                        };
-                        if (slides['first'].vote.length > 0) {
-                            if (slides['first'].votes[0].vote == '1') {
-                                slides['first'].vote.upVote = true;
-                            }
-
-                            if (slides['first'].votes[0].vote == '0') {
-                                slides['first'].vote.downVote = true;
-                            }
-                        }
-                    };
-
-                    if (slides['second'] != undefined) {
-                        slides['second'].vote = {
-                            upVote: false,
-                            downVote: false
-                        };
-                        if (slides['second'].vote.length > 0) {
-                            if (slides['second'].votes[0].vote == '1') {
-                                slides['second'].vote.upVote = true;
-                            }
-
-                            if (slides['second'].votes[0].vote == '0') {
-                                slides['second'].vote.downVote = true;
-                            }
-                        }
-                    };
-
-                    if (slides['third'] != undefined) {
-                        slides['third'].vote = {
-                            upVote: false,
-                            downVote: false
-                        };
-                        if (slides['third'].vote.length > 0) {
-                            if (slides['third'].votes[0].vote == '1') {
-                                slides['third'].vote.upVote = true;
-                            }
-
-                            if (slides['third'].votes[0].vote == '0') {
-                                slides['third'].vote.downVote = true;
-                            }
-                        }
-                    };
-
-                    if (slides['fourth'] != undefined) {
-                        slides['fourth'].vote = {
-                            upVote: false,
-                            downVote: false
-                        };
-                        if (slides['fourth'].vote.length > 0) {
-                            if (slides['fourth'].votes[0].vote == '1') {
-                                slides['fourth'].vote.upVote = true;
-                            }
-
-                            if (slides['fourth'].votes[0].vote == '0') {
-                                slides['fourth'].vote.downVote = true;
-                            }
-                        }
-                    };
-                }
-
-
-
 			}
 			
 		}
@@ -411,7 +331,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
         $scope.queryString = null;
         $scope.pageCount = 1;
 
-        $http.get("/events?start_time="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count=1')
+        $http.get("/events?user_id=" + $scope.userID + "&start_time="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count=1')
             .success(function(data){
                 eventSuccess(data);
                 recommendedEventSuccess(data);
@@ -435,7 +355,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
             }
         }
 
-        $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
+        $http.get("/events?" + "user_id=" + $scope.userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
             .success(function(data){
                 // $scope.eventData = data;
                 eventSuccess(data);
@@ -476,7 +396,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
             var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
 
-            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
+            $http.get('/events?user_id=' + $scope.userID + '&start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
                 .success(function(data){
                     $scope.eventData = data;
                     eventSuccess(data);
@@ -491,7 +411,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
             var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
 
-            $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
+            $http.get('/events?user_id=' + $scope.userID + 'start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
                 .success(function(data){
                     $scope.eventData = data;
                     eventSuccess(data);
@@ -621,10 +541,17 @@ var firstOfMonth = moment().startOf('month').format('YYYY-MM-DD');
 var endOfMonth = moment().endOf('month').format('YYYY-MM-DD');
 var maxPerDay = 5;
 
-cityHapps.factory('getEventsMonthStart', function($http){
+cityHapps.factory('getEventsMonthStart', function($http, ipCookie){
    return  {
        events : function(){
-           return $http.get('/events?start_date='+ firstOfMonth + '&end_date=' + endOfMonth + '&max_per_day=' + maxPerDay).success(function(data){
+           var userID = null;
+
+            var cookie = ipCookie('user');
+            if (cookie) {
+                userID = cookie.id;
+            }
+
+           return $http.get('/events?user_id=' + userID + '&start_date='+ firstOfMonth + '&end_date=' + endOfMonth + '&max_per_day=' + maxPerDay).success(function(data){
 
            });
        }
@@ -676,12 +603,19 @@ cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
 }]);
 
 
-cityHapps.factory('search', function($http){
+cityHapps.factory('search', function($http, ipCookie){
     var now = moment().format('YYYY-MM-DD');
 
     return {
         searchData : function(query){
-            return $http.get("/events?search=" + query + "&start_date=" + now )
+            var userID = null;
+
+            var cookie = ipCookie('user');
+            if (cookie) {
+                userID = cookie.id;
+            }
+
+            return $http.get("/events?user_id=" + userID + "&search=" + query + "&start_date=" + now )
                 .success(function(data, scope){
                   console.log(data);
 
@@ -690,12 +624,19 @@ cityHapps.factory('search', function($http){
     };
 });
 
-cityHapps.factory('calDayClick', function($http){
+cityHapps.factory('calDayClick', function($http, ipCookie){
     var now = moment().format('YYYY-MM-d');
 
     return {
         dateClicked : function(day){
-            return $http.get('/events?start_date=' + day + "&end_date=" + day)
+            var userID = null;
+
+            var cookie = ipCookie('user');
+            if (cookie) {
+                userID = cookie.id;
+            }
+
+            return $http.get('/events?user_id=' + userID + '&start_date=' + day + "&end_date=" + day)
                 .success(function(data){
                     console.log(data);            
             });
@@ -763,6 +704,18 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
                 
                 $scope.filterCategoryUser = function() {
 
+                    var userID = null;
+
+                    var cookie = ipCookie('user');
+                    if (cookie) {
+                        userID = cookie.id;
+                    }
+
+
+                    $scope.nowGet = moment().format();
+                    $scope.nowDateGet = moment().format('YYYY-MM-DD');
+
+                    var queryString = '';
 
                     for (var i in $scope.filterData.categories){
                         console.log(i);
@@ -772,6 +725,11 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
                         }
                     }
 
+                    $http.get("/events?user_id=" + userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
+                        .success(function(data){
+                            $scope.eventData = data
+                            eventSuccess(data);
+                            recommendedEventSuccess(data);
 
                     console.log($scope.filterData.categories);
                 }
@@ -1741,8 +1699,8 @@ cityHapps.config(function($routeProvider, $locationProvider){
 });
 
 
-cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal', '$log', '$http', 'getCategories',
-	function($scope, GoogleMapApi, getEvents, $modal, $log, $http, getCategories) {
+cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal', '$log', '$http', 'getCategories', 'ipCookie', 
+	function($scope, GoogleMapApi, getEvents, $modal, $log, $http, getCategories, ipCookie) {
 	
 	//handle tabs inside mapController
     $scope.ifLimit = function(length) {
@@ -1756,6 +1714,14 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 		// { title:'Activities', content:'Dynamic content 2' }
 	];
 
+    var userID = null;
+
+    var cookie = ipCookie('user');
+    if (cookie) {
+        userID = cookie.id;
+    }
+
+    $scope.userID = userID;
 
 	$scope.scrollTop = function() {
 		document.body.scrollTop = 0;
@@ -1796,7 +1762,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
             var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
 
-			$http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
+			$http.get('/events?user_id = ' + $scope.userID + '&start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
 				.success(function(data){
 					$scope.eventData = data;
 					drawEvents(data);
@@ -1811,7 +1777,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
             var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
 			
-			$http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end )
+			$http.get('/events?user_id = ' + $scope.userID + '&start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end )
 				.success(function(data){
 					$scope.eventData = data;
 					drawEvents(data);
@@ -1910,7 +1876,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
             $scope.nowDateGet = moment().add(next, 'days').format('YYYY-MM-DD');
 
-			$http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count='+ $scope.pageCount + string ).success(function(pagedEvents){
+			$http.get('/events?user_id=' + $scope.userID + '&start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count='+ $scope.pageCount + string ).success(function(pagedEvents){
 				console.log(pagedEvents.events);
 				$scope.tabEvents = pagedEvents.events;
 			});
@@ -1931,7 +1897,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
                 var string = "";
             }
 
-			$http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count='+ $scope.pageCount + "&" + string).success(function(pagedEvents){
+			$http.get('/events?user_id=' + $scope.userID + '&start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count='+ $scope.pageCount + "&" + string).success(function(pagedEvents){
 				$log.info(pagedEvents.events);
 				$scope.tabEvents = pagedEvents.events;
 			});
@@ -1965,7 +1931,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
             $scope.queryString = null;
             $scope.pageCount = 1;
 
-            $http.get("/events?start_time="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count=1')
+            $http.get("/events?user_id=" + $scope.userID + "&start_time="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count=1')
                 .success(function(data){
                     $scope.tabEvents = data.events;
                     //drawEvents(data.events);
@@ -1990,7 +1956,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
                 }
             }
 
-            $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=" + $scope.pageCount + "&page_size=10&" + $scope.queryString)
+            $http.get("/events?" + "user_id=" + $scope.userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=" + $scope.pageCount + "&page_size=10&" + $scope.queryString)
                 .success(function(data){
                     $scope.tabEvents = data.events;
                     //drawEvents(data.events);
@@ -2039,14 +2005,21 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 	
 }]);
 
-cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal, $rootScope, $http, getCategories, getEventsMonthStart, $location){
+cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal, $rootScope, $http, getCategories, getEventsMonthStart, $location, ipCookie){
 
 	$scope.alertTest = function() {
 		//alert('firing on click');
 	}
 
     //Needs to be broken out into a factory
+    var userID = null;
 
+    var cookie = ipCookie('user');
+    if (cookie) {
+        userID = cookie.id;
+    }
+
+    $scope.userID = userID;
 
     $scope.categoryToggle = function() {
         $(".categoriesDropdown").fadeToggle();
@@ -2073,7 +2046,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
             }
         }
 
-        $http.get("/events?start_date="+firstOfMonth + "&end_date=" + endOfMonth + queryString + "&max_per_day=5")
+        $http.get("/events?user_id=" + $scope.userID + "&start_date="+firstOfMonth + "&end_date=" + endOfMonth + queryString + "&max_per_day=5")
             .success(function(data){
                 $scope.eventData = data;
                 calEvents(data);
@@ -2167,7 +2140,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
                     $scope.nowGet = moment().add(next,'months').date(1).format();
                     $scope.nowDateGet = moment().add(next, 'months').date(1).format("YYYY-MM-DD");
 
-                    $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&end_date=' + moment().add((next + 1),'months').date(1).format("YYYY-MM-DD") + '&max_per_day=5')
+                    $http.get('/events?user_id=' + $scope.userID + '&start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&end_date=' + moment().add((next + 1),'months').date(1).format("YYYY-MM-DD") + '&max_per_day=5')
                         .success(function(data){
                             // $scope.eventSource = [data];
                             calEvents(data);
@@ -2181,7 +2154,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
                     $scope.nowGet = moment().add(next,'months').date(1).format();
                     $scope.nowDateGet = moment().add(next, 'months').date(1).format("YYYY-MM-DD");
 
-                    $http.get('/events?start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&end_date=' + moment().add((next + 1), 'months').date(1).format("YYYY-MM-DD") + '&max_per_day=5')
+                    $http.get('/events?user_id=' + $scope.userID + '&start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&end_date=' + moment().add((next + 1), 'months').date(1).format("YYYY-MM-DD") + '&max_per_day=5')
                         .success(function(data){
                             // $scope.eventSource = [data];
                             calEvents(data);
@@ -2213,15 +2186,23 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
 
 
-cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, daySliderFactory, $rootScope, $location, calDayClick, $routeParams) {
+cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, daySliderFactory, $rootScope, $location, calDayClick, $routeParams, ipCookie) {
 
+    var userID = null;
+
+    var cookie = ipCookie('user');
+    if (cookie) {
+        userID = cookie.id;
+    }
+
+    $scope.userID = userID;
 
         $rootScope.now = moment().format("dddd, MMMM, Do");
 
 
         if ($location.path().indexOf('share') > -1) {
 
-            $http.get("/events?id=" + $routeParams.id).success(function(data){
+            $http.get("/events?user_id=" + $scope.userID + "&id=" + $routeParams.id).success(function(data){
 
                 $modal.open({
                     templateUrl: "templates/eventModal.html",
@@ -2237,8 +2218,27 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
                 $rootScope.nowShareDate = moment(data.events[0].event_date).format("YYYY-MM-DD");
 
                     var dayEvents = function(data) {
+                        
                         $scope.dayEvents = data.events;
                         $scope.eventGroup =  [];
+
+                        for (i = 0; i < $scope.dayEvents.length; i++) {
+
+                            $scope.dayEvents[i].vote = {
+                                upVote: false,
+                                downVote: false
+                            };
+                            if ($scope.dayEvents[i].votes && $scope.dayEvents[i].votes.length > 0) {
+                                if ($scope.dayEvents[i].votes[0].vote == '1') {
+                                    $scope.dayEvents[i].vote.upVote = true;
+                            
+                                }
+
+                                if ($scope.dayEvents[i].votes[0].vote == '0') {
+                                    $scope.dayEvents[i].vote.downVote = true;
+                                }
+                            }
+                        };
                     };
                     
                 getEvents.eventsDay(data.events[0].event_date).success(dayEvents);
@@ -2386,6 +2386,25 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
         $scope.$on('search', function(info, data){
             $scope.dayEvents = data.events;
+
+            for (i = 0; i < $scope.dayEvents.length; i++) {
+
+                $scope.dayEvents[i].vote = {
+                    upVote: false,
+                    downVote: false
+                };
+                if ($scope.dayEvents[i].votes && $scope.dayEvents[i].votes.length > 0) {
+                    if ($scope.dayEvents[i].votes[0].vote == '1') {
+                        $scope.dayEvents[i].vote.upVote = true;
+                
+                    }
+
+                    if ($scope.dayEvents[i].votes[0].vote == '0') {
+                        $scope.dayEvents[i].vote.downVote = true;
+                    }
+                }
+            };
+
         });
 
         var dayEvents = function(data) {
@@ -2394,6 +2413,24 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
             $scope.dayEvents = data.events;
             $scope.eventGroup =  [];
+
+            for (i = 0; i < $scope.dayEvents.length; i++) {
+
+                $scope.dayEvents[i].vote = {
+                    upVote: false,
+                    downVote: false
+                };
+                if ($scope.dayEvents[i].votes && $scope.dayEvents[i].votes.length > 0) {
+                    if ($scope.dayEvents[i].votes[0].vote == '1') {
+                        $scope.dayEvents[i].vote.upVote = true;
+                
+                    }
+
+                    if ($scope.dayEvents[i].votes[0].vote == '0') {
+                        $scope.dayEvents[i].vote.downVote = true;
+                    }
+                }
+            };
 
         };
 
@@ -2410,8 +2447,15 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
 
 
-cityHapps.factory("daySliderFactory", function($http, $rootScope){
+cityHapps.factory("daySliderFactory", function($http, $rootScope, ipCookie){
     
+    var userID = null;
+
+    var cookie = ipCookie('user');
+    if (cookie) {
+        userID = cookie.id;
+    }
+
     return {
         nextDay : function(time, next, queryString) {
             $rootScope.now = moment(time).add(next, 'days').format("dddd, MMMM Do");
@@ -2421,7 +2465,7 @@ cityHapps.factory("daySliderFactory", function($http, $rootScope){
 
             var end = moment(time).add(next ,'days').endOf('day').format('YYYY-MM-DD');
 
-            return $http.get('/events?start_date=' + startDate + '&start_time=' + startTime + "&end_date=" + end + queryString)
+            return $http.get('/events?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime + "&end_date=" + end + queryString)
                 .success(function(data){
 
                     
@@ -2438,7 +2482,7 @@ cityHapps.factory("daySliderFactory", function($http, $rootScope){
 
             var end = moment(time).add(next ,'days').endOf('day').format('YYYY-MM-DD');
 
-            return $http.get('/events?start_date=' + startDate + '&start_time=' + startTime + "&end_date=" + end + queryString)
+            return $http.get('/events?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime + "&end_date=" + end + queryString)
                 .success(function(data){
 
                     console.log(data);
@@ -2450,7 +2494,16 @@ cityHapps.factory("daySliderFactory", function($http, $rootScope){
 
 
 cityHapps.controller("calDayController", function($scope, getEvents, $modal, $http, getCategories, $rootScope, $location, $location, 
-    calDayClick, $routeParams, $window, daySliderFactory) {
+    calDayClick, $routeParams, $window, daySliderFactory, ipCookie) {
+
+    var userID = null;
+
+    var cookie = ipCookie('user');
+    if (cookie) {
+        userID = cookie.id;
+    }
+
+    $scope.userID = userID;
 
     var dayEvents = function(data) {
 
@@ -2520,7 +2573,7 @@ cityHapps.controller("calDayController", function($scope, getEvents, $modal, $ht
                 }
             }
 
-            $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet +
+            $http.get("/events?user_id=" + $scope.userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet +
             "&page_size=10&" + "end_date=" + $scope.endDate + "&" + $scope.queryString)
                 .success(function(data){
                     dayEvents(data);
@@ -2537,7 +2590,7 @@ cityHapps.controller("calDayController", function($scope, getEvents, $modal, $ht
 
             //+ '&page_size=10&page_count=1'
 
-            $http.get("/events?start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + $scope.endDate + "&")
+            $http.get("/events?user_id=" + $scope.userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + $scope.endDate + "&")
                 .success(function(data){
                     //$scope.tabEvents = data.events;
                     dayEvents(data);
