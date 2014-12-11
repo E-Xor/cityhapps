@@ -694,9 +694,6 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
                 });
             };
-
-
-
             
             var user = ipCookie('user');
 
@@ -727,13 +724,15 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
                     $http.get("/events?user_id=" + userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
                         .success(function(data){
-                            $scope.eventData = data
+                            $scope.eventData = data;
                             eventSuccess(data);
                             recommendedEventSuccess(data);
 
-                    console.log($scope.filterData.categories);
-                }
-            }
+                            console.log($scope.filterData.categories);
+                    });
+
+                }        
+            };
             
 
 
@@ -747,7 +746,7 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
         $scope.recToggle = function() {
             $('.rec').fadeToggle();
             $('.rec-arrow').toggleClass("down");
-        }
+        };
 
         $('div').fadeIn('fast');
 
@@ -773,7 +772,6 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
                 search.searchData(query).success(function(data){
                     $scope.$broadcast('search', data);
                     $scope.searchQuery = data.events.length + " " + "results for" + " " + "<div class='red'>" + query + "</div>";
-
                 });
             } else {
                 $location.path('/search');
