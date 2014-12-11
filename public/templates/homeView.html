@@ -25,7 +25,7 @@
 											<h4 class="ellipsis">{{event.event_name | limitTo: 25 }}</h4>
 
                                             <p>{{event.start_time | dateToISO | date: 'h:mm a' | uniqueHour}}
-                                                <a href="{{event.venue_url}}" target="_blank">{{event.venue_name | limitTo: 40}}</a>
+                                                <a href="{{event.venue_url}}" target="_blank">{{event.venue_name | ellipsis: 40}}</a>
                                             </p>
                                         </div>
 									</div>
@@ -68,7 +68,7 @@
                             <div class="mobile-event-image" style="background-image: url('{{event.event_image_url}}'); ">
                             </div>
                             <div class="mobile-event-details">
-                                <div class="bold ellipsis">{{event.event_name | limitTo: 20}}</div>
+                                <div class="bold">{{event.event_name | ellipsis: 20}}</div>
                                 {{event.start_time | dateToISO | date: 'mediumDate'}}
                                 <a href="{{event.venue_url}}" target="_blank">{{event.venue_name}}</a>
                             </div>
@@ -99,9 +99,9 @@
 								<div class="event-image" style="background-image: url('{{event.first.event_image_url}}'); background-size: cover; height: 225px;">
 								</div>
 								<div class="event-details">
-									<h4 class="ellipsis">{{event.first.event_name | limitTo: 30 }}</h4>
+									<h4>{{event.first.event_name | ellipsis: 30 }}</h4>
 									<div class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate' }}</div>
-                                    <a href="{{event.first.venue_url}}" target="_blank"><p>{{event.first.venue_name | limitTo: 40}}</p></a>
+                                    <a href="{{event.first.venue_url}}" target="_blank">{{event.first.venue_name | ellipsis: 40}}</a>
 								</div>
 							</div>
 							<div class="icons">
@@ -120,9 +120,9 @@
 								<div class="event-image" style="background-image: url('{{event.second.event_image_url}}'); background-size: cover; height: 225px;">
 								</div>
 								<div class="event-details">
-									<h4 class="ellipsis">{{event.second.event_name | limitTo: 30}}</h4>
+									<h4>{{event.second.event_name | ellipsis: 30 }}</h4>
 									<div class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                    <a href="{{event.second.venue_url}}" target="_blank"><p>{{event.second.venue_name | limitTo: 40}}</p></a>
+                                    <a href="{{event.second.venue_url}}" target="_blank">{{event.second.venue_name | ellipsis: 40}}</a>
 								</div>
 							</div>
 							<div class="icons">
@@ -141,9 +141,9 @@
 								<div class="event-image" style="background-image: url('{{event.third.event_image_url}}'); background-size: cover; height: 225px;">
 								</div>
 								<div class="event-details">
-									<h4 class="ellipsis">{{event.third.event_name | limitTo: 30}} </h4>
+									<h4 class="ellipsis">{{event.third.event_name | ellipsis: 30}} </h4>
 									<div class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                    <a href="{{event.third.venue_url}}" target="_blank"><p>{{event.third.venue_name | limitTo: 40}}</p></a>
+                                    <a href="{{event.third.venue_url}}" target="_blank">{{event.third.venue_name | ellipsis: 40}}</a>
 								</div>
 							</div>
 							<div class="icons">
@@ -162,9 +162,9 @@
 								<div class="event-image" style="background-image: url('{{event.fourth.event_image_url}}'); background-size: cover; height: 225px;">
 								</div>
 								<div class="event-details">
-									<h4 class="ellipsis">{{event.fourth.event_name | limitTo: 30}}</h4>
+									<h4 class="ellipsis">{{event.fourth.event_name | ellipsis: 30}}</h4>
 									<div class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                    <a href="{{event.fourth.venue_url}}" target="_blank"><p>{{event.fourth.venue_name | limitTo: 40}}</p></a>
+                                    <a href="{{event.fourth.venue_url}}" target="_blank">{{event.fourth.venue_name | ellipsis: 40}}</a>
 								</div>
 							</div>
 							<div class="icons">
@@ -256,9 +256,9 @@
 										<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
-										<h4 class="">{{event.first.event_name | limitTo: 30}}</h4>
+										<h4 class="">{{event.first.event_name | ellipsis: 30}}</h4>
 										<div class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                        <a href="{{event.first.venue_url}}" target="_blank"><p>{{event.first.venue_name | limitTo: 40}}</p></a>
+                                        <a href="{{event.first.venue_url}}" target="_blank">{{event.first.venue_name | ellipsis: 40}}</a>
 									</div>
 								</div>
 								<div class="icons">
@@ -278,9 +278,9 @@
 										<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
-										<h4 class="">{{event.second.event_name | limitTo: 30}}</h4>
+										<h4 class="">{{event.second.event_name | ellipsis: 30}}</h4>
 										<div class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                        <a href="{{event.second.venue_url}}" target="_blank"><p>{{event.second.venue_name | limitTo: 40}}</p></a>
+                                        <a href="{{event.second.venue_url}}" target="_blank">{{event.second.venue_name | ellipsis: 40}}</a>
 									</div>
 								</div>
 								<div class="icons">
@@ -300,9 +300,9 @@
 									<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
-										<h4 class="">{{event.third.event_name | limitTo: 30}} </h4>
+										<h4 class="">{{event.third.event_name | ellipsis: 30}} </h4>
 										<div class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                        <a href="{{event.venue_url}}" target="_blank"><p>{{event.third.venue_name | limitTo: 40}}</p></a>
+                                        <a href="{{event.venue_url}}" target="_blank">{{event.third.venue_name | ellipsis: 40}}</a>
 									</div>
 								</div>
 								<div class="icons">
@@ -322,9 +322,9 @@
 									<!-- <img ng-src=""> -->
 									</div>
 									<div class="event-details">
-										<h4 class="">{{event.fourth.event_name | limitTo: 30}}</h4>
+										<h4 class="">{{event.fourth.event_name | ellipsis: 30}}</h4>
 										<div class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                        <a href="{{event.venue_url}}" target="_blank"><p>{{event.fourth.venue_name | limitTo: 40}}</p></a>
+                                        <a href="{{event.venue_url}}" target="_blank">{{event.fourth.venue_name | ellipsis: 40}}</a>
 									</div>
 								</div>
 								<div class="icons">

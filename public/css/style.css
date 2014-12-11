@@ -457,6 +457,9 @@ body {
   -moz-transition: all linear 0.5s;
   min-height: 325px; }
 
+.event .event-details a {
+  color: #404042; }
+
 .event-slider-day {
   max-width: 970px;
   margin: 0 auto;
@@ -866,9 +869,6 @@ body {
   box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
   min-width: 300px; }
 
-.tab-event-title h4:after {
-  content: "..."; }
-
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   background: transparent;
   font-size: 1.4em;
@@ -1012,8 +1012,9 @@ button.create-account[disabled='disabled'] {
 .red {
   color: #FF5C50; }
 
-.ellipsis:after {
-  content: "..."; }
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden; }
 
 .pointer {
   cursor: pointer !important; }

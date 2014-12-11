@@ -124,11 +124,28 @@ class UserController extends \BaseController {
 	public function getUserCategories()
 	{
 
+		//Checkboxes on client are fussy and need a flat 1D object
+
 		$id = Input::only('id');
 
 		$user = User::with('categories')->find($id);
 
-		return json_encode($user);
+		$userData = (array)$user;
+
+		$categoriesArray = array();
+
+		foreach ($userData as $categories) {
+			
+			$categoryIds = $categories[0]['categories'];
+
+			for ($i = 0; $i < count($categoryIds); $i++) {
+
+				array_push($categoriesArray, array($categoryIds[$i]['id'] => true));	
+
+			}	
+		}
+
+		return $categoriesArray;
 
 	}
 

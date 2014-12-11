@@ -76,15 +76,14 @@
                                         </div>
                                         <div ng-cloak ng-show="user">
                                             <div class="user-info">
-                                                <h5 class="red italic inline accountSignIn" ng-click="helpFade()">help</h5>
+                                                <h5 class="red italic inline accountHelp" ng-click="helpFade()">help</h5>
                                                     <div ng-click="categoryToggle()"> {{user.email}} </div>
-                                                    <div class="categoriesDropdownUser" ng-init="getCategoriesUser()">
+                                                    <div class="categoriesDropdownUser">
                                                         <div class="toggle-controls">
                                                             <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
-                                                            <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
                                                         </div>
-                                                        <div ng-repeat="userCategory in userCategories">
-                                                            <label class="event-category" ng-model="filterData.categories[userCategory.id]" ng-change="filterCategoryUser(filterData.categories[userCategory.id])" btn-checkbox>{{category.name}}</label>
+                                                        <div ng-repeat="category in categories">
+                                                            <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
                                                         </div>
                                                     </div>
                                                 <a class="red logout" ng-click="logoutUser()">sign out</a>
@@ -167,7 +166,7 @@
                                <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
                            </div>
                            <div ng-repeat="category in categories">
-                               <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory(filterData.categories[category.id])" btn-checkbox>{{category.name}}</label>
+                               <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
                            </div>
                        </div>
 

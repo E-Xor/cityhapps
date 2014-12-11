@@ -527,6 +527,17 @@ cityHapps.filter('nonUniqueHour', function() {
     };
 });
 
+cityHapps.filter('ellipsis', function () {
+    return function (input, num) {
+        if (input && input.length >= num) {
+            return input.substr(0, num) + "...";
+        } else {
+            return input;
+        }
+    };
+});
+
+
 
 cityHapps.factory('voteService', function(){
 
@@ -693,39 +704,65 @@ cityHapps.factory('calDayClick', function($http){
 });
 
 
-cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getCategoriesUser', 'search', 'ipCookie',
-	function($scope, $window, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getCategoriesUser, search, ipCookie){
+cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
+	function($scope, $window, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
 
-        //$scope.recEventCount = registerDataService.recEventCount;
+
+        //I modified this Gist to flatten return object from php
+        // https://gist.github.com/penguinboy/762197
+
+        
+            var flattenObject = function(ob) {
+                var toReturn = {};
+                
+                for (var i in ob) {
+                    if (!ob.hasOwnProperty(i)) continue;
+                    
+                    if ((typeof ob[i]) == 'object') {
+                        var flatObject = flattenObject(ob[i]);
+                        for (var x in flatObject) {
+                            if (!flatObject.hasOwnProperty(x)) continue;
+                            
+                            toReturn[x] = flatObject[x];
+                        }
+                    } else {
+                        toReturn[i] = ob[i];
+                    }
+                }
+                return toReturn;
+            };
+
+
 
             $scope.categoryToggle = function() {
                 $(".categoriesDropdownUser").fadeToggle();
 
                 getCategories.success(function(data){
+                    
                     $scope.categories = data;
+
+                    var user = ipCookie('user');
+                    params = "?id=" + user.id;
+
+                    getUserCategories.params(params).success(function(data){
+
+                        $scope.filterData = {};
+                        $scope.filterData.userCategories = flattenObject(data);    
+
+                    });    
+
                 });
             };
 
-            $scope.getCategoriesUser = function() {
-                getCategoriesUser.success(function(data){
-                    $scope.userCategories = data;
-                });
-            }
 
-            $scope.filterData = {};
-            $scope.filterData.categories = {};
+
             
             var user = ipCookie('user');
 
             if (user) {
+                
                 $scope.filterCategoryUser = function() {
 
-
-
-                    $scope.nowGet = moment().format();
-                    $scope.nowDateGet = moment().format('YYYY-MM-DD');
-
-                    var queryString = '';
 
                     for (var i in $scope.filterData.categories){
                         console.log(i);
@@ -735,14 +772,6 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
                         }
                     }
 
-                    $http.get("/events?" + "start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
-                        .success(function(data){
-                            $scope.eventData = data
-                            eventSuccess(data);
-                            recommendedEventSuccess(data);
-
-                            console.log(data);
-                        });
 
                     console.log($scope.filterData.categories);
                 }
@@ -1531,20 +1560,44 @@ cityHapps.factory('getCategories', function($http){
         });
 });
 
-cityHapps.factory('getCategoriesUser', function($http){
-       // return $http({
-       //      method: "GET",
-       //      url: "/user_categories",
-       //      headers: {"Content-Type": "application/json"}
-       //  }).success(function (data) {
-       //      if (!data) {
-       //          console.log('Unable to Get Categories');
-       //      } else if (data) {
-       //          console.log('successfully Getting Categories');
-       //          console.log(data);
+cityHapps.factory('getUserCategories', function($http){
+    return { 
+        params : function(args) {
+            return $http({
+                method: "GET",
+                url: "/getUserCategories" + args,
+                headers: {"Content-Type": "application/json"}
+            }).success(function (data) {
+                if (!data) {
+                    console.log('Unable to Get Categories');
+                } else if (data) {
+                    console.log('successfully Getting Categories');
+                    console.log(data);
 
-       //      }
-       //  });
+                }
+            });
+        }    
+    }
+});
+
+cityHapps.factory('updateUserCategories', function($http){
+    return { 
+        params : function(args) {
+            return $http({
+                method: "GET",
+                url: "/getUserCategories" + args,
+                headers: {"Content-Type": "application/json"}
+            }).success(function (data) {
+                if (!data) {
+                    console.log('Unable to Get Categories');
+                } else if (data) {
+                    console.log('successfully Getting Categories');
+                    console.log(data);
+
+                }
+            });
+        }    
+    }
 });
 
 //

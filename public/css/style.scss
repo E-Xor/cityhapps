@@ -610,6 +610,10 @@ body {
   min-height: 325px;
 }
 
+.event .event-details a {
+  color: $grey;
+}
+
 .event-slider-day {
   max-width: 970px;
   margin: 0 auto;
@@ -1146,12 +1150,6 @@ body {
 	min-width: 300px;	
 }
 
-.tab-event-title h4 {
-		&:after {
-		content: "..."
-	}
-}
-
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
 	background: transparent;
 	font-size: 1.4em;
@@ -1362,9 +1360,8 @@ button.create-account[disabled='disabled'] {
 }
 
 .ellipsis{
-  &:after {
-    content: "..."
-  }
+  text-overflow: ellipsis;
+  overflow: hidden; 
 }
 
 .pointer {
