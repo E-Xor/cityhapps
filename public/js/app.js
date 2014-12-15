@@ -656,6 +656,9 @@ cityHapps.factory('calDayClick', function($http, ipCookie){
 cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
 	function($scope, $window, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
 
+        $scope.user = ipCookie('user');
+
+
         $scope.filterData = {};
         $scope.filterData.categories = {};
 
@@ -1222,7 +1225,7 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
 		$scope.vote = {};
 
-            $rootScope.user = ipCookie('user');
+        $scope.user = ipCookie('user');
 
             if ($rootScope.user) {
 
@@ -1389,9 +1392,9 @@ cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance
 
 
         console.log(data);
-            $rootScope.user = ipCookie('user');
+            $scope.user = ipCookie('user');
 
-            if ($rootScope.user) {
+            if ($scope.user) {
                 $scope.simpleVoteEvent = function(event, action) {
 
                     var eventID = event.id;
