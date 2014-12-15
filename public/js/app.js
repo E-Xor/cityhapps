@@ -2032,7 +2032,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
         for (var i in $scope.filterData.categories){
             console.log(i);
             if ($scope.filterData.categories[i] == true) {
-                queryString += "category[]=" + i;
+                queryString += "&category[]=" + i;
                 //+ "&";
             }
         }
