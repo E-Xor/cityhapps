@@ -70,7 +70,7 @@ body {
   font-family: "proxima-nova", sans-serif;
   font-size: 3em; }
 
-.search-search::-moz-placeholder {
+.main-search::-moz-placeholder {
   color: #fff;
   font-size: 1.2em;
   font-style: italic;
@@ -145,6 +145,9 @@ body {
     padding: 5px 5px 5px 70px;
     border: 2px solid #fff;
     background: url("/img/searchIcon.png") 35px 16px/23px 26px no-repeat; }
+
+input.main-search {
+  padding: 5px 5px 5px 30px; }
 
 .nonUniqueHour {
   height: 20px; }
