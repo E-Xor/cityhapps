@@ -1943,11 +1943,11 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
             for (var i in $scope.filterData.categories){
                 console.log(i);
                 if ($scope.filterData.categories[i] == true) {
-                    $scope.queryString += "category[]=" + i + "&";
+                    $scope.queryString += "&category[]=" + i;
                 }
             }
 
-            $http.get("/events?" + "user_id=" + $scope.userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=" + $scope.pageCount + "&page_size=10&" + $scope.queryString)
+            $http.get("/events?" + "user_id=" + $scope.userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=" + $scope.pageCount + "&page_size=10" + $scope.queryString)
                 .success(function(data){
                     $scope.tabEvents = data.events;
                     //drawEvents(data.events);
