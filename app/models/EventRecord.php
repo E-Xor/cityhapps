@@ -164,13 +164,13 @@ class EventRecord extends Eloquent {
 	}
 
 	public function scopeStartTime($query, $startTime) {
-		/*
+
 		if ($startTime != null) {
-			return $query->where('end_time', '>=', $startTime);
+			return $query->where('start_time', '>=', $startTime);
 		} else {
 			return $query;
 		}
-		*/
+		
 	}
 
 	public function scopeDateRange($query, $startDate, $endDate) {
@@ -250,7 +250,7 @@ class EventRecord extends Eloquent {
 
 	public function scopeGetPage($query, $pageSize, $pageCount, $pageShift) {
 		if (($pageSize != null) && ($pageCount != null)) {
-			if ($pageSize == '-1') {
+			if ($pageSize == 'all') {
 				return $query; // returns all records
 			} else {
 				if ($pageShift != null) {
@@ -259,8 +259,14 @@ class EventRecord extends Eloquent {
 					return $query->skip($pageSize * ($pageCount - 1))->take($pageSize);
 				}
 			}
+		} elseif ($pageSize != null) {
+			if ($pageSize == 'all') {
+				return $query; // returns all records
+			} else {
+				return $query->take($pageSize); // Return 50 results by default
+			}
 		} else {
-			return $query->take(100);
+			return $query->take(50); // Return 50 results by default
 		}
 	}
 

@@ -538,7 +538,7 @@ cityHapps.factory('getRecommendedEvents', function($http, ipCookie) {
 			var startDate = moment().format('YYYY-MM-DD');
             var startTime = moment().format();
 
-			return $http.get('/recommendedEvents?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime).success(function(data) {
+			return $http.get('/recommendedEvents?user_id=' + userID + '&start_date=' + startDate + '&end_date=' + startDate + '&start_time=' + startTime).success(function(data) {
 
 			});
 		}
@@ -559,7 +559,7 @@ cityHapps.factory('getEventsMonthStart', function($http, ipCookie){
                 userID = cookie.id;
             }
 
-           return $http.get('/events?user_id=' + userID + '&start_date='+ firstOfMonth + '&end_date=' + endOfMonth + '&max_per_day=' + maxPerDay).success(function(data){
+           return $http.get('/events?page_size=all&user_id=' + userID + '&start_date='+ firstOfMonth + '&end_date=' + endOfMonth + '&max_per_day=' + maxPerDay).success(function(data){
 
            });
        }
