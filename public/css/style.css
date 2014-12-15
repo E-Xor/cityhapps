@@ -963,7 +963,7 @@ h3.main-date {
   .calendar td.fc-day-number {
     padding: 7px;
     font-weight: bold;
-    color: #2c2625; }
+    color: #DBD0CE; }
     .calendar td.fc-day-number.fc-today {
       border-width: 5px 5px 0 5px;
       border-color: #5DD49C;
@@ -991,9 +991,10 @@ h3.main-date {
     text-align: left; }
   .calendar .event-count {
     background: #FF5C50;
-    padding: 10px 15px;
+    padding: 5px 10px;
     color: #fff;
-    font-size: 1.2em;
+    font-size: 1em;
+    font-weight: bold;
     text-shadow: 2px 1px 1px #E24B44;
     width: 11px;
     float: right; }
