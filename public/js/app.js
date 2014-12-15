@@ -78,7 +78,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
             }
             
-            if ($scope.eventData != undefined && $window.innerWidth > 768) {
+            if ($scope.eventData != undefined && $window.innerWidth >= 768) {
         		
         		$scope.recSlideGroup = [];
 
@@ -160,6 +160,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 				}
 			}
         }
+
 		
 		var eventSuccess = function(data) {
 
@@ -167,7 +168,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 			console.log($scope.eventData);
 
             if ($window.innerWidth <= 768 ) {
-
                 $scope.slideGroup = [];
 
                 for (rec = 0; rec < $scope.eventData.length; rec ++) {
@@ -210,7 +210,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
 				var i;
 
-	            for (i = 0; i < $scope.eventData.length; i += 4) {
+                for (i = 0; i < $scope.eventData.length; i += 4) {
 				
 					var slides = {
                         'first' : $scope.eventData[i],
@@ -331,7 +331,7 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
         $scope.queryString = null;
         $scope.pageCount = 1;
 
-        $http.get("/events?user_id=" + $scope.userID + "&start_time="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count=1')
+        $http.get("/events?user_id=" + $scope.userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count=1')
             .success(function(data){
                 eventSuccess(data);
                 recommendedEventSuccess(data);
@@ -359,7 +359,9 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
             .success(function(data){
                 // $scope.eventData = data;
                 eventSuccess(data);
+
                 if ($rootScope.user) {
+                    eventSuccess(data);
                     recommendedEventSuccess(data);   
                 }
                 
@@ -384,6 +386,8 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
     }
 
 	$scope.now = moment().format("dddd, MMMM Do");
+    $scope.nowMobile = moment().format("ddd, MMMM D, YYYY");
+
 	//$scope.nowPost = moment().format();
 
 		var next = 0;
@@ -391,6 +395,8 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
         $scope.nextDay = function() {
             next += 1;
             $scope.now = moment().add((next),'days').format("dddd, MMMM Do");
+            $scope.nowMobile = moment().add(next, 'days').format("ddd, MMMM D, YYYY");
+
             $scope.nowGet = moment().add(next,'days').format();
         	$scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
 
@@ -406,12 +412,14 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
         $scope.prevDay = function() {
             next -= 1;
             $scope.now = moment().add(next, 'days').format("dddd, MMMM Do");
+            $scope.nowMobile = moment().add(next, 'days').format("ddd, MMMM D, YYYY");
+
             $scope.nowGet = moment().add(next,'days').format();
         	$scope.nowDateGet = moment().add(next,'days').format('YYYY-MM-DD');
 
             var end = moment().add(next ,'days').endOf('day').format('YYYY-MM-DD');
 
-            $http.get('/events?user_id=' + $scope.userID + 'start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
+            $http.get('/events?user_id=' + $scope.userID + '&start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&end_date=" + end)
                 .success(function(data){
                     $scope.eventData = data;
                     eventSuccess(data);
@@ -648,11 +656,12 @@ cityHapps.factory('calDayClick', function($http, ipCookie){
 cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
 	function($scope, $window, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
 
+        $scope.filterData = {};
+        $scope.filterData.categories = {};
+
 
         //I modified this Gist to flatten return object from php
         // https://gist.github.com/penguinboy/762197
-
-        
             var flattenObject = function(ob) {
                 var toReturn = {};
                 
@@ -694,10 +703,8 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
                 });
             };
-            
-            var user = ipCookie('user');
 
-            if (user) {
+            if ($rootScope.user) {
                 
                 $scope.filterCategoryUser = function() {
 
@@ -735,8 +742,6 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
             };
             
 
-
-
         console.log(registerDataService.recEventCount);
 
         $scope.helpFade = function() {
@@ -749,14 +754,6 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
         };
 
         $('div').fadeIn('fast');
-
-        // $scope.active = function(route) {
-        //     return route === $location.path();
-        // }
-
-        $scope.user = ipCookie('user');
-        console.log($scope.user);
-
 
 		$scope.mobile = function() {
 			if ($window.innerWidth <= 768 ) {
@@ -852,9 +849,7 @@ cityHapps.controller('appController', ['$scope', '$window', 'authService', 'regi
 
 		console.log(registerDataService.vote);
 
-		//if ($scope.user) {
-		//	console.log($scope.user.data.email);
-		//}f
+
 
 		$scope.formData = {
 			email : '',
@@ -1332,8 +1327,6 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
                 $http.post("/sharedEvent", sharedEvent).success(function(data){
 
-                    alert(data);
-
                 });
             };
 
@@ -1480,7 +1473,6 @@ cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance
             $scope.currentURL = "http://" + window.location.host + "/share/";
 
             $scope.fbShare = function(url, title) {
-                alert(url);
                 Facebook.ui({
                     method: 'feed',
                     link: url,
@@ -1751,6 +1743,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 	//sloppy code re-use, but im doing it for demo
 	$scope.now = moment().format("dddd, MMMM Do");
 
+
 	var next = 0;
 	$scope.nextDay = function() {
 			next += 1;
@@ -1806,7 +1799,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
             //$(this).delay((i++) * 500).fadeTo(1000, 1); });
 
 			$scope.tabEvents = data.events;
-			console.table($scope.tabEvents);
+			console.table($scope.markers);
 
 			for (var tab = 0; tab < $scope.tabEvents.length; tab++) {
 				$scope.tabEvents[tab].vote = {
@@ -1929,7 +1922,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
             $scope.queryString = null;
             $scope.pageCount = 1;
 
-            $http.get("/events?user_id=" + $scope.userID + "&start_time="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count=1')
+            $http.get("/events?user_id=" + $scope.userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_size=10&page_count=1')
                 .success(function(data){
                     $scope.tabEvents = data.events;
                     //drawEvents(data.events);
@@ -2108,12 +2101,9 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
                         .split(" ");
 
                     var dayShort = day[0].charAt(0).toUpperCase() + day[0].slice(1);
-                    // console.log(dayShort);
-
                     
                     $(this).one().prepend(dayShort + " ");
-                    
-
+                
                 });
 
                 $(".fc-day").each(function () {

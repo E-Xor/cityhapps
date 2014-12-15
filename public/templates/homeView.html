@@ -1,15 +1,16 @@
 <div ng-controller="eventsController" class="imageContainer">
-	<div class="event-counter" ng-init="getCategories()">
-		<h2 class="center white totalEvents">
-            <div class="inline mobile-large-num" >{{eventCount}}</div>
-            things to do in Atlanta
-        </h2>
-	</div>
+
 
 
 
 			<!-- MOBILE / PHONE slide view -->
 		<div ng-if = 'mobile()'>
+				<div class="event-counter" ng-init="getCategories()">
+					<h2 class="center white totalEvents">
+			            <div class="inline mobile-large-num" >{{eventCount}}</div>
+			            <h3 class="center white margin">things to do in Atlanta today</h3>
+			        </h2>
+				</div>
 			<div class="row event-slider" ng-if="user">
                 <p ng-if="recSlideGroup" class="uppercase center white wide-kerning">Recommendations</p>
 				<carousel interval="interval" class="col-sm-12">
@@ -25,7 +26,7 @@
 											<h4 class="ellipsis">{{event.event_name | limitTo: 25 }}</h4>
 
                                             <p>{{event.start_time | dateToISO | date: 'h:mm a' | uniqueHour}}
-                                                <a href="{{event.venue_url}}" target="_blank">{{event.venue_name | ellipsis: 40}}</a>
+                                                
                                             </p>
                                         </div>
 									</div>
@@ -47,8 +48,8 @@
 							<div class="col-sm-1 col-xs-2 left prev" ng-click="prevDay()">
 								
 							</div>
-							<div class="col-sm-10 col-xs-8">
-								<h3 class="uppercase main-date">{{now}}</h3>
+							<div class="col-sm-10 col-xs-8 no-padding">
+								<h4 class="uppercase main-date">{{nowMobile}}</h4>
 							</div>
 							<div class="col-sm-1 col-xs-2 right next" ng-click="nextDay()">
 								
@@ -68,9 +69,9 @@
                             <div class="mobile-event-image" style="background-image: url('{{event.event_image_url}}'); ">
                             </div>
                             <div class="mobile-event-details">
-                                <div class="bold">{{event.event_name | ellipsis: 20}}</div>
+                                <div class="bold mobile-event-title">{{event.event_name | ellipsis: 20}}</div>
                                 {{event.start_time | dateToISO | date: 'mediumDate'}}
-                                <a href="{{event.venue_url}}" target="_blank">{{event.venue_name}}</a>
+                                
                             </div>
                         </div>
                             <div class="mobile-vote-icons">
@@ -88,6 +89,12 @@
 
     <!-- Desktop Tablet > 768px -->
 	<div ng-if="!mobile()">
+		<div class="event-counter" ng-init="getCategories()">
+			<h2 class="center white totalEvents">
+	            <div class="inline mobile-large-num" >{{eventCount}}</div>
+	            things to do in Atlanta
+	        </h2>
+		</div>
 		<div class="row event-slider rec" ng-if="user">
             <p ng-if="recSlideGroup" class="uppercase center white wide-kerning">Recommendations</p>
 			<carousel interval="interval" class="col-sm-12" >
@@ -101,7 +108,7 @@
 								<div class="event-details">
 									<h4>{{event.first.event_name | ellipsis: 30 }}</h4>
 									<div class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate' }}</div>
-                                    <a href="{{event.first.venue_url}}" target="_blank">{{event.first.venue_name | ellipsis: 40}}</a>
+                                    
 								</div>
 							</div>
 							<div class="icons">
@@ -122,7 +129,7 @@
 								<div class="event-details">
 									<h4>{{event.second.event_name | ellipsis: 30 }}</h4>
 									<div class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                    <a href="{{event.second.venue_url}}" target="_blank">{{event.second.venue_name | ellipsis: 40}}</a>
+                                    
 								</div>
 							</div>
 							<div class="icons">
@@ -143,7 +150,7 @@
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.third.event_name | ellipsis: 30}} </h4>
 									<div class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                    <a href="{{event.third.venue_url}}" target="_blank">{{event.third.venue_name | ellipsis: 40}}</a>
+                                    
 								</div>
 							</div>
 							<div class="icons">
@@ -164,7 +171,7 @@
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.fourth.event_name | ellipsis: 30}}</h4>
 									<div class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                    <a href="{{event.fourth.venue_url}}" target="_blank">{{event.fourth.venue_name | ellipsis: 40}}</a>
+                                    
 								</div>
 							</div>
 							<div class="icons">
@@ -222,12 +229,13 @@
                 <div class="col-sm-2 margin">
                     <!-- Additional filtration like most recent to go here -->
                 </div>
-				<div class="col-sm-3 col-sm-offset-5">
+				<div class="col-sm-4 col-sm-offset-4 view-row">
 
                     <a ng-if="currentPath !== '/'" ng-class="{active:active('/')}" class="list-icon" href="#/"></a>
-                    <a ng-if="currentPath !== '/calendar'" ng-class="{active:active('/calendar')}" class="cal-icon" href="#/calendar"></a>
+                    <a ng-if="currentPath !== '/day'" ng-class="{active:active('/day')}" ng-click="toggleActive()" class="day-icon" href="#/day"></a>	
                     <a ng-if="currentPath !== '/map'"  ng-class="{active:active('/map')}" class="map-icon" href="#/map"></a>
-                    <a ng-if="currentPath !== '/day'" ng-class="{active:active('/day')}" ng-click="toggleActive()" class="day-icon" href="#/day"></a>
+                    <a ng-if="currentPath !== '/calendar'" ng-class="{active:active('/calendar')}" class="cal-icon" href="#/calendar"></a>
+
 
                 </div>
 
@@ -258,7 +266,7 @@
 									<div class="event-details">
 										<h4 class="">{{event.first.event_name | ellipsis: 30}}</h4>
 										<div class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                        <a href="{{event.first.venue_url}}" target="_blank">{{event.first.venue_name | ellipsis: 40}}</a>
+                                        
 									</div>
 								</div>
 								<div class="icons">
@@ -280,7 +288,7 @@
 									<div class="event-details">
 										<h4 class="">{{event.second.event_name | ellipsis: 30}}</h4>
 										<div class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                        <a href="{{event.second.venue_url}}" target="_blank">{{event.second.venue_name | ellipsis: 40}}</a>
+                                        
 									</div>
 								</div>
 								<div class="icons">
@@ -302,7 +310,6 @@
 									<div class="event-details">
 										<h4 class="">{{event.third.event_name | ellipsis: 30}} </h4>
 										<div class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                        <a href="{{event.venue_url}}" target="_blank">{{event.third.venue_name | ellipsis: 40}}</a>
 									</div>
 								</div>
 								<div class="icons">
@@ -324,7 +331,7 @@
 									<div class="event-details">
 										<h4 class="">{{event.fourth.event_name | ellipsis: 30}}</h4>
 										<div class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</div>
-                                        <a href="{{event.venue_url}}" target="_blank">{{event.fourth.venue_name | ellipsis: 40}}</a>
+                                        
 									</div>
 								</div>
 								<div class="icons">

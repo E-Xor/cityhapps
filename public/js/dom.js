@@ -14,6 +14,19 @@ $(function(){
 		});
 	});
 
+	$('.search-clear').on('click', function(){
+		$('.search-large').blur();
+		$('input.search-large').val('');
+		$('input.main-search').val('');
+	});
+
+	$(".wide-search").submit(function(){
+		$('input.main-search').val('');
+		$('input.search-large').val('');
+	});
+
+
+
 	//Mobile Version
 
 	$(".mobile-search").on("click", function(){

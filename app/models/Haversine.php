@@ -75,10 +75,10 @@
 
             $data = DB::table('events')
                 ->select( DB::raw( implode( ',' ,  $fields ) . ',' .  $distance_select  ) )
+                ->where('start_time', ">=", Carbon::now())
                 ->having( 'distance', '<=', $max_distance )
                 ->orderBy( 'distance', 'asc' )
                 ->orderBy('start_time', 'asc')
-                ->where('start_time', ">=", Carbon::now())
                 ->take(10)
                 ->get();
 

@@ -38,11 +38,11 @@
                 <div class="col-sm-2 margin">
                         <!-- Additional filtration like most recent to go here -->
                 </div>
-                <div class="col-sm-3 col-sm-offset-5">
+                <div class="col-sm-4 col-sm-offset-4">
                     <a ng-if="currentPath !== '/'" ng-class="{active:active('/')}" class="list-icon" href="#/"></a>
-                    <a ng-if="currentPath !== '/calendar'" ng-class="{active:active('/calendar')}" class="cal-icon" href="#/calendar"></a>
+                    <a ng-if="currentPath !== '/day'" ng-class="{active:active('/day')}" ng-click="toggleActive()" class="day-icon" href="#/day"></a>   
                     <a ng-if="currentPath !== '/map'"  ng-class="{active:active('/map')}" class="map-icon" href="#/map"></a>
-                    <a ng-if="currentPath !== '/day'" ng-class="{active:active('/day')}" ng-click="toggleActive()" class="day-icon" href="#/day"></a>
+                    <a ng-if="currentPath !== '/calendar'" ng-class="{active:active('/calendar')}" class="cal-icon" href="#/calendar"></a>
                 </div>
 
             </div>

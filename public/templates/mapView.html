@@ -25,10 +25,15 @@
 	<div class="row view-select map">
 
 		<div class="col-sm-12 view-row map-margin">
-		<div class="col-sm-4">	
+		<div class="col-sm-6">	
 
-			<tabset>	
-				<tab ng-repeat="tab in tabs" heading='{{tab.title}}' >
+<!-- 			<tabset>	
+				<tab > -->
+			<div class="margin" ng-click="categoryToggle()">
+                <div class="categoryToggle">All Categories</div>
+            </div>
+				
+				<div class="map-overlay">	
 					<div class="map-event pointer" ng-repeat="event in tabEvents | limitTo: 10" ng-animate="{enter: 'animate-enter' }">
 						<div ng-click="mapEventModal(event)">
 							<div class="inline">
@@ -40,7 +45,7 @@
 							</div>
 							<div class="tab-event-title">
 								<h4>{{event.event_name | ellipsis: 20}}</h4>
-								<p class="blue">{{event.start_time | dateToISO | date:"yyyy-MM-d" }}</p>
+								<p class="blue">{{event.start_time | dateToISO | date: 'MMM d h:mm a' }}</p>
 							</div>							
 						</div>
 					</div>
@@ -52,14 +57,15 @@
 							Next
 						</div>
 					</div>
-				</tab>
-			</tabset>
+				</div>
+
+
+<!-- 				</tab>
+			</tabset> -->
 			
 		</div>
-            <div class="col-sm-2 margin categoryToggle" ng-click="categoryToggle()">
-                All Categories
-            </div>
-            <div class="categoriesDropdownMap" ng-init="getCategories()">
+            
+            <div class="categoriesDropdown" ng-init="getCategories()">
                 <div class="toggle-controls">
                     <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
                     <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
@@ -74,11 +80,11 @@
             <div class="col-sm-2 margin">
                 <!-- Additional filtration like most recent to go here -->
 			</div>	
-			<div class="col-sm-3 col-sm-offset-1">
-                <a ng-if="currentPath !== '/'" ng-class="{active:active('/')}" class="list-icon" href="#/"></a>
-                <a ng-if="currentPath !== '/calendar'" ng-class="{active:active('/calendar')}" class="cal-icon" href="#/calendar"></a>
-                <a ng-if="currentPath !== '/map'"  ng-class="{active:active('/map')}" class="map-icon" href="#/map"></a>
-                <a ng-if="currentPath !== '/day'" ng-class="{active:active('/day')}" ng-click="toggleActive()" class="day-icon" href="#/day"></a>
+			<div class="col-sm-4">
+                    <a ng-if="currentPath !== '/'" ng-class="{active:active('/')}" class="list-icon" href="#/"></a>
+                    <a ng-if="currentPath !== '/day'" ng-class="{active:active('/day')}" ng-click="toggleActive()" class="day-icon" href="#/day"></a>	
+                    <a ng-if="currentPath !== '/map'"  ng-class="{active:active('/map')}" class="map-icon" href="#/map"></a>
+                    <a ng-if="currentPath !== '/calendar'" ng-class="{active:active('/calendar')}" class="cal-icon" href="#/calendar"></a>
 			</div>	
 		</div>
 	</div>	
@@ -90,8 +96,17 @@
 			<ui-gmap-google-map id="map" center="map.center" zoom="map.zoom" options= "{scrollwheel : false}" draggable="true" bounds="map.bounds" events="map.events">
 					<ui-gmap-marker ng-repeat="event in tabEvents | limitTo: 10" ng-init="map.init()" options="{labelContent: ($index + 1) + (10 * (pageCount - 1)), labelAnchor: '8 35', labelClass: 'markerLabel' }" doCluster="'true'" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" icon="'/img/marker.png'" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}">
 					<!-- icon="markers.icon" -->
-		        	</ui-gmap-marker>
-			</ui-gmap-google-map>
+		        	</ui-gmap-marker> 
+			 </ui-gmap-google-map> 
+
+
+				<!-- To use clustering for overlapping map markers, they need to be displayed this way using 'ui-gmap-markers' -->
+
+<!-- 			<ui-gmap-google-map id="map" center="map.center" zoom="map.zoom" options= "{scrollwheel : false}" draggable="true" bounds="map.bounds" events="map.events">
+					<ui-gmap-markers models="markers" ng-init="map.init()" options="{labelContent: ($index + 1) + (10 * (pageCount - 1)), labelAnchor: '8 35', labelClass: 'markerLabel' }" doCluster="'true'" ng-init="alert()" idKey="$index" click="mapMarkerModal(event)" icon="'/img/marker.png'" coords="{'latitude' : event.latitude, 'longitude' : event.longitude}">
+					<!-- icon="markers.icon" -->
+		        	<!--  </ui-gmap-markers> -->
+			<!-- </ui-gmap-google-map> -->
 
 		</div>
 	</div>

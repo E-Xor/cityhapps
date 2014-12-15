@@ -14,22 +14,22 @@
 <div class="eventModal">
     <div ng-controller="eventsController">
 		<div class="modal-header-event">
-		    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true"><img src="/img/modalClose.png"></img></span><span class="sr-only">Close</span>
 		    </button>
 				
 				<div class="modal-image" style="background-image: url('{{data.event_image_url}}'); background-size: cover;">
 				    <div class="modal-image-wrapper">
                         <div class="share-overlay">
                             <h4 class="wide-kerning uppercase">Share</h4>
-                            <h3 class="dark">{{data.event_name}}</h3>
+                            <h3 class="dark bold">{{data.event_name}}</h3>
 
                             <a class="share-icon fb-share fb-share-button" data-href="cityhapps.dev" ng-click="sharedPush(data.id, 'facebook'); fbShare(currentURL + data.id, data.event_name)">
                             </a>
 
-                            <a class="share-icon twitter-share" ng-click="sharedPush(data.id, 'twitter'); socialShare('https://twitter.com/intent/tweet?text={{data.event_name}}&url={{currentURL + data.id}}', 'Twitter Share', 'width=600, height=400')">
+                            <a class="share-icon twitter-share" ng-click="sharedPush(data.id, 'twitter'); socialShare('https://twitter.com/intent/tweet?text={{data.event_name}}&amp;url={{currentURL + data.id}}', 'Twitter Share', 'width=600, height=400')">
                             </a>
 
-                            <a class="share-icon pinterest-share" ng-click="sharedPush(data.id, 'pinterest'); socialShare('http://www.pinterest.com/pin/create/button/?url={{currentURL + data.id}}&description={{data.event_name}}&media={{data.event_image_url}}','Pinterest Share','width=600, height=400' )">
+                            <a class="share-icon pinterest-share" ng-click="sharedPush(data.id, 'pinterest'); socialShare('http://www.pinterest.com/pin/create/button/?url={{currentURL + data.id}}&amp;description={{data.event_name}}&amp;media={{data.event_image_url}}','Pinterest Share','width=600, height=400' )">
                             </a>
                         </div>
 				    	<h3 class="modal-title-event">{{data.event_name}}</h3>
@@ -42,9 +42,11 @@
 		</div>
 
 	      	<div class="modal-body">
-				<p class="blue">{{data.start_time | dateToISO | date: 'MMM d h:mm a'}}</p>
-		    	<a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a>
-		    	<p>{{data.address}}, {{data.city}}, {{data.state}}</p>
+	      		<div class="modal-details">
+					<p class="blue">{{data.start_time | dateToISO | date: 'MMM d h:mm a'}}</p>
+			    	<a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a>
+			    	<p>{{data.address}}, {{data.city}}, {{data.state}}</p>
+			    </div>
 
 		    	<div class="margin20 left">
                     <div ng-repeat="category in data.categories" class="inline">
@@ -72,7 +74,7 @@
 					    </div>
 					</div>
 						<!-- <a href="http://google.com">Google</a> -->
-						<a class="buy right" href="{{data.url}}">Details</a>
+						<a class="buy right" href="{{data.url}}" target="_blank">Details</a>
 				</div>
 			</div>
 		</div>
