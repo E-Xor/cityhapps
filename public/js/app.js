@@ -2316,7 +2316,7 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
             for (var i in $scope.filterData.categories){
                 console.log(i);
                 if ($scope.filterData.categories[i] == true) {
-                    $scope.queryString += "category[]=" + i + "&";
+                    $scope.queryString += "&category[]=" + i;
                 }
             }
 
