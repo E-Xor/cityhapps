@@ -67,7 +67,7 @@
                             </div>
                             <div class="event-details">
                                 <h4 class="ellipsis">{{event.event_name | ellipsis: 30 }}</h4>
-                                <p class="blue">{{event.start_time | dateToISO | date: 'mediumDate' }}</p>
+                                <p class="blue">{{event.start_time | dateToISO | date: 'MMM d, h:mm a' }}</p>
                                 <a href="{{event.venue_url}}" target="_blank"><p>{{event.venue_name | limitTo: 40}}</p></a>
                             </div>
                         </div>
