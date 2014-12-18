@@ -1,6 +1,6 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
 	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(), 
-    'ui.calendar', 'angular.filter', 'ngSanitize', 'ipCookie', 'snap']);
+    'ui.calendar', 'angular.filter', 'ngSanitize', 'ipCookie', 'snap', 'ngIdle']);
 
 
 cityHapps.controller("eventsController", function($scope, $rootScope, $http, $filter, $modal, registerDataService, voteService, ipCookie, getEvents, getRecommendedEvents, $window, getCategories) {
@@ -597,6 +597,11 @@ cityHapps.config([
     }
 ]);
 
+cityHapps.config(['$keepaliveProvider', '$idleProvider', function($keepaliveProvider, $idleProvider) {
+  $idleProvider.idleDuration(5);
+
+}]);
+
 cityHapps.config(function(snapRemoteProvider) {
     snapRemoteProvider.globalOptions.disable = 'left';
 });
@@ -653,8 +658,14 @@ cityHapps.factory('calDayClick', function($http, ipCookie){
 });
 
 
-cityHapps.controller('appController', ['$scope', '$window', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
-	function($scope, $window, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
+cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
+	function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
+
+        $scope.$on('$idleStart', function(){
+            
+            alert('idle firing now');
+
+        });
 
         $scope.user = ipCookie('user');
 
@@ -1006,27 +1017,27 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
         };
       
 
-      $scope.$on('Facebook:statusChange', function(ev, data) {
-        console.log('Status: ', data);
-        if (data.status == 'connected') {
-          $scope.$apply(function() {
-            $scope.salutation = true;
-            $scope.byebye     = false;   
-          });
-        } else {
-          $scope.$apply(function() {
-            $scope.salutation = false;
-            $scope.byebye     = true;
+      // $scope.$on('Facebook:statusChange', function(ev, data) {
+      //   console.log('Status: ', data);
+      //   if (data.status == 'connected') {
+      //     $scope.$apply(function() {
+      //       $scope.salutation = true;
+      //       $scope.byebye     = false;   
+      //     });
+      //   } else {
+      //     $scope.$apply(function() {
+      //       $scope.salutation = false;
+      //       $scope.byebye     = true;
             
-            // Dismiss byebye message after two seconds
-            $timeout(function() {
-              $scope.byebye = false;
-            }, 2000);
-          });
-        }
+      //       // Dismiss byebye message after two seconds
+      //       $timeout(function() {
+      //         $scope.byebye = false;
+      //       }, 2000);
+      //     });
+      //   }
         
         
-      });
+      // });
 
 	$scope.formData = registerDataService.data;
 

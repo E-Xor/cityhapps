@@ -29,7 +29,7 @@
                             <a class="share-icon twitter-share" ng-click="sharedPush(data.id, 'twitter'); socialShare('https://twitter.com/intent/tweet?text={{data.event_name}}&amp;url={{currentURL + data.id}}', 'Twitter Share', 'width=600, height=400')">
                             </a>
 
-                            <a class="share-icon pinterest-share" ng-click="sharedPush(data.id, 'pinterest'); socialShare('http://www.pinterest.com/pin/create/button/?url={{currentURL + data.id}}&amp;description={{data.event_name}}&amp;media={{data.event_image_url}}','Pinterest Share','width=600, height=400' )">
+                            <a class="share-icon pinterest-share" ng-click="sharedPush(data.id, 'pinterest'); socialShare('http://www.pinterest.com/pin/create/button/?url={{currentURL + data.id}}&description={{data.event_name}}&media={{data.event_image_url}}','Pinterest Share','width=600, height=400' )">
                             </a>
                         </div>
 				    	<h3 class="modal-title-event">{{data.event_name}}</h3>

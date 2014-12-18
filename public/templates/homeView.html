@@ -70,8 +70,7 @@
                             </div>
                             <div class="mobile-event-details">
                                 <div class="bold mobile-event-title">{{event.event_name | ellipsis: 20}}</div>
-                                {{event.start_time | dateToISO | date: 'mediumDate'}}
-                                
+                                {{event.start_time | dateToISO | date: 'MMM d, h:mm a'}}
                             </div>
                         </div>
                             <div class="mobile-vote-icons">
@@ -107,7 +106,7 @@
 								</div>
 								<div class="event-details">
 									<h4>{{event.first.event_name | ellipsis: 30 }}</h4>
-									<div class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate' }}</div>
+									<div class="blue">{{event.first.start_time | dateToISO | date: 'MMM d, h:mm a' }}</div>
                                     
 								</div>
 							</div>
@@ -128,7 +127,7 @@
 								</div>
 								<div class="event-details">
 									<h4>{{event.second.event_name | ellipsis: 30 }}</h4>
-									<div class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</div>
+									<div class="blue">{{event.second.start_time | dateToISO | date: 'MMM d, h:mm a'}}</div>
                                     
 								</div>
 							</div>
@@ -149,7 +148,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.third.event_name | ellipsis: 30}} </h4>
-									<div class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</div>
+									<div class="blue">{{event.third.start_time | dateToISO | date: 'MMM d, h:mm a'}}</div>
                                     
 								</div>
 							</div>
@@ -170,7 +169,7 @@
 								</div>
 								<div class="event-details">
 									<h4 class="ellipsis">{{event.fourth.event_name | ellipsis: 30}}</h4>
-									<div class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</div>
+									<div class="blue">{{event.fourth.start_time | dateToISO | date: 'MMM d, h:mm a'}}</div>
                                     
 								</div>
 							</div>
@@ -265,7 +264,7 @@
 									</div>
 									<div class="event-details">
 										<h4 class="">{{event.first.event_name | ellipsis: 30}}</h4>
-										<div class="blue">{{event.first.start_time | dateToISO | date: 'mediumDate'}}</div>
+										<div class="blue">{{event.first.start_time | dateToISO | date: 'MMM d, h:mm a'}}</div>
                                         
 									</div>
 								</div>
@@ -287,7 +286,7 @@
 									</div>
 									<div class="event-details">
 										<h4 class="">{{event.second.event_name | ellipsis: 30}}</h4>
-										<div class="blue">{{event.second.start_time | dateToISO | date: 'mediumDate'}}</div>
+										<div class="blue">{{event.second.start_time | dateToISO | date: 'MMM d, h:mm a'}}</div>
                                         
 									</div>
 								</div>
@@ -309,7 +308,7 @@
 									</div>
 									<div class="event-details">
 										<h4 class="">{{event.third.event_name | ellipsis: 30}} </h4>
-										<div class="blue">{{event.third.start_time | dateToISO | date: 'mediumDate'}}</div>
+										<div class="blue">{{event.third.start_time | dateToISO | date: 'MMM d, h:mm a'}}</div>
 									</div>
 								</div>
 								<div class="icons">
@@ -330,7 +329,7 @@
 									</div>
 									<div class="event-details">
 										<h4 class="">{{event.fourth.event_name | ellipsis: 30}}</h4>
-										<div class="blue">{{event.fourth.start_time | dateToISO | date: 'mediumDate'}}</div>
+										<div class="blue">{{event.fourth.start_time | dateToISO | date: 'MMM d, h:mm a'}}</div>
                                         
 									</div>
 								</div>

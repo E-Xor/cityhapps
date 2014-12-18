@@ -87,7 +87,7 @@
                                                             <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
                                                         </div>
                                                     </div>
-                                                <a class="red logout" ng-click="logoutUser()">sign out</a>
+                                                <a class="red logout" ng-click="logoutUser()">Sign out</a>
                                             </div>
                                         </div>
                                         <div class="rec-arrow" ng-cloak ng-show="user" ng-click="recToggle()">
@@ -220,6 +220,7 @@
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
     <!-- <script src="/js/angular-touch.js"></script> -->
+    <script src="/js/angular-idle.min.js"></script>    
 
     <script src="/js/moment.min.js"></script>
     <script type="text/javascript" src="/js/fullcalendar.js"></script>
