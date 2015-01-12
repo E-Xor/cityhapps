@@ -15,8 +15,10 @@ class UpdateEventsTableDatetime extends Migration {
 
 		Schema::table('events', function(Blueprint $table)
 		{
-			$table->dropColumn('event_date');
-
+		if (Schema::hasColumn('events', 'event_date'))
+			{
+				$table->dropColumn('event_date');
+			}
 		});
 
 

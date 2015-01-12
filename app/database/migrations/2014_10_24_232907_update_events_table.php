@@ -12,7 +12,10 @@ class UpdateEventsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::drop('events');
+		if (Schema::hasTable('events'))
+		{
+			Schema::drop('events');
+		}
 
 		Schema::create('events', function(Blueprint $table)
 		{

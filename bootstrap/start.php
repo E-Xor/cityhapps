@@ -29,6 +29,7 @@ $env = $app->detectEnvironment(array(
 
 	'local-cpk' => array("cpk.local"),
 	'local-mike' => array("NowlinCrispyMacbookAir.local")
+//	'local-yourName' => array("yourMachineName.local") //local-yourName is what you define in app/config
 
 ));
 

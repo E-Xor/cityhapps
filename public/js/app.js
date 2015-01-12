@@ -2512,7 +2512,7 @@ cityHapps.controller("calDayController", function($scope, getEvents, $modal, $ht
         $scope.dayEvents = data.events;
         $scope.eventGroup =  [];
         $rootScope.now = moment($routeParams.date).format("dddd, MMMM Do");
-        
+
         //Needs to be broken out into a factory
 
 

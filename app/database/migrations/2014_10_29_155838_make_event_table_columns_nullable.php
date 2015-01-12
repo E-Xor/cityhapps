@@ -12,7 +12,10 @@ class MakeEventTableColumnsNullable extends Migration {
 	 */
 	public function up()
 	{
-		// 
+		if (Schema::hasTable('events'))
+		{
+			Schema::drop('events');
+		}
 
 		Schema::create('events', function(Blueprint $table)
 		{

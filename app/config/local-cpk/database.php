@@ -23,7 +23,8 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'vwd',
+			'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
+			'database'  => 'vwdTest',
 			'username'  => 'root',
 			'password'  => 'root',
 			'charset'   => 'utf8',

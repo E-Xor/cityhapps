@@ -12,16 +12,19 @@ class UpdateUserEventTable extends Migration {
 	 */
 	public function up()
 	{
-		// Schema::drop('user_event');
+//		if (Schema::hasTable('user_event'))
+//		{
+//			Schema::drop('user_event');
+//		}
 
-		Schema::create('user_event', function(Blueprint $table)
+		Schema::table('user_event', function(Blueprint $table)
 		{
-			$table->increments('id');
+//			$table->increments('id');
 			$table->string('user_id');
 			$table->string('event_id');
-			$table->boolean('upvote')->default(false); // Event URL
-			$table->string('downvote')->default(false); // Event ID (from source)
-			$table->timestamps();
+//			$table->boolean('upvote')->default(false); // Event URL
+//			$table->string('downvote')->default(false); // Event ID (from source)
+//			$table->timestamps();
 		});
 	}
 
