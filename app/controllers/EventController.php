@@ -44,7 +44,6 @@ class EventController extends BaseController {
 		$eventParams['userID'] = input::get('user_id'); // This is a special parameter used to return the "vote" flag for events with a UserEvent vote
 
 		$eventParams['search'] = Input::get('search'); // This is a space-delimited "omni search" term, like "dogs atlanta april"
-
 		$events = EventRecord::selectEvents($eventParams);
 
 		$meta = array();
