@@ -120,8 +120,7 @@ class EventController extends BaseController {
 
 		$response = '';
 
-		/* ACTIVE */
-		$eventParams = array();
+		/*$eventParams = array();
 
 		$eventParams['page_size'] = '50';
 		$eventParams['page_number'] = '1';
@@ -202,7 +201,7 @@ class EventController extends BaseController {
 				
 				$eventParams['page_number'] = $i;
 
-				/* ACTIVE */
+				// ACTIVE
 				if (!$activeComplete) {
 					try {
 						$temp = Active::storeEvents($eventParams);
@@ -218,7 +217,7 @@ class EventController extends BaseController {
 					}
 				}
 
-				/* EVENTBRITE */
+				// EVENTBRITE 
 				if (!$eventbriteComplete) {
 					try {
 						$temp = Eventbrite::storeEvents($eventParams);
@@ -234,7 +233,7 @@ class EventController extends BaseController {
 					}
 				}
 
-				/* EVENTFUL */
+				// EVENTFUL
 				if (!$eventfulComplete) {
 					try {
 						$temp = Eventful::storeEvents($eventParams);
@@ -250,7 +249,7 @@ class EventController extends BaseController {
 					}
 				}
 
-				/* MEETUP */
+				// MEETUP
 				if (!$meetupComplete) {
 					try {
 						$temp = Meetup::storeEvents($eventParams);
@@ -267,10 +266,10 @@ class EventController extends BaseController {
 				}
 			}
 
-		}
+		}*/
 		
 
-		//EventRecord::storeEvents();
+		EventRecord::storeEvents();
 
 		return $response;
 

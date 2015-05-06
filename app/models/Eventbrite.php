@@ -54,9 +54,8 @@ class Eventbrite extends Eloquent {
 			$pageNum = $eventParams['page_number'];
 		}
 
-		//$events = file_get_contents($url);
-
-		$events = file_get_contents('https://www.eventbriteapi.com/v3/events/search/?start_date.range_start='.$start_date.'T00:00:00Z&venue.city=Atlanta&venue.region=GA&venue.country=US&token=UKNDTMAVPK4A7ACVVLWF&page=' . $pageNum);
+		$url = 'https://www.eventbriteapi.com/v3/events/search/?start_date.range_start='.$start_date.'T00:00:00Z&venue.city=Atlanta&venue.region=GA&venue.country=US&token=UKNDTMAVPK4A7ACVVLWF&page=' . $pageNum;
+        $events = file_get_contents($url);
 
 		$jsonObj = json_decode( $events );  
 		$jsonArray = Eventbrite::eventbriteObjectToArray($jsonObj);
@@ -90,7 +89,7 @@ class Eventbrite extends Eloquent {
 				$eventRecord->start_local			=	$jsonArray['events'][$i]['start']['local'];
 				$eventRecord->end_local				=	$jsonArray['events'][$i]['end']['local'];
 				$eventRecord->AllDayFlag			=	'';
-				$eventRecord->logo_url				=	$jsonArray['events'][$i]['logo_url'];
+				$eventRecord->logo_url				=	$jsonArray['events'][$i]['logo']['url'];
 				$eventRecord->latitude				=	$jsonArray['events'][$i]['venue']['address']['latitude'];
 				$eventRecord->longitude				=	$jsonArray['events'][$i]['venue']['address']['longitude'];
 				

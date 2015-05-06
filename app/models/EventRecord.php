@@ -380,21 +380,23 @@ class EventRecord extends Eloquent {
 							$eventRecord->end_time = date_format(date_create($event->end_local), "Y-m-d H:i:s");
 						}
 
-						$eventRecord->save();
+						if (EventRecord::keywordFilter($eventRecord)) {
+							$eventRecord->save();
 
-						foreach ($event->eventbriteCategories as $category) {
+							foreach ($event->eventbriteCategories as $category) {
 
-							$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
-							$categoryRecords = $categoryExisting->get();
-							
-							if ($categoryRecords->count() < 1) {
-								$categoryRecords->push(new EventCategory);
-							}
+								$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+								$categoryRecords = $categoryExisting->get();
+								
+								if ($categoryRecords->count() < 1) {
+									$categoryRecords->push(new EventCategory);
+								}
 
-							foreach ($categoryRecords as $categoryRecord) {
-								$categoryRecord->category_id = $category->category_id;
-								$categoryRecord->event_id = $eventRecord->id;
-								$categoryRecord->save();
+								foreach ($categoryRecords as $categoryRecord) {
+									$categoryRecord->category_id = $category->category_id;
+									$categoryRecord->event_id = $eventRecord->id;
+									$categoryRecord->save();
+								}
 							}
 						}
 					}
@@ -451,21 +453,23 @@ class EventRecord extends Eloquent {
 							$eventRecord->end_time = date_format(date_create($event->stop_time), "Y-m-d H:i:s");
 						}
 
-						$eventRecord->save();
+						if (EventRecord::keywordFilter($eventRecord)) {
+							$eventRecord->save();
 
-						foreach ($event->eventfulCategories as $category) {
+							foreach ($event->eventfulCategories as $category) {
 
-							$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
-							$categoryRecords = $categoryExisting->get();
-							
-							if ($categoryRecords->count() < 1) {
-								$categoryRecords->push(new EventCategory);
-							}
+								$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+								$categoryRecords = $categoryExisting->get();
+								
+								if ($categoryRecords->count() < 1) {
+									$categoryRecords->push(new EventCategory);
+								}
 
-							foreach ($categoryRecords as $categoryRecord) {
-								$categoryRecord->category_id = $category->category_id;
-								$categoryRecord->event_id = $eventRecord->id;
-								$categoryRecord->save();
+								foreach ($categoryRecords as $categoryRecord) {
+									$categoryRecord->category_id = $category->category_id;
+									$categoryRecord->event_id = $eventRecord->id;
+									$categoryRecord->save();
+								}
 							}
 						}
 					}
@@ -530,22 +534,23 @@ class EventRecord extends Eloquent {
 								$eventRecord->end_time = $eventRecord->end_time = date("Y-m-d H:i:s", $endSeconds);
 							}
 						}
+						if (EventRecord::keywordFilter($eventRecord)) {
+							$eventRecord->save();
 
-						$eventRecord->save();
+							foreach ($event->meetupCategories as $category) {
 
-						foreach ($event->meetupCategories as $category) {
+								$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+								$categoryRecords = $categoryExisting->get();
+								
+								if ($categoryRecords->count() < 1) {
+									$categoryRecords->push(new EventCategory);
+								}
 
-							$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
-							$categoryRecords = $categoryExisting->get();
-							
-							if ($categoryRecords->count() < 1) {
-								$categoryRecords->push(new EventCategory);
-							}
-
-							foreach ($categoryRecords as $categoryRecord) {
-								$categoryRecord->category_id = $category->category_id;
-								$categoryRecord->event_id = $eventRecord->id;
-								$categoryRecord->save();
+								foreach ($categoryRecords as $categoryRecord) {
+									$categoryRecord->category_id = $category->category_id;
+									$categoryRecord->event_id = $eventRecord->id;
+									$categoryRecord->save();
+								}
 							}
 						}
 					}
@@ -553,7 +558,30 @@ class EventRecord extends Eloquent {
 
 			} 
 		});
-
 	}
 
+	public static function keywordFilter($eventRecord) {
+		$threshold = 20;
+		$keywords = array(
+			'children' => 10,
+			'parents' => 10,
+			'family' => 10,
+			'entire family' => 20,
+			'kids' => 10,
+			'margarita' => -10,
+			'mojito' => -10,
+			'beer' => -10,
+			'wine' => -10,
+		);
+		
+		$score = 0;
+
+		// Check for keywords
+		foreach($keywords as $keyword => $value) {
+			$score += substr_count(strtoupper($eventRecord->event_name), strtoupper($keyword)) * $value * 2; // Keywords in the title count double
+			$score += substr_count(strtoupper($eventRecord->description), strtoupper($keyword)) * $value;
+		}
+
+		return $score >= $threshold;
+	}
 }
