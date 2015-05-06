@@ -8,19 +8,6 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class Integration extends Eloquent {
 
 	protected $guarded = array('id','create_at', "updated_at");
-	/*protected $table = '';
-
-	public function categories() {
-
-	}
-
-	public static function objectToArray($d) {
-
-	}
-
-	public static function storeEvents($eventParams) {
-
-	}*/
 
 	public static function retrieveData($name, $type, $values) {
 		$integrationPath = '../app/config/integrations/' . $name . '.json';
