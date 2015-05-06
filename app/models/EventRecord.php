@@ -324,8 +324,6 @@ class EventRecord extends Eloquent {
 	public static function storeEvents() {
 
 		/*
-		Active::storeEvents();
-		echo("Active events stored.<br />");
 		Eventbrite::storeEvents();
 		echo("Eventbrite events stored.<br />");
 		Eventful::storeEvents();
@@ -334,81 +332,10 @@ class EventRecord extends Eloquent {
 		echo("Meetup events stored.<br />");
 		*/
 		
-		EventRecord::storeActiveEvents();
 		EventRecord::storeEventbriteEvents();
 		EventRecord::storeEventfulEvents();
 		EventRecord::storeMeetupEvents();
 		
-	}
-
-	public static function storeActiveEvents() {
-
-		Active::chunk(200, function($events) {
-
-			foreach ($events as $event) {
-
-				if ($event->imageUrlAdr != null) {
-
-					$checkExisting = EventRecord::where('source_id', '=', $event->assetGuid);
-					$eventRecords = $checkExisting->get();
-					
-					if ($eventRecords->count() < 1) {
-						$eventRecords->push(new EventRecord);
-					}
-
-					foreach ($eventRecords as $eventRecord) {
-						
-						$eventRecord->source = 'Active';
-						$eventRecord->url = $event->urlAdr;
-						$eventRecord->source_id = $event->assetGuid;
-						$eventRecord->event_name = $event->assetName;
-						$eventRecord->venue_url = $event->placeUrlAdr;
-						$eventRecord->venue_name = $event->placeName;
-						$eventRecord->address = $event->addressLine1Txt;
-						$eventRecord->city = $event->cityName;
-						$eventRecord->state = $event->stateProvinceCode;
-						$eventRecord->zip = $event->postalCode;
-						$eventRecord->description = $event->description;
-						
-						$eventRecord->end_time = $event->activityEndDate;
-						$eventRecord->all_day_flag = $event->AllDayFlag;
-						$eventRecord->event_image_url = $event->imageUrlAdr;
-						$eventRecord->latitude = $event->lat;
-						$eventRecord->longitude = $event->lon;
-
-						if ($event->activityStartDate != null) {
-							$eventRecord->event_date = date_format(date_create($event->activityStartDate), "Y-m-d");
-							$eventRecord->start_time = date_format(date_create($event->activityStartDate), "Y-m-d H:i:s");
-						}
-
-						if ($event->activityEndDate != null) {
-							$eventRecord->end_time = date_format(date_create($event->activityEndDate), "Y-m-d H:i:s");
-						}
-
-						$eventRecord->save();
-
-						foreach ($event->activeCategories as $category) {
-
-							$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
-							$categoryRecords = $categoryExisting->get();
-							
-							if ($categoryRecords->count() < 1) {
-								$categoryRecords->push(new EventCategory);
-							}
-
-							foreach ($categoryRecords as $categoryRecord) {
-								$categoryRecord->category_id = $category->category_id;
-								$categoryRecord->event_id = $eventRecord->id;
-								$categoryRecord->save();
-							}
-						}
-
-					}
-				}
-
-			} 
-		});
-
 	}
 
 	public static function storeEventbriteEvents() {
