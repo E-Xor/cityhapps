@@ -1,0 +1,45 @@
+{
+    "integration": {
+        "name": "Eventbrite",
+        "docs": "http://developer.eventbrite.com/docs",
+        "url": "https://www.eventbriteapi.com",
+        "version": "v3",
+        "global_parameters": {
+            "page": "ARRAY_DEFINED",
+            "token": "UKNDTMAVPK4A7ACVVLWF"
+        },
+        "endpoints": {
+            "endpoint": {
+                "type": "events",
+                "path": "events/search",
+                "parameters": {
+                    "q": "",
+                    "since_id": "",
+                    "sort_by": "",
+                    "popular": "",
+                    "location.address": "",
+                    "location.latitude": "",
+                    "location.longitude": "",
+                    "location.within": "",
+                    "venue.city": "Atlanta",
+                    "venue.region": "GA",
+                    "venue.country": "US",
+                    "organizer.id": "",
+                    "user.id": "",
+                    "tracking_code": "",
+                    "categories": "",
+                    "formats": "",
+                    "start_date.range_start": "ARRAY_DEFINED",
+                    "start_date.range_end": "",
+                    "start_date.keyword": "",
+                    "date_created.range_start": "",
+                    "date_created.range_end": "",
+                    "date_created.keyword": "",
+                    "date_modified.range_start": "",
+                    "date_modified.range_end": "",
+                    "date_modified.keyword": ""
+                }
+            }
+        }
+    }
+}

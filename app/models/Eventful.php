@@ -1,13 +1,6 @@
 <?php
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
-
-class Eventful extends Eloquent {
-
-	protected $guarded = array('id','create_at', "updated_at");
+class Eventful extends Integration {
 
 	protected $table = 'eventful';
 
@@ -16,62 +9,20 @@ class Eventful extends Eloquent {
 		return $this->belongsToMany('EventfulCategory', 'eventful_eventfulCategories', 'eventful_id', 'eventfulCategories_id');
 	}
 
-	//Eventful will return an object but we need an array 
-	public static function eventfulObjectToArray($d) {
-		if (is_object($d)) {
-			// Gets the properties of the given object
-			// with get_object_vars function
-			$d = get_object_vars($d);	
-		}
- 
-		if (is_array($d)) {
-			/*
-			* Return array converted to object
-			* Using __FUNCTION__ (Magic constant)
-			* for recursive call
-			*/
-			return array_map('Eventful::eventfulObjectToArray', $d);
-		}
-		else {
-			// Return array
-			return $d;
-		}
-	}
-
 	public static function storeEvents($eventParams) {
-
 		$response = '';
 
-		$today = new DateTime();
+		// Build out the JSON event request parameters
+		$pageSize = ($eventParams['page_size'] != null) ? $eventParams['page_size'] : 100;
+		$pageNumber = ($eventParams['page_number'] != null) ? $eventParams['page_number'] : 1;
 
-		$start_date = date_sub($today, date_interval_create_from_date_string("30 days"))->format('Y-m-d');
+		$values = array(
+			'page_size' => $pageSize,
+			'page_number' => $pageNumber,
+		);
 
-		// Enter your application key here. (See http://api.eventful.com/keys/)
-		// $app_key = 'pLB3SGLn9xSnfcg5';
-
-		//http://api.eventful.com/json/events/search?location=Atlanta&image_sizes=block250&app_key=pLB3SGLn9xSnfcg5&date=Future&page_size=100&include=categories,images,price,links
-
-		$url = 'http://api.eventful.com/json/events/search?';
-		$url .= 'location=Atlanta';
-		$url .= '&image_sizes=block250';
-		$url .= '&app_key=pLB3SGLn9xSnfcg5';
-		$url .= '&date=Future';
-		$url .= '&include=categories,images,price,links';
-
-		if ($eventParams['page_size'] != null) {
-			$url .= '&page_size=' . $eventParams['page_size'];
-		} else {
-			$url .= '&page_size=100';
-		}
-
-		if ($eventParams['page_number'] != null) {
-			$url .= '&page_number=' . $eventParams['page_number'];
-		}
-
-		$events = file_get_contents($url);
-
-		$jsonObj = json_decode( $events );  
-		$jsonArray = Eventful::eventfulObjectToArray($jsonObj);
+		// Make the JSON Request
+		$jsonArray = Eventful::retrieveData('eventful', 'events', $values);
 
 		$total = count($jsonArray['events']['event']);
 		$response = $jsonArray['page_count'];
@@ -206,12 +157,6 @@ class Eventful extends Eloquent {
 		return $response;
 
 	}
-
-
-
-
-
-
 
 	public static function storeEventsByCategory() { // ***** This is the old way of calling the API, deprecated
 

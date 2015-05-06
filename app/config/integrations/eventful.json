@@ -1,0 +1,34 @@
+{
+    "integration": {
+        "name": "Eventful",
+        "docs": "http://api.eventful.com/docs",
+        "url": "http://api.eventful.com",
+        "version": "json",
+        "global_parameters": {
+            "app_key": "pLB3SGLn9xSnfcg5"
+        },
+        "endpoints": {
+            "endpoint": {
+                "type": "events",
+                "path": "events/search",
+                "parameters": {
+                    "keywords": "",
+                    "location": "Atlanta, GA",
+                    "date": "Future",
+                    "category": "",
+                    "within": "",
+                    "units": "",
+                    "count_only": "",
+                    "sort_order": "",
+                    "sort_direction": "",
+                    "page_size": "ARRAY_DEFINED",
+                    "page_number": "ARRAY_DEFINED",
+                    "image_sizes": "block250",
+                    "languages": "",
+                    "mature": "safe",
+                    "include": "categories,images,price,links"
+                }
+            }
+        }
+    }
+}
