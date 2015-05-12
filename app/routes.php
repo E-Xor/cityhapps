@@ -67,16 +67,14 @@ Route::resource('category', 'CategoryController');
 
 Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
 
-Route::group(array('before'=>'auth'), function() {
-  Route::get('admin', function() {
+Route::get('admin', function() {
 
-    //old admin return
-    Auth::user();
-
-  });
-  Route::get('admin/event', 'AdminEventController@index');
-  Route::post('admin/event/add', 'AdminEventController@create');
+  //old admin return
+  Auth::user();
 });
+
+Route::get('admin/event', 'AdminEventController@index');
+Route::post('admin/event/add', 'AdminEventController@create');
 
 
 
