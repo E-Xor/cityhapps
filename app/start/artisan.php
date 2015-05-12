@@ -13,3 +13,4 @@
 
 Artisan::add(new StoreEventsCommand);
 Artisan::add(new ConvertEventsCommand);
+Artisan::add(new ClearApi);
