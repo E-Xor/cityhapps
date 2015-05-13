@@ -62,6 +62,7 @@ class PullApi extends Command {
    */
   public function grabEventbrite()
   {
+      $this->line("Start time: " . (string)date('l jS \of F Y h:i:s A'));
       $this->comment("Started Eventbrite");
       $eb = new EventbriteController;
       $eb->storeEvents();
@@ -73,6 +74,7 @@ class PullApi extends Command {
    */
   public function grabEventful()
   {
+      $this->line("Start time: " . (string)date('l jS \of F Y h:i:s A'));
       $this->comment("Started Eventful");
       $eb = new EventfulController;
       $eb->storeEvents();
@@ -84,6 +86,7 @@ class PullApi extends Command {
    */
   public function grabMeetup()
   {
+      $this->line("Start time: " . (string)date('l jS \of F Y h:i:s A'));
       $this->comment("Started Meetup");
       $eb = new MeetupController;
       $eb->storeEvents();
