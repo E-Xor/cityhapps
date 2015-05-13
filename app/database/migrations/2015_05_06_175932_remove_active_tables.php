@@ -56,32 +56,6 @@ class RemoveActiveTables extends Migration {
 			$table->timestamps();
 		});
 
-		ActiveCategory::create(array('name' => 'classes'));
-		ActiveCategory::create(array('name' => 'event'));
-		ActiveCategory::create(array('name' => 'tournaments'));
-		ActiveCategory::create(array('name' => 'camps'));
-		ActiveCategory::create(array('name' => 'races'));
-		ActiveCategory::create(array('name' => 'trail heads'));
-		ActiveCategory::create(array('name' => 'leagues'));
-		ActiveCategory::create(array('name' => 'articles'));
-		ActiveCategory::create(array('name' => 'clinics'));
-		ActiveCategory::create(array('name' => 'memberships'));
-		ActiveCategory::create(array('name' => 'lessons'));
-		ActiveCategory::create(array('name' => 'programs'));
-		ActiveCategory::create(array('name' => 'experts'));
-		ActiveCategory::create(array('name' => 'conferences'));
-		ActiveCategory::create(array('name' => 'workshops'));
-		ActiveCategory::create(array('name' => 'swimming pools/aquatic centers'));
-		ActiveCategory::create(array('name' => 'schools'));
-		ActiveCategory::create(array('name' => 'meetings'));
-		ActiveCategory::create(array('name' => 'virtual events'));
-		ActiveCategory::create(array('name' => 'place'));
-		ActiveCategory::create(array('name' => 'training plans'));
-		ActiveCategory::create(array('name' => 'creative work'));
-		ActiveCategory::create(array('name' => 'clubs'));
-		ActiveCategory::create(array('name' => 'tickets'));
-		ActiveCategory::create(array('name' => 'meetups'));
-
 		Schema::create('active_activeCategories', function(Blueprint $table)
 		{
 			$table->increments('id');
