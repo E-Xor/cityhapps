@@ -658,6 +658,85 @@ cityHapps.factory('calDayClick', function($http, ipCookie){
 });
 
 
+/* ***************************** */
+/* Admin Event Controller        */
+/* -- Start --                   */
+/* ***************************** */
+cityHapps.controller('adminEventController', ['$scope', '$window', '$idle', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
+	function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
+		
+  $scope.user = ipCookie('user');
+	$scope.showEventful = false;
+	$scope.showActive = false;
+	$scope.showMeetup = false;
+
+	$scope.showEvents = function(eventSource) {
+		
+		$scope.eventData = null;
+
+		$scope.showEventful = false;
+		$scope.showActive = false;
+		$scope.showMeetup = false;
+		$scope.showEventbrite = false;
+
+		var eventRoute = '';
+
+		switch(eventSource) {
+			case "Eventful":
+				eventRoute = "eventfulEvents";
+				break;
+			case "Active":
+				eventRoute = "activeEvents";
+				break;
+			case "Meetup":
+				eventRoute = "meetupEvents";
+				break;
+			case "Eventbrite":
+				eventRoute = "eventbriteEvents";
+				break;
+			default:
+				// This should never happen
+		}
+
+		if (eventRoute != '') {
+
+			var events = $http.get('/' + eventRoute);
+
+			events.success(function(data) {
+				
+				console.log(data);
+
+				switch(eventSource) {
+					case "Eventful":
+						$scope.eventData = data.events["event"];
+						$scope.showEventful = true;
+						break;
+					case "Active":
+						$scope.eventData = data.results;
+						$scope.showActive = true;
+						break;
+					case "Meetup":
+						$scope.eventData = data.results;
+						$scope.showMeetup = true;
+						break;
+					case "Eventbrite":
+						$scope.eventData = data.events;
+						$scope.showEventbrite = true;
+						break;
+					default:
+						// This should never happen
+				}
+
+			});
+		}
+	};
+
+}]);
+/* ***************************** */
+/* Admin Event Controller       */
+/* -- Stop --                   */
+/* ***************************** */
+
 cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
 	function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
 

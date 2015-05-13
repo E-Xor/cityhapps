@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFbTokenToUsersTable extends Migration {
+class ChangeLogoUrlToText extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,9 @@ class AddFbTokenToUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('users', function(Blueprint $table)
+		Schema::table('eventbrite', function(Blueprint $table)
 		{
-			$table->string("fb_token")->default(0);
+      DB::statement('ALTER TABLE eventbrite MODIFY COLUMN logo_url TEXT');
 		});
 	}
 
@@ -25,9 +25,9 @@ class AddFbTokenToUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('users', function(Blueprint $table)
+		Schema::table('eventbrite', function(Blueprint $table)
 		{
-			$table->dropColumn("fb_token");
+			//
 		});
 	}
 

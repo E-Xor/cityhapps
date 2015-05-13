@@ -10,7 +10,7 @@ class Integration extends Eloquent {
 	protected $guarded = array('id','create_at', "updated_at");
 
 	public static function retrieveData($name, $type, $values) {
-		$integrationPath = '../app/config/integrations/' . $name . '.json';
+		$integrationPath = app_path() . '/config/integrations/' . $name . '.json';
 		if (file_exists($integrationPath)) {
 			$integrationJSON = file_get_contents($integrationPath);
 			$integrationWrapper = json_decode($integrationJSON);
