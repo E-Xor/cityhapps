@@ -16,3 +16,4 @@ Artisan::add(new ConvertEventsCommand);
 Artisan::add(new ClearApi);
 Artisan::add(new PullApi);
 Artisan::add(new LoadApiData);
+Artisan::add(new StaleApiData);
