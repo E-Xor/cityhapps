@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 class PullApi extends Command {
 
@@ -18,7 +19,7 @@ class PullApi extends Command {
    *
    * @var string
    */
-  protected $description = 'Populate API tables from their respective apis.';
+  protected $description = 'Populate API tables from their respective APIs.';
 
   /**
    * Create a new command instance.
@@ -64,8 +65,38 @@ class PullApi extends Command {
   {
       $this->line("Start time: " . (string)date('l jS \of F Y h:i:s A'));
       $this->comment("Started Eventbrite");
-      $eb = new EventbriteController;
-      $eb->storeEvents();
+
+
+      $eb = new Eventbrite;
+      
+      $eventParams = array(
+        'page_size' => '',
+        'page_number' => '1',
+      );
+      
+      $this->info("Waiting for page count...");
+      $pageCount = $eb->storeEvents($eventParams);
+
+
+      if (isset($pageCount) && (int)$pageCount > 1) {
+        $progress = new ProgressBar($this->output, (int)$pageCount);
+        $progress->setFormat('very_verbose');
+        $progress->start();
+        $progress->advance();
+        for ($i = 2; $i <= (int)$pageCount; $i++) {
+          $eventParams['page_number'] = $i;
+          $newPageCount = $eb->storeEvents($eventParams);
+
+          if ($newPageCount != null) {
+            if ((int)$newPageCount != (int)$pageCount) {
+              $pageCount = $newPageCount;
+            }
+          }
+          $progress->advance();
+        }
+        $progress->finish();
+      }
+
       $this->info("Finished Eventbrite");
   }
   /**

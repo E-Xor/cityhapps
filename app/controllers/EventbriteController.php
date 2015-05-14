@@ -16,33 +16,28 @@ class EventbriteController extends BaseController {
 	public function storeEvents() {
 		$response = '';
 
-		$eventParams = array();
-
-		$eventParams['page_size'] = '';
-		$eventParams['page_number'] = '1';
+		$eventParams = array(
+			'page_size' => '',
+			'page_number' => '1',
+		);
 
 		$pageCount = Eventbrite::storeEvents($eventParams);
 
-		if ($pageCount != null) {
-			if ((int)$pageCount > 1) {
-				for ($i = 2; $i <= (int)$pageCount; $i++) {
-					$eventParams['page_number'] = $i;
-					$newPageCount = Eventbrite::storeEvents($eventParams);
+		if (isset($pageCount) && (int)$pageCount > 1) {
+			for ($i = 2; $i <= (int)$pageCount; $i++) {
+				$eventParams['page_number'] = $i;
+				$newPageCount = Eventbrite::storeEvents($eventParams);
 
-					if ($newPageCount != null) {
-						if ((int)$newPageCount != (int)$pageCount) {
-							$pageCount = $newPageCount;
-						}
+				if ($newPageCount != null) {
+					if ((int)$newPageCount != (int)$pageCount) {
+						$pageCount = $newPageCount;
 					}
-
-					$response .= $i . "<br />";
 				}
+				$response .= $i . "<br />";
 			}
 		}
-
 		echo $response;
 	}
-
 }
 
 ?>
