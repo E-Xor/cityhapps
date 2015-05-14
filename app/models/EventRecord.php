@@ -43,6 +43,12 @@ class EventRecord extends Eloquent {
 		return EventRecord::where('event_date', '=', $date->format('Y-m-d'))->count();
 	}
 
+  public static function clearStaleApi()
+  {
+    $query = DB::delete("DELETE events FROM events LEFT JOIN eventbrite eb ON eb.url = events.url LEFT JOIN eventful ef ON ef.url = events.url LEFT JOIN meetup m ON m.event_url = events.url WHERE eb.url IS NULL AND m.event_url IS NULL AND ef.url IS NULL OR events.end_time < now()");
+    return $query;
+  }
+
 	public static function selectEvents($eventParams) {
 
 		$events = EventRecord::with('categories')
