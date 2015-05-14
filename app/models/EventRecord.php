@@ -47,7 +47,6 @@ class EventRecord extends Eloquent {
   {
     // initialize variables
     $buildQuery = "DELETE events FROM events ";
-    $queryResult = -1;
     $buildWhere = "";
     // grab count for each table;
     $ebCount = DB::table('eventbrite')->count();
@@ -76,15 +75,9 @@ class EventRecord extends Eloquent {
       $buildWhere .=  ($buildWhere ? "AND m.id IS NULL " : "m.id IS NULL ");
     }
 
-    if ($ebCount != 0 || $efCount != 0 || $meCount != 0)
-    {
-      // Atleast one is full, so we can use it.
-      $buildWhere .= "OR events.end_time < now()";
-      // build final query
-      $query = $buildQuery." WHERE " .$buildWhere;
-      $queryResult = DB::delete($query);
-    }
-    // return either -1 for api tables empty, or number of rows deleted.
+    $buildWhere .= ($buildWhere ? "OR events.end_time < now() " : "events.end_time < now() ");
+    $query = $buildQuery." WHERE " .$buildWhere;
+    $queryResult = DB::delete($query);
     return $queryResult;
   }
 

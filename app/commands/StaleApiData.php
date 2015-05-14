@@ -43,9 +43,6 @@ class StaleApiData extends Command {
 
     // This finds the url's that are in events but not in any of the other tables! then deletes them
     $query = EventRecord::clearStaleApi();
-    if ($query == -1)
-      $this->info("Looks like the API Tables are clear! (No stale data to check against)");
-    else
-      $this->info("Deleted " . $query . " row(s) from events table");
+    $this->info("Deleted " . $query . " row(s) from events table");
   }
 }
