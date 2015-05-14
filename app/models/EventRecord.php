@@ -600,17 +600,9 @@ class EventRecord extends Eloquent {
 
   public static function keywordFilter($eventRecord) {
     $threshold = 20;
-    $keywords = array(
-      'children' => 10,
-      'parents' => 10,
-      'family' => 10,
-      'entire family' => 20,
-      'kids' => 10,
-      'margarita' => -10,
-      'mojito' => -10,
-      'beer' => -10,
-      'wine' => -10,
-    );
+
+    $file = app_path() . "/config/filters/keywords.json";
+    $keywords = json_decode(file_get_contents($file),true);
 
     $score = 0;
 
