@@ -35,7 +35,7 @@ class AdminEventController extends \BaseController {
   {
     //show the admin frontend view
     // is it okay to just return html here?
-    $events = DB::table('events')->select('id', 'url', 'source', 'event_date', 'start_time', 'end_time')->orderBy('event_date', 'asc')->get();
+    $events = DB::table('events')->select('id', 'url', 'event_name', 'source', 'event_date', 'start_time', 'end_time')->orderBy('event_date', 'asc')->get();
     $eventCount = DB::table('events')->count();
     $html = '<h1>'.$eventCount.' Events</h1>
       <table cellspacing="0" cellpadding="0" border="0" style="width:100%">
@@ -44,7 +44,7 @@ class AdminEventController extends \BaseController {
       <table cellspacing="0" cellpadding="1" border="1" style="width:100%">
       <tr>
       <th style="width:32px;">ID</th>
-      <th style="width:888px;">Event URL</th>
+      <th style="width:911px;">Event URL</th>
       <th style="width:67px;">API Source</th>
       <th style="width:53px;">Event Date</th>
       <th>Start Time</th>
@@ -61,7 +61,7 @@ class AdminEventController extends \BaseController {
     {
       $html .= "<tr>";
       $html .= "<td>".$event->id."</td>";
-      $html .= "<td>".$event->url."</td>";
+      $html .= "<td><a href='".$event->url."'>".$event->event_name."</a></td>";
       $html .= "<td>".$event->source."</td>";
       $html .= "<td>".$event->event_date."</td>";
       $html .= "<td>".$event->start_time."</td>";
