@@ -74,6 +74,7 @@ Route::get('admin', function() {
 });
 
 Route::get('admin/event', 'AdminEventController@index');
+Route::get('admin/event/list', 'AdminEventController@listEvents');
 Route::post('admin/event/add', 'AdminEventController@create');
 
 

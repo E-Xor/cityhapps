@@ -23,7 +23,19 @@ class AdminEventController extends \BaseController {
 	public function create()
 	{
 		//
-    return "yolo";
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /admin/event/list
+	 *
+	 * @return Response
+	 */
+	public function listEvents()
+	{
+		//show the admin frontend view
+    // is it okay to just return html here?
+    return "<h1>Test</h1>";
 	}
 
 	/**
@@ -43,7 +55,7 @@ class AdminEventController extends \BaseController {
 		$events = UserEvent::storeUserEventVote($eventParams);
 
 		return json_encode($events);
-		
+
 	}
 
 	/**
