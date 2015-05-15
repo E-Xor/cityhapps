@@ -92,7 +92,13 @@ class PullApi extends Command {
               $pageCount = $newPageCount;
             }
           }
-          $progress->advance();
+          if ($progress->getProgressPercent() < 1) {
+            $progress->advance();
+          }
+          else
+          {
+            $this->info("Extra pages!");
+          }
         }
         $progress->finish();
       }
