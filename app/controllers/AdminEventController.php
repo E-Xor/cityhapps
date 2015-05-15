@@ -35,8 +35,9 @@ class AdminEventController extends \BaseController {
   {
     //show the admin frontend view
     // is it okay to just return html here?
-    $events = DB::table('events')->select('id', 'url', 'source', 'event_date', 'start_time', 'end_time')->orderBy('event_date', 'desc')->get();
-    $html = '<h1>Events</h1>
+    $events = DB::table('events')->select('id', 'url', 'source', 'event_date', 'start_time', 'end_time')->orderBy('event_date', 'asc')->get();
+    $eventCount = DB::table('events')->count();
+    $html = '<h1>'.$eventCount.' Events</h1>
       <table cellspacing="0" cellpadding="0" border="0" style="width:100%">
       <tr>
       <td>
