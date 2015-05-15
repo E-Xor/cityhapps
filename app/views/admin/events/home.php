@@ -43,7 +43,6 @@
 
     <body ng-controller="adminEventController" ng-cloak>
 		<div ng-if="!mobile()">
-			<div class="bg-image">
                 <!-- if mobile add snap-content -->
                 <header class="header-container proxima">
 					<div class="wide">
@@ -101,7 +100,6 @@
         <p><a href='#'>Delete Event</a></p>
       </div>
 			<!-- <div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div> -->
-			</div>
 		</div>
 		<!-- if mobile -->
 	<!-- </div> -->

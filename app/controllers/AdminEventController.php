@@ -20,9 +20,21 @@ class AdminEventController extends \BaseController {
    *
    * @return Response
    */
+  public function add()
+  {
+    //show the admin event add view
+    return View::make('admin/events/add');
+  }
+
+  /**
+   * Show the form for creating a new resource.
+   * POST /admin/event/create
+   *
+   * @return Response
+   */
   public function create()
   {
-    //
+    // logic to push to model includes database transactions, sanitizing, etc.
   }
 
   /**
