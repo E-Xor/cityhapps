@@ -3,8 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title>City Happs</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/css/angular-snap.min.css" />
+	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/css/fullcalendar.css" />
+    <!-- <link rel="stylesheet" href="/css/bootstrap-responsive.min.css" /> -->
+	<link rel="stylesheet" href="/css/style.css" />
 	<style>
 		@import url(//fonts.googleapis.com/css?family=Lato:700);
+    html { background:#fff;}
     .form_container {
     width:675px;
     margin:50px auto;
@@ -26,17 +36,12 @@
     .form_container select { background: #fff;height: 31px;}
     .form_container input:focus {
       border-color: #339933;
-    } 
+    }
+    .form_container input[type='submit'] {
+    background: #87cefa;
+    color:#fff;
+    }
 	</style>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="/css/angular-snap.min.css" />
-	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="/css/fullcalendar.css" />
-    <!-- <link rel="stylesheet" href="/css/bootstrap-responsive.min.css" /> -->
-	<link rel="stylesheet" href="/css/style.css" />
 
 
 	<!-- load angular from CDN-->
@@ -154,6 +159,8 @@
               <label for="tags">Tags</label>
               <textarea name="tags" id="tags" style="width:488px;height:180px;"></textarea>
             </div>
+            <div>
+            <input type="submit" value="Submit" />
         </fieldset>
         </form>
         </div>
