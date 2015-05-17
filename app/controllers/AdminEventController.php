@@ -38,7 +38,9 @@ class AdminEventController extends \BaseController {
     $eventParams = array();
 
     $eventParams['event_name'] = Input::get('title');
+    $eventParams['url'] = Input::get('event_url');
     $eventParams['venue_name'] = Input::get('venue_name');
+    $eventParams['venue_url'] = Input::get('venue_url');
     $eventParams['address'] = Input::get('street_address');
     // no room for building
     //$eventParams['building'] = Input::get('building');
@@ -46,6 +48,9 @@ class AdminEventController extends \BaseController {
     $eventParams['state'] = Input::get('state');
     $eventParams['zip'] = Input::get('zip_code');
     $eventParams['description'] = Input::get('desc');
+    $eventParams['event_date'] = Input::get('start_time');
+    $eventParams['start_time'] = Input::get('start_time');
+    $eventParams['end_time'] = Input::get('end_time');
     // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
    // $eventParams['tags'] = Input::get('tags');
     $eventParams['source'] = "Custom";

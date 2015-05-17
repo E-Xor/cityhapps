@@ -125,21 +125,31 @@
         <form method="post">
           <fieldset>
             <div>
-              <label for="title">Title</label>
-              <input type="text" class="full" id="title" name="title" value="" placeholder="Title" />
+              <label for="title">Event Name</label>
+              <input type="text" class="full" id="title" name="title" value="" placeholder="Event Name" ng-model="formData.title" />
+            </div>
+
+            <div>
+              <label for="event_url">Event URL</label>
+              <input type="text" id="event_url" class="full" name="event_url" value="" placeholder="http://www.event.com" ng-model="formData.event_url" />
             </div>
 
             <div>
               <label for="venue_name">Venue Name</label>
-              <input type="text" id="venue_name" class="full" name="venue_name" value="" placeholder="Venue Name" />
+              <input type="text" id="venue_name" class="full" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
+            </div>
+
+            <div>
+              <label for="venue_url">Venue URL</label>
+              <input type="text" id="venue_url" class="full" name="venue_url" value="" ng-model="formData.venue_url" placeholder="http://www.venue.com" />
             </div>
 
             <div>
               <label for="street_address" style="display:inline-block;width:331px;">Street Address</label>
               <label for="building" style="display:inline-block;width:155px;">Building / Suite</label>
 
-              <input type="text" id="street_address" name="street_address" value="" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
-              <input type="text" id="building" name="building" value="" style="width:341px;" />
+              <input type="text" id="street_address" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
+              <input type="text" id="building" name="building" value="" ng-model="formData.building" style="width:341px;" />
             </div>
 
             <div>
@@ -147,11 +157,11 @@
               <label for="state" style="display:inline-block;width:261px;">State</label>
               <label for="zip_code" style="display:inline-block;width:162px;">Zip Code</label>
 
-              <input type="text" id="city" name="city" value="" placeholder="City" style="width:222px;margin-right:20px;"/>
-              <select id="state" name="state" placeholder="State" style="width:245px;margin-right:20px;">
+              <input type="text" id="city" name="city" value="" ng-model="formData.city" placeholder="City" style="width:222px;margin-right:20px;"/>
+              <select id="state" name="state" placeholder="State" ng-model="formData.state" style="width:245px;margin-right:20px;">
                 <option>Georgia</option>
               </select>
-              <input type="text" id="zip_code" name="zip_code" value="" placeholder="Zip Code" style="width:160px;" />
+              <input type="text" id="zip_code" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" style="width:160px;" />
             </div>
 
             <div>
@@ -159,20 +169,20 @@
               <label for="end_time" style="display:inline-block;width:146px;">End Date/Time</label>
 
 
-              <input id="start_time" name="state" placeholder="State" date-time-picker style="width:225px;margin-right:35px;"/>
-              <input id="end_time" name="state" placeholder="State" date-time-picker style="width:225px;"/>
+              <input id="start_time" name="start_time" placeholder="State" date-time-picker ng-model="formData.start_time" style="width:225px;margin-right:35px;"/>
+              <input id="end_time" name="end_time" placeholder="State" date-time-picker ng-model="formData.end_time" style="width:225px;"/>
             </div>
 
             <div>
               <label for="desc">Description</label>
-              <textarea name="desc" id="desc" style="width:488px;height:180px;"></textarea>
+              <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
             </div>
             <div>
               <label for="tags">Tags</label>
-              <textarea name="tags" id="tags" style="width:488px;height:180px;"></textarea>
+              <textarea name="tags" id="tags" style="width:488px;height:180px;" ng-model="formData.tags"></textarea>
             </div>
             <div>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" />
         </fieldset>
         </form>
         </div>
