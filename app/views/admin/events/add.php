@@ -5,6 +5,8 @@
 	<title>City Happs</title>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.css"/ >
+
 
     <link rel="stylesheet" href="/css/angular-snap.min.css" />
 	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
@@ -139,6 +141,7 @@
               <input type="text" id="street_address" name="street_address" value="" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
               <input type="text" id="building" name="building" value="" style="width:341px;" />
             </div>
+
             <div>
               <label for="city" style="display:inline-block;width:244px;">City</label>
               <label for="state" style="display:inline-block;width:261px;">State</label>
@@ -149,6 +152,15 @@
                 <option>Georgia</option>
               </select>
               <input type="text" id="zip_code" name="zip_code" value="" placeholder="Zip Code" style="width:160px;" />
+            </div>
+
+            <div>
+              <label for="start_time" style="display:inline-block;width:262px;">Start Date/Time</label>
+              <label for="end_time" style="display:inline-block;width:146px;">End Date/Time</label>
+
+
+              <input id="start_time" name="state" placeholder="State" date-time-picker style="width:225px;margin-right:35px;"/>
+              <input id="end_time" name="state" placeholder="State" date-time-picker style="width:225px;"/>
             </div>
 
             <div>
@@ -186,6 +198,8 @@
     <script src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+   <script src="/js/jquery.datetimepicker.js"></script>
+
     <!-- <script src="/js/angular-touch.js"></script> -->
     <script src="/js/angular-idle.min.js"></script>
 

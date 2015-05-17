@@ -566,7 +566,16 @@ cityHapps.factory('getEventsMonthStart', function($http, ipCookie){
    }
 
 });
-
+cityHapps.directive('dateTimePicker', function() {
+    return {
+        // Restrict it to be an attribute in this case
+        restrict: 'A',
+        // responsible for registering DOM listeners as well as updating the DOM
+        link: function(scope, element, attrs) {
+            $(element).datetimepicker();
+        }
+    };
+});
 cityHapps.directive('ngModelOnblur', function() {
     return {
         restrict: 'A',
@@ -665,6 +674,7 @@ cityHapps.factory('calDayClick', function($http, ipCookie){
 cityHapps.controller('adminEventController', ['$scope', '$window', '$idle', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
 	function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
 		
+  $('#start_time').datetimepicker(function() { console.log("yo"); });
   $scope.user = ipCookie('user');
 	$scope.showEventful = false;
 	$scope.showActive = false;
