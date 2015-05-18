@@ -131,6 +131,8 @@
         </div>
         <form method="post" ng-if="!success">
           <fieldset>
+          <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
+
           <div class="red center margin20" ng-if="error">{{error}}</div>
             <div>
               <label for="title">Event Name <span class="red center margin20">* <span ng-if="titleError">You must have a event name</span></span></label>
@@ -183,13 +185,13 @@
               <label for="all_day" style="display:inline-block;width:245px;" ng-if="formData.all_day">All Day Event</label>
 
 
-              <input id="start_time" name="start_time" placeholder="1/1/1992 12:00PM" date-time-picker ng-model="formData.start_time" style="width:225px;margin-right:35px;"/>
-              <input id="end_time" name="end_time" placeholder="1/1/1992 1:00PM" date-time-picker ng-model="formData.end_time" ng-if="!formData.all_day" style="width:225px;margin-right:25px;"/>
+              <input id="start_time" name="start_time" placeholder="MM/DD/YYYY H:M AM/PM" date-time-picker ng-model="formData.start_time" style="width:225px;margin-right:35px;"/>
+              <input id="end_time" name="end_time" placeholder="MM/DD/YYYY H:M AM/PM" date-time-picker ng-model="formData.end_time" ng-if="!formData.all_day" style="width:225px;margin-right:25px;"/>
               <input id="all_day" name="all_day" type="checkbox" ng-model="formData.all_day" style="-webkit-appearance: checkbox;"/>
             </div>
 
             <div>
-              <label for="desc">Description</label>
+              <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
               <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
             </div>
             <div>
@@ -197,7 +199,9 @@
               <textarea name="tags" id="tags" style="width:488px;height:180px;" ng-model="formData.tags"></textarea>
             </div>
             <div>
-            <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" />
+
+            <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
+
         </fieldset>
         </form>
         </div>
