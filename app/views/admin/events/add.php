@@ -146,6 +146,11 @@
             </div>
 
             <div>
+              <label for="event_image_url">Event Image URL</label>
+              <input type="text" id="event_image_url" class="full" name="event_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.event_image_url" />
+            </div>
+
+            <div>
               <label for="venue_name">Venue Name <span class="red center margin20">* <span ng-if="venueError">You must have a venue name</span></span></label>
               <input type="text" id="venue_name" class="full" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
             </div>
