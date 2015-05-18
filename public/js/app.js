@@ -715,7 +715,15 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
 			if(!data) {
 				console.log('not working');
 			} else if (data) {
-        console.log("Success");
+        if (data.error) {
+          $scope.error = data.message;
+          console.log("Error creating event", data.message);
+        }
+        else
+        {
+          $scope.success = data;
+          console.log("Success");
+        }
 
 			}
 			console.log("create event data",data);

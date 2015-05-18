@@ -122,8 +122,16 @@
 					</header>
 			<!-- Get the home body partial -->
         <div class="form_container">
-        <form method="post">
+        <div ng-if="success">
+        <h1> 
+          Successfully created event <b>{{success.event_name}}</b> 
+          <br/>
+          <a href='/admin/event/add'>Create New Event</a>
+        </h1>
+        </div>
+        <form method="post" ng-if="!success">
           <fieldset>
+          <div class="red center margin20" ng-if="error">{{error}}</div>
             <div>
               <label for="title">Event Name <span class="red center margin20" ng-if="titleError">You must have a event name</span></label>
 
