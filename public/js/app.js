@@ -566,13 +566,22 @@ cityHapps.factory('getEventsMonthStart', function($http, ipCookie){
    }
 
 });
-cityHapps.directive('dateTimePicker', function() {
+cityHapps.directive('dateTimePicker', function($parse) {
     return {
         // Restrict it to be an attribute in this case
         restrict: 'A',
         // responsible for registering DOM listeners as well as updating the DOM
         link: function(scope, element, attrs) {
-            $(element).datetimepicker();
+            $(element).datetimepicker({
+              onClose: function(ct,$i) {
+                ngModel = $parse($i.attr('ng-model'));
+                var date = $i.val();
+                scope.$apply(function(scope){
+                   // Change binded variable
+                   ngModel.assign(scope, date);
+                });
+              }
+           });
         }
     };
 });
