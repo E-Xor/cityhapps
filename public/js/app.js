@@ -171,6 +171,8 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
                 $scope.slideGroup = [];
 
                 for (rec = 0; rec < $scope.eventData.length; rec ++) {
+                    // if there is no event image url, replace it with /img/logo.png
+                    if (!$scope.eventData[rec].event_image_url) $scope.eventData[rec].event_image_url = "/img/logo.png";
 
                     var mobileRecSlides = $scope.eventData[rec];
                     $scope.slideGroup.push(mobileRecSlides);
@@ -212,7 +214,9 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
                 for (i = 0; i < $scope.eventData.length; i += 4) {
 
-					var slides = {
+                    // if there is no event image url, replace it with /img/logo.png
+                    if (!$scope.eventData[i].event_image_url) $scope.eventData[i].event_image_url = "/img/logo.png";
+					          var slides = {
                         'first' : $scope.eventData[i],
                         'second' : $scope.eventData[i + 1],
                         'third' : $scope.eventData[i + 2],
