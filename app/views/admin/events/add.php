@@ -123,8 +123,8 @@
 			<!-- Get the home body partial -->
         <div class="form_container">
         <div ng-if="success">
-        <h1> 
-          Successfully created event <b>{{success.event_name}}</b> 
+        <h1>
+          Successfully created event <b>{{success.event_name}}</b>
           <br/>
           <a href='/admin/event/add'>Create New Event</a>
         </h1>
@@ -133,7 +133,7 @@
           <fieldset>
           <div class="red center margin20" ng-if="error">{{error}}</div>
             <div>
-              <label for="title">Event Name <span class="red center margin20" ng-if="titleError">You must have a event name</span></label>
+              <label for="title">Event Name <span class="red center margin20">* <span ng-if="titleError">You must have a event name</span></span></label>
 
               <input type="text" class="full" id="title" name="title" value="" placeholder="Event Name" ng-model="formData.title" />
             </div>
@@ -144,7 +144,7 @@
             </div>
 
             <div>
-              <label for="venue_name">Venue Name <span class="red center margin20" ng-if="venueError">You must have a venue name</span></label>
+              <label for="venue_name">Venue Name <span class="red center margin20">* <span ng-if="venueError">You must have a venue name</span></span></label>
               <input type="text" id="venue_name" class="full" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
             </div>
 
@@ -154,7 +154,7 @@
             </div>
 
             <div>
-              <label for="street_address" style="display:inline-block;width:331px;">Street Address <span class="red center margin20" ng-if="addressError">You must have a address</span></label>
+              <label for="street_address" style="display:inline-block;width:331px;">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
               <label for="building" style="display:inline-block;width:155px;">Building / Suite</label>
 
               <input type="text" id="street_address" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
@@ -174,12 +174,18 @@
             </div>
 
             <div>
-              <label for="start_time" style="display:inline-block;width:262px;">Start Date/Time <span class="red center margin20" ng-if="startDateError">You must have a start Date</span></label>
-              <label for="end_time" style="display:inline-block;width:146px;">End Date/Time <span class="red center margin20" ng-if="endDateError">You must have a end date</span></label>
+              <label for="start_time" style="display:inline-block;width:262px;">Start Date/Time <span class="red center margin20"> * </span>
+                <div class="red" ng-if="startDateError">You must have a start date</div>
+              </label>
+
+              <label for="end_time" style="display:inline-block;width:243px;" ng-if="!formData.all_day">End Date/Time </label>
+              <label for="all_day" style="display:inline-block;" ng-if="!formData.all_day">All Day Event</label>
+              <label for="all_day" style="display:inline-block;width:245px;" ng-if="formData.all_day">All Day Event</label>
 
 
-              <input id="start_time" name="start_time" placeholder="State" date-time-picker ng-model="formData.start_time" style="width:225px;margin-right:35px;"/>
-              <input id="end_time" name="end_time" placeholder="State" date-time-picker ng-model="formData.end_time" style="width:225px;"/>
+              <input id="start_time" name="start_time" placeholder="1/1/1992 12:00PM" date-time-picker ng-model="formData.start_time" style="width:225px;margin-right:35px;"/>
+              <input id="end_time" name="end_time" placeholder="1/1/1992 1:00PM" date-time-picker ng-model="formData.end_time" ng-if="!formData.all_day" style="width:225px;margin-right:25px;"/>
+              <input id="all_day" name="all_day" type="checkbox" ng-model="formData.all_day" style="-webkit-appearance: checkbox;"/>
             </div>
 
             <div>

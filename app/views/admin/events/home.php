@@ -95,7 +95,7 @@
 			<!-- Get the home body partial -->
       <div class='center white'>
         <h2> Select what you want to do: </h2>
-        <p><a href='#'>Add Event</a></p>
+        <p><a href='/admin/event/add'>Add Event</a></p>
         <p><a href='#'>Filter Events</a></p>
         <p><a href='#'>Delete Event</a></p>
       </div>
