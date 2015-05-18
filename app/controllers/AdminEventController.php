@@ -35,6 +35,9 @@ class AdminEventController extends \BaseController {
   public function create()
   {
     // logic to push to model includes database transactions, sanitizing, etc.
+    // fall back error message
+    $passValidation = true; 
+    $message = 'Failed to create event';
     $eventParams = array();
 
     $eventParams['event_name'] = Input::get('title');
@@ -54,12 +57,15 @@ class AdminEventController extends \BaseController {
     // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
    // $eventParams['tags'] = Input::get('tags');
     $eventParams['source'] = "Custom";
-    $result = EventRecord::create($eventParams);
+
+
+    if ($passValidation)
+      $result = EventRecord::create($eventParams);
 
     if ($result)
       return json_encode($result);
     else
-      return json_encode(array('error' => true, 'message'=>'Failed to create event'));
+      return json_encode(array('error' => true, 'message'=>$message));
 
   }
 

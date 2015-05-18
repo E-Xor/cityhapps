@@ -125,7 +125,8 @@
         <form method="post">
           <fieldset>
             <div>
-              <label for="title">Event Name</label>
+              <label for="title">Event Name <span class="red center margin20" ng-if="titleError">You must have a event name</span></label>
+
               <input type="text" class="full" id="title" name="title" value="" placeholder="Event Name" ng-model="formData.title" />
             </div>
 
@@ -135,7 +136,7 @@
             </div>
 
             <div>
-              <label for="venue_name">Venue Name</label>
+              <label for="venue_name">Venue Name <span class="red center margin20" ng-if="venueError">You must have a venue name</span></label>
               <input type="text" id="venue_name" class="full" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
             </div>
 
@@ -145,7 +146,7 @@
             </div>
 
             <div>
-              <label for="street_address" style="display:inline-block;width:331px;">Street Address</label>
+              <label for="street_address" style="display:inline-block;width:331px;">Street Address <span class="red center margin20" ng-if="addressError">You must have a address</span></label>
               <label for="building" style="display:inline-block;width:155px;">Building / Suite</label>
 
               <input type="text" id="street_address" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
@@ -165,8 +166,8 @@
             </div>
 
             <div>
-              <label for="start_time" style="display:inline-block;width:262px;">Start Date/Time</label>
-              <label for="end_time" style="display:inline-block;width:146px;">End Date/Time</label>
+              <label for="start_time" style="display:inline-block;width:262px;">Start Date/Time <span class="red center margin20" ng-if="startDateError">You must have a start Date</span></label>
+              <label for="end_time" style="display:inline-block;width:146px;">End Date/Time <span class="red center margin20" ng-if="endDateError">You must have a end date</span></label>
 
 
               <input id="start_time" name="start_time" placeholder="State" date-time-picker ng-model="formData.start_time" style="width:225px;margin-right:35px;"/>

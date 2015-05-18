@@ -689,6 +689,23 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
 
 	$scope.processForm = function(formData) {
     console.log("Starting", formData);
+    var error=0;
+    if (!formData) {
+      return;
+    }
+    if (typeof formData.title === "undefined" || formData.title == "") {
+      error=1;
+      $scope.titleError = true;
+    }
+    if (typeof formData.venue_name === "undefined" || formData.venue_name == "") {
+      error=1;
+      $scope.venueError = true;
+    }
+    if (typeof formData.street_address === "undefined" || formData.street_address == "") {
+      error=1;
+      $scope.addressError = true;
+    }
+    if (error) return;
    		$http({
 			method: 'POST',
       url: '/admin/event/create',
