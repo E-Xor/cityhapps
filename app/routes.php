@@ -9,14 +9,7 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the Closure to execute when that URI is requested.
 |
-*/
-
-
-Route::get('admin', function() {
-
-	return Auth::user();
-
-})->before('auth');
+ */
 
 
 Route::get('/', 'HomeController@showWelcome');
@@ -25,7 +18,7 @@ Route::get('harness', 'HarnessController@showHarness');
 
 App::missing(function($exception) {
 
-	return View::make('home');
+  return View::make('home');
 
 });
 
@@ -57,22 +50,33 @@ Route::get('storeEventbriteEvents', 'EventbriteController@storeEvents');
 
 Route::post('userEvent', 'UserEventController@store');
 
-	Route::get('auth/status', 'SessionsController@index');
+Route::get('auth/status', 'SessionsController@index');
 
-	Route::post('auth/login', 'SessionsController@login');
+Route::post('auth/login', 'SessionsController@login');
 
-	Route::get('auth/logout', 'SessionsController@logout');
+Route::get('auth/logout', 'SessionsController@logout');
 
-	Route::resource('user', 'UserController');
+Route::resource('user', 'UserController');
 
-	Route::post('user/check', 'UserController@check');
+Route::post('user/check', 'UserController@check');
 
-	Route::post('updateUserCategories', 'UserController@updateCategories');
-	Route::get('getUserCategories', 'UserController@getUserCategories');
+Route::post('updateUserCategories', 'UserController@updateCategories');
+Route::get('getUserCategories', 'UserController@getUserCategories');
 
-	Route::resource('category', 'CategoryController');
+Route::resource('category', 'CategoryController');
 
-	Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
+Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
+
+Route::get('admin', function() {
+
+  //old admin return
+  Auth::user();
+});
+
+Route::get('admin/event', 'AdminEventController@index');
+Route::get('admin/event/list', 'AdminEventController@listEvents');
+Route::get('admin/event/add', 'AdminEventController@add');
+Route::post('admin/event/create', 'AdminEventController@create');
 
 
 

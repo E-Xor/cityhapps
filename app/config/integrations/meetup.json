@@ -1,0 +1,39 @@
+{
+    "integration": {
+        "name": "Meetup",
+        "docs": "http://www.meetup.com/meetup_api/docs",
+        "url": "https://api.meetup.com",
+        "version": "2",
+        "global_parameters": {
+            "desc": "",
+            "key": "45246f1914773661d4c48611911505b",
+            "offset": "ARRAY_DEFINED",
+            "order": "",
+            "page": "ARRAY_DEFINED"
+        },
+        "endpoints": {
+            "endpoint": {
+                "type": "events",
+                "path": "open_events.json",
+                "parameters": {
+                    "and_text": "",
+                    "category": "",
+                    "city": "atlanta",
+                    "country": "US",
+                    "fields": "category,group_photo",
+                    "lat": "",
+                    "limited_events": "",
+                    "lon": "",
+                    "radius": "",
+                    "state": "GA",
+                    "status": "",
+                    "text": "",
+                    "text_format": "",
+                    "time": "",
+                    "topic": "",
+                    "zip": ""
+                }
+            }
+        }
+    }
+}

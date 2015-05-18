@@ -1,13 +1,6 @@
 <?php
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
-
-class Meetup extends Eloquent {
-
-	protected $guarded = array('id','create_at', "updated_at");
+class Meetup extends Integration {
 
 	protected $table = 'meetup';
 
@@ -16,58 +9,22 @@ class Meetup extends Eloquent {
 		return $this->belongsToMany('MeetupCategory', 'meetup_meetupCategories', 'meetup_id', 'meetupCategories_id');
 	}
 
-	public static function meetupObjectToArray($d) {
-		if (is_object($d)) {
-			// Gets the properties of the given object
-			// with get_object_vars function
-			$d = get_object_vars($d);	
-		}
- 
-		if (is_array($d)) {
-			/*
-			* Return array converted to object
-			* Using __FUNCTION__ (Magic constant)
-			* for recursive call
-			*/
-			return array_map('Meetup::meetupObjectToArray', $d);
-		}
-		else {
-			// Return array
-			return $d;
-		}
-	}
-
 	public static function storeEvents($eventParams) {
-
-		// (See http://www.meetup.com/meetup_api/)
-		// $app_key = '45246f1914773661d4c48611911505b';
-
 		$response = '';
 
 		$meetupCategories = MeetupCategory::all();
 
-		$url = 'https://api.meetup.com/2/open_events.json?';
-		$url .= 'city=atlanta&state=GA&country=US';
-		$url .= '&key=45246f1914773661d4c48611911505b';
-		$url .= '&fields=category,group_photo';
+		// Build out the JSON event request parameters
+		$page = ($eventParams['page_size'] != null) ? $eventParams['page_size'] : 100;
+		$offset = ($eventParams['page_number'] != null) ? (int)$eventParams['page_number'] - 1 : 0;
 
-		if ($eventParams['page_size'] != null) {
-			$url .= '&page=' . $eventParams['page_size'];
-		} else {
-			$url .= '&page=100';
-		}
+		$values = array(
+			'page' => $page,
+			'offset' => $offset,
+		);
 
-		if ($eventParams['page_number'] != null) {
-			$offset = (int)$eventParams['page_number'] - 1;
-			$url .= '&offset=' . $offset;
-		}
-
-		$events = file_get_contents($url);
-
-		//$events = file_get_contents('https://api.meetup.com/2/open_events.json?city=atlanta&state=GA&country=US&key=45246f1914773661d4c48611911505b&category=' . $meetupCategory->source_category_id);
-
-		$jsonObj = json_decode( $events );  
-		$jsonArray = Meetup::meetupObjectToArray($jsonObj);
+		// Make the JSON Request
+		$jsonArray = Meetup::retrieveData('meetup', 'events', $values);
 
 		$total = count($jsonArray['results']);
 		$response = $jsonArray['meta']['total_count'];
@@ -171,9 +128,6 @@ class Meetup extends Eloquent {
 				}
 			}
 		}
-
 		return $response;
-
 	}
-
 }
