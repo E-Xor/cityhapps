@@ -573,6 +573,8 @@ cityHapps.directive('dateTimePicker', function($parse) {
         // responsible for registering DOM listeners as well as updating the DOM
         link: function(scope, element, attrs) {
             $(element).datetimepicker({
+              formatTime: 'g:i A',
+              format: 'm/d/Y h:i A',
               onClose: function(ct,$i) {
                 ngModel = $parse($i.attr('ng-model'));
                 var date = $i.val();
