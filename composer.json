@@ -1,13 +1,11 @@
 {
-	"name": "laravel/laravel",
+	"name": "vwd/cityhapps",
 	"description": "The Laravel Framework.",
-	"keywords": ["framework", "laravel"],
-	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.2.*", 
+		"laravel/framework": "4.2.*",
 		"way/generators": "2.*",
 		"illuminate/html": "~4.0",
-		"guzzlehttp/guzzle": "~4.0", 
+		"guzzlehttp/guzzle": "~4.0",
 		"nesbot/Carbon": "1.*"
 	},
 	"autoload": {
