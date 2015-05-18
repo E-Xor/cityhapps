@@ -53,7 +53,9 @@ class AdminEventController extends \BaseController {
     $eventParams['description'] = Input::get('desc');
     $eventParams['event_date'] = Input::get('start_time');
     $eventParams['start_time'] = Input::get('start_time');
+    $eventParams['all_day_flag'] = Input::get('all_day');
     $eventParams['end_time'] = Input::get('end_time');
+    if (!$eventParams['end_time']) $eventParams['end_time'] = NULL;
     // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
    // $eventParams['tags'] = Input::get('tags');
     $eventParams['source'] = "Custom";

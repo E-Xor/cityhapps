@@ -689,6 +689,7 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
 
 	$scope.processForm = function(formData) {
     console.log("Starting", formData);
+    /// validation
     var error=0;
     if (!formData) {
       return;
@@ -705,6 +706,12 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
       error=1;
       $scope.addressError = true;
     }
+    if (typeof formData.start_time === "undefined" || formData.start_time == "") {
+      error=1;
+      $scope.startDateError = true;
+    }
+    console.log("checkbox", formData.all_day);
+    // if any error, don't post
     if (error) return;
    		$http({
 			method: 'POST',
