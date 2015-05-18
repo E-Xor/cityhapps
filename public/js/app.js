@@ -165,14 +165,16 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 		var eventSuccess = function(data) {
 
 			$scope.eventData = data.events;
+      for (rec = 0; rec < $scope.eventData.length; rec ++) {
+        // if event_image_url isn't there, replace it with /img/logo.png
+        if (!$scope.eventData[rec].event_image_url) $scope.eventData[rec].event_image_url = '/img/logo.png';
+      }
 			console.log($scope.eventData);
 
             if ($window.innerWidth <= 768 ) {
                 $scope.slideGroup = [];
 
                 for (rec = 0; rec < $scope.eventData.length; rec ++) {
-                    // if there is no event image url, replace it with /img/logo.png
-                    if (!$scope.eventData[rec].event_image_url) $scope.eventData[rec].event_image_url = "/img/logo.png";
 
                     var mobileRecSlides = $scope.eventData[rec];
                     $scope.slideGroup.push(mobileRecSlides);
@@ -214,8 +216,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
                 for (i = 0; i < $scope.eventData.length; i += 4) {
 
-                    // if there is no event image url, replace it with /img/logo.png
-                    if (!$scope.eventData[i].event_image_url) $scope.eventData[i].event_image_url = "/img/logo.png";
 					          var slides = {
                         'first' : $scope.eventData[i],
                         'second' : $scope.eventData[i + 1],
@@ -498,7 +498,7 @@ cityHapps.factory('getEvents', function($http, ipCookie){
             var startTime = moment().format();
 
 			// '?start_date=' + startDate
-			return $http.get('/events?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime+'&image_required=no').success(function(data) {
+			return $http.get('/events?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime).success(function(data) {
 
 			});
 		},
