@@ -494,7 +494,7 @@ cityHapps.factory('getEvents', function($http, ipCookie){
             var startTime = moment().format();
 
 			// '?start_date=' + startDate
-			return $http.get('/events?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime).success(function(data) {
+			return $http.get('/events?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime+'&image_required=no').success(function(data) {
 
 			});
 		},
