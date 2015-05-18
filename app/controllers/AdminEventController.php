@@ -36,7 +36,7 @@ class AdminEventController extends \BaseController {
   {
     // logic to push to model includes database transactions, sanitizing, etc.
     // fall back error message
-    $passValidation = true; 
+    $passValidation = true;
     $message = 'Failed to create event';
     $eventParams = array();
 
@@ -51,11 +51,18 @@ class AdminEventController extends \BaseController {
     $eventParams['state'] = Input::get('state');
     $eventParams['zip'] = Input::get('zip_code');
     $eventParams['description'] = Input::get('desc');
-    $eventParams['event_date'] = Input::get('start_time');
-    $eventParams['start_time'] = Input::get('start_time');
+    /* just to explain this ternary operator a little bit
+    ** sets $time to unix time (if it is an invalid input, null, or not a date, it will return false)
+    ** $time is false: return null
+    ** $time is satisfactory: return date that mysql can use
+    */
+    $eventParams['event_date'] = (($time = strtotime(Input::get('start_time'))) === false ? null : date("Y-m-d", $time));
+    $eventParams['start_time'] = (($time = strtotime(Input::get('start_time'))) === false ? null : date("Y-m-d H:i:s", $time));
     $eventParams['all_day_flag'] = Input::get('all_day');
-    $eventParams['end_time'] = Input::get('end_time');
-    if (!$eventParams['end_time']) $eventParams['end_time'] = NULL;
+    $eventParams['end_time'] = (($time = strtotime(Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
+
+    $time = strtotime(Input::get('start_time'));
+    $start_time = date("Y-m-d H:j:s", $time);
     // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
    // $eventParams['tags'] = Input::get('tags');
     $eventParams['source'] = "Custom";

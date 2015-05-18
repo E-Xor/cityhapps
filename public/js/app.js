@@ -739,10 +739,10 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
           $scope.success = data;
           console.log("Success");
         }
-
-			}
-			console.log("create event data",data);
-      });
+      }
+    }).error(function(data){
+          $scope.error = data.error.message;
+    })
 	};
 
 
