@@ -83,12 +83,12 @@ class EventRecord extends Eloquent {
 					->imageRequired($eventParams['imageRequired'])
 
 					->withRecommendedUserEvent($eventParams['userID'])
-					
+
 					->orderBy('event_date', 'asc')
 					->orderBy('start_time', 'asc')
-					
+
 					->getPage($eventParams['pageSize'], $eventParams['pageCount'], $eventParams['pageShift'])
-					
+
 					->get();
 
 			return $events;
@@ -170,14 +170,14 @@ class EventRecord extends Eloquent {
 		} else {
 			return $query;
 		}
-		
+
 	}
 
 	public function scopeDateRange($query, $startDate, $endDate) {
 
 		if ($startDate != null) {
 			$query->where('event_date', '>=', $startDate);
-		} 
+		}
 
 		if ($endDate != null) {
 			$query->where('event_date', '<=', $endDate);
@@ -188,17 +188,17 @@ class EventRecord extends Eloquent {
 
 	public function scopeImageRequired($query, $imageRequired) {
 		if ($imageRequired != null) {
-			if ($imageRequired == 'no') {
-				return $query; // Stop processing WHERE clause addition and return
+			if ($imageRequired == 'yes') {
+		    // If the image_required parameter was set to "yes", return only events with an image by default
+		    return $query->whereNotNull('event_image_url');
 			}
 		}
-		// If the image_required parameter was not set to "no", return only events with an image by default
-		return $query->whereNotNull('event_image_url');
+		return $query; // Stop processing WHERE clause addition and return
 	}
 
 	public function scopeWithCategory($query, $categories) {
 		if ($categories != null) {
-			
+
 			// categories should be an array
 			if ((count($categories) > 0) && is_array($categories)) {
 
@@ -293,7 +293,7 @@ class EventRecord extends Eloquent {
 
     		foreach($searchTerms as $term) {
 		        $query->where(function($q) use ($term) {
-					
+
 					$q->orWhere('event_name', 'LIKE', '%'. $term .'%')
 					->orWhere('venue_name', 'LIKE', '%'. $term .'%')
 					->orWhere('address', 'LIKE', '%'. $term .'%')
@@ -301,7 +301,7 @@ class EventRecord extends Eloquent {
 					->orWhere('state', 'LIKE', '%'. $term .'%')
 					->orWhere('zip', 'LIKE', '%'. $term .'%')
 					->orWhere('description', 'LIKE', '%'. $term .'%')
-					
+
 					->orWhereHas('categories', function($c) use ($term) {
 						$c->where('name', 'LIKE', '%'. $term .'%');
 					});
@@ -311,9 +311,9 @@ class EventRecord extends Eloquent {
 
 		return $query;
 	}
-	
+
 	public function scopeUserCategory($query, $userID) {
-		
+
 		$joined = $query->join('event_category as ec', 'events.id', '=', 'ec.event_id')
 						->join('user_categories as uc', 'uc.category_id', '=', 'ec.category_id')
 						->where('uc.user_id', '=', $userID);
@@ -331,11 +331,11 @@ class EventRecord extends Eloquent {
 		Meetup::storeEvents();
 		echo("Meetup events stored.<br />");
 		*/
-		
+
 		EventRecord::storeEventbriteEvents();
 		EventRecord::storeEventfulEvents();
 		EventRecord::storeMeetupEvents();
-		
+
 	}
 
 	public static function storeEventbriteEvents() {
@@ -348,13 +348,13 @@ class EventRecord extends Eloquent {
 
 					$checkExisting = EventRecord::where('source_id', '=', $event->eventbriteID);
 					$eventRecords = $checkExisting->get();
-					
+
 					if ($eventRecords->count() < 1) {
 						$eventRecords->push(new EventRecord);
 					}
 
 					foreach ($eventRecords as $eventRecord) {
-						
+
 						$eventRecord->source = 'Eventbrite';
 						$eventRecord->url = $event->url;
 						$eventRecord->source_id = $event->eventbriteID;
@@ -387,7 +387,7 @@ class EventRecord extends Eloquent {
 
 								$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
 								$categoryRecords = $categoryExisting->get();
-								
+
 								if ($categoryRecords->count() < 1) {
 									$categoryRecords->push(new EventCategory);
 								}
@@ -402,7 +402,7 @@ class EventRecord extends Eloquent {
 					}
 				}
 
-			} 
+			}
 		});
 
 	}
@@ -419,13 +419,13 @@ class EventRecord extends Eloquent {
 
 					$checkExisting = EventRecord::where('source_id', '=', $event->eventful_id);
 					$eventRecords = $checkExisting->get();
-					
+
 					if ($eventRecords->count() < 1) {
 						$eventRecords->push(new EventRecord);
 					}
 
 					foreach ($eventRecords as $eventRecord) {
-						
+
 						$eventRecord->source = 'Eventful';
 						$eventRecord->url = $event->url;
 						$eventRecord->source_id = $event->eventful_id;
@@ -460,7 +460,7 @@ class EventRecord extends Eloquent {
 
 								$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
 								$categoryRecords = $categoryExisting->get();
-								
+
 								if ($categoryRecords->count() < 1) {
 									$categoryRecords->push(new EventCategory);
 								}
@@ -475,7 +475,7 @@ class EventRecord extends Eloquent {
 					}
 				}
 
-			} 
+			}
 		});
 
 	}
@@ -491,13 +491,13 @@ class EventRecord extends Eloquent {
 					$checkExisting = EventRecord::where('source_id', '=', $event->meetupID)
 											->where('source', '=', 'Meetup');
 					$eventRecords = $checkExisting->get();
-					
+
 					if ($eventRecords->count() < 1) {
 						$eventRecords->push(new EventRecord);
 					}
 
 					foreach ($eventRecords as $eventRecord) {
-						
+
 						$eventRecord->source = 'Meetup';
 						$eventRecord->url = $event->event_url;
 						$eventRecord->source_id = $event->meetupID;
@@ -541,7 +541,7 @@ class EventRecord extends Eloquent {
 
 								$categoryExisting = EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
 								$categoryRecords = $categoryExisting->get();
-								
+
 								if ($categoryRecords->count() < 1) {
 									$categoryRecords->push(new EventCategory);
 								}
@@ -556,7 +556,7 @@ class EventRecord extends Eloquent {
 					}
 				}
 
-			} 
+			}
 		});
 	}
 
@@ -573,7 +573,7 @@ class EventRecord extends Eloquent {
 			'beer' => -10,
 			'wine' => -10,
 		);
-		
+
 		$score = 0;
 
 		// Check for keywords
