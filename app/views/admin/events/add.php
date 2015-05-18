@@ -131,6 +131,8 @@
         </div>
         <form method="post" ng-if="!success">
           <fieldset>
+          <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
+
           <div class="red center margin20" ng-if="error">{{error}}</div>
             <div>
               <label for="title">Event Name <span class="red center margin20">* <span ng-if="titleError">You must have a event name</span></span></label>
@@ -189,7 +191,7 @@
             </div>
 
             <div>
-              <label for="desc">Description</label>
+              <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
               <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
             </div>
             <div>
@@ -197,7 +199,9 @@
               <textarea name="tags" id="tags" style="width:488px;height:180px;" ng-model="formData.tags"></textarea>
             </div>
             <div>
-            <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" />
+
+            <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
+
         </fieldset>
         </form>
         </div>

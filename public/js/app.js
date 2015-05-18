@@ -688,10 +688,10 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
 
 
 	$scope.processForm = function(formData) {
-    console.log("Starting", formData);
     /// validation
     var error=0;
     if (!formData) {
+      $scope.generalError = true;
       return;
     }
     if (typeof formData.title === "undefined" || formData.title == "") {
@@ -710,9 +710,15 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
       error=1;
       $scope.startDateError = true;
     }
-    console.log("checkbox", formData.all_day);
+    if (typeof formData.desc === "undefined" || formData.desc == "") {
+      error=1;
+      $scope.descError = true;
+    }
     // if any error, don't post
-    if (error) return;
+    if (error) {
+      $scope.generalError = true;
+      return;
+    }
    		$http({
 			method: 'POST',
       url: '/admin/event/create',
