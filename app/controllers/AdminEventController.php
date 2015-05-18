@@ -20,9 +20,53 @@ class AdminEventController extends \BaseController {
    *
    * @return Response
    */
+  public function add()
+  {
+    //show the admin event add view
+    return View::make('admin/events/add');
+  }
+
+  /**
+   * Show the form for creating a new resource.
+   * POST /admin/event/create
+   *
+   * @return Response
+   */
   public function create()
   {
-    //
+    // logic to push to model includes database transactions, sanitizing, etc.
+    // fall back error message
+    $passValidation = true; 
+    $message = 'Failed to create event';
+    $eventParams = array();
+
+    $eventParams['event_name'] = Input::get('title');
+    $eventParams['url'] = Input::get('event_url');
+    $eventParams['venue_name'] = Input::get('venue_name');
+    $eventParams['venue_url'] = Input::get('venue_url');
+    $eventParams['address'] = Input::get('street_address');
+    // no room for building
+    //$eventParams['building'] = Input::get('building');
+    $eventParams['city'] = Input::get('city');
+    $eventParams['state'] = Input::get('state');
+    $eventParams['zip'] = Input::get('zip_code');
+    $eventParams['description'] = Input::get('desc');
+    $eventParams['event_date'] = Input::get('start_time');
+    $eventParams['start_time'] = Input::get('start_time');
+    $eventParams['end_time'] = Input::get('end_time');
+    // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
+   // $eventParams['tags'] = Input::get('tags');
+    $eventParams['source'] = "Custom";
+
+
+    if ($passValidation)
+      $result = EventRecord::create($eventParams);
+
+    if ($result)
+      return json_encode($result);
+    else
+      return json_encode(array('error' => true, 'message'=>$message));
+
   }
 
   /**
@@ -75,74 +119,6 @@ class AdminEventController extends \BaseController {
       </tr>
       </table>";
     return $html;
-  }
-
-  /**
-   * Store a newly created resource in storage.
-   * POST /user_event
-   *
-   * @return Response
-   */
-  public function store()
-  {
-    $eventParams = array();
-
-    $eventParams['userID'] = Input::get('user_id');
-    $eventParams['eventID'] = Input::get('event_id');
-    $eventParams['vote'] = Input::get('vote');
-
-    $events = UserEvent::storeUserEventVote($eventParams);
-
-    return json_encode($events);
-
-  }
-
-  /**
-   * Display the specified resource.
-   * GET /user_event/{id}
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function show($id)
-  {
-    //
-  }
-
-  /**
-   * Show the form for editing the specified resource.
-   * GET /user_event/{id}/edit
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function edit($id)
-  {
-    //
-  }
-
-  /**
-   * Update the specified resource in storage.
-   * PUT /user_event/{id}
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function update($id)
-  {
-    //
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   * DELETE /user_event/{id}
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function destroy($id)
-  {
-    //
   }
 
 }
