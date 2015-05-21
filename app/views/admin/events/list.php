@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" ng-app="cityHapps">
 <head>
 	<meta charset="UTF-8">
@@ -43,6 +43,7 @@
 
     <body ng-controller="adminEventController" ng-cloak>
 		<div ng-if="!mobile()">
+            <div class="bg-image">
                 <!-- if mobile add snap-content -->
                 <header class="header-container proxima">
 					<div class="wide">
@@ -93,17 +94,38 @@
 						</div>
 					</header>
 			<!-- Get the home body partial -->
-      <div class='center white'>
-        <h2> Select what you want to do: </h2>
-        <p><a href='/admin/event/add'>Add Event</a></p>
-        <p><a href='/admin/event/list'>Event Listing</a></p>
-        <p><a href='#'>Filter Events</a></p>
-        <p><a href='#'>Delete Event</a></p>
+      <div class='center white imageContainer'>
+        <h1 style="margin:0px auto;padding:20px 0 10px 0;">Event Listing</h1>
+        <h3>{{eventsCount}} Happs Currently in the System</h3>
+        <table style="margin:0 30px 50px;">
+            <thead>
+                <tr>
+                    <th style="width:32px;">ID</th>
+                    <th>Title & Link</th>
+                    <th style="width:67px;">Source</th>
+                    <th style="width:80px;">Start Date</th>
+                    <th style="width:90px;">Start Time</th>
+                    <th style="width:80px;">End Date</th>
+                    <th style="width:90px;">End Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in allEvents">
+                    <td>{{item.id}}</td>
+                    <td><a href="{{item.url}}" style="color:#33CCFF;">{{item.event_name}}</a></td>
+                    <td>{{item.source}}</td>
+                    <td>{{item.start_date}}</td>
+                    <td>{{item.start_only_time}}</td>
+                    <td>{{item.end_date}}</td>
+                    <td>{{item.end_only_time}}</td>
+                </tr>
+            </tbody>
+        </table>
       </div>
 			<!-- <div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div> -->
 		</div>
 		<!-- if mobile -->
-	<!-- </div> -->
+	</div>
 
 	<!-- ng- scripts n thangs -->
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>

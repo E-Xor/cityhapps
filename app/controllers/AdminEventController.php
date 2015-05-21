@@ -87,48 +87,8 @@ class AdminEventController extends \BaseController {
    */
   public function listEvents()
   {
-    // show the admin frontend view
-    $events = DB::table('events')
-      ->select('id', 'url', 'event_name', 'source', 'event_date', 'start_time', 'end_time')
-      ->orderBy('event_date', 'asc')
-      ->get();
-    $eventCount = DB::table('events')->count();
-    $html = '<h1>' . $eventCount . ' Events</h1>
-      <table cellspacing="0" cellpadding="0" border="0" style="width:100%">
-      <tr>
-      <td colspan=6>
-      <table cellspacing="0" cellpadding="1" border="1" style="width:100%">
-      <tr>
-      <th style="width:32px;">ID</th>
-      <th>Title & Link</th>
-      <th style="width:67px;">Source</th>
-      <th style="width:80px;">Event Date</th>
-      <th style="width:150px;">Start Time</th>
-      <th style="width:150px;">End Time</th>
-      </tr>
-      </table>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <div style="width:100%; height:600px; overflow:auto;">
-      <table cellspacing="0" cellpadding="1" border="1" style="width:100%">';
-    foreach ($events as $event)
-    {
-      $html .= '<tr>';
-      $html .= '<td style="width:32px;">' . $event->id . '</td>';
-      $html .= '<td><a href="' . $event->url . '" target="_new">' . $event->event_name . '</a></td>';
-      $html .= '<td style="width:67px;">' . $event->source . '</td>';
-      $html .= '<td style="width:80px;">' . $event->event_date . '</td>';
-      $html .= '<td style="width:150px;">' . $event->start_time . '</td>';
-      $html .= '<td style="width:150px;">' . $event->end_time . '</td>';
-    }
-    $html .= "</table>
-      </div>
-      </td>
-      </tr>
-      </table>";
-    return $html;
+    //show the admin event add view
+    return View::make('admin/events/list');
   }
 
 }
