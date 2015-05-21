@@ -1,50 +1,54 @@
-var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute', 'ui.validate',
-	'facebook', 'http-auth-interceptor', 'remoteValidation', 'google-maps'.ns(),
-    'ui.calendar', 'angular.filter', 'ngSanitize', 'ipCookie', 'snap', 'ngIdle']);
+var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute',
+    'ui.validate', 'facebook', 'http-auth-interceptor', 'remoteValidation',
+    'google-maps'.ns(), 'ui.calendar', 'angular.filter', 'ngSanitize',
+    'ipCookie', 'snap', 'ngIdle']);
 
 
-cityHapps.controller("eventsController", function($scope, $rootScope, $http, $filter, $modal, registerDataService, voteService, ipCookie, getEvents, getRecommendedEvents, $window, getCategories) {
+cityHapps.controller('eventsController', function($scope, $rootScope, $http, 
+    $filter, $modal, registerDataService, voteService, ipCookie, getEvents, 
+    getRecommendedEvents, $window, getCategories) {
 
-		$scope.mobile = function() {
-			if ($window.innerWidth <= 768 ) {
-				return true;
-			} else {
-				return false;
-			}
-		};
-
-        var userID = null;
-
-        var cookie = ipCookie('user');
-        if (cookie) {
-            userID = cookie.id;
+    $scope.mobile = function() {
+        if ($window.innerWidth <= 768) {
+            return true;
+        } else {
+           return false;
         }
+    };
 
-        $scope.userID = userID;
+    var userID = null;
 
-        //will only happen on mobile because desktop version redirects to day view
-        $scope.$on('search', function(info, data){
-            console.log(data);
-            recommendedEventSuccess(data);
-            eventSuccess(data);
-        });
+    var cookie = ipCookie('user');
+    if (cookie) {
+        userID = cookie.id;
+    }
 
-        $scope.fadeIn = function(speed) {
-            $('.carousel-inner').fadeIn(speed);
-        }
+    $scope.userID = userID;
 
-        var recommendedEventSuccess = function(data) {
+    // Will only happen on mobile because desktop version redirects to day view
+    $scope.$on('search', function(info, data) {
+        console.log(data);
+        recommendedEventSuccess(data);
+        eventSuccess(data);
+    });
 
-            $rootScope.recEventCount = data.events.length;
+    $scope.fadeIn = function(speed) {
+        $('.carousel-inner').fadeIn(speed);
+    };
 
-        	$scope.eventData = data.events;
-        	console.log($scope.eventData);
+    var recommendedEventSuccess = function(data) {
 
-            if ($window.innerWidth <= 768 ) {
+        $rootScope.recEventCount = data.events.length;
+
+        $scope.eventData = data.events;
+
+        console.log($scope.eventData);
+
+        if ($window.innerWidth <= 768) {
 
                 $scope.recSlideGroup = [];
 
-                for (rec = 0; rec < $scope.eventData.length; rec ++) {
+                for (rec = 0; rec < $scope.eventData.length; rec++) {
 
                     var mobileRecSlides = $scope.eventData[rec];
                     $scope.recSlideGroup.push(mobileRecSlides);
@@ -227,7 +231,6 @@ cityHapps.controller("eventsController", function($scope, $rootScope, $http, $fi
 
 
                     if (slides['first'] !== undefined) {
-                        //alert('this is firing');
                         slides['first'].vote = {
                             upVote: false,
                             downVote: false
@@ -484,25 +487,23 @@ cityHapps.factory('voteService', function(){
 });
 
 
-cityHapps.factory('getEvents', function($http, ipCookie){
-	return {
-		events : function() {
-			var userID = null;
+cityHapps.factory('getEvents', function($http, ipCookie) {
+    return {
+        events: function() {
+            var userID = null;
 
-			var cookie = ipCookie('user');
-			if (cookie) {
+            var cookie = ipCookie('user');
+            if (cookie) {
                 userID = cookie.id;
             }
 
-			var startDate = moment().format('YYYY-MM-DD');
+            var startDate = moment().format('YYYY-MM-DD');
             var startTime = moment().format();
 
-			// '?start_date=' + startDate
-			return $http.get('/events?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime).success(function(data) {
-
-			});
-		},
-        eventsDay : function(time) {
+            // '?start_date=' + startDate
+            return $http.get('/events?user_id=' + userID + '&start_date=' + startDate + '&start_time=' + startTime).success(function(data) {});
+        },
+        eventsDay: function(time) {
             var startDate = moment().format('YYYY-MM-DD');
             var startTime = moment().format();
 
@@ -513,7 +514,7 @@ cityHapps.factory('getEvents', function($http, ipCookie){
                 var userID = cookie.id;
             }
 
-            return $http.get('/events?user_id='+ userID +'&start_date=' + time + "&end_date=" + end).success(function(data) {
+            return $http.get('/events?user_id=' + userID +'&start_date=' + time + "&end_date=" + end).success(function(data) {
                 console.log(data);
                 //if (data.events.votes.length > 0) {
                 //    if (data.events.vote == '1') {
@@ -525,8 +526,18 @@ cityHapps.factory('getEvents', function($http, ipCookie){
                 //    }
                 //}
             });
-        }
-	}
+        }//,
+        /*allEvents: function() {
+            var userID = null;
+
+            var cookie = ipCookie('user');
+            if (cookie) {
+                userID = cookie.id;
+            }
+
+            return $http.get('/events?user_id=' + userID).success(function(data) {});
+        }*/
+    };
 });
 
 cityHapps.factory('getRecommendedEvents', function($http, ipCookie) {
@@ -687,70 +698,96 @@ cityHapps.factory('calDayClick', function($http, ipCookie){
 /* -- Start --                   */
 /* ***************************** */
 cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
-	function($scope, $http, ipCookie){
+    function($scope, $http, ipCookie) {
 
-  $scope.user = ipCookie('user');
+    $scope.user = ipCookie('user');
 
-
-
-	$scope.processForm = function(formData) {
-    /// validation
-    var error=0;
-    if (!formData) {
-      $scope.generalError = true;
-      return;
-    }
-    if (typeof formData.title === "undefined" || formData.title == "") {
-      error=1;
-      $scope.titleError = true;
-    }
-    if (typeof formData.venue_name === "undefined" || formData.venue_name == "") {
-      error=1;
-      $scope.venueError = true;
-    }
-    if (typeof formData.street_address === "undefined" || formData.street_address == "") {
-      error=1;
-      $scope.addressError = true;
-    }
-    if (typeof formData.start_time === "undefined" || formData.start_time == "") {
-      error=1;
-      $scope.startDateError = true;
-    }
-    if (typeof formData.desc === "undefined" || formData.desc == "") {
-      error=1;
-      $scope.descError = true;
-    }
-    // if any error, don't post
-    if (error) {
-      $scope.generalError = true;
-      return;
-    }
-   		$http({
-			method: 'POST',
-      url: '/admin/event/create',
-			data: formData,
-			headers: {"Content-Type": "application/json"}
-		}).success(function(data){
-			if(!data) {
-				console.log('not working');
-			} else if (data) {
-        if (data.error) {
-          $scope.error = data.message;
-          console.log("Error creating event", data.message);
+    // Processing the form data for adding an event
+    $scope.processForm = function(formData) {
+        // Validation
+        var error = 0;
+        if (!formData) {
+          $scope.generalError = true;
+          return;
         }
-        else
-        {
-          $scope.success = data;
-          console.log("Success");
+        if (typeof formData.title === 'undefined' || formData.title == '') {
+          error = 1;
+          $scope.titleError = true;
         }
-      }
-    }).error(function(data){
-          $scope.error = data.error.message;
-    })
-	};
+        if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
+          error = 1;
+          $scope.venueError = true;
+        }
+        if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
+          error = 1;
+          $scope.addressError = true;
+        }
+        if (typeof formData.start_time === 'undefined' || formData.start_time == '') {
+          error = 1;
+          $scope.startDateError = true;
+        }
+        if (typeof formData.desc === 'undefined' || formData.desc == '') {
+          error = 1;
+          $scope.descError = true;
+        }
+        // if any error, don't post
+        if (error) {
+          $scope.generalError = true;
+          return;
+        }
 
+        $http({
+            method: 'POST',
+            url: '/admin/event/create',
+                data: formData,
+                headers: {'Content-Type': 'application/json'}
+        }).success(function(data) {
+            if (!data) {
+                console.log('Data Not Posting');
+            }
+            else if (data) {
+                if (data.error) {
+                    $scope.error = data.message;
+                    console.log('Error creating event', data.message);
+                }
+                else {
+                    $scope.success = data;
+                    console.log('Success');
+                }
+            }
+        }).error(function(data) {
+                $scope.error = data.error.message;
+        });
+    };
 
+    // Retieving all of the data for the listing page
+    $http.get('/events?page_size=all')
+        .success(function(data) {
+        $scope.eventsCount = data.events.length;
+        var allEventsUnformatted = data.events;
+        for (var i = 0; i < allEventsUnformatted.length; i++) {
+            console.log(moment(allEventsUnformatted[i].start_time));
+            if (moment(allEventsUnformatted[i].start_time).isValid()) {
+                allEventsUnformatted[i].start_date = moment(allEventsUnformatted[i].start_time).format('M/D/YYYY');
+                allEventsUnformatted[i].start_only_time = moment(allEventsUnformatted[i].start_time).format('h:mm:ss a');
+            }
+            else {
+                allEventsUnformatted[i].start_date = '';
+                allEventsUnformatted[i].start_only_time = '';
+            }
+            if (moment(allEventsUnformatted[i].end_time).isValid()) {
+                allEventsUnformatted[i].end_date = moment(allEventsUnformatted[i].end_time).format('M/D/YYYY');
+                allEventsUnformatted[i].end_only_time = moment(allEventsUnformatted[i].end_time).format('h:mm:ss a');
+            }
+            else {
+                allEventsUnformatted[i].end_date = '';
+                allEventsUnformatted[i].end_only_time = '';
+            }
+        }
+        $scope.allEvents = allEventsUnformatted;
+    });
 }]);
+
 /* ***************************** */
 /* Admin Event Controller       */
 /* -- Stop --                   */
@@ -759,7 +796,7 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
 cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
 	function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
 
-        $scope.$on('$idleStart', function(){
+        $scope.$on('$idleStart', function() {
 
             alert('idle firing now');
 
@@ -772,7 +809,7 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
         $scope.filterData.categories = {};
 
 
-        //I modified this Gist to flatten return object from php
+        // I modified this Gist to flatten return object from php
         // https://gist.github.com/penguinboy/762197
             var flattenObject = function(ob) {
                 var toReturn = {};
@@ -2795,12 +2832,11 @@ cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $
 						$scope.showEventbrite = true;
 						break;
 					default:
-						// This should never happen
-				}
-
-			});
-		}
-	};
+                        // This should never happen
+                }
+            });
+        }
+    };
 
 }]);
 /* ***************************** */
