@@ -12,7 +12,7 @@
  */
 
 
-Route::get('/', 'HomeController@showWelcome');
+Route::get('/', 'AdminEventController@listEvents');
 
 Route::get('harness', 'HarnessController@showHarness');
 
@@ -74,7 +74,7 @@ Route::get('admin', function() {
 });
 
 Route::get('admin/event', 'AdminEventController@index');
-Route::get('admin/event/list', 'AdminEventController@listEvents');
+Route::get('admin/event/list', 'HomeController@showWelcome');
 Route::get('admin/event/add', 'AdminEventController@add');
 Route::post('admin/event/create', 'AdminEventController@create');
 

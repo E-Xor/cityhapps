@@ -95,7 +95,7 @@
 					</header>
 			<!-- Get the home body partial -->
       <div class='center white imageContainer'>
-        <h1 style="margin:0px auto;padding:20px 0 10px 0;">Event Listing</h1>
+        <h1 style="margin:0px auto;padding:20px 0 10px 0;">Happs Listing</h1>
         <h3>{{eventsCount}} Happs Currently in the System</h3>
         <table style="margin:0 30px 50px;">
             <thead>
