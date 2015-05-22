@@ -15,11 +15,11 @@ class Meetup extends Integration {
 		$meetupCategories = MeetupCategory::all();
 
 		// Build out the JSON event request parameters
-		$page = ($eventParams['page_size'] != null) ? $eventParams['page_size'] : 100;
+		$eventParams['page_size'] = empty($eventParams['page_size']) ? 200 : $eventParams['page_size'];
 		$offset = ($eventParams['page_number'] != null) ? (int)$eventParams['page_number'] - 1 : 0;
 
 		$values = array(
-			'page' => $page,
+			'page' => $eventParams['page_size'],
 			'offset' => $offset,
 		);
 
@@ -27,7 +27,7 @@ class Meetup extends Integration {
 		$jsonArray = Meetup::retrieveData('meetup', 'events', $values);
 
 		$total = count($jsonArray['results']);
-		$response = $jsonArray['meta']['total_count'];
+		$response = ceil($jsonArray['meta']['total_count'] / $eventParams['page_size']);
 	
 		for ($i = 1; $i < $total; $i++ ) {
 			
