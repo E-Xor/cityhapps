@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 class PullApi extends Command {
 
@@ -18,7 +19,7 @@ class PullApi extends Command {
    *
    * @var string
    */
-  protected $description = 'Populate API tables from their respective apis.';
+  protected $description = 'Populate API tables from their respective APIs.';
 
   /**
    * Create a new command instance.
@@ -37,61 +38,173 @@ class PullApi extends Command {
    */
   public function fire()
   {
-    //
-    if ($this->option('eventbrite'))
-      $this->grabEventbrite();
-    elseif ($this->option('eventful'))
-      $this->grabEventful();
-    elseif ($this->option('meetup'))
-      $this->grabMeetup();
-    elseif ($this->option('all'))
-    {
-      $this->grabEventbrite();
-      $this->grabEventful();
-      $this->grabMeetup();
+    $this->line('Start time: ' . (string)date('l jS \of F Y h:i:s A'));
+    $select = $this->option('select');
+    switch ($select) {
+      case 'eventbrite':
+        $this->grabEventbrite();
+        break;
+      case 'eventful':
+        $this->grabEventful();
+        break;
+      case 'meetup':
+        $this->grabMeetup();
+        break;
+      case 'all':
+        $this->info('Running all integrations: eventbrite, eventful, meetup');
+        $this->grabEventbrite();
+        $this->line('Marked time: ' . (string)date('l jS \of F Y h:i:s A'));
+        $this->grabEventful();
+        $this->line('Marked time: ' . (string)date('l jS \of F Y h:i:s A'));
+        $this->grabMeetup();
+        break;
+      default:
+        $this->error('Integration "' . $select . '" not recognized. Must be one of the following: eventbrite, eventful, meetup, all');
+        break;
     }
-    else
-    {
-      $this->info("Usage:");
-      $this->comment("\t api:pull [--eventbrite] [--eventful] [--meetup] [-a|--all]");
-    }
+    $this->line('End time: ' . (string)date('l jS \of F Y h:i:s A'));    
   }
+
   /**
    * Use the Eventbrite API to populate api tables
    *
    */
   public function grabEventbrite()
   {
-      $this->line("Start time: " . (string)date('l jS \of F Y h:i:s A'));
-      $this->comment("Started Eventbrite");
-      $eb = new EventbriteController;
-      $eb->storeEvents();
-      $this->info("Finished Eventbrite");
+    $this->comment('Started Eventbrite');
+    $this->info('Getting first page; waiting for page count...');
+
+    $modelObject = new Eventbrite;
+    $eventParams = array(
+      'page_size' => '',
+      'page_number' => '1',
+    );
+    $pageCount = $modelObject->storeEvents($eventParams);
+
+    if (isset($pageCount) && (int)$pageCount > 1) {
+      $progress = new ProgressBar($this->output, (int)$pageCount);
+      $progress->setFormat('very_verbose');
+      $progress->start();
+      $progress->advance();
+      // We'll go through the pages backwards so we don't have to think about pages
+      // being added/removed while working through the process
+      for ($i = (int)$pageCount; $i >= 2; $i--) {
+        $eventParams['page_number'] = $i;
+        $modelObject->storeEvents($eventParams);
+        $progress->advance();
+      }
+      $progress->finish();
+    }
+
+    $this->line(''); // New line after the progress bar
+    $this->comment('Finished Eventbrite');
   }
+
   /**
-   * Use the Eventful API to populate api tables
-   *
+   * Use the Eventful API to populate API tables
    */
   public function grabEventful()
   {
-      $this->line("Start time: " . (string)date('l jS \of F Y h:i:s A'));
-      $this->comment("Started Eventful");
-      $eb = new EventfulController;
-      $eb->storeEvents();
-      $this->info("Finished Eventful");
+    $this->comment('Started Eventful');
+    $this->info('Getting first page; waiting for page count...');
+
+    $modelObject = new Eventful;
+    $eventParams = array(
+      'page_size' => '',
+      'page_number' => '1',
+    );
+    $pageCount = $modelObject->storeEvents($eventParams);
+
+    if (isset($pageCount) && (int)$pageCount > 1) {
+      $progress = new ProgressBar($this->output, (int)$pageCount);
+      $progress->setFormat('very_verbose');
+      $progress->start();
+      $progress->advance();
+      // We'll go through the pages backwards so we don't have to think about pages
+      // being added/removed while working through the process
+      for ($i = (int)$pageCount; $i >= 2; $i--) {
+        $eventParams['page_number'] = $i;
+        $modelObject->storeEvents($eventParams);
+        $progress->advance();
+      }
+      $progress->finish();
+    }
+
+    $this->line(''); // New line after the progress bar
+    $this->comment('Finished Eventful');
   }
+
   /**
-   * Use the meetup API to populate api tables
-   *
+   * Use the Meetup API to populate api tables
    */
-  public function grabMeetup()
-  {
-      $this->line("Start time: " . (string)date('l jS \of F Y h:i:s A'));
-      $this->comment("Started Meetup");
-      $eb = new MeetupController;
-      $eb->storeEvents();
-      $this->info("Finished Meetup");
+  public function grabMeetup() {
+    $this->comment('Started Meetup');
+    $this->info('Getting first page; waiting for page count...');
+
+    $modelObject = new Meetup;
+    $eventParams = array(
+      'page_size' => '',
+      'page_number' => '1',
+    );
+    $pageCount = $modelObject->storeEvents($eventParams);
+
+    if (isset($pageCount) && (int)$pageCount > 1) {
+      $progress = new ProgressBar($this->output, (int)$pageCount);
+      $progress->setFormat('very_verbose');
+      $progress->start();
+      $progress->advance();
+      // We'll go through the pages backwards so we don't have to think about pages
+      // being added/removed while working through the process
+      for ($i = (int)$pageCount; $i >= 2; $i--) {
+        $eventParams['page_number'] = $i;
+        $modelObject->storeEvents($eventParams);
+        $progress->advance();
+      }
+      $progress->finish();
+    }
+
+    $this->line(''); // New line after the progress bar
+    $this->comment('Finished Meetup');
   }
+
+  /**
+   * Generic call to populate API tables
+   */
+  public function grabEventIntigration($name)
+  {
+    // TODO: get integrations listing to grab label and class name
+    $label = $name;
+    $class = ucfirst($name);
+
+    $this->comment('Started ' . $name);
+    $this->info('Getting first page; waiting for page count...');
+
+    $modelObject = new $class;
+    $eventParams = array(
+      'page_size' => '',
+      'page_number' => '1',
+    );
+    $pageCount = $modelObject->storeEvents($eventParams);
+
+    if (isset($pageCount) && (int)$pageCount > 1) {
+      $progress = new ProgressBar($this->output, (int)$pageCount);
+      $progress->setFormat('very_verbose');
+      $progress->start();
+      $progress->advance();
+      // We'll go through the pages backwards so we don't have to think about pages
+      // being added/removed while working through the process
+      for ($i = (int)$pageCount; $i >= 2; $i--) {
+        $eventParams['page_number'] = $i;
+        $modelObject->storeEvents($eventParams);
+        $progress->advance();
+      }
+      $progress->finish();
+    }
+
+    $this->line(''); // New line after the progress bar
+    $this->comment('Finished ' . $name);
+  }
+
   /**
    * Get the console command options.
    *
@@ -100,10 +213,7 @@ class PullApi extends Command {
   public function getOptions()
   {
     return array(
-      array('eventbrite', null, InputOption::VALUE_NONE, 'Grab Eventbrite API', null),
-      array('eventful', null, InputOption::VALUE_NONE, 'Grab Eventful API', null),
-      array('meetup', null, InputOption::VALUE_NONE, 'Grab Meetup API', null),
-      array('all', 'a', InputOption::VALUE_NONE, 'Grab All API\'s (slow)', null)
+      array('select', 's', InputOption::VALUE_OPTIONAL, 'Choose an Integration to Pull', 'all'),
     );
   }
 
