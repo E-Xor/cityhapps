@@ -25,7 +25,7 @@ $app = new Illuminate\Foundation\Application;
  */
 
 $env = $app->detectEnvironment([
-
+'dev' => array ('ninelabs-devbox')
 ]);
 
 /*
