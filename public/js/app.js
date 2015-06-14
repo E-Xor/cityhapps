@@ -760,7 +760,28 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                     $scope.error = data.error.message;
             });
         } else {
-            console.log("call /admin/event/update");
+            $http({
+                method: 'POST',
+                url: '/admin/event/update',
+                data: formData,
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data) {
+                if (!data) {
+                    console.log('Data Not Posting');
+                }
+                else if (data) {
+                    if (data.error) {
+                        $scope.error = data.message;
+                        console.log('Error updating event', data.message);
+                    }
+                    else {
+                        $scope.success = data;
+                        console.log('Success');
+                    }
+                }
+            }).error(function(data) {
+                $scope.error = data.error.message;
+            });
         }
 
         }
@@ -798,6 +819,7 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                 {
                     var singleEvent = data.events[0];
                     $scope.formData.title = singleEvent.event_name;
+                    $scope.formData.event_id = singleEvent.id;
                     $scope.formData.event_url = singleEvent.url;
                     $scope.formData.event_image_url = singleEvent.event_image_url;
                     $scope.formData.venue_name = singleEvent.venue_name;
@@ -807,7 +829,10 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                     $scope.formData.state = singleEvent.state;
                     $scope.formData.zip_code = singleEvent.zip;
                     $scope.formData.desc = singleEvent.description;
-                    $scope.formData.all_day = (singleEvent.all_day ? true : false );
+                    $scope.formData.all_day = (singleEvent.all_day_flag ? true : false );
+                    $scope.formData.start_time = singleEvent.start_time;
+                    $scope.formData.end_time = singleEvent.end_time;
+
                 }
         })
     }
