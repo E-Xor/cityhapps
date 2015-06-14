@@ -4,10 +4,18 @@ use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Support\Facades\DB;
 
-class EventRecord extends Eloquent {
-
-  protected $guarded = array('id','create_at', 'updated_at');
+class EventRecord extends Eloquent
+{
+  protected $guarded = array('id', 'create_at', 'updated_at');
+    /**
+     * @var int status codes for event states
+     */
+  static $STATUS_DRAFT = 0;
+  static $STATUS_ACTIVE = 1;
+  static $STATUS_CANCELLED = 2;
+  static $STATUS_ARCHIVED = 3;
 
   protected $table = 'events';
 
@@ -45,40 +53,40 @@ class EventRecord extends Eloquent {
 
   public static function clearStaleApi()
   {
-    // initialize variables
-    $buildQuery = "DELETE events FROM events ";
-    $buildWhere = "";
-    // grab count for each table;
-    $ebCount = DB::table('eventbrite')->count();
-    $efCount = DB::table('eventful')->count();
-    $meCount = DB::table('meetup')->count();
+      $total_cancelled = 0;
+      $total_archived = 0;
+      try{
+          $venues = array(
+            'eb'=> array('join_column' => 'eventbriteID', 'table' => 'eventbrite'),
+            'ef'=> array('join_column' => 'eventful_id', 'table' => 'eventful'),
+            'me'=> array('join_column' => 'meetupID', 'table' => 'meetup')
+          );
 
-    if ($ebCount != 0)
-    {
-      // safe to assume eventbrite is not "cleared out"
+          foreach ($venues as $alias => $eventVenueProvider) {
+              // grab count for each table;
+              $baseQuery = DB::table('events');
+              if (DB::table($eventVenueProvider['table'])->count()) {
+                  $total_cancelled +=
+                  $baseQuery->leftJoin("{$eventVenueProvider['table']} AS {$alias}", function($join) use ($alias, $eventVenueProvider)
+                  {
+                      $join->on("{$alias}.{$eventVenueProvider['join_column']}", '=','events.source_id');
+                      $join->on('events.source', '=', DB::raw("'{$eventVenueProvider['table']}'"));
 
-      $buildQuery .= "LEFT JOIN eventbrite eb ON (events.source = 'Eventbrite' AND eb.eventbriteID = events.source_id) ";
-      $buildWhere .=  ($buildWhere ? "AND eb.id IS NULL " : "eb.id IS NULL ");
-    }
+                  })
+                    ->whereNull("{$alias}.id")
+                    //If the event is missing from its corresponding table, mark it as cancelled asd
+                    ->update(['status' => EventRecord::$STATUS_CANCELLED]);
+                    die($baseQuery->toSql());
+              }
+          }
 
-    if ($efCount != 0)
-    {
-      // safe to assume eventful table is not cleared out
-      $buildQuery .= "LEFT JOIN eventful ef ON (ef.eventful_id = events.source_id AND events.source = 'Eventful') ";
-      $buildWhere .=  ($buildWhere ? "AND ef.id IS NULL " : "ef.id IS NULL ");
-    }
+          //Now every event that is not EventRecord::$STATUS_CANCELLED will be archived
+          $total_archived += DB::table('events')->where('events.end_time', '>', 'NOW()')->update(array('status' => EventRecord::$STATUS_ARCHIVED));
+      } catch (Exception $e) {
+            return array("error" => $e->getCode() . ":" . $e->getMessage());
+      }
 
-    if ($meCount != 0)
-    {
-      // safe to assume meetful table is not cleared out
-      $buildQuery .= "LEFT JOIN meetup m ON (m.meetupID = events.source_id AND events.source = 'Meetup') ";
-      $buildWhere .=  ($buildWhere ? "AND m.id IS NULL " : "m.id IS NULL ");
-    }
-
-    $buildWhere .= ($buildWhere ? "OR events.end_time < now() " : "events.end_time < now() ");
-    $query = $buildQuery." WHERE " .$buildWhere;
-    $queryResult = DB::delete($query);
-    return $queryResult;
+    return array("tec" => $total_cancelled, "tea" => $total_archived);
   }
 
   public static function selectEvents($eventParams) {
@@ -94,6 +102,7 @@ class EventRecord extends Eloquent {
       ->venueName($eventParams['venueZip'])
       ->description($eventParams['description'])
       ->startTime($eventParams['startTime'])
+      ->status(EventRecord::$STATUS_ACTIVE)
       ->dateRange($eventParams['startDate'], $eventParams['endDate'])
       ->imageRequired($eventParams['imageRequired'])
       ->eventSearch($eventParams['search'])
@@ -443,6 +452,18 @@ class EventRecord extends Eloquent {
       }
     });
 
+  }
+
+  /**
+   * Returns records with the predefined status only
+   *
+   * @param \Illuminate\Database\Eloquent\Builder $query
+   * @param int $status
+   *
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeStatus($query, $status = 1){
+    return $query->where('status', $status);
   }
 
   public static function storeEventfulEvents() {

@@ -29,5 +29,6 @@ class CategoryTableSeeder extends Seeder {
 		Category::create(array('name' => 'Food'));
 		Category::create(array('name' => 'Patriotic'));
 		Category::create(array('name' => 'Misc'));
+
 	}
 }

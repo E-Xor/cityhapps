@@ -50,7 +50,7 @@ class EventController extends BaseController {
 		$count = EventRecord::eventCount($eventParams['startDate']);
 		$meta["count"] = $count;
 
-		$results = array("meta" => $meta, "events" => $events);;
+		$results = array("meta" => $meta, "events" => $events);
 		
 		return json_encode($results);
 	}
