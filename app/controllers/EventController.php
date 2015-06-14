@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // require 'vendor/autoload.php';
 
@@ -6,11 +6,11 @@ use Carbon\Carbon;
 
 
 
-class EventController extends BaseController { 
+class EventController extends BaseController {
 
 
 	public function testEvents() {
-		
+
 		EventRecord::storeEvents();
 	}
 
@@ -51,12 +51,12 @@ class EventController extends BaseController {
 		$meta["count"] = $count;
 
 		$results = array("meta" => $meta, "events" => $events);;
-		
+
 		return json_encode($results);
 	}
 
 	public function recommendedEvents() {
-		
+
 		$eventParams = array();
 
 		$eventParams['userID'] = Input::get('user_id');
@@ -74,7 +74,7 @@ class EventController extends BaseController {
 		$meta["user_id"] = $eventParams['userID'];
 
 		$results = array("meta" => $meta, "events" => $events);;
-		
+
 		return json_encode($results);
 	}
 
@@ -92,11 +92,11 @@ class EventController extends BaseController {
 		$currentLong = Input::get('longitude');
 
 		$findClosest = Haversine::closestCoords($currentLat, $currentLong);
-		
-		return $findClosest;		
+
+		return $findClosest;
 	}
 
-	
+
 
 	public function dayEvents() {
 
@@ -104,7 +104,7 @@ class EventController extends BaseController {
 
 
 		$today = Carbon::today('America/Chicago')->addDays($count);
-		$tomorrow = Carbon::tomorrow('America/Chicago')->addDays($count);	
+		$tomorrow = Carbon::tomorrow('America/Chicago')->addDays($count);
 
 		$timeEvents = EventRecord::where('start_time', ">", $today )
 									->where('start_time', '<', $tomorrow)
@@ -196,9 +196,9 @@ class EventController extends BaseController {
 
 		$response .= "A: " . $activePageCount . " EB: " . $eventbritePageCount . " EF: " . $eventfulPageCount . " M: " . $meetupPageCount . "<br />";
 		if (!$activeComplete || !$eventbriteComplete || !$eventfulComplete || !$meetupComplete) {
-				
+
 			for ($i = 2; $i <= (int)$loopIndex; $i++) {
-				
+
 				$eventParams['page_number'] = $i;
 
 				// ACTIVE
@@ -217,7 +217,7 @@ class EventController extends BaseController {
 					}
 				}
 
-				// EVENTBRITE 
+				// EVENTBRITE
 				if (!$eventbriteComplete) {
 					try {
 						$temp = Eventbrite::storeEvents($eventParams);
@@ -267,7 +267,7 @@ class EventController extends BaseController {
 			}
 
 		}*/
-		
+
 
 		EventRecord::storeEvents();
 
@@ -276,7 +276,7 @@ class EventController extends BaseController {
 	}
 
 }
-	
+
 
 
 

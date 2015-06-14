@@ -22,10 +22,29 @@ class AdminEventController extends \BaseController {
    */
   public function add()
   {
-    //show the admin event add view
-    return View::make('admin/events/add');
+    // will be shown by angular
   }
 
+  /**
+   * Show the form for creating a new resource.
+   * GET /admin/event/edit
+   *
+   * @return Response
+   */
+  public function edit()
+  {
+    // will be shown by angular
+  }
+  /**
+   * Show the form for creating a new resource.
+   * POST /admin/event/update
+   *
+   * @return Response
+   */
+  public function update()
+  {
+
+  }
   /**
    * Show the form for creating a new resource.
    * POST /admin/event/create
@@ -45,7 +64,7 @@ class AdminEventController extends \BaseController {
     $eventParams['venue_name'] = Input::get('venue_name');
     $eventParams['venue_url'] = Input::get('venue_url');
     $eventParams['address'] = Input::get('street_address');
-    $eventParams['event_image_url'] = Input::get('event_image_url');  
+    $eventParams['event_image_url'] = Input::get('event_image_url');
     // no room for building
     //$eventParams['building'] = Input::get('building');
     $eventParams['city'] = Input::get('city');
