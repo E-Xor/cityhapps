@@ -80,11 +80,15 @@ class AdminEventController extends \BaseController {
    $start_time = date("Y-m-d H:j:s", $time);
    // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
    // $eventParams['tags'] = Input::get('tags');
+
    if ($passValidation)
    {
      $result = EventRecord::find($eventParams['id']);
+
      if ($result) {
       // then update
+      $difference = json_encode(array_keys(array_diff($eventParams, $result->getAttributes())));
+      $eventParams['serialized'] = $difference;
       $result->update($eventParams);
       $result['updated'] = 1;
      }
