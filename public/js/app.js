@@ -832,7 +832,12 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                     $scope.formData.all_day = (singleEvent.all_day_flag ? true : false );
                     $scope.formData.start_time = singleEvent.start_time;
                     $scope.formData.end_time = singleEvent.end_time;
-
+                    dateCheckCreate = new Date(singleEvent.created_at).getTime() / 1000;
+                    dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
+                    console.log(dateCheckCreate);
+                    console.log(dateCheckUpdate);
+                    if (dateCheckCreate != dateCheckUpdate)
+                       $scope.updated_last  = singleEvent.updated_at;
                 }
         })
     }

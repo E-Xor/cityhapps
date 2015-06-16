@@ -39,6 +39,7 @@
         </div>
         <form method="post" ng-if="!success">
           <fieldset>
+          <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
           <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
 
           <div class="red center margin20" ng-if="error">{{error}}</div>
