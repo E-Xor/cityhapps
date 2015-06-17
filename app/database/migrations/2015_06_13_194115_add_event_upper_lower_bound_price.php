@@ -12,10 +12,10 @@ class AddEventUpperLowerBoundPrice extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('events', function($table)
+		Schema::table('events', function(Blueprint $table)
 		{
-			$table->float('upper_bound_price');
-			$table->float('lower_bound_price');
+			$table->integer('upper_bound_price');
+			$table->integer('lower_bound_price');
 		});
 	}
 
@@ -26,7 +26,7 @@ class AddEventUpperLowerBoundPrice extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('events', function($table)
+		Schema::table('events', function(Blueprint $table)
 		{
 			$table->dropColumn('upper_bound_price');
 			$table->dropColumn('lower_bound_price');

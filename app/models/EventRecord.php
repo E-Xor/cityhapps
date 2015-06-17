@@ -89,6 +89,11 @@ class EventRecord extends Eloquent
     return array("tec" => $total_cancelled, "tea" => $total_archived);
   }
 
+  public function ageLimit()
+  {
+    return $this->hasMany('EventAgeLimit', 'event_id', 'id');
+  }
+
   public static function selectEvents($eventParams) {
 
     $events = EventRecord::with('categories')
