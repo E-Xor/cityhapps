@@ -28,6 +28,21 @@
                     "mature": "safe",
                     "include": "categories,images,price,links"
                 }
+            },
+            "endpoint2": {
+                "type": "venues",
+                "path": "venues/search",
+                "parameters": {
+                    "keywords": "",
+                    "location": "Atlanta, GA",
+                    "count_only": "",
+                    "page_size": "ARRAY_DEFINED",
+                    "page_number": "ARRAY_DEFINED",
+                    "within": "",
+                    "units": "",
+                    "sort_order": "",
+                    "sort_direction": ""
+                }
             }
         }
     }
