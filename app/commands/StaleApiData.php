@@ -50,7 +50,7 @@ class StaleApiData extends Command {
     ];
 
     $info = '';
-    foreach(EventRecord::clearStaleApi() as $legend_key => $record) {
+    foreach(Happ::clearStaleApi() as $legend_key => $record) {
       $info .= sprintf("%s: %d\n",$legends[$legend_key], $record);
     }
 

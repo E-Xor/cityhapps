@@ -14,19 +14,18 @@ class AddTableEventAgeLevel extends Migration
     public function up()
     {
         Schema::create(
-          'event_age_level',
+          'age_level',
           function (Blueprint $table) {
               $table->increments('id');
               $table->string('name')->unique(); //Name, example Infants
           }
         );
 
-        //We're now going to insert some data, into it, we need at least 1 record otherwise the FK will fail
+        //We're now going to insert some data, into it, we need at least 1 record otherwise the FK in events will fail
         //Delete previous data, this only runs once per instance
-        DB::table('event_age_level')->delete();
+        DB::table('age_level')->delete();
 
         //Defaults
-        //This to permit the FK to exist on previously migrated data
         $seedData = [
           'No Limit',
           'Infants',
@@ -38,7 +37,7 @@ class AddTableEventAgeLevel extends Migration
         ];
 
         foreach ($seedData as $data) {
-            DB::table('event_age_level')->insert(
+            DB::table('age_level')->insert(
               [
                 "name" => $data
               ]
@@ -53,7 +52,7 @@ class AddTableEventAgeLevel extends Migration
      */
     public function down()
     {
-        Schema::drop('event_age_level');
+        Schema::drop('age_level');
     }
 
 }

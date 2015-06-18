@@ -196,10 +196,10 @@ class StoreEventsCommand extends Command {
 		$this->info("API loading completed at: " . (string)date('l jS \of F Y h:i:s A'));
 		
 		try {
-			EventRecord::storeEvents();
+			Happ::storeEvents();
 			$this->info('All events stored in the Events table at: ' . (string)date('l jS \of F Y h:i:s A'));
 		} catch (Exception $e) {
-			$this->error("EventRecord storeEvents failed to complete. " . $e->getMessage());
+			$this->error("Happ storeEvents failed to complete. " . $e->getMessage());
 		}
 	}
 

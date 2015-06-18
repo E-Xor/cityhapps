@@ -13,11 +13,14 @@ class CreateEventAgeTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_age', function (Blueprint $table) {
+        Schema::create('happ_age_level', function (Blueprint $table) {
               $table->increments('id', true, true);
-              $table->unsignedInteger('event_id');
-              $table->unsignedInteger('age_type_id');
-              $table->foreign('event_id')
+              $table->unsignedInteger('happ_id');
+              $table->unsignedInteger('age_level_id');
+              $table->foreign('age_level_id')
+                    ->references('id')->on('age_level')
+                    ->onUpdate('cascade');
+              $table->foreign('happ_id')
                       ->references('id')->on('events')
                       ->onDelete('cascade')
                       ->onUpdate('cascade');
@@ -33,6 +36,6 @@ class CreateEventAgeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('event_age');
+        Schema::drop('happ_age_level');
     }
 }

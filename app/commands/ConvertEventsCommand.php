@@ -40,34 +40,34 @@ class ConvertEventsCommand extends Command {
 		$this->info('Started Convert Events at ' . (string)date('l jS \of F Y h:i:s A'));
 
 		try {
-			EventRecord::storeEventfulEvents();
+			Happ::storeEventfulEvents();
 			$this->info("Eventful events converted at "  . (string)date('l jS \of F Y h:i:s A'));
 		} catch (Exception $e) {
 			$this->error("Eventful convert events FAILED to complete. " . $e->getMessage());
 		}
 
 		try {
-			EventRecord::storeMeetupEvents();
+			Happ::storeMeetupEvents();
 			$this->info("Meetup events converted at "  . (string)date('l jS \of F Y h:i:s A'));
 		} catch (Exception $e) {
 			$this->error("Meetup convert events FAILED to complete. " . $e->getMessage());
 		}
 
 		try {
-			EventRecord::storeActiveEvents();
+			Happ::storeActiveEvents();
 			$this->info("Active events converted at "  . (string)date('l jS \of F Y h:i:s A'));
 		} catch (Exception $e) {
 			$this->error("Active convert events FAILED to complete. " . $e->getMessage());
 		}
 
 		try {
-			EventRecord::storeEventbriteEvents();
+			Happ::storeEventbriteEvents();
 			$this->info("Eventbrite events converted at "  . (string)date('l jS \of F Y h:i:s A'));
 		} catch (Exception $e) {
 			$this->error("Eventbrite convert events FAILED to complete. " . $e->getMessage());
 		}
 
-		//EventRecord::storeEvents();
+		//Happ::storeEvents();
 		
 		$this->info('All events stored in the Events table at: ' . (string)date('l jS \of F Y h:i:s A'));
 		

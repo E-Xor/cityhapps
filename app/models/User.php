@@ -34,7 +34,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function events()
 	{
-		return $this->belongsToMany('EventRecord', 'user_event', 'user_id', 'event_id');
+		return $this->belongsToMany('Happ', 'user_event', 'user_id', 'event_id');
 	}
 
 }
