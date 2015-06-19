@@ -99,7 +99,7 @@ class EventfulVenues extends Integration {
                     $venueRecord->description = $jsonArray['venues']['venue'][$i]['description'];
                 }
                 if (isset($jsonArray['venues']['venue'][$i]['image'])) {
-                    $venueRecord->image = $jsonArray['venues']['venue'][$i]['image'];
+                    $venueRecord->image = serialize($jsonArray['venues']['venue'][$i]['image']);
                 }
                 if (isset($jsonArray['venues']['venue'][$i]['created'])) {
                     $venueRecord->created = $jsonArray['venues']['venue'][$i]['created'];
@@ -107,9 +107,9 @@ class EventfulVenues extends Integration {
                 if (isset($jsonArray['venues']['venue'][$i]['venue_type'])) {
                     $venueRecord->venue_type = $jsonArray['venues']['venue'][$i]['venue_type'];
                 }
-                if (isset($jsonArray['venues']['venue'][$i]['venue_name'])) {
-                    $venueRecord->venue_name = $jsonArray['venues']['venue'][$i]['venue_name'];
-                }
+//                if (isset($jsonArray['venues']['venue'][$i]['venue_name'])) {
+//                    $venueRecord->venue_name = $jsonArray['venues']['venue'][$i]['venue_name'];
+//                }
 
                 try {
                     $venueRecord->save();

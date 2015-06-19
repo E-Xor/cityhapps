@@ -37,38 +37,30 @@ class MeetupVenues extends Integration {
                     $venueRecord->meetupVenueID = $jsonResult['results'][$i]['id'];
                     $venueRecord->id = $jsonResult['results'][$i]['id'];
                 }
-
                 if (isset($jsonResult['results'][$i]['zip'])) {
                     $venueRecord->zip = $jsonResult['results'][$i]['zip'];
                 }
-
                 if (isset($jsonResult['results'][$i]['country'])) {
                     $venueRecord->country = $jsonResult['results'][$i]['country'];
                 }
                 if (isset($jsonResult['results'][$i]['distance'])) {
                     $venueRecord->distance = $jsonResult['results'][$i]['distance'];
                 }
-
                 if (isset($jsonResult['results'][$i]['city'])) {
                     $venueRecord->city = $jsonResult['results'][$i]['city'];
                 }
-
                 if (isset($jsonResult['results'][$i]['address_1'])) {
                     $venueRecord->address_1 = $jsonResult['results'][$i]['address_1'];
                 }
-
                 if (isset($jsonResult['results'][$i]['address_2'])) {
                     $venueRecord->address_2 = $jsonResult['results'][$i]['address_2'];
                 }
-
                 if (isset($jsonResult['results'][$i]['address_3'])) {
                     $venueRecord->address_3 = $jsonResult['results'][$i]['address_3'];
                 }
-
                 if (isset($jsonResult['results'][$i]['phone'])) {
                     $venueRecord->phone = $jsonResult['results'][$i]['phone'];
                 }
-
                 if (isset($jsonResult['results'][$i]['rating'])) {
                     $venueRecord->rating = $jsonResult['results'][$i]['rating'];
                 }
@@ -86,6 +78,21 @@ class MeetupVenues extends Integration {
                 }
                 if (isset($jsonResult['results'][$i]['lat'])) {
                     $venueRecord->lat = $jsonResult['results'][$i]['lat'];
+                }
+                if (isset($jsonResult['results'][$i]['rating_count'])) {
+                    $venueRecord->rating_count = $jsonResult['results'][$i]['rating_count'];
+                }
+                if (isset($jsonResult['results'][$i]['email'])) {
+                    $venueRecord->email = $jsonResult['results'][$i]['email'];
+                }
+                if (isset($jsonResult['results'][$i]['fax'])) {
+                    $venueRecord->fax = $jsonResult['results'][$i]['fax'];
+                }
+                if (isset($jsonResult['results'][$i]['taglist'])) {
+                    $venueRecord->taglist = $jsonResult['results'][$i]['taglist'];
+                }
+                if (isset($jsonResult['results'][$i]['venue_url'])) {
+                    $venueRecord->venue_url = $jsonResult['results'][$i]['venue_url'];
                 }
 
                 try {

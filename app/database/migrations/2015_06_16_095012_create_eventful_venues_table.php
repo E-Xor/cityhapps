@@ -39,7 +39,7 @@ class CreateEventfulVenuesTable extends Migration {
             $table->string('image')->nullable();
             $table->string('created')->nullable();
             $table->string('venue_type')->nullable();
-            $table->string('venue_name')->nullable();
+//            $table->string('venue_name')->nullable();
 			$table->timestamps();
 		});
 	}

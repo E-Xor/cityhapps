@@ -39,11 +39,18 @@
                 "path": "open_venues.json",
                 "parameters": {
                     "city": "atlanta",
-                    "state": "GA",
                     "country": "US",
-                    "since_count": "",
-                    "since_mtime": "",
-                    "trickle": ""
+                    "fields": "",
+                    "group_urlname": "",
+                    "lat": "",
+                    "lon": "",
+                    "radius": "",
+                    "state": "GA",
+                    "text": "",
+                    "zip": ""
+
+
+
                 }
             }
         }
