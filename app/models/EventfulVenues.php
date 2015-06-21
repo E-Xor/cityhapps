@@ -35,7 +35,6 @@ class EventfulVenues extends Integration {
 			foreach ($venueRecords as $venueRecord) {
 
                 if (isset($jsonArray['venues']['venue'][$i]['id'])) {
-                    $venueRecord->id = $jsonArray['venues']['venue'][$i]['id'];
                     $venueRecord->eventfulVenueID = $jsonArray['venues']['venue'][$i]['id'];
                 }
                 if (isset($jsonArray['venues']['venue'][$i]['geocode_type'])) {
