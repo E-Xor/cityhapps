@@ -35,7 +35,6 @@ class MeetupVenues extends Integration {
 
                 if (isset($jsonResult['results'][$i]['id'])) {
                     $venueRecord->meetupVenueID = $jsonResult['results'][$i]['id'];
-                    $venueRecord->id = $jsonResult['results'][$i]['id'];
                 }
                 if (isset($jsonResult['results'][$i]['zip'])) {
                     $venueRecord->zip = $jsonResult['results'][$i]['zip'];
@@ -98,7 +97,7 @@ class MeetupVenues extends Integration {
                 try {
                     $venueRecord->save();
                 } catch (Exception $e) {
-
+                    print_r("Line: " . $e->getLine() ."Message: ".$e->getMessage());
                 }
 			}
 		}

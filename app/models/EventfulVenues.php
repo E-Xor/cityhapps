@@ -113,7 +113,7 @@ class EventfulVenues extends Integration {
                 try {
                     $venueRecord->save();
                 } catch (Exception $e) {
-                    // This venue will not be stored.
+                    print_r("Line: " . $e->getLine() ."Message: ".$e->getMessage());
                 }
 			}
 		}

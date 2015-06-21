@@ -147,7 +147,7 @@ class FoursquareVenues extends Integration {
                 try {
                     $venueRecord->save();
                 } catch (Exception $e) {
-
+                    print_r("Line: " . $e->getLine() ."Message: ".$e->getMessage());
                 }
 			}
 		}
