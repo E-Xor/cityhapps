@@ -4,12 +4,20 @@ use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Support\Facades\DB;
 
-class EventRecord extends Eloquent {
+class Happ extends Eloquent
+{
+  protected $guarded = array('id', 'create_at', 'updated_at');
+    /**
+     * @var int status codes for event states
+     */
+  static $STATUS_DRAFT = 0;
+  static $STATUS_ACTIVE = 1;
+  static $STATUS_CANCELLED = 2;
+  static $STATUS_ARCHIVED = 3;
 
-  protected $guarded = array('id','create_at', 'updated_at');
-
-  protected $table = 'events';
+  protected  $table = 'happs';
 
   public function users()
   {
@@ -40,50 +48,55 @@ class EventRecord extends Eloquent {
       $date = new DateTime();
     }
 
-    return EventRecord::where('event_date', '=', $date->format('Y-m-d'))->count();
+    return Happ::where('event_date', '=', $date->format('Y-m-d'))->count();
   }
 
   public static function clearStaleApi()
   {
-    // initialize variables
-    $buildQuery = "DELETE events FROM events ";
-    $buildWhere = "";
-    // grab count for each table;
-    $ebCount = DB::table('eventbrite')->count();
-    $efCount = DB::table('eventful')->count();
-    $meCount = DB::table('meetup')->count();
+      $total_cancelled = 0;
+      $total_archived = 0;
+      try{
+          $source = array(
+            'eb'=> array('join_column' => 'eventbriteID', 'table' => 'eventbrite'),
+            'ef'=> array('join_column' => 'eventful_id', 'table' => 'eventful'),
+            'me'=> array('join_column' => 'meetupID', 'table' => 'meetup')
+          );
 
-    if ($ebCount != 0)
-    {
-      // safe to assume eventbrite is not "cleared out"
+          foreach ($source as $alias => $eventVenueProvider) {
+              // grab count for each table;
+              $baseQuery = DB::table('happs');
+              if (DB::table($eventVenueProvider['table'])->count()) {
+                  $total_cancelled +=
+                  $baseQuery->leftJoin("{$eventVenueProvider['table']} AS {$alias}", function($join) use ($alias, $eventVenueProvider)
+                  {
+                      $join->on("{$alias}.{$eventVenueProvider['join_column']}", '=', self::table . '.source_id');
+                      $join->on('happs' . '.source', '=', DB::raw("'{$eventVenueProvider['table']}'"));
 
-      $buildQuery .= "LEFT JOIN eventbrite eb ON (events.source = 'Eventbrite' AND eb.eventbriteID = events.source_id) ";
-      $buildWhere .=  ($buildWhere ? "AND eb.id IS NULL " : "eb.id IS NULL ");
-    }
+                  })
+                    ->whereNull("{$alias}.id")
+                    //If the event is missing from its corresponding table, mark it as cancelled
+                    ->update(['status' => Happ::$STATUS_CANCELLED]);
+                    die($baseQuery->toSql());
+              }
+          }
 
-    if ($efCount != 0)
-    {
-      // safe to assume eventful table is not cleared out
-      $buildQuery .= "LEFT JOIN eventful ef ON (ef.eventful_id = events.source_id AND events.source = 'Eventful') ";
-      $buildWhere .=  ($buildWhere ? "AND ef.id IS NULL " : "ef.id IS NULL ");
-    }
+          //Now every event that is not Happ::$STATUS_CANCELLED will be archived
+          $total_archived += DB::table('happs')->where(self::table . '.end_time', '>', 'NOW()')->update(array('status' => Happ::$STATUS_ARCHIVED));
+      } catch (Exception $e) {
+            return array("error" => $e->getCode() . ":" . $e->getMessage());
+      }
 
-    if ($meCount != 0)
-    {
-      // safe to assume meetful table is not cleared out
-      $buildQuery .= "LEFT JOIN meetup m ON (m.meetupID = events.source_id AND events.source = 'Meetup') ";
-      $buildWhere .=  ($buildWhere ? "AND m.id IS NULL " : "m.id IS NULL ");
-    }
+    return array("cancelled" => $total_cancelled, "archived" => $total_archived);
+  }
 
-    $buildWhere .= ($buildWhere ? "OR events.end_time < now() " : "events.end_time < now() ");
-    $query = $buildQuery." WHERE " .$buildWhere;
-    $queryResult = DB::delete($query);
-    return $queryResult;
+  public function ageLevel()
+  {
+    return $this->hasMany('HappAgeLimit', 'event_id', 'id');
   }
 
   public static function selectEvents($eventParams) {
 
-    $events = EventRecord::with('categories')
+    $events = Happ::with('categories')
       ->maxPerDay($eventParams['maxPerDay'])
       ->eventID($eventParams['eventID'])
       ->eventName($eventParams['eventName'])
@@ -94,6 +107,7 @@ class EventRecord extends Eloquent {
       ->venueName($eventParams['venueZip'])
       ->description($eventParams['description'])
       ->startTime($eventParams['startTime'])
+      ->status(Happ::$STATUS_ACTIVE)
       ->dateRange($eventParams['startDate'], $eventParams['endDate'])
       ->imageRequired($eventParams['imageRequired'])
       ->eventSearch($eventParams['search'])
@@ -114,7 +128,7 @@ class EventRecord extends Eloquent {
 
     if ($userID != null) {
 
-      $events = EventRecord::with('categories')
+      $events = Happ::with('categories')
         ->userCategory($userID)
         ->startTime($eventParams['startTime'])
         ->dateRange($eventParams['startDate'], $eventParams['endDate'])
@@ -310,12 +324,12 @@ class EventRecord extends Eloquent {
 
   public function scopeMaxPerDay($query, $maxPerDay) {
     if ($maxPerDay != null) {
-      $topFiveJoin = '(SELECT @position_num := IF(@event_date = event_date, @position_num + 1, 1) AS position, @event_date := event_date AS match_date, e.event_date AS sort_date, e.start_time AS sort_time, e.id AS match_id FROM events e ORDER BY e.event_date ASC, e.start_time ASC) five_events';
+      $topFiveJoin = '(SELECT @position_num := IF(@event_date = event_date, @position_num + 1, 1) AS position, @event_date := event_date AS match_date, e.event_date AS sort_date, e.start_time AS sort_time, e.id AS match_id FROM ' . 'happs' . ' e ORDER BY e.event_date ASC, e.start_time ASC) five_events';
 
-      $eventCountJoin = '(SELECT event_date AS count_date, COUNT(*) AS date_event_count FROM events GROUP BY event_date ORDER BY event_date) count_events';
+      $eventCountJoin = '(SELECT event_date AS count_date, COUNT(*) AS date_event_count FROM ' . 'happs' . ' GROUP BY event_date ORDER BY event_date) count_events';
 
-      $joined = $query->join(DB::raw($topFiveJoin), 'five_events.match_id', '=', 'events.id')
-        ->join(DB::raw($eventCountJoin), 'count_events.count_date', '=', 'events.event_date')
+      $joined = $query->join(DB::raw($topFiveJoin), 'five_events.match_id', '=', 'happs' . '.id')
+        ->join(DB::raw($eventCountJoin), 'count_events.count_date', '=', 'happs' . '.event_date')
         ->where('five_events.position', '<=', $maxPerDay);
 
       return $joined;
@@ -352,7 +366,7 @@ class EventRecord extends Eloquent {
 
   public function scopeUserCategory($query, $userID) {
 
-    $joined = $query->join('event_category as ec', 'events.id', '=', 'ec.event_id')
+    $joined = $query->join('event_category as ec', 'happs' . '.id', '=', 'ec.event_id')
       ->join('user_categories as uc', 'uc.category_id', '=', 'ec.category_id')
       ->where('uc.user_id', '=', $userID);
 
@@ -370,9 +384,9 @@ class EventRecord extends Eloquent {
     echo("Meetup events stored.<br />");
      */
 
-    EventRecord::storeEventbriteEvents();
-    EventRecord::storeEventfulEvents();
-    EventRecord::storeMeetupEvents();
+    Happ::storeEventbriteEvents();
+    Happ::storeEventfulEvents();
+    Happ::storeMeetupEvents();
 
   }
 
@@ -384,11 +398,11 @@ class EventRecord extends Eloquent {
 
         if ($event->logo_url != null) {
 
-          $checkExisting = EventRecord::where('source_id', '=', $event->eventbriteID);
+          $checkExisting = Happ::where('source_id', '=', $event->eventbriteID);
           $eventRecords = $checkExisting->get();
 
           if ($eventRecords->count() < 1) {
-            $eventRecords->push(new EventRecord);
+            $eventRecords->push(new Happ);
           }
 
           foreach ($eventRecords as $eventRecord) {
@@ -418,7 +432,7 @@ class EventRecord extends Eloquent {
               $eventRecord->end_time = date_format(date_create($event->end_local), "Y-m-d H:i:s");
             }
 
-            if (EventRecord::keywordFilter($eventRecord)) {
+            if (Happ::keywordFilter($eventRecord)) {
               $eventRecord->save();
 
               foreach ($event->eventbriteCategories as $category) {
@@ -445,6 +459,18 @@ class EventRecord extends Eloquent {
 
   }
 
+  /**
+   * Returns records with the predefined status only
+   *
+   * @param \Illuminate\Database\Eloquent\Builder $query
+   * @param int $status
+   *
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeStatus($query, $status = 1){
+    return $query->where('status', $status);
+  }
+
   public static function storeEventfulEvents() {
     DB::connection()->disableQueryLog();
     //$events = Eventful::all();
@@ -455,11 +481,11 @@ class EventRecord extends Eloquent {
 
         if ($event->image != null) {
 
-          $checkExisting = EventRecord::where('source_id', '=', $event->eventful_id);
+          $checkExisting = Happ::where('source_id', '=', $event->eventful_id);
           $eventRecords = $checkExisting->get();
 
           if ($eventRecords->count() < 1) {
-            $eventRecords->push(new EventRecord);
+            $eventRecords->push(new Happ);
           }
 
           foreach ($eventRecords as $eventRecord) {
@@ -491,7 +517,7 @@ class EventRecord extends Eloquent {
               $eventRecord->end_time = date_format(date_create($event->stop_time), "Y-m-d H:i:s");
             }
 
-            if (EventRecord::keywordFilter($eventRecord)) {
+            if (Happ::keywordFilter($eventRecord)) {
               $eventRecord->save();
 
               foreach ($event->eventfulCategories as $category) {
@@ -526,12 +552,12 @@ class EventRecord extends Eloquent {
 
         if ($event->photo_url != null) {
 
-          $checkExisting = EventRecord::where('source_id', '=', $event->meetupID)
+          $checkExisting = Happ::where('source_id', '=', $event->meetupID)
             ->where('source', '=', 'Meetup');
           $eventRecords = $checkExisting->get();
 
           if ($eventRecords->count() < 1) {
-            $eventRecords->push(new EventRecord);
+            $eventRecords->push(new Happ);
           }
 
           foreach ($eventRecords as $eventRecord) {
@@ -572,7 +598,7 @@ class EventRecord extends Eloquent {
                 $eventRecord->end_time = $eventRecord->end_time = date("Y-m-d H:i:s", $endSeconds);
               }
             }
-            if (EventRecord::keywordFilter($eventRecord)) {
+            if (Happ::keywordFilter($eventRecord)) {
               $eventRecord->save();
 
               foreach ($event->meetupCategories as $category) {

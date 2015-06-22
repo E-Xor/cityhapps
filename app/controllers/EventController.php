@@ -11,7 +11,7 @@ class EventController extends BaseController {
 
 	public function testEvents() {
 		
-		EventRecord::storeEvents();
+		Happ::storeEvents();
 	}
 
 	public function events() {
@@ -44,13 +44,13 @@ class EventController extends BaseController {
 		$eventParams['userID'] = input::get('user_id'); // This is a special parameter used to return the "vote" flag for events with a UserEvent vote
 
 		$eventParams['search'] = Input::get('search'); // This is a space-delimited "omni search" term, like "dogs atlanta april"
-		$events = EventRecord::selectEvents($eventParams);
+		$events = Happ::selectEvents($eventParams);
 
 		$meta = array();
-		$count = EventRecord::eventCount($eventParams['startDate']);
+		$count = Happ::eventCount($eventParams['startDate']);
 		$meta["count"] = $count;
 
-		$results = array("meta" => $meta, "events" => $events);;
+		$results = array("meta" => $meta, "events" => $events);
 		
 		return json_encode($results);
 	}
@@ -68,7 +68,7 @@ class EventController extends BaseController {
 		$eventParams['pageCount'] = Input::get('page_count');
 		$eventParams['pageShift'] = Input::get('page_shift');
 
-		$events = EventRecord::recommendedEvents($eventParams);
+		$events = Happ::recommendedEvents($eventParams);
 
 		$meta = array();
 		$meta["user_id"] = $eventParams['userID'];
@@ -80,7 +80,7 @@ class EventController extends BaseController {
 
 	public function eventsPaged() {
 
-		$events = EventRecord::paginate(10);
+		$events = Happ::paginate(10);
 		return $events;
 
 	}
@@ -106,7 +106,7 @@ class EventController extends BaseController {
 		$today = Carbon::today('America/Chicago')->addDays($count);
 		$tomorrow = Carbon::tomorrow('America/Chicago')->addDays($count);	
 
-		$timeEvents = EventRecord::where('start_time', ">", $today )
+		$timeEvents = Happ::where('start_time', ">", $today )
 									->where('start_time', '<', $tomorrow)
 									->orderBy('start_time', 'asc')
 									->get();
@@ -269,7 +269,7 @@ class EventController extends BaseController {
 		}*/
 		
 
-		EventRecord::storeEvents();
+		Happ::storeEvents();
 
 		return $response;
 

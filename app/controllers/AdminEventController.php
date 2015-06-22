@@ -70,7 +70,7 @@ class AdminEventController extends \BaseController {
 
 
     if ($passValidation)
-      $result = EventRecord::create($eventParams);
+      $result = Happ::create($eventParams);
 
     if ($result)
       return json_encode($result);
