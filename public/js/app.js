@@ -4,8 +4,8 @@ var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute',
     'ipCookie', 'snap', 'ngIdle']);
 
 
-cityHapps.controller('eventsController', function($scope, $rootScope, $http, 
-    $filter, $modal, registerDataService, voteService, ipCookie, getEvents, 
+cityHapps.controller('eventsController', function($scope, $rootScope, $http,
+    $filter, $modal, registerDataService, voteService, ipCookie, getEvents,
     getRecommendedEvents, $window, getCategories) {
 
     $scope.mobile = function() {
@@ -697,13 +697,14 @@ cityHapps.factory('calDayClick', function($http, ipCookie){
 /* Admin Event Controller        */
 /* -- Start --                   */
 /* ***************************** */
-cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
-    function($scope, $http, ipCookie) {
+cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams', 'ipCookie',
+    function($scope, $http, $routeParams, ipCookie) {
 
     $scope.user = ipCookie('user');
 
     // Processing the form data for adding an event
     $scope.processForm = function(formData) {
+        var edit = ($routeParams.id ? true : false);
         // Validation
         var error = 0;
         if (!formData) {
@@ -735,38 +736,61 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
           $scope.generalError = true;
           return;
         }
-
-        $http({
-            method: 'POST',
-            url: '/admin/event/create',
+        if (!edit) {
+            $http({
+                method: 'POST',
+                url: '/admin/event/create',
+                    data: formData,
+                    headers: {'Content-Type': 'application/json'}
+            }).success(function(data) {
+                if (!data) {
+                    console.log('Data Not Posting');
+                }
+                else if (data) {
+                    if (data.error) {
+                        $scope.error = data.message;
+                        console.log('Error creating event', data.message);
+                    }
+                    else {
+                        $scope.success = data;
+                        console.log('Success');
+                    }
+                }
+            }).error(function(data) {
+                    $scope.error = data.error.message;
+            });
+        } else {
+            $http({
+                method: 'POST',
+                url: '/admin/event/update',
                 data: formData,
                 headers: {'Content-Type': 'application/json'}
-        }).success(function(data) {
-            if (!data) {
-                console.log('Data Not Posting');
-            }
-            else if (data) {
-                if (data.error) {
-                    $scope.error = data.message;
-                    console.log('Error creating event', data.message);
+            }).success(function(data) {
+                if (!data) {
+                    console.log('Data Not Posting');
                 }
-                else {
-                    $scope.success = data;
-                    console.log('Success');
+                else if (data) {
+                    if (data.error) {
+                        $scope.error = data.message;
+                        console.log('Error updating event', data.message);
+                    }
+                    else {
+                        $scope.success = data;
+                        console.log('Success');
+                    }
                 }
-            }
-        }).error(function(data) {
+            }).error(function(data) {
                 $scope.error = data.error.message;
-        });
-    };
+            });
+        }
 
+        }
     // Retieving all of the data for the listing page
     $http.get('/events?page_size=all')
         .success(function(data) {
         $scope.eventsCount = data.events.length;
         var allEventsUnformatted = data.events;
         for (var i = 0; i < allEventsUnformatted.length; i++) {
-            console.log(moment(allEventsUnformatted[i].start_time));
             if (moment(allEventsUnformatted[i].start_time).isValid()) {
                 allEventsUnformatted[i].start_date = moment(allEventsUnformatted[i].start_time).format('M/D/YYYY');
                 allEventsUnformatted[i].start_only_time = moment(allEventsUnformatted[i].start_time).format('h:mm:ss a');
@@ -786,6 +810,36 @@ cityHapps.controller('adminEventController', ['$scope', '$http', 'ipCookie',
         }
         $scope.allEvents = allEventsUnformatted;
     });
+
+    // edit page
+    if ($routeParams.id) {
+        $http.get('/events?id='+$routeParams.id)
+            .success(function(data){
+                if (data.events.length > 0)
+                {
+                    var singleEvent = data.events[0];
+                    $scope.formData.title = singleEvent.event_name;
+                    $scope.formData.event_id = singleEvent.id;
+                    $scope.formData.event_url = singleEvent.url;
+                    $scope.formData.event_image_url = singleEvent.event_image_url;
+                    $scope.formData.venue_name = singleEvent.venue_name;
+                    $scope.formData.venue_url = singleEvent.venue_url;
+                    $scope.formData.street_address = singleEvent.address;
+                    $scope.formData.city = singleEvent.city;
+                    $scope.formData.state = singleEvent.state;
+                    $scope.formData.zip_code = singleEvent.zip;
+                    $scope.formData.desc = singleEvent.description;
+                    $scope.formData.all_day = (singleEvent.all_day_flag ? true : false );
+                    $scope.formData.start_time = singleEvent.start_time;
+                    $scope.formData.end_time = singleEvent.end_time;
+                    dateCheckCreate = new Date(singleEvent.created_at).getTime() / 1000;
+                    dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
+                    if (dateCheckCreate != dateCheckUpdate)
+                       $scope.updated_last  = singleEvent.updated_at;
+                }
+        })
+    }
+
 }]);
 
 /* ***************************** */
@@ -1830,6 +1884,14 @@ cityHapps.config(function($routeProvider, $locationProvider){
         .when("/share/:id", {
             controller: "dayController",
             templateUrl: "templates/dayView.html"
+        })
+        .when("/admin/event/edit/:id", {
+            controller: "adminEventController",
+            templateUrl: "templates/event.html"
+        })
+        .when("/admin/event/add", {
+            controller: "adminEventController",
+            templateUrl: "templates/event.html"
         })
 		.otherwise({redirectTo: "/"});
 

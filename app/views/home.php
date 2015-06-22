@@ -16,10 +16,11 @@
     <link rel="stylesheet" href="/css/fullcalendar.css" />
     <!-- <link rel="stylesheet" href="/css/bootstrap-responsive.min.css" /> -->
 	<link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.css"/ >
 
 
 	<!-- load angular from CDN-->
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script> 
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script>
 	<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
  	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,height=device-height" >
@@ -31,16 +32,16 @@
 
     <script src="//use.typekit.net/pzp3zgb.js"></script>
 	<script>try{Typekit.load();}catch(e){}</script>
-	
+
 	<base href="/">
 
 </head>
 <div id="fb-root"></div>
 
 
-   <!-- default is set to 120 minutes, which our angular cookie is synced to --> 
+   <!-- default is set to 120 minutes, which our angular cookie is synced to -->
     <!-- echo(Config::get('session.lifetime')); -->
-	
+
     <body ng-controller="appController" ng-cloak>
 		<div ng-if="!mobile()">
 
@@ -53,7 +54,7 @@
 						<div class='wide-search'>
                             <form ng-submit="search(query)">
                                 <input type="text" placeholder="Search" ng-model="query" class="search-large">
-                                <div class="search-clear"></div> 
+                                <div class="search-clear"></div>
                                 <input type="submit" style="display: none;">
                             </form>
 						</div>
@@ -145,7 +146,7 @@
                             </slide>
                         </carousel>
 					</header>
-			<!-- Get the home body partial -->	
+			<!-- Get the home body partial -->
 			<div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
 			</div>
 		</div>
@@ -179,13 +180,13 @@
 					<div class="wide">
 						<div class='wide-search'>
                             <form ng-submit="search(query)" class="wide-search">
-                                <input type="text" placeholder="Search" ng-model="query" class="search-large">   
+                                <input type="text" placeholder="Search" ng-model="query" class="search-large">
                                 <input type="submit" style="display: none;">
                             </form>
 						</div>
 						<div class="header-search">
 							<div class="mobile-header">
-								<div class="mobile-search left"></div>	
+								<div class="mobile-search left"></div>
 								<a href="#/"><img class="mobile-logo" src="/img/logo.png"></a>
 								<div class="mobile-menu right" snap-toggle="right"></div>
 							</div>
@@ -210,7 +211,7 @@
 
     <script src="/js/angular-route.min.js"></script>
 	<script src="/js/angular-facebook.js"></script>
-	
+
 	<script src="/js/http-auth-interceptor.js"></script>
 	<script src="/js/ngRemoteValidate.0.4.1.min.js"></script>
     <script src="/js/angular-cookie.min.js"></script>
@@ -220,7 +221,8 @@
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
     <!-- <script src="/js/angular-touch.js"></script> -->
-    <script src="/js/angular-idle.min.js"></script>    
+    <script src="/js/angular-idle.min.js"></script>
+    <script src="/js/jquery.datetimepicker.js"></script>
 
     <script src="/js/moment.min.js"></script>
     <script type="text/javascript" src="/js/fullcalendar.js"></script>
@@ -233,7 +235,7 @@
     <script type="text/javascript" src="/js/angular-filter.js"></script>
 
 	<script src="/js/lodash.min.js"></script>
-	<script src="/js/bluebird.js"></script> 
+	<script src="/js/bluebird.js"></script>
 	<script src="/js/angular-google-maps.min.js"></script>
 
 	<script src="/js/app.js"></script>
