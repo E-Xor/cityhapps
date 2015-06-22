@@ -83,7 +83,7 @@ class AdminEventController extends \BaseController {
 
    if ($passValidation)
    {
-     $result = EventRecord::find($eventParams['id']);
+     $result = Happ::find($eventParams['id']);
 
      if ($result) {
       // then update
