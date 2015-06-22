@@ -67,9 +67,6 @@ class MeetupVenues extends Integration {
                 if (isset($jsonResult['results'][$i]['lon'])) {
                     $venueRecord->lon = $jsonResult['results'][$i]['lon'];
                 }
-                if (isset($jsonResult['results'][$i]['rating_count'])) {
-                    $venueRecord->rating_count = $jsonResult['results'][$i]['rating_count'];
-                }
                 if (isset($jsonResult['results'][$i]['name'])) {
                     $venueRecord->name = $jsonResult['results'][$i]['name'];
                 }
