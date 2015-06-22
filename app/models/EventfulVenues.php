@@ -22,7 +22,7 @@ class EventfulVenues extends Integration {
 		$total = count($jsonArray['venues']['venue']);
 		$response = $jsonArray['page_count'];
 		
-		for ($i = 1; $i < $total; $i++ ) {
+		for ($i = 0; $i < $total; $i++ ) {
 			//one of these fields is expecting a string and geting an array
 
 			$checkExisting = EventfulVenues::where('eventfulVenueID', '=', $jsonArray['venues']['venue'][$i]['id']);
