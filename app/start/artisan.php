@@ -17,3 +17,5 @@ Artisan::add(new ClearApi);
 Artisan::add(new PullApi);
 Artisan::add(new LoadApiData);
 Artisan::add(new StaleApiData);
+Artisan::add(new PullApiVenues());
+Artisan::add(new LoadApiVenuesData());

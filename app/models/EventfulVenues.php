@@ -22,7 +22,7 @@ class EventfulVenues extends Integration {
 		$total = count($jsonArray['venues']['venue']);
 		$response = $jsonArray['page_count'];
 		
-		for ($i = 1; $i < $total; $i++ ) {
+		for ($i = 0; $i < $total; $i++ ) {
 			//one of these fields is expecting a string and geting an array
 
 			$checkExisting = EventfulVenues::where('eventfulVenueID', '=', $jsonArray['venues']['venue'][$i]['id']);
@@ -35,7 +35,6 @@ class EventfulVenues extends Integration {
 			foreach ($venueRecords as $venueRecord) {
 
                 if (isset($jsonArray['venues']['venue'][$i]['id'])) {
-                    $venueRecord->id = $jsonArray['venues']['venue'][$i]['id'];
                     $venueRecord->eventfulVenueID = $jsonArray['venues']['venue'][$i]['id'];
                 }
                 if (isset($jsonArray['venues']['venue'][$i]['geocode_type'])) {
@@ -114,7 +113,7 @@ class EventfulVenues extends Integration {
                 try {
                     $venueRecord->save();
                 } catch (Exception $e) {
-                    // This venue will not be stored.
+                    print_r("Line: " . $e->getLine() ."Message: ".$e->getMessage());
                 }
 			}
 		}

@@ -22,7 +22,7 @@ class MeetupVenues extends Integration {
         $total = count($jsonResult['results']);
 		$response = ceil($jsonResult['meta']['total_count'] / $venueParams['page_size']);
 	
-		for ($i = 1; $i < $total; $i++ ) {
+		for ($i = 0; $i < $total; $i++ ) {
 			
 			$checkExisting = MeetupVenues::where('meetupVenueID', '=', $jsonResult['results'][$i]['id']);
 			$venueRecords = $checkExisting->get();
@@ -35,7 +35,6 @@ class MeetupVenues extends Integration {
 
                 if (isset($jsonResult['results'][$i]['id'])) {
                     $venueRecord->meetupVenueID = $jsonResult['results'][$i]['id'];
-                    $venueRecord->id = $jsonResult['results'][$i]['id'];
                 }
                 if (isset($jsonResult['results'][$i]['zip'])) {
                     $venueRecord->zip = $jsonResult['results'][$i]['zip'];
@@ -95,7 +94,7 @@ class MeetupVenues extends Integration {
                 try {
                     $venueRecord->save();
                 } catch (Exception $e) {
-
+                    print_r("Line: " . $e->getLine() ."Message: ".$e->getMessage());
                 }
 			}
 		}
