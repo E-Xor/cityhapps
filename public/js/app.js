@@ -1893,6 +1893,14 @@ cityHapps.config(function($routeProvider, $locationProvider){
             controller: "adminEventController",
             templateUrl: "templates/event.html"
         })
+        .when("/admin/venue/edit/:id", {
+            controller: "adminVenueController",
+            templateUrl: "templates/event.html"
+        })
+        .when("/admin/venue/add", {
+            controller: "adminEventController",
+            templateUrl: "templates/venue.html"
+        })
 		.otherwise({redirectTo: "/"});
 
 		// use the HTML5 History API
