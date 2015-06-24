@@ -847,6 +847,160 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
 /* -- Stop --                   */
 /* ***************************** */
 
+/* ***************************** */
+/* Admin Venue Controller        */
+/* -- Start --                   */
+/* ***************************** */
+cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams', 'ipCookie',
+    function($scope, $http, $routeParams, ipCookie) {
+
+    $scope.user = ipCookie('user');
+
+    // Processing the form data for adding an event
+    $scope.processForm = function(formData) {
+        var edit = ($routeParams.id ? true : false);
+        // Validation
+        var error = 0;
+        if (!formData) {
+          $scope.generalError = true;
+          return;
+        }
+        if (typeof formData.title === 'undefined' || formData.title == '') {
+          error = 1;
+          $scope.titleError = true;
+        }
+        if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
+          error = 1;
+          $scope.venueError = true;
+        }
+        if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
+          error = 1;
+          $scope.addressError = true;
+        }
+        if (typeof formData.start_time === 'undefined' || formData.start_time == '') {
+          error = 1;
+          $scope.startDateError = true;
+        }
+        if (typeof formData.desc === 'undefined' || formData.desc == '') {
+          error = 1;
+          $scope.descError = true;
+        }
+        // if any error, don't post
+        if (error) {
+          $scope.generalError = true;
+          return;
+        }
+        if (!edit) {
+            $http({
+                method: 'POST',
+                url: '/admin/venue/create',
+                    data: formData,
+                    headers: {'Content-Type': 'application/json'}
+            }).success(function(data) {
+                if (!data) {
+                    console.log('Data Not Posting');
+                }
+                else if (data) {
+                    if (data.error) {
+                        $scope.error = data.message;
+                        console.log('Error creating event', data.message);
+                    }
+                    else {
+                        $scope.success = data;
+                        console.log('Success');
+                    }
+                }
+            }).error(function(data) {
+                    $scope.error = data.error.message;
+            });
+        } else {
+            $http({
+                method: 'POST',
+                url: '/admin/event/update',
+                data: formData,
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data) {
+                if (!data) {
+                    console.log('Data Not Posting');
+                }
+                else if (data) {
+                    if (data.error) {
+                        $scope.error = data.message;
+                        console.log('Error updating event', data.message);
+                    }
+                    else {
+                        $scope.success = data;
+                        console.log('Success');
+                    }
+                }
+            }).error(function(data) {
+                $scope.error = data.error.message;
+            });
+        }
+
+        }
+    // Retieving all of the data for the listing page
+    $http.get('/venues?page_size=all')
+        .success(function(data) {
+        $scope.eventsCount = data.venues.length;
+        var allEventsUnformatted = data.venues;
+        for (var i = 0; i < allEventsUnformatted.length; i++) {
+            if (moment(allEventsUnformatted[i].start_time).isValid()) {
+                allEventsUnformatted[i].start_date = moment(allEventsUnformatted[i].start_time).format('M/D/YYYY');
+                allEventsUnformatted[i].start_only_time = moment(allEventsUnformatted[i].start_time).format('h:mm:ss a');
+            }
+            else {
+                allEventsUnformatted[i].start_date = '';
+                allEventsUnformatted[i].start_only_time = '';
+            }
+            if (moment(allEventsUnformatted[i].end_time).isValid()) {
+                allEventsUnformatted[i].end_date = moment(allEventsUnformatted[i].end_time).format('M/D/YYYY');
+                allEventsUnformatted[i].end_only_time = moment(allEventsUnformatted[i].end_time).format('h:mm:ss a');
+            }
+            else {
+                allEventsUnformatted[i].end_date = '';
+                allEventsUnformatted[i].end_only_time = '';
+            }
+        }
+        $scope.allEvents = allEventsUnformatted;
+    });
+
+    // edit page
+    if ($routeParams.id) {
+        $http.get('/events?id='+$routeParams.id)
+            .success(function(data){
+                if (data.events.length > 0)
+                {
+                    var singleEvent = data.events[0];
+                    $scope.formData.title = singleEvent.event_name;
+                    $scope.formData.event_id = singleEvent.id;
+                    $scope.formData.event_url = singleEvent.url;
+                    $scope.formData.event_image_url = singleEvent.event_image_url;
+                    $scope.formData.venue_name = singleEvent.venue_name;
+                    $scope.formData.venue_url = singleEvent.venue_url;
+                    $scope.formData.street_address = singleEvent.address;
+                    $scope.formData.city = singleEvent.city;
+                    $scope.formData.state = singleEvent.state;
+                    $scope.formData.zip_code = singleEvent.zip;
+                    $scope.formData.desc = singleEvent.description;
+                    $scope.formData.all_day = (singleEvent.all_day_flag ? true : false );
+                    $scope.formData.start_time = singleEvent.start_time;
+                    $scope.formData.end_time = singleEvent.end_time;
+                    dateCheckCreate = new Date(singleEvent.created_at).getTime() / 1000;
+                    dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
+                    if (dateCheckCreate != dateCheckUpdate)
+                       $scope.updated_last  = singleEvent.updated_at;
+                }
+        })
+    }
+
+}]);
+
+/* ***************************** */
+/* Admin Venue Controller       */
+/* -- Stop --                   */
+/* ***************************** */
+
 cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
 	function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie){
 

@@ -136,32 +136,17 @@ class AdminVenueController extends \BaseController {
     $message = 'Failed to create venue';
     $venueParams = array();
 
-    $venueParams['venue_name'] = Input::get('title');
-    $venueParams['url'] = Input::get('venue_url');
     $venueParams['venue_name'] = Input::get('venue_name');
-    $venueParams['venue_url'] = Input::get('venue_url');
+    $venueParams['url'] = Input::get('venue_url');
     $venueParams['address'] = Input::get('street_address');
     $venueParams['venue_image_url'] = Input::get('venue_image_url');
     // no room for building
     //$venueParams['building'] = Input::get('building');
     $venueParams['city'] = Input::get('city');
     $venueParams['state'] = Input::get('state');
-    $venueParams['zip'] = Input::get('zip_code');
+    $venueParams['postal_code'] = Input::get('zip_code');
     $venueParams['description'] = Input::get('desc');
-    /* just to explain this ternary operator a little bit
-    ** sets $time to unix time (if it is an invalid input, null, or not a date, it will return false)
-    ** $time is false: return null
-    ** $time is satisfactory: return date that mysql can use
-    */
-    $venueParams['venue_date'] = (($time = strtotime(Input::get('start_time'))) === false ? null : date("Y-m-d", $time));
-    $venueParams['start_time'] = (($time = strtotime(Input::get('start_time'))) === false ? null : date("Y-m-d H:i:s", $time));
-    $venueParams['all_day_flag'] = Input::get('all_day');
-    $venueParams['end_time'] = (($time = strtotime(Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
 
-    $time = strtotime(Input::get('start_time'));
-    $start_time = date("Y-m-d H:j:s", $time);
-    // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
-   // $venueParams['tags'] = Input::get('tags');
     $venueParams['source'] = "Custom";
 
 

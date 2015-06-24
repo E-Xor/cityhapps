@@ -121,6 +121,21 @@ class VenueRecord extends Eloquent
         );
     }
 
+    /** $venueParams will be a way to minimize results, for now it is not in use */
+    public static function selectVenues($venueParams) {
+
+    $venues = venueRecord::get();
+
+    return $venues;
+
+  }
+
+   public static function venueCount()
+    {
+
+      return VenueRecord::count();
+    }
+
     public static function storeMeetupVenues()
     {
 
