@@ -16,6 +16,7 @@ class AddUserVenueTable extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('user_id');
+			$table->integer('venue_id');
 			$table->boolean('vote');
 			$table->timestamps();
 		});

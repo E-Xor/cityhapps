@@ -11,7 +11,7 @@ class UserVenue extends Eloquent implements UserInterface, RemindableInterface {
 
 	// public $timestamps = false;
 
-	protected $fillable = ['user_id', 'event_id', 'vote'];
+	protected $fillable = ['user_id', 'venue_id', 'vote'];
 
 	/**
 	 * The database table used by the model.
