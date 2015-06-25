@@ -96,6 +96,10 @@ class Meetup extends Integration {
 					$eventRecord->utc_offset	=	$jsonArray['results'][$i]['utc_offset'];
 				}
 
+                if (isset($jsonArray['results'][$i]['venue']['id'])) {
+					$eventRecord->venue_id	=	$jsonArray['results'][$i]['venue']['id'];
+				}
+
 				$eventRecord->save();
 
 				// MeetupCategories

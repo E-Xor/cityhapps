@@ -90,6 +90,9 @@ class MeetupVenues extends Integration {
                 if (isset($jsonResult['results'][$i]['venue_url'])) {
                     $venueRecord->venue_url = $jsonResult['results'][$i]['venue_url'];
                 }
+                if (isset($jsonResult['results'][$i]['venue_id'])) {
+                    $venueRecord->venue_url = $jsonResult['results'][$i]['venue_id'];
+                }
 
                 try {
                     $venueRecord->save();

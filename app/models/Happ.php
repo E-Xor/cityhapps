@@ -76,7 +76,6 @@ class Happ extends Eloquent
                     ->whereNull("{$alias}.id")
                     //If the event is missing from its corresponding table, mark it as cancelled
                     ->update(['status' => Happ::$STATUS_CANCELLED]);
-                    die($baseQuery->toSql());
               }
           }
 
@@ -87,6 +86,11 @@ class Happ extends Eloquent
       }
 
     return array("cancelled" => $total_cancelled, "archived" => $total_archived);
+  }
+
+
+  public function venue(){
+    return $this->hasOne('VenueRecord', 'venue_id', 'id');
   }
 
   public function ageLevel()
@@ -508,6 +512,13 @@ class Happ extends Eloquent
             $eventRecord->latitude = $event->latitude;
             $eventRecord->longitude = $event->longitude;
 
+            $venue = VenueRecord::where('source_id', $event->venue_id)->where('source', $eventRecord->source)->first();
+            if($venue) {
+              $eventRecord->venue_id = $venue->id;
+            }
+
+            $eventRecord->venue_id = $event->venue_id;
+
             if ($event->start_time != null) {
               $eventRecord->event_date = date_format(date_create($event->start_time), "Y-m-d");
               $eventRecord->start_time = date_format(date_create($event->start_time), "Y-m-d H:i:s");
@@ -579,6 +590,12 @@ class Happ extends Eloquent
             $eventRecord->event_image_url = $event->photo_url;
             $eventRecord->latitude = $event->lat;
             $eventRecord->longitude = $event->lon;
+
+            $venue = VenueRecord::where('source_id', '=', $event->venue_id)->where('source', '=', $eventRecord->source)->first();
+            if($venue) {
+              $eventRecord->venue_id = $venue->id;
+            }
+
 
             if ($event->time != null) {
               if ($event->utc_offset != null) {
