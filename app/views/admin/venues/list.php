@@ -96,28 +96,24 @@
       <!-- Get the home body partial -->
       <div class='center white imageContainer'>
         <h1 style="margin:0px auto;padding:20px 0 10px 0;">Happs Listing</h1>
-        <h3>{{eventsCount}} Happs Currently in the System</h3>
+        <h3>{{venuesCount}} Happs Currently in the System</h3>
         <table style="margin:0 30px 50px;">
             <thead>
                 <tr>
                     <th style="width:32px;">ID</th>
-                    <th>Title & Link</th>
+                    <th style="width:160px;">Title & Link</th>
                     <th style="width:67px;">Source</th>
-                    <th style="width:80px;">Start Date</th>
-                    <th style="width:90px;">Start Time</th>
-                    <th style="width:80px;">End Date</th>
-                    <th style="width:90px;">End Time</th>
+                    <th style="width:80px;">Hours</th>
+                    <th style="">Address</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in allVenues">
-                    <td><a href='/admin/event/edit/{{item.id}}'>{{item.id}}</a></td>
-                    <td><a href="{{item.url}}" style="color:#33CCFF;">{{item.event_name}}</a></td>
+                    <td><a href='/admin/venue/edit/{{item.id}}'>{{item.id}}</a></td>
+                    <td style="width:160px;"><a href="{{item.url}}" style="color:#33CCFF;">{{item.name}}</a></td>
                     <td>{{item.source}}</td>
-                    <td>{{item.start_date}}</td>
-                    <td>{{item.start_only_time}}</td>
-                    <td>{{item.end_date}}</td>
-                    <td>{{item.end_only_time}}</td>
+                    <td>{{item.hours}}</td>
+                    <td>{{item.address_1}}</td>
                 </tr>
             </tbody>
         </table>

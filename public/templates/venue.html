@@ -32,9 +32,9 @@
         <div class="form_container">
         <div ng-if="success">
         <h1>
-          Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> event <b>{{success.venue_name}}</b>
+          Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> venue <b>{{success.venue_name}}</b>
           <br/>
-          <a href='/admin/event/add'>Create New Venue</a>
+          <a href='/admin/venue/add'>Create New Venue</a>
         </h1>
         </div>
         <form method="post" ng-if="!success">
@@ -55,18 +55,18 @@
             </div>
 
             <div>
-              <label for="event_image_url">Venue Image URL</label>
+              <label for="venue_image_url">Venue Image URL</label>
               <input type="text" id="venue_image_url" class="full" name="venue_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.venue_image_url" />
             </div>
 
             <div>
-              <label for="venue_url">Venue URL</label>
-              <input type="text" id="venue_url" class="full" name="venue_url" value="" ng-model="formData.venue_url" placeholder="http://www.venue.com" />
+              <label for="phone">Phone Number</label>
+              <input type="text" id="phone" class="full" name="phone" value="" ng-model="formData.phone" placeholder="1-800-244-4232" />
             </div>
 
             <div>
               <label for="street_address" style="display:inline-block;width:331px;">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
-              <label for="building" style="display:inline-block;width:155px;">Hours of Operation</label>
+              <label for="hours" style="display:inline-block;width:155px;">Hours of Operation</label>
 
               <input type="text" id="street_address" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
               <input type="text" id="hours" name="hours" value="" ng-model="formData.hours" style="width:341px;" placeholder="6am to 7pm" />

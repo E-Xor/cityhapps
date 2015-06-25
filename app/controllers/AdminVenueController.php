@@ -90,18 +90,18 @@ class AdminVenueController extends \BaseController {
     $venueParams['id'] = Input::get('venue_id');
     if (!$venueParams['id']) $passValidation = false;
 
-    $venueParams['venue_name'] = Input::get('title');
+    $venueParams['name'] = Input::get('venue_name');
     $venueParams['url'] = Input::get('venue_url');
-    $venueParams['venue_name'] = Input::get('venue_name');
-    $venueParams['venue_url'] = Input::get('venue_url');
-    $venueParams['address'] = Input::get('street_address');
-    $venueParams['venue_image_url'] = Input::get('venue_image_url');
-   // no room for building
-   //$venueParams['building'] = Input::get('building');
+    $venueParams['address_1'] = Input::get('street_address');
+    $venueParams['image'] = Input::get('venue_image_url');
+    // no room for building
+    //$venueParams['building'] = Input::get('building');
     $venueParams['city'] = Input::get('city');
     $venueParams['state'] = Input::get('state');
-    $venueParams['zip'] = Input::get('zip_code');
+    $venueParams['postal_code'] = Input::get('zip_code');
     $venueParams['description'] = Input::get('desc');
+    $venueParams['hours'] = Input::get('hours');
+    $venueParams['phone'] = Input::get('phone');
 
    if ($passValidation)
    {
@@ -109,8 +109,6 @@ class AdminVenueController extends \BaseController {
 
      if ($result) {
       // then update
-      $difference = json_encode(array_keys(array_diff($venueParams, $result->getAttributes())));
-      $venueParams['serialized'] = $difference;
       $result->update($venueParams);
       $result['updated'] = 1;
      }
@@ -136,16 +134,18 @@ class AdminVenueController extends \BaseController {
     $message = 'Failed to create venue';
     $venueParams = array();
 
-    $venueParams['venue_name'] = Input::get('venue_name');
+    $venueParams['name'] = Input::get('venue_name');
     $venueParams['url'] = Input::get('venue_url');
-    $venueParams['address'] = Input::get('street_address');
-    $venueParams['venue_image_url'] = Input::get('venue_image_url');
+    $venueParams['address_1'] = Input::get('street_address');
+    $venueParams['image'] = Input::get('venue_image_url');
     // no room for building
     //$venueParams['building'] = Input::get('building');
     $venueParams['city'] = Input::get('city');
     $venueParams['state'] = Input::get('state');
     $venueParams['postal_code'] = Input::get('zip_code');
     $venueParams['description'] = Input::get('desc');
+    $venueParams['hours'] = Input::get('hours');
+    $venueParams['phone'] = Input::get('phone');
 
     $venueParams['source'] = "Custom";
 
