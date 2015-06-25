@@ -39,6 +39,10 @@ class Happ extends Eloquent
     return $this->hasMany('UserEvent', 'event_id', 'event_id');
   }
 
+  public function recurringInformation(){
+    return $this->hasOne('HappRecurring');
+  }
+
   public static function eventCount($startDate)
   {
 
