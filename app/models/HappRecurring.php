@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\DB;
 
 class HappRecurring extends \Eloquent
 {
-    protected $guarded = array('id', 'start_date', 'end_date');
+    protected $guarded = array('id', 'happ_id');
 
 
     protected  $table = 'happs_recurring';
