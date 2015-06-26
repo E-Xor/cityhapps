@@ -32,6 +32,7 @@ Route::resource('sharedEvent', 'SharedEventController');
 
 
 Route::get('events', 'EventController@events');
+Route::get('venues', 'VenueController@venues');
 Route::get('recommendedEvents', 'EventController@recommendedEvents');
 Route::get('eventsPaged', 'EventController@eventsPaged');
 Route::post('dayEvents', 'EventController@dayEvents');
@@ -67,15 +68,15 @@ Route::resource('category', 'CategoryController');
 
 Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
 
-Route::get('admin', function() {
-
-  //old admin return
-  Auth::user();
-});
-
-Route::get('admin/event', 'AdminEventController@index');
+/** Admin **/
+Route::get('admin', 'AdminEventController@index');
+/** Admin Event **/
 Route::get('admin/event/list', 'HomeController@showWelcome');
 Route::post('admin/event/create', 'AdminEventController@create');
 Route::post('admin/event/update', 'AdminEventController@update');
+/** Admin Venue **/
+Route::get('admin/venue/list', 'AdminVenueController@listVenues');
+Route::post('admin/venue/create', 'AdminVenueController@create');
+Route::post('admin/venue/update', 'AdminVenueController@update');
 
 // Route::get("")
