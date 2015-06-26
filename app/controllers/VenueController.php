@@ -4,7 +4,7 @@ class VenueController extends BaseController {
 
 	public static function storeVenues()
     {
-		VenueRecord::storeVenues();
+		Venue::storeVenues();
 
 		return true;
 	}
@@ -36,10 +36,10 @@ class VenueController extends BaseController {
     $venueParams['pageShift'] = Input::get('page_shift');
     $venueParams['maxPerDay'] = Input::get('max_per_day');
 
-    $venues = VenueRecord::selectVenues($venueParams);
+    $venues = Venue::selectVenues($venueParams);
 
     $meta = array();
-    $count = VenueRecord::venueCount($venueParams['startDate']);
+    $count = Venue::venueCount($venueParams['startDate']);
     $meta["count"] = $count;
 
     $results = array("meta" => $meta, "venues" => $venues);

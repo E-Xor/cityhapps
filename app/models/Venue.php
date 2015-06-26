@@ -1,6 +1,6 @@
 <?php
 
-class VenueRecord extends Eloquent
+class Venue extends Eloquent
 {
 
     protected $guarded = array('id', 'create_at', 'updated_at');
@@ -40,9 +40,9 @@ class VenueRecord extends Eloquent
 
     public static function storeVenues()
     {
-        VenueRecord::storeFoursquareVenues();
-        VenueRecord::storeEventfulVenues();
-        VenueRecord::storeMeetupVenues();
+        Venue::storeFoursquareVenues();
+        Venue::storeEventfulVenues();
+        Venue::storeMeetupVenues();
     }
 
     public static function storeFoursquareVenues()
@@ -52,11 +52,11 @@ class VenueRecord extends Eloquent
             function ($venues) {
                 foreach ($venues as $venue) {
 
-                    $checkExisting = VenueRecord::where('source_id', '=', $venue->foursquareVenueID);
+                    $checkExisting = Venue::where('source_id', '=', $venue->foursquareVenueID);
                     $venueRecords = $checkExisting->get();
 
                     if ($venueRecords->count() < 1) {
-                        $venueRecords->push(new VenueRecord);
+                        $venueRecords->push(new Venue);
                     }
 
                     foreach ($venueRecords as $venueRecord) {
@@ -90,11 +90,11 @@ class VenueRecord extends Eloquent
             function ($venues) {
                 foreach ($venues as $venue) {
 
-                    $checkExisting = VenueRecord::where('source_id', '=', $venue->eventfulVenueID);
+                    $checkExisting = Venue::where('source_id', '=', $venue->eventfulVenueID);
                     $venueRecords = $checkExisting->get();
 
                     if ($venueRecords->count() < 1) {
-                        $venueRecords->push(new VenueRecord);
+                        $venueRecords->push(new Venue);
                     }
 
                     foreach ($venueRecords as $venueRecord) {
@@ -124,7 +124,7 @@ class VenueRecord extends Eloquent
   /** $venueParams will be a way to minimize results, for now it is not in use */
   public static function selectVenues($venueParams) {
 
-    $venues = VenueRecord::get();
+    $venues = Venue::get();
 
     return $venues;
 
@@ -133,7 +133,7 @@ class VenueRecord extends Eloquent
    public static function venueCount()
     {
 
-      return VenueRecord::count();
+      return Venue::count();
     }
 
     public static function storeMeetupVenues()
@@ -143,11 +143,11 @@ class VenueRecord extends Eloquent
             200,
             function ($venues) {
                 foreach ($venues as $venue) {
-                    $checkExisting = VenueRecord::where('source_id', '=', $venue->meetupVenueID);
+                    $checkExisting = Venue::where('source_id', '=', $venue->meetupVenueID);
                     $venueRecords = $checkExisting->get();
 
                     if ($venueRecords->count() < 1) {
-                        $venueRecords->push(new VenueRecord);
+                        $venueRecords->push(new Venue);
                     }
 
                     foreach ($venueRecords as $venueRecord) {

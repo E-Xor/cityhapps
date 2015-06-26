@@ -63,7 +63,7 @@ class AdminVenueController extends \BaseController {
     $venueParams['pageShift'] = Input::get('page_shift');
     $venueParams['maxPerDay'] = Input::get('max_per_day');
 
-    $venues = VenueRecord::selectVenues($venueParams);
+    $venues = Venue::selectVenues($venueParams);
 
     $results = array("venues" => $venues);
 
@@ -105,7 +105,7 @@ class AdminVenueController extends \BaseController {
 
    if ($passValidation)
    {
-     $result = VenueRecord::find($venueParams['id']);
+     $result = Venue::find($venueParams['id']);
 
      if ($result) {
       // then update
@@ -151,7 +151,7 @@ class AdminVenueController extends \BaseController {
 
 
     if ($passValidation)
-      $result = VenueRecord::create($venueParams);
+      $result = Venue::create($venueParams);
 
     if ($result)
       return json_encode($result);
