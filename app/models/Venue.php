@@ -52,17 +52,9 @@ class Venue extends Eloquent
   /** 
    * $venueParams will be a way to minimize results, for now it is not in use
    */
-  public static function selectVenues($venueParams) {
-    $venues = Venue::get();
+  public static function selectVenues($params) {
+    $venues = Venue::paginate($params['pageSize']);
     return $venues;
-  }
-
-  /**
-   *
-   */
-  public static function venueCount()
-  {
-    return Venue::count();
   }
 
   /**

@@ -11,36 +11,35 @@ class VenueController extends BaseController {
 
 
   public function venues() {
+    $params['id'] = Input::get('id');
+    $params['name'] = Input::get('name');
+    $params['venueAddress'] = Input::get('venue_address');
+    $params['venueCity'] = Input::get('venue_city');
+    $params['venueState'] = Input::get('venue_state');
+    $params['venueZip'] = Input::get('venue_zip');
+    $params['description'] = Input::get('description');
+    $params['latitude'] = Input::get('latitude');
+    $params['longitude'] = Input::get('longitude');
+    $params['createdAt'] = Input::get('created_at');
+    $params['updatedAt'] = Input::get('updated_at');
+    $params['source'] = Input::get('source');
+    $params['imageRequired'] = Input::get('image_required');
+    $params['pageSize'] = Input::get('page_size', 100);
+    $params['page'] = Input::get('page', 1);
 
-    $venueParams = array();
-
-    $venueParams['id'] = Input::get('id');
-    $venueParams['eventName'] = Input::get('name');
-    $venueParams['venueName'] = Input::get('venue_name');
-    $venueParams['venueAddress'] = Input::get('venue_address');
-    $venueParams['venueCity'] = Input::get('venue_city');
-    $venueParams['venueState'] = Input::get('venue_state');
-    $venueParams['venueZip'] = Input::get('venue_zip');
-    $venueParams['description'] = Input::get('description');
-    $venueParams['startTime'] = Input::get('start_time');
-    $venueParams['startDate'] = Input::get('start_date');
-    $venueParams['endDate'] = Input::get('end_date');
-    $venueParams['latitude'] = Input::get('latitude');
-    $venueParams['longitude'] = Input::get('longitude');
-    $venueParams['createdAt'] = Input::get('created_at');
-    $venueParams['updatedAt'] = Input::get('updated_at');
-    $venueParams['source'] = Input::get('source');
-    $venueParams['imageRequired'] = Input::get('image_required');
-    $venueParams['pageSize'] = Input::get('page_size');
-    $venueParams['pageCount'] = Input::get('page_count');
-    $venueParams['pageShift'] = Input::get('page_shift');
-    $venueParams['maxPerDay'] = Input::get('max_per_day');
-
-    $venues = Venue::selectVenues($venueParams);
+    // We'll use this for proper queries later
+    //$venues = Venue::selectVenues($params);
+    
+    if (!empty($params['id']))
+      $venues = array(Venue::find($params['id']));
+    else {
+      $venuesPaginator = Venue::paginate($params['pageSize']);
+      $venues = $venuesPaginator->getItems();
+    }
 
     $meta = array();
-    $count = Venue::venueCount($venueParams['startDate']);
-    $meta["count"] = $count;
+    $meta['count'] = Venue::count();
+    $meta['page'] = $params['page'];
 
     $results = array("meta" => $meta, "venues" => $venues);
 
