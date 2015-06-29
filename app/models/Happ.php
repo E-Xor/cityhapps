@@ -39,6 +39,15 @@ class Happ extends Eloquent
     return $this->hasMany('UserEvent', 'event_id', 'event_id');
   }
 
+  public function venue(){
+    return $this->hasOne('Venue', 'venue_id', 'id');
+  }
+
+  public function ageLevel()
+  {
+    return $this->hasMany('HappAgeLimit', 'event_id', 'id');
+  }
+
   public static function eventCount($startDate)
   {
 
@@ -86,16 +95,6 @@ class Happ extends Eloquent
       }
 
     return array("cancelled" => $total_cancelled, "archived" => $total_archived);
-  }
-
-
-  public function venue(){
-    return $this->hasOne('VenueRecord', 'venue_id', 'id');
-  }
-
-  public function ageLevel()
-  {
-    return $this->hasMany('HappAgeLimit', 'event_id', 'id');
   }
 
   public static function selectEvents($eventParams) {
