@@ -87,6 +87,7 @@ class Eventful extends Integration {
 				$eventRecord->stop_time			=	$jsonArray['events']['event'][$i]['stop_time'];
 				$eventRecord->venue_name		=	$jsonArray['events']['event'][$i]['venue_name'];
 				$eventRecord->venue_url			=	$jsonArray['events']['event'][$i]['venue_url'];
+				$eventRecord->venue_id			=	$jsonArray['events']['event'][$i]['venue_id'];
 
 				if (isset($jsonArray['events']['event'][$i]['image'])) {
 					if (isset($jsonArray['events']['event'][$i]['image']['block250'])) {
