@@ -511,7 +511,7 @@ class Happ extends Eloquent
             $eventRecord->latitude = $event->latitude;
             $eventRecord->longitude = $event->longitude;
 
-            $venue = VenueRecord::where('source_id', $event->venue_id)->where('source', $eventRecord->source)->first();
+            $venue = Venue::where('source_id', $event->venue_id)->where('source', $eventRecord->source)->first();
             if($venue) {
               $eventRecord->venue_id = $venue->id;
             }
@@ -590,7 +590,7 @@ class Happ extends Eloquent
             $eventRecord->latitude = $event->lat;
             $eventRecord->longitude = $event->lon;
 
-            $venue = VenueRecord::where('source_id', '=', $event->venue_id)->where('source', '=', $eventRecord->source)->first();
+            $venue = Venue::where('source_id', '=', $event->venue_id)->where('source', '=', $eventRecord->source)->first();
             if($venue) {
               $eventRecord->venue_id = $venue->id;
             }
