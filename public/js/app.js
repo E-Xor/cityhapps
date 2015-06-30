@@ -694,6 +694,22 @@ cityHapps.factory('calDayClick', function($http, ipCookie){
 
 
 /* ***************************** */
+/* Happ Controller        */
+/* -- Start --                   */
+/* ***************************** */
+cityHapps.controller('happController', ['$scope', '$http', '$routeParams', 'ipCookie',
+    function($scope, $http, $routeParams, ipCookie) {
+
+        $scope.user = ipCookie('user');
+
+        $http.get('/events?id=' + $routeParams.id)
+            .success(function(data) {
+                if (data.events.length > 0)
+                    $scope.data = data.events[0];
+            });
+}]);
+
+/* ***************************** */
 /* Admin Event Controller        */
 /* -- Start --                   */
 /* ***************************** */
@@ -2009,9 +2025,9 @@ cityHapps.config(function($routeProvider, $locationProvider){
             // controller: "calController",
             templateUrl: "templates/searchView.html"
         })
-        .when("/event/:id", {
-            controller: "adminEventController",
-            templateUrl: "app/components/happs/single.html"
+        .when("/happ/:id", {
+            controller: "happController",
+            templateUrl: "app/components/happs/view.html"
         })
         .when("/share/:id", {
             controller: "dayController",

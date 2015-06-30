@@ -14,13 +14,11 @@
 
 Route::get('/', 'HomeController@index');
 
-Route::get('harness', 'HarnessController@showHarness');
-
 App::missing(function($exception) {
-
-  return View::make('home');
-
+  return View::make('main');
 });
+
+Route::get('harness', 'HarnessController@showHarness');
 
 // Route::get('share/{id}', 'SharedEventController@sharedEventPosition' );
 

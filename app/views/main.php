@@ -10,13 +10,13 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="/css/angular-snap.min.css" />
-	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/angular-snap.min.css" />
+	<link href="/assets/css/jquery.bxslider.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/css/fullcalendar.css" />
-    <!-- <link rel="stylesheet" href="/css/bootstrap-responsive.min.css" /> -->
-	<link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.css"/ >
+    <link rel="stylesheet" href="/assets/css/fullcalendar.css" />
+    <!-- <link rel="stylesheet" href="/assets/css/bootstrap-responsive.min.css" /> -->
+	<link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/jquery.datetimepicker.css"/ >
 
 
 	<!-- load angular from CDN-->
@@ -26,12 +26,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,height=device-height" >
 
 	<script>
-    //	document.body.scrollTop = 0;
-	<!--local typeKit -->
+        //document.body.scrollTop = 0;
+        <!--local typeKit-->
     </script>
 
     <script src="//use.typekit.net/pzp3zgb.js"></script>
-	<script>try{Typekit.load();}catch(e){}</script>
+	<script>try {Typekit.load();}catch (e) {}</script>
 
 	<base href="/">
 
@@ -61,7 +61,7 @@
 						<div class="header-search">
 							<div class="row sm-12">
 								<div class="col-sm-4 center">
-									<a href="#/"><img src="/img/logo.png"></a>
+									<a href="#/"><img src="/assets/img/logo.png"></a>
 								</div>
 								<div class="col-sm-4 center logo">
                                     <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
@@ -187,7 +187,7 @@
 						<div class="header-search">
 							<div class="mobile-header">
 								<div class="mobile-search left"></div>
-								<a href="#/"><img class="mobile-logo" src="/img/logo.png"></a>
+								<a href="#/"><img class="mobile-logo" src="/assets/img/logo.png"></a>
 								<div class="mobile-menu right" snap-toggle="right"></div>
 							</div>
 

@@ -10,7 +10,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="/css/angular-snap.min.css" />
+    <link rel="stylesheet" href="/HELLO/css/angular-snap.min.css" />
 	<link href="/css/jquery.bxslider.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="/css/fullcalendar.css" />
