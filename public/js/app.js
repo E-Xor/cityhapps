@@ -1044,7 +1044,7 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 			$scope.voteEvent = function(event) {
 				$modal.open({
 					templateUrl: "templates/registrationModal.html",
-					controller: 'modalInstanceController',
+					controller: 'modalInstanceController'
 				});
 			}
 		}
@@ -1205,6 +1205,15 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
             });
         };
 
+        $scope.resetPasswordOpen = function(size) {
+
+            var modalInstance = $modal.open({
+                templateUrl: "templates/resetPasswordModal.html",
+                controller: 'modalInstanceController',
+                size: size
+            });
+        };
+
 
       // $scope.$on('Facebook:statusChange', function(ev, data) {
       //   console.log('Status: ', data);
@@ -1350,6 +1359,48 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal
 
 	};
 
+    auth.userExist = function(email, callback ) {
+        $http({
+            method: "POST",
+            url: '/user/exist',
+            data: { "email" : email },
+            headers : {"Content-Type": "application/json"}
+        }).success(function(data){
+
+            console.log(data);
+            if(typeof callback  === 'function') {
+                callback(data);
+            }
+
+        });
+
+    };
+
+    auth.resetPassword = function (email) {
+
+        $http
+            .post('/user/reset-password', email)
+            .success(function (res) {
+                console.log(res);
+            })
+            .error(function (res) {
+//                $rootScope.loginError = "There was a problem with email";
+                console.log(res);
+            });
+    };
+
+    auth.editUserData = function (data) {
+
+        $http
+            .post('/user/edit', data)
+            .success(function (res) {
+                console.log(res);
+            })
+            .error(function (res) {
+                console.log(res);
+            });
+    };
+
 	return auth;
 
 
@@ -1383,6 +1434,30 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 		});
 	};
 
+    $scope.editOpen = function(size) {
+
+        var modalInstance = $modal.open({
+            templateUrl: "templates/editModal.html",
+            controller: 'modalInstanceController',
+            size: size
+        });
+    };
+
+    $scope.getUserEmail = function() {
+        var email = document.querySelector('.user-email').innerHTML;
+        console.log(email);
+        this.formData.email = email;
+    };
+
+    $scope.resetPasswordOpen = function(size) {
+
+        var modalInstance = $modal.open({
+            templateUrl: "templates/resetPasswordModal.html",
+            controller: 'modalInstanceController',
+            size: size
+        });
+    };
+
 	$scope.categoriesOpen = function(size) {
 
 		var modalInstance = $modal.open({
@@ -1404,6 +1479,19 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 	$scope.logoutUser = function() {
 		authFactory.logoutUser();
 	};
+
+    $scope.userExist = function() {
+        authFactory.userExist();
+    };
+
+
+    $scope.resetPassword = function (data) {
+        authFactory.resetPassword($scope.formData);
+    };
+
+    $scope.editUserData = function () {
+        authFactory.editUserData($scope.formData);
+    };
 
 });
 

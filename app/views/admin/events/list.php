@@ -71,7 +71,7 @@
                                         <div ng-cloak ng-show="user">
                                             <div class="user-info">
                                                 <h5 class="red italic inline accountHelp" ng-click="helpFade()">help</h5>
-                                                    <div ng-click="categoryToggle()"> {{user.email}} </div>
+                                                    <div ng-click="categoryToggle()" class="user-email"> {{user.email}} </div>
                                                     <div class="categoriesDropdownUser">
                                                         <div class="toggle-controls">
                                                             <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
@@ -81,6 +81,7 @@
                                                             <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
                                                         </div>
                                                     </div>
+                                                <a class="red logout" ng-click="getUserEmail(); editOpen('md');" style="margin-right: 20px;">Edit</a>
                                                 <a class="red logout" ng-click="logoutUser()">Sign out</a>
                                             </div>
                                         </div>

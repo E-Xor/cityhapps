@@ -1,0 +1,35 @@
+<button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+</button>
+
+<div class="register">
+    <div class="modal-header">
+        <h2 class="modal-title uppercase center">Edit Account</h2>
+    </div>
+
+    <div class="modal-body" ng-controller="registerFormController">
+
+        <form name="edit">
+            <div class="editForm" ng-controller="modalController">
+                <input type="email" readonly ng-value="formData.email" name="email" class="registerEmail block">
+
+
+
+                <input type="password" placeholder="New password" name="password" ng-minlength='8' required
+                       class="registerPassword block" ng-model="formData.password" ng-model-onblur>
+                <span ng-if="edit.password.$error.minlength" style="text-align: center;">Please use a minumum of 8 characters.</span>
+
+                <input type="password" placeholder="Re-enter new password" name="password2" required
+                       ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "
+                       class="registerPassword2 block" ng-model="formData.password2" ng-model-onblur>
+
+                <span ng-show="editForm.password2.$error.validator" class="block" style="text-align: center;">Passwords do not match!</span>
+
+                <button type="button" class="create-account center" ng-click="editUserData(); cancel();">Save</button>
+                <br/>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+

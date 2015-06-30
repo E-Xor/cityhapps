@@ -80,6 +80,7 @@
                                                             <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
                                                         </div>
                                                     </div>
+                                                <a class="red logout" ng-click="editOpen('md') close()">Edit</a>
                                                 <a class="red logout" ng-click="logoutUser()">Sign out</a>
                                             </div>
                                         </div>
