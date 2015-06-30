@@ -1982,9 +1982,13 @@ cityHapps.config(function($routeProvider, $locationProvider){
 
 	$routeProvider
 		.when("/", {
-			// controller: 'eventsController',
-			templateUrl: 'templates/homeView.html'
+			controller: 'adminEventController',
+            templateUrl: 'app/components/happs/list.html'
 		})
+        .when("/preview", {
+            controller: 'adminEventController',
+            templateUrl: 'app/components/happs/list.html'
+        })
 		.when("/map", {
 			// controller: 'mapViewController',
 			templateUrl: 'templates/mapView.html'
@@ -2005,6 +2009,10 @@ cityHapps.config(function($routeProvider, $locationProvider){
             // controller: "calController",
             templateUrl: "templates/searchView.html"
         })
+        .when("/event/:id", {
+            controller: "adminEventController",
+            templateUrl: "app/components/happs/single.html"
+        })
         .when("/share/:id", {
             controller: "dayController",
             templateUrl: "templates/dayView.html"
@@ -2017,21 +2025,21 @@ cityHapps.config(function($routeProvider, $locationProvider){
             controller: "adminEventController",
             templateUrl: "templates/event.html"
         })
-        .when("/admin/venue/edit/:id", {
-            controller: "adminVenueController",
-            templateUrl: "templates/venue.html"
-        })
         .when("/admin/venue/add", {
             controller: "adminVenueController",
-            templateUrl: "templates/venue.html"
+            templateUrl: "app/components/venues/edit.html"
+        })
+        .when("/admin/venue/edit/:id", {
+            controller: "adminVenueController",
+            templateUrl: "app/components/venues/edit.html"
         })
         .when("/admin/venue/list", {
             controller: "adminVenueController",
-            templateUrl: "templates/venueList.html"
+            templateUrl: "app/components/venues/list.html"
         })
         .when("/admin/venue/list/:page", {
             controller: "adminVenueController",
-            templateUrl: "templates/venueList.html"
+            templateUrl: "app/components/venues/list.html"
         })
 		.otherwise({redirectTo: "/"});
 

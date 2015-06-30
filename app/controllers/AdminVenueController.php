@@ -160,16 +160,4 @@ class AdminVenueController extends \BaseController {
 
   }
 
-  /**
-   * Display a listing of the resource.
-   * GET /admin/venue/list
-   *
-   * @return Response
-   */
-  public function listVenues()
-  {
-    //show the admin venue add view
-    return View::make('admin/venues/list');
-  }
-
 }
