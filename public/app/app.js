@@ -707,6 +707,52 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
                 if (data.events.length > 0)
                     $scope.data = data.events[0];
             });
+
+        $scope.vote = {};
+
+        if ($scope.user) {
+
+            $scope.simpleVoteEvent = function(event, action) {
+
+                var eventID = event.id;
+
+                console.log(event.vote);
+
+                var userID = $scope.user.id;
+                var upVote = event.vote.upVote;
+                var downVote = event.vote.downVote;
+
+                var eventVote = -1;
+
+                if (action == 'up') {
+                    event.vote.downVote = false;
+                    if (upVote == true) {
+                        eventVote = 1;
+                    }
+                } else { // Downvote changed
+                    event.vote.upVote = false;
+                    if (downVote == true) {
+                        eventVote = 0;
+                    }
+                }
+                $http({
+                    method: "POST",
+                    url: '/userEvent',
+                    data: {
+                        'user_id' : userID,
+                        'event_id' : eventID,
+                        'vote' : eventVote
+                    },
+                    headers : {"Content-Type": "application/json"}
+                }).success(function(data){
+                    if (!data) {
+                        console.log("no vote, man");
+                    } else if(data) {
+                        console.log(data);
+                    }
+                });
+            };
+        }
 }]);
 
 /* ***************************** */

@@ -21,7 +21,7 @@
 				<h3 class="dark bold">{{data.event_name}}</h3>
 				<div class="time">{{data.start_time | dateToISO | date: 'h:mm a'}} - {{data.end_time | dateToISO | date: 'h:mm a'}}</p>
 				<div class="venue"><a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a></div>
-				<label class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></label>
+				<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
 				<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
 			</div>
 		</div>
