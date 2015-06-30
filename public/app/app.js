@@ -1,11 +1,11 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute',
     'ui.validate', 'facebook', 'http-auth-interceptor', 'remoteValidation',
     'google-maps'.ns(), 'ui.calendar', 'angular.filter', 'ngSanitize',
-    'ipCookie', 'snap', 'ngIdle']);
+    'ngCookies', 'snap', 'ngIdle']);
 
 
 cityHapps.controller('eventsController', function($scope, $rootScope, $http,
-    $filter, $modal, registerDataService, voteService, ipCookie, getEvents,
+    $filter, $modal, registerDataService, voteService, $cookies, $cookieStore, getEvents,
     getRecommendedEvents, $window, getCategories) {
 
     $scope.mobile = function() {
@@ -18,7 +18,7 @@ cityHapps.controller('eventsController', function($scope, $rootScope, $http,
 
     var userID = null;
 
-    var cookie = ipCookie('user');
+    var cookie = $cookies.user;
     if (cookie) {
         userID = cookie.id;
     }
@@ -379,7 +379,7 @@ cityHapps.controller('eventsController', function($scope, $rootScope, $http,
         console.log($scope.filterData.categories);
     }
 
-    var cookie = ipCookie('user');
+    var cookie = $cookies.user;
 
     $scope.$on('event:loginConfirmed', function(){
         getRecommendedEvents.events().success(recommendedEventSuccess);
@@ -487,12 +487,12 @@ cityHapps.factory('voteService', function(){
 });
 
 
-cityHapps.factory('getEvents', function($http, ipCookie) {
+cityHapps.factory('getEvents', function($http, $cookies, $cookieStore) {
     return {
         events: function() {
             var userID = null;
 
-            var cookie = ipCookie('user');
+            var cookie = $cookies.user;
             if (cookie) {
                 userID = cookie.id;
             }
@@ -509,7 +509,7 @@ cityHapps.factory('getEvents', function($http, ipCookie) {
 
             var end = moment(time).endOf('day').format('YYYY-MM-DD');
 
-            var cookie = ipCookie('user');
+            var cookie = $cookies.user;
             if (cookie) {
                 var userID = cookie.id;
             }
@@ -530,7 +530,7 @@ cityHapps.factory('getEvents', function($http, ipCookie) {
         /*allEvents: function() {
             var userID = null;
 
-            var cookie = ipCookie('user');
+            var cookie = $cookies.user;
             if (cookie) {
                 userID = cookie.id;
             }
@@ -540,12 +540,12 @@ cityHapps.factory('getEvents', function($http, ipCookie) {
     };
 });
 
-cityHapps.factory('getRecommendedEvents', function($http, ipCookie) {
+cityHapps.factory('getRecommendedEvents', function($http, $cookies, $cookieStore) {
 	return {
 		events : function() {
 			var userID = null;
 
-			var cookie = ipCookie('user');
+			var cookie = $cookies.user;
 			if (cookie) {
                 userID = cookie.id;
             }
@@ -564,12 +564,12 @@ var firstOfMonth = moment().startOf('month').format('YYYY-MM-DD');
 var endOfMonth = moment().endOf('month').format('YYYY-MM-DD');
 var maxPerDay = 5;
 
-cityHapps.factory('getEventsMonthStart', function($http, ipCookie){
+cityHapps.factory('getEventsMonthStart', function($http, $cookies, $cookieStore){
    return  {
        events : function(){
            var userID = null;
 
-            var cookie = ipCookie('user');
+            var cookie = $cookies.user;
             if (cookie) {
                 userID = cookie.id;
             }
@@ -651,14 +651,14 @@ cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
 }]);
 
 
-cityHapps.factory('search', function($http, ipCookie){
+cityHapps.factory('search', function($http, $cookies, $cookieStore){
     var now = moment().format('YYYY-MM-DD');
 
     return {
         searchData : function(query){
             var userID = null;
 
-            var cookie = ipCookie('user');
+            var cookie = $cookies.user;
             if (cookie) {
                 userID = cookie.id;
             }
@@ -672,14 +672,14 @@ cityHapps.factory('search', function($http, ipCookie){
     };
 });
 
-cityHapps.factory('calDayClick', function($http, ipCookie){
+cityHapps.factory('calDayClick', function($http, $cookies, $cookieStore){
     var now = moment().format('YYYY-MM-d');
 
     return {
         dateClicked : function(day){
             var userID = null;
 
-            var cookie = ipCookie('user');
+            var cookie = $cookies.user;
             if (cookie) {
                 userID = cookie.id;
             }
@@ -697,10 +697,10 @@ cityHapps.factory('calDayClick', function($http, ipCookie){
 /* Happ Controller        */
 /* -- Start --                   */
 /* ***************************** */
-cityHapps.controller('happController', ['$scope', '$http', '$routeParams', 'ipCookie',
-    function($scope, $http, $routeParams, ipCookie) {
+cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
+    function($scope, $http, $routeParams, $cookies, $cookieStore) {
 
-        $scope.user = ipCookie('user');
+        $scope.user = $cookies.user;
 
         $http.get('/events?id=' + $routeParams.id)
             .success(function(data) {
@@ -713,10 +713,10 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', 'ipCo
 /* Admin Event Controller        */
 /* -- Start --                   */
 /* ***************************** */
-cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams', 'ipCookie',
-    function($scope, $http, $routeParams, ipCookie) {
+cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
+    function($scope, $http, $routeParams, $cookies, $cookieStore) {
 
-    $scope.user = ipCookie('user');
+    $scope.user = $cookies.user;
 
     // Processing the form data for adding an event
     $scope.processForm = function(formData) {
@@ -867,10 +867,10 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
 /* Admin Venue Controller        */
 /* -- Start --                   */
 /* ***************************** */
-cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams', 'ipCookie',
-    function($scope, $http, $routeParams, ipCookie) {
+cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
+    function($scope, $http, $routeParams, $cookies, $cookieStore) {
 
-    $scope.user = ipCookie('user');
+    $scope.user = $cookies.user;
 
     // Processing the form data for adding an event
     $scope.processForm = function(formData) {
@@ -987,8 +987,8 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
 /* -- Stop --                   */
 /* ***************************** */
 
-cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', 'ipCookie',
-    function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, ipCookie) {
+cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', '$cookies', '$cookieStore',
+    function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, $cookies, $cookieStore) {
 
         $scope.$on('$idleStart', function() {
 
@@ -996,7 +996,7 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 
         });
 
-        $scope.user = ipCookie('user');
+        $scope.user = $cookies.user;
 
 
         $scope.filterData = {};
@@ -1034,7 +1034,7 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 
                     $scope.categories = data;
 
-                    var user = ipCookie('user');
+                    var user = $cookies.user;
                     params = "?id=" + user.id;
 
                     getUserCategories.params(params).success(function(data){
@@ -1053,7 +1053,7 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 
                     var userID = null;
 
-                    var cookie = ipCookie('user');
+                    var cookie = $cookies.user;
                     if (cookie) {
                         userID = cookie.id;
                     }
@@ -1125,7 +1125,7 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 
         };
 
-		$rootScope.user = ipCookie('user');
+		$rootScope.user = $cookies.user;
 
 		if ($rootScope.user) {
 
@@ -1422,7 +1422,7 @@ cityHapps.factory("registerDataService", function(){
 });
 
 
-cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal, ipCookie, $modalStack){
+cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal, $cookies, $cookieStore, $modalStack){
 
 	var auth = {};
 
@@ -1434,8 +1434,8 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal
 				delete res.password;
 				localStorage.setItem('user', JSON.stringify(res));
 
-                //$cookieStore.put('user', res);
-                ipCookie('user', res, {expires: 2, expirationUnit: 'hours'});
+                $cookieStore.put('user', res);
+                //ipCookie('user', res, {expires: 2, expirationUnit: 'hours'});
 
                 var userString = localStorage.getItem('user');
                 var user = angular.fromJson(userString);
@@ -1460,8 +1460,8 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal
 			url: '/auth/logout',
 			headers : {"Content-Type": "application/json"}
 		}).success(function(data){
-			//$cookieStore.remove('user');
-            ipCookie.remove("user");
+			$cookieStore.remove('user');
+            //ipCookie.remove("user");
 
 			document.location.reload(true);
 			if (!data) {
@@ -1550,8 +1550,8 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 //
 //Handles homepage event modals
 //
-cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", '$rootScope', 'voteService', "$http", "$modalInstance", 'data', 'num', 'vote', 'ipCookie', 'Facebook',
-		function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, ipCookie, Facebook){
+cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", '$rootScope', 'voteService', "$http", "$modalInstance", 'data', 'num', 'vote', '$cookies', '$cookieStore', 'Facebook',
+		function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
 
 		if (num === null || num === undefined) {
 			$scope.data = data;
@@ -1565,7 +1565,7 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
 		$scope.vote = {};
 
-        $scope.user = ipCookie('user');
+        $scope.user = $cookies.user;
 
             if ($rootScope.user) {
 
@@ -1657,7 +1657,7 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 
                 var sharedEvent;
 
-                $scope.user = ipCookie('user');
+                $scope.user = $cookies.user;
 
                 if ($scope.user) {
                     var sharedEvent = {
@@ -1702,8 +1702,8 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 //
 //Handles All event modals not on homepage
 //
-cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance", 'data', '$http', '$rootScope', 'ipCookie', 'voteService', 'Facebook', '$modal', '$window',
-		function($scope, $modalInstance, data, $http, $rootScope, ipCookie, voteService, Facebook, $modal, $window){
+cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance", 'data', '$http', '$rootScope', '$cookies', '$cookieStore', 'voteService', 'Facebook', '$modal', '$window',
+		function($scope, $modalInstance, data, $http, $rootScope, $cookies, $cookieStore, voteService, Facebook, $modal, $window){
 
 		$scope.data = data;
         if ($window.innerWidth > 768) {
@@ -1732,7 +1732,7 @@ cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance
 
 
         console.log(data);
-            $scope.user = ipCookie('user');
+            $scope.user = $cookies.user;
 
             if ($scope.user) {
                 $scope.simpleVoteEvent = function(event, action) {
@@ -2064,8 +2064,8 @@ cityHapps.config(function($routeProvider, $locationProvider){
 });
 
 
-cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal', '$log', '$http', 'getCategories', 'ipCookie',
-	function($scope, GoogleMapApi, getEvents, $modal, $log, $http, getCategories, ipCookie) {
+cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal', '$log', '$http', 'getCategories', '$cookies', '$cookieStore',
+	function($scope, GoogleMapApi, getEvents, $modal, $log, $http, getCategories, $cookies, $cookieStore) {
 
 	//handle tabs inside mapController
     $scope.ifLimit = function(length) {
@@ -2081,7 +2081,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
     var userID = null;
 
-    var cookie = ipCookie('user');
+    var cookie = $cookies.user;
     if (cookie) {
         userID = cookie.id;
     }
@@ -2371,7 +2371,7 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 
 }]);
 
-cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal, $rootScope, $http, getCategories, getEventsMonthStart, $location, ipCookie){
+cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal, $rootScope, $http, getCategories, getEventsMonthStart, $location, $cookies, $cookieStore) {
 
 	$scope.alertTest = function() {
 		//alert('firing on click');
@@ -2380,7 +2380,7 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
     //Needs to be broken out into a factory
     var userID = null;
 
-    var cookie = ipCookie('user');
+    var cookie = $cookies.user;
     if (cookie) {
         userID = cookie.id;
     }
@@ -2549,11 +2549,11 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
 
 
-cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, daySliderFactory, $rootScope, $location, calDayClick, $routeParams, ipCookie) {
+cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, daySliderFactory, $rootScope, $location, calDayClick, $routeParams, $cookies, $cookieStore) {
 
     var userID = null;
 
-    var cookie = ipCookie('user');
+    var cookie = $cookies.user;
     if (cookie) {
         userID = cookie.id;
     }
@@ -2810,11 +2810,11 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
 
 
-cityHapps.factory("daySliderFactory", function($http, $rootScope, ipCookie){
+cityHapps.factory("daySliderFactory", function($http, $rootScope, $cookies, $cookieStore){
 
     var userID = null;
 
-    var cookie = ipCookie('user');
+    var cookie = $cookies.user;
     if (cookie) {
         userID = cookie.id;
     }
@@ -2857,11 +2857,11 @@ cityHapps.factory("daySliderFactory", function($http, $rootScope, ipCookie){
 
 
 cityHapps.controller("calDayController", function($scope, getEvents, $modal, $http, getCategories, $rootScope, $location, $location,
-    calDayClick, $routeParams, $window, daySliderFactory, ipCookie) {
+    calDayClick, $routeParams, $window, daySliderFactory, $cookies, $cookieStore) {
 
     var userID = null;
 
-    var cookie = ipCookie('user');
+    var cookie = $cookies.user;
     if (cookie) {
         userID = cookie.id;
     }

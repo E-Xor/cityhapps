@@ -20,7 +20,7 @@
 
 
 	<!-- load angular from CDN-->
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
 	<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
  	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,height=device-height" >
@@ -205,29 +205,29 @@
 		</div>
 	<!-- </div> -->
 
-	<!-- ng- scripts n thangs -->
+	<!-- ng- scripts and things -->
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <script src="http://platform.twitter.com/widgets.js"></script>
 
-    <script src="/js/angular-route.min.js"></script>
+    <script src="/assets/js/angular/angular-route.min.js"></script>
 	<script src="/js/angular-facebook.js"></script>
 
 	<script src="/js/http-auth-interceptor.js"></script>
 	<script src="/js/ngRemoteValidate.0.4.1.min.js"></script>
-    <script src="/js/angular-cookie.min.js"></script>
+    <script src="/assets/js/angular/angular-cookies.min.js"></script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/ui-utils.min.js"></script>
 	<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
-    <!-- <script src="/js/angular-touch.js"></script> -->
+    <!-- <script src="/assets/js/angular/angular-touch.js"></script> -->
     <script src="/js/angular-idle.min.js"></script>
     <script src="/js/jquery.datetimepicker.js"></script>
 
     <script src="/js/moment.min.js"></script>
     <script type="text/javascript" src="/js/fullcalendar.js"></script>
     <script type="text/javascript" src="/js/calendar.js"></script>
-    <script type="text/javascript" src="/js/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="/assets/js/angular/angular-sanitize.min.js"></script>
 
     <script type="text/javascript" src="/js/snap.min.js"></script>
     <script type="text/javascript" src="/js/angular-snap.min.js"></script>
@@ -238,7 +238,7 @@
 	<script src="/js/bluebird.js"></script>
 	<script src="/js/angular-google-maps.min.js"></script>
 
-	<script src="/js/app.js"></script>
+	<script src="/app/app.js"></script>
 	<script src="/js/dom.js"></script>
 
 
