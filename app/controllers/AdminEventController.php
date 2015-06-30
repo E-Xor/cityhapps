@@ -3,18 +3,6 @@
 class AdminEventController extends \BaseController {
 
   /**
-   * Display a listing of the resource.
-   * GET /admin/event
-   *
-   * @return Response
-   */
-  public function index()
-  {
-    //show the admin frontend view
-    return View::make('admin/events/home');
-  }
-
-  /**
    * Show the form for creating a new resource.
    * GET /admin/event/add
    *
@@ -151,18 +139,6 @@ class AdminEventController extends \BaseController {
     else
       return json_encode(array('error' => true, 'message'=>$message));
 
-  }
-
-  /**
-   * Display a listing of the resource.
-   * GET /admin/event/list
-   *
-   * @return Response
-   */
-  public function listEvents()
-  {
-    //show the admin event add view
-    return View::make('admin/events/list');
   }
 
 }

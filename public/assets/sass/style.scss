@@ -89,7 +89,7 @@ body {
 
 .bg-image {
 	padding: 0;
-	background: url('/img/fullWidthBG.jpg') no-repeat #2c2625;
+	background: url('../img/fullWidthBG.jpg') no-repeat #2c2625;
 	background-size: contain;
 	-moz-background-size: contain;
 	z-index: 1;
@@ -175,7 +175,7 @@ body {
 	width: 100%;
 	right: 0;
 	&:before {
-		content: url('/img/sliderRight.png');
+		content: url('../img/sliderRight.png');
 		cursor: pointer;
 	}
 }
@@ -185,7 +185,7 @@ body {
 	width: 100%;
 	left: 0;
 	&:before {
-		content: url('/img/sliderLeft.png');
+		content: url('../img/sliderLeft.png');
 		cursor: pointer;
 	}
 }
@@ -207,7 +207,7 @@ body {
 		height: 60px;
 		padding: 5px 5px 5px 70px;
 		border: 2px solid #fff;
-		background: url("/img/searchIcon.png") 35px 16px / 23px 26px no-repeat;
+		background: url("../img/searchIcon.png") 35px 16px / 23px 26px no-repeat;
 	}
 }
 
@@ -232,7 +232,7 @@ input.main-search {
 .search-clear {
   width: 30px;
   height: 30px;
-  background: url("/img/modalClose.png") 0 0/30px 30px no-repeat;
+  background: url("../img/modalClose.png") 0 0/30px 30px no-repeat;
   position: absolute;
   cursor: pointer;
   right: 15%;
@@ -248,7 +248,7 @@ input.main-search {
   width: 100%;
   left: 0;
   padding: 0 16%;
-  background: url("/img/searchIcon.png") 13% 50%/30px 34px no-repeat;
+  background: url("../img/searchIcon.png") 13% 50%/30px 34px no-repeat;
   font-style: italic;
 	&:focus {
 		outline: none;
@@ -266,7 +266,7 @@ input.main-search {
       position: absolute;
       width: 68px;
       height: 70px;
-      background: url("/img/recArrow.png") no-repeat;
+      background: url("../img/recArrow.png") no-repeat;
       right: 87px;
       top: 5px;
       padding: 16px 0;
@@ -274,7 +274,7 @@ input.main-search {
       color: #FF5C50;
       font-weight: bold;
       &.down {
-        background: url("/img/recArrowDown.png") no-repeat;
+        background: url("../img/recArrowDown.png") no-repeat;
       }
     }
 }
@@ -288,6 +288,14 @@ input.main-search {
 //     margin: 0; 
 // }
 
+.happ-single {
+  background: white;
+  padding: 30px;
+}
+
+.happ-image {
+  min-height: 180px;
+}
 
 .modal-dialog {
 	max-width: 500px;
@@ -448,7 +456,7 @@ input.main-search {
 .share {
   width: 21px;
   height: 29px;
-  background: url('/img/shareIcon.png') 0 0/21px 29px no-repeat;
+  background: url('../img/shareIcon.png') 0 0/21px 29px no-repeat;
   right: 15px;
   position: absolute;
   bottom: 15px;
@@ -472,13 +480,13 @@ input.main-search {
   margin-right: 10px;
   cursor: pointer;
   &.fb-share {
-    background: url('/img/shareIcons.png') no-repeat 0 0/259px 76px;
+    background: url('../img/shareIcons.png') no-repeat 0 0/259px 76px;
   }
   &.twitter-share, .twitter-share-button {
-    background: url('/img/shareIcons.png') no-repeat -91px 0/259px 76px;
+    background: url('../img/shareIcons.png') no-repeat -91px 0/259px 76px;
   }
   &.pinterest-share {
-    background: url('/img/shareIcons.png') no-repeat -183px 0/259px 76px;
+    background: url('../img/shareIcons.png') no-repeat -183px 0/259px 76px;
   }
   span {
     display: none;
@@ -493,7 +501,7 @@ input.main-search {
     box-sizing: border-box;
     height: 70px;
     max-width: 100%;
-    background: url("/img/shareIcons.png") no-repeat -91px 0/259px 76px;
+    background: url("../img/shareIcons.png") no-repeat -91px 0/259px 76px;
     border: none;
     width: 70px;
   }
@@ -544,7 +552,7 @@ input.main-search {
 .categoryToggle {
   cursor: pointer;
   &:before {
-      content: url("/img/categoryArrow.png");
+      content: url("../img/categoryArrow.png");
       position: absolute;
       width: 15px;
       height: 15px;
@@ -678,7 +686,7 @@ h3 {
   &.prev {
     height: 50px;
     cursor: pointer;
-    background: url("/img/sliderLeft.png") no-repeat 14px 5px / 71px 40px;
+    background: url("../img/sliderLeft.png") no-repeat 14px 5px / 71px 40px;
   }
 }
 
@@ -687,7 +695,7 @@ h3 {
   &.next {
     height: 50px;
     cursor: pointer;
-    background: url("/img/sliderRight.png") no-repeat 7px 5px / 71px 40px;
+    background: url("../img/sliderRight.png") no-repeat 7px 5px / 71px 40px;
   }
 }
 
@@ -771,33 +779,33 @@ h3 {
  
 .list-icon {
 	@extend .icon;
-	background: url('/img/viewSelectSprite.png') no-repeat 0 3px;
+	background: url('../img/viewSelectSprite.png') no-repeat 0 3px;
     &.active {
-      background: url('/img/viewSelectSprite.png') no-repeat 0 -36px;
+      background: url('../img/viewSelectSprite.png') no-repeat 0 -36px;
     }
 }
 
 .map-icon {
 	@extend .icon;
-	background: url('/img/viewSelectSprite.png') no-repeat  -107px 3px;
+	background: url('../img/viewSelectSprite.png') no-repeat  -107px 3px;
     &.active {
-      background: url('/img/viewSelectSprite.png') no-repeat  -107px -36px;
+      background: url('../img/viewSelectSprite.png') no-repeat  -107px -36px;
     }
 }
 
 .day-icon {
 	@extend .icon;
-	background: url('/img/viewSelectSprite.png') no-repeat -50px 3px;
+	background: url('../img/viewSelectSprite.png') no-repeat -50px 3px;
     &.active {
-      background: url('/img/viewSelectSprite.png') no-repeat -50px -36px;
+      background: url('../img/viewSelectSprite.png') no-repeat -50px -36px;
     }
 }
 
 .cal-icon {
     @extend .icon;
-    background: url('/img/viewSelectSprite.png') no-repeat -154px 3px;
+    background: url('../img/viewSelectSprite.png') no-repeat -154px 3px;
     &.active {
-      background: url('/img/viewSelectSprite.png') no-repeat -154px -36px;
+      background: url('../img/viewSelectSprite.png') no-repeat -154px -36px;
     }
 }
 
@@ -831,33 +839,33 @@ h3 {
 .like-icon {
 	height: 41px;
 	width: 41px;
-	background: url('/img/likeIcon.png') no-repeat 0 0;
+	background: url('../img/likeIcon.png') no-repeat 0 0;
 	cursor: pointer;
 	float: left;
       &.large {
         height: 80px;
         width: 80px;
-        background: url("/img/likeIcon.png") no-repeat 0px 0/197px 80px;
+        background: url("../img/likeIcon.png") no-repeat 0px 0/197px 80px;
       }
 	&.active {
-		background: url('/img/likeIconActive.png') no-repeat 0 0;
+		background: url('../img/likeIconActive.png') no-repeat 0 0;
 	}
 }
 
 .dislike-icon {
 	height: 41px;
 	width: 41px;
-	background: url('/img/likeIcon.png') no-repeat -61px 0;
+	background: url('../img/likeIcon.png') no-repeat -61px 0;
 	cursor: pointer;
 	float: right;
 	margin-left: 20px;
     &.large {
       height: 80px;
       width: 80px;
-      background: url("/img/likeIcon.png") no-repeat -117px 0/197px 80px;
+      background: url("../img/likeIcon.png") no-repeat -117px 0/197px 80px;
     }
 	&.active {
-		background: url('/img/likeIconActive.png') no-repeat -61px 0;
+		background: url('../img/likeIconActive.png') no-repeat -61px 0;
 	}
 }
 
@@ -865,13 +873,13 @@ h3 {
 .like-icon-mobile {
     height: 25px;
     width: 25px;
-    background: url("/img/mobileLikeIcon.png") no-repeat 0 0/25px 25px;
+    background: url("../img/mobileLikeIcon.png") no-repeat 0 0/25px 25px;
     cursor: pointer;
     float: right;
     background-size: cover;
     margin-bottom: 15px;
 	&.active {
-        background: url("/img/likeIconActive.png") no-repeat 0px 0/25px 25px;
+        background: url("../img/likeIconActive.png") no-repeat 0px 0/25px 25px;
         height: 25px;
         width: 25px;
         background-size: cover;
@@ -881,12 +889,12 @@ h3 {
 .dislike-icon-mobile {
 	height: 25px;
 	width: 25px;
-	background: url('/img/mobileLikeIcon.png') no-repeat 0px -43px / 25px 25px;
+	background: url('../img/mobileLikeIcon.png') no-repeat 0px -43px / 25px 25px;
     background-size: cover;
 	cursor: pointer;
 	float: right;
 	&.active {
-        background: url("/img/likeIconActive.png") no-repeat -37px 0/25px 25px;
+        background: url("../img/likeIconActive.png") no-repeat -37px 0/25px 25px;
         height: 25px;
         width: 25px;
         background-size: cover;
@@ -912,7 +920,7 @@ h3 {
 
 
 .facebookButton {
-	background: #3b5998 url("/img/facebookIcon.png") no-repeat 93% 10px/17.5px 35px;
+	background: #3b5998 url("../img/facebookIcon.png") no-repeat 93% 10px/17.5px 35px;
 	width: 100%;
 	color: #fff;
 	padding: 15px;
@@ -1048,7 +1056,7 @@ h3 {
   cursor: pointer;
   width: 79px;
   &.fc-state-default {
-//    background: url("/img/sliderRight.png") no-repeat 7px 5px/71px 40px;
+//    background: url("../img/sliderRight.png") no-repeat 7px 5px/71px 40px;
     border: none;
     text-shadow: none;
     box-shadow: none;
@@ -1056,11 +1064,11 @@ h3 {
 }
 
 .fc-next-button.fc-state-default {
-  background: url("/img/sliderRight.png") no-repeat 7px 5px/71px 40px;
+  background: url("../img/sliderRight.png") no-repeat 7px 5px/71px 40px;
 }
 
 .fc-prev-button.fc-state-default {
-  background: url("/img/sliderLeft.png") no-repeat 7px 5px/71px 40px;
+  background: url("../img/sliderLeft.png") no-repeat 7px 5px/71px 40px;
 }
 
 
@@ -1076,7 +1084,7 @@ h3 {
   font-size: 14px;
   font-weight: bold;
 	&.prev-ctrl {
-		background: url('/img/prevIcon.png') #F6EFEE 20px 25px/11px 18px no-repeat;
+		background: url('../img/prevIcon.png') #F6EFEE 20px 25px/11px 18px no-repeat;
 		cursor: pointer;
 		position: absolute;
 		left: 0;
@@ -1084,7 +1092,7 @@ h3 {
 		padding: 25px 40px;
 	}
 	&.next-ctrl {
-		background: url("/img/nextIcon.png") #F6EFEE 120px 25px/11px 18px no-repeat;
+		background: url("../img/nextIcon.png") #F6EFEE 120px 25px/11px 18px no-repeat;
 		cursor: pointer;
 		position: absolute;
 		right: 0;
@@ -1225,7 +1233,7 @@ h3 {
   float: left;
   height: 50px;
   margin: 0px 10px;
-  background: url("/img/marker.png") no-repeat 0 0/27px 37px;
+  background: url("../img/marker.png") no-repeat 0 0/27px 37px;
   text-align: center;
   font-weight: bold;
 	&:nth-child(10) {
@@ -1463,6 +1471,21 @@ h3 {
 	float: left;
 }
 
+.happ-button {
+  padding: 9px 27px;
+  background: #FF5C50;
+  border: none;
+  display: block;
+  font-size: 1.3em;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 2px 1px 1px #E24B44;
+  text-align: center;
+  &:hover{
+    color: #fff;
+  }
+}
+
 //iPad
 
 @media screen and (min-width : 768px) and (max-width : 1024px) {
@@ -1508,7 +1531,7 @@ h3 {
 		width: auto;
 		right: 50%;
 		&:before {
-			content: url('/img/sliderRight.png');
+			content: url('../img/sliderRight.png');
 			cursor: pointer;
 		}
 	}
@@ -1535,7 +1558,7 @@ h3 {
 		width: auto; 
 		left: 50%;
 		&:before {
-			content: url('/img/sliderLeft.png');
+			content: url('../img/sliderLeft.png');
 			cursor: pointer;
 		}
 	}
@@ -1558,19 +1581,19 @@ h3 {
 	}
 
 	.mobile-search {
-		background: url("/img/searchIcon.png") 20px 10px/23px 26px no-repeat;
+		background: url("../img/searchIcon.png") 20px 10px/23px 26px no-repeat;
 		width: 20%;
 		height: 38px;
 		display: inline;
 	}
 
     .search-large {
-      background: url("/img/searchIcon.png") 15px 40px/23px 26px no-repeat;
+      background: url("../img/searchIcon.png") 15px 40px/23px 26px no-repeat;
     }
 
   //Drawer menu styles
   .mobile-menu {
-		background: url("/img/menuIcon.png") 18px 10px/26px 26px no-repeat;
+		background: url("../img/menuIcon.png") 18px 10px/26px 26px no-repeat;
 		width: 20%;
 		height: 38px;
 		display: inline;
@@ -1627,7 +1650,7 @@ h3 {
   }
 
   .facebookButton {
-    background: #3b5998 url("/img/facebookIcon.png") no-repeat 93% 13px/17.5px 35px;
+    background: #3b5998 url("../img/facebookIcon.png") no-repeat 93% 13px/17.5px 35px;
     font-size: .8em;
   }
 
@@ -1669,7 +1692,7 @@ h3 {
 	.left.prev {
 		height: 50px;
 		cursor: pointer;
-		background: url("/img/sliderLeft.png") no-repeat 0px 14px / 40px 22px;
+		background: url("../img/sliderLeft.png") no-repeat 0px 14px / 40px 22px;
 	}
 
 	.event-inner {
@@ -1679,8 +1702,7 @@ h3 {
 	.right.next {
 		height: 50px;
 		cursor: pointer;
-		background: url("/img/sliderRight.png") no-repeat 0px 14px / 40px 22px;
+		background: url("../img/sliderRight.png") no-repeat 0px 14px / 40px 22px;
 	}
-	
 
 }

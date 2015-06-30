@@ -12,15 +12,13 @@
  */
 
 
-Route::get('/', 'AdminEventController@listEvents');
-
-Route::get('harness', 'HarnessController@showHarness');
+Route::get('/', 'HomeController@index');
 
 App::missing(function($exception) {
-
-  return View::make('home');
-
+  return View::make('main');
 });
+
+Route::get('harness', 'HarnessController@showHarness');
 
 // Route::get('share/{id}', 'SharedEventController@sharedEventPosition' );
 
@@ -69,14 +67,10 @@ Route::resource('category', 'CategoryController');
 Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
 
 /** Admin **/
-Route::get('admin', 'AdminEventController@index');
 /** Admin Event **/
 Route::get('admin/event/list', 'HomeController@showWelcome');
 Route::post('admin/event/create', 'AdminEventController@create');
 Route::post('admin/event/update', 'AdminEventController@update');
 /** Admin Venue **/
-Route::get('admin/venue/list', 'AdminVenueController@listVenues');
 Route::post('admin/venue/create', 'AdminVenueController@create');
 Route::post('admin/venue/update', 'AdminVenueController@update');
-
-// Route::get("")
