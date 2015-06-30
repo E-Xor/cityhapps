@@ -1589,91 +1589,108 @@ h3.main-date {
   float: left;
 }
 
+/* line 1474, ../sass/style.scss */
+.happ-button {
+  padding: 9px 27px;
+  background: #FF5C50;
+  border: none;
+  display: block;
+  font-size: 1.3em;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 2px 1px 1px #E24B44;
+  text-align: center;
+}
+/* line 1484, ../sass/style.scss */
+.happ-button:hover {
+  color: #fff;
+}
+
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  /* line 1477, ../sass/style.scss */
+  /* line 1492, ../sass/style.scss */
   .user-info {
     width: 130px;
   }
 }
 @media screen and (max-width: 768px) {
-  /* line 1487, ../sass/style.scss */
+  /* line 1502, ../sass/style.scss */
   html, body {
     overflow: hidden;
   }
 
-  /* line 1492, ../sass/style.scss */
+  /* line 1507, ../sass/style.scss */
   .row {
     margin-right: 0;
     margin-left: 0;
   }
 
-  /* line 1497, ../sass/style.scss */
+  /* line 1512, ../sass/style.scss */
   .event {
     padding: 0;
   }
 
-  /* line 1501, ../sass/style.scss */
+  /* line 1516, ../sass/style.scss */
   .logo {
     margin: 20px 0;
   }
 
-  /* line 1505, ../sass/style.scss */
+  /* line 1520, ../sass/style.scss */
   .day-slider {
     padding: 0;
   }
 
-  /* line 1509, ../sass/style.scss */
+  /* line 1524, ../sass/style.scss */
   h4.main-date {
     font-size: 16px;
     margin-top: 17px;
   }
 
-  /* line 1514, ../sass/style.scss */
+  /* line 1529, ../sass/style.scss */
   .glyphicon.glyphicon-chevron-right {
     height: 50px;
     width: auto;
     right: 50%;
   }
-  /* line 1518, ../sass/style.scss */
+  /* line 1533, ../sass/style.scss */
   .glyphicon.glyphicon-chevron-right:before {
     content: url("../img/sliderRight.png");
     cursor: pointer;
   }
 
-  /* line 1524, ../sass/style.scss */
+  /* line 1539, ../sass/style.scss */
   .header-container {
     padding: 0;
   }
 
-  /* line 1528, ../sass/style.scss */
+  /* line 1543, ../sass/style.scss */
   .carousel-control.left {
     margin-left: 0;
   }
 
-  /* line 1532, ../sass/style.scss */
+  /* line 1547, ../sass/style.scss */
   .carousel-control.right {
     margin-right: 0;
   }
 
-  /* line 1536, ../sass/style.scss */
+  /* line 1551, ../sass/style.scss */
   .uppercase.center.white.wide-kerning {
     margin: 10px 0;
     padding: 10px;
   }
 
-  /* line 1541, ../sass/style.scss */
+  /* line 1556, ../sass/style.scss */
   .glyphicon.glyphicon-chevron-left {
     height: 50px;
     width: auto;
     left: 50%;
   }
-  /* line 1545, ../sass/style.scss */
+  /* line 1560, ../sass/style.scss */
   .glyphicon.glyphicon-chevron-left:before {
     content: url("../img/sliderLeft.png");
     cursor: pointer;
   }
 
-  /* line 1551, ../sass/style.scss */
+  /* line 1566, ../sass/style.scss */
   .time {
     float: left;
     margin: 10px 0;
@@ -1682,18 +1699,18 @@ h3.main-date {
     color: #fff;
   }
 
-  /* line 1559, ../sass/style.scss */
+  /* line 1574, ../sass/style.scss */
   .event-slider {
     margin-bottom: 52px;
   }
 
-  /* line 1563, ../sass/style.scss */
+  /* line 1578, ../sass/style.scss */
   .mobile-large-num {
     font-size: 3.2em;
     display: block;
   }
 
-  /* line 1568, ../sass/style.scss */
+  /* line 1583, ../sass/style.scss */
   .mobile-search {
     background: url("../img/searchIcon.png") 20px 10px/23px 26px no-repeat;
     width: 20%;
@@ -1701,12 +1718,12 @@ h3.main-date {
     display: inline;
   }
 
-  /* line 1575, ../sass/style.scss */
+  /* line 1590, ../sass/style.scss */
   .search-large {
     background: url("../img/searchIcon.png") 15px 40px/23px 26px no-repeat;
   }
 
-  /* line 1580, ../sass/style.scss */
+  /* line 1595, ../sass/style.scss */
   .mobile-menu {
     background: url("../img/menuIcon.png") 18px 10px/26px 26px no-repeat;
     width: 20%;
@@ -1714,7 +1731,7 @@ h3.main-date {
     display: inline;
   }
 
-  /* line 1588, ../sass/style.scss */
+  /* line 1603, ../sass/style.scss */
   .snap-drawer {
     background: #2E2526;
     right: 0;
@@ -1722,7 +1739,7 @@ h3.main-date {
     max-width: 265px;
   }
 
-  /* line 1596, ../sass/style.scss */
+  /* line 1611, ../sass/style.scss */
   .categoriesDropdown.drawer {
     width: 100%;
     position: absolute;
@@ -1734,26 +1751,26 @@ h3.main-date {
     left: 0;
   }
 
-  /* line 1610, ../sass/style.scss */
+  /* line 1625, ../sass/style.scss */
   li {
     list-style: none;
     padding: 15px 0;
   }
-  /* line 1613, ../sass/style.scss */
+  /* line 1628, ../sass/style.scss */
   li a {
     padding: 10px 5px;
   }
-  /* line 1615, ../sass/style.scss */
+  /* line 1630, ../sass/style.scss */
   li a.drawer-link {
     color: #fff;
   }
 
-  /* line 1621, ../sass/style.scss */
+  /* line 1636, ../sass/style.scss */
   .mobile-logo {
     width: 40%;
   }
 
-  /* line 1625, ../sass/style.scss */
+  /* line 1640, ../sass/style.scss */
   .mobile-event {
     width: 100%;
     background: #fff;
@@ -1762,18 +1779,18 @@ h3.main-date {
     float: left;
   }
 
-  /* line 1633, ../sass/style.scss */
+  /* line 1648, ../sass/style.scss */
   .register, .login {
     padding: 0 5px;
   }
 
-  /* line 1637, ../sass/style.scss */
+  /* line 1652, ../sass/style.scss */
   .facebookButton {
     background: #3b5998 url("../img/facebookIcon.png") no-repeat 93% 13px/17.5px 35px;
     font-size: .8em;
   }
 
-  /* line 1642, ../sass/style.scss */
+  /* line 1657, ../sass/style.scss */
   .mobile-event-image {
     background-size: cover;
     width: 30%;
@@ -1782,7 +1799,7 @@ h3.main-date {
     float: left;
   }
 
-  /* line 1650, ../sass/style.scss */
+  /* line 1665, ../sass/style.scss */
   .mobile-event-details {
     width: 56%;
     padding: 10px;
@@ -1790,7 +1807,7 @@ h3.main-date {
     float: left;
   }
 
-  /* line 1657, ../sass/style.scss */
+  /* line 1672, ../sass/style.scss */
   .scrollable {
     overflow: auto;
     -webkit-transition-property: top, bottom;
@@ -1802,30 +1819,30 @@ h3.main-date {
     -webkit-overflow-scrolling: touch;
   }
 
-  /* line 1668, ../sass/style.scss */
+  /* line 1683, ../sass/style.scss */
   .event-counter {
     padding: 10px 0;
   }
 
-  /* line 1672, ../sass/style.scss */
+  /* line 1687, ../sass/style.scss */
   .bg-image {
     background-size: auto 359px;
     background-position-x: -58px;
   }
 
-  /* line 1677, ../sass/style.scss */
+  /* line 1692, ../sass/style.scss */
   .left.prev {
     height: 50px;
     cursor: pointer;
     background: url("../img/sliderLeft.png") no-repeat 0px 14px/40px 22px;
   }
 
-  /* line 1683, ../sass/style.scss */
+  /* line 1698, ../sass/style.scss */
   .event-inner {
     height: 425px;
   }
 
-  /* line 1687, ../sass/style.scss */
+  /* line 1702, ../sass/style.scss */
   .right.next {
     height: 50px;
     cursor: pointer;

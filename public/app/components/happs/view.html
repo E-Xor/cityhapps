@@ -22,13 +22,29 @@
 				<div class="time">{{data.start_time | dateToISO | date: 'h:mm a'}} - {{data.end_time | dateToISO | date: 'h:mm a'}}</p>
 				<div class="venue"><a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a></div>
 				<label class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></label>
-				<a class="buy right" href="{{data.url}}" target="_blank">Book It Now</a>
+				<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="happ-description" ng-if="data.description" ng-bind-html="data.description"></div>
 			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-9">
+				More Like This:
+			</div>
+			<div class="col-md-3">
+				Share It:
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<a class="happ-button" href="{{ data.google_directions_link }}">Get Directions</a>
+			</div>
+		</div>
+		<div class="row">
+			<a href="{{ data.google_directions_link }}"><img class="col-md-12" src="{{ data.google_map_large }}" /></a>
 		</div>
 	</div>
 </div>

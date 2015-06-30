@@ -1471,6 +1471,21 @@ h3 {
 	float: left;
 }
 
+.happ-button {
+  padding: 9px 27px;
+  background: #FF5C50;
+  border: none;
+  display: block;
+  font-size: 1.3em;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 2px 1px 1px #E24B44;
+  text-align: center;
+  &:hover{
+    color: #fff;
+  }
+}
+
 //iPad
 
 @media screen and (min-width : 768px) and (max-width : 1024px) {
@@ -1689,6 +1704,5 @@ h3 {
 		cursor: pointer;
 		background: url("../img/sliderRight.png") no-repeat 0px 14px / 40px 22px;
 	}
-	
 
 }

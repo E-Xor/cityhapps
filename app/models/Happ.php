@@ -8,16 +8,17 @@ use Illuminate\Support\Facades\DB;
 
 class Happ extends Eloquent
 {
+  protected $table = 'happs';
   protected $guarded = array('id', 'create_at', 'updated_at');
-    /**
-     * @var int status codes for event states
-     */
+  protected $appends = array('google_directions_link', 'google_map_large');
+  
+  /**
+   * @var int status codes for event states
+   */
   static $STATUS_DRAFT = 0;
   static $STATUS_ACTIVE = 1;
   static $STATUS_CANCELLED = 2;
   static $STATUS_ARCHIVED = 3;
-
-  protected  $table = 'happs';
 
   public function users()
   {
@@ -377,20 +378,9 @@ class Happ extends Eloquent
   }
 
   public static function storeEvents() {
-
-    /*
-    Eventbrite::storeEvents();
-    echo("Eventbrite events stored.<br />");
-    Eventful::storeEvents();
-    echo("Eventful events stored.<br />");
-    Meetup::storeEvents();
-    echo("Meetup events stored.<br />");
-     */
-
     Happ::storeEventbriteEvents();
     Happ::storeEventfulEvents();
     Happ::storeMeetupEvents();
-
   }
 
   public static function storeEventbriteEvents() {
@@ -655,5 +645,15 @@ class Happ extends Eloquent
     }
 
     return $score >= $threshold;
+  }
+
+  public function getGoogleDirectionsLinkAttribute()
+  {
+    return 'https://www.google.com/maps/dir/Current+Location/' . $this->latitude . ',' . $this->longitude;
+  }
+
+  public function getGoogleMapLargeAttribute()
+  {
+    return 'http://maps.googleapis.com/maps/api/staticmap?center=' . $this->latitude . ',' . $this->longitude . '&zoom=13&scale=2&size=640x320&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:red%7Clabel:1%7C' . $this->latitude . ',' . $this->longitude;
   }
 }
