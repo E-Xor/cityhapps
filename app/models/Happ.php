@@ -15,10 +15,10 @@ class Happ extends Eloquent
   /**
    * @var int status codes for event states
    */
-  static $STATUS_DRAFT = 0;
-  static $STATUS_ACTIVE = 1;
-  static $STATUS_CANCELLED = 2;
-  static $STATUS_ARCHIVED = 3;
+  const STATUS_DRAFT = 0;
+  const STATUS_ACTIVE = 1;
+  const STATUS_CANCELLED = 2;
+  const STATUS_ARCHIVED = 3;
 
   public function users()
   {
@@ -61,41 +61,56 @@ class Happ extends Eloquent
     return Happ::where('event_date', '=', $date->format('Y-m-d'))->count();
   }
 
+  /**
+   *
+   */
   public static function clearStaleApi()
   {
-      $total_cancelled = 0;
-      $total_archived = 0;
-      try{
-          $source = array(
-            'eb'=> array('join_column' => 'eventbriteID', 'table' => 'eventbrite'),
-            'ef'=> array('join_column' => 'eventful_id', 'table' => 'eventful'),
-            'me'=> array('join_column' => 'meetupID', 'table' => 'meetup')
-          );
+    $total_cancelled = 0;
+    $total_archived = 0;
+    try {
 
-          foreach ($source as $alias => $eventVenueProvider) {
-              // grab count for each table;
-              $baseQuery = DB::table('happs');
-              if (DB::table($eventVenueProvider['table'])->count()) {
-                  $total_cancelled +=
-                  $baseQuery->leftJoin("{$eventVenueProvider['table']} AS {$alias}", function($join) use ($alias, $eventVenueProvider)
-                  {
-                      $join->on("{$alias}.{$eventVenueProvider['join_column']}", '=', self::table . '.source_id');
-                      $join->on('happs' . '.source', '=', DB::raw("'{$eventVenueProvider['table']}'"));
+      // Archive old events first
+      $total_archived += DB::table('happs')
+        ->orWhere(function($query) {
+          $query->whereNotNull('happs.end_time')
+            ->where('happs.end_time', '<', date('Y-m-d H:i:s'));
+        })
+        ->orWhere(function($query) {
+          $query->whereNull('happs.end_time')
+            ->where('happs.start_time', '<', date('Y-m-d H:i:s'));
+        })
+        ->update(array('status' => Happ::STATUS_ARCHIVED));
 
-                  })
-                    ->whereNull("{$alias}.id")
-                    //If the event is missing from its corresponding table, mark it as cancelled
-                    ->update(['status' => Happ::$STATUS_CANCELLED]);
-              }
-          }
+      $source = array(
+        'eb'=> array('join_column' => 'eventbriteID', 'table' => 'eventbrite'),
+        'ef'=> array('join_column' => 'eventful_id', 'table' => 'eventful'),
+        'me'=> array('join_column' => 'meetupID', 'table' => 'meetup')
+      );
 
-          //Now every event that is not Happ::$STATUS_CANCELLED will be archived
-          $total_archived += DB::table('happs')->where(self::table . '.end_time', '>', 'NOW()')->update(array('status' => Happ::$STATUS_ARCHIVED));
-      } catch (Exception $e) {
-            return array("error" => $e->getCode() . ":" . $e->getMessage());
+      // Loop through and mark any items that are 'active' but missing from the API table as cancelled
+      foreach ($source as $alias => $integration) {
+        // grab count for each table
+        $table = $integration['table'];
+        $column = $integration['join_column'];
+        // Check that there are records in the table before moving forward
+        if (DB::table($table)->count()) {
+          $total_cancelled += DB::table('happs')
+            ->leftJoin($table . ' AS ' . $alias, function($join) use ($alias, $column)
+            {
+              $join->on('happs.source_id', '=', $alias . '.' . $column);
+            })
+            ->where('happs.source', '=', $table)
+            ->where('happs.status', '=', Happ::STATUS_ACTIVE)
+            ->whereNull($alias . '.id')
+            ->update(['status' => Happ::STATUS_CANCELLED]);
+        }
       }
+    } catch (Exception $e) {
+      return array("error" => $e->getCode() . ": " . $e->getMessage());
+    }
 
-    return array("cancelled" => $total_cancelled, "archived" => $total_archived);
+    return array('cancelled' => $total_cancelled, 'archived' => $total_archived);
   }
 
   public static function selectEvents($eventParams) {
@@ -111,7 +126,7 @@ class Happ extends Eloquent
       ->venueName($eventParams['venueZip'])
       ->description($eventParams['description'])
       ->startTime($eventParams['startTime'])
-      ->status(Happ::$STATUS_ACTIVE)
+      ->status(Happ::STATUS_ACTIVE)
       ->dateRange($eventParams['startDate'], $eventParams['endDate'])
       ->imageRequired($eventParams['imageRequired'])
       ->eventSearch($eventParams['search'])
