@@ -756,6 +756,68 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
 }]);
 
 /* ***************************** */
+/* Venue Controller        */
+/* -- Start --                   */
+/* ***************************** */
+cityHapps.controller('venueController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
+    function($scope, $http, $routeParams, $cookies, $cookieStore) {
+
+        $scope.user = $cookies.user;
+
+        $http.get('/venues?id=' + $routeParams.id)
+            .success(function(data) {
+                if (data.events.length > 0)
+                    $scope.data = data.events[0];
+            });
+
+        $scope.vote = {};
+
+        if ($scope.user) {
+
+            $scope.simpleVoteEvent = function(event, action) {
+
+                var eventID = event.id;
+
+                console.log(event.vote);
+
+                var userID = $scope.user.id;
+                var upVote = event.vote.upVote;
+                var downVote = event.vote.downVote;
+
+                var eventVote = -1;
+
+                if (action == 'up') {
+                    event.vote.downVote = false;
+                    if (upVote == true) {
+                        eventVote = 1;
+                    }
+                } else { // Downvote changed
+                    event.vote.upVote = false;
+                    if (downVote == true) {
+                        eventVote = 0;
+                    }
+                }
+                $http({
+                    method: 'POST',
+                    url: '/userVenue',
+                    data: {
+                        'user_id' : userID,
+                        'venue_id' : eventID,
+                        'vote' : eventVote
+                    },
+                    headers: {'Content-Type': 'application/json'}
+                }).success(function(data) {
+                    if (!data) {
+                        console.log('No vote registered.');
+                    } else if (data) {
+                        console.log(data);
+                    }
+                });
+            };
+        }
+}]);
+
+/* ***************************** */
 /* Admin Event Controller        */
 /* -- Start --                   */
 /* ***************************** */
@@ -2074,6 +2136,10 @@ cityHapps.config(function($routeProvider, $locationProvider){
         .when("/happ/:id", {
             controller: "happController",
             templateUrl: "app/components/happs/view.html"
+        })
+        .when("/venue/:id", {
+            controller: "venueController",
+            templateUrl: "app/components/venues/view.html"
         })
         .when("/share/:id", {
             controller: "dayController",
