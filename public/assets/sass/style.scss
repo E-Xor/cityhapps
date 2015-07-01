@@ -288,7 +288,7 @@ input.main-search {
 //     margin: 0; 
 // }
 
-.happ-single {
+.happ-single, .venue-single {
   background: white;
   padding: 30px;
 }
@@ -1481,7 +1481,7 @@ h3 {
   font-weight: 700;
   text-shadow: 2px 1px 1px #E24B44;
   text-align: center;
-  &:hover{
+  &:hover, &:visited, &:active{
     color: #fff;
   }
 }

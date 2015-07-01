@@ -766,8 +766,8 @@ cityHapps.controller('venueController', ['$scope', '$http', '$routeParams', '$co
 
         $http.get('/venues?id=' + $routeParams.id)
             .success(function(data) {
-                if (data.events.length > 0)
-                    $scope.data = data.events[0];
+                if (data.venues.length > 0)
+                    $scope.data = data.venues[0];
             });
 
         $scope.vote = {};

@@ -2,9 +2,9 @@
 
 class Venue extends Eloquent
 {
-  protected $guarded = array('id', 'create_at', 'updated_at');
-
   protected $table = 'venues';
+  protected $guarded = array('id', 'create_at', 'updated_at');
+  protected $appends = array('google_directions_link', 'google_map_large');
 
   /**
    *
@@ -177,5 +177,15 @@ class Venue extends Eloquent
         }
       }
     );
+  }
+
+  public function getGoogleDirectionsLinkAttribute()
+  {
+    return 'https://www.google.com/maps/dir/Current+Location/' . $this->lat . ',' . $this->lng;
+  }
+
+  public function getGoogleMapLargeAttribute()
+  {
+    return 'http://maps.googleapis.com/maps/api/staticmap?center=' . $this->lat . ',' . $this->lng . '&zoom=13&scale=2&size=640x320&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:red%7Clabel:1%7C' . $this->lat . ',' . $this->lng;
   }
 }

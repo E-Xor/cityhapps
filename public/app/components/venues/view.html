@@ -15,14 +15,12 @@
 				<div ng-repeat="category in data.categories" class="inline">
 					<span class="happ-category">{{category.name}}</span>
 				</div>
-				<div class="happ-date">{{data.start_time | dateToISO | date: 'MMM d'}}</div>
 			</div>
 			<div class="col-md-5">
-				<h3 class="dark bold">{{data.event_name}}</h3>
-				<div class="time">{{data.start_time | dateToISO | date: 'h:mm a'}} - {{data.end_time | dateToISO | date: 'h:mm a'}}</p>
-				<div class="venue"><a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a></div>
+				<h3 class="dark bold">{{data.name}}</h3>
+				<div class="venue-address">{{data.address_1}} {{data.address_2}} {{data.address_3}}<br>{{data.city}}, {{data.state}} {{data.postal_code}}<br>{{data.country}}</div>
 				<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
-				<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
+				<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
 			</div>
 		</div>
 		<div class="row">
