@@ -44,14 +44,14 @@ class StaleApiData extends Command {
     // This finds the url's that are in events but not in any of the other tables! then deletes them
 
     $legends = [
-      "tec" => "Total events cancelled",
-      "tea" => "Total events archived",
+      "cancelled" => "Total events cancelled",
+      "archived" => "Total events archived",
       "error" => "An error has occurred"
     ];
 
     $info = '';
     foreach(Happ::clearStaleApi() as $legend_key => $record) {
-      $info .= sprintf("%s: %d\n",$legends[$legend_key], $record);
+      $info .= sprintf("%s: %d\n", $legends[$legend_key], $record);
     }
 
     $this->info($info);

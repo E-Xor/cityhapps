@@ -276,7 +276,7 @@ input.main-search {
 }
 
 /* line 291, ../sass/style.scss */
-.happ-single {
+.happ-single, .venue-single {
   background: white;
   padding: 30px;
 }
@@ -1602,7 +1602,7 @@ h3.main-date {
   text-align: center;
 }
 /* line 1484, ../sass/style.scss */
-.happ-button:hover {
+.happ-button:hover, .happ-button:visited, .happ-button:active {
   color: #fff;
 }
 
