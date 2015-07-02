@@ -6,7 +6,8 @@
 		"way/generators": "2.*",
 		"illuminate/html": "~4.0",
 		"guzzlehttp/guzzle": "~4.0",
-		"nesbot/Carbon": "1.*"
+		"nesbot/Carbon": "1.*",
+        "artdarek/oauth-4-laravel": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

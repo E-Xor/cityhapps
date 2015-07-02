@@ -26,6 +26,7 @@ class CreateMeetupVenuesTable extends Migration {
             $table->string('phone')->nullable();
             $table->string('rating')->nullable();
             $table->string('lon')->nullable();
+            $table->string('rating_count')->nullable();
             $table->string('name')->nullable();
             $table->string('state')->nullable();
             $table->string('lat')->nullable();

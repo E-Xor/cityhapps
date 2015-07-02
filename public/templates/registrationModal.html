@@ -29,13 +29,22 @@
 						
 						<input type="password" placeholder="Re-enter Password" name="password2" required ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "class="registerPassword2 block" ng-model="formData.password2" ng-model-onblur>
 
-						<span ng-show="registerForm.password2.$error.validator" class="block">Passwords do not match!</span>
-			        
+						<span ng-show="register.password2.$error.validator" class="block">Passwords do not match!</span>
+                        <!--email - {{register.email.$error}}<br />-->
+                        <!--pass2 - {{register.password2.$error}}<br />-->
+                        <!--pass1 - {{register.password.$error}}<br />-->
 
 			        	<!-- ng-click="categoriesOpen('md'); cancel(); -->
 			        	<!-- ng-disabled="register.$invalid" -->
-				        <button type="button" class="create-account center" ng-click="categoriesOpen('md'); cancel(); getCategories()" >Next</button>
-				        <h5 class="center red margin pointer" ng-click="cancel(); loginOpen('md')">Already have an account?</h5>
+				        <button type="button" class="create-account center" ng-click="categoriesOpen('md'); cancel(); getCategories()"
+                         ng-disabled="
+                         register.email.$error.required || register.email.$error.email || register.email.$error.ngRemoteValidate ||
+                         register.password.$error.required || register.password.$error.minlength ||
+                         register.password2.$error.required || register.password2.$error.validator">
+                            Next
+                        </button>
+
+                        <h5 class="center red margin pointer" ng-click="cancel(); loginOpen('md')">Already have an account?</h5>
 			      </div>  
 			   </form>
 		      <!-- {{formData}} -->

@@ -1292,7 +1292,7 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 			$scope.voteEvent = function(event) {
 				$modal.open({
 					templateUrl: "templates/registrationModal.html",
-					controller: 'modalInstanceController',
+					controller: 'modalInstanceController'
 				});
 			}
 		}
@@ -1304,6 +1304,7 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 
 		$scope.formData = {
 			email : '',
+			username : '',
 			password: ''
 		};
 
@@ -1453,6 +1454,15 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
             });
         };
 
+        $scope.resetPasswordOpen = function(size) {
+
+            var modalInstance = $modal.open({
+                templateUrl: "templates/resetPasswordModal.html",
+                controller: 'modalInstanceController',
+                size: size
+            });
+        };
+
 
       // $scope.$on('Facebook:statusChange', function(ev, data) {
       //   console.log('Status: ', data);
@@ -1482,7 +1492,8 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 
 	var credentials = {
 		"email" :  $scope.formData.email,
-		"password" : $scope.formData.password
+		"password" : $scope.formData.password,
+		"username" : $scope.formData.username
 	};
 
 
@@ -1598,6 +1609,47 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal
 
 	};
 
+    auth.userExist = function(email, callback ) {
+        $http({
+            method: "POST",
+            url: '/user/exist',
+            data: { "email" : email },
+            headers : {"Content-Type": "application/json"}
+        }).success(function(data){
+
+            console.log(data);
+            if(typeof callback  === 'function') {
+                callback(data);
+            }
+
+        });
+
+    };
+
+    auth.resetPassword = function (email) {
+
+        $http
+            .post('/user/reset-password', email)
+            .success(function (res) {
+                console.log(res);
+            })
+            .error(function (res) {
+                console.log(res);
+            });
+    };
+
+    auth.editUserData = function (data) {
+
+        $http
+            .post('/user/edit', data)
+            .success(function (res) {
+                console.log(res);
+            })
+            .error(function (res) {
+                console.log(res);
+            });
+    };
+
 	return auth;
 
 
@@ -1631,6 +1683,49 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 		});
 	};
 
+    $scope.editOpen = function(size) {
+
+        var modalInstance = $modal.open({
+            templateUrl: "templates/editModal.html",
+            controller: 'modalInstanceController',
+            size: size
+        });
+    };
+
+    $scope.getUserData = function() {
+        var email = document.querySelector('.user-email').innerHTML;
+        console.log(email);
+        this.formData.email = email;
+
+        var data = {
+            "email" :  email
+        };
+
+        this.getUsername(data);
+    };
+
+    $scope.getUsername = function (data) {
+        $http
+            .post('/user/username', data)
+            .success(function (res) {
+                console.log(res);
+                $scope.formData.username = res.username;
+            })
+            .error(function (res) {
+                console.log('Errors');
+                console.log(res);
+            });
+    };
+
+    $scope.resetPasswordOpen = function(size) {
+
+        var modalInstance = $modal.open({
+            templateUrl: "templates/resetPasswordModal.html",
+            controller: 'modalInstanceController',
+            size: size
+        });
+    };
+
 	$scope.categoriesOpen = function(size) {
 
 		var modalInstance = $modal.open({
@@ -1652,6 +1747,19 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
 	$scope.logoutUser = function() {
 		authFactory.logoutUser();
 	};
+
+    $scope.userExist = function() {
+        authFactory.userExist();
+    };
+
+
+    $scope.resetPassword = function (data) {
+        authFactory.resetPassword($scope.formData);
+    };
+
+    $scope.editUserData = function () {
+        authFactory.editUserData($scope.formData);
+    };
 
 });
 
