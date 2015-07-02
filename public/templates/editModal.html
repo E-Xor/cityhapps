@@ -12,6 +12,8 @@
             <div class="editForm" ng-controller="modalController">
                 <input type="email" readonly ng-value="formData.email" name="email" class="registerEmail block">
 
+                <input type="text" placeholder="Your Username" ng-model="formData.username" value="{{formData.username}}" ng-model-onblur name="username" class="registerEmail block">
+
                 <input type="password" placeholder="New password" name="password" ng-minlength='8' required
                        class="registerPassword block" ng-model="formData.password" ng-model-onblur>
                 <span ng-if="edit.password.$error.minlength" style="text-align: center;">Please use a minumum of 8 characters.</span>

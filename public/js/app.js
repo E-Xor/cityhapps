@@ -1056,6 +1056,7 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 
 		$scope.formData = {
 			email : '',
+			username : '',
 			password: ''
 		};
 
@@ -1243,7 +1244,8 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 
 	var credentials = {
 		"email" :  $scope.formData.email,
-		"password" : $scope.formData.password
+		"password" : $scope.formData.password,
+		"username" : $scope.formData.username
 	};
 
 
@@ -1384,7 +1386,6 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal
                 console.log(res);
             })
             .error(function (res) {
-//                $rootScope.loginError = "There was a problem with email";
                 console.log(res);
             });
     };
@@ -1443,10 +1444,29 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
         });
     };
 
-    $scope.getUserEmail = function() {
+    $scope.getUserData = function() {
         var email = document.querySelector('.user-email').innerHTML;
         console.log(email);
         this.formData.email = email;
+
+        var data = {
+            "email" :  email
+        };
+
+        this.getUsername(data);
+    };
+
+    $scope.getUsername = function (data) {
+        $http
+            .post('/user/username', data)
+            .success(function (res) {
+                console.log(res);
+                $scope.formData.username = res.username;
+            })
+            .error(function (res) {
+                console.log('Errors');
+                console.log(res);
+            });
     };
 
     $scope.resetPasswordOpen = function(size) {

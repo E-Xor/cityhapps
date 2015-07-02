@@ -235,6 +235,20 @@ class UserController extends \BaseController {
 
     }
 
+    public function getUserName() {
+
+        $data = Input::only('email');
+        $email = $data['email'];
+
+        $user = User::find((int) Auth::user()->id);
+
+        $userName = $user->user_name;
+
+        return json_encode(['username' => $userName]);
+
+    }
+
+
 
 
 	/**
@@ -248,27 +262,41 @@ class UserController extends \BaseController {
 		//
 	}
 
-	public function editUser()
-	{
-        $formData = Input::only('email', 'password');
+    /**
+     * Update user data
+     *
+     * @return string
+     */
+    public function editUser()
+    {
+        $formData = Input::only('email', 'password', 'username');
 
-        $email = $formData['email'];
-        $password = $formData['password'];
+        $email = trim($formData['email']);
+        $password = trim($formData['password']);
+        $username = trim($formData['username']);
 
-        $user = User::where('email', $email)->getModel();
+        $userId = DB::table('users')->where('email', $email)->pluck('id');
+        $user = User::find((int) $userId);
 
-        if(!is_null($user)) {
+            try {
+                if (!is_null($user)) {
 
-            $user->password = Hash::make($password);
+                    $user->password = Hash::make($password);
+                    $user->user_name = $username;
 
-            $user->update();
+                    $user->save();
 
-            return json_encode(array('status' => 'ok', 'message' => 'Successfully'));
-        }
+                    return json_encode(array('status' => 'ok', 'message' => 'Successfully'));
+                }
 
-        return json_encode(array('status' => 'error', 'message' => 'Have errors'));
+                return json_encode(array('status' => 'error', 'message' => 'some errors'));
 
-	}
+            } catch (Exception $e) {
+
+                return json_encode(array('status' => 'error', 'message' => $e->getMessage()));
+            }
+
+    }
 
 
 	/**
