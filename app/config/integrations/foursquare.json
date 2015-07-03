@@ -1,0 +1,42 @@
+{
+    "integration": {
+        "name": "Foursquare",
+        "docs": "https://developer.foursquare.com/docs/",
+        "url": "https://api.foursquare.com",
+        "version": "v2",
+        "global_parameters": {
+            "client_id": "DKQPXJYJZD1RMUO10QUD13DIWY40GSC0MZ4TARMK05TOW3O1",
+            "client_secret": "QNNVAPLASZQLS12SFJHFCYL1LYO50K5DM4QON2SSDTL0GOUL",
+            "v": "20150601"
+        },
+        "endpoints": {
+            "endpoint": {
+                "type": "venues",
+                "path": "venues/explore",
+                "parameters": {
+                    "ll": "",
+                    "near": "Atlanta,GA",
+                    "llAcc": "",
+                    "alt": "",
+                    "altAcc": "",
+                    "radius": "25000",
+                    "section": "",
+                    "query": "",
+                    "limit": "ARRAY_DEFINED",
+                    "offset": "ARRAY_DEFINED",
+                    "novelty": "",
+                    "friendVisits": "",
+                    "time": "",
+                    "day": "",
+                    "venuePhotos": "",
+                    "lastVenue": "",
+                    "sortByDistance": "",
+                    "price": "",
+                    "saved": "",
+                    "specials": "",
+                    "openNow": ""
+                }
+            }
+        }
+    }
+}

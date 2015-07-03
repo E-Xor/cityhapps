@@ -1,0 +1,98 @@
+
+  <style>
+    @import url(//fonts.googleapis.com/css?family=Lato:700);
+    html, .bg-image { background:#fff;}
+    .form_container {
+    width:675px;
+    margin:50px auto;
+    }
+    .form_container label {
+    display:block;
+    }
+    .form_container input.full { width:100%; }
+    .form_container input, .form_container select, .form_container textarea {
+      border: 1px solid #ccc;
+      -moz-border-radius: 6px;
+      -webkit-border-radius: 6px;
+      border-radius: 6px;
+      padding: 4px 7px;
+      outline: 0;
+      margin:5px 0;
+    }
+    .form_container input { -webkit-appearance: none;}
+    .form_container select { background: #fff;height: 31px;}
+    .form_container input:focus {
+      border-color: #339933;
+    }
+    .form_container input[type='submit'] {
+    background: #87cefa;
+    color:#fff;
+    }
+  </style>
+        <div class="form_container">
+        <div ng-if="success">
+        <h1>
+          Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> venue <b>{{success.venue_name}}</b>
+          <br/>
+          <a href='/admin/venue/add'>Create New Venue</a>
+        </h1>
+        </div>
+        <form method="post" ng-if="!success">
+          <fieldset>
+          <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
+          <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
+
+          <div class="red center margin20" ng-if="error">{{error}}</div>
+            <div>
+              <label for="title">Venue Name <span class="red center margin20">* <span ng-if="titleError">You must have a venue name</span></span></label>
+              <input type="hidden" id="venue_id" name="venue_id" ng-model="formData.venue_id"/>
+              <input type="text" class="full" id="venue_name" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
+            </div>
+
+            <div>
+              <label for="event_url">Venue URL</label>
+              <input type="text" id="venue_url" class="full" name="venue_url" value="{{venueData.venues[0].url}}"" placeholder="http://www.event.com" ng-model="formData.venue_url" />
+            </div>
+
+            <div>
+              <label for="venue_image_url">Venue Image URL</label>
+              <input type="text" id="venue_image_url" class="full" name="venue_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.venue_image_url" />
+            </div>
+
+            <div>
+              <label for="phone">Phone Number</label>
+              <input type="text" id="phone" class="full" name="phone" value="" ng-model="formData.phone" placeholder="1-800-244-4232" />
+            </div>
+
+            <div>
+              <label for="street_address" style="display:inline-block;width:331px;">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
+              <label for="hours" style="display:inline-block;width:155px;">Hours of Operation</label>
+
+              <input type="text" id="street_address" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
+              <input type="text" id="hours" name="hours" value="" ng-model="formData.hours" style="width:341px;" placeholder="6am to 7pm" />
+            </div>
+
+            <div>
+              <label for="city" style="display:inline-block;width:244px;">City</label>
+              <label for="state" style="display:inline-block;width:261px;">State</label>
+              <label for="zip_code" style="display:inline-block;width:162px;">Zip Code</label>
+
+              <input type="text" id="city" name="city" value="" ng-model="formData.city" placeholder="City" style="width:222px;margin-right:20px;"/>
+              <select id="state" name="state" placeholder="State" ng-model="formData.state" style="width:245px;margin-right:20px;">
+                <option>Georgia</option>
+              </select>
+              <input type="text" id="zip_code" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" style="width:160px;" />
+            </div>
+
+            <div>
+              <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
+              <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
+            </div>
+
+            <div>
+
+            <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
+
+        </fieldset>
+        </form>
+        <script src="/js/jquery.datetimepicker.js"></script>

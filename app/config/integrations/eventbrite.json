@@ -37,7 +37,8 @@
                     "date_created.keyword": "",
                     "date_modified.range_start": "",
                     "date_modified.range_end": "",
-                    "date_modified.keyword": ""
+                    "date_modified.keyword": "",
+                    "expand" : "venue,category"
                 }
             }
         }

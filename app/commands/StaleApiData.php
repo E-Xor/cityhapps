@@ -39,10 +39,21 @@ class StaleApiData extends Command {
   {
     // output some log info
     $this->line("Start time: " . (string)date('l jS \of F Y h:i:s A'));
-    $this->line("Truncating all events that are not in API Tables (Eventbrite, Eventful, Meetup) and events that are in the past");
+    $this->line("Updating all events that are not in API Tables (Eventbrite, Eventful, Meetup) and events that are in the past");
 
     // This finds the url's that are in events but not in any of the other tables! then deletes them
-    $query = EventRecord::clearStaleApi();
-    $this->info("Deleted " . $query . " row(s) from events table");
+
+    $legends = [
+      "cancelled" => "Total events cancelled",
+      "archived" => "Total events archived",
+      "error" => "An error has occurred"
+    ];
+
+    $info = '';
+    foreach(Happ::clearStaleApi() as $legend_key => $record) {
+      $info .= sprintf("%s: %d\n", $legends[$legend_key], $record);
+    }
+
+    $this->info($info);
   }
 }

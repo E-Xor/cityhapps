@@ -80,6 +80,7 @@
                                                             <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
                                                         </div>
                                                     </div>
+                                                <a class="red logout" ng-click="editOpen('md') close()">Edit</a>
                                                 <a class="red logout" ng-click="logoutUser()">Sign out</a>
                                             </div>
                                         </div>
@@ -99,6 +100,8 @@
         <p><a href='/admin/event/list'>Event Listing</a></p>
         <p><a href='#'>Filter Events</a></p>
         <p><a href='#'>Delete Event</a></p>
+        <p><a href='/admin/venue/add'>Add Venue</a></p>
+        <p><a href='/admin/venue/list'>Venue Listing</a></p>
       </div>
 			<!-- <div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div> -->
 		</div>

@@ -12,15 +12,13 @@
  */
 
 
-Route::get('/', 'AdminEventController@listEvents');
-
-Route::get('harness', 'HarnessController@showHarness');
+Route::get('/', 'HomeController@index');
 
 App::missing(function($exception) {
-
-  return View::make('home');
-
+  return View::make('main');
 });
+
+Route::get('harness', 'HarnessController@showHarness');
 
 // Route::get('share/{id}', 'SharedEventController@sharedEventPosition' );
 
@@ -32,6 +30,7 @@ Route::resource('sharedEvent', 'SharedEventController');
 
 
 Route::get('events', 'EventController@events');
+Route::get('venues', 'VenueController@venues');
 Route::get('recommendedEvents', 'EventController@recommendedEvents');
 Route::get('eventsPaged', 'EventController@eventsPaged');
 Route::post('dayEvents', 'EventController@dayEvents');
@@ -59,6 +58,10 @@ Route::get('auth/logout', 'SessionsController@logout');
 Route::resource('user', 'UserController');
 
 Route::post('user/check', 'UserController@check');
+Route::post('user/exist', 'UserController@exist');
+Route::post('user/reset-password', 'UserController@resetPassword');
+Route::post('user/getData', 'UserController@getUserData');
+Route::post('user/edit', 'UserController@editUser');
 
 Route::post('updateUserCategories', 'UserController@updateCategories');
 Route::get('getUserCategories', 'UserController@getUserCategories');
@@ -67,17 +70,11 @@ Route::resource('category', 'CategoryController');
 
 Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
 
-Route::get('admin', function() {
-
-  //old admin return
-  Auth::user();
-});
-
-Route::get('admin/event', 'AdminEventController@index');
+/** Admin **/
+/** Admin Event **/
 Route::get('admin/event/list', 'HomeController@showWelcome');
-Route::get('admin/event/add', 'AdminEventController@add');
 Route::post('admin/event/create', 'AdminEventController@create');
-
-
-
-// Route::get("")
+Route::post('admin/event/update', 'AdminEventController@update');
+/** Admin Venue **/
+Route::post('admin/venue/create', 'AdminVenueController@create');
+Route::post('admin/venue/update', 'AdminVenueController@update');

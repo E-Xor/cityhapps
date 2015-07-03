@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Auth\Reminders\RemindableTrait;
+use Illuminate\Auth\Reminders\RemindableInterface;
+
 class UserController extends \BaseController {
 
 	/**
@@ -173,8 +176,76 @@ class UserController extends \BaseController {
 			return;
 		}
 
-
 	}
+
+    public function exist()
+    {
+        //Add Laravel email validation check
+
+        $email = Input::only('email');
+        $rules = array('email' => 'unique:users,email');
+
+        $userID = DB::table('users')->where('email', $email)->pluck('id');
+
+        $validator = Validator::make($email, $rules);
+
+        if ($validator->fails()) {
+
+            echo json_encode(array('isValid' => true,
+                'value' => 'nice'));
+            return;
+
+        } else {
+
+            echo json_encode(array('isValid' => false,
+                'id' => $userID ));
+            return;
+
+        }
+
+    }
+
+    public function resetPassword() {
+
+        $email = Input::only('email')['email'];
+
+        $user = User::where('email', $email)->first();
+
+        $password = substr(sha1($email . time()), 0, 12);
+
+        if(!is_null($user)) {
+
+            $user->password = Hash::make($password);
+
+            $user->save();
+
+            Mail::send('emails.reset', array('password' => $password), function($message) use ($email){
+
+                $message->from('team@cityhapps.com', 'CityHapps');
+
+                $message->to($email, $email)->subject('Reset Password on CityHapps!');
+
+            });
+
+            return json_encode(array('status' => 'ok', 'message' => 'Successfully'));
+        }
+
+        return json_encode(array('status' => 'error', 'message' => 'Have errors'));
+
+
+    }
+
+    public function getUserData()
+    {
+        $user = User::find((int) Auth::user()->id);
+
+        $userName = $user->user_name;
+        $userEmail = $user->email;
+
+        return json_encode(['username' => $userName, 'email' => $userEmail]);
+
+    }
+
 
 
 
@@ -189,17 +260,41 @@ class UserController extends \BaseController {
 		//
 	}
 
+    /**
+     * Update user data
+     *
+     * @return string
+     */
+    public function editUser()
+    {
+        $formData = Input::only('email', 'password', 'username');
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+        $email = trim($formData['email']);
+        $password = trim($formData['password']);
+        $username = trim($formData['username']);
+
+        $userId = DB::table('users')->where('email', $email)->pluck('id');
+        $user = User::find((int) $userId);
+
+            try {
+                if (!is_null($user)) {
+
+                    $user->password = Hash::make($password);
+                    $user->user_name = $username;
+
+                    $user->save();
+
+                    return json_encode(array('status' => 'ok', 'message' => 'Successfully'));
+                }
+
+                return json_encode(array('status' => 'error', 'message' => 'some errors'));
+
+            } catch (Exception $e) {
+
+                return json_encode(array('status' => 'error', 'message' => $e->getMessage()));
+            }
+
+    }
 
 
 	/**

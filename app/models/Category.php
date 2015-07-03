@@ -34,7 +34,7 @@ class Category extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function events()
 	{
-		return $this->belongsToMany('EventRecord', 'event_category', 'category_id', 'event_id');
+		return $this->belongsToMany('Happ', 'event_category', 'category_id', 'event_id');
 	}
 
 }

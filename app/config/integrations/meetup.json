@@ -33,6 +33,25 @@
                     "topic": "",
                     "zip": ""
                 }
+            },
+            "endpoint2": {
+                "type": "venues",
+                "path": "open_venues.json",
+                "parameters": {
+                    "city": "atlanta",
+                    "country": "US",
+                    "fields": "",
+                    "group_urlname": "",
+                    "lat": "",
+                    "lon": "",
+                    "radius": "",
+                    "state": "GA",
+                    "text": "",
+                    "zip": ""
+
+
+
+                }
             }
         }
     }

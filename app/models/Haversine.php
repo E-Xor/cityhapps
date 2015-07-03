@@ -19,7 +19,7 @@
          * @access  public
          * @var     string
          */
-        protected $table = 'events';
+        protected  $table = 'happs';
         
         public function __construct()
         {
@@ -73,7 +73,7 @@
                         $lat
                        );
 
-            $data = DB::table('events')
+            $data = DB::table('happs')
                 ->select( DB::raw( implode( ',' ,  $fields ) . ',' .  $distance_select  ) )
                 ->where('start_time', ">=", Carbon::now())
                 ->having( 'distance', '<=', $max_distance )

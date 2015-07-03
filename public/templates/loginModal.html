@@ -14,14 +14,14 @@
                   <!-- <input type="email" placeholder="speedTest" class="registerEmail block" > -->
 
                   <input type="email" placeholder="Email" class="registerEmail block" ng-model="formData.email" ng-model-onblur>
-                  <input type="password" placeholder="Password" class="registerPassword block" autocorrect="off" ng-model="formData.password" ng-model-onblur>
+                  <input type="password" placeholder="Password" class="registerPassword block" autocorrect="off" ng-model="formData.password">
                   <!-- <input type="password" placeholder="password" class="registerPassword left" ng-model="formData.password2"> -->
                   <div class="margin20 center">
-                      <a class="red italic forgot" href="#">Forgot Password?</a>
+                      <p class="red pointer" ng-click="resetPasswordOpen('md'); cancel()">Forgot Password?</p>
                   </div>
 
                   <div>
-                      <button type="submit" class="create-account center" ng-click="loginUser(formData)">Sign In</button>
+                      <button type="submit" class="create-account center" ng-click="loginUser(formData);">Sign In</button>
                   </div>
 
                   <div class="margin20 center">

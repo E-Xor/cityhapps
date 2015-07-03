@@ -11,7 +11,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	// public $timestamps = false;
 
-	protected $fillable = ['email', 'username', 'password'];
+	protected $fillable = ['email', 'user_name', 'password'];
 
 	/**
 	 * The database table used by the model.
@@ -27,6 +27,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+    /**
+     *
+     * @var array
+     */
+    protected $guarded = array('id');
+
 	public function categories()
 	{
 		return $this->belongsToMany('Category', 'user_categories', 'user_id', 'category_id');
@@ -34,7 +40,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function events()
 	{
-		return $this->belongsToMany('EventRecord', 'user_event', 'user_id', 'event_id');
+		return $this->belongsToMany('Happ', 'user_event', 'user_id', 'event_id');
 	}
 
 }
