@@ -75,20 +75,20 @@
                                             <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
                                             <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
                                         </div>
-                                        <div ng-cloak ng-show="user">
+                                        <div ng-cloak ng-show="user" ng-init="getUserData();">
                                             <div class="user-info">
                                                 <h5 class="red italic inline accountHelp" ng-click="helpFade()">help</h5>
-                                                    <div ng-click="categoryToggle()"> {{user.email}} </div>
+                                                    <div ng-click="categoryToggle()"> {{formData.email}} </div>
                                                     <div class="categoriesDropdownUser">
                                                         <div class="toggle-controls">
-                                                            <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
+                                                            <div class="right red uppercase bold pointer" ng-click="categoryToggle(); updateUserCategories();">Close</div>
                                                             <div class="left red uppercase bold pointer">Edit your categories here</div>
                                                         </div>
                                                         <div ng-repeat="category in categories">
                                                             <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
                                                         </div>
                                                     </div>
-                                                <a class="red logout" ng-click="editOpen('md') close()">Edit</a>
+                                                <a class="red logout" ng-click="editOpen('md'); close();">Edit</a>
                                                 <a class="red logout" ng-click="logoutUser()">Sign out</a>
                                             </div>
                                         </div>

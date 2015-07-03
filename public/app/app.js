@@ -1142,7 +1142,8 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 
                     $scope.categories = data;
 
-                    var user = $cookies.user;
+                    var user = localStorage.user;
+                    user = JSON.parse(user);
                     params = "?id=" + user.id;
 
                     getUserCategories.params(params).success(function(data){
@@ -1496,8 +1497,6 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 		"username" : $scope.formData.username
 	};
 
-
-
 	$scope.processForm = function(formData) {
 		$http({
 			method: 'POST',
@@ -1693,23 +1692,12 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
     };
 
     $scope.getUserData = function() {
-        var email = document.querySelector('.user-email').innerHTML;
-        console.log(email);
-        this.formData.email = email;
-
-        var data = {
-            "email" :  email
-        };
-
-        this.getUsername(data);
-    };
-
-    $scope.getUsername = function (data) {
         $http
-            .post('/user/username', data)
+            .post('/user/getData')
             .success(function (res) {
                 console.log(res);
                 $scope.formData.username = res.username;
+                $scope.formData.email = res.email;
             })
             .error(function (res) {
                 console.log('Errors');
