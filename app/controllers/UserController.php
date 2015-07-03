@@ -235,16 +235,14 @@ class UserController extends \BaseController {
 
     }
 
-    public function getUserName() {
-
-        $data = Input::only('email');
-        $email = $data['email'];
-
+    public function getUserData()
+    {
         $user = User::find((int) Auth::user()->id);
 
         $userName = $user->user_name;
+        $userEmail = $user->email;
 
-        return json_encode(['username' => $userName]);
+        return json_encode(['username' => $userName, 'email' => $userEmail]);
 
     }
 
