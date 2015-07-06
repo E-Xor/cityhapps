@@ -1600,6 +1600,8 @@ h3.main-date {
   font-weight: 700;
   text-shadow: 2px 1px 1px #E24B44;
   text-align: center;
+
+  height: 43px;
 }
 /* line 1484, ../sass/style.scss */
 .happ-button:hover {
@@ -1849,3 +1851,78 @@ h3.main-date {
     background: url("../img/sliderRight.png") no-repeat 0px 14px/40px 22px;
   }
 }
+
+/* New CSS JM*/
+.inline.ng-scope {
+  display: block;
+  color: #ffffff;
+  background-color: #FFA500;
+  width: 12em;
+  height: 2em;
+  text-align: center;
+  float: left;
+  margin-top: 20px;
+  margin-left: -15px;
+}
+}
+
+.happ-description.ng-binding.ng-scope {
+
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3%;
+  text-align: justify;
+  float: left;
+  font-family: 'myriad pro regular';
+  
+}
+
+.happ-date.ng-binding {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-top: solid #D9433F 1px;
+  position: absolute;
+  margin-top: 119px;
+  width: 100%;
+  margin-left: -15px;
+}
+
+a.ng-pristine.ng-untouched.ng-valid {
+  padding: 9px 27px;
+  display: block;
+  color: #E24B44;
+  border: solid #E24B44 1px;
+  float: left ;
+  font-size: 1.3em;
+  height: 43px;
+  text-align: center;
+  width: 50%;
+}
+
+.buttons {
+	margin-top: 50px;
+}
+
+.buttons .happ-button {
+   
+   width: 50%;
+	
+}
+a.ng-binding {
+  text-decoration: none;
+  color: #000;
+}
+
+.happ-description.ng-binding.ng-scope {
+  padding: 1%;
+}
+
+.col-md-9 {
+  width: 75%;
+  padding-left: 2%;
+  padding-bottom: 2%;
+}
+
+}
+
