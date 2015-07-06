@@ -45,23 +45,30 @@ class Eventbrite extends Integration {
 
 			foreach ($eventRecords as $eventRecord) {
 
+				/**
+				 * Event information
+				 */
 				$eventRecord->url					=	$jsonArray['events'][$i]['url'];
 				$eventRecord->eventbriteID  		=	$jsonArray['events'][$i]['id'];
 				$eventRecord->name_text 			=	$jsonArray['events'][$i]['name']['text'];
+				$eventRecord->description_text		=	$jsonArray['events'][$i]['description']['text'];
+				$eventRecord->start_local			=	$jsonArray['events'][$i]['start']['local'];
+				$eventRecord->end_local				=	$jsonArray['events'][$i]['end']['local'];
+				$eventRecord->AllDayFlag			=	'';
 				$eventRecord->venue_resource_uri  	=	'';
+				/**
+				 * Venue Information
+				 */
 				$eventRecord->venue_name			=	$jsonArray['events'][$i]['venue']['name'];
 				$eventRecord->address_1				=	$jsonArray['events'][$i]['venue']['address']['address_1'];
 				$eventRecord->city					=	$jsonArray['events'][$i]['venue']['address']['city'];
 				$eventRecord->region				=	$jsonArray['events'][$i]['venue']['address']['region'];
 				$eventRecord->postal_code			=	$jsonArray['events'][$i]['venue']['address']['postal_code'];
-				$eventRecord->description_text		=	$jsonArray['events'][$i]['description']['text'];
-				$eventRecord->start_local			=	$jsonArray['events'][$i]['start']['local'];
-				$eventRecord->end_local				=	$jsonArray['events'][$i]['end']['local'];
-				$eventRecord->AllDayFlag			=	'';
+				$eventRecord->latitude				=	$jsonArray['events'][$i]['venue']['latitude'];
+				$eventRecord->longitude				=	$jsonArray['events'][$i]['venue']['longitude'];
+				$eventRecord->venue_id				=	$jsonArray['events'][$i]['venue']['id'];
 				$eventRecord->logo_url				=	$jsonArray['events'][$i]['logo']['url'];
-				$eventRecord->latitude				=	$jsonArray['events'][$i]['venue']['address']['latitude'];
-				$eventRecord->longitude				=	$jsonArray['events'][$i]['venue']['address']['longitude'];
-				
+
 				$eventRecord->save();
 
 				// EventbriteCategories
