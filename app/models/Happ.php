@@ -10,7 +10,7 @@ class Happ extends Eloquent
 {
   protected $table = 'happs';
   protected $guarded = array('id', 'create_at', 'updated_at');
-  protected $appends = array('google_directions_link', 'google_map_large');
+  protected $appends = array('google_directions_link', 'google_map_large', 'similar');
   
   /**
    * @var int status codes for event states
@@ -48,6 +48,40 @@ class Happ extends Eloquent
   {
     return $this->hasMany('HappAgeLimit', 'event_id', 'id');
   }
+
+
+  public function duplicated()
+  {
+    $this->hasMany('Happ','parent_id');
+  }
+
+  /**
+   * Return a list of duplicated events for the current event.
+   */
+  public function getSimilarAttribute(){
+    /**
+     * @var self::query Eloquent
+     */
+    $res = [];
+    $event = Happ::where('event_name', 'LIKE',  "%{$this->event_name}%")
+        ->where('id','<>',$this->id)
+        ->where('event_date', $this->event_date)
+        ->orderBy('venue_id', 'asc')
+        ->get();
+
+    foreach($event as $id => $e) {
+      $res[$id]['id'] = $e->id;
+      $res[$id]['event_name'] = $e->event_name;
+      $res[$id]['venue_name'] = $e->venue_name;
+      $res[$id]['event_image_url'] = $e->event_image_url;
+      $res[$id]['event_date'] = $e->event_date;
+      $res[$id]['parent_id'] = $e->parent_id;
+    }
+
+    return $res;
+  }
+
+
 
   public static function eventCount($startDate)
   {
@@ -136,6 +170,8 @@ class Happ extends Eloquent
       ->orderBy('start_time', 'asc')
       ->getPage($eventParams['pageSize'], $eventParams['pageCount'], $eventParams['pageShift'])
       ->get();
+
+    //dd($events[0]);
 
     return $events;
 
@@ -556,8 +592,8 @@ class Happ extends Eloquent
 
       }
     });
-
   }
+
 
   public static function storeMeetupEvents() {
 

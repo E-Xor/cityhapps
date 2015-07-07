@@ -239,6 +239,7 @@
 	<script src="/js/bluebird.js"></script>
 	<script src="/js/angular-google-maps.min.js"></script>
 
+    <script src="/js/checklist-model.js"></script>
 	<script src="/app/app.js"></script>
 	<script src="/js/dom.js"></script>
 

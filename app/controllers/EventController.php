@@ -55,6 +55,7 @@ class EventController extends BaseController {
 		return json_encode($results);
 	}
 
+
 	public function recommendedEvents() {
 
 		$eventParams = array();
