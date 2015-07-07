@@ -700,13 +700,44 @@ cityHapps.factory('calDayClick', function($http, $cookies, $cookieStore){
 cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
     function($scope, $http, $routeParams, $cookies, $cookieStore) {
 
-        $scope.user = $cookies.user;
+        $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
+        $scope.likeStatus;
 
         $http.get('/events?id=' + $routeParams.id)
             .success(function(data) {
                 if (data.events.length > 0)
                     $scope.data = data.events[0];
+                    if ($scope.user) {
+                        $scope.checkLikeStatus();
+                    }
             });
+
+        $scope.checkLikeStatus = function() {
+            var userId = $scope.user.id;
+            var eventId = $scope.data.id;
+
+            $http({
+                method: "POST",
+                url: '/checkLikeStatus',
+                data: {
+                    'user_id' : userId,
+                    'event_id' : eventId
+                },
+                headers : {"Content-Type": "application/json"}
+            }).success(function(data){
+                if (!data) {
+                    $scope.likeStatus = false;
+
+                } else if(data) {
+                    console.log(data);
+                    if(data.status == 'ok') {
+                        $scope.likeStatus = true;
+                    } else {
+                        $scope.likeStatus = false;
+                    }
+                }
+            });
+        };
 
         $scope.vote = {};
 
@@ -728,11 +759,13 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
                     event.vote.downVote = false;
                     if (upVote == true) {
                         eventVote = 1;
+                    } else {
+                        eventVote = -1
                     }
                 } else { // Downvote changed
                     event.vote.upVote = false;
                     if (downVote == true) {
-                        eventVote = 0;
+                        eventVote = -1;
                     }
                 }
                 $http({

@@ -48,6 +48,7 @@ Route::get('storeMeetupEvents', 'MeetupController@storeEvents');
 Route::get('storeEventbriteEvents', 'EventbriteController@storeEvents');
 
 Route::post('userEvent', 'UserEventController@store');
+Route::post('checkLikeStatus', 'UserEventController@checkLikeStatus');
 
 Route::get('auth/status', 'SessionsController@index');
 

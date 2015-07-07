@@ -44,6 +44,27 @@ class UserEventController extends \BaseController {
 		
 	}
 
+    public function checkLikeStatus()
+    {
+        $userId = Input::get('user_id');
+        $eventId = Input::get('event_id');
+
+        if (($userId != null) && ($eventId != null)) {
+
+            $userEventId = UserEvent::where('event_id', '=', $eventId)
+                ->where('user_id', '=', $userId)
+                ->pluck('id');
+
+            if(!is_null($userEventId)) {
+                return json_encode(['status' => 'ok']);
+            }
+
+            return json_encode(['status' => 'not exists']);
+        }
+
+        return json_encode(['status' => 'error']);
+    }
+
 	/**
 	 * Display the specified resource.
 	 * GET /user_event/{id}
