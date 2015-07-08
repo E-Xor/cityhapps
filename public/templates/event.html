@@ -70,7 +70,7 @@
 
             <div>
               <label for="event_url">Event URL</label>
-              <input type="text" id="event_url" class="full" name="event_url" value="{{eventData.events[0].url}}"" placeholder="http://www.event.com" ng-model="formData.event_url" />
+              <input type="text" id="event_url" class="full" name="event_url" value="{{eventData.events[0].url}}" placeholder="http://www.event.com" ng-model="formData.event_url" />
             </div>
 
             <div>
@@ -139,7 +139,7 @@
               <div class="similar_events">
                   <div ng-if="formData.similar_events_model">
                       <h4>Duplicated Events</h4>
-                      <p>Some events might appear to be duplicated, please choose the correct ones, or none otherwise</p>
+                      <p>There are events that appear to be duplicates of this one. Select those events here to mark them as duplicates and hide them from listings.</p>
                       <div ng-repeat="(key, value) in formData.similar_events_model">
                           <div class="single_event {{isCheched=value.parent_id?'checked-row':''}}">
                               <input type="checkbox" id="event_id_{{value.id}}"
@@ -147,12 +147,11 @@
                                      style="display: none"/>
                               <label for="event_id_{{value.id}}" class="label_container">
                                   <img width="100px" src="{{value.event_image_url}}"/>
-
                                   <div class="container">
                                       <span>{{value.event_name}}</span>
-                                      <small>Event venue: {{value.venue_name}}</small>
+                                      <small>Event Venue: {{value.venue_name}}</small>
                                       <small>Event Date: {{value.event_date}}</small>
-                                      <small>Parent ID: {{value.parent_id}}</small>
+                                      <small>Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
                                   </div>
                               </label>
                           </div>
