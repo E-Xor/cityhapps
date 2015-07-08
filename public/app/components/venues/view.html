@@ -19,8 +19,13 @@
 			<div class="col-md-5">
 				<h3 class="dark bold">{{data.name}}</h3>
 				<div class="venue-address">{{data.address_1}} {{data.address_2}} {{data.address_3}}<br>{{data.city}}, {{data.state}} {{data.postal_code}}<br>{{data.country}}</div>
-				<div class="{{ likeStatus ? 'like-icon active' : 'like-icon'}}" ng-model="data.vote.upVote" ng-change="simpleVoteVenue(data , 'up')" btn-checkbox></div>
-				<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
+				<div class="happ-buttons">
+					<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
+					<a class="happ-button inverse right{{ likeStatus ? ' active' : '' }}" href="#" ng-model="data.vote.upVote;" ng-change="simpleVoteVenue(data , 'up')" btn-checkbox>
+						<span ng-hide="likeStatus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Like This Venue</span>
+						<span ng-show="likeStatus">I Like This Venue</span>
+					</a>
+				</div>
 			</div>
 		</div>
 		<div class="row">

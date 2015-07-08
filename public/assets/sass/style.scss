@@ -1474,7 +1474,7 @@ h3 {
 .happ-button {
   padding: 9px 27px;
   background: #FF5C50;
-  border: none;
+  border: solid #FF5C50 2px;
   display: block;
   font-size: 1.3em;
   color: #fff;
@@ -1482,8 +1482,32 @@ h3 {
   text-shadow: 2px 1px 1px #E24B44;
   text-align: center;
   height: 43px;
-  &:hover, &:visited, &:active {
-    color: #fff;
+  &.active {
+    color: #FF5C50;
+    background: none;
+    text-shadow: none;
+    &:hover, &:visited, &:active, &:focus {
+      color: #FF5C50;
+    }
+  }
+  &:hover, &:visited, &:active, &:focus {
+    color: #FFF;
+  }
+  &.inverse {
+    color: #FF5C50;
+    background: none;
+    text-shadow: none;
+    &:hover, &:visited, &:active, &:focus {
+      color: #FF5C50;
+    }
+    &.active {
+      color: #FFF;
+      background: #FF5C50;
+      text-shadow: 2px 1px 1px #E24B44;
+      &:hover, &:visited, &:active, &:focus {
+        color: #FFF;
+      }
+    }
   }
 }
 
@@ -1708,7 +1732,7 @@ h3 {
 
 }
 
-.inline.ng-scope {
+.happ-categories {
   display: block;
   color: #ffffff;
   background-color: #FFA500;
@@ -1720,16 +1744,15 @@ h3 {
   margin-left: -15px;
 }
 
-.happ-description.ng-binding.ng-scope {
+.happ-description {
   margin-left: auto;
   margin-right: auto;
-  padding: 3%;
+  padding: 1%;
   text-align: justify;
   float: left;
-  font-family: 'myriad pro regular';
 }
 
-.happ-date.ng-binding {
+.happ-date {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
@@ -1740,37 +1763,13 @@ h3 {
   margin-left: -15px;
 }
 
-a.ng-pristine.ng-untouched.ng-valid {
-  padding: 9px 27px;
-  display: block;
-  color: #E24B44;
-  border: solid #E24B44 1px;
-  float: left ;
-  font-size: 1.3em;
-  height: 43px;
-  text-align: center;
-  width: 50%;
+.happ-buttons {
+  .happ-button {
+    width: 50%;
+  }
 }
 
-.buttons {
-  margin-top: 50px;
-}
-
-.buttons .happ-button {
-  width: 50%;
-}
-
-a.ng-binding {
+.happ-venue a {
   text-decoration: none;
   color: #000;
-}
-
-.happ-description.ng-binding.ng-scope {
-  padding: 1%;
-}
-
-.col-md-9 {
-  width: 75%;
-  padding-left: 2%;
-  padding-bottom: 2%;
 }

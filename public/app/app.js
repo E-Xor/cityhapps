@@ -783,6 +783,7 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
                         console.log("no vote, man");
                     } else if(data) {
                         console.log(data);
+                        $scope.likeStatus = !$scope.likeStatus;
                     }
                 });
             };
@@ -877,6 +878,7 @@ cityHapps.controller('venueController', ['$scope', '$http', '$routeParams', '$co
                         console.log('No vote registered.');
                     } else if (data) {
                         console.log(data);
+                        $scope.likeStatus = !$scope.likeStatus;
                     }
                 });
             };
