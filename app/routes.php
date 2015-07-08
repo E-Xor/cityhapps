@@ -48,6 +48,10 @@ Route::get('storeMeetupEvents', 'MeetupController@storeEvents');
 Route::get('storeEventbriteEvents', 'EventbriteController@storeEvents');
 
 Route::post('userEvent', 'UserEventController@store');
+Route::post('checkUserEventVote', 'UserEventController@checkLikeStatus');
+
+Route::post('userVenue', 'UserVenueController@store');
+Route::post('checkUserVenueVote', 'UserVenueController@checkLikeStatus');
 
 Route::get('auth/status', 'SessionsController@index');
 

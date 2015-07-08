@@ -18,7 +18,7 @@ class UserVenue extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var string
 	 */
-	protected $table = 'user_event';
+	protected $table = 'user_venue';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -27,25 +27,26 @@ class UserVenue extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	//protected $hidden = array('id');
 
-	public static function storeUserVenueVote($eventParams) {
+	public static function storeUserVenueVote($venueParams)
+    {
 		
-		$userID = $eventParams['userID'];
-		$venueID = $eventParams['venueID'];
-		$vote = $eventParams['vote'];
+		$userId = $venueParams['userId'];
+		$venueId = $venueParams['venueId'];
+		$vote = $venueParams['vote'];
 		
-		if (($userID != null) && ($venueID != null)) {
+		if (($userId != null) && ($venueId != null)) {
 
 
-			UserVenue::where('venue_id', '=', $venueID)
-						->where('user_id', '=', $userID)
+			UserVenue::where('venue_id', '=', $venueId)
+						->where('user_id', '=', $userId)
 						->delete();
 
 			if ($vote != '-1') {
 
 				$userVenue = new UserVenue;
 			
-				$userVenue->user_id = $userID;
-				$userVenue->venue_id = $venueID;
+				$userVenue->user_id = $userId;
+				$userVenue->venue_id = $venueId;
 				$userVenue->vote = $vote;
 
 				$userVenue->save();
@@ -57,5 +58,26 @@ class UserVenue extends Eloquent implements UserInterface, RemindableInterface {
 		return NULL;
 
 	}
+
+    public static function userVenueVoteStatus($venueParameters)
+    {
+        $userId = $venueParameters['userId'];
+        $venueId = $venueParameters['venueId'];
+
+        if (($userId != null) && ($venueId != null)) {
+
+            $userVenueId = UserVenue::where('venue_id', '=', $venueId)
+                ->where('user_id', '=', $userId)
+                ->pluck('id');
+
+            if(!is_null($userVenueId)) {
+                return ['status' => 'ok'];
+            }
+
+            return ['status' => 'not exists'];
+        }
+
+        return ['status' => 'error'];
+    }
 
 }
