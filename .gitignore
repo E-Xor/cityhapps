@@ -15,3 +15,5 @@ bower_components
 
 .idea
 .idea/
+
+/public/assets/css/style.css
