@@ -1,7 +1,7 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute',
     'ui.validate', 'facebook', 'http-auth-interceptor', 'remoteValidation',
     'google-maps'.ns(), 'ui.calendar', 'angular.filter', 'ngSanitize',
-    'ngCookies', 'snap', 'ngIdle']);
+    'ngCookies', 'snap', 'ngIdle', 'checklist-model']);
 
 
 cityHapps.controller('eventsController', function($scope, $rootScope, $http,
@@ -923,11 +923,13 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
           error = 1;
           $scope.descError = true;
         }
+
         // if any error, don't post
         if (error) {
           $scope.generalError = true;
           return;
         }
+        console.log(formData);
         if (!edit) {
             $http({
                 method: 'POST',
@@ -975,7 +977,6 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                 $scope.error = data.error.message;
             });
         }
-
         }
     // Retieving all of the data for the listing page
     $http.get('/events?page_size=all')
@@ -1028,6 +1029,16 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                     dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
                     if (dateCheckCreate != dateCheckUpdate)
                        $scope.updated_last  = singleEvent.updated_at;
+                    $scope.formData.similar_events_model = singleEvent.similar;
+                    $scope.formData.similar_events_storage = (function () {
+                        var base = [];
+                        angular.forEach(singleEvent.similar, function (value) {
+                            if (value.parent_id != null) {
+                                base.push(value.id);
+                            }
+                        });
+                        return base;
+                    })();
                 }
         })
     }

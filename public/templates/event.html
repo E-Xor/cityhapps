@@ -28,6 +28,25 @@
     background: #87cefa;
     color:#fff;
     }
+    input:checked + .label_container {
+       background-color: burlywood;
+    }
+        .single_event {
+            padding: 10px 5px 0;
+        }
+
+      .single_event .container {
+          width: 70%;
+          display: inline-block;
+      }
+
+      .single_event img {
+          vertical-align: top;
+      }
+
+      .single_event span, .single_event small {
+          display: block;
+      }
   </style>
         <div class="form_container">
         <div ng-if="success">
@@ -112,7 +131,34 @@
               <label for="tags">Tags</label>
               <textarea name="tags" id="tags" style="width:488px;height:180px;" ng-model="formData.tags"></textarea>
             </div>
-            <div>
+            <div class="similar_events">
+              <div ng-repeat="(key, value) in myObj">
+
+              </div>
+            </div>
+              <div class="similar_events">
+                  <div ng-if="formData.similar_events_model">
+                      <h4>Duplicated Events</h4>
+                      <p>Some events might appear to be duplicated, please choose the correct ones, or none otherwise</p>
+                      <div ng-repeat="(key, value) in formData.similar_events_model">
+                          <div class="single_event {{isCheched=value.parent_id?'checked-row':''}}">
+                              <input type="checkbox" id="event_id_{{value.id}}"
+                                     checklist-model="formData.similar_events_storage" checklist-value="value.id"
+                                     style="display: none"/>
+                              <label for="event_id_{{value.id}}" class="label_container">
+                                  <img width="100px" src="{{value.event_image_url}}"/>
+
+                                  <div class="container">
+                                      <span>{{value.event_name}}</span>
+                                      <small>Event venue: {{value.venue_name}}</small>
+                                      <small>Event Date: {{value.event_date}}</small>
+                                      <small>Parent ID: {{value.parent_id}}</small>
+                                  </div>
+                              </label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
 
             <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
 

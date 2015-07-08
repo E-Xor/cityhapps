@@ -64,6 +64,8 @@ class AdminEventController extends \BaseController {
    $eventParams['all_day_flag'] = Input::get('all_day');
    $eventParams['end_time'] = (($time = strtotime(Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
 
+   $eventParams['similar_events'] = Input::get('similar_events_storage');
+
    $time = strtotime(Input::get('start_time'));
    $start_time = date("Y-m-d H:j:s", $time);
    // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
@@ -72,6 +74,25 @@ class AdminEventController extends \BaseController {
    if ($passValidation)
    {
      $result = Happ::find($eventParams['id']);
+     $similar = $result->similar;
+       if (!empty($eventParams['similar_events'])) {
+           $similar_events = Happ::whereIn('id', $eventParams['similar_events'])->get();
+           if ($similar_events){
+               foreach($similar_events as $sv){
+                   $sv->update(array(
+                       'parent_id' =>$eventParams['id']
+                   ));
+               }
+           }
+       } else {
+           foreach ($similar as $s) {
+               Happ::find($s['id'])->update(array('parent_id' => NULL));
+           }
+       }
+
+     unset($eventParams['similar_events_storage']);
+     unset($eventParams['similar_events_model']);
+     unset($eventParams['similar_events']);
 
      if ($result) {
       // then update
