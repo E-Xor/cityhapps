@@ -705,11 +705,12 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
 
         $http.get('/events?id=' + $routeParams.id)
             .success(function(data) {
-                if (data.events.length > 0)
+                if (data.events.length > 0) {
                     $scope.data = data.events[0];
                     if ($scope.user) {
                         $scope.checkLikeStatus();
                     }
+                }
             });
 
         $scope.checkLikeStatus = function() {
@@ -718,7 +719,7 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
 
             $http({
                 method: "POST",
-                url: '/checkLikeStatus',
+                url: '/checkUserEventVote',
                 data: {
                     'user_id' : userId,
                     'event_id' : eventId
@@ -795,39 +796,71 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
 cityHapps.controller('venueController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
     function($scope, $http, $routeParams, $cookies, $cookieStore) {
 
-        $scope.user = $cookies.user;
+        $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
+        $scope.likeStatus;
 
         $http.get('/venues?id=' + $routeParams.id)
             .success(function(data) {
-                if (data.venues.length > 0)
+                if (data.venues.length > 0) {
                     $scope.data = data.venues[0];
+                    if ($scope.user) {
+                        $scope.checkLikeStatus();
+                    }
+                }
             });
+
+        $scope.checkLikeStatus = function() {
+            var userId = $scope.user.id;
+            var venueId = $scope.data.id;
+
+            $http({
+                method: "POST",
+                url: '/checkUserVenueVote',
+                data: {
+                    'user_id' : userId,
+                    'venue_id' : venueId
+                },
+                headers : {"Content-Type": "application/json"}
+            }).success(function(data){
+                if (!data) {
+                    $scope.likeStatus = false;
+
+                } else if(data) {
+                    console.log(data);
+                    if(data.status == 'ok') {
+                        $scope.likeStatus = true;
+                    } else {
+                        $scope.likeStatus = false;
+                    }
+                }
+            });
+        };
 
         $scope.vote = {};
 
         if ($scope.user) {
 
-            $scope.simpleVoteEvent = function(event, action) {
+            $scope.simpleVoteVenue = function(venue, action) {
 
-                var eventID = event.id;
-
-                console.log(event.vote);
+                var venueID = venue.id;
 
                 var userID = $scope.user.id;
-                var upVote = event.vote.upVote;
-                var downVote = event.vote.downVote;
+                var upVote = venue.vote.upVote;
+                var downVote = venue.vote.downVote;
 
-                var eventVote = -1;
+                var venueVote = -1;
 
                 if (action == 'up') {
-                    event.vote.downVote = false;
+                    venue.vote.downVote = false;
                     if (upVote == true) {
-                        eventVote = 1;
+                        venueVote = 1;
+                    } else {
+                        venueVote = -1
                     }
                 } else { // Downvote changed
-                    event.vote.upVote = false;
+                    venue.vote.upVote = false;
                     if (downVote == true) {
-                        eventVote = 0;
+                        venueVote = -1;
                     }
                 }
                 $http({
@@ -835,8 +868,8 @@ cityHapps.controller('venueController', ['$scope', '$http', '$routeParams', '$co
                     url: '/userVenue',
                     data: {
                         'user_id' : userID,
-                        'venue_id' : eventID,
-                        'vote' : eventVote
+                        'venue_id' : venueID,
+                        'vote' : venueVote
                     },
                     headers: {'Content-Type': 'application/json'}
                 }).success(function(data) {
