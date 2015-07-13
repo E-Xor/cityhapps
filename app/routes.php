@@ -73,6 +73,8 @@ Route::get('getUserCategories', 'UserController@getUserCategories');
 Route::resource('category', 'CategoryController');
 
 Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
+//Tags
+Route::get('tags/{name}','TagController@getTags');
 
 /** Admin **/
 /** Admin Event **/
@@ -82,3 +84,4 @@ Route::post('admin/event/update', 'AdminEventController@update');
 /** Admin Venue **/
 Route::post('admin/venue/create', 'AdminVenueController@create');
 Route::post('admin/venue/update', 'AdminVenueController@update');
+

@@ -68,12 +68,33 @@ class AdminEventController extends \BaseController {
 
    $time = strtotime(Input::get('start_time'));
    $start_time = date("Y-m-d H:j:s", $time);
-   // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
-   // $eventParams['tags'] = Input::get('tags');
 
    if ($passValidation)
    {
      $result = Happ::find($eventParams['id']);
+     //If we have at least 1 defined tag, let's process it
+     if (!empty(Input::get('tags'))) {
+         $tags = Input::get('tags');
+         //Drop previous tags for this event
+         $result->tags()->detach();
+         foreach ($tags as $tag){
+             if (!isset($tag["id"])) {
+                 //if there's another tag with the same name, just use it instead
+                 $single_tag = Tag::whereRaw("LOWER(tag_raw) = '?'", array(str_replace("-"," ", strtolower($tag["tag_raw"]))))->first();
+                 if ($single_tag) {
+                    $result->tags()->attach($single_tag->id);
+                 } else {
+                     $new_tag = new Tag(['tag_raw' => $tag["tag_raw"]]);
+                     $result->tags()->save($new_tag);
+                 }
+             } else {
+                 //if the tag has an id, it means it was an old saved tag and we want it back
+                 $result->tags()->attach($tag["id"]);
+             }
+         }
+
+     }
+
      $similar = $result->similar;
        if (!empty($eventParams['similar_events'])) {
            $similar_events = Happ::whereIn('id', $eventParams['similar_events'])->get();
