@@ -625,7 +625,7 @@ cityHapps.directive('ngModelOnblur', function() {
 cityHapps.config([
     'FacebookProvider',
     function(FacebookProvider) {
-     var myAppId = '895139070496415';
+     var myAppId = '1149149361767339';
 
      FacebookProvider.init(myAppId);
 
