@@ -68,7 +68,7 @@ class Venue extends Eloquent
    * $venueParams will be a way to minimize results, for now it is not in use
    */
   public static function selectVenues($params) {
-    $venues = Venue::paginate($params['pageSize']);
+    $venues = Venue::with('tags')->paginate($params['pageSize']);
     return $venues;
   }
 
@@ -152,6 +152,11 @@ class Venue extends Eloquent
         }
       }
     );
+  }
+
+  public function tags()
+  {
+    return $this->belongsToMany('Tag', 'venue_tag' );
   }
 
   /**

@@ -51,7 +51,6 @@ class EventController extends BaseController {
 		$meta["count"] = $count;
 
 		$results = array("meta" => $meta, "events" => $events);
-		
 		return json_encode($results);
 	}
 

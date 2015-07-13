@@ -36,6 +36,37 @@ class AdminVenueController extends \BaseController {
     // will be shown by angular
   }
 
+  /**
+   *
+   * Store tag information for the EventEntity
+   *
+   * @param $entity
+   * @param $tags
+   * @TODO: rework this into a library
+   */
+  private function createTags($entity, $tags) {
+    if (!empty($tags)) {
+      //Drop previous tags for this event
+      $entity->tags()->detach();
+      foreach ($tags as $tag){
+        if (!isset($tag["id"])) {
+          //if there's another tag with the same name, just use it instead
+          $single_tag = Tag::whereRaw("LOWER(tag_raw) = '?'", array(str_replace("-"," ", strtolower($tag["tag_raw"]))))->first();
+          if ($single_tag) {
+            $entity->tags()->attach($single_tag->id);
+          } else {
+            $new_tag = new Tag(['tag_raw' => $tag["tag_raw"]]);
+            $entity->tags()->save($new_tag);
+          }
+        } else {
+          //if the tag has an id, it means it was an old saved tag and we want it back
+          $entity->tags()->attach($tag["id"]);
+        }
+      }
+
+    }
+  }
+
   public function venues() {
 
     $venueParams = array();
@@ -69,6 +100,7 @@ class AdminVenueController extends \BaseController {
 
     return json_encode($results);
   }
+
 
 
   /**
@@ -106,6 +138,8 @@ class AdminVenueController extends \BaseController {
    if ($passValidation)
    {
      $result = Venue::find($venueParams['id']);
+
+     $this->createTags($result, Input::get('tags'));
 
      if ($result) {
       // then update
@@ -152,6 +186,7 @@ class AdminVenueController extends \BaseController {
 
     if ($passValidation)
       $result = Venue::create($venueParams);
+      $this->createTags($result, Input::get('tags'));
 
     if ($result)
       return json_encode($result);

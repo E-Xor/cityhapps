@@ -68,12 +68,13 @@ class AdminEventController extends \BaseController {
 
    $time = strtotime(Input::get('start_time'));
    $start_time = date("Y-m-d H:j:s", $time);
-   // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
-   // $eventParams['tags'] = Input::get('tags');
 
    if ($passValidation)
    {
      $result = Happ::find($eventParams['id']);
+     //If we have at least 1 defined tag, let's process it
+     $this->createTags($result, Input::get('tags'));
+
      $similar = $result->similar;
        if (!empty($eventParams['similar_events'])) {
            $similar_events = Happ::whereIn('id', $eventParams['similar_events'])->get();
@@ -109,6 +110,38 @@ class AdminEventController extends \BaseController {
      return json_encode(array('error' => true, 'message'=>$message));
 
  }
+
+/**
+ *
+ * Store tag information for the EventEntity
+ *
+ * @param $entity
+ * @param $tags
+ * @TODO: rework this into a library
+ */
+ private function createTags($entity, $tags) {
+     if (!empty($tags)) {
+         //Drop previous tags for this event
+         $entity->tags()->detach();
+         foreach ($tags as $tag){
+             if (!isset($tag["id"])) {
+                 //if there's another tag with the same name, just use it instead
+                 $single_tag = Tag::whereRaw("LOWER(tag_raw) = '?'", array(str_replace("-"," ", strtolower($tag["tag_raw"]))))->first();
+                 if ($single_tag) {
+                     $entity->tags()->attach($single_tag->id);
+                 } else {
+                     $new_tag = new Tag(['tag_raw' => $tag["tag_raw"]]);
+                     $entity->tags()->save($new_tag);
+                 }
+             } else {
+                 //if the tag has an id, it means it was an old saved tag and we want it back
+                 $entity->tags()->attach($tag["id"]);
+             }
+         }
+
+     }
+ }
+
   /**
    * Show the form for creating a new resource.
    * POST /admin/event/create
@@ -154,6 +187,8 @@ class AdminEventController extends \BaseController {
 
     if ($passValidation)
       $result = Happ::create($eventParams);
+
+      $this->createTags($result, Input::get('tags'));
 
     if ($result)
       return json_encode($result);
