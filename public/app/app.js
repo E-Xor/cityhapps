@@ -1168,6 +1168,10 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
                     dateCheckUpdate = new Date(singleVenue.updated_at).getTime() / 1000;
                     if (dateCheckCreate != dateCheckUpdate)
                        $scope.updated_last = singleVenue.updated_at;
+                    $scope.formData.tags = singleVenue.tags;
+                    $scope.loadTags = function(query) {
+                        return $http.get('/tags/' + query);
+                    };
                 }
         });
     }

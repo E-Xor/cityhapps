@@ -30,8 +30,10 @@ class VenueController extends BaseController {
     // We'll use this for proper queries later
     //$venues = Venue::selectVenues($params);
     
-    if (!empty($params['id']))
-      $venues = array(Venue::find($params['id']));
+    if (!empty($params['id'])) {
+      $_tags = Venue::with('tags');
+      $venues = array($_tags->find($params['id']));
+    }
     else {
       $venuesPaginator = Venue::paginate($params['pageSize']);
       $venues = $venuesPaginator->getItems();
