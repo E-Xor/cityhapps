@@ -107,6 +107,13 @@
               <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
               <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
             </div>
+            
+            <div>
+              <label for="tags">Tags</label>
+              <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw">
+                <auto-complete source="loadTags($query)"></auto-complete>
+              </tags-input>
+            </div>
 
 
             <div class="similar_venues">
@@ -133,6 +140,8 @@
                 </div>
               </div>
             </div>
+            
+            <div>
 
             <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
 

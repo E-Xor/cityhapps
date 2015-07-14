@@ -18,6 +18,9 @@
 	<link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/jquery.datetimepicker.css"/ >
 
+    <!-- Tags -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/ng-tags-input.min.css">
+    <!-- Tags -->
 
 	<!-- load angular from CDN-->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
@@ -240,6 +243,10 @@
 	<script src="/js/angular-google-maps.min.js"></script>
 
     <script src="/js/checklist-model.js"></script>
+
+    <!-- Tags -->
+    <script src="/js/ng-tags-input.min.js"></script>
+    <!-- tags -->
 	<script src="/app/app.js"></script>
 	<script src="/js/dom.js"></script>
 

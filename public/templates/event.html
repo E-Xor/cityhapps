@@ -128,8 +128,10 @@
               <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
             </div>
             <div>
-              <label for="tags">Tags</label>
-              <textarea name="tags" id="tags" style="width:488px;height:180px;" ng-model="formData.tags"></textarea>
+                <label for="tags">Tags</label>
+                <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw">
+                    <auto-complete source="loadTags($query)"></auto-complete>
+                </tags-input>
             </div>
               <div class="similar_events">
                   <div ng-if="formData.parent_id > 0">

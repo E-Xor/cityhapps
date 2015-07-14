@@ -50,11 +50,11 @@ class Happ extends Eloquent
     return $this->hasMany('HappAgeLimit', 'event_id', 'id');
   }
 
-
   public function duplicated()
   {
     $this->hasMany('Happ','parent_id');
   }
+
 
   /**
    * Return a list of duplicated events for the current event.
@@ -82,7 +82,14 @@ class Happ extends Eloquent
     return $res;
   }
 
+  public function recurringInformation(){
+    return $this->hasMany('HappRecurring');
+  }
 
+  public function tags()
+  {
+    return $this->belongsToMany('Tag');
+  }
 
   public static function eventCount($startDate)
   {
@@ -151,6 +158,7 @@ class Happ extends Eloquent
   public static function selectEvents($eventParams) {
 
     $events = Happ::with('categories')
+      ->with('tags')
       ->maxPerDay($eventParams['maxPerDay'])
       ->eventID($eventParams['eventID'])
       ->eventName($eventParams['eventName'])

@@ -1,7 +1,7 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute',
     'ui.validate', 'facebook', 'http-auth-interceptor', 'remoteValidation',
     'google-maps'.ns(), 'ui.calendar', 'angular.filter', 'ngSanitize',
-    'ngCookies', 'snap', 'ngIdle', 'checklist-model']);
+    'ngCookies', 'snap', 'ngIdle', 'checklist-model', 'ngTagsInput']);
 
 
 cityHapps.controller('eventsController', function($scope, $rootScope, $http,
@@ -625,7 +625,7 @@ cityHapps.directive('ngModelOnblur', function() {
 cityHapps.config([
     'FacebookProvider',
     function(FacebookProvider) {
-     var myAppId = '895139070496415';
+     var myAppId = '1149149361767339';
 
      FacebookProvider.init(myAppId);
 
@@ -1040,6 +1040,10 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                         });
                         return base;
                     })();
+                    $scope.formData.tags = singleEvent.tags;
+                    $scope.loadTags = function(query) {
+                        return $http.get('/tags/' + query);
+                    };
                 }
         })
     }
@@ -1178,6 +1182,10 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
                         });
                         return base;
                     })();
+                    $scope.formData.tags = singleVenue.tags;
+                    $scope.loadTags = function(query) {
+                        return $http.get('/tags/' + query);
+                    };
                 }
         });
     }

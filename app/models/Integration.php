@@ -67,7 +67,6 @@ class Integration extends Eloquent {
 
 				// Add the parameters to the URL
 				$url .= http_build_query($params);
-
 				// Get the API's response
 				if ($response = file_get_contents($url)) {
 					$data = json_decode($response, true);
