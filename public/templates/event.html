@@ -135,7 +135,7 @@
             </div>
               <div class="similar_events">
                   <div ng-if="formData.parent_id > 0">
-                      This item has been identified as a duplicate of <a href="/admin/event/edit/{{formData.parent_id}}">{{formData.title}}</a>
+                      This item has been identified as a duplicate of <a href="/admin/event/edit/{{formData.parent_id}}">Event ID:{{formData.parent_id}}</a>
                   </div>
                   <div ng-if="formData.similar_events_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
                       <h4>Duplicated Events</h4>

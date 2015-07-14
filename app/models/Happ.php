@@ -173,6 +173,7 @@ class Happ extends Eloquent
       ->dateRange($eventParams['startDate'], $eventParams['endDate'])
       ->imageRequired($eventParams['imageRequired'])
       ->eventSearch($eventParams['search'])
+      ->where('status', '<>', Happ::STATUS_DUPLICATED)
       ->withCategory($eventParams['category'])
       ->withUserEvent($eventParams['userID'])
       ->orderBy('event_date', 'asc')

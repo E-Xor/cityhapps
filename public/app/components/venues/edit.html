@@ -118,7 +118,7 @@
 
             <div class="similar_venues">
               <div ng-if="formData.parent_id > 0">
-                This item has been identified as a duplicate of <a href="admin/venue/edit/{{formData.parent_id}}">{{formData.name}}</a>
+                This item has been identified as a duplicate of <a href="admin/venue/edit/{{formData.parent_id}}">Venue ID: {{formData.parent_id}}</a>
               </div>
               <div ng-if="formData.similar_venues_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
                 <h4>Duplicated Venues</h4>
@@ -131,18 +131,15 @@
                     <label for="venue_id_{{value.id}}" class="label_container">
                       <div class="container">
                         <span>{{value.venue_name}}</span>
-                        <small>Event Venue: {{value.venue_name}}</small>
-                        <small>Event Date: {{value.venue_address_1}}</small>
+                        <small>Venue ID: {{value.id}}</small>
+                        <small>Venue Address: {{value.venue_address_1}} ({{value.venue_lat}}@{{value.venue_lng}})</small>
                         <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
                       </div>
                     </label>
                   </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <div>
-
             <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
 
         </fieldset>

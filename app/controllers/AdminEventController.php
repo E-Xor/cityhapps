@@ -81,13 +81,14 @@ class AdminEventController extends \BaseController {
            if ($similar_events){
                foreach($similar_events as $sv){
                    $sv->update(array(
-                       'parent_id' =>$eventParams['id']
+                       'parent_id' => $eventParams['id'],
+                        'status' => Happ::STATUS_DUPLICATED
                    ));
                }
            }
        } else {
            foreach ($similar as $s) {
-               Happ::find($s['id'])->update(array('parent_id' => NULL));
+               Happ::find($s['id'])->update(array('parent_id' => NULL, 'status' => Happ::STATUS_ACTIVE));
            }
        }
 

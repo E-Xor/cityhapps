@@ -1186,7 +1186,11 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
                     $scope.loadTags = function(query) {
                         return $http.get('/tags/' + query);
                     };
+
+                    console.log($scope.formData);
                 }
+
+
         });
     }
 }]);

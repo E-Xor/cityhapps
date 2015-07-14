@@ -19,7 +19,6 @@ class Venue extends Eloquent
     $res = [];
     $event = Venue::where('name', 'LIKE',  "%{$this->name}%")
                  ->where('id','<>',$this->id)
-
                  ->orderBy('id', 'asc')
                  ->get();
 
@@ -28,6 +27,8 @@ class Venue extends Eloquent
       $res[$id]['venue_name'] = $e->name;
       $res[$id]['venue_address_1'] = $e->address_1;
       $res[$id]['parent_id'] = $e->parent_id;
+      $res[$id]['venue_lat'] = $e->lat;
+      $res[$id]['venue_lng'] = $e->lng;
     }
 
     return $res;

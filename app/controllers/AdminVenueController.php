@@ -134,12 +134,33 @@ class AdminVenueController extends \BaseController {
     $venueParams['description'] = Input::get('desc');
     $venueParams['hours'] = Input::get('hours');
     $venueParams['phone'] = Input::get('phone');
+    $venueParams['similar_venues'] = Input::get('similar_venues_storage');
 
    if ($passValidation)
    {
      $result = Venue::find($venueParams['id']);
 
      $this->createTags($result, Input::get('tags'));
+
+     $similar = $result->similar;
+     if (!empty($venueParams['similar_venues'])) {
+       $similar_venues = Venue::whereIn('id', $venueParams['similar_venues'])->get();
+       if ($similar_venues){
+         foreach($similar_venues as $sv){
+           $sv->update(array(
+             'parent_id' => $venueParams['id']
+           ));
+         }
+       }
+     } else {
+       foreach ($similar as $s) {
+           Venue::find($s['id'])->update(array('parent_id' => NULL));
+       }
+     }
+
+     unset($venueParams['similar_venues_storage']);
+     unset($venueParams['similar_venues_model']);
+     unset($venueParams['similar_venues']);
 
      if ($result) {
       // then update
