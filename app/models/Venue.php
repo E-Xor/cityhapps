@@ -4,7 +4,32 @@ class Venue extends Eloquent
 {
   protected $table = 'venues';
   protected $guarded = array('id', 'create_at', 'updated_at');
-  protected $appends = array('google_directions_link', 'google_map_large');
+  protected $appends = array('google_directions_link', 'google_map_large', 'similar');
+
+
+  /**
+   * Return a list of duplicated venues for the current venue.
+   */
+  public function getSimilarAttribute(){
+    /**
+     * @var self::query Eloquent
+     */
+    $res = [];
+    $event = Venue::where('name', 'LIKE',  "%{$this->name}%")
+                 ->where('id','<>',$this->id)
+
+                 ->orderBy('id', 'asc')
+                 ->get();
+
+    foreach($event as $id => $e) {
+      $res[$id]['id'] = $e->id;
+      $res[$id]['venue_name'] = $e->name;
+      $res[$id]['venue_address_1'] = $e->address_1;
+      $res[$id]['parent_id'] = $e->parent_id;
+    }
+
+    return $res;
+  }
 
   /**
    *

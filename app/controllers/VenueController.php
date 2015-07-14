@@ -43,7 +43,7 @@ class VenueController extends BaseController {
 
     $results = array("meta" => $meta, "venues" => $venues);
 
-    return json_encode($results);
+    return $results;
   }
 
 

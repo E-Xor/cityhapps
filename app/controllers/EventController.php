@@ -52,7 +52,7 @@ class EventController extends BaseController {
 
 		$results = array("meta" => $meta, "events" => $events);
 		
-		return json_encode($results);
+		return $results;
 	}
 
 

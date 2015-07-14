@@ -131,13 +131,11 @@
               <label for="tags">Tags</label>
               <textarea name="tags" id="tags" style="width:488px;height:180px;" ng-model="formData.tags"></textarea>
             </div>
-            <div class="similar_events">
-              <div ng-repeat="(key, value) in myObj">
-
-              </div>
-            </div>
               <div class="similar_events">
-                  <div ng-if="formData.similar_events_model">
+                  <div ng-if="formData.parent_id > 0">
+                      This item has been identified as a duplicate of <a href="/admin/event/edit/{{formData.parent_id}}">{{formData.title}}</a>
+                  </div>
+                  <div ng-if="formData.similar_events_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
                       <h4>Duplicated Events</h4>
                       <p>There are events that appear to be duplicates of this one. Select those events here to mark them as duplicates and hide them from listings.</p>
                       <div ng-repeat="(key, value) in formData.similar_events_model">
@@ -151,14 +149,13 @@
                                       <span>{{value.event_name}}</span>
                                       <small>Event Venue: {{value.venue_name}}</small>
                                       <small>Event Date: {{value.event_date}}</small>
-                                      <small>Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
+                                      <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
                                   </div>
                               </label>
                           </div>
                       </div>
                   </div>
               </div>
-
             <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
 
         </fieldset>

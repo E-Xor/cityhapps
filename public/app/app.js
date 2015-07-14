@@ -1013,6 +1013,7 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                     var singleEvent = data.events[0];
                     $scope.formData.title = singleEvent.event_name;
                     $scope.formData.event_id = singleEvent.id;
+                    $scope.formData.parent_id = singleEvent.parent_id;
                     $scope.formData.event_url = singleEvent.url;
                     $scope.formData.event_image_url = singleEvent.event_image_url;
                     $scope.formData.venue_name = singleEvent.venue_name;
@@ -1151,6 +1152,7 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
                     var singleVenue = data.venues[0];
                     $scope.formData.venue_name = singleVenue.name;
                     $scope.formData.venue_id = singleVenue.id;
+                    $scope.formData.parent_id = singleVenue.parent_id;
                     $scope.formData.venue_url = singleVenue.url;
                     $scope.formData.venue_image_url = singleVenue.image;
                     $scope.formData.phone = singleVenue.phone;
@@ -1164,6 +1166,18 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
                     dateCheckUpdate = new Date(singleVenue.updated_at).getTime() / 1000;
                     if (dateCheckCreate != dateCheckUpdate)
                        $scope.updated_last = singleVenue.updated_at;
+                    $scope.formData.parent_id = singleVenue.parent_id;
+                    $scope.formData.similar_venues_model = singleVenue.similar;
+
+                    $scope.formData.similar_venues_storage = (function () {
+                        var base = [];
+                        angular.forEach(singleVenue.similar, function (value) {
+                            if (value.parent_id != null) {
+                                base.push(value.id);
+                            }
+                        });
+                        return base;
+                    })();
                 }
         });
     }

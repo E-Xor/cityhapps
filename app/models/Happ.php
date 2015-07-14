@@ -19,6 +19,7 @@ class Happ extends Eloquent
   const STATUS_ACTIVE = 1;
   const STATUS_CANCELLED = 2;
   const STATUS_ARCHIVED = 3;
+  const STATUS_DUPLICATED = 4;
 
   public function users()
   {
