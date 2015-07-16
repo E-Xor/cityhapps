@@ -19,6 +19,7 @@ class Happ extends Eloquent
   const STATUS_ACTIVE = 1;
   const STATUS_CANCELLED = 2;
   const STATUS_ARCHIVED = 3;
+  const STATUS_DUPLICATED = 4;
 
   public function users()
   {
@@ -172,6 +173,7 @@ class Happ extends Eloquent
       ->dateRange($eventParams['startDate'], $eventParams['endDate'])
       ->imageRequired($eventParams['imageRequired'])
       ->eventSearch($eventParams['search'])
+      ->where('status', '<>', Happ::STATUS_DUPLICATED)
       ->withCategory($eventParams['category'])
       ->withUserEvent($eventParams['userID'])
       ->orderBy('event_date', 'asc')
