@@ -8,7 +8,7 @@ class HappController extends BaseController
 
         $response = Response::make($happs['happs'], $happs['status_code']);
 
-        $response->header('Content-Type', HappController::getJsonContentType());
+        $response->header('Content-Type', JsonApiFormatterHelper::getJsonContentType());
 
         return $response;
     }
