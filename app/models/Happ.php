@@ -56,6 +56,24 @@ class Happ extends Eloquent
   }
 
 
+    public static function getHapps()
+    {
+        return Happ::with('categories')
+            ->with('tags')
+            ->get();
+    }
+
+
+    public static function getHappById($happId)
+    {
+        return Happ::with('categories')
+                    ->with('tags')
+                    ->where('id', '=', $happId)
+                    ->get();
+    }
+
+
+
   /**
    * Return a list of duplicated events for the current event.
    */
