@@ -216,6 +216,45 @@ class JsonApiFormatterHelper {
         return $result;
     }
 
+    private static function jsonApiHappVenueStructure($happ = array(), $statusCode = Response::HTTP_NOT_FOUND, $errors = array('404' => 'Content not found'))
+    {
+        $selfUrl = url('/happs');
+
+        $result = [];
+        $data = [];
+        if(count($happ) > 0) {
+            if(isset($happ->venue_id) || isset($happ->venue_name) || isset($happ->venue_url)) {
+                $data['data']['type'] = 'venues';
+                $data['data']['id'] = $happ->venue_id;
+                $data['data']['attributes'] = [
+                    'name' => $happ->venue_name,
+                    'url' => $happ->venue_url,
+                ];
+            }
+
+            $data['links'] = [
+                'self' => $selfUrl . '/' . $happ->id . '/venue'
+            ];
+        }
+
+        $result['venue'] = [];
+
+        if(count($data) > 0) {
+            $result['venue'] = $data;
+        }
+
+        $result['status_code'] = $statusCode;
+
+        if(count($errors) > 0) {
+            $result['venue']['errors'] = $errors;
+        }
+
+        $result['venue']['meta']['count'] = count($happ);
+
+        return $result;
+
+    }
+
     public static function getHapps($happs)
     {
         if(count($happs) > 0) {
@@ -224,6 +263,18 @@ class JsonApiFormatterHelper {
         }
 
         return self::jsonApiHappStructure();
+    }
+
+
+
+    public static function getHappVenue($happ)
+    {
+        if(count($happ) > 0) {
+
+            return self::jsonApiHappVenueStructure($happ, Response::HTTP_OK, array());
+        }
+
+        return self::jsonApiHappVenueStructure();
     }
 
 } 

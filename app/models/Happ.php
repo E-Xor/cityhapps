@@ -72,6 +72,14 @@ class Happ extends Eloquent
                     ->get();
     }
 
+    public static function getFirstHapp($id)
+    {
+        return Happ::with('categories')
+            ->with('tags')
+            ->where('id', '=', $id)
+            ->first();
+    }
+
 
 
   /**
