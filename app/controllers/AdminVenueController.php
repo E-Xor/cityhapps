@@ -49,13 +49,14 @@ class AdminVenueController extends \BaseController {
       //Drop previous tags for this event
       $entity->tags()->detach();
       foreach ($tags as $tag){
+        $tag_url = Str::slug($tag["tag_raw"]);
         if (!isset($tag["id"])) {
-          //if there's another tag with the same name, just use it instead
-          $single_tag = Tag::whereRaw("LOWER(tag_raw) = '?'", array(str_replace("-"," ", strtolower($tag["tag_raw"]))))->first();
+          //if there's another tag with the same url, just use it instead
+          $single_tag = Tag::whereRaw("LOWER(tag_url) = '?'", array($tag_url))->first();
           if ($single_tag) {
             $entity->tags()->attach($single_tag->id);
           } else {
-            $new_tag = new Tag(['tag_raw' => $tag["tag_raw"]]);
+            $new_tag = new Tag(['tag_raw' => $tag["tag_raw"], 'tag_url' => $tag_url]);
             $entity->tags()->save($new_tag);
           }
         } else {
@@ -63,7 +64,6 @@ class AdminVenueController extends \BaseController {
           $entity->tags()->attach($tag["id"]);
         }
       }
-
     }
   }
 

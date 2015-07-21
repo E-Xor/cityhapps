@@ -139,6 +139,7 @@
 	<script src="/js/lodash.min.js"></script>
 	<script src="/js/bluebird.js"></script>
 	<script src="/js/angular-google-maps.min.js"></script>
+    <script src="/js/angular-slugify.js"></script>
 
 	<script src="/js/app.js"></script>
 	<script src="/js/dom.js"></script>
