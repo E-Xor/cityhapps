@@ -112,37 +112,32 @@ class AdminEventController extends \BaseController {
 
  }
 
-/**
- *
- * Store tag information for the EventEntity
- *
- * @param $entity
- * @param $tags
- * @TODO: rework this into a library
- */
- private function createTags($entity, $tags) {
-     if (!empty($tags)) {
-         //Drop previous tags for this event
-         $entity->tags()->detach();
-         foreach ($tags as $tag){
-             $tag_url = Str::slug($tag["tag_raw"]);
-             if (!isset($tag["id"])) {
-                 //if there's another tag with the same url, just use it instead
-                 $single_tag = Tag::whereRaw("LOWER(tag_url) = '?'", array($tag_url))->first();
-                 if ($single_tag) {
-                     $entity->tags()->attach($single_tag->id);
-                 } else {
-                     $new_tag = new Tag(['tag_raw' => $tag["tag_raw"], 'tag_url' => $tag_url]);
-                     $entity->tags()->save($new_tag);
-                 }
-             } else {
-                 //if the tag has an id, it means it was an old saved tag and we want it back
-                 $entity->tags()->attach($tag["id"]);
-             }
-         }
 
-     }
- }
+    /**
+     *
+     * Store tag information for the EventEntity
+     *
+     * @param $entity
+     * @param $tags
+     *
+     * @TODO: rework this into a library
+     */
+    private function createTags($entity, $tags)
+    {
+        if (!empty($tags)) {
+            //Drop previous tags for this event
+            $entity->tags()->detach();
+            foreach ($tags as $tag_id => $tag) {
+                if (!isset($tag["id"])) {
+                    $new_tag = new Tag(['tag_raw' => $tag["tag_raw"]]);
+                    $entity->tags()->save($new_tag);
+                } else {
+                    //if the tag has an id, it means it was an old saved tag and we want it back
+                    $entity->tags()->attach($tag["id"]);
+                }
+            }
+        }
+    }
 
   /**
    * Show the form for creating a new resource.
