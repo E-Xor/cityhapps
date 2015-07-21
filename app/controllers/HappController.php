@@ -4,7 +4,15 @@ class HappController extends BaseController
 {
     public function getHappList()
     {
-        $happs = JsonApiFormatterHelper::getHapps(Happ::getHapps());
+        $date      = Input::get('date');
+        $timeofday = Input::get('timeofday');
+        $agelevel  = Input::get('agelevel');
+        $type      = Input::get('type');
+        $zip       = Input::get('zip');
+        $zipradius = Input::get('zipradius');
+
+
+        $happs = JsonApiFormatterHelper::getHapps(Happ::getHapps($date, $timeofday, $agelevel, $type, $zip, $zipradius));
 
         $response = Response::make($happs['happs'], $happs['status_code']);
 
