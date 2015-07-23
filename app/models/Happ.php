@@ -56,6 +56,66 @@ class Happ extends Eloquent
   }
 
 
+    public static function getHapps($date = null, $timeofday = null, $agelevel = null, $type = null, $zip = null, $zipradius = null)
+    {
+        $happs =  Happ::with('categories')
+            ->with('tags');
+
+        if(!is_null($agelevel)) {
+
+            $happs = $happs->with('agelevel');
+        }
+
+        if(!is_null($type)) {
+
+            $happs = $happs->where('type', '=', $type);
+        }
+
+        if(!is_null($zip)) {
+
+            $happs = $happs->where('zip', '=', $zip);
+        }
+
+        $happs = $happs->get();
+
+        if(!is_null($date)) {
+
+            $happs = HappFilterHelper::filterDate($happs, $date);
+
+        }
+
+        if(!is_null($timeofday)) {
+
+            $happs = HappFilterHelper::filterTimeOfDay($happs, $timeofday);
+
+        }
+
+        if(!is_null($zipradius)) {
+
+            $happs = HappFilterHelper::filterZipRadius($happs, $zipradius);
+        }
+
+        return $happs;
+    }
+
+    public static function getHappById($happId)
+    {
+        return Happ::with('categories')
+                    ->with('tags')
+                    ->where('id', '=', $happId)
+                    ->get();
+    }
+
+    public static function getFirstHapp($id)
+    {
+        return Happ::with('categories')
+            ->with('tags')
+            ->where('id', '=', $id)
+            ->first();
+    }
+
+
+
   /**
    * Return a list of duplicated events for the current event.
    */

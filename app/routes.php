@@ -29,6 +29,10 @@ Route::get('sharedEventPosition', 'SharedEventController@sharedEventPosition');
 Route::resource('sharedEvent', 'SharedEventController');
 
 
+Route::get('happs{date?}{timeofday?}{agelevel?}{type?}{zip?}{zipradius?}', 'HappController@getHappList');
+Route::get('happs/{id}', 'HappController@getHapp');
+Route::get('happs/{id}/venue', 'HappController@getHappVenue');
+
 Route::get('events', 'EventController@events');
 Route::get('venues', 'VenueController@venues');
 Route::get('recommendedEvents', 'EventController@recommendedEvents');
