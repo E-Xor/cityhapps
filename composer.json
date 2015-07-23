@@ -7,7 +7,8 @@
 		"illuminate/html": "~4.0",
 		"guzzlehttp/guzzle": "~4.0",
 		"nesbot/Carbon": "1.*",
-        "artdarek/oauth-4-laravel": "dev-master"
+        "artdarek/oauth-4-laravel": "dev-master",
+	  	"cviebrock/eloquent-sluggable": "2.x"
 	},
 	"autoload": {
 		"classmap": [

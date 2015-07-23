@@ -129,7 +129,7 @@
             </div>
             <div>
                 <label for="tags">Tags</label>
-                <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw">
+                <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">
                     <auto-complete source="loadTags($query)"></auto-complete>
                 </tags-input>
             </div>
