@@ -42,12 +42,12 @@ class Happ extends Eloquent
   }
 
   public function venue(){
-    return $this->hasOne('Venue', 'venue_id', 'id');
+    return $this->hasOne('Venue', 'id', 'venue_id');
   }
 
   public function ageLevel()
   {
-    return $this->hasMany('HappAgeLimit', 'event_id', 'id');
+    return $this->hasMany('HappAgeLevel', 'happ_id', 'id');
   }
 
   public function duplicated()
@@ -55,66 +55,66 @@ class Happ extends Eloquent
     $this->hasMany('Happ','parent_id');
   }
 
+  /**
+   *
+   */
+  public static function getHapps($date = null, $timeofday = null, $agelevel = null, $type = null, $zip = null, $zipradius = null)
+  {
+    $query = Happ::with('categories')
+      ->with('tags')
+      ->with('venue')
+      ->with('agelevel');
 
-    public static function getHapps($date = null, $timeofday = null, $agelevel = null, $type = null, $zip = null, $zipradius = null)
-    {
-        $happs =  Happ::with('categories')
-            ->with('tags');
-
-        if(!is_null($agelevel)) {
-
-            $happs = $happs->with('agelevel');
-        }
-
-        if(!is_null($type)) {
-
-            $happs = $happs->where('type', '=', $type);
-        }
-
-        if(!is_null($zip)) {
-
-            $happs = $happs->where('zip', '=', $zip);
-        }
-
-        $happs = $happs->get();
-
-        if(!is_null($date)) {
-
-            $happs = HappFilterHelper::filterDate($happs, $date);
-
-        }
-
-        if(!is_null($timeofday)) {
-
-            $happs = HappFilterHelper::filterTimeOfDay($happs, $timeofday);
-
-        }
-
-        if(!is_null($zipradius)) {
-
-            $happs = HappFilterHelper::filterZipRadius($happs, $zipradius);
-        }
-
-        return $happs;
+    if(!is_null($agelevel)) {
+      //$query;
     }
 
-    public static function getHappById($happId)
-    {
-        return Happ::with('categories')
-                    ->with('tags')
-                    ->where('id', '=', $happId)
-                    ->get();
+    if(!is_null($type)) {
+      $query->where('type', '=', $type);
     }
 
-    public static function getFirstHapp($id)
-    {
-        return Happ::with('categories')
-            ->with('tags')
-            ->where('id', '=', $id)
-            ->first();
+    if(!is_null($zip)) {
+      $query->where('zip', '=', $zip);
     }
 
+    if(!is_null($date)) {
+      $happs = HappFilterHelper::filterDate($query, $date);
+    }
 
+    $happs = $query->get();
+
+    if(!is_null($timeofday)) {
+      $happs = HappFilterHelper::filterTimeOfDay($happs, $timeofday);
+    }
+
+    if(!is_null($zipradius)) {
+      $happs = HappFilterHelper::filterZipRadius($happs, $zipradius);
+    }
+
+    return $happs;
+  }
+
+  /**
+   *
+   */
+  public static function getHappById($happId)
+  {
+    return Happ::with('categories')
+      ->with('tags')
+      ->where('id', '=', $happId)
+      ->get();
+  }
+
+  /**
+   *
+   */
+  public static function getFirstHapp($id)
+  {
+    return Happ::with('categories')
+      ->with('tags')
+      ->where('id', '=', $id)
+      ->first();
+  }
 
   /**
    * Return a list of duplicated events for the current event.
