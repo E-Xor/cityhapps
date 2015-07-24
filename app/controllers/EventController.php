@@ -14,11 +14,23 @@ class EventController extends BaseController {
 		Happ::storeEvents();
 	}
 
+	/**
+	 * Returns a list of events matching the search criteria
+	 *
+	 * @param bool|false $name
+	 *
+	 * @return array
+	 */
 	public function events() {
 
 		$eventParams = array();
 
-		$eventParams['eventID'] = Input::get('id');
+		$eventParams['eventID'] = (Input::get('current_id')) ? Input::get( 'current_id' ) : Input::get('id');
+        if ($eventParams['eventID'] == Input::get('current_id')) {
+            if (Input::get('current_id')) {
+                $eventParams['remove_self'] = TRUE;
+            }
+        }
 		$eventParams['eventName'] = Input::get('name');
 		$eventParams['venueName'] = Input::get('venue_name');
 		$eventParams['venueAddress'] = Input::get('venue_address');
@@ -51,6 +63,9 @@ class EventController extends BaseController {
 		$meta["count"] = $count;
 
 		$results = array("meta" => $meta, "events" => $events);
+        if (isset($eventParams['remove_self']) && $eventParams['remove_self']){
+            $results = $events;
+        }
 		
 		return $results;
 	}

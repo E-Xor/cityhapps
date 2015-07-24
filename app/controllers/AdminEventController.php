@@ -48,6 +48,16 @@ class AdminEventController extends \BaseController {
     $eventParams['venue_url'] = Input::get('venue_url');
     $eventParams['address'] = Input::get('street_address');
     $eventParams['event_image_url'] = Input::get('event_image_url');
+    if (Input::get('parent_id') > 0) {
+        if (!Input::get('parent')) {
+            //tag was deleted, delete the parent_id too
+            Happ::find($eventParams['id'])->update(array('parent_id' => NULL, 'status' => Happ::STATUS_ACTIVE));
+        } else {
+            $eventParams['parent_id'] = Input::get('parent_id');
+            $eventParams['status'] = Happ::STATUS_DUPLICATED;
+        }
+    }
+
    // no room for building
    //$eventParams['building'] = Input::get('building');
     $eventParams['city'] = Input::get('city');
@@ -95,6 +105,7 @@ class AdminEventController extends \BaseController {
      unset($eventParams['similar_events_storage']);
      unset($eventParams['similar_events_model']);
      unset($eventParams['similar_events']);
+     unset($eventParams['parent']);
 
      if ($result) {
       // then update

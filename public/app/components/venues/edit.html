@@ -114,8 +114,16 @@
                 <auto-complete source="loadTags($query)"></auto-complete>
               </tags-input>
             </div>
-
-
+            <div  ng-if="formData.parent_id > 0 || formData.similar_events_model.length == 0">
+              <dl>
+                <dt>Duplicate of</dt>
+                <dd>If you believe this is a duplicate of another event, add it here. We'll make sure it is labeled as such and removed from results.</dd>
+              </dl>
+              <tags-input id="parent_id" ng-model="formData.parent" key-property="id" display-property="event_name" replace-spaces-with-dashes="false" placeholder="Add an event" max-tags=1 addFromAutocompleteOnly="true">
+                <auto-complete source="loadEvents($query)" template="parentIdTemplate" debounceDelay="1000"></auto-complete>
+              </tags-input>
+              <span></span>
+            </div>
             <div class="similar_venues">
               <div ng-if="formData.parent_id > 0">
                 This item has been identified as a duplicate of <a href="admin/venue/edit/{{formData.parent_id}}">Venue ID: {{formData.parent_id}}</a>
@@ -144,4 +152,5 @@
 
         </fieldset>
         </form>
+          </div>
         <script src="/js/jquery.datetimepicker.js"></script>

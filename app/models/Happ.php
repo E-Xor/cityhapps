@@ -220,8 +220,6 @@ class Happ extends Eloquent
     $events = Happ::with('categories')
       ->with('tags')
       ->maxPerDay($eventParams['maxPerDay'])
-      ->eventID($eventParams['eventID'])
-      ->eventName($eventParams['eventName'])
       ->venueName($eventParams['venueName'])
       ->venueAddress($eventParams['venueAddress'])
       ->venueName($eventParams['venueCity'])
@@ -229,21 +227,33 @@ class Happ extends Eloquent
       ->venueName($eventParams['venueZip'])
       ->description($eventParams['description'])
       ->startTime($eventParams['startTime'])
-      ->status(Happ::STATUS_ACTIVE)
       ->dateRange($eventParams['startDate'], $eventParams['endDate'])
       ->imageRequired($eventParams['imageRequired'])
       ->eventSearch($eventParams['search'])
-      ->where('status', '<>', Happ::STATUS_DUPLICATED)
       ->withCategory($eventParams['category'])
       ->withUserEvent($eventParams['userID'])
       ->orderBy('event_date', 'asc')
       ->orderBy('start_time', 'asc')
-      ->getPage($eventParams['pageSize'], $eventParams['pageCount'], $eventParams['pageShift'])
-      ->get();
+      ->getPage($eventParams['pageSize'], $eventParams['pageCount'], $eventParams['pageShift']);
 
-    //dd($events[0]);
+    if ($eventParams['eventID'] && !$eventParams['eventName']) {
+      $events->where('id', '=', $eventParams['eventID']);
+    } else {
+      if ($eventParams['eventName']) {
+        $events->where('id', '<>', $eventParams['eventID']);
+      }
+    }
+    if($eventParams['eventName']) {
+      $events->where('event_name', 'LIKE', "%{$eventParams['eventName']}%");
+    }
+    if (!empty($eventParams['pageSize'])) {
+      $events->where('status', '<>', Happ::STATUS_DUPLICATED)->orWhere(function($query)
+      {
+        $query->where('status', '=', Happ::STATUS_ACTIVE);
+      });
+    }
 
-    return $events;
+    return $events->get();
 
   }
 
