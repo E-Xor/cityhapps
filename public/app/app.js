@@ -1320,11 +1320,6 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
             $('.help-overlay').fadeToggle();
         };
 
-        $scope.recToggle = function() {
-            $('.rec').fadeToggle();
-            $('.rec-arrow').toggleClass("down");
-        };
-
         $('div').fadeIn('fast');
 
 		$scope.mobile = function() {

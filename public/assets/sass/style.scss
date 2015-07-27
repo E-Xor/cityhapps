@@ -263,21 +263,6 @@ input.main-search {
 
 .header-search .auth {
 	cursor: pointer;
-    .rec-arrow {
-      position: absolute;
-      width: 68px;
-      height: 70px;
-      background: url("../img/recArrow.png") no-repeat;
-      right: 87px;
-      top: 5px;
-      padding: 16px 0;
-      font-size: 1.3em;
-      color: #FF5C50;
-      font-weight: bold;
-      &.down {
-        background: url("../img/recArrowDown.png") no-repeat;
-      }
-    }
 }
 
 // .modal { 

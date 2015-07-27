@@ -1,13 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" ng-app="cityHapps">
 <head>
 	<meta charset="UTF-8">
 	<title>City Happs</title>
-	<style>
-		@import url(//fonts.googleapis.com/css?family=Lato:700);
-
-	</style>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,700italic,500italic,400italic|Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="/assets/css/angular-snap.min.css" />
@@ -42,10 +40,44 @@
 <div id="fb-root"></div>
 
 
-   <!-- default is set to 120 minutes, which our angular cookie is synced to -->
+    <!-- default is set to 120 minutes, which our angular cookie is synced to -->
     <!-- echo(Config::get('session.lifetime')); -->
 
+
+
     <body ng-controller="appController" ng-cloak>
+        <ul id="verticalMenu">
+            <li id="firstMenu"><a href="#">My Account</a></li>
+            <hr>
+            <li><a href="/">Home</a></li>
+            <hr>
+            <li><a href="#">My Favorites</a></li>
+            <hr>
+            <li><a href="#">Exhibits &amp; Museums</a></li>
+            <hr>
+            <li><a href="#">Festivals</a></li>
+            <hr>
+            <li><a href="#">Sports</a></li>
+            <hr>
+            <li><a href="#">Art</a></li>
+            <hr>
+            <li><a href="#">Music</a></li>
+            <hr>
+            <li><a href="#">Category</a></li>
+            <hr>
+            <li><a href="#">Category</a></li>
+            <hr>
+            <li><a href="#">Category</a></li>
+            <hr>
+            <li><a href="#">Category</a></li>
+            <hr>
+            <li><a href="#">Category</a></li>
+            <hr>
+            <li><a href="#">Category</a></li>
+            <hr>
+            <li><a href="#">Category</a></li>
+            <hr>
+        </ul>
 		<div ng-if="!mobile()">
 
 <!--<ng-include src="/public/templates/helpSlider.html"></ng-include>-->
@@ -63,8 +95,11 @@
 						</div>
 						<div class="header-search">
 							<div class="row sm-12">
-								<div class="col-sm-4 center">
-									<a href="#/"><img src="/assets/img/logo.png"></a>
+								<div class="col-sm-4 center cityLogo">
+									<a href="/"><img src="/assets/img/logo.png"></a>
+                                    <p id="atl">ATLANTA</p>
+                                    <hr>
+                                    <span id="filterBy">Filter By</span>
 								</div>
 								<div class="col-sm-4 center logo">
                                     <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
@@ -73,12 +108,12 @@
 
 								</div>
 									<div class="col-sm-4 auth" ng-controller="modalController">
-                                        <div ng-cloak ng-show="!user" class="margin">
+                                        <!--div ng-cloak ng-show="!user" class="margin">
                                             <h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
                                             <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
                                             <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
-                                        </div>
-                                        <div ng-cloak ng-show="user" ng-init="getUserData();">
+                                        </div-->
+                                        <!--div ng-cloak ng-show="user" ng-init="getUserData();">
                                             <div class="user-info">
                                                 <h5 class="red italic inline accountHelp" ng-click="helpFade()">help</h5>
                                                     <div ng-click="categoryToggle()"> {{formData.email}} </div>
@@ -94,10 +129,7 @@
                                                 <a class="red logout" ng-click="editOpen('md'); close();">Edit</a>
                                                 <a class="red logout" ng-click="logoutUser()">Sign out</a>
                                             </div>
-                                        </div>
-                                        <div class="rec-arrow" ng-cloak ng-show="user" ng-click="recToggle()">
-                                            {{recEventCount}}
-                                        </div>
+                                        </div-->
 									</div>
 
 								</div>
@@ -175,7 +207,6 @@
                                <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
                            </div>
                        </div>
-
                    </li>
                </ul>
             </div>
@@ -208,6 +239,14 @@
 			</div>
 		</div>
 	<!-- </div> -->
+
+    <footer>
+        <ul id="footerMenu">
+            <li><a href="#">Events</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </footer>
 
 	<!-- ng- scripts and things -->
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
@@ -249,8 +288,6 @@
     <!-- tags -->
 	<script src="/app/app.js"></script>
 	<script src="/js/dom.js"></script>
-
-
 
 </body>
 </html>

@@ -12,22 +12,20 @@
 	<div class="happ-single">
 		<div class="row">
 			<div class="happ-image col-md-7" style="background-image: url('{{data.event_image_url}}'); background-size: cover;">
-				<div ng-repeat="category in data.categories" class="happ-categories inline">
+				<div ng-repeat="category in data.categories" class="inline">
 					<span class="happ-category">{{category.name}}</span>
 				</div>
 				<div class="happ-date">{{data.start_time | dateToISO | date: 'MMM d'}}</div>
 			</div>
 			<div class="col-md-5">
 				<h3 class="dark bold">{{data.event_name}}</h3>
-				<div class="time">{{data.start_time | dateToISO | date: 'h:mm a'}} - {{data.end_time | dateToISO | date: 'h:mm a'}}</div>
-				<div class="happ-venue"><a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a></div>
-				<div class="happ-buttons">
-					<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
-					<a class="happ-button inverse right{{ likeStatus ? ' active' : '' }}" href="#" ng-model="data.vote.upVote;" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>
-						<span ng-hide="likeStatus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Save For Later</span>
-						<span ng-show="likeStatus">Saved for Later</span>
-					</a>
-				</div>
+				<div class="time">{{data.start_time | dateToISO | date: 'h:mm a'}} - {{data.end_time | dateToISO | date: 'h:mm a'}}</p></div>
+				<div class="venue"><a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a></div>
+				<!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
+				<div class="buttons">
+				<a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
+				<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
+				</div>-->
 			</div>
 		</div>
 		<div class="row">
@@ -36,12 +34,12 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-9">
-				More Like This:
+			<!--<div class="col-md-9">
+			More Like This:
 			</div>
 			<div class="col-md-3">
-				Share It:
-			</div>
+			Share It:
+			</div>-->
 		</div>
 		<div class="row">
 			<div class="col-md-12">
@@ -52,4 +50,8 @@
 			<a href="{{ data.google_directions_link }}"><img class="col-md-12" src="{{ data.google_map_large }}" /></a>
 		</div>
 	</div>
+</div>
+<div id="ad">
+	<div id="adOne"><p>Ad Space</p></div>
+	<div id="adTwo"><p>Ad Space</p></div>
 </div>
