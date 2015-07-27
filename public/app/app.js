@@ -923,6 +923,9 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
           error = 1;
           $scope.descError = true;
         }
+        if (formData.parent.length > 0) {
+            formData.parent_id = formData.parent[0]['id'];
+        }
 
         // if any error, don't post
         if (error) {
@@ -1041,9 +1044,18 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                         return base;
                     })();
                     $scope.formData.tags = singleEvent.tags;
+                    $scope.formData.parent = [];
+
                     $scope.loadTags = function(query) {
                         return $http.get('/tags/' + query);
                     };
+                    $scope.loadEvents = function(query){
+                        return $http.get('/events/?name=' + query + '&current_id=' + $routeParams.id);
+                    };
+                    if ($scope.formData.parent_id > 0) {
+                        //This event has NO suggested similar, events let's fetch the parent information
+                        $http.get('/events/?id=' + $routeParams.id + '&current_id=' + $scope.formData.parent_id ).success(function(data){$scope.formData.parent = data;});
+                    }
                 }
         })
     }
@@ -1084,6 +1096,9 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
         if (typeof formData.desc === 'undefined' || formData.desc == '') {
           error = 1;
           $scope.descError = true;
+        }
+        if (formData.parent.length > 0) {
+            formData.parent_id = formData.parent[0]['id'];
         }
         // if any error, don't post
         if (error) {
