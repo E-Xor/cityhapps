@@ -34,14 +34,14 @@ $tan: #F7EEEF;
 .gradient-blue {
     // background: rgba(16, 41, 70, 0.56);
     // shoud be a Sass gradient
-    background: rgba(16,41,70,0.56);
+    /*background: rgba(16,41,70,0.56);
     background: -moz-linear-gradient(top, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
     background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(16,41,70,0.56)), color-stop(55%, rgba(16,41,70,0.5)), color-stop(99%, rgba(16,41,70,0)));
     background: -webkit-linear-gradient(top, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
     background: -o-linear-gradient(top, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
     background: -ms-linear-gradient(top, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
     background: linear-gradient(to bottom, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#102946', endColorstr='#102946', GradientType=0 );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#102946', endColorstr='#102946', GradientType=0 );*/
 }
 
 .gradient-grey {
@@ -64,8 +64,8 @@ $tan: #F7EEEF;
 
 html {
 	@extend .proxima;
-	background: #2c2625;
-    overflow: visible;
+	background: #EBE6DE;
+  overflow: visible;
 }
 
 body {
@@ -77,9 +77,11 @@ body {
 
 .header-container {
 	z-index: 2;
-  background: rgba(11, 38, 60, 0.54);
-  margin: 0 auto;
-  padding: 0 5%;
+  background-color: #FFFFFF;
+  border-bottom: 1px #C7C5C0 solid;
+  width: 80%;
+  float: right;
+  height: 200px;
 }
 
 .imageContainer {
@@ -89,12 +91,12 @@ body {
 
 .bg-image {
 	padding: 0;
-	background: url('../img/fullWidthBG.jpg') no-repeat #2c2625;
 	background-size: contain;
 	-moz-background-size: contain;
 	z-index: 1;
 	min-height: 1000px;
   @extend .gradient-blue;
+  background-color: #EAE6DE;
 }
 
 .calContainer {
@@ -129,7 +131,7 @@ body {
 }
 
 .search-large::-webkit-input-placeholder {
-	color: #fff;
+	color: #5C5C5C;
 	font-size: 1.2em;
 	font-style: italic;
 	letter-spacing: .1em;
@@ -204,10 +206,9 @@ body {
 	text-align: center;
 	input {
 		width: 100%;
-		height: 60px;
+		height: 20px;
 		padding: 5px 5px 5px 70px;
-		border: 2px solid #fff;
-		background: url("../img/searchIcon.png") 35px 16px / 23px 26px no-repeat;
+		border: 1px solid #D3D3D3;
 	}
 }
 
@@ -242,7 +243,7 @@ input.main-search {
 .search-large {
   height: 109px;
   font-size: 2.2em;
-  color: #fff;
+  color: #5C5C5C;
   border: 4px solid #FF5C50;
   position: absolute;
   width: 100%;
@@ -290,7 +291,7 @@ input.main-search {
 
 .happ-single, .venue-single {
   background: white;
-  padding: 30px;
+  padding: 3%;
 }
 
 .happ-image {
@@ -1753,7 +1754,7 @@ h3 {
 }
 
 .happ-date {
-  color: #fff;
+  color: #FFFFFF;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-top: solid #D9433F 1px;
@@ -1772,4 +1773,132 @@ h3 {
 .happ-venue a {
   text-decoration: none;
   color: #000;
+}
+
+#verticalMenu{
+  background-color: #555555;
+  width: 20%;
+  height: 100%;
+  float: left;
+  li{
+    text-decoration: none;
+    list-style-type: none;
+    a{
+     color: #FFFFFF;
+     text-decoration: none;
+    }
+  }
+}
+
+#firstMenu{
+ color: #8b8b8b;
+ text-decoration: none;
+}
+
+.happ-single {
+  background: white;
+  float: right;
+  overflow: hidden;
+}
+
+#adOne {
+  height: 200px;
+  width: 300px;
+  margin-bottom: 50px;
+  background-color: #fff;
+  margin-left: auto;
+  margin-right: 50px;
+}
+
+#adTwo {
+  height: 200px;
+  width: 300px;
+  background-color: #fff;
+  margin-left: auto;
+  margin-right: 50px;
+}
+
+#ad{
+  margin: 2%;
+}
+
+.happ-single, #ad {
+  float: left;
+  width: 18%;
+}
+
+.happ-single {
+  width: 45%;
+  margin: 2%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#ad p {
+  margin: auto;
+  padding: 40%;
+}
+
+#verticalMenu {
+  padding-top: 150px;
+  hr{
+    margin-left: -40px;
+    border-color: #626262;
+    &:last-child{
+      visibility: hidden;
+    }
+  }
+}
+
+.cityLogo {
+  width: 100%;
+  hr {
+    border-color: #B8B5B0;
+  }
+  span{
+    color: #9B9B9B;
+    float: left;
+    margin-left: 6%;
+  }
+}
+
+.col-sm-4.center.logo {
+  float: right;
+  margin-right: 2%;
+}
+
+#atl{
+  color: #5c5c5c;
+}
+
+#firstMenu a{
+  color: #8B8B8B !important;
+}
+
+a {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+}
+
+footer{
+  color: red;
+  clear: both;
+}
+
+footer ul li{  
+  text-decoration: none;
+  display: inline;
+}
+
+ul#footerMenu {
+  margin-left: 50%;
+  color: #2F3030;
 }
