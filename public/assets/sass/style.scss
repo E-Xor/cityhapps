@@ -7,72 +7,19 @@ $dark-grey: #2C2625;
 $grey: #404042;
 $light-grey: #D1D2D4;
 $tan: #F7EEEF;
-//Fonts 
-
-.proxima {
-	font-family: "proxima-nova", sans-serif;
-	font-style: normal;
-	font-weight: 400;
-} 
-
-.proxima-light {
-	font-weight: 200;
-}
-
-.proximaItalic {
-	font-family: "proxima-nova", sans-serif;
-	font-style: italic;
-	font-weight: 400;
-}
-
-.proximaBold {
-	font-family: "proxima-nova", sans-serif;
-	font-style: normal;
-	font-weight: 700;
-}
-
-.gradient-blue {
-    // background: rgba(16, 41, 70, 0.56);
-    // shoud be a Sass gradient
-    /*background: rgba(16,41,70,0.56);
-    background: -moz-linear-gradient(top, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(16,41,70,0.56)), color-stop(55%, rgba(16,41,70,0.5)), color-stop(99%, rgba(16,41,70,0)));
-    background: -webkit-linear-gradient(top, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
-    background: -o-linear-gradient(top, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
-    background: -ms-linear-gradient(top, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
-    background: linear-gradient(to bottom, rgba(16,41,70,0.56) 0%, rgba(16,41,70,0.5) 55%, rgba(16,41,70,0) 99%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#102946', endColorstr='#102946', GradientType=0 );*/
-}
-
-.gradient-grey {
-  background: -moz-linear-gradient(top,  rgba(28,30,33,0.56) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(28,30,33,0.56)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgba(28,30,33,0.56) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgba(28,30,33,0.56) 0%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgba(28,30,33,0.56) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  rgba(28,30,33,0.56) 0%,rgba(255,255,255,0) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f1c1e21', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
-
-
-
-}
-// .open-sans {
-// 	font-family: 'Open Sans', sans-serif;
-// }
 
 //End Vars
 
 html {
-	@extend .proxima;
 	background: #EBE6DE;
   overflow: visible;
 }
 
 body {
-	@extend .proxima;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow: visible;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: visible;
 }
 
 .header-container {
@@ -83,10 +30,6 @@ body {
   float: right;
   height: 200px;
 }
-
-.imageContainer {
-  @extend .gradient-blue;
-}
 	
 
 .bg-image {
@@ -95,26 +38,11 @@ body {
 	-moz-background-size: contain;
 	z-index: 1;
 	min-height: 1000px;
-  @extend .gradient-blue;
   background-color: #EAE6DE;
 }
 
-.calContainer {
-  @extend .gradient-grey;
-}
-
-.grey-wide, .grey-wide-map {
-  @extend .gradient-grey;
-}
-
-//.grey-wide-map {
-//	background: rgba(0,0,0,0.35);
-////    @extend .gradient-grey;
-//}
-
 .totalEvents {
   font-weight: 200;
-  font-family: "proxima-nova", sans-serif;
   font-size: 3em;
 }
 
@@ -1886,4 +1814,11 @@ footer ul li{
 ul#footerMenu {
   margin-left: 50%;
   color: #2F3030;
+}
+
+.header-controls {
+  .filter {
+    text-transform: uppercase;
+    font-size: 13px;
+  }
 }

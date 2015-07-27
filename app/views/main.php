@@ -99,38 +99,38 @@
 									<a href="/"><img src="/assets/img/logo.png"></a>
                                     <p id="atl">ATLANTA</p>
                                     <hr>
-                                    <span id="filterBy">Filter By</span>
+                                    <div class="header-controls">
+                                    <span class="filter">Filter By</span>
+                                    <div class="col-sm-4 center logo">
+                                        <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
+                                            <i class="fa fa-search"></i><input type="text" ng-model="query" class="main-search" />
+                                        </form>
+                                    </div>
 								</div>
-								<div class="col-sm-4 center logo">
-                                    <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
-                                        <input type="text" placeholder="Find Events &amp; Activities" ng-model="query" class="main-search" />
-                                    </form>
-
-								</div>
-									<div class="col-sm-4 auth" ng-controller="modalController">
-                                        <!--div ng-cloak ng-show="!user" class="margin">
-                                            <h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
-                                            <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
-                                            <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
-                                        </div-->
-                                        <!--div ng-cloak ng-show="user" ng-init="getUserData();">
-                                            <div class="user-info">
-                                                <h5 class="red italic inline accountHelp" ng-click="helpFade()">help</h5>
-                                                    <div ng-click="categoryToggle()"> {{formData.email}} </div>
-                                                    <div class="categoriesDropdownUser">
-                                                        <div class="toggle-controls">
-                                                            <div class="right red uppercase bold pointer" ng-click="categoryToggle(); updateUserCategories();">Close</div>
-                                                            <div class="left red uppercase bold pointer">Edit your categories here</div>
-                                                        </div>
-                                                        <div ng-repeat="category in categories">
-                                                            <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
-                                                        </div>
+								<div class="col-sm-4 auth" ng-controller="modalController">
+                                    <!--div ng-cloak ng-show="!user" class="margin">
+                                        <h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
+                                        <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
+                                        <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
+                                    </div-->
+                                    <!--div ng-cloak ng-show="user" ng-init="getUserData();">
+                                        <div class="user-info">
+                                            <h5 class="red italic inline accountHelp" ng-click="helpFade()">help</h5>
+                                                <div ng-click="categoryToggle()"> {{formData.email}} </div>
+                                                <div class="categoriesDropdownUser">
+                                                    <div class="toggle-controls">
+                                                        <div class="right red uppercase bold pointer" ng-click="categoryToggle(); updateUserCategories();">Close</div>
+                                                        <div class="left red uppercase bold pointer">Edit your categories here</div>
                                                     </div>
-                                                <a class="red logout" ng-click="editOpen('md'); close();">Edit</a>
-                                                <a class="red logout" ng-click="logoutUser()">Sign out</a>
-                                            </div>
-                                        </div-->
-									</div>
+                                                    <div ng-repeat="category in categories">
+                                                        <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
+                                                    </div>
+                                                </div>
+                                            <a class="red logout" ng-click="editOpen('md'); close();">Edit</a>
+                                            <a class="red logout" ng-click="logoutUser()">Sign out</a>
+                                        </div>
+                                    </div-->
+								</div>
 
 								</div>
 							</div>
