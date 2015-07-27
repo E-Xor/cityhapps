@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5807a80130cb177bdc7d92f8fb030f68",
+    "hash": "3fefee4139a00db4869a3baa084d6899",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -327,6 +327,53 @@
                 "string"
             ],
             "time": "2014-12-20 21:24:13"
+        },
+        {
+            "name": "echo-it/laravel-jsonapi",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cdarken/laravel-jsonapi.git",
+                "reference": "763b6c1f664998270795a1edec72ea79e56c59ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cdarken/laravel-jsonapi/zipball/763b6c1f664998270795a1edec72ea79e56c59ec",
+                "reference": "763b6c1f664998270795a1edec72ea79e56c59ec",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.1.*",
+                "illuminate/http": "5.1.*",
+                "illuminate/pagination": "5.1.*",
+                "illuminate/support": "5.1.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "EchoIt\\JsonApi\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ronni Egeriis Persson",
+                    "email": "ronni@egeriis.me"
+                },
+                {
+                    "name": "Jared Chapiewsky",
+                    "email": "chapiewsky@earthlinginteractive.com"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/cdarken/laravel-jsonapi/tree/master"
+            },
+            "time": "2015-07-09 12:39:46"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -3036,7 +3083,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "echo-it/laravel-jsonapi": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
