@@ -1,14 +1,9 @@
 <?php
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Database\Eloquent\Model;
 
-class EventfulCategory extends Eloquent implements UserInterface, RemindableInterface {
-
-	use UserTrait, RemindableTrait;
-
+class EventfulCategory extends Model
+{
 	// public $timestamps = false;
 
 	protected $fillable = ['category_id', 'name', 'long_name', 'source_category_id'];
@@ -26,5 +21,4 @@ class EventfulCategory extends Eloquent implements UserInterface, RemindableInte
 	 * @var array
 	 */
 	//protected $hidden = array('id');
-
 }

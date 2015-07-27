@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: CityHapps
+        psr4_prefix: CityHapps
+        src_path: app

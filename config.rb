@@ -5,7 +5,7 @@ project_type = :stand_alone
 # Set this to the root of your project when deployed:
 http_path = "/"
 css_dir = "public/assets/css"
-sass_dir = "public/assets/sass"
+sass_dir = "resources/assets/sass"
 images_dir = "public/assets/img"
 javascripts_dir = "public/assets/js"
 

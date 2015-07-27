@@ -1,14 +1,9 @@
 <?php
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Database\Eloquent\Model;
 
-class EventbriteEventbriteCategory extends Eloquent implements UserInterface, RemindableInterface {
-
-	use UserTrait, RemindableTrait;
-
+class EventbriteEventbriteCategory extends Model
+{
 	// public $timestamps = false;
 
 	protected $fillable = ['eventbrite_id', 'eventbriteCategories_id'];
