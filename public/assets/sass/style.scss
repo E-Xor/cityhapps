@@ -1691,7 +1691,6 @@ h3 {
 #verticalMenu{
   background-color: #555555;
   width: 20%;
-  height: 100%;
   float: left;
   li{
     text-decoration: none;
@@ -1712,23 +1711,26 @@ h3 {
   background: white;
   float: right;
   overflow: hidden;
+  box-shadow: 1px 3px 11px #888888;
 }
 
 #adOne {
-  height: 200px;
-  width: 300px;
+  height: 250px;
+  width: 350px;
   margin-bottom: 50px;
   background-color: #fff;
   margin-left: auto;
   margin-right: 50px;
+  box-shadow: 1px 3px 11px #888888;
 }
 
 #adTwo {
-  height: 200px;
-  width: 300px;
+  height: 400px;
+  width: 350px;
   background-color: #fff;
   margin-left: auto;
   margin-right: 50px;
+  box-shadow: 1px 3px 11px #888888;
 }
 
 #ad{
