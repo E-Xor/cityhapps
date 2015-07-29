@@ -7,7 +7,7 @@
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
-
+<div id="viewContent">
 <div ng-controller="happController">
 	<div class="happ-single">
 		<div class="row">
@@ -17,10 +17,11 @@
 				</div>
 				<div class="happ-date">{{data.start_time | dateToISO | date: 'MMM d'}}</div>
 			</div>
-			<div class="col-md-5">
+			<div class="col-md-5 happInfo">
 				<h3 class="dark bold">{{data.event_name}}</h3>
 				<div class="time">{{data.start_time | dateToISO | date: 'h:mm a'}} - {{data.end_time | dateToISO | date: 'h:mm a'}}</p></div>
 				<div class="venue"><a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a></div>
+        <div class="ratingPrice"><span id="rating">Rating</span><span id="price">Price</span></div>
 				<!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
 				<div class="buttons">
 				<a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
@@ -47,7 +48,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<a href="{{ data.google_directions_link }}"><img class="col-md-12" src="{{ data.google_map_large }}" /></a>
+			<a href="{{ data.google_directions_link }}"><img class="col-md-12" src="{{ data.google_map_large }}" /><span id="mapCircle">Maps</span></a>
 		</div>
 	</div>
 </div>
@@ -55,3 +56,5 @@
 	<div id="adOne"><p>Ad Space</p></div>
 	<div id="adTwo"><p>Ad Space</p></div>
 </div>
+</div>
+
