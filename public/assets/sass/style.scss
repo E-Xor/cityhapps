@@ -204,11 +204,13 @@ input.main-search {
 
 .happ-single, .venue-single {
   background: white;
-  padding: 3%;
+  padding: 1%;
 }
 
 .happ-image {
   min-height: 180px;
+  margin-left: 2%;
+  width:50%;
 }
 
 .modal-dialog {
@@ -1661,20 +1663,21 @@ h3 {
 .happ-description {
   margin-left: auto;
   margin-right: auto;
-  padding: 1%;
+  padding: 2%;
   text-align: justify;
   float: left;
+  line-height: 1.5em;
 }
 
 .happ-date {
-  color: #FFFFFF;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  border-top: solid #D9433F 1px;
-  position: absolute;
-  margin-top: 119px;
-  width: 100%;
-  margin-left: -15px;
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-top: solid #D9433F 1px;
+    position: absolute;
+    margin-top: 118px;
+    width: 100%;
+    margin-left: -15px;
 }
 
 .happ-buttons {
@@ -1688,10 +1691,7 @@ h3 {
   color: #000;
 }
 
-#verticalMenu{
-  background-color: #555555;
-  width: 20%;
-  float: left;
+
   li{
     text-decoration: none;
     list-style-type: none;
@@ -1700,7 +1700,7 @@ h3 {
      text-decoration: none;
     }
   }
-}
+
 
 #firstMenu{
  color: #8b8b8b;
@@ -1733,8 +1733,9 @@ h3 {
   box-shadow: 1px 3px 11px #888888;
 }
 
-#ad{
-  margin: 2%;
+#ad {
+    margin-left: 2%;
+    margin-top: 2%;
 }
 
 .happ-single, #ad {
@@ -1743,8 +1744,9 @@ h3 {
 }
 
 .happ-single {
-  width: 45%;
-  margin: 2%;
+  width: 50%;
+  margin-top: 2%;
+    margin-left: 22%;
 }
 
 .container {
@@ -1759,7 +1761,13 @@ h3 {
 }
 
 #verticalMenu {
-  padding-top: 150px;
+  padding-top: 154px;
+  background-color: #555555;
+  width: 20%;
+  float: left;
+  position: absolute;
+  top: 0;
+  bottom:0;
   hr{
     margin-left: -40px;
     border-color: #626262;
@@ -1787,7 +1795,10 @@ h3 {
 }
 
 #atl{
-  color: #5c5c5c;
+    color: #5c5c5c;
+    font-weight: 400;
+    font-size: 18px;
+    margin-top: -1.2%;
 }
 
 #firstMenu a{
@@ -1804,8 +1815,8 @@ p {
 }
 
 footer{
-  color: red;
-  clear: both;
+ 
+ 
 }
 
 footer ul li{  
@@ -1813,9 +1824,22 @@ footer ul li{
   display: inline;
 }
 
-ul#footerMenu {
+#footerMenu {
   margin-left: 50%;
+}
+
+#footerMenu a{
+  text-decoration: underline;
   color: #2F3030;
+  font-size: 14px
+
+}
+
+#footerMenu a:hover{
+  
+}
+span#copyright {
+    margin-left: 49%;
 }
 
 .header-controls {
@@ -1823,4 +1847,76 @@ ul#footerMenu {
     text-transform: uppercase;
     font-size: 13px;
   }
+}
+
+span.happ-category.ng-binding {
+    color: #fff;
+    font-family: 'roboto';
+    font-weight: bold;
+    background-color: #FFA500;
+    padding-right: 60px;
+    padding-left: 60px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 3%;
+    margin-left: -13%;
+    position: absolute;
+}
+
+.venue a {
+    font-size: 14px;
+    color: #333;
+  
+}
+
+.venue a:hover {
+    text-decoration: none;  
+}
+
+span#mapCircle {
+      background: #555555;
+    /* background: rgb(255, 255, 255); */
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    float: left;
+    text-align: center;
+    line-height: 60px;
+    color: #fff;
+    font-size: 12px;
+    position: relative;
+    margin-top: -13%;
+    margin-left: 85%;
+}
+
+.dark {
+    font-size: 14px;
+}
+
+#relatedEvents{
+  width: 40%;
+    margin-left: 22%;
+    color: #444;
+}
+
+
+
+.everything{
+  position:relative;
+  overflow: hidden;
+}
+.happ-date {
+    font-family: 'roboto';
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.ratingPrice {
+    color: #777;
+    float: right;
+    font-weight: 500;
+}
+
+.happ-info{
+   width:27%;
 }

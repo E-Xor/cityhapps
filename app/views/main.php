@@ -43,7 +43,7 @@
     <!-- default is set to 120 minutes, which our angular cookie is synced to -->
     <!-- echo(Config::get('session.lifetime')); -->
 
-
+<div class="everything">
 
     <body ng-controller="appController" ng-cloak>
         <ul id="verticalMenu">
@@ -100,7 +100,7 @@
                                     <p id="atl">ATLANTA</p>
                                     <hr>
                                     <div class="header-controls">
-                                    <span class="filter">Filter By</span>
+                                    <span class="filter">Filter By</span><span class="horizantal">|</span><span class="sort">Sort By</span>
                                     <div class="col-sm-4 center logo">
                                         <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
                                             <i class="fa fa-search"></i><input type="text" ng-model="query" class="main-search" />
@@ -239,15 +239,19 @@
 			</div>
 		</div>
 	<!-- </div> -->
-
+  <div id="relatedEvents">
+<h2 id="related">Related Events</h2>
+</div>
+ 
     <footer>
         <ul id="footerMenu">
             <li><a href="#">Events</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
+        <span id="copyright">CityHapps | &copy2015 All Rights Reserved.</span>
     </footer>
-
+</div>
 	<!-- ng- scripts and things -->
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <script src="http://platform.twitter.com/widgets.js"></script>
