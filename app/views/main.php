@@ -47,9 +47,10 @@
 
     <body ng-controller="appController" ng-cloak>
         <ul id="verticalMenu">
-            <li id="firstMenu"><a href="#">My Account</a></li>
+            <li id="firstMenu"><a href="#">My Account</a><i class="fa fa-sort-desc"></i></li>
             <hr>
-            <li><a href="/">Home</a></li>
+            <li><a href="/">Home</a></i>
+</li>
             <hr>
             <li><a href="#">My Favorites</a></li>
             <hr>
@@ -100,10 +101,10 @@
                                     <p id="atl">ATLANTA</p>
                                     <hr>
                                     <div class="header-controls">
-                                    <span class="filter">Filter By</span><span class="horizantal">|</span><span class="sort">Sort By</span>
+                                    <span class="filter"><i class="fa fa-filter"></i>Filter By <i class="fa fa-sort-desc"></i></span><span class="horizantal">|</span><span class="sort">Sort By<i class="fa fa-sort-desc"></i></span>
                                     <div class="col-sm-4 center logo">
-                                        <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
-                                            <i class="fa fa-search"></i><input type="text" ng-model="query" class="main-search" />
+                                        <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}"<i class="fa fa-search"></i>
+                                     <input type="text" ng-model="query" class="main-search"  />
                                         </form>
                                     </div>
 								</div>
@@ -239,11 +240,11 @@
 			</div>
 		</div>
 	<!-- </div> -->
-  <div id="relatedEvents">
-<h2 id="related">Related Events</h2>
-</div>
+ 
  
     <footer>
+   <i class="fa fa-facebook-official"></i>
+        <i class="fa fa-twitter-square"></i>
         <ul id="footerMenu">
             <li><a href="#">Events</a></li>
             <li><a href="#">About</a></li>

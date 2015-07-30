@@ -1746,7 +1746,8 @@ h3 {
 .happ-single {
   width: 50%;
   margin-top: 2%;
-    margin-left: 22%;
+  margin-left: 22%;
+  margin-bottom: 2%;
 }
 
 .container {
@@ -1756,10 +1757,13 @@ h3 {
 }
 
 #ad p {
-  margin: auto;
-  padding: 40%;
+    font-weight: 400;
+    text-align: center;
+    top: 50%;
+    bottom: 50%;
+    position: relative;
+    font-size: 22px;
 }
-
 #verticalMenu {
   padding-top: 154px;
   background-color: #555555;
@@ -1774,8 +1778,24 @@ h3 {
     &:last-child{
       visibility: hidden;
     }
+
   }
 }
+
+#verticalMenu li{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+ #verticalMenu li a{
+
+    -webkit-font-smoothing: subpixel-antialiased;
+
+    }
+
+#verticalMenu li a:hover{
+   color: #fff;
+  }
 
 .cityLogo {
   width: 100%;
@@ -1827,17 +1847,24 @@ footer ul li{
 #footerMenu {
   margin-left: 50%;
 }
+  a{
+  text-decoration: underline;
+  color: #2F3030;
+  font-size: 14px;
+  
+}
+
+
 
 #footerMenu a{
   text-decoration: underline;
   color: #2F3030;
-  font-size: 14px
+  font-size: 14px;
+  padding-right: 10px;
 
 }
 
-#footerMenu a:hover{
-  
-}
+
 span#copyright {
     margin-left: 49%;
 }
@@ -1856,8 +1883,8 @@ span.happ-category.ng-binding {
     background-color: #FFA500;
     padding-right: 60px;
     padding-left: 60px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     margin-top: 3%;
     margin-left: -13%;
     position: absolute;
@@ -1866,7 +1893,14 @@ span.happ-category.ng-binding {
 .venue a {
     font-size: 14px;
     color: #333;
+    text-decoration: none;
+
   
+}
+
+a:hover, a:focus {
+    color: #2a6496; 
+    text-decoration: none;
 }
 
 .venue a:hover {
@@ -1917,6 +1951,38 @@ span#mapCircle {
     font-weight: 500;
 }
 
+#rating{
+  display:block;
+}
+
 .happ-info{
    width:27%;
+}
+
+i.fa.fa-facebook-official {
+    color: #3B5998;
+    font-size: 2em;
+    margin-left: 56%;
+
+}
+
+i.fa.fa-twitter-square {
+    color: #1dcaff;
+    font-size: 2em;
+}
+
+i.fa.fa-filter {
+    font-size: 22px;
+}
+
+
+i.fa.fa-sort-desc {
+    margin-left: 2px;
+}
+
+ i.fa.fa-arrow-right {
+    display: block;
+    margin-bottom: -20px;
+    margin-top: 8px;
+    font-size: 22px;
 }
