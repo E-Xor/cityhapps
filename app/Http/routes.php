@@ -23,7 +23,7 @@ Route::get('testShare', 'SharedEventController@testShare'); // TODO: Kill this o
 Route::get('sharedEventPosition', 'SharedEventController@sharedEventPosition');
 Route::resource('sharedEvent', 'SharedEventController');
 
-Route::get('happs{date?}{timeofday?}{agelevel?}{type?}{zip?}{zipradius?}', 'HappController@getHappList');
+Route::get('happs{date?}{timeofday?}{agelevel?}{type?}{zip?}{zipradius?}{limit?}', 'HappController@getHappList');
 Route::get('happs/{id}', 'HappController@getHapp');
 Route::get('happs/{id}/venue', 'HappController@getHappVenue');
 

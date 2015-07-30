@@ -76,7 +76,8 @@ class Happ extends Model
         $agelevel = null,
         $type = null,
         $zip = null,
-        $zipradius = null
+        $zipradius = null,
+        $limit = 50
     ) {
         $query = Happ::with('categories')
             ->with('tags')
@@ -108,7 +109,9 @@ class Happ extends Model
             HappFilter::filterAgeLevel($query, $agelevel);
         }
 
-        $happs = $query->get();
+        $limit = ($limit <= 100) ? $limit : 100;
+
+        $happs = $query->paginate($limit);
 
         return $happs;
     }

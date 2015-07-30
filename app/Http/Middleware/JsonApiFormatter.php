@@ -2,7 +2,9 @@
 
 namespace CityHapps\Http\Middleware;
 
+use Illuminate\Support\Facades\Input;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class JsonApiFormatter {
 
@@ -30,6 +32,27 @@ class JsonApiFormatter {
     private static function getSiteTimeZone()
     {
         return 'America/New_York';
+    }
+
+    protected static function getRequestParametersString()
+    {
+        $parameters['date'] = Input::get('date');
+        $parameters['timeofday'] = Input::get('timeofday');
+        $parameters['agelevel'] = Input::get('agelevel');
+        $parameters['type'] = Input::get('type');
+        $parameters['zip'] = Input::get('zip');
+        $parameters['zipradius'] = Input::get('zipradius');
+        $parameters['limit'] = Input::get('limit');
+
+        $query = '';
+
+        foreach ($parameters as $key => $value) {
+            if(isset($value)) {
+                $query .= '&' . $key . '=' . $value;
+            }
+        }
+
+        return $query;
     }
 
     /**
@@ -214,7 +237,22 @@ class JsonApiFormatter {
             $result['happs']['errors'] = $errors;
         }
 
-        $result['happs']['meta']['count'] = count($happs);
+        $result['happs']['meta'] = [];
+        $meta['count'] = count($happs);
+
+        if(count($happs) > 0 && $happs instanceof LengthAwarePaginator) {
+            $meta['currentPage'] = $happs->currentPage();
+            $meta['lastPage'] = $happs->lastPage();
+            $meta['perPage'] = $happs->perPage();
+            $meta['hasMorePages'] = $happs->hasMorePages();
+            $meta['url'] = $happs->url(Input::get('page')) . JsonApiFormatter::getRequestParametersString();
+            $meta['nextPageUrl'] = $happs->hasMorePages() ? $happs->nextPageUrl() . JsonApiFormatter::getRequestParametersString() : null;
+            $meta['firstItem'] = $happs->firstItem();
+            $meta['lastItem'] = $happs->lastItem();
+            $meta['total'] = $happs->total();
+        }
+
+        $result['happs']['meta'] = $meta;
 
         return $result;
     }
