@@ -703,10 +703,11 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
         $scope.likeStatus;
 
-        $http.get('/events?id=' + $routeParams.id)
+        $http.get('/happs/' + $routeParams.id)
             .success(function(data) {
-                if (data.events.length > 0) {
-                    $scope.data = data.events[0];
+                console.log(data.data[0]);
+                if (data.data.length == 1) {
+                    $scope.data = data.data[0];
                     if ($scope.user) {
                         $scope.checkLikeStatus();
                     }
@@ -2318,7 +2319,7 @@ cityHapps.config(function($routeProvider, $locationProvider){
 	$routeProvider
 		.when("/", {
 			controller: 'adminEventController',
-            templateUrl: 'app/components/happs/list.html'
+            templateUrl: 'app/components/happs/home.html'
 		})
         .when("/preview", {
             controller: 'adminEventController',

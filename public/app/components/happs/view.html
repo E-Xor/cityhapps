@@ -11,19 +11,19 @@
 <div ng-controller="happController">
 	<div class="happ-single">
 		<div class="row">
-			<div class="happ-image col-md-7" style="background-image: url('{{data.event_image_url}}'); background-size: cover;">
+			<div class="happ-image col-md-7" style="background-image: url('{{data.attributes.event_image_url}}'); background-size: cover;">
 				<div ng-repeat="category in data.categories" class="inline">
 					<span class="happ-category">{{category.name}}</span>
 				</div>
-				<div class="happ-date">{{data.start_time | dateToISO | date: 'MMM d'}}</div>
+				<div class="happ-date">{{data.attributes.start.local | dateToISO | date: 'MMM d'}}</div>
 			</div>
 			<div class="col-md-5 happInfo">
 				<h3 class="dark bold">
-{{data.event_name}}</h3>
+{{data.attributes.event_name}}</h3>
 				<div class="time"><i class="fa fa-clock-o"></i>
-{{data.start_time | dateToISO | date: 'h:mm a'}} - {{data.end_time | dateToISO | date: 'h:mm a'}}</p></div>
+{{data.attributes.start.local | dateToISO | date: 'h:mm a'}} - {{data.attributes.end.local | dateToISO | date: 'h:mm a'}}</p></div>
 				<div class="venue"><i class="fa fa-map-marker"></i>
-<a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a></div>
+<a href="{{data.venue_url}}" target="_blank">{{data.relationships.venue.venue_name}}</a></div>
         <div class="ratingPrice"><span id="rating">Rating</span><span id="price">Price</span></div>
         <div id="socialIcons">
         <a href="#"><i class="fa fa-facebook-official"></i></a>
@@ -40,7 +40,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<div class="happ-description" ng-if="data.description" ng-bind-html="data.description"></div>
+				<div class="happ-description" ng-if="data.attributes.description" ng-bind-html="data.attributes.description"></div>
 			</div>
 		</div>
 		<div class="row">
@@ -53,11 +53,11 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<a class="happ-button" href="{{ data.google_directions_link }}">Get Directions</a>
+				<a class="happ-button" href="{{ data.attributes.geo_data.google_directions_link }}">Get Directions</a>
 			</div>
 		</div>
 		<div class="row">
-			<a href="{{ data.google_directions_link }}"><img class="col-md-12" src="{{ data.google_map_large }}" /><span id="mapCircle"><i class="fa fa-arrow-right"></i>
+			<a href="{{ data.attributes.geo_data.google_directions_link }}"><img class="col-md-12" src="{{ data.attributes.geo_data.google_map_large }}" /><span id="mapCircle"><i class="fa fa-arrow-right"></i>
 Maps</span></a>
 		</div>
 	</div>
