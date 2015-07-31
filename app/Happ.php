@@ -4,6 +4,7 @@ namespace CityHapps;
 
 use Illuminate\Database\Eloquent\Model;
 use CityHapps\Category;
+use CityHapps\AgeLevel;
 use CityHapps\Http\Middleware\HappFilter;
 
 class Happ extends Model
@@ -11,7 +12,7 @@ class Happ extends Model
   protected $table = 'happs';
   protected $guarded = array('id', 'create_at', 'updated_at');
   protected $appends = array('google_directions_link', 'google_map_large', 'similar');
-  
+
   /**
    * @var int status codes for event states
    */
@@ -41,60 +42,68 @@ class Happ extends Model
     return $this->hasMany('UserEvent', 'event_id', 'event_id');
   }
 
-  public function venue(){
+  public function venue()
+  {
     return $this->hasOne('Venue', 'id', 'venue_id');
   }
 
-  public function ageLevel()
-  {
-    return $this->hasMany('HappAgeLevel', 'happ_id', 'id');
-  }
+  // public function ageLevel()
+  // {
+  //   return $this->hasMany('HappAgeLevel', 'id', 'happ_id');
+  // }
 
   public function tags()
   {
     return $this->belongsToMany('CityHapps\Tag');
   }
 
+  public function ageLevels()
+  {
+    return $this->belongsToMany('CityHapps\AgeLevel', 'happ_age_level', 'happ_id', 'age_level_id');
+  }
+
   public function duplicated()
   {
-    $this->hasMany('Happ','parent_id');
+    $this->hasMany('Happ', 'parent_id');
   }
 
   /**
    *
    */
-  public static function getHapps($date = null, $timeofday = null, $agelevel = null, $type = null, $zip = null, $zipradius = null)
-  {
+  public static function getHapps($date = null, $timeofday = null, $agelevel = null, $type = null, $zip = null, $zipradius = null, $limit = 50) {
     $query = Happ::with('categories')
       ->with('tags')
       ->with('venue')
-      ->with('agelevel');
+      ->with('ageLevels');
 
-    if(!is_null($agelevel)) {
-      //$query;
-    }
 
-    if(!is_null($type)) {
+    if (!is_null($type)) {
       $query->where('type', '=', $type);
     }
 
-    if(!is_null($zip)) {
+    if (!is_null($zip)) {
       $query->where('zip', '=', $zip);
     }
 
-    if(!is_null($date)) {
-      $happs = HappFilter::filterDate($query, $date);
+    if (!is_null($date)) {
+      HappFilter::filterDate($query, $date);
     }
 
-    $happs = $query->get();
-
-    if(!is_null($timeofday)) {
-      $happs = HappFilter::filterTimeOfDay($happs, $timeofday);
+    if (!is_null($timeofday)) {
+      HappFilter::filterTimeOfDay($query, $timeofday);
     }
 
-    if(!is_null($zipradius)) {
-      $happs = HappFilter::filterZipRadius($happs, $zipradius);
+    if (!is_null($zipradius)) {
+      HappFilter::filterZipRadius($query, $zipradius);
     }
+
+    if (!is_null($agelevel)) {
+      HappFilter::filterAgeLevel($query, $agelevel);
+    }
+
+    $limit = ($limit <= 100) ? $limit : 100;
+
+    $happs = $query->paginate($limit);
 
     return $happs;
   }
@@ -124,16 +133,17 @@ class Happ extends Model
   /**
    * Return a list of duplicated events for the current event.
    */
-  public function getSimilarAttribute(){
+  public function getSimilarAttribute()
+  {
     /**
      * @var self::query Eloquent
      */
     $res = [];
-    $event = Happ::where('event_name', 'LIKE',  "%{$this->event_name}%")
-        ->where('id','<>',$this->id)
-        ->where('event_date', $this->event_date)
-        ->orderBy('venue_id', 'asc')
-        ->get();
+    $event = Happ::where('event_name', 'LIKE', "%{$this->event_name}%")
+      ->where('id', '<>', $this->id)
+      ->where('event_date', $this->event_date)
+      ->orderBy('venue_id', 'asc')
+      ->get();
 
     foreach($event as $id => $e) {
       $res[$id]['id'] = $e->id;
@@ -147,7 +157,8 @@ class Happ extends Model
     return $res;
   }
 
-  public function recurringInformation(){
+  public function recurringInformation()
+  {
     return $this->hasMany('HappRecurring');
   }
 
@@ -174,20 +185,24 @@ class Happ extends Model
 
       // Archive old events first
       $total_archived += \DB::table('happs')
-        ->orWhere(function($query) {
-          $query->whereNotNull('happs.end_time')
-            ->where('happs.end_time', '<', date('Y-m-d H:i:s'));
-        })
-        ->orWhere(function($query) {
-          $query->whereNull('happs.end_time')
-            ->where('happs.start_time', '<', date('Y-m-d H:i:s'));
-        })
+        ->orWhere(
+          function ($query) {
+            $query->whereNotNull('happs.end_time')
+              ->where('happs.end_time', '<', date('Y-m-d H:i:s'));
+          }
+        )
+        ->orWhere(
+          function ($query) {
+            $query->whereNull('happs.end_time')
+              ->where('happs.start_time', '<', date('Y-m-d H:i:s'));
+          }
+        )
         ->update(array('status' => Happ::STATUS_ARCHIVED));
 
       $source = array(
-        'eb'=> array('join_column' => 'eventbriteID', 'table' => 'eventbrite'),
-        'ef'=> array('join_column' => 'eventful_id', 'table' => 'eventful'),
-        'me'=> array('join_column' => 'meetupID', 'table' => 'meetup')
+        'eb' => array('join_column' => 'eventbriteID', 'table' => 'eventbrite'),
+        'ef' => array('join_column' => 'eventful_id', 'table' => 'eventful'),
+        'me' => array('join_column' => 'meetupID', 'table' => 'meetup')
       );
 
       // Loop through and mark any items that are 'active' but missing from the API table as cancelled
@@ -198,10 +213,12 @@ class Happ extends Model
         // Check that there are records in the table before moving forward
         if (\DB::table($table)->count()) {
           $total_cancelled += \DB::table('happs')
-            ->leftJoin($table . ' AS ' . $alias, function($join) use ($alias, $column)
-            {
-              $join->on('happs.source_id', '=', $alias . '.' . $column);
-            })
+            ->leftJoin(
+              $table . ' AS ' . $alias,
+              function ($join) use ($alias, $column) {
+                $join->on('happs.source_id', '=', $alias . '.' . $column);
+              }
+            )
             ->where('happs.source', '=', $table)
             ->where('happs.status', '=', Happ::STATUS_ACTIVE)
             ->whereNull($alias . '.id')
@@ -215,7 +232,8 @@ class Happ extends Model
     return array('cancelled' => $total_cancelled, 'archived' => $total_archived);
   }
 
-  public static function selectEvents($eventParams) {
+  public static function selectEvents($eventParams)
+  {
 
     $events = Happ::with('categories')
       ->with('tags')
@@ -243,21 +261,23 @@ class Happ extends Model
         $events->where('id', '<>', $eventParams['eventID']);
       }
     }
-    if($eventParams['eventName']) {
+    if ($eventParams['eventName']) {
       $events->where('event_name', 'LIKE', "%{$eventParams['eventName']}%");
     }
     if (!empty($eventParams['pageSize'])) {
-      $events->where('status', '<>', Happ::STATUS_DUPLICATED)->orWhere(function($query)
-      {
-        $query->where('status', '=', Happ::STATUS_ACTIVE);
-      });
+      $events->where('status', '<>', Happ::STATUS_DUPLICATED)->orWhere(
+        function ($query) {
+          $query->where('status', '=', Happ::STATUS_ACTIVE);
+        }
+      );
     }
 
     return $events->get();
 
   }
 
-  public static function recommendedEvents($eventParams) {
+  public static function recommendedEvents($eventParams)
+  {
 
     $userID = $eventParams['userID'];
 
@@ -286,7 +306,8 @@ class Happ extends Model
 
   }
 
-  public function scopeEventID($query, $eventID) {
+  public function scopeEventID($query, $eventID)
+  {
     if ($eventID != null) {
       return $query->where('id', '=', $eventID);
     } else {
@@ -294,63 +315,71 @@ class Happ extends Model
     }
   }
 
-  public function scopeEventName($query, $eventName) {
+  public function scopeEventName($query, $eventName)
+  {
     if ($eventName != null) {
-      return $query->where('event_name', 'like', '%'.$eventName.'%');
+      return $query->where('event_name', 'like', '%' . $eventName . '%');
     } else {
       return $query;
     }
   }
 
-  public function scopeVenueName($query, $venueName) {
+  public function scopeVenueName($query, $venueName)
+  {
     if ($venueName != null) {
-      return $query->where('venue_name', 'like', '%'.$venueName.'%');
+      return $query->where('venue_name', 'like', '%' . $venueName . '%');
     } else {
       return $query;
     }
   }
 
-  public function scopeVenueAddress($query, $venueAddress) {
+  public function scopeVenueAddress($query, $venueAddress)
+  {
     if ($venueAddress != null) {
-      return $query->where('address', 'like', '%'.$venueAddress.'%');
+      return $query->where('address', 'like', '%' . $venueAddress . '%');
     } else {
       return $query;
     }
   }
 
-  public function scopeVenueCity($query, $venueCity) {
+  public function scopeVenueCity($query, $venueCity)
+  {
     if ($venueCity != null) {
-      return $query->where('city', 'like', '%'.$venueCity.'%');
+      return $query->where('city', 'like', '%' . $venueCity . '%');
     } else {
       return $query;
     }
   }
 
-  public function scopeVenueState($query, $venueState) {
+  public function scopeVenueState($query, $venueState)
+  {
     if ($venueState != null) {
-      return $query->where('state', 'like', '%'.$venueState.'%');
+      return $query->where('state', 'like', '%' . $venueState . '%');
     } else {
       return $query;
     }
   }
 
-  public function scopeVenueZip($query, $venueZip) {
+  public function scopeVenueZip($query, $venueZip)
+  {
     if ($venueZip != null) {
-      return $query->where('zip', 'like', '%'.$venueZip.'%');
+      return $query->where('zip', 'like', '%' . $venueZip . '%');
     } else {
       return $query;
     }
   }
 
-  public function scopeDescription($query, $description) {
+  public function scopeDescription($query, $description)
+  {
     if ($description != null) {
-      return $query->where('description', 'like', '%'.$description.'%');
+      return $query->where('description', 'like', '%' . $description . '%');
     } else {
       return $query;
     }
   }
 
-  public function scopeStartTime($query, $startTime) {
+  public function scopeStartTime($query, $startTime)
+  {
 
     if ($startTime != null) {
       return $query->where('start_time', '>=', $startTime);
@@ -360,7 +389,8 @@ class Happ extends Model
 
   }
 
-  public function scopeDateRange($query, $startDate, $endDate) {
+  public function scopeDateRange($query, $startDate, $endDate)
+  {
 
     if ($startDate != null) {
       $query->where('event_date', '>=', $startDate);
@@ -373,17 +403,20 @@ class Happ extends Model
     return $query;
   }
 
-  public function scopeImageRequired($query, $imageRequired) {
+  public function scopeImageRequired($query, $imageRequired)
+  {
     if ($imageRequired != null) {
       if ($imageRequired == 'yes') {
         // If the image_required parameter was set to "yes", return only events with an image by default
         return $query->whereNotNull('event_image_url');
       }
     }
+
     return $query; // Stop processing WHERE clause addition and return
   }
 
-  public function scopeWithCategory($query, $categories) {
+  public function scopeWithCategory($query, $categories)
+  {
     if ($categories != null) {
 
       // categories should be an array
@@ -391,9 +424,12 @@ class Happ extends Model
 
         //$categoryIDs = implode(',', $categories);
 
-        return $query->whereHas('categories', function($q) use ($categories) {
-          $q->whereIn('category_id', $categories);
-        });
+        return $query->whereHas(
+          'categories',
+          function ($q) use ($categories) {
+              $q->whereIn('category_id', $categories);
+          }
+        );
 
       }
 
@@ -403,12 +439,17 @@ class Happ extends Model
     return $query;
   }
 
-  public function scopeWithUserEvent($query, $userID) {
+  public function scopeWithUserEvent($query, $userID)
+  {
     if ($userID != null) {
 
-      $joined = $query->with(array('votes' => function($q) use ($userID) {
-        $q->where('user_id', '=', $userID);
-      })); // use User ID?
+      $joined = $query->with(
+        array(
+          'votes' => function ($q) use ($userID) {
+                $q->where('user_id', '=', $userID);
+              }
+        )
+      ); // use User ID?
 
       return $joined;
 
@@ -419,12 +460,17 @@ class Happ extends Model
     }
   }
 
-  public function scopeWithRecommendedUserEvent($query, $userID) {
+  public function scopeWithRecommendedUserEvent($query, $userID)
+  {
     if ($userID != null) {
 
-      $joined = $query->with(array('recommendedVotes' => function($q) use ($userID) {
-        $q->where('user_id', '=', $userID);
-      })); // use User ID?
+      $joined = $query->with(
+        array(
+          'recommendedVotes' => function ($q) use ($userID) {
+                $q->where('user_id', '=', $userID);
+              }
+        )
+      ); // use User ID?
 
       return $joined;
 
@@ -435,7 +481,8 @@ class Happ extends Model
     }
   }
 
-  public function scopeGetPage($query, $pageSize, $pageCount, $pageShift) {
+  public function scopeGetPage($query, $pageSize, $pageCount, $pageShift)
+  {
     if (($pageSize != null) && ($pageCount != null)) {
       if ($pageSize == 'all') {
         return $query; // returns all records
@@ -457,7 +504,8 @@ class Happ extends Model
     }
   }
 
-  public function scopeMaxPerDay($query, $maxPerDay) {
+  public function scopeMaxPerDay($query, $maxPerDay)
+  {
     if ($maxPerDay != null) {
       $topFiveJoin = '(SELECT @position_num := IF(@event_date = event_date, @position_num + 1, 1) AS position, @event_date := event_date AS match_date, e.event_date AS sort_date, e.start_time AS sort_time, e.id AS match_id FROM ' . 'happs' . ' e ORDER BY e.event_date ASC, e.start_time ASC) five_events';
 
@@ -473,33 +521,40 @@ class Happ extends Model
     }
   }
 
-  public function scopeEventSearch($query, $search) {
+  public function scopeEventSearch($query, $search)
+  {
     if ($search != null) {
 
       $searchTerms = explode(' ', $search);
 
-      foreach($searchTerms as $term) {
-        $query->where(function($q) use ($term) {
+      foreach ($searchTerms as $term) {
+        $query->where(
+          function ($q) use ($term) {
 
-          $q->orWhere('event_name', 'LIKE', '%'. $term .'%')
-            ->orWhere('venue_name', 'LIKE', '%'. $term .'%')
-            ->orWhere('address', 'LIKE', '%'. $term .'%')
-            ->orWhere('city', 'LIKE', '%'. $term .'%')
-            ->orWhere('state', 'LIKE', '%'. $term .'%')
-            ->orWhere('zip', 'LIKE', '%'. $term .'%')
-            ->orWhere('description', 'LIKE', '%'. $term .'%')
+            $q->orWhere('event_name', 'LIKE', '%' . $term . '%')
+              ->orWhere('venue_name', 'LIKE', '%' . $term . '%')
+              ->orWhere('address', 'LIKE', '%' . $term . '%')
+              ->orWhere('city', 'LIKE', '%' . $term . '%')
+              ->orWhere('state', 'LIKE', '%' . $term . '%')
+              ->orWhere('zip', 'LIKE', '%' . $term . '%')
+              ->orWhere('description', 'LIKE', '%' . $term . '%')
 
-            ->orWhereHas('categories', function($c) use ($term) {
-              $c->where('name', 'LIKE', '%'. $term .'%');
-            });
-        });
+              ->orWhereHas(
+                'categories',
+                function ($c) use ($term) {
+                  $c->where('name', 'LIKE', '%' . $term . '%');
+                }
+              );
+          }
+        );
       }
     }
 
     return $query;
   }
 
-  public function scopeUserCategory($query, $userID) {
+  public function scopeUserCategory($query, $userID)
+  {
 
     $joined = $query->join('event_category as ec', 'happs' . '.id', '=', 'ec.event_id')
       ->join('user_categories as uc', 'uc.category_id', '=', 'ec.category_id')
@@ -508,15 +563,17 @@ class Happ extends Model
     return $joined;
   }
 
-  public static function storeEvents() {
+  public static function storeEvents()
+  {
     Happ::storeEventbriteEvents();
     Happ::storeEventfulEvents();
     Happ::storeMeetupEvents();
   }
 
-  public static function storeEventbriteEvents() {
+  public static function storeEventbriteEvents()
+  {
 
-    \Eventbrite::chunk(200, function($events) {
+    \Eventbrite::chunk(200, function ($events) {
 
       foreach ($events as $event) {
 
@@ -561,7 +618,11 @@ class Happ extends Model
 
               foreach ($event->eventbriteCategories as $category) {
 
-                $categoryExisting = \EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+                $categoryExisting = \EventCategory::where(
+                  'category_id',
+                  '=',
+                  $category->category_id
+                )->where('event_id', '=', $eventRecord->id);
                 $categoryRecords = $categoryExisting->get();
 
                 if ($categoryRecords->count() < 1) {
@@ -591,15 +652,17 @@ class Happ extends Model
    *
    * @return \Illuminate\Database\Eloquent\Builder
    */
-  public function scopeStatus($query, $status = 1){
+  public function scopeStatus($query, $status = 1)
+  {
     return $query->where('status', $status);
   }
 
-  public static function storeEventfulEvents() {
+  public static function storeEventfulEvents()
+  {
     \DB::connection()->disableQueryLog();
     //$events = Eventful::all();
 
-    \Eventful::chunk(200, function($events) {
+    \Eventful::chunk(200, function ($events) {
 
       foreach ($events as $event) {
 
@@ -609,7 +672,7 @@ class Happ extends Model
           $eventRecords = $checkExisting->get();
 
           if ($eventRecords->count() < 1) {
-            $eventRecords->push(new Happ);
+              $eventRecords->push(new Happ);
           }
 
           foreach ($eventRecords as $eventRecord) {
@@ -633,7 +696,7 @@ class Happ extends Model
             $eventRecord->longitude = $event->longitude;
 
             $venue = \Venue::where('source_id', $event->venue_id)->where('source', $eventRecord->source)->first();
-            if($venue) {
+            if ($venue) {
               $eventRecord->venue_id = $venue->id;
             }
 
@@ -653,7 +716,11 @@ class Happ extends Model
 
               foreach ($event->eventfulCategories as $category) {
 
-                $categoryExisting = \EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+                $categoryExisting = \EventCategory::where(
+                  'category_id',
+                  '=',
+                  $category->category_id
+                )->where('event_id', '=', $eventRecord->id);
                 $categoryRecords = $categoryExisting->get();
 
                 if ($categoryRecords->count() < 1) {
@@ -675,9 +742,10 @@ class Happ extends Model
   }
 
 
-  public static function storeMeetupEvents() {
+  public static function storeMeetupEvents()
+  {
 
-    \Meetup::chunk(200, function($events) {
+    \Meetup::chunk(200, function ($events) {
 
       foreach ($events as $event) {
 
@@ -712,7 +780,7 @@ class Happ extends Model
             $eventRecord->longitude = $event->lon;
 
             $venue = \Venue::where('source_id', '=', $event->venue_id)->where('source', '=', $eventRecord->source)->first();
-            if($venue) {
+            if ($venue) {
               $eventRecord->venue_id = $venue->id;
             }
 
@@ -731,7 +799,7 @@ class Happ extends Model
                 $eventRecord->end_time = date("Y-m-d H:i:s", $endSeconds);
               } else {
                 // According to Meetup documentation, events with no duration should be assumed to be 3 hours long
-                $endSeconds = $seconds + (3*60*60);
+                $endSeconds = $seconds + (3 * 60 * 60);
                 $eventRecord->end_time = $eventRecord->end_time = date("Y-m-d H:i:s", $endSeconds);
               }
             }
@@ -740,7 +808,11 @@ class Happ extends Model
 
               foreach ($event->meetupCategories as $category) {
 
-                $categoryExisting = \EventCategory::where('category_id', '=', $category->category_id)->where('event_id', '=', $eventRecord->id);
+                $categoryExisting = \EventCategory::where(
+                  'category_id',
+                  '=',
+                  $category->category_id
+                )->where('event_id', '=', $eventRecord->id);
                 $categoryRecords = $categoryExisting->get();
 
                 if ($categoryRecords->count() < 1) {
@@ -761,17 +833,21 @@ class Happ extends Model
     });
   }
 
-  public static function keywordFilter($eventRecord) {
+  public static function keywordFilter($eventRecord)
+  {
     $threshold = 20;
 
     $file = app_path() . "/../config/filters/keywords.json";
-    $keywords = json_decode(file_get_contents($file),true);
+    $keywords = json_decode(file_get_contents($file), true);
 
     $score = 0;
 
     // Check for keywords
-    foreach($keywords as $keyword => $value) {
-      $score += substr_count(strtoupper($eventRecord->event_name), strtoupper($keyword)) * $value * 2; // Keywords in the title count double
+    foreach ($keywords as $keyword => $value) {
+      $score += substr_count(
+          strtoupper($eventRecord->event_name),
+          strtoupper($keyword)
+        ) * $value * 2; // Keywords in the title count double
       $score += substr_count(strtoupper($eventRecord->description), strtoupper($keyword)) * $value;
     }
 

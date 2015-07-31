@@ -14,9 +14,11 @@ class HappController extends BaseController
         $type      = Input::get('type');
         $zip       = Input::get('zip');
         $zipradius = Input::get('zipradius');
+        $limit     = Input::get('limit');
 
+        $limit = is_null($limit) ? 50 : $limit;
 
-        $happs = JsonApiFormatter::getHapps(Happ::getHapps($date, $timeofday, $agelevel, $type, $zip, $zipradius));
+        $happs = JsonApiFormatter::getHapps(Happ::getHapps($date, $timeofday, $agelevel, $type, $zip, $zipradius, $limit));
 
         $response = Response::make($happs['happs'], $happs['status_code']);
 
