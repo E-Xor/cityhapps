@@ -115,6 +115,7 @@ class Happ extends Model
   {
     return Happ::with('categories')
       ->with('tags')
+      ->with('venue')
       ->where('id', '=', $happId)
       ->get();
   }

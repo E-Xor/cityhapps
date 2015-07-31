@@ -123,6 +123,7 @@ class JsonApiFormatter {
                         $categories['data'][] = [
                             'type' => 'categories',
                             'id' => $category->id,
+                            'attributes' => ['name' => $category->name],
                         ];
                     }
                 }
@@ -136,6 +137,7 @@ class JsonApiFormatter {
                         $tags['data'][] = [
                             'type' => 'tags',
                             'id' => $tag->id,
+                            'attributes' => ['name' => $tag->tag_raw],
                         ];
                     }
                 }
@@ -147,6 +149,8 @@ class JsonApiFormatter {
                 if(isset($happ->venue_id) || isset($happ->venue_name) || isset($happ->venue_url)) {
                     $venue['data']['type'] = 'venues';
                     $venue['data']['id'] = $happ->venue_id;
+                    $venue['data']['attributes']['venue_name'] = $happ->venue_name;
+                    $venue['data']['attributes']['venue_url'] = $happ->venue_url;
                 }
 
                 /**

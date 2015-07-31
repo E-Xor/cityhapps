@@ -1,39 +1,29 @@
-<div ng-controller="adminEventController" ng-cloak>
-  <div ng-if="!mobile()">
-    <!-- if mobile add snap-content -->
-
-    <!-- Get the home body partial -->
-    <div class='center white imageContainer'>
-      <h1 style="margin:0px auto;padding:20px 0 10px 0;">Happs Listing</h1>
-      <h3>{{eventsCount}} Happs Currently in the System</h3>
-      <table style="margin:0 30px 50px;">
-        <thead>
-          <tr>
-            <th style="width:32px;">ID</th>
-            <th>Title &amp; Link</th>
-            <th style="width:67px;">Source</th>
-            <th style="width:80px;">Start Date</th>
-            <th style="width:90px;">Start Time</th>
-            <th style="width:80px;">End Date</th>
-            <th style="width:90px;">End Time</th>
-            <th style="width:90px;">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in allEvents">
-            <td>{{item.id}}</td>
-            <td><a href="{{item.url}}" style="color:#33CCFF;">{{item.event_name}}</a></td>
-            <td>{{item.source}}</td>
-            <td>{{item.start_date}}</td>
-            <td>{{item.start_only_time}}</td>
-            <td>{{item.end_date}}</td>
-            <td>{{item.end_only_time}}</td>
-            <td><a href='/happ/{{item.id}}'>View</a> | <a href='/admin/event/edit/{{item.id}}'>Edit</a></td>
-          </tr>
-        </tbody>
-      </table>
+<div ng-controller="happController" ng-cloak class="happ-listing">
+  <div ng-repeat="happ in data" class="happ-single col-md-4">
+    <div class="row">
+      <div class="happ-image col-xs-12" style="background-image: url('{{happ.attributes.event_image_url}}'); background-size: cover;">
+        <div ng-repeat="category in happ.relationships.categories.data" class="inline">
+          <span class="happ-category">{{category.attributes.name}}</span>
+        </div>
+        <div class="happ-date">{{happ.attributes.start.local | dateToISO | date: 'MMM d'}}</div>
+      </div>
     </div>
-    <!-- <div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div> -->
-    <!-- if mobile -->
+    <div class="row">
+      <div class="col-xs-12 happInfo">
+        <h3 class="dark bold">
+{{happ.attributes.event_name}}</h3>
+        <div class="time"><i class="fa fa-clock-o"></i>
+{{happ.attributes.start.local | dateToISO | date: 'h:mm a'}} - {{happ.attributes.end.local | dateToISO | date: 'h:mm a'}}</p></div>
+        <div class="venue"><i class="fa fa-map-marker"></i>
+<a href="{{happ.relationships.venue.data.attributes.venue_url}}" target="_blank">{{happ.relationships.venue.data.attributes.venue_name}}</a></div>
+        <div class="ratingPrice"><span id="rating">Rating</span><span id="price">Price</span></div>
+        <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
+        <div class="buttons">
+        <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
+        <a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
+        </div>-->
+      </div>
+    </div>
+    <div><a class="happ-button" href='{{happ.attributes.geo_data.google_directions_link}}' target="_new">Get Directions</a> <a class="happ-button" href='/happ/{{happ.id}}'>Learn More</a></div>
   </div>
 </div>

@@ -9,11 +9,11 @@
 </script>
 <div id="viewContent">
 <div ng-controller="happController">
-	<div class="happ-single">
+	<div class="happ-single col-md-9">
 		<div class="row">
 			<div class="happ-image col-md-7" style="background-image: url('{{data.attributes.event_image_url}}'); background-size: cover;">
-				<div ng-repeat="category in data.categories" class="inline">
-					<span class="happ-category">{{category.name}}</span>
+				<div ng-repeat="category in data.relationships.categories.data" class="inline">
+					<span class="happ-category">{{category.attributes.name}}</span>
 				</div>
 				<div class="happ-date">{{data.attributes.start.local | dateToISO | date: 'MMM d'}}</div>
 			</div>
@@ -23,7 +23,7 @@
 				<div class="time"><i class="fa fa-clock-o"></i>
 {{data.attributes.start.local | dateToISO | date: 'h:mm a'}} - {{data.attributes.end.local | dateToISO | date: 'h:mm a'}}</p></div>
 				<div class="venue"><i class="fa fa-map-marker"></i>
-<a href="{{data.venue_url}}" target="_blank">{{data.relationships.venue.venue_name}}</a></div>
+<a href="{{data.relationships.venue.data.attributes.venue_url}}" target="_blank">{{data.relationships.venue.data.attributes.venue_name}}</a></div>
         <div class="ratingPrice"><span id="rating">Rating</span><span id="price">Price</span></div>
         <div id="socialIcons">
         <a href="#"><i class="fa fa-facebook-official"></i></a>
@@ -62,7 +62,7 @@ Maps</span></a>
 		</div>
 	</div>
 </div>
-<div id="ad">
+<div id="ad" class="col-md-3">
 	<div id="adOne"><p>Ad Space</p></div>
 	<div id="adTwo"><p>Ad Space</p></div>
 </div>

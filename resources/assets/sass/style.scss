@@ -1099,7 +1099,8 @@ h3 {
 }
 
 .main-content {
-    display: block;
+  display: block;
+  margin: 30px auto;
 }
 
 .event-counter {
@@ -1731,54 +1732,36 @@ h3 {
 
 .happ-single {
   background: white;
-  float: right;
   overflow: hidden;
   box-shadow: 1px 3px 11px #888888;
+  i.fa.fa-arrow-right {
+    display: block;
+    margin-bottom: -20px;
+    margin-top: 8px;
+    font-size: 22px;
+  }
+}
+
+.happ-listing {
+  margin: 0 30px;
+  .happ-single {
+    margin: 25px 30px;
+  
+  }
 }
 
 #adOne {
   height: 250px;
-  width: 350px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   background-color: #fff;
-  margin-left: auto;
-  margin-right: 50px;
   box-shadow: 1px 3px 11px #888888;
 }
 
 #adTwo {
   height: 400px;
-  width: 350px;
   background-color: #fff;
-  margin-left: auto;
-  margin-right: 50px;
   box-shadow: 1px 3px 11px #888888;
 }
-
-#ad {
-    margin-left: 2%;
-    margin-top: 2%;
-}
-
-.happ-single, #ad {
-  float: left;
-  width: 18%;
-}
-
-.happ-single {
-  width: 50%;
-  margin-top: 2%;
- 
-  margin-bottom: 2%;
-}
-
-.happ-single i.fa.fa-arrow-right {
-    display: block;
-    margin-bottom: -20px;
-    margin-top: 8px;
-    font-size: 22px;
-}
-
 
 .container {
   width: 100%;
@@ -1891,9 +1874,8 @@ span#copyright {
   z-index: 2;
   background-color: #FFFFFF;
   border-bottom: 1px #C7C5C0 solid;
-  //width: 81%;
-  //float: right;
   height: 235px;
+  margin-bottom: 30px;
   .logo-row {
     padding-top: 20px;
   }
@@ -2008,15 +1990,12 @@ span#mapCircle {
    width:27%;
 }
 
-.happ-single{
-
-
-  } i.fa.fa-facebook-official {
+i.fa.fa-facebook-official {
     color: #3B5998;
     font-size: 2em;
     margin-left: 56%;
-
 }
+
  i.fa.fa-twitter-square {
     color: #1dcaff;
     font-size: 2em;

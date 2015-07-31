@@ -703,16 +703,24 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
         $scope.likeStatus;
 
-        $http.get('/happs/' + $routeParams.id)
-            .success(function(data) {
-                console.log(data.data[0]);
-                if (data.data.length == 1) {
-                    $scope.data = data.data[0];
-                    if ($scope.user) {
-                        $scope.checkLikeStatus();
+        if (typeof $routeParams.id !== 'undefined') {
+            $http.get('/happs/' + $routeParams.id)
+                .success(function(data) {
+                    if (data.data.length == 1) {
+                        $scope.data = data.data[0];
+                        if ($scope.user) {
+                            $scope.checkLikeStatus();
+                        }
                     }
-                }
-            });
+                });
+        } else {
+            // Get filter data here
+            var filters = '';
+            $http.get('/happs' + filters)
+                .success(function(payload) {
+                    $scope.data = payload.data;
+                });
+        }
 
         $scope.checkLikeStatus = function() {
             var userId = $scope.user.id;
@@ -2318,7 +2326,7 @@ cityHapps.config(function($routeProvider, $locationProvider){
 
 	$routeProvider
 		.when("/", {
-			controller: 'adminEventController',
+			controller: 'happController',
             templateUrl: 'app/components/happs/home.html'
 		})
         .when("/preview", {
