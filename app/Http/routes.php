@@ -89,7 +89,9 @@ Route::get('about', function () {
 	return view('main');
 });
 
-Route::any('{model}/{id?}', 'ApiController@handleRequest');
+// Limit this to only models that can be used
+Route::any('{model}/{id?}', 'ApiController@handleRequest')
+	->where(['model' => 'Venue|Category|Tag|Happ']);
 
 // Yes, this is awful. We'll change it when we get the API in a good spot
 Route::any('{path?}', function()
