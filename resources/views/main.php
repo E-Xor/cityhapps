@@ -96,8 +96,7 @@
 						<div class="header-search">
 							<div class="row sm-12">
 								<div class="col-sm-4 center cityLogo">
-									<a href="/"><img src="/assets/img/logo.png"></a>
-                                    <p id="atl">ATLANTA</p>
+									<a href="/"><img src="/assets/img/logo-atl.png"></a>
                                     <hr>
                                     <div class="header-controls">
                                     <span class="filter">Filter By</span><span class="horizantal">|</span><span class="sort">Sort By</span>
