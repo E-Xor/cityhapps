@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('preview', 'HomeController@preview');
 
 Route::get('harness', 'HarnessController@showHarness');
 

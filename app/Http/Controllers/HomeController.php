@@ -20,4 +20,9 @@ class HomeController extends BaseController {
 		return View::make('main');
 	}
 
+	public function preview()
+	{
+		return View::make('layouts.master');
+	}
+
 }
