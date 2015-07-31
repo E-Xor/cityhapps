@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Model;
 
-class Venue extends Eloquent
+class Venue extends Model
 {
   protected $table = 'venues';
   protected $guarded = array('id', 'create_at', 'updated_at');
@@ -250,4 +251,5 @@ class Venue extends Eloquent
   {
     return 'http://maps.googleapis.com/maps/api/staticmap?center=' . $this->lat . ',' . $this->lng . '&zoom=13&scale=2&size=640x320&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:red%7Clabel:1%7C' . $this->lat . ',' . $this->lng;
   }
+
 }
