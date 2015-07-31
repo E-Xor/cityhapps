@@ -86,7 +86,7 @@
                             </div>
                             <div class="col-sm-6 center">
                                 <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
-                                    <i class="fa fa-search"></i><input type="text" ng-model="query" class="main-search"  />
+                                    <div id="searchBox"><i class="fa fa-search"></i><input type="text" ng-model="query" class="main-search"  /></div>
                                 </form>
                             </div>
                         </div>
