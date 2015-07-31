@@ -1,5 +1,8 @@
 //Color Pallete and variables
 
+$screen-sm-min: 768px;
+$screen-md-min: 992px;
+$screen-lg-min: 1200px;
 
 //Temp UX colors, grey
 
@@ -12,25 +15,14 @@ $tan: #F7EEEF;
 
 html {
 	background: #EBE6DE;
-  overflow: visible;
 }
 
 body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: visible;
-}
-
-.header-container {
-	z-index: 2;
-  background-color: #FFFFFF;
-  border-bottom: 1px #C7C5C0 solid;
-  width: 81%;
-  float: right;
-  height: 235px;
-}
-	
+  background-color: #EAE6DE;
+}	
 
 .bg-image {
 	padding: 0;
@@ -124,6 +116,37 @@ body {
 	display: none;
 }
 
+.content-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.sidebar {
+  display: none;
+  background-color: #555555;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.test-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: $screen-md-min) {
+  .content-wrapper {
+    width: 80%;
+    float: left;
+  }
+  .sidebar{
+    width: 20%;
+    float: left;
+    display: block;
+  }
+}
 
 .header-search {
 	padding: 20px;
@@ -1771,36 +1794,30 @@ h3 {
     position: relative;
     font-size: 22px;
 }
-#verticalMenu {
+
+.category-menu {
   padding-top: 154px;
-  background-color: #555555;
-  width: 19%;
-  float: left;
-  position: absolute;
-  top: 0;
-  bottom:0;
   hr{
     margin-left: -40px;
     border-color: #626262;
     &:last-child{
       visibility: hidden;
     }
-
   }
 }
 
-#verticalMenu li{
+.category-menu li{
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
- #verticalMenu li a{
+ .category-menu li a{
 
     -webkit-font-smoothing: subpixel-antialiased;
 
     }
 
-#verticalMenu li a:hover{
+.category-menu li a:hover{
    color: #fff;
   }
 
@@ -1870,16 +1887,34 @@ span#copyright {
     margin-left: 49%;
 }
 
-.header-controls {
-  .filter {
-    text-transform: uppercase;
-    font-size: 13px;
+.header-container {
+  z-index: 2;
+  background-color: #FFFFFF;
+  border-bottom: 1px #C7C5C0 solid;
+  //width: 81%;
+  //float: right;
+  height: 235px;
+  .logo-row {
+    padding-top: 20px;
+  }
+  hr {
+    border-color: #B8B5B0;
+  }
+  .header-controls {
+    color: #9B9B9B;
+    .filterSort {
+      margin-top: 40px;
+      font-size: 13px;
+      bottom: 0;
+      text-transform: uppercase;
+    }
   }
 }
 
+
+
 span.happ-category.ng-binding {
     color: #fff;
-    font-family: 'roboto';
     font-weight: bold;
     background-color: #FFA500;
     padding-right: 60px;
@@ -1984,35 +2019,10 @@ span#mapCircle {
       word-spacing: .5em;
 }
 
- footer i.fa.fa-twitter-square {
+footer i.fa.fa-twitter-square {
     color: #1dcaff;
     font-size: 2em;
 
-}
-
-.everything i.fa.fa-filter {
-    font-size: 22px;
-
-}
-
-
-  .everything i.fa.fa-sort-desc {
-    margin-left: 2px;
-    margin-bottom: 22px;
-}
-
- 
-
- .everything i.fa.fa-long-arrow-up {
-    font-size: 22px;
-}
-  .everything i.fa.fa-long-arrow-down {
-    font-size: 22px;
-}
-
-.filterSort {
-    margin-top: 40px;
-    bottom: 0;
 }
 
 a.ng-binding:hover{
