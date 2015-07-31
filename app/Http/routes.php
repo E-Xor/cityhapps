@@ -83,6 +83,11 @@ Route::post('admin/event/update', 'AdminEventController@update');
 Route::post('admin/venue/create', 'AdminVenueController@create');
 Route::post('admin/venue/update', 'AdminVenueController@update');
 
+// Static Pages
+Route::get('about', function () {
+	return view('main');
+});
+
 Route::any('{model}/{id?}', 'ApiController@handleRequest');
 
 // Yes, this is awful. We'll change it when we get the API in a good spot
