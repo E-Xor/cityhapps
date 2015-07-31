@@ -14,7 +14,7 @@ $tan: #F7EEEF;
 //End Vars
 
 html {
-	background: #EBE6DE;
+	background: #F7EEEF;
 }
 
 body {
@@ -1830,7 +1830,7 @@ h3 {
   span{
     color: #9B9B9B;
     float: left;
-    margin-left: 6%;
+    ;
   }
 }
 
@@ -1905,8 +1905,15 @@ span#copyright {
     .filterSort {
       margin-top: 40px;
       font-size: 13px;
-      bottom: 0;
       text-transform: uppercase;
+      span {
+        line-height: 3em;
+        display: inline-block;
+        padding: 0 20px;
+        &.filter{
+          border-right: 1px solid #D1D2D4;
+        }
+      }
     }
   }
 }
@@ -1987,7 +1994,7 @@ span#mapCircle {
     color: #777;
     float: right;
     font-weight: 500;
-   margin-top: -48%;
+   margin-top: -100px;
 
 }
 
