@@ -102,10 +102,10 @@
                                     <hr>
                                     <div class="header-controls">
                                     <div class="filterSort">
-                                    <span class="filter"><i class="fa fa-filter"></i>Filter By <i class="fa fa-sort-desc"></i></span><span class="horizontal">|</span><span class="sort"><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i>Sort By<i class="fa fa-sort-desc"></i></span>
+                                    <span class="filter"><i class="fa fa-filter"></i>Filter By <i class="fa fa-sort-desc"></i></span><span class="horizontal"></span><span class="sort"><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i>Sort By<i class="fa fa-sort-desc"></i></span>
                                     </div>
                                     <div class="col-sm-4 center logo">
-                                        <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}"<i class="fa fa-search"></i>
+                                     <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}"<i class="fa fa-search"></i>
                                      <input type="text" ng-model="query" class="main-search"  />
                                         </form>
                                     </div>
@@ -241,7 +241,6 @@
 
 			</div>
 	<!-- </div> -->
- 
  
     <footer>
     <div id="footerSocial">

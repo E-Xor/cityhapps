@@ -11,7 +11,7 @@ $tan: #F7EEEF;
 //End Vars
 
 html {
-	background: #EBE6DE;
+	background: #F7EEEF;
   overflow: visible;
 }
 
@@ -1813,7 +1813,7 @@ h3 {
   span{
     color: #9B9B9B;
     float: left;
-    margin-left: 6%;
+    ;
   }
 }
 
@@ -1874,6 +1874,7 @@ span#copyright {
   .filter {
     text-transform: uppercase;
     font-size: 13px;
+
   }
 }
 
@@ -1952,7 +1953,7 @@ span#mapCircle {
     color: #777;
     float: right;
     font-weight: 500;
-   margin-top: -48%;
+   margin-top: -100px;
 
 }
 
@@ -2012,8 +2013,19 @@ span#mapCircle {
 
 .filterSort {
     margin-top: 40px;
-    bottom: 0;
+    text-transform: uppercase;
+    margin-left: 6%;
+    font-size: 13px;
 }
+
+span.horizontal {
+    display: inline-block;
+    height: 3em;
+    margin-right: 20px;
+    margin-left: 20px;
+    border-right: 1px solid #D1D2D4;
+}
+
 
 a.ng-binding:hover{
   text-decoration: none;
