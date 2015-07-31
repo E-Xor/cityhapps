@@ -3,7 +3,7 @@
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=895139070496415&version=v2.0";
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1149149361767339&version=v2.0";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
@@ -11,7 +11,7 @@
 <div ng-controller="venueController">
 	<div class="venue-single">
 		<div class="row">
-			<div class="happ-image col-md-7" style="background-image: url('{{data.event_image_url}}'); background-size: cover;">
+			<div class="happ-image col-md-7" style="background-image: url('{{data.image}}'); background-size: cover;">
 				<div ng-repeat="category in data.categories" class="inline">
 					<span class="happ-category">{{category.name}}</span>
 				</div>
@@ -19,8 +19,13 @@
 			<div class="col-md-5">
 				<h3 class="dark bold">{{data.name}}</h3>
 				<div class="venue-address">{{data.address_1}} {{data.address_2}} {{data.address_3}}<br>{{data.city}}, {{data.state}} {{data.postal_code}}<br>{{data.country}}</div>
-				<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
-				<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
+				<div class="happ-buttons">
+					<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
+					<a class="happ-button inverse right{{ likeStatus ? ' active' : '' }}" href="#" ng-model="data.vote.upVote;" ng-change="simpleVoteVenue(data , 'up')" btn-checkbox>
+						<span ng-hide="likeStatus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Like This Venue</span>
+						<span ng-show="likeStatus">I Like This Venue</span>
+					</a>
+				</div>
 			</div>
 		</div>
 		<div class="row">

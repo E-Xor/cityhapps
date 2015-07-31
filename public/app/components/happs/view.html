@@ -3,104 +3,68 @@
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=895139070496415&version=v2.0";
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1149149361767339&version=v2.0";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
-
+<div id="viewContent">
 <div ng-controller="happController">
-	<div class="happ-single">
+	<div class="happ-single col-md-9">
 		<div class="row">
-			<div class="happ-image col-md-7" style="background-image: url('{{data.event_image_url}}'); background-size: cover;">
-				<div ng-repeat="category in data.categories" class="inline">
-					<span class="happ-category">{{category.name}}</span>
+			<div class="happ-image col-md-7" style="background-image: url('{{data.attributes.event_image_url}}'); background-size: cover;">
+				<div ng-repeat="category in data.relationships.categories.data" class="inline">
+					<span class="happ-category">{{category.attributes.name}}</span>
 				</div>
-				<div class="happ-date">{{data.start_time | dateToISO | date: 'MMM d'}}</div>
+				<div class="happ-date">{{data.attributes.start.local | dateToISO | date: 'MMM d'}}</div>
 			</div>
-			<div class="col-md-5">
-				<h3 class="dark bold">{{data.event_name}}</h3>
-				<div class="time">{{data.start_time | dateToISO | date: 'h:mm a'}} - {{data.end_time | dateToISO | date: 'h:mm a'}}</p>
-				<div class="venue"><a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a></div>
-				<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
+			<div class="col-md-5 happInfo">
+				<h3 class="dark bold">
+{{data.attributes.event_name}}</h3>
+				<div class="time"><i class="fa fa-clock-o"></i>
+{{data.attributes.start.local | dateToISO | date: 'h:mm a'}} - {{data.attributes.end.local | dateToISO | date: 'h:mm a'}}</p></div>
+				<div class="venue"><i class="fa fa-map-marker"></i>
+<a href="{{data.relationships.venue.data.attributes.venue_url}}" target="_blank">{{data.relationships.venue.data.attributes.venue_name}}</a></div>
+        <div class="ratingPrice"><span id="rating">Rating</span><span id="price">Price</span></div>
+        <div id="socialIcons">
+        <a href="#"><i class="fa fa-facebook-official"></i></a>
+        <a href="#"><i class="fa fa-twitter-square"></i></a>
+        </div>
+
+
+				<!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
+				<div class="buttons">
+				<a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
 				<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
+				</div>-->
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<div class="happ-description" ng-if="data.description" ng-bind-html="data.description"></div>
+				<div class="happ-description" ng-if="data.attributes.description" ng-bind-html="data.attributes.description"></div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-9">
-				More Like This:
+			<!--<div class="col-md-9">
+			More Like This:
 			</div>
 			<div class="col-md-3">
-				Share It:
-			</div>
+			Share It:
+			</div>-->
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<a class="happ-button" href="{{ data.google_directions_link }}">Get Directions</a>
+				<a class="happ-button" href="{{ data.attributes.geo_data.google_directions_link }}">Get Directions</a>
 			</div>
 		</div>
 		<div class="row">
-			<a href="{{ data.google_directions_link }}"><img class="col-md-12" src="{{ data.google_map_large }}" /></a>
+			<a href="{{ data.attributes.geo_data.google_directions_link }}"><img class="col-md-12" src="{{ data.attributes.geo_data.google_map_large }}" /><span id="mapCircle"><i class="fa fa-arrow-right"></i>
+Maps</span></a>
 		</div>
 	</div>
 </div>
-<!--div class="modal-header-event">
-<div class="modal-image" style="background-image: url('{{data.event_image_url}}'); background-size: cover;">
-<div class="modal-image-wrapper">
-<div class="share-overlay">
-<h4 class="wide-kerning uppercase">Share</h4>
-
-<a class="share-icon fb-share fb-share-button" data-href="cityhapps.dev" ng-click="sharedPush(data.id, 'facebook'); fbShare(currentURL + data.id, data.event_name)">
-</a>
-<a class="share-icon twitter-share" ng-click="sharedPush(data.id, 'twitter'); socialShare('https://twitter.com/intent/tweet?text={{data.event_name}}&amp;url={{currentURL + data.id}}', 'Twitter Share', 'width=600, height=400')">
-</a>
-<a class="share-icon pinterest-share" ng-click="sharedPush(data.id, 'pinterest'); socialShare('http://www.pinterest.com/pin/create/button/?url={{currentURL + data.id}}&description={{data.event_name}}&media={{data.event_image_url}}','Pinterest Share','width=600, height=400' )">
-</a>
-</div>
-<h3 class="modal-title-event">{{data.event_name}}</h3>
-<div class="share right" ng-click="shareReveal()">
-</div>
-</div>
-</div>
-</div-->
-
-<!--div class="modal-body">
-<div class="modal-details">
-<p class="blue">{{data.start_time | dateToISO | date: 'MMM d h:mm a'}}</p>
-<a href="{{data.venue_url}}" target="_blank">{{data.venue_name}}</a>
-<p>{{data.address}}, {{data.city}}, {{data.state}}</p>
-</div>
-
-<div class="margin20 left">
-<div ng-repeat="category in data.categories" class="inline">
-<div class="event-category inline-block margin-top-5 ">
-{{category.name}}
-</div>
+<div id="ad" class="col-md-3">
+	<div id="adOne"><p>Ad Space</p></div>
+	<div id="adTwo"><p>Ad Space</p></div>
 </div>
 </div>
 
-<div class="modal-description">
-<p ng-if="description" ng-bind-html="description"></p>
-
-<p ng-if="data.description" ng-bind-html="data.description"></p>
-
-</div>
-
-<div class="modal-footer">
-
-<div class="icons-modal">
-
-<div class="btn-group">
-<label class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></label>
-
-<label class="dislike-icon" ng-model="data.vote.downVote" ng-change="simpleVoteEvent(data, 'down')" btn-checkbox></label>
-</div>
-</div>
-
-<a class="buy right" href="{{data.url}}" target="_blank">Book It Now</a>
-</div>
-</div-->

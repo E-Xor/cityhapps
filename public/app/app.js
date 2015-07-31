@@ -1,7 +1,7 @@
 var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute',
     'ui.validate', 'facebook', 'http-auth-interceptor', 'remoteValidation',
     'google-maps'.ns(), 'ui.calendar', 'angular.filter', 'ngSanitize',
-    'ngCookies', 'snap', 'ngIdle']);
+    'ngCookies', 'snap', 'ngIdle', 'checklist-model', 'ngTagsInput']);
 
 
 cityHapps.controller('eventsController', function($scope, $rootScope, $http,
@@ -625,7 +625,7 @@ cityHapps.directive('ngModelOnblur', function() {
 cityHapps.config([
     'FacebookProvider',
     function(FacebookProvider) {
-     var myAppId = '895139070496415';
+     var myAppId = '1149149361767339';
 
      FacebookProvider.init(myAppId);
 
@@ -700,13 +700,54 @@ cityHapps.factory('calDayClick', function($http, $cookies, $cookieStore){
 cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
     function($scope, $http, $routeParams, $cookies, $cookieStore) {
 
-        $scope.user = $cookies.user;
+        $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
+        $scope.likeStatus;
 
-        $http.get('/events?id=' + $routeParams.id)
-            .success(function(data) {
-                if (data.events.length > 0)
-                    $scope.data = data.events[0];
+        if (typeof $routeParams.id !== 'undefined') {
+            $http.get('/happs/' + $routeParams.id)
+                .success(function(data) {
+                    if (data.data.length == 1) {
+                        $scope.data = data.data[0];
+                        if ($scope.user) {
+                            $scope.checkLikeStatus();
+                        }
+                    }
+                });
+        } else {
+            // Get filter data here
+            var filters = '';
+            $http.get('/happs' + filters)
+                .success(function(payload) {
+                    $scope.data = payload.data;
+                });
+        }
+
+        $scope.checkLikeStatus = function() {
+            var userId = $scope.user.id;
+            var eventId = $scope.data.id;
+
+            $http({
+                method: "POST",
+                url: '/checkUserEventVote',
+                data: {
+                    'user_id' : userId,
+                    'event_id' : eventId
+                },
+                headers : {"Content-Type": "application/json"}
+            }).success(function(data){
+                if (!data) {
+                    $scope.likeStatus = false;
+
+                } else if(data) {
+                    console.log(data);
+                    if(data.status == 'ok') {
+                        $scope.likeStatus = true;
+                    } else {
+                        $scope.likeStatus = false;
+                    }
+                }
             });
+        };
 
         $scope.vote = {};
 
@@ -728,11 +769,13 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
                     event.vote.downVote = false;
                     if (upVote == true) {
                         eventVote = 1;
+                    } else {
+                        eventVote = -1
                     }
                 } else { // Downvote changed
                     event.vote.upVote = false;
                     if (downVote == true) {
-                        eventVote = 0;
+                        eventVote = -1;
                     }
                 }
                 $http({
@@ -749,6 +792,7 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
                         console.log("no vote, man");
                     } else if(data) {
                         console.log(data);
+                        $scope.likeStatus = !$scope.likeStatus;
                     }
                 });
             };
@@ -762,39 +806,71 @@ cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$coo
 cityHapps.controller('venueController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
     function($scope, $http, $routeParams, $cookies, $cookieStore) {
 
-        $scope.user = $cookies.user;
+        $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
+        $scope.likeStatus;
 
         $http.get('/venues?id=' + $routeParams.id)
             .success(function(data) {
-                if (data.venues.length > 0)
+                if (data.venues.length > 0) {
                     $scope.data = data.venues[0];
+                    if ($scope.user) {
+                        $scope.checkLikeStatus();
+                    }
+                }
             });
+
+        $scope.checkLikeStatus = function() {
+            var userId = $scope.user.id;
+            var venueId = $scope.data.id;
+
+            $http({
+                method: "POST",
+                url: '/checkUserVenueVote',
+                data: {
+                    'user_id' : userId,
+                    'venue_id' : venueId
+                },
+                headers : {"Content-Type": "application/json"}
+            }).success(function(data){
+                if (!data) {
+                    $scope.likeStatus = false;
+
+                } else if(data) {
+                    console.log(data);
+                    if(data.status == 'ok') {
+                        $scope.likeStatus = true;
+                    } else {
+                        $scope.likeStatus = false;
+                    }
+                }
+            });
+        };
 
         $scope.vote = {};
 
         if ($scope.user) {
 
-            $scope.simpleVoteEvent = function(event, action) {
+            $scope.simpleVoteVenue = function(venue, action) {
 
-                var eventID = event.id;
-
-                console.log(event.vote);
+                var venueID = venue.id;
 
                 var userID = $scope.user.id;
-                var upVote = event.vote.upVote;
-                var downVote = event.vote.downVote;
+                var upVote = venue.vote.upVote;
+                var downVote = venue.vote.downVote;
 
-                var eventVote = -1;
+                var venueVote = -1;
 
                 if (action == 'up') {
-                    event.vote.downVote = false;
+                    venue.vote.downVote = false;
                     if (upVote == true) {
-                        eventVote = 1;
+                        venueVote = 1;
+                    } else {
+                        venueVote = -1
                     }
                 } else { // Downvote changed
-                    event.vote.upVote = false;
+                    venue.vote.upVote = false;
                     if (downVote == true) {
-                        eventVote = 0;
+                        venueVote = -1;
                     }
                 }
                 $http({
@@ -802,8 +878,8 @@ cityHapps.controller('venueController', ['$scope', '$http', '$routeParams', '$co
                     url: '/userVenue',
                     data: {
                         'user_id' : userID,
-                        'venue_id' : eventID,
-                        'vote' : eventVote
+                        'venue_id' : venueID,
+                        'vote' : venueVote
                     },
                     headers: {'Content-Type': 'application/json'}
                 }).success(function(data) {
@@ -811,6 +887,7 @@ cityHapps.controller('venueController', ['$scope', '$http', '$routeParams', '$co
                         console.log('No vote registered.');
                     } else if (data) {
                         console.log(data);
+                        $scope.likeStatus = !$scope.likeStatus;
                     }
                 });
             };
@@ -855,11 +932,16 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
           error = 1;
           $scope.descError = true;
         }
+        if (formData.parent.length > 0) {
+            formData.parent_id = formData.parent[0]['id'];
+        }
+
         // if any error, don't post
         if (error) {
           $scope.generalError = true;
           return;
         }
+        console.log(formData);
         if (!edit) {
             $http({
                 method: 'POST',
@@ -907,7 +989,6 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                 $scope.error = data.error.message;
             });
         }
-
         }
     // Retieving all of the data for the listing page
     $http.get('/events?page_size=all')
@@ -944,6 +1025,7 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                     var singleEvent = data.events[0];
                     $scope.formData.title = singleEvent.event_name;
                     $scope.formData.event_id = singleEvent.id;
+                    $scope.formData.parent_id = singleEvent.parent_id;
                     $scope.formData.event_url = singleEvent.url;
                     $scope.formData.event_image_url = singleEvent.event_image_url;
                     $scope.formData.venue_name = singleEvent.venue_name;
@@ -960,6 +1042,29 @@ cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams',
                     dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
                     if (dateCheckCreate != dateCheckUpdate)
                        $scope.updated_last  = singleEvent.updated_at;
+                    $scope.formData.similar_events_model = singleEvent.similar;
+                    $scope.formData.similar_events_storage = (function () {
+                        var base = [];
+                        angular.forEach(singleEvent.similar, function (value) {
+                            if (value.parent_id != null) {
+                                base.push(value.id);
+                            }
+                        });
+                        return base;
+                    })();
+                    $scope.formData.tags = singleEvent.tags;
+                    $scope.formData.parent = [];
+
+                    $scope.loadTags = function(query) {
+                        return $http.get('/tags/' + query);
+                    };
+                    $scope.loadEvents = function(query){
+                        return $http.get('/events/?name=' + query + '&current_id=' + $routeParams.id);
+                    };
+                    if ($scope.formData.parent_id > 0) {
+                        //This event has NO suggested similar, events let's fetch the parent information
+                        $http.get('/events/?id=' + $routeParams.id + '&current_id=' + $scope.formData.parent_id ).success(function(data){$scope.formData.parent = data;});
+                    }
                 }
         })
     }
@@ -1000,6 +1105,9 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
         if (typeof formData.desc === 'undefined' || formData.desc == '') {
           error = 1;
           $scope.descError = true;
+        }
+        if (formData.parent.length > 0) {
+            formData.parent_id = formData.parent[0]['id'];
         }
         // if any error, don't post
         if (error) {
@@ -1072,6 +1180,7 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
                     var singleVenue = data.venues[0];
                     $scope.formData.venue_name = singleVenue.name;
                     $scope.formData.venue_id = singleVenue.id;
+                    $scope.formData.parent_id = singleVenue.parent_id;
                     $scope.formData.venue_url = singleVenue.url;
                     $scope.formData.venue_image_url = singleVenue.image;
                     $scope.formData.phone = singleVenue.phone;
@@ -1085,7 +1194,27 @@ cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams',
                     dateCheckUpdate = new Date(singleVenue.updated_at).getTime() / 1000;
                     if (dateCheckCreate != dateCheckUpdate)
                        $scope.updated_last = singleVenue.updated_at;
+                    $scope.formData.parent_id = singleVenue.parent_id;
+                    $scope.formData.similar_venues_model = singleVenue.similar;
+
+                    $scope.formData.similar_venues_storage = (function () {
+                        var base = [];
+                        angular.forEach(singleVenue.similar, function (value) {
+                            if (value.parent_id != null) {
+                                base.push(value.id);
+                            }
+                        });
+                        return base;
+                    })();
+                    $scope.formData.tags = singleVenue.tags;
+                    $scope.loadTags = function(query) {
+                        return $http.get('/tags/' + query);
+                    };
+
+                    console.log($scope.formData);
                 }
+
+
         });
     }
 }]);
@@ -1198,11 +1327,6 @@ cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authServic
 
         $scope.helpFade = function() {
             $('.help-overlay').fadeToggle();
-        };
-
-        $scope.recToggle = function() {
-            $('.rec').fadeToggle();
-            $('.rec-arrow').toggleClass("down");
         };
 
         $('div').fadeIn('fast');
@@ -2202,8 +2326,8 @@ cityHapps.config(function($routeProvider, $locationProvider){
 
 	$routeProvider
 		.when("/", {
-			controller: 'adminEventController',
-            templateUrl: 'app/components/happs/list.html'
+			controller: 'happController',
+            templateUrl: 'app/components/happs/home.html'
 		})
         .when("/preview", {
             controller: 'adminEventController',

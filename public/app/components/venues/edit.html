@@ -28,6 +28,25 @@
     background: #87cefa;
     color:#fff;
     }
+
+
+    input:checked + .label_container {
+      background-color: burlywood;
+    }
+    .single_venue {
+      padding: 10px 5px 0;
+    }
+
+    .single_venue .container {
+      width: 70%;
+      display: inline-block;
+    }
+
+
+    .single_venue span, .single_venue small {
+      display: block;
+    }
+
   </style>
         <div class="form_container">
         <div ng-if="success">
@@ -88,11 +107,50 @@
               <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
               <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
             </div>
-
+            
             <div>
-
+              <label for="tags">Tags</label>
+              <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">
+                <auto-complete source="loadTags($query)"></auto-complete>
+              </tags-input>
+            </div>
+            <div  ng-if="formData.parent_id > 0 || formData.similar_events_model.length == 0">
+              <dl>
+                <dt>Duplicate of</dt>
+                <dd>If you believe this is a duplicate of another event, add it here. We'll make sure it is labeled as such and removed from results.</dd>
+              </dl>
+              <tags-input id="parent_id" ng-model="formData.parent" key-property="id" display-property="event_name" replace-spaces-with-dashes="false" placeholder="Add an event" max-tags=1 addFromAutocompleteOnly="true">
+                <auto-complete source="loadEvents($query)" template="parentIdTemplate" debounceDelay="1000"></auto-complete>
+              </tags-input>
+              <span></span>
+            </div>
+            <div class="similar_venues">
+              <div ng-if="formData.parent_id > 0">
+                This item has been identified as a duplicate of <a href="admin/venue/edit/{{formData.parent_id}}">Venue ID: {{formData.parent_id}}</a>
+              </div>
+              <div ng-if="formData.similar_venues_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
+                <h4>Duplicated Venues</h4>
+                <p>There are venues that appear to be duplicates of this one. Select those venues here to mark them as duplicates and hide them from listings.</p>
+                <div ng-repeat="(key, value) in formData.similar_venues_model">
+                  <div class="single_venue {{isCheched=value.parent_id?'checked-row':''}}">
+                    <input type="checkbox" id="venue_id_{{value.id}}"
+                           checklist-model="formData.similar_venues_storage" checklist-value="value.id"
+                           style="display: none"/>
+                    <label for="venue_id_{{value.id}}" class="label_container">
+                      <div class="container">
+                        <span>{{value.venue_name}}</span>
+                        <small>Venue ID: {{value.id}}</small>
+                        <small>Venue Address: {{value.venue_address_1}} ({{value.venue_lat}}@{{value.venue_lng}})</small>
+                        <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
+                      </div>
+                    </label>
+                  </div>
+                  </div>
+                </div>
+              </div>
             <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
 
         </fieldset>
         </form>
+          </div>
         <script src="/js/jquery.datetimepicker.js"></script>
