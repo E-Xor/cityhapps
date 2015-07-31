@@ -26,9 +26,9 @@ body {
 	z-index: 2;
   background-color: #FFFFFF;
   border-bottom: 1px #C7C5C0 solid;
-  width: 80%;
+  width: 81%;
   float: right;
-  height: 200px;
+  height: 235px;
 }
 	
 
@@ -1669,13 +1669,13 @@ h3 {
   line-height: 1.5em;
 }
 
-.happ-date {
+    .happ-date {
     color: #FFFFFF;
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-top: solid #D9433F 1px;
+    padding: 11px;
+    border-top: solid #D9433F 2.5px;
     position: absolute;
-    margin-top: 118px;
+    margin-top: 136px;
     width: 100%;
     margin-left: -15px;
 }
@@ -1750,6 +1750,14 @@ h3 {
   margin-bottom: 2%;
 }
 
+.happ-single i.fa.fa-arrow-right {
+    display: block;
+    margin-bottom: -20px;
+    margin-top: 8px;
+    font-size: 22px;
+}
+
+
 .container {
   width: 100%;
   height: 100%;
@@ -1767,7 +1775,7 @@ h3 {
 #verticalMenu {
   padding-top: 154px;
   background-color: #555555;
-  width: 20%;
+  width: 19%;
   float: left;
   position: absolute;
   top: 0;
@@ -1797,6 +1805,7 @@ h3 {
    color: #fff;
   }
 
+
 .cityLogo {
   width: 100%;
   hr {
@@ -1822,7 +1831,7 @@ h3 {
 }
 
 #firstMenu a{
-  color: #8B8B8B !important;
+  color: #9b9b9b !important;
 }
 
 a {
@@ -1924,7 +1933,9 @@ span#mapCircle {
 }
 
 .dark {
-    font-size: 14px;
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 10%;
 }
 
 #relatedEvents{
@@ -1949,40 +1960,86 @@ span#mapCircle {
     color: #777;
     float: right;
     font-weight: 500;
+   margin-top: -48%;
+
 }
 
 #rating{
   display:block;
+  margin-bottom: 61%;
+
 }
 
 .happ-info{
    width:27%;
 }
 
-i.fa.fa-facebook-official {
+.happ-single{
+
+
+  } i.fa.fa-facebook-official {
     color: #3B5998;
     font-size: 2em;
     margin-left: 56%;
 
 }
-
-i.fa.fa-twitter-square {
+ i.fa.fa-twitter-square {
     color: #1dcaff;
     font-size: 2em;
 }
 
-i.fa.fa-filter {
+#footerSocial{
+      word-spacing: .5em;
+}
+
+ footer i.fa.fa-twitter-square {
+    color: #1dcaff;
+    font-size: 2em;
+
+}
+
+.everything i.fa.fa-filter {
     font-size: 22px;
+
 }
 
 
-i.fa.fa-sort-desc {
+  .everything i.fa.fa-sort-desc {
     margin-left: 2px;
+    margin-bottom: 22px;
 }
 
- i.fa.fa-arrow-right {
-    display: block;
-    margin-bottom: -20px;
-    margin-top: 8px;
+ 
+
+ .everything i.fa.fa-long-arrow-up {
     font-size: 22px;
+}
+  .everything i.fa.fa-long-arrow-down {
+    font-size: 22px;
+}
+
+.filterSort {
+    margin-top: 40px;
+    bottom: 0;
+}
+
+a.ng-binding:hover{
+  text-decoration: none;
+  color: #333;
+}
+
+div#socialIcons {
+    margin-top: 21%;
+    margin-left: 43%;
+    font-size: 16px;
+    word-spacing: .5em;
+}
+
+.happInfo {
+    padding-right: 0px;
+}
+
+h3.dark.bold.ng-binding {
+    display: block;
+    width: 80%;
 }
