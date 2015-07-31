@@ -1835,10 +1835,6 @@ p {
   font-family: 'Roboto', sans-serif;
 }
 
-footer{
- 
- 
-}
 
 footer ul li{  
   text-decoration: none;
@@ -1846,7 +1842,8 @@ footer ul li{
 }
 
 #footerMenu {
-  margin-left: 50%;
+    text-align: center;
+    padding: 0;
 }
   a{
   text-decoration: underline;
@@ -1866,9 +1863,10 @@ footer ul li{
 }
 
 
-span#copyright {
-    margin-left: 49%;
-}
+span#copyright {   
+    text-align: center;
+    display: block;
+  }
 
 .header-container {
   z-index: 2;
@@ -1881,11 +1879,11 @@ span#copyright {
   }
   hr {
     border-color: #B8B5B0;
+    margin-bottom:40px;
   }
   .header-controls {
     color: #9B9B9B;
     .filterSort {
-      margin-top: 40px;
       font-size: 13px;
       text-transform: uppercase;
       span {
@@ -1993,7 +1991,6 @@ span#mapCircle {
 i.fa.fa-facebook-official {
     color: #3B5998;
     font-size: 2em;
-    margin-left: 56%;
 }
 
  i.fa.fa-twitter-square {
@@ -2003,6 +2000,7 @@ i.fa.fa-facebook-official {
 
 #footerSocial{
       word-spacing: .5em;
+      text-align: center;
 }
 
 footer i.fa.fa-twitter-square {
@@ -2039,13 +2037,21 @@ h3.dark.bold.ng-binding {
 
    i.fa.fa-search {
     position: absolute;
-    top: 13px;
+    top: 11px;
     left: 8px;
     font-size: 1.5em;
 }
 }
 
+i.fa.fa-filter {
+    font-size: 1.7em;
+}
+
+i.fa.fa-exchange.fa-rotate-90 {
+    font-size: 1.7em;
+}
+
 input.main-search.ng-pristine.ng-untouched.ng-valid {
     width: 450px;
-    height: 50px;
+    height: 45px;
 }
