@@ -1768,7 +1768,7 @@ h3 {
 .happ-single {
   width: 50%;
   margin-top: 2%;
-  margin-left: 22%;
+ 
   margin-bottom: 2%;
 }
 
@@ -2051,4 +2051,22 @@ div#socialIcons {
 h3.dark.bold.ng-binding {
     display: block;
     width: 80%;
+}
+
+#searchBox{
+   position: relative;
+  width: 37%;
+
+
+   i.fa.fa-search {
+    position: absolute;
+    top: 13px;
+    left: 8px;
+    font-size: 1.5em;
+}
+}
+
+input.main-search.ng-pristine.ng-untouched.ng-valid {
+    width: 450px;
+    height: 50px;
 }
