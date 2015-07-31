@@ -43,13 +43,15 @@
     <!-- default is set to 120 minutes, which our angular cookie is synced to -->
     <!-- echo(Config::get('session.lifetime')); -->
 
-<div class="everything">
+
 
     <body ng-controller="appController" ng-cloak>
+    <div class="everything">
         <ul id="verticalMenu">
-            <li id="firstMenu"><a href="#">My Account</a></li>
+            <li id="firstMenu"><a href="#">My Account</a><i class="fa fa-sort-desc"></i></li>
             <hr>
-            <li><a href="/">Home</a></li>
+            <li><a href="/">Home</a></i>
+</li>
             <hr>
             <li><a href="#">My Favorites</a></li>
             <hr>
@@ -76,7 +78,7 @@
             <li><a href="#">Category</a></li>
             <hr>
             <li><a href="#">Category</a></li>
-            <hr>
+            <hr id= "lastHr">
         </ul>
 		<div ng-if="!mobile()">
 
@@ -99,10 +101,12 @@
 									<a href="/"><img src="/assets/img/logo-atl.png"></a>
                                     <hr>
                                     <div class="header-controls">
-                                    <span class="filter">Filter By</span><span class="horizantal">|</span><span class="sort">Sort By</span>
+                                    <div class="filterSort">
+                                    <span class="filter"><i class="fa fa-filter"></i>Filter By <i class="fa fa-sort-desc"></i></span><span class="horizontal">|</span><span class="sort"><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i>Sort By<i class="fa fa-sort-desc"></i></span>
+                                    </div>
                                     <div class="col-sm-4 center logo">
-                                        <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
-                                            <i class="fa fa-search"></i><input type="text" ng-model="query" class="main-search" />
+                                        <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}"<i class="fa fa-search"></i>
+                                     <input type="text" ng-model="query" class="main-search"  />
                                         </form>
                                     </div>
 								</div>
@@ -236,13 +240,14 @@
 			<div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
 
 			</div>
-		</div>
 	<!-- </div> -->
-  <div id="relatedEvents">
-<h2 id="related">Related Events</h2>
-</div>
+ 
  
     <footer>
+    <div id="footerSocial">
+  <a href="#"> <i class="fa fa-facebook-official"></i></a>
+  <a href="#"><i class="fa fa-twitter-square"></i></a>
+        </div>
         <ul id="footerMenu">
             <li><a href="#">Events</a></li>
             <li><a href="#">About</a></li>
