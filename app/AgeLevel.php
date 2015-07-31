@@ -1,4 +1,5 @@
 <?php
+
 namespace CityHapps;
 
 use Illuminate\Database\Eloquent\Model;
