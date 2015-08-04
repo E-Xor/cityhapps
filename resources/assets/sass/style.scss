@@ -2055,3 +2055,65 @@ input.main-search.ng-pristine.ng-untouched.ng-valid {
     width: 450px;
     height: 45px;
 }
+/*Home Page SCSS*/
+
+.homeImage {
+    width: 92%;
+    margin-left: 4%;
+    min-height: 130px;
+    }
+
+.homeButtons{
+  float: left;
+  text-decoration: none;
+  font-size: 14px;
+  width: 50%;
+}
+
+.homeDirections{
+  background-color: #fff;
+  border-bottom: none;
+  border-left: none;
+  text-shadow: none;
+  position: absolute;
+  bottom: 0;
+  right: 50%;
+
+}
+.homeMore{
+  position: absolute;
+    bottom: 0;
+    left: 50%;
+}
+
+.homeListing{
+      position: relative;
+}
+
+a .homeDirections{
+  background-color: none;
+}
+a.happ-button.homeButtons.homeDirections {
+    color: #E24B44;
+}
+
+.homeName{
+  font-size:1em;
+}
+
+.homeDate{
+     
+      margin-top: 86px;
+}
+
+.homeTime{
+  font-size: .9em;
+  color:$grey;
+
+}
+
+.homeVenue, .homeVenue a{
+  font-size: .9em;
+  color:$grey;
+}
+
