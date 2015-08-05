@@ -69,8 +69,6 @@ Route::post('user/edit', 'UserController@editUser');
 Route::post('updateUserCategories', 'UserController@updateCategories');
 Route::get('getUserCategories', 'UserController@getUserCategories');
 
-Route::resource('category', 'CategoryController');
-
 Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
 
 Route::get('tags/{name}','TagController@getTags');
@@ -91,7 +89,7 @@ Route::get('about', function () {
 
 // Limit this to only models that can be used
 Route::any('{model}/{id?}', 'ApiController@handleRequest')
-	->where(['model' => 'Venue|Category|Tag|Happ']);
+	->where(['model' => 'venue|category|tag|happ']);
 
 // Yes, this is awful. We'll change it when we get the API in a good spot
 Route::any('{path?}', function()
