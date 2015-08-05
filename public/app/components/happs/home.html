@@ -1,22 +1,22 @@
-<div ng-controller="happController" ng-cloak class="happ-listing">
+<div ng-controller="happController" ng-cloak class="happ-listing HomeListing">
   <div ng-repeat="happ in data" class="happ-single col-md-4">
     <div class="row">
-      <div class="happ-image col-xs-12" style="background-image: url('{{happ.attributes.event_image_url}}'); background-size: cover;">
+      <div class="happ-image col-xs-12 homeImage" style="background-image: url('{{happ.attributes.event_image_url}}'); background-size: cover;">
         <div ng-repeat="category in happ.relationships.categories.data" class="inline">
           <span class="happ-category">{{category.attributes.name}}</span>
         </div>
-        <div class="happ-date">{{happ.attributes.start.local | dateToISO | date: 'MMM d'}}</div>
+        <div class="happ-date homeDate">{{happ.attributes.start.local | dateToISO | date: 'MMM d'}}</div>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12 happInfo">
-        <h3 class="dark bold">
+        <h3 class="dark bold homeName">
 {{happ.attributes.event_name}}</h3>
-        <div class="time"><i class="fa fa-clock-o"></i>
+        <div class="time homeTime"><i class="fa fa-clock-o"></i>
 {{happ.attributes.start.local | dateToISO | date: 'h:mm a'}} - {{happ.attributes.end.local | dateToISO | date: 'h:mm a'}}</p></div>
-        <div class="venue"><i class="fa fa-map-marker"></i>
+        <div class="venue homeVenue"><i class="fa fa-map-marker"></i>
 <a href="{{happ.relationships.venue.data.attributes.venue_url}}" target="_blank">{{happ.relationships.venue.data.attributes.venue_name}}</a></div>
-        <div class="ratingPrice"><span id="rating">Rating</span><span id="price">Price</span></div>
+        <div class="ratingPrice homeRP"><span id="rating">Rating</span><span id="price">Price</span></div>
         <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
         <div class="buttons">
         <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
@@ -24,6 +24,6 @@
         </div>-->
       </div>
     </div>
-    <div><a class="happ-button" href='{{happ.attributes.geo_data.google_directions_link}}' target="_new">Get Directions</a> <a class="happ-button" href='/happ/{{happ.id}}'>Learn More</a></div>
+    <div><a class="happ-button homeButtons homeDirections" href='{{happ.attributes.geo_data.google_directions_link}}' target="_new">Get Directions</a> <a class="happ-button homeButtons homeMore" href='/happ/{{happ.id}}'>Learn More</a></div>
   </div>
 </div>
