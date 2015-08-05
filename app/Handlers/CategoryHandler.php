@@ -13,7 +13,7 @@ class CategoryHandler extends ApiHandler
 {
 	const ERROR_SCOPE = 1024;
 
-	protected static $exposedRelations = [];
+	protected static $exposedRelations = ['users', 'happs'];
 
 	/**
 	 * @param ApiRequest $request
