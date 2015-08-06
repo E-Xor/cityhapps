@@ -60,7 +60,7 @@ class Happ extends Model
 
   public function ageLevels()
   {
-    return $this->belongsToMany('CityHapps\AgeLevel', 'happ_age_level', 'happ_id', 'age_level_id');
+    return $this->belongsToMany('CityHapps\AgeLevel', 'happ_age_level');
   }
 
   public function duplicated()

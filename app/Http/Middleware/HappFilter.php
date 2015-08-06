@@ -28,6 +28,27 @@ class HappFilter
     ];
 
     /**
+     * @param object $model model
+     * @param string $key column name
+     * @param string $value column value
+     */
+    public static function filterByHappColumn(&$model, $key, $value)
+    {
+        $values = explode(',', $value);
+
+        if(count($values) > 1) {
+            $model->where(function ($model) use ($key, $values) {
+                    foreach ($values as $val) {
+                        $model->orWhere($key, '=', $val);
+                    }
+                }
+            );
+        } else {
+            $model->where($key, '=', $value);
+        }
+    }
+
+    /**
      * @param $query
      * @param $values
      */

@@ -1,5 +1,7 @@
 <?php
 
+use CityHapps\Venue;
+
 class VenueController extends BaseController {
 
 	public static function storeVenues()
