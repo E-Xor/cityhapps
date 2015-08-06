@@ -2,6 +2,14 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
     return $resource('/happs/:id', {}, {
         query: { isArray: false }
     });
+}).factory('Category', function($resource) {
+    return $resource('/api/category/:id', {}, {
+        query: { isArray: false }
+    });
+}).factory('Tag', function($resource) {
+    return $resource('/api/tag/:id', {}, {
+        query: { isArray: false }
+    });
 }).factory('voteService', function() {
 
     var vote = {};
@@ -132,16 +140,15 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             console.log('Unable to Get Categories');
         } else if (data) {
             console.log('successfully Getting Categories');
-            console.log(data);
         }
     });
-}).factory('getUserCategories', function($http){
+}).factory('getUserCategories', function($http) {
     return {
         params: function(args) {
             return $http({
-                method: "GET",
-                url: "/getUserCategories" + args,
-                headers: {"Content-Type": "application/json"}
+                method: 'GET',
+                url: '/getUserCategories' + args,
+                headers: {'Content-Type': 'application/json'}
             }).success(function(data) {
                 if (!data) {
                     console.log('Unable to Get Categories');

@@ -1,7 +1,6 @@
-/*var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute', 'ngResource',
-    'ui.validate', 'facebook', 'http-auth-interceptor', 'remoteValidation',
-    'google-maps'.ns(), 'ui.calendar', 'angular.filter', 'ngSanitize',
-    'ngCookies', 'snap', 'ngIdle', 'checklist-model', 'ngTagsInput']);*/
+/**
+ * CityHapps AngularJS Bootstrap
+ */
 
 angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
     'ngResource', 'ui.validate', 'facebook', 'http-auth-interceptor',
@@ -10,17 +9,22 @@ angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
     'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
     'cityHapps.filters']);
 
-angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider) {
+angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider) {
+    $stateProvider.state('home', {
+        url: '/',
+        templateUrl: 'app/components/happs/home.html',
+        controller: 'happController'
+    }).state('listEvents', {
+        url: '/preview',
+        templateUrl: 'app/components/happs/list.html',
+        controller: 'adminEventController'
+    }).state('singleHapp', {
+        url: '/happ/:id',
+        templateUrl: 'app/components/happs/view.html',
+        controller: 'happController'
+    });
 
     $routeProvider
-        .when("/", {
-            controller: 'happController',
-            templateUrl: 'app/components/happs/home.html'
-        })
-        .when("/preview", {
-            controller: 'adminEventController',
-            templateUrl: 'app/components/happs/list.html'
-        })
         .when("/map", {
             // controller: 'mapViewController',
             templateUrl: 'templates/mapView.html'
@@ -40,10 +44,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         .when("/search", {
             // controller: "calController",
             templateUrl: "templates/searchView.html"
-        })
-        .when("/happ/:id", {
-            controller: "happController",
-            templateUrl: "app/components/happs/view.html"
         })
         .when("/venue/:id", {
             controller: "venueController",

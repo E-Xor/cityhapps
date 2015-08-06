@@ -114,7 +114,7 @@
                 </div>
             </header>
             <!-- Get the home body partial -->
-            <div ng-view class="main-content container-fluid" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
+            <div class="main-content container-fluid" ng-animate="{enter: 'animate', leave: 'animate'}" ui-view></div>
             <footer class="container-fluid">
                 <div id="footerSocial">
                     <a href="#"> <i class="fa fa-facebook-official"></i></a>

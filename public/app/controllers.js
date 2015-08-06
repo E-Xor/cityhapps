@@ -89,13 +89,13 @@ angular.module('cityHapps.controllers', []).controller('venueController', functi
                 });
             };
         }
-}).controller('happController', function($scope, $http, $routeParams, $cookies, $cookieStore, Happ) {
+}).controller('happController', function($scope, $http, $routeParams, $stateParams, $cookies, $cookieStore, Happ) {
 
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
         $scope.likeStatus;
 
-        if (typeof $routeParams.id !== 'undefined') {
-            Happ.get({ id: $routeParams.id }, function(payload) {
+        if (typeof $stateParams.id !== 'undefined') {
+            Happ.get({ id: $stateParams.id }, function(payload) {
               $scope.data = payload.data[0];
             });
         } else {
@@ -111,7 +111,7 @@ angular.module('cityHapps.controllers', []).controller('venueController', functi
             var eventId = $scope.data.id;
 
             $http({
-                method: "POST",
+                method: 'POST',
                 url: '/checkUserEventVote',
                 data: {
                     'user_id' : userId,
