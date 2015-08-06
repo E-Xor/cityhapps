@@ -2027,12 +2027,6 @@ div#socialIcons {
     padding-right: 0px;
 }
 
-h3.dark.bold.ng-binding {
-    display: block;
-    width: 80%;
-    height: 28px;
-}
-
 
 #searchBox{
    position: relative;
@@ -2110,22 +2104,25 @@ a.happ-button.homeButtons.homeDirections {
   height: 20px;
 }
 
+
 .homeDate {
     margin-top: 106px;
     padding: 0;
     font-size: 16px;
 }
 
-.homeTime{
-  font-size: .9em;
-  color:$grey;
+.homeIcons{
+  font-size: 12px;
+  color: $grey;
+
+  a{
+    color: $grey;
+    font-size: 12px
+  }
 
 }
 
-.homeVenue, .homeVenue a{
-  font-size: .9em;
-  color:$grey;
-}
+
 
 #startDate{
   margin-left: 5px;
@@ -2137,12 +2134,10 @@ a.happ-button.homeButtons.homeDirections {
 }
 
 .homeRP {
-    float: none;
-    margin-left: 223px;
-    margin-top: -69px;
+    padding: 15% 13%;
     font-weight: 500;
     font-size: .8em;
-    
+
     #rating{
       margin-bottom: 14px;
     }
@@ -2152,4 +2147,8 @@ a.happ-button.homeButtons.homeDirections {
     margin: 15px 12px !important;   
     width: 31%;
 }  
+
+
+
+
 
