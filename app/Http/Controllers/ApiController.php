@@ -1,11 +1,10 @@
 <?php
-
 //namespace CityHapps\Http\Controllers;
 
 use EchoIt\JsonApi\Request as ApiRequest;
 use EchoIt\JsonApi\ErrorResponse as ApiErrorResponse;
 use EchoIt\JsonApi\Exception as ApiException;
-//use \Request;
+//use CityHapps\Http\Requests\Request;
 
 class ApiController extends Controller
 {

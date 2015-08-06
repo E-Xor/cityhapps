@@ -2,7 +2,8 @@
 
 namespace CityHapps;
 
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
+use EchoIt\JsonApi\Model;
 use CityHapps\Category;
 use CityHapps\AgeLevel;
 use CityHapps\Http\Middleware\HappFilter;

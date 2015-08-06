@@ -2,7 +2,8 @@
 
 namespace CityHapps;
 
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
+use EchoIt\JsonApi\Model;
 
 class Category extends Model {
 
@@ -26,12 +27,12 @@ class Category extends Model {
 
 	public function users()
 	{
-		return $this->belongsToMany('User', 'user_categories', 'category_id', 'user_id');
+		return $this->belongsToMany('CityHapps\User', 'user_categories', 'category_id', 'user_id');
 	}
 
 	public function happs()
 	{
-		return $this->hasMany('CityHapps\Happ', 'event_category', 'category_id', 'event_id');
+		return $this->belongsToMany('CityHapps\Happ', 'event_category', 'category_id', 'event_id');
 	}
 
 }
