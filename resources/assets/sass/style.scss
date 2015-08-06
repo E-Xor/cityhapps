@@ -1778,32 +1778,32 @@ h3 {
     font-size: 22px;
 }
 
-.category-menu {
+.sidebar-menu {
   padding-top: 154px;
-  hr{
-    margin-left: -40px;
-    border-color: #626262;
-    &:last-child{
-      visibility: hidden;
+  padding-left: 0px;
+  font-size: 16px;
+  .fa-star {
+    color: #F5A60D;
+  }
+  li {
+    a {
+      -webkit-font-smoothing: subpixel-antialiased;
+      display: block;
+      padding: 30px 40px;
+      border-bottom: 1px solid #626262;
+      &:hover {
+        color: #FFFFFF;
+        background-color: #626262;
+      }
+    }
+    &:first-child a{
+      color: #9B9B9B;
+    }
+    &:last-child a{
+      border-bottom: none;
     }
   }
 }
-
-.category-menu li{
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
- .category-menu li a{
-
-    -webkit-font-smoothing: subpixel-antialiased;
-
-    }
-
-.category-menu li a:hover{
-   color: #fff;
-  }
-
 
 .cityLogo {
   width: 100%;
@@ -1822,46 +1822,20 @@ h3 {
   margin-right: 2%;
 }
 
-#firstMenu a{
-  color: #9b9b9b !important;
-}
-
-a {
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-}
-
-p {
-  font-family: 'Roboto', sans-serif;
-}
-
-
 footer ul li{  
   text-decoration: none;
   display: inline;
 }
 
 #footerMenu {
-    text-align: center;
-    padding: 0;
+  text-align: center;
+  padding: 0;
+  a {
+    text-decoration: underline;
+    color: #2F3030;
+    font-size: 14px;
+  }
 }
-  a{
-  text-decoration: underline;
-  color: #2F3030;
-  font-size: 14px;
-  
-}
-
-
-
-#footerMenu a{
-  text-decoration: underline;
-  color: #2F3030;
-  font-size: 14px;
-  padding-right: 10px;
-
-}
-
 
 span#copyright {   
     text-align: center;

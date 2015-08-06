@@ -32,40 +32,7 @@
 
 <body ng-controller="appController" ng-cloak>
     <div ng-if="!mobile()" class="test-wrapper">
-        <aside class="sidebar">
-            <ul class="category-menu">
-                <li id="firstMenu"><a href="#">My Account</a> <i class="fa fa-sort-desc"></i></li>
-                <hr>
-                <li><a href="/">Home</a></li>
-                <hr>
-                <li><a href="#">My Favorites</a></li>
-                <hr>
-                <li><a href="#">Exhibits &amp; Museums</a></li>
-                <hr>
-                <li><a href="#">Festivals</a></li>
-                <hr>
-                <li><a href="#">Sports</a></li>
-                <hr>
-                <li><a href="#">Art</a></li>
-                <hr>
-                <li><a href="#">Music</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr id= "lastHr">
-            </ul>
-        </aside>
+        <aside class="sidebar" ui-view="sidebar"></aside>
         <div class="content-wrapper">
             <header class="header-container container-fluid">
                 <div class="row">
@@ -121,11 +88,11 @@
                     <a href="#"><i class="fa fa-twitter-square"></i></a>
                 </div>
                 <ul id="footerMenu">
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/">Events</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
-                <span id="copyright">CityHapps | &copy;2015 All Rights Reserved.</span>
+                <span id="copyright">City Happs | &copy;2015 All Rights Reserved.</span>
             </footer>
         </div>
     </div>
@@ -173,7 +140,7 @@
                 </div>
             </header>
             <!-- Get the home body partial -->
-            <div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
+            <div ui-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
         </div>
     </div>
 

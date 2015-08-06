@@ -99,6 +99,10 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
                 });
             };
         }
+}).controller('CategorySidebarController', function($scope, Category) {
+    Category.query(function(payload) {
+      $scope.categories = payload.data;
+    });
 }).controller('venueController', function($scope, $http, $routeParams, $stateParams, $cookies, $cookieStore) {
 
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
@@ -504,7 +508,6 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
 
         $scope.filterData = {};
         $scope.filterData.categories = {};
-
 
         // I modified this Gist to flatten return object from php
         // https://gist.github.com/penguinboy/762197

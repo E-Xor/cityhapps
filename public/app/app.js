@@ -10,55 +10,134 @@ angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
     'cityHapps.filters']);
 
 angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider) {
-    $stateProvider.state('home', {
+    $stateProvider.state('default', {
+        abstract: true,
+        views: {
+            '@': {
+                templateUrl: 'app/components/happs/home.html',
+                controller: 'HappHomeController'
+            },
+            'sidebar': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            }
+        }
+    }).state('home', {
         url: '/',
-        templateUrl: 'app/components/happs/home.html',
-        controller: 'HappHomeController'
+        parent: 'default'
     }).state('viewHapp', {
         url: '/happ/:id',
-        templateUrl: 'app/components/happs/view.html',
-        controller: 'HappViewController'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/happs/view.html',
+                controller: 'HappViewController'
+            }
+        }
     }).state('addHapp', {
         url: '/admin/event/add',
-        templateUrl: 'templates/event.html',
-        controller: 'adminEventController'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'templates/event.html',
+                controller: 'adminEventController'
+            }
+        }
     }).state('editHapp', {
         url: '/admin/event/edit/:id',
-        templateUrl: 'templates/event.html',
-        controller: 'adminEventController'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'templates/event.html',
+                controller: 'adminEventController'
+            }
+        }
     }).state('listHapp', {
         url: '/preview',
-        templateUrl: 'app/components/happs/list.html',
-        controller: 'adminEventController'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/happs/list.html',
+                controller: 'adminEventController'
+            }
+        }
     }).state('viewVenue', {
         url: '/venue/:id',
-        templateUrl: 'app/components/venues/view.html',
-        controller: 'venueController'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/view.html',
+                controller: 'venueController'
+            }
+        }
     }).state('addVenue', {
         url: '/admin/venue/add',
-        templateUrl: 'app/components/venues/edit.html',
-        controller: 'adminVenueController'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/edit.html',
+                controller: 'adminVenueController'
+            }
+        }
     }).state('editVenue', {
         url: '/admin/venue/edit/:id',
-        templateUrl: 'app/components/venues/edit.html',
-        controller: 'adminVenueController'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/edit.html',
+                controller: 'adminVenueController'
+            }
+        }
     }).state('listVenue', {
         url: '/admin/venue/list',
-        templateUrl: 'app/components/venues/list.html',
-        controller: 'adminVenueController'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/list.html',
+                controller: 'adminVenueController'
+            }
+        }
     }).state('listVenuePage', {
         url: '/admin/venue/list/:page',
-        templateUrl: 'app/components/venues/list.html',
-        controller: 'adminVenueController'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/list.html',
+                controller: 'adminVenueController'
+            }
+        }
     }).state('about', {
         url: '/about',
-        templateUrl: 'app/components/static/about.html'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/static/about.html'
+            }
+        }
     }).state('requestVenue', {
         url: '/add-venue',
-        templateUrl: 'app/components/static/add-venue.html'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/static/add-venue.html'
+            }
+        }
     }).state('requestEvent', {
         url: '/add-event',
-        templateUrl: 'app/components/static/add-event.html'
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/static/add-event.html'
+            }
+        }
+    }).state('contact', {
+        url: '/contact',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/static/contact.html'
+            }
+        }
     });
 
     $urlRouterProvider.otherwise('/');
