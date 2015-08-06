@@ -2146,6 +2146,36 @@ a.happ-button.homeButtons.homeDirections {
     width: 31%;
 }  
 
+/*Single Venue View*/
+.venueSingle{
+    background: #58afb9;
+    height: 164px;
+    margin: -30px -15px 0px -15px;
+  }
+
+  .venueInfo{
+    text-align: center;
+    width: 100%;
+  }
+
+  .venueText{
+    font-size: 1em;
+  }
+
+  .venueName{
+    font-size: 2em;
+    color: #fff;
+    margin-bottom: 21px;
+  
+}
+  
+
+.venue-address{
+    border-left: 1px solid $grey;
+    border-right: 1px solid $grey;
+    width: 300px;
+    margin: 0 auto;
+}
 
 
 

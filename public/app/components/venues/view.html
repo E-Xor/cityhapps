@@ -9,26 +9,27 @@
 </script>
 
 <div ng-controller="venueController">
-	<div class="venue-single">
+	<div class="venue-single venueSingle">
 		<div class="row">
-			<div class="happ-image col-md-7" style="background-image: url('{{data.image}}'); background-size: cover;">
+			<!--<div class="happ-image col-md-7" style="background-image: url('{{data.image}}'); background-size: cover;">-->
 				<div ng-repeat="category in data.categories" class="inline">
 					<span class="happ-category">{{category.name}}</span>
 				</div>
 			</div>
-			<div class="col-md-5">
-				<h3 class="dark bold">{{data.name}}</h3>
-				<div class="venue-address">{{data.address_1}} {{data.address_2}} {{data.address_3}}<br>{{data.city}}, {{data.state}} {{data.postal_code}}<br>{{data.country}}</div>
-				<div class="happ-buttons">
+			<div class="col-md-5 venueInfo">
+			 <h2 class="venueText">VENUE</h2>
+				<h3 class="dark bold venueName">{{data.name}}</h3>
+				<div class="venue-address">{{data.address_1}} {{data.address_2}} {{data.address_3}} {{data.city}}, {{data.state}} {{data.postal_code}}</div>
+				<!--<div class="happ-buttons">
 					<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
 					<a class="happ-button inverse right{{ likeStatus ? ' active' : '' }}" href="#" ng-model="data.vote.upVote;" ng-change="simpleVoteVenue(data , 'up')" btn-checkbox>
 						<span ng-hide="likeStatus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Like This Venue</span>
 						<span ng-show="likeStatus">I Like This Venue</span>
 					</a>
-				</div>
+				</div>-->
 			</div>
 		</div>
-		<div class="row">
+		<!--<div class="row">
 			<div class="col-md-12">
 				<div class="happ-description" ng-if="data.description" ng-bind-html="data.description"></div>
 			</div>
@@ -48,6 +49,6 @@
 		</div>
 		<div class="row">
 			<a href="{{ data.google_directions_link }}"><img class="col-md-12" src="{{ data.google_map_large }}" /></a>
-		</div>
+		</div>-->
 	</div>
 </div>
