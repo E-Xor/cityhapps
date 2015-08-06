@@ -2,12 +2,113 @@
  * Controllers for CityHapps
  */
 
-angular.module('cityHapps.controllers', []).controller('venueController', function($scope, $http, $routeParams, $cookies, $cookieStore) {
+angular.module('cityHapps.controllers', []).controller('HappViewController', function($scope, $stateParams, Happ) {
+    Happ.get({ id: $stateParams.id }, function(payload) {
+      $scope.data = payload.data[0];
+    });
+}).controller('HappHomeController', function($scope, $stateParams, Happ) {
+    Happ.query(function(payload) {
+      $scope.data = payload.data;
+    });
+}).controller('happController', function($scope, $http, $routeParams, $stateParams, $cookies, $cookieStore, Happ) {
 
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
         $scope.likeStatus;
 
-        $http.get('/venues?id=' + $routeParams.id)
+        if (typeof $stateParams.id !== 'undefined') {
+            Happ.get({ id: $stateParams.id }, function(payload) {
+              $scope.data = payload.data[0];
+            });
+        } else {
+            // Get filter data here
+            var filters = '';
+            Happ.query(function(payload) {
+                $scope.data = payload.data;
+            });
+        }
+
+        $scope.checkLikeStatus = function() {
+            var userId = $scope.user.id;
+            var eventId = $scope.data.id;
+
+            $http({
+                method: 'POST',
+                url: '/checkUserEventVote',
+                data: {
+                    'user_id' : userId,
+                    'event_id' : eventId
+                },
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data) {
+                if (!data) {
+                    $scope.likeStatus = false;
+
+                } else if (data) {
+                    if (data.status == 'ok') {
+                        $scope.likeStatus = true;
+                    } else {
+                        $scope.likeStatus = false;
+                    }
+                }
+            });
+        };
+
+        $scope.vote = {};
+
+        if ($scope.user) {
+
+            $scope.simpleVoteEvent = function(event, action) {
+
+                var eventID = event.id;
+
+                var userID = $scope.user.id;
+                var upVote = event.vote.upVote;
+                var downVote = event.vote.downVote;
+
+                var eventVote = -1;
+
+                if (action == 'up') {
+                    event.vote.downVote = false;
+                    if (upVote == true) {
+                        eventVote = 1;
+                    } else {
+                        eventVote = -1
+                    }
+                } else { // Downvote changed
+                    event.vote.upVote = false;
+                    if (downVote == true) {
+                        eventVote = -1;
+                    }
+                }
+                $http({
+                    method: 'POST',
+                    url: '/userEvent',
+                    data: {
+                        'user_id' : userID,
+                        'event_id' : eventID,
+                        'vote' : eventVote
+                    },
+                    headers: {'Content-Type': 'application/json'}
+                }).success(function(data) {
+                    if (!data) {
+                        console.log('no vote, man');
+                    } else if (data) {
+                        console.log(data);
+                        $scope.likeStatus = !$scope.likeStatus;
+                    }
+                });
+            };
+        }
+}).controller('CategorySidebarController', function($scope, Category) {
+    Category.query(function(payload) {
+      $scope.categories = payload.data;
+    });
+}).controller('venueController', function($scope, $http, $routeParams, $stateParams, $cookies, $cookieStore) {
+
+        $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
+        $scope.likeStatus;
+
+        $http.get('/venues?id=' + $stateParams.id)
             .success(function(data) {
                 if (data.venues.length > 0) {
                     $scope.data = data.venues[0];
@@ -89,105 +190,13 @@ angular.module('cityHapps.controllers', []).controller('venueController', functi
                 });
             };
         }
-}).controller('happController', function($scope, $http, $routeParams, $cookies, $cookieStore, Happ) {
-
-        $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
-        $scope.likeStatus;
-
-        if (typeof $routeParams.id !== 'undefined') {
-            Happ.get({ id: $routeParams.id }, function(payload) {
-              $scope.data = payload.data[0];
-            });
-        } else {
-            // Get filter data here
-            var filters = '';
-            Happ.query(function(payload) {
-                $scope.data = payload.data;
-            });
-        }
-
-        $scope.checkLikeStatus = function() {
-            var userId = $scope.user.id;
-            var eventId = $scope.data.id;
-
-            $http({
-                method: "POST",
-                url: '/checkUserEventVote',
-                data: {
-                    'user_id' : userId,
-                    'event_id' : eventId
-                },
-                headers : {"Content-Type": "application/json"}
-            }).success(function(data){
-                if (!data) {
-                    $scope.likeStatus = false;
-
-                } else if(data) {
-                    console.log(data);
-                    if(data.status == 'ok') {
-                        $scope.likeStatus = true;
-                    } else {
-                        $scope.likeStatus = false;
-                    }
-                }
-            });
-        };
-
-        $scope.vote = {};
-
-        if ($scope.user) {
-
-            $scope.simpleVoteEvent = function(event, action) {
-
-                var eventID = event.id;
-
-                console.log(event.vote);
-
-                var userID = $scope.user.id;
-                var upVote = event.vote.upVote;
-                var downVote = event.vote.downVote;
-
-                var eventVote = -1;
-
-                if (action == 'up') {
-                    event.vote.downVote = false;
-                    if (upVote == true) {
-                        eventVote = 1;
-                    } else {
-                        eventVote = -1
-                    }
-                } else { // Downvote changed
-                    event.vote.upVote = false;
-                    if (downVote == true) {
-                        eventVote = -1;
-                    }
-                }
-                $http({
-                    method: "POST",
-                    url: '/userEvent',
-                    data: {
-                        'user_id' : userID,
-                        'event_id' : eventID,
-                        'vote' : eventVote
-                    },
-                    headers : {"Content-Type": "application/json"}
-                }).success(function(data){
-                    if (!data) {
-                        console.log("no vote, man");
-                    } else if(data) {
-                        console.log(data);
-                        $scope.likeStatus = !$scope.likeStatus;
-                    }
-                });
-            };
-        }
-}).controller('adminEventController', function($scope, $http, $routeParams, $cookies, $cookieStore) {
+}).controller('adminEventController', function($scope, $http, $routeParams, $stateParams, $cookies, $cookieStore) {
 
     $scope.user = $cookies.user;
 
     // Processing the form data for adding an event
     $scope.processForm = function(formData) {
-        var edit = ($routeParams.id ? true : false);
+        var edit = ($stateParams.id ? true : false);
         // Validation
         var error = 0;
         if (!formData) {
@@ -351,13 +360,13 @@ angular.module('cityHapps.controllers', []).controller('venueController', functi
         })
     }
 
-}).controller('adminVenueController', function($scope, $http, $routeParams, $cookies, $cookieStore) {
+}).controller('adminVenueController', function($scope, $http, $routeParams, $stateParams, $cookies, $cookieStore) {
 
     $scope.user = $cookies.user;
 
     // Processing the form data for adding an event
     $scope.processForm = function(formData) {
-        var edit = ($routeParams.id ? true : false);
+        var edit = ($stateParams.id ? true : false);
         // Validation
         var error = 0;
         if (!formData) {
@@ -497,10 +506,8 @@ angular.module('cityHapps.controllers', []).controller('venueController', functi
 
         $scope.user = $cookies.user;
 
-
         $scope.filterData = {};
         $scope.filterData.categories = {};
-
 
         // I modified this Gist to flatten return object from php
         // https://gist.github.com/penguinboy/762197
@@ -681,11 +688,6 @@ angular.module('cityHapps.controllers', []).controller('venueController', functi
             }
         }
 
-
-        console.log(registerDataService.vote);
-
-
-
         $scope.formData = {
             email : '',
             username : '',
@@ -705,12 +707,8 @@ angular.module('cityHapps.controllers', []).controller('venueController', functi
             $scope.upvoted = '';
 
         });
-
-        console.log($rootScope.userData);
     }
 ).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook) {
-
-
     //Facebook Auth
 
       // Define user empty data :/

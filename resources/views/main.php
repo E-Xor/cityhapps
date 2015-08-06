@@ -31,42 +31,10 @@
 <!-- echo(Config::get('session.lifetime')); -->
 
 <body ng-controller="appController" ng-cloak>
-    <div ng-if="!mobile()" class="test-wrapper">
-        <aside class="sidebar">
-            <ul class="category-menu">
-                <li id="firstMenu"><a href="#">My Account</a> <i class="fa fa-sort-desc"></i></li>
-                <hr>
-                <li><a href="/">Home</a></li>
-                <hr>
-                <li><a href="#">My Favorites</a></li>
-                <hr>
-                <li><a href="#">Exhibits &amp; Museums</a></li>
-                <hr>
-                <li><a href="#">Festivals</a></li>
-                <hr>
-                <li><a href="#">Sports</a></li>
-                <hr>
-                <li><a href="#">Art</a></li>
-                <hr>
-                <li><a href="#">Music</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr id= "lastHr">
-            </ul>
-        </aside>
-        <div class="content-wrapper">
+    <aside class="snap-sidebar" ui-view="sidebar" snap-drawer="left"></aside>
+    <div class="page-wrapper" snap-content>
+        <aside class="sidebar" ui-view="sidebar"></aside>
+        <div class="content-wrapper" >
             <header class="header-container container-fluid">
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
@@ -74,6 +42,7 @@
                             <div class="col-xs-12 center">
                                 <a href="/"><img src="/assets/img/logo-atl.png"></a>
                             </div>
+                            <div class="" snap-toggle="left"><i class="fa fa-bars"></i></div>
                         </div>
                         <hr>
                         <div class="row header-controls">
@@ -114,23 +83,23 @@
                 </div>
             </header>
             <!-- Get the home body partial -->
-            <div ng-view class="main-content container-fluid" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
+            <div class="main-content container-fluid" ng-animate="{enter: 'animate', leave: 'animate'}" ui-view></div>
             <footer class="container-fluid">
                 <div id="footerSocial">
                     <a href="#"> <i class="fa fa-facebook-official"></i></a>
                     <a href="#"><i class="fa fa-twitter-square"></i></a>
                 </div>
                 <ul id="footerMenu">
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/">Events</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
-                <span id="copyright">CityHapps | &copy;2015 All Rights Reserved.</span>
+                <span id="copyright">City Happs | &copy;2015 All Rights Reserved.</span>
             </footer>
         </div>
     </div>
     <!-- if mobile -->
-    <div ng-if="mobile()" class="test-wrapper">
+    <!--div ng-if="mobile()" class="test-wrapper">
         <div snap-drawer="left">
            <ul ng-controller="modalController">
                 <li><a class="drawer-link" href="" ng-click="userCategoryToggle()" ng-if="user">{{user.email}}</a></li>
@@ -172,10 +141,9 @@
                     </div>
                 </div>
             </header>
-            <!-- Get the home body partial -->
-            <div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
+            <div ui-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
         </div>
-    </div>
+    </div-->
 
     <!-- ng- scripts and things -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
