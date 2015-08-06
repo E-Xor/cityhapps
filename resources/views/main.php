@@ -12,16 +12,12 @@
     <link href="/assets/css/jquery.bxslider.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="/assets/css/fullcalendar.css" />
-    <!-- <link rel="stylesheet" href="/assets/css/bootstrap-responsive.min.css" /> -->
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/jquery.datetimepicker.css"/ >
-
-    <!-- Tags -->
     <link rel="stylesheet" type="text/css" href="/assets/css/ng-tags-input.min.css">
-    <!-- Tags -->
 
     <!-- load angular from CDN-->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
+    
     <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,height=device-height" >
@@ -182,6 +178,10 @@
     </div>
 
     <!-- ng- scripts and things -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <script src="http://platform.twitter.com/widgets.js"></script>
 
@@ -216,10 +216,12 @@
 
     <script src="/js/checklist-model.js"></script>
 
-    <!-- Tags -->
     <script src="/js/ng-tags-input.min.js"></script>
-    <!-- tags -->
+
     <script src="/app/app.js"></script>
+    <script src="/app/controllers.js"></script>
+    <script src="/app/services.js"></script>
+    <script src="/app/filters.js"></script>
     <script src="/js/dom.js"></script>
 
 </body>
