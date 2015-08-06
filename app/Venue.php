@@ -13,7 +13,7 @@ class Venue extends Model
 
   public function tags()
   {
-    return $this->belongsToMany('Tag', 'venue_tag');
+    return $this->belongsToMany('CityHapps\Tag', 'venue_tag');
   }
 
 
