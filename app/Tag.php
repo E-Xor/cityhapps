@@ -2,7 +2,7 @@
 
 namespace CityHapps;
 
-use Illuminate\Database\Eloquent\Model;
+use EchoIt\JsonApi\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
@@ -22,6 +22,6 @@ class Tag extends Model implements SluggableInterface
     }
 
     public function venues(){
-        return $this->belongsToMany('Venue');
+        return $this->belongsToMany('CityHapps\Venue', 'venue_tag');
     }
 }
