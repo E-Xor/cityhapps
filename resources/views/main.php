@@ -47,7 +47,7 @@
                         <hr>
                         <div class="row header-controls">
                             <div class="col-sm-6 filterSort">
-                                <span class="filter"><i class="fa fa-filter"></i> Filter By <i class="fa fa-sort-desc"></i></span><span class="sort"><i class="fa fa-exchange fa-rotate-90"></i> Sort By <i class="fa fa-sort-desc"></i></span>
+                                <span class="filter"><i class="fa fa-filter"></i> Filter By <i class="fa fa-sort-desc"></i></span>
                             </div>
                             <div class="col-sm-6 center">
                                 <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">

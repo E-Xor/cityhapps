@@ -12,9 +12,9 @@
       <div class="col-xs-12 happInfo homeInfo">
         <h3 class="dark bold homeName">
 {{happ.attributes.event_name}}</h3>
-        <div class="time homeTime"><i class="fa fa-clock-o"></i>
+        <div class="time homeTime homeIcons"><i class="fa fa-clock-o"></i>
 {{happ.attributes.start.local | dateToISO | date: 'h:mm a'}} - {{happ.attributes.end.local | dateToISO | date: 'h:mm a'}}</p></div>
-        <div class="venue homeVenue"><i class="fa fa-map-marker"></i>
+        <div class="venue homeVenue homeIcons"><i class="fa fa-map-marker"></i>
 <a href="{{happ.relationships.venue.data.attributes.venue_url}}" target="_blank">{{happ.relationships.venue.data.attributes.venue_name}}</a></div>
         <div class="ratingPrice homeRP"><span id="rating">Rating</span><span id="price">Price</span></div>
         <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>

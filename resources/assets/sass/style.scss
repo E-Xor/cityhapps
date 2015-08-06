@@ -1858,9 +1858,7 @@ span#copyright {
         line-height: 3em;
         display: inline-block;
         padding: 0 20px;
-        &.filter{
-          border-right: 1px solid #D1D2D4;
-        }
+        
       }
     }
   }
@@ -1995,12 +1993,6 @@ div#socialIcons {
     padding-right: 0px;
 }
 
-h3.dark.bold.ng-binding {
-    display: block;
-    width: 80%;
-    height: 28px;
-}
-
 
 #searchBox{
    position: relative;
@@ -2078,22 +2070,25 @@ a.happ-button.homeButtons.homeDirections {
   height: 20px;
 }
 
+
 .homeDate {
     margin-top: 106px;
     padding: 0;
     font-size: 16px;
 }
 
-.homeTime{
-  font-size: .9em;
-  color:$grey;
+.homeIcons{
+  font-size: 12px;
+  color: $grey;
+
+  a{
+    color: $grey;
+    font-size: 12px
+  }
 
 }
 
-.homeVenue, .homeVenue a{
-  font-size: .9em;
-  color:$grey;
-}
+
 
 #startDate{
   margin-left: 5px;
@@ -2105,12 +2100,10 @@ a.happ-button.homeButtons.homeDirections {
 }
 
 .homeRP {
-    float: none;
-    margin-left: 223px;
-    margin-top: -69px;
+    padding: 15% 13%;
     font-weight: 500;
     font-size: .8em;
-    
+
     #rating{
       margin-bottom: 14px;
     }
@@ -2120,4 +2113,38 @@ a.happ-button.homeButtons.homeDirections {
     margin: 15px 12px !important;   
     width: 31%;
 }  
+
+/*Single Venue View*/
+.venueSingle{
+    background: #58afb9;
+    height: 164px;
+    margin: -30px -15px 0px -15px;
+  }
+
+  .venueInfo{
+    text-align: center;
+    width: 100%;
+  }
+
+  .venueText{
+    font-size: 1em;
+  }
+
+  .venueName{
+    font-size: 2em;
+    color: #fff;
+    margin-bottom: 21px;
+  
+}
+  
+
+.venue-address{
+    border-left: 1px solid $grey;
+    border-right: 1px solid $grey;
+    width: 300px;
+    margin: 0 auto;
+}
+
+
+
 
