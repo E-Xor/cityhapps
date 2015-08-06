@@ -50,6 +50,15 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/venue/list/:page',
         templateUrl: 'app/components/venues/list.html',
         controller: 'adminVenueController'
+    }).state('about', {
+        url: '/about',
+        templateUrl: 'app/components/static/about.html'
+    }).state('requestVenue', {
+        url: '/add-venue',
+        templateUrl: 'app/components/static/add-venue.html'
+    }).state('requestEvent', {
+        url: '/add-event',
+        templateUrl: 'app/components/static/add-event.html'
     });
 
     $urlRouterProvider.otherwise('/');
