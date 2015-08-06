@@ -1,3 +1,7 @@
+/**
+ * Services for CityHapps
+ */
+
 angular.module('cityHapps.services', []).factory('Happ', function($resource) {
     return $resource('/happs/:id', {}, {
         query: { isArray: false }
@@ -137,9 +141,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         headers: {'Content-Type': 'application/json'}
     }).success(function(data) {
         if (!data) {
-            console.log('Unable to Get Categories');
         } else if (data) {
-            console.log('successfully Getting Categories');
         }
     });
 }).factory('getUserCategories', function($http) {
