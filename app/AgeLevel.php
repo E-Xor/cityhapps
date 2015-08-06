@@ -2,7 +2,8 @@
 
 namespace CityHapps;
 
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
+use EchoIt\JsonApi\Model;
 
 class AgeLevel extends Model {
 
@@ -15,9 +16,9 @@ class AgeLevel extends Model {
 	 */
 	protected $table = 'age_level';
 
-    public function happ()
+    public function happs()
     {
-        return $this->belongsToMany('HappAgeLevel');
+        return $this->belongsToMany('CityHapps\Happ', 'happ_age_level', 'age_level_id', 'happ_id');
     }
 
 }
