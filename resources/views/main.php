@@ -31,9 +31,10 @@
 <!-- echo(Config::get('session.lifetime')); -->
 
 <body ng-controller="appController" ng-cloak>
-    <div ng-if="!mobile()" class="test-wrapper">
+    <aside class="snap-sidebar" ui-view="sidebar" snap-drawer="left"></aside>
+    <div class="page-wrapper" snap-content>
         <aside class="sidebar" ui-view="sidebar"></aside>
-        <div class="content-wrapper">
+        <div class="content-wrapper" >
             <header class="header-container container-fluid">
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
@@ -41,6 +42,7 @@
                             <div class="col-xs-12 center">
                                 <a href="/"><img src="/assets/img/logo-atl.png"></a>
                             </div>
+                            <div class="" snap-toggle="left"><i class="fa fa-bars"></i></div>
                         </div>
                         <hr>
                         <div class="row header-controls">
@@ -97,7 +99,7 @@
         </div>
     </div>
     <!-- if mobile -->
-    <div ng-if="mobile()" class="test-wrapper">
+    <!--div ng-if="mobile()" class="test-wrapper">
         <div snap-drawer="left">
            <ul ng-controller="modalController">
                 <li><a class="drawer-link" href="" ng-click="userCategoryToggle()" ng-if="user">{{user.email}}</a></li>
@@ -139,10 +141,9 @@
                     </div>
                 </div>
             </header>
-            <!-- Get the home body partial -->
             <div ui-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
         </div>
-    </div>
+    </div-->
 
     <!-- ng- scripts and things -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
