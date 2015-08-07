@@ -61,6 +61,15 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'adminEventController'
             }
         }
+    }).state('listCategoryHapp', {
+        url: '/category/:slug',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/categories/happlist.html',
+                controller: 'CategoryHappController'
+            }
+        }
     }).state('viewVenue', {
         url: '/venue/:id',
         parent: 'default',
@@ -89,11 +98,20 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             }
         }
     }).state('listVenue', {
-        url: '/admin/venue/list',
+        url: '/venue/list',
         parent: 'default',
         views: {
             '@': {
                 templateUrl: 'app/components/venues/list.html',
+                controller: 'VenueListController'
+            }
+        }
+    }).state('adminListVenue', {
+        url: '/admin/venue/list',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/admin-list.html',
                 controller: 'adminVenueController'
             }
         }
@@ -102,7 +120,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         parent: 'default',
         views: {
             '@': {
-                templateUrl: 'app/components/venues/list.html',
+                templateUrl: 'app/components/venues/admin-list.html',
                 controller: 'adminVenueController'
             }
         }

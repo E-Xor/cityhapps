@@ -1785,9 +1785,12 @@ h3 {
       display: block;
       padding: 30px 40px;
       border-bottom: 1px solid #626262;
-      &:hover {
+      &:hover, &.active {
         color: #FFFFFF;
         background-color: #626262;
+      }
+      &:focus {
+        color: #FFFFFF;
       }
     }
     &:first-child a{

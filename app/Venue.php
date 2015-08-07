@@ -186,6 +186,13 @@ class Venue extends Model
         }
       }
     );
+
+    //Using raw SQL instead of eloquent, as it is like 1000% faster for this alone.
+    /*$insert_select = 'INSERT INTO venues (source_id, source, name, lat, lng, address_1, city, state, postal_code, country) ';
+    $insert_select .= 'SELECT DISTINCT(venue_id) AS venue_id, "Eventful", venue_name, latitude, longitude, address_1, city, region, postal_code, "us"  FROM eventful ';
+    $insert_select .= 'ON DUPLICATE KEY UPDATE lat=VALUES(lat), lng=VALUES(lng),city=VALUES(city),address_1=VALUES(address_1), state=VALUES(state), postal_code=VALUES(postal_code)';
+
+    \DB::statement($insert_select);*/
   }
 
   /**
@@ -200,7 +207,7 @@ class Venue extends Model
         $insert_select .= 'SELECT DISTINCT(venue_id) AS venue_id, "Eventbrite", venue_name, latitude, longitude, address_1, city, region, postal_code, "us"  FROM eventbrite ';
         $insert_select .= 'ON DUPLICATE KEY UPDATE lat=VALUES(lat), lng=VALUES(lng),city=VALUES(city),address_1=VALUES(address_1), state=VALUES(state), postal_code=VALUES(postal_code)';
 
-        DB::statement($insert_select);
+        \DB::statement($insert_select);
 
     }
 
