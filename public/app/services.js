@@ -3,7 +3,7 @@
  */
 
 angular.module('cityHapps.services', []).factory('Happ', function($resource) {
-    return $resource('/happs/:id', {}, {
+    return $resource('/api/happ/:id', {}, {
         query: { isArray: false }
     });
 }).factory('Category', function($resource) {

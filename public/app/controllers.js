@@ -3,14 +3,129 @@
  */
 
 angular.module('cityHapps.controllers', []).controller('HappViewController', function($scope, $stateParams, Happ) {
-    Happ.get({ id: $stateParams.id, include: 'tags'}, function(payload) {
+    Happ.get({ id: $stateParams.id, include: 'tags,categories'}, function(payload) {
         console.log(payload);
-      $scope.data = payload.data[0];
+      $scope.happ = payload.data[0];
     });
 }).controller('HappHomeController', function($scope, $stateParams, Happ) {
-    Happ.query(function(payload) {
-      $scope.data = payload.data;
-    });
+    $scope.filters = {
+        today: true,
+        tomorrow: false,
+        weekend: false,
+        calendar: false,
+        morning: true,
+        afternoon: true,
+        evening: true,
+        night: true,
+        zip: ''
+    };
+
+    $scope.getHapps = function() {
+        var filter = {};
+        // Clean up the filters
+        if ($scope.filters.zip.length == 5)
+            filter.zip = $scope.filters.zip;
+
+        var date = ''
+        if ($scope.filters.today)
+            date += String($scope.todayDate());
+        if ($scope.filters.tomorrow) {
+            if (date != '')
+                date += ',';
+            date += String($scope.tomorrowDate());
+        }
+        if ($scope.filters.weekend) {
+            if (date != '')
+                date += ',';
+            date += String($scope.weekendDate());
+        }
+        if (date != '')
+            filter.date = date;
+
+
+        var time = '';
+        if ($scope.filters.morning)
+            time += 'morning';
+        if ($scope.filters.afternoon) {
+            if (time != '')
+                time += ',';
+            time += 'afternoon';
+        }
+        if ($scope.filters.evening) {
+            if (time != '')
+                time += ',';
+            time += 'evening';
+        }
+        if ($scope.filters.night) {
+            if (time != '')
+                time += ',';
+            time += 'night';
+        }
+        if (time != '')
+            filter.timeofday = time;
+        console.log($scope.filters);
+        console.log(filter);
+        Happ.query(filter, function(payload) {
+            console.log(payload);
+          $scope.happs = payload.data;
+        });
+    };
+
+    $scope.todayDate = function() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10)
+            dd = '0' + dd;
+        if (mm < 10)
+            mm = '0' + mm;
+        return yyyy + mm + dd;
+    };
+    $scope.tomorrowDate = function() {
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var dd = tomorrow.getDate();
+        var mm = tomorrow.getMonth() + 1; //January is 0!
+        var yyyy = tomorrow.getFullYear();
+        if (dd < 10)
+            dd = '0' + dd;
+        if (mm < 10)
+            mm = '0' + mm;
+        return yyyy + mm + dd;
+    };
+    $scope.weekendDate = function() {
+        var today = new Date();
+        switch (today.getDay()) {
+            case 0:
+                return $scope.todayDate();
+            case 6:
+                return $scope.todayDate() + ',' + $scope.tomorrowDate();
+            default:
+                var saturday = new Date();
+                saturday.setDate(saturday.getDate() + 6 - today.getDay());
+                var dd = saturday.getDate();
+                var mm = saturday.getMonth() + 1; //January is 0!
+                var yyyy = saturday.getFullYear();
+                if (dd < 10)
+                    dd = '0' + dd;
+                if (mm < 10)
+                    mm = '0' + mm;
+                var sat = yyyy + mm + dd;
+                var sunday = new Date();
+                sunday.setDate(saturday.getDate() + 1);
+                dd = sunday.getDate();
+                mm = sunday.getMonth() + 1; //January is 0!
+                yyyy = sunday.getFullYear();
+                if (dd < 10)
+                    dd = '0' + dd;
+                if (mm < 10)
+                    mm = '0' + mm;
+                return sat + ',' + yyyy + mm + dd;
+        }
+    };
+
+    $scope.getHapps();
 }).controller('happController', function($scope, $http, $routeParams, $stateParams, $cookies, $cookieStore, Happ) {
 
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
