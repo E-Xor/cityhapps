@@ -42,7 +42,7 @@
         <div class="happ-date homeDate"><span id="startDate">{{ happ.start.local | dateToISO | date: 'MMM d' }}</span></div>
       </div>
     </div>
-    <div class="row">
+    <div class="row happText">
       <div class="col-xs-12 happInfo homeInfo">
         <h3 class="dark bold homeName">
           {{happ.event_name}}
@@ -64,6 +64,8 @@
         </div>-->
       </div>
     </div>
-    <div><a class="happ-button homeButtons homeDirections" href='{{happ.geo_data.google_directions_link}}' target="_new">Get Directions</a> <a class="happ-button homeButtons homeMore" href='/happ/{{ happ.id }}'>Learn More</a></div>
+    <div class="bothButtons">
+      <a class="happ-button homeButtons homeDirections" href='{{happ.geo_data.google_directions_link}}' target="_new">Get Directions</a> <a class="happ-button homeButtons homeMore" href='/happ/{{ happ.id }}'>Learn More</a>
+    </div>
   </div>
 </div>
