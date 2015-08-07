@@ -2151,11 +2151,18 @@ a.happ-button.homeButtons.homeDirections {
     width: 95%;
     padding: 5%;
     margin: 0 auto;
-    padding: 5% 3% 10% 3%;
+    padding: 3% 3% 15% 3%;
+    font-size: 16px;
+}
+
+.about h1{
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 50px;
 }
 
 .aboutInfo {
-    padding-bottom: 10%;
+    padding-bottom: 7%;
 }
 
 /*Media Queries*/
@@ -2243,15 +2250,14 @@ a.happ-button.homeButtons.homeDirections {
       }
       .ratingPrice {
            margin-top: -45%;
-}
+      }
 
-.homeRP #rating {
-    margin-bottom: 30px;
-}
+      .homeRP #rating {
+         margin-bottom: 30px;
+       }
 
    .homeVenue a{
     margin: 0;
-
        
     }
       
