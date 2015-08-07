@@ -1789,12 +1789,19 @@ h3 {
         color: #FFFFFF;
         background-color: #626262;
       }
+      &:focus {
+        color: #FFFFFF;
+      }
     }
     &:first-child a{
       color: #9B9B9B;
     }
     &:last-child a{
       border-bottom: none;
+    }
+    &.active a{
+      background-color: #EAE6DE;
+      color: #555555;
     }
   }
 }
@@ -2145,6 +2152,18 @@ a.happ-button.homeButtons.homeDirections {
     margin: 0 auto;
 }
 
+/*About Page Styling*/
+.about{
+    background-color: #fff;
+    width: 95%;
+    padding: 5%;
+    margin: 0 auto;
+    padding: 5% 3% 10% 3%;
+}
+
+.aboutInfo {
+    padding-bottom: 10%;
+}
 
 
 

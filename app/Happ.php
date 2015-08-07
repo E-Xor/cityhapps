@@ -6,6 +6,7 @@ namespace CityHapps;
 use EchoIt\JsonApi\Model;
 use CityHapps\Category;
 use CityHapps\AgeLevel;
+use CityHapps\Venue;
 use CityHapps\Http\Middleware\HappFilter;
 
 class Happ extends Model
@@ -45,7 +46,7 @@ class Happ extends Model
 
   public function venue()
   {
-    return $this->hasOne('CityHapps\Venue', 'id', 'venue_id');
+    return $this->belongsTo('CityHapps\Venue', 'venue_id');
   }
 
   public function venues()
@@ -702,7 +703,7 @@ class Happ extends Model
             $eventRecord->latitude = $event->latitude;
             $eventRecord->longitude = $event->longitude;
 
-            $venue = \Venue::where('source_id', $event->venue_id)->where('source', $eventRecord->source)->first();
+            $venue = Venue::where('source_id', $event->venue_id)->where('source', $eventRecord->source)->first();
             if ($venue) {
               $eventRecord->venue_id = $venue->id;
             }
@@ -786,7 +787,7 @@ class Happ extends Model
             $eventRecord->latitude = $event->lat;
             $eventRecord->longitude = $event->lon;
 
-            $venue = \Venue::where('source_id', '=', $event->venue_id)->where('source', '=', $eventRecord->source)->first();
+            $venue = Venue::where('source_id', '=', $event->venue_id)->where('source', '=', $eventRecord->source)->first();
             if ($venue) {
               $eventRecord->venue_id = $venue->id;
             }
@@ -842,7 +843,7 @@ class Happ extends Model
 
   public static function keywordFilter($eventRecord)
   {
-    $threshold = 20;
+    /*$threshold = 20;
 
     $file = app_path() . "/../config/filters/keywords.json";
     $keywords = json_decode(file_get_contents($file), true);
@@ -858,7 +859,8 @@ class Happ extends Model
       $score += substr_count(strtoupper($eventRecord->description), strtoupper($keyword)) * $value;
     }
 
-    return $score >= $threshold;
+    return $score >= $threshold;*/
+    return TRUE;
   }
 
   public function getGoogleDirectionsLinkAttribute()
