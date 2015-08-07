@@ -2140,11 +2140,23 @@ a.happ-button.homeButtons.homeDirections {
 
 .venue-address{
     border-left: 1px solid $grey;
-    border-right: 1px solid $grey;
+    border-right: 1px solid $gr
     width: 300px;
     margin: 0 auto;
 }
 
+/*About Page Styling*/
+.about{
+    background-color: #fff;
+    width: 95%;
+    padding: 5%;
+    margin: 0 auto;
+    padding: 5% 3% 10% 3%;
+}
+
+.aboutInfo {
+    padding-bottom: 10%;
+}
 
 
 
