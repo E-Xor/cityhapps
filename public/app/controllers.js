@@ -99,9 +99,22 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
                 });
             };
         }
+}).controller('CategoryHappController', function($scope, $stateParams, Category) {
+    // First let's get the category id
+    Category.get({ slug: $stateParams.slug }, function(payload) {
+      var categoryId = payload.data.id;
+      // Then let's get our data
+      Category.query(function(payload) {
+        $scope.categories = payload.data;
+      });
+    });
 }).controller('CategorySidebarController', function($scope, Category) {
     Category.query(function(payload) {
       $scope.categories = payload.data;
+    });
+}).controller('VenueListController', function($scope, Venue) {
+    Venue.query(function(payload) {
+      $scope.venues = payload.data;
     });
 }).controller('venueController', function($scope, $http, $routeParams, $stateParams, $cookies, $cookieStore) {
 
