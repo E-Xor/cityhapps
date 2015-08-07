@@ -7,7 +7,7 @@ angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
     'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
     'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
     'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
-    'cityHapps.filters']);
+    'cityHapps.filters', 'cityHapps.directives']);
 
 angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider.state('default', {
@@ -76,7 +76,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         views: {
             '@': {
                 templateUrl: 'app/components/venues/view.html',
-                controller: 'venueController'
+                controller: 'VenueViewController'
             }
         }
     }).state('addVenue', {
@@ -98,7 +98,16 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             }
         }
     }).state('listVenue', {
-        url: '/venue/list',
+        url: '/venues',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/list.html',
+                controller: 'VenueListController'
+            }
+        }
+    }).state('listVenuePage', {
+        url: '/venues/:page',
         parent: 'default',
         views: {
             '@': {
@@ -115,7 +124,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'adminVenueController'
             }
         }
-    }).state('listVenuePage', {
+    }).state('adminListVenuePage', {
         url: '/admin/venue/list/:page',
         parent: 'default',
         views: {

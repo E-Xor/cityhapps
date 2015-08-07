@@ -16,6 +16,11 @@ class Venue extends Model
     return $this->belongsToMany('CityHapps\Tag', 'venue_tag');
   }
 
+  public function happs()
+  {
+    return $this->hasMany('CityHapps\Happ', 'venue_id');
+  }
+
 
   /**
    * Return a list of duplicated venues for the current venue.

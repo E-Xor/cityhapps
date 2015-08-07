@@ -1785,7 +1785,7 @@ h3 {
       display: block;
       padding: 30px 40px;
       border-bottom: 1px solid #626262;
-      &:hover, &.active {
+      &:hover {
         color: #FFFFFF;
         background-color: #626262;
       }
@@ -1798,6 +1798,10 @@ h3 {
     }
     &:last-child a{
       border-bottom: none;
+    }
+    &.active a{
+      background-color: #EAE6DE;
+      color: #555555;
     }
   }
 }

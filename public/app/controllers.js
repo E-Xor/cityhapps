@@ -112,9 +112,41 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
     Category.query(function(payload) {
       $scope.categories = payload.data;
     });
-}).controller('VenueListController', function($scope, Venue) {
-    Venue.query(function(payload) {
-      $scope.venues = payload.data;
+}).controller('VenueListController', function($scope, $stateParams, Venue) {
+    var size = 48;
+    var page = (typeof $stateParams.page != 'undefined') ? parseInt($stateParams.page) : 1;
+    Venue.query({'page[size]': size, 'page[number]': page}, function(payload) {
+        $scope.venues = payload.data;
+        var qd = {};
+        payload.links.last.split('?')[1].split("&").forEach(function(item) {var k = item.split("=")[0], v = item.split("=")[1]; v = v && decodeURIComponent(v); (k in qd) ? qd[k].push(v) : qd[k] = [v]})
+        var last = parseInt(qd['page[number]'][0]);
+
+        $scope.pagination = [];
+        if (page != 1) {
+            $scope.pagination.push({'text': '< Previous', 'link': '/venues/' + (page - 1)});
+        }
+        $scope.pagination.push({'text': '1', 'link': '/venues'});
+        
+        if (page - 3 > 1)
+            $scope.pagination.push({'text': '...'});
+
+        for (var i = page - 2; i < page + 3; i++) {
+            if (i > 1 && i < last)
+                $scope.pagination.push({'text': String(i), 'link': '/venues/' + i});
+        };
+
+        if (page + 3 < last)
+            $scope.pagination.push({'text': '...'});
+
+        $scope.pagination.push({'text': String(last), 'link': '/venues/' + last});
+        if (page != last) {
+            $scope.pagination.push({'text': 'Next >', 'link': '/venues/' + (page + 1)});
+        }
+        console.log($scope.pagination);
+    });
+}).controller('VenueViewController', function($scope, $stateParams, Venue) {
+    Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
+        $scope.venue = payload.data[0];
     });
 }).controller('venueController', function($scope, $http, $routeParams, $stateParams, $cookies, $cookieStore) {
 

@@ -15,7 +15,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         query: { isArray: false }
     });
 }).factory('Venue', function($resource) {
-    return $resource('/venues/:id', {}, {
+    return $resource('/api/venue/:id', {}, {
         query: { isArray: false }
     });
 }).factory('voteService', function() {

@@ -190,6 +190,7 @@
     <script src="/app/controllers.js"></script>
     <script src="/app/services.js"></script>
     <script src="/app/filters.js"></script>
+    <script src="/app/directives.js"></script>
     <script src="/js/dom.js"></script>
 
 </body>

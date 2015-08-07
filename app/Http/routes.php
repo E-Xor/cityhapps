@@ -29,7 +29,7 @@ Route::get('happs/{id}', 'HappController@getHapp');
 Route::get('happs/{id}/venue', 'HappController@getHappVenue');
 
 Route::get('events', 'EventController@events');
-Route::get('venues', 'VenueController@venues');
+//Route::get('venues', 'VenueController@venues');
 Route::get('recommendedEvents', 'EventController@recommendedEvents');
 Route::get('eventsPaged', 'EventController@eventsPaged');
 Route::post('dayEvents', 'EventController@dayEvents');

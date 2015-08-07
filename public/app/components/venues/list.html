@@ -3,8 +3,10 @@
     <div class="venue-line col-md-4 col-sm-6" ng-repeat="venue in venues">
       <a href="/venue/{{ venue.id }}">{{ venue.name }}</a>
     </div>
-    <div class="pagination">
-      Pagination
-    </div>
+    <ul class="pagination" auto-active>
+      <li ng-repeat="item in pagination">
+		<a href="{{ item.link }}">{{ item.text }}</a>
+      </li>
+    </ul>
   </div>
 </div>
