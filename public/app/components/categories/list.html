@@ -1,6 +1,8 @@
-<ul class="category-menu">
-    <li id="firstMenu"><a href="#">My Account</a> <i class="fa fa-sort-desc"></i></li>
+<ul class="sidebar-menu">
+    <li><a href="">My Account <i class="fa fa-caret-down"></i></a></li>
+    <li><a href="">My Favorites <i class="fa fa-star"></i></a></li>
+    <li><a href="">Venues</a></li>
     <li ng-repeat="category in categories">
-        <a href="/category/{{ category.id }}">{{ category.name }}</a>
+        <a href="/category/{{ category.slug }}">{{ category.name }}</a>
     </li>
 </ul>

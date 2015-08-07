@@ -45,7 +45,7 @@ class Happ extends Model
 
   public function venue()
   {
-    return $this->hasOne('Venue', 'id', 'venue_id');
+    return $this->hasOne('CityHapps\Venue', 'id', 'venue_id');
   }
 
   // public function ageLevel()

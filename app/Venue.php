@@ -111,7 +111,7 @@ class Venue extends Model
    */
   public static function storeFoursquareVenues()
   {
-    FoursquareVenues::chunk(
+    \FoursquareVenues::chunk(
       200,
       function ($venues) {
         foreach ($venues as $venue) {
@@ -152,7 +152,7 @@ class Venue extends Model
    */
   public static function storeEventfulVenues()
   {
-    EventfulVenues::chunk(
+    \EventfulVenues::chunk(
       200,
       function ($venues) {
         foreach ($venues as $venue) {
@@ -209,7 +209,7 @@ class Venue extends Model
    */
   public static function storeMeetupVenues()
   {
-    MeetupVenues::chunk(
+    \MeetupVenues::chunk(
       200,
       function ($venues) {
         foreach ($venues as $venue) {
