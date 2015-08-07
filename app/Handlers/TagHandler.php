@@ -1,17 +1,17 @@
-<?php
+<?php 
 namespace CityHapps\Handlers;
 
-use CityHapps\Venue;
+use CityHapps\Tag;
 
 use EchoIt\JsonApi\Exception as ApiException;
 use EchoIt\JsonApi\Request as ApiRequest;
 use EchoIt\JsonApi\Handler as ApiHandler;
 
-class VenueHandler extends ApiHandler
+class TagHandler extends ApiHandler
 {
 	const ERROR_SCOPE = 1024;
 
-	protected static $exposedRelations = ['tags'];
+	protected static $exposedRelations = ['venues', 'happs'];
 
 	/**
 	 * @param ApiRequest $request
@@ -21,7 +21,7 @@ class VenueHandler extends ApiHandler
 	 */
 	public function handleGet(ApiRequest $request)
 	{
-		return $this->handleGetDefault($request, new Venue);
+		return $this->handleGetDefault($request, new Tag);
 	}
 
 }

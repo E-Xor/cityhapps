@@ -1,34 +1,12 @@
-<div ng-controller="adminVenueController" ng-cloak>
-  <div ng-if="!mobile()">
-    <!-- if mobile add snap-content -->
-    <!-- Get the home body partial -->
-    <div class='center white imageContainer'>
-      <h1 style="margin:0px auto;padding:20px 0 10px 0;">Venues Listing</h1>
-      <h3>{{venuesCount}} Venues Currently in the System</h3>
-      <table style="margin:0 30px 50px;">
-        <thead>
-          <tr>
-            <th style="width:32px;">ID</th>
-            <th>Title & Link</th>
-            <th style="width:67px;">Source</th>
-            <th style="width:80px;">Hours</th>
-            <th style="width:260px;">Address</th>
-            <th style="width:90px;">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in allVenues">
-            <td><a href='/admin/venue/edit/{{item.id}}'>{{item.id}}</a></td>
-            <td><a href="{{item.url}}" style="color:#33CCFF;">{{item.name}}</a></td>
-            <td>{{item.source}}</td>
-            <td>{{item.hours}}</td>
-            <td>{{item.address_1}}</td>
-            <td><a href='/venue/{{item.id}}'>View</a> | <a href='/admin/venue/edit/{{item.id}}'>Edit</a></td>
-          </tr>
-        </tbody>
-      </table>
+<div class="container">
+  <div class="row">
+    <div class="venue-line col-md-4 col-sm-6" ng-repeat="venue in venues">
+      <a href="/venue/{{ venue.id }}">{{ venue.name }}</a>
     </div>
-    <!-- <div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div> -->
-    <!-- if mobile -->
+    <ul class="pagination" auto-active>
+      <li ng-repeat="item in pagination">
+		<a href="{{ item.link }}">{{ item.text }}</a>
+      </li>
+    </ul>
   </div>
 </div>

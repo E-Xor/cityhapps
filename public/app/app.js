@@ -1,10 +1,231 @@
-var cityHapps = angular.module('cityHapps', ['ui.bootstrap', 'ngRoute',
-    'ui.validate', 'facebook', 'http-auth-interceptor', 'remoteValidation',
-    'google-maps'.ns(), 'ui.calendar', 'angular.filter', 'ngSanitize',
-    'ngCookies', 'snap', 'ngIdle', 'checklist-model', 'ngTagsInput']);
+/**
+ * CityHapps AngularJS Bootstrap
+ */
+
+angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
+    'ngResource', 'ui.validate', 'facebook', 'http-auth-interceptor',
+    'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
+    'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
+    'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
+    'cityHapps.filters', 'cityHapps.directives']);
+
+angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider) {
+    $stateProvider.state('default', {
+        abstract: true,
+        views: {
+            '@': {
+                templateUrl: 'app/components/happs/home.html',
+                controller: 'HappHomeController'
+            },
+            'sidebar': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            }
+        }
+    }).state('home', {
+        url: '/',
+        parent: 'default'
+    }).state('viewHapp', {
+        url: '/happ/:id',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/happs/view.html',
+                controller: 'HappViewController'
+            }
+        }
+    }).state('addHapp', {
+        url: '/admin/event/add',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'templates/event.html',
+                controller: 'adminEventController'
+            }
+        }
+    }).state('editHapp', {
+        url: '/admin/event/edit/:id',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'templates/event.html',
+                controller: 'adminEventController'
+            }
+        }
+    }).state('listHapp', {
+        url: '/preview',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/happs/list.html',
+                controller: 'adminEventController'
+            }
+        }
+    }).state('listCategoryHapp', {
+        url: '/category/:slug',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/categories/happlist.html',
+                controller: 'CategoryHappController'
+            }
+        }
+    }).state('viewVenue', {
+        url: '/venue/:id',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/view.html',
+                controller: 'VenueViewController'
+            }
+        }
+    }).state('addVenue', {
+        url: '/admin/venue/add',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/edit.html',
+                controller: 'adminVenueController'
+            }
+        }
+    }).state('editVenue', {
+        url: '/admin/venue/edit/:id',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/edit.html',
+                controller: 'adminVenueController'
+            }
+        }
+    }).state('listVenue', {
+        url: '/venues',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/list.html',
+                controller: 'VenueListController'
+            }
+        }
+    }).state('listVenuePage', {
+        url: '/venues/:page',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/list.html',
+                controller: 'VenueListController'
+            }
+        }
+    }).state('adminListVenue', {
+        url: '/admin/venue/list',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/admin-list.html',
+                controller: 'adminVenueController'
+            }
+        }
+    }).state('adminListVenuePage', {
+        url: '/admin/venue/list/:page',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/venues/admin-list.html',
+                controller: 'adminVenueController'
+            }
+        }
+    }).state('about', {
+        url: '/about',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/static/about.html'
+            }
+        }
+    }).state('requestVenue', {
+        url: '/add-venue',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/static/add-venue.html'
+            }
+        }
+    }).state('requestEvent', {
+        url: '/add-event',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/static/add-event.html'
+            }
+        }
+    }).state('contact', {
+        url: '/contact',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/static/contact.html'
+            }
+        }
+    });
+
+    $urlRouterProvider.otherwise('/');
+
+    /*$routeProvider
+        .when("/map", {
+            // controller: 'mapViewController',
+            templateUrl: 'templates/mapView.html'
+        })
+        .when("/calendar", {
+            // controller: "calController",
+            templateUrl: "templates/calView.html"
+        })
+        .when("/day", {
+            controller: "dayController",
+            templateUrl: "templates/dayView.html"
+        })
+        .when("/day/:date", {
+            controller: "calDayController",
+            templateUrl: "templates/dayView.html"
+        })
+        .when("/search", {
+            // controller: "calController",
+            templateUrl: "templates/searchView.html"
+        })
+        .when("/share/:id", {
+            controller: "dayController",
+            templateUrl: "templates/dayView.html"
+        });*/
+
+    // use the HTML5 History API
+    $locationProvider.html5Mode(true);
+
+    var myAppId = '1149149361767339';
+    FacebookProvider.init(myAppId);
+}).run(function() {
+   //
+});
+
+/*
+
+cityHapps.config(['$keepaliveProvider', '$idleProvider', function($keepaliveProvider, $idleProvider) {
+  $idleProvider.idleDuration(5);
+
+}]);
+
+cityHapps.config(function(snapRemoteProvider) {
+    snapRemoteProvider.globalOptions.disable = 'left';
+});
 
 
-cityHapps.controller('eventsController', function($scope, $rootScope, $http,
+cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
+    GoogleMapApi.configure({
+        //    key: 'your api key',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
+}]);*/
+
+
+/*cityHapps.controller('eventsController', function($scope, $rootScope, $http,
     $filter, $modal, registerDataService, voteService, $cookies, $cookieStore, getEvents,
     getRecommendedEvents, $window, getCategories) {
 
@@ -433,9 +654,9 @@ cityHapps.controller('eventsController', function($scope, $rootScope, $http,
                 });
         };
         //end sloppy code re-use
-});
+});*/
 
-cityHapps.filter('dateToISO', function() {
+/*cityHapps.filter('dateToISO', function() {
     return function(input) {
         input = moment(input).toISOString();
         return input;
@@ -527,16 +748,16 @@ cityHapps.factory('getEvents', function($http, $cookies, $cookieStore) {
                 //}
             });
         }//,
-        /*allEvents: function() {
-            var userID = null;
-
-            var cookie = $cookies.user;
-            if (cookie) {
-                userID = cookie.id;
-            }
-
-            return $http.get('/events?user_id=' + userID).success(function(data) {});
-        }*/
+ //       allEvents: function() {
+ //           var userID = null;
+//
+ //           var cookie = $cookies.user;
+ //           if (cookie) {
+ //               userID = cookie.id;
+ //           }
+//
+ //           return $http.get('/events?user_id=' + userID).success(function(data) {});
+ //       }
     };
 });
 
@@ -621,36 +842,6 @@ cityHapps.directive('ngModelOnblur', function() {
 });
 
 
-
-cityHapps.config([
-    'FacebookProvider',
-    function(FacebookProvider) {
-     var myAppId = '1149149361767339';
-
-     FacebookProvider.init(myAppId);
-
-    }
-]);
-
-cityHapps.config(['$keepaliveProvider', '$idleProvider', function($keepaliveProvider, $idleProvider) {
-  $idleProvider.idleDuration(5);
-
-}]);
-
-cityHapps.config(function(snapRemoteProvider) {
-    snapRemoteProvider.globalOptions.disable = 'left';
-});
-
-
-cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
-    GoogleMapApi.configure({
-        //    key: 'your api key',
-        v: '3.17',
-        libraries: 'weather,geometry,visualization'
-    });
-}]);
-
-
 cityHapps.factory('search', function($http, $cookies, $cookieStore){
     var now = moment().format('YYYY-MM-DD');
 
@@ -690,784 +881,22 @@ cityHapps.factory('calDayClick', function($http, $cookies, $cookieStore){
             });
         }
     };
-});
+});*/
 
+//cityHapps.formData = {};
 
-/* ***************************** */
-/* Happ Controller        */
-/* -- Start --                   */
-/* ***************************** */
-cityHapps.controller('happController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
-    function($scope, $http, $routeParams, $cookies, $cookieStore) {
-
-        $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
-        $scope.likeStatus;
-
-        if (typeof $routeParams.id !== 'undefined') {
-            $http.get('/happs/' + $routeParams.id)
-                .success(function(data) {
-                    if (data.data.length == 1) {
-                        $scope.data = data.data[0];
-                        if ($scope.user) {
-                            $scope.checkLikeStatus();
-                        }
-                    }
-                });
-        } else {
-            // Get filter data here
-            var filters = '';
-            $http.get('/happs' + filters)
-                .success(function(payload) {
-                    $scope.data = payload.data;
-                });
-        }
-
-        $scope.checkLikeStatus = function() {
-            var userId = $scope.user.id;
-            var eventId = $scope.data.id;
-
-            $http({
-                method: "POST",
-                url: '/checkUserEventVote',
-                data: {
-                    'user_id' : userId,
-                    'event_id' : eventId
-                },
-                headers : {"Content-Type": "application/json"}
-            }).success(function(data){
-                if (!data) {
-                    $scope.likeStatus = false;
-
-                } else if(data) {
-                    console.log(data);
-                    if(data.status == 'ok') {
-                        $scope.likeStatus = true;
-                    } else {
-                        $scope.likeStatus = false;
-                    }
-                }
-            });
-        };
-
-        $scope.vote = {};
-
-        if ($scope.user) {
-
-            $scope.simpleVoteEvent = function(event, action) {
-
-                var eventID = event.id;
-
-                console.log(event.vote);
-
-                var userID = $scope.user.id;
-                var upVote = event.vote.upVote;
-                var downVote = event.vote.downVote;
-
-                var eventVote = -1;
-
-                if (action == 'up') {
-                    event.vote.downVote = false;
-                    if (upVote == true) {
-                        eventVote = 1;
-                    } else {
-                        eventVote = -1
-                    }
-                } else { // Downvote changed
-                    event.vote.upVote = false;
-                    if (downVote == true) {
-                        eventVote = -1;
-                    }
-                }
-                $http({
-                    method: "POST",
-                    url: '/userEvent',
-                    data: {
-                        'user_id' : userID,
-                        'event_id' : eventID,
-                        'vote' : eventVote
-                    },
-                    headers : {"Content-Type": "application/json"}
-                }).success(function(data){
-                    if (!data) {
-                        console.log("no vote, man");
-                    } else if(data) {
-                        console.log(data);
-                        $scope.likeStatus = !$scope.likeStatus;
-                    }
-                });
-            };
-        }
-}]);
-
-/* ***************************** */
-/* Venue Controller        */
-/* -- Start --                   */
-/* ***************************** */
-cityHapps.controller('venueController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
-    function($scope, $http, $routeParams, $cookies, $cookieStore) {
-
-        $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
-        $scope.likeStatus;
-
-        $http.get('/venues?id=' + $routeParams.id)
-            .success(function(data) {
-                if (data.venues.length > 0) {
-                    $scope.data = data.venues[0];
-                    if ($scope.user) {
-                        $scope.checkLikeStatus();
-                    }
-                }
-            });
-
-        $scope.checkLikeStatus = function() {
-            var userId = $scope.user.id;
-            var venueId = $scope.data.id;
-
-            $http({
-                method: "POST",
-                url: '/checkUserVenueVote',
-                data: {
-                    'user_id' : userId,
-                    'venue_id' : venueId
-                },
-                headers : {"Content-Type": "application/json"}
-            }).success(function(data){
-                if (!data) {
-                    $scope.likeStatus = false;
-
-                } else if(data) {
-                    console.log(data);
-                    if(data.status == 'ok') {
-                        $scope.likeStatus = true;
-                    } else {
-                        $scope.likeStatus = false;
-                    }
-                }
-            });
-        };
-
-        $scope.vote = {};
-
-        if ($scope.user) {
-
-            $scope.simpleVoteVenue = function(venue, action) {
-
-                var venueID = venue.id;
-
-                var userID = $scope.user.id;
-                var upVote = venue.vote.upVote;
-                var downVote = venue.vote.downVote;
-
-                var venueVote = -1;
-
-                if (action == 'up') {
-                    venue.vote.downVote = false;
-                    if (upVote == true) {
-                        venueVote = 1;
-                    } else {
-                        venueVote = -1
-                    }
-                } else { // Downvote changed
-                    venue.vote.upVote = false;
-                    if (downVote == true) {
-                        venueVote = -1;
-                    }
-                }
-                $http({
-                    method: 'POST',
-                    url: '/userVenue',
-                    data: {
-                        'user_id' : userID,
-                        'venue_id' : venueID,
-                        'vote' : venueVote
-                    },
-                    headers: {'Content-Type': 'application/json'}
-                }).success(function(data) {
-                    if (!data) {
-                        console.log('No vote registered.');
-                    } else if (data) {
-                        console.log(data);
-                        $scope.likeStatus = !$scope.likeStatus;
-                    }
-                });
-            };
-        }
-}]);
-
-/* ***************************** */
-/* Admin Event Controller        */
-/* -- Start --                   */
-/* ***************************** */
-cityHapps.controller('adminEventController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
-    function($scope, $http, $routeParams, $cookies, $cookieStore) {
-
-    $scope.user = $cookies.user;
-
-    // Processing the form data for adding an event
-    $scope.processForm = function(formData) {
-        var edit = ($routeParams.id ? true : false);
-        // Validation
-        var error = 0;
-        if (!formData) {
-          $scope.generalError = true;
-          return;
-        }
-        if (typeof formData.title === 'undefined' || formData.title == '') {
-          error = 1;
-          $scope.titleError = true;
-        }
-        if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
-          error = 1;
-          $scope.venueError = true;
-        }
-        if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
-          error = 1;
-          $scope.addressError = true;
-        }
-        if (typeof formData.start_time === 'undefined' || formData.start_time == '') {
-          error = 1;
-          $scope.startDateError = true;
-        }
-        if (typeof formData.desc === 'undefined' || formData.desc == '') {
-          error = 1;
-          $scope.descError = true;
-        }
-        if (formData.parent.length > 0) {
-            formData.parent_id = formData.parent[0]['id'];
-        }
-
-        // if any error, don't post
-        if (error) {
-          $scope.generalError = true;
-          return;
-        }
-        console.log(formData);
-        if (!edit) {
-            $http({
-                method: 'POST',
-                url: '/admin/event/create',
-                    data: formData,
-                    headers: {'Content-Type': 'application/json'}
-            }).success(function(data) {
-                if (!data) {
-                    console.log('Data Not Posting');
-                }
-                else if (data) {
-                    if (data.error) {
-                        $scope.error = data.message;
-                        console.log('Error creating event', data.message);
-                    }
-                    else {
-                        $scope.success = data;
-                        console.log('Success');
-                    }
-                }
-            }).error(function(data) {
-                    $scope.error = data.error.message;
-            });
-        } else {
-            $http({
-                method: 'POST',
-                url: '/admin/event/update',
-                data: formData,
-                headers: {'Content-Type': 'application/json'}
-            }).success(function(data) {
-                if (!data) {
-                    console.log('Data Not Posting');
-                }
-                else if (data) {
-                    if (data.error) {
-                        $scope.error = data.message;
-                        console.log('Error updating event', data.message);
-                    }
-                    else {
-                        $scope.success = data;
-                        console.log('Success');
-                    }
-                }
-            }).error(function(data) {
-                $scope.error = data.error.message;
-            });
-        }
-        }
-    // Retieving all of the data for the listing page
-    $http.get('/events?page_size=all')
-        .success(function(data) {
-        $scope.eventsCount = data.events.length;
-        var allEventsUnformatted = data.events;
-        for (var i = 0; i < allEventsUnformatted.length; i++) {
-            if (moment(allEventsUnformatted[i].start_time).isValid()) {
-                allEventsUnformatted[i].start_date = moment(allEventsUnformatted[i].start_time).format('M/D/YYYY');
-                allEventsUnformatted[i].start_only_time = moment(allEventsUnformatted[i].start_time).format('h:mm:ss a');
-            }
-            else {
-                allEventsUnformatted[i].start_date = '';
-                allEventsUnformatted[i].start_only_time = '';
-            }
-            if (moment(allEventsUnformatted[i].end_time).isValid()) {
-                allEventsUnformatted[i].end_date = moment(allEventsUnformatted[i].end_time).format('M/D/YYYY');
-                allEventsUnformatted[i].end_only_time = moment(allEventsUnformatted[i].end_time).format('h:mm:ss a');
-            }
-            else {
-                allEventsUnformatted[i].end_date = '';
-                allEventsUnformatted[i].end_only_time = '';
-            }
-        }
-        $scope.allEvents = allEventsUnformatted;
-    });
-
-    // edit page
-    if ($routeParams.id) {
-        $http.get('/events?id=' + $routeParams.id)
-            .success(function(data) {
-                if (data.events.length > 0)
-                {
-                    var singleEvent = data.events[0];
-                    $scope.formData.title = singleEvent.event_name;
-                    $scope.formData.event_id = singleEvent.id;
-                    $scope.formData.parent_id = singleEvent.parent_id;
-                    $scope.formData.event_url = singleEvent.url;
-                    $scope.formData.event_image_url = singleEvent.event_image_url;
-                    $scope.formData.venue_name = singleEvent.venue_name;
-                    $scope.formData.venue_url = singleEvent.venue_url;
-                    $scope.formData.street_address = singleEvent.address;
-                    $scope.formData.city = singleEvent.city;
-                    $scope.formData.state = singleEvent.state;
-                    $scope.formData.zip_code = singleEvent.zip;
-                    $scope.formData.desc = singleEvent.description;
-                    $scope.formData.all_day = (singleEvent.all_day_flag ? true : false );
-                    $scope.formData.start_time = singleEvent.start_time;
-                    $scope.formData.end_time = singleEvent.end_time;
-                    dateCheckCreate = new Date(singleEvent.created_at).getTime() / 1000;
-                    dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
-                    if (dateCheckCreate != dateCheckUpdate)
-                       $scope.updated_last  = singleEvent.updated_at;
-                    $scope.formData.similar_events_model = singleEvent.similar;
-                    $scope.formData.similar_events_storage = (function () {
-                        var base = [];
-                        angular.forEach(singleEvent.similar, function (value) {
-                            if (value.parent_id != null) {
-                                base.push(value.id);
-                            }
-                        });
-                        return base;
-                    })();
-                    $scope.formData.tags = singleEvent.tags;
-                    $scope.formData.parent = [];
-
-                    $scope.loadTags = function(query) {
-                        return $http.get('/tags/' + query);
-                    };
-                    $scope.loadEvents = function(query){
-                        return $http.get('/events/?name=' + query + '&current_id=' + $routeParams.id);
-                    };
-                    if ($scope.formData.parent_id > 0) {
-                        //This event has NO suggested similar, events let's fetch the parent information
-                        $http.get('/events/?id=' + $routeParams.id + '&current_id=' + $scope.formData.parent_id ).success(function(data){$scope.formData.parent = data;});
-                    }
-                }
-        })
-    }
-
-}]);
-
-/* ***************************** */
-/* Admin Event Controller       */
-/* -- Stop --                   */
-/* ***************************** */
-
-/* ***************************** */
-/* Admin Venue Controller        */
-/* -- Start --                   */
-/* ***************************** */
-cityHapps.controller('adminVenueController', ['$scope', '$http', '$routeParams', '$cookies', '$cookieStore',
-    function($scope, $http, $routeParams, $cookies, $cookieStore) {
-
-    $scope.user = $cookies.user;
-
-    // Processing the form data for adding an event
-    $scope.processForm = function(formData) {
-        var edit = ($routeParams.id ? true : false);
-        // Validation
-        var error = 0;
-        if (!formData) {
-          $scope.generalError = true;
-          return;
-        }
-        if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
-          error = 1;
-          $scope.venueError = true;
-        }
-        if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
-          error = 1;
-          $scope.addressError = true;
-        }
-        if (typeof formData.desc === 'undefined' || formData.desc == '') {
-          error = 1;
-          $scope.descError = true;
-        }
-        if (formData.parent.length > 0) {
-            formData.parent_id = formData.parent[0]['id'];
-        }
-        // if any error, don't post
-        if (error) {
-          $scope.generalError = true;
-          return;
-        }
-        if (!edit) {
-            $http({
-                method: 'POST',
-                url: '/admin/venue/create',
-                    data: formData,
-                    headers: {'Content-Type': 'application/json'}
-            }).success(function(data) {
-                if (!data) {
-                    console.log('Data Not Posting');
-                }
-                else if (data) {
-                    if (data.error) {
-                        $scope.error = data.message;
-                        console.log('Error creating venue', data.message);
-                    }
-                    else {
-                        $scope.success = data;
-                        console.log('Success');
-                    }
-                }
-            }).error(function(data) {
-                    $scope.error = data.error.message;
-            });
-        } else {
-            $http({
-                method: 'POST',
-                url: '/admin/venue/update',
-                data: formData,
-                headers: {'Content-Type': 'application/json'}
-            }).success(function(data) {
-                if (!data) {
-                    console.log('Data Not Posting');
-                }
-                else if (data) {
-                    if (data.error) {
-                        $scope.error = data.message;
-                        console.log('Error updating venue', data.message);
-                    }
-                    else {
-                        $scope.success = data;
-                        console.log('Success');
-                    }
-                }
-            }).error(function(data) {
-                $scope.error = data.error.message;
-            });
-        }
-    };
-    // Retrieving all of the data for the listing page
-    var pageNumber = ($routeParams.page) ? '&page=' + $routeParams.page : '';
-    console.log($routeParams.page);
-    $http.get('/venues?page_size=500' + pageNumber)
-        .success(function(data) {
-            $scope.venuesCount = data.meta.count;
-            $scope.allVenues = data.venues;
-    });
-
-    // edit page
-    if ($routeParams.id) {
-        $http.get('/venues?id=' + $routeParams.id)
-            .success(function(data) {
-                if (data.venues.length > 0)
-                {
-                    var singleVenue = data.venues[0];
-                    $scope.formData.venue_name = singleVenue.name;
-                    $scope.formData.venue_id = singleVenue.id;
-                    $scope.formData.parent_id = singleVenue.parent_id;
-                    $scope.formData.venue_url = singleVenue.url;
-                    $scope.formData.venue_image_url = singleVenue.image;
-                    $scope.formData.phone = singleVenue.phone;
-                    $scope.formData.street_address = singleVenue.address_1;
-                    $scope.formData.city = singleVenue.city;
-                    $scope.formData.state = singleVenue.state;
-                    $scope.formData.zip_code = singleVenue.postal_code;
-                    $scope.formData.desc = singleVenue.description;
-                    $scope.formData.hours = singleVenue.hours;
-                    dateCheckCreate = new Date(singleVenue.created_at).getTime() / 1000;
-                    dateCheckUpdate = new Date(singleVenue.updated_at).getTime() / 1000;
-                    if (dateCheckCreate != dateCheckUpdate)
-                       $scope.updated_last = singleVenue.updated_at;
-                    $scope.formData.parent_id = singleVenue.parent_id;
-                    $scope.formData.similar_venues_model = singleVenue.similar;
-
-                    $scope.formData.similar_venues_storage = (function () {
-                        var base = [];
-                        angular.forEach(singleVenue.similar, function (value) {
-                            if (value.parent_id != null) {
-                                base.push(value.id);
-                            }
-                        });
-                        return base;
-                    })();
-                    $scope.formData.tags = singleVenue.tags;
-                    $scope.loadTags = function(query) {
-                        return $http.get('/tags/' + query);
-                    };
-
-                    console.log($scope.formData);
-                }
-
-
-        });
-    }
-}]);
-
-/* ***************************** */
-/* Admin Venue Controller       */
-/* -- Stop --                   */
-/* ***************************** */
-
-cityHapps.controller('appController', ['$scope', '$window', '$idle', 'authService', 'registerDataService', 'voteService', '$rootScope', 'authFactory', '$http', '$modal', '$location', 'getCategories', 'getUserCategories', 'search', '$cookies', '$cookieStore',
-    function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, $cookies, $cookieStore) {
-
-        $scope.$on('$idleStart', function() {
-
-            alert('idle firing now');
-
-        });
-
-        $scope.user = $cookies.user;
-
-
-        $scope.filterData = {};
-        $scope.filterData.categories = {};
-
-
-        // I modified this Gist to flatten return object from php
-        // https://gist.github.com/penguinboy/762197
-            var flattenObject = function(ob) {
-                var toReturn = {};
-
-                for (var i in ob) {
-                    if (!ob.hasOwnProperty(i)) continue;
-
-                    if ((typeof ob[i]) == 'object') {
-                        var flatObject = flattenObject(ob[i]);
-                        for (var x in flatObject) {
-                            if (!flatObject.hasOwnProperty(x)) continue;
-
-                            toReturn[x] = flatObject[x];
-                        }
-                    } else {
-                        toReturn[i] = ob[i];
-                    }
-                }
-                return toReturn;
-            };
-
-
-
-            $scope.categoryToggle = function() {
-                $(".categoriesDropdownUser").fadeToggle();
-
-                getCategories.success(function(data){
-
-                    $scope.categories = data;
-
-                    var user = localStorage.user;
-                    user = JSON.parse(user);
-                    params = "?id=" + user.id;
-
-                    getUserCategories.params(params).success(function(data){
-
-                        $scope.filterData = {};
-                        $scope.filterData.userCategories = flattenObject(data);
-
-                    });
-
-                });
-            };
-
-            if ($rootScope.user) {
-
-                $scope.filterCategoryUser = function() {
-
-                    var userID = null;
-
-                    var cookie = $cookies.user;
-                    if (cookie) {
-                        userID = cookie.id;
-                    }
-
-
-                    $scope.nowGet = moment().format();
-                    $scope.nowDateGet = moment().format('YYYY-MM-DD');
-
-                    var queryString = '';
-
-                    for (var i in $scope.filterData.categories){
-                        console.log(i);
-                        if ($scope.filterData.categories[i] == true) {
-                            queryString += "category=[]" + i;
-                            //+ "&";
-                        }
-                    }
-
-                    $http.get("/events?user_id=" + userID + "&start_date="+ $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
-                        .success(function(data){
-                            $scope.eventData = data;
-                            eventSuccess(data);
-                            recommendedEventSuccess(data);
-
-                            console.log($scope.filterData.categories);
-                    });
-
-                }
-            };
-
-
-        console.log(registerDataService.recEventCount);
-
-        $scope.helpFade = function() {
-            $('.help-overlay').fadeToggle();
-        };
-
-        $('div').fadeIn('fast');
-
-		$scope.mobile = function() {
-			if ($window.innerWidth <= 768 ) {
-				return true;
-			} else {
-				return false;
-			}
-		};
-
-        $scope.search = function(query) {
-            if ($window.innerWidth <= 768) {
-                $(".search-large").blur();
-                search.searchData(query).success(function(data){
-                    $scope.$broadcast('search', data);
-                    $scope.searchQuery = data.events.length + " " + "results for" + " " + "<div class='red'>" + query + "</div>";
-                });
-            } else {
-                $location.path('/search');
-                search.searchData(query).success(function(data){
-                    $scope.$broadcast('search', data);
-                    $scope.searchAmount = data.events.length +  " results for ";
-                    $scope.searchLength = data.events.length;
-                    $scope.searchQuery = query;
-                });
-            }
-
-        };
-
-		$rootScope.user = $cookies.user;
-
-		if ($rootScope.user) {
-
-			$scope.voteEvent = function(event, num, action) {
-
-				var eventID = event[num].event_id;
-				if (eventID == undefined) {
-					eventID = event[num].id; // Recommended events have event_id, regular events have id
-				}
-
-                console.log(event);
-
-				var userID = $scope.user.id;
-				var upVote = event[num].vote.upVote;
-				var downVote = event[num].vote.downVote;
-
-				var eventVote = -1;
-
-				if (action == 'up') {
-					event[num].vote.downVote = false;
-					if (upVote == true) {
-						eventVote = 1;
-					}
-				} else { // Downvote changed
-					event[num].vote.upVote = false;
-					if (downVote == true) {
-						eventVote = 0;
-					}
-				}
-
-				$http({
-					method: "POST",
-					url: '/userEvent',
-					data: {
-						'user_id' : userID,
-						'event_id' : eventID,
-						'vote' : eventVote
-					},
-
-					headers : {"Content-Type": "application/json"}
-				}).success(function(data) {
-
-					if (!data) {
-						console.log("no vote, man");
-						// $scope.loggedOut = false;;
-					} else if(data) {
-						console.log(data);
-						// $scope.loggedOut = true;
-					}
-				});
-
-			};
-
-		} else {
-
-			$scope.voteEvent = function(event) {
-				$modal.open({
-					templateUrl: "templates/registrationModal.html",
-					controller: 'modalInstanceController'
-				});
-			}
-		}
-
-
-		console.log(registerDataService.vote);
-
-
-
-		$scope.formData = {
-			email : '',
-			username : '',
-			password: ''
-		};
-
-		//$scope.loginUser = function(formData) {
-		//	authFactory.loginUser(formData);
-		//};
-
-
-		$scope.vote = registerDataService.vote;
-
-		$scope.$on('event:loginConfirmed', function(){
-			// alert("youre logged in");
-
-			$scope.upvoted = '';
-
-		});
-
-		console.log($rootScope.userData);
-	}
-]);
-
-
-
-cityHapps.formData = {};
-
-cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "registerDataService", "$timeout", "authFactory", "Facebook",
+/*cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "registerDataService", "$timeout", "authFactory", "Facebook",
   function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook) {
 
 
-	//Facebook Auth
+    // Facebook Auth
 
       // Define user empty data :/
       $scope.user = {};
 
-      /**
-       * Watch for Facebook to be ready.
-       * There's also the event that could be used
-       */
+    // Watch for Facebook to be ready.
+    // There's also the event that could be used
+       
       $scope.$watch(
         function() {
           return Facebook.isReady();
@@ -1645,10 +1074,10 @@ cityHapps.controller('registerFormController', [ "$scope", "$http", "$modal", "r
 
 
 	}
-]);
+]);*/
 
 
-cityHapps.factory("registerDataService", function(){
+/*cityHapps.factory("registerDataService", function(){
 
 	var registerDataService = {};
 	registerDataService.data = {};
@@ -1661,10 +1090,10 @@ cityHapps.factory("registerDataService", function(){
 	return registerDataService;
 
 
-});
+});*/
 
 
-cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal, $cookies, $cookieStore, $modalStack){
+/*cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal, $cookies, $cookieStore, $modalStack){
 
 	var auth = {};
 
@@ -1776,15 +1205,10 @@ cityHapps.factory('authFactory', function($http, authService, $rootScope, $modal
 	return auth;
 
 
-});
-
-cityHapps.factory("FBLogin", function($http){
+});*/
 
 
-})
-
-
-cityHapps.controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
+/*cityHapps.controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
 
 	$scope.formData = registerDataService.data;
 
@@ -1873,12 +1297,12 @@ cityHapps.controller("modalController", function($scope, $modal, $http, authFact
         authFactory.editUserData($scope.formData);
     };
 
-});
+});*/
 
 //
 //Handles homepage event modals
 //
-cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", '$rootScope', 'voteService', "$http", "$modalInstance", 'data', 'num', 'vote', '$cookies', '$cookieStore', 'Facebook',
+/*cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataService", '$rootScope', 'voteService', "$http", "$modalInstance", 'data', 'num', 'vote', '$cookies', '$cookieStore', 'Facebook',
 		function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
 
 		if (num === null || num === undefined) {
@@ -2019,7 +1443,7 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 			$modalInstance.dismiss('cancel');
 		};
 	}
-]);
+]);*/
 
 // cityHapps.controller("shareController", function($scope, $modal, $http, $rootScope, $location, $routeParams){
 
@@ -2030,7 +1454,7 @@ cityHapps.controller("eventModalInstanceController", ["$scope", "registerDataSer
 //
 //Handles All event modals not on homepage
 //
-cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance", 'data', '$http', '$rootScope', '$cookies', '$cookieStore', 'voteService', 'Facebook', '$modal', '$window',
+/*cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance", 'data', '$http', '$rootScope', '$cookies', '$cookieStore', 'voteService', 'Facebook', '$modal', '$window',
 		function($scope, $modalInstance, data, $http, $rootScope, $cookies, $cookieStore, voteService, Facebook, $modal, $window){
 
 		$scope.data = data;
@@ -2161,9 +1585,9 @@ cityHapps.controller("simpleModalInstanceController", ["$scope", "$modalInstance
                 window.open(url, name, size);
             };
         }
-]);
+]);*/
 
-cityHapps.factory('getCategories', function($http){
+/*cityHapps.factory('getCategories', function($http){
        return $http({
             method: "GET",
             url: "/category",
@@ -2177,9 +1601,9 @@ cityHapps.factory('getCategories', function($http){
 
             }
         });
-});
+});*/
 
-cityHapps.factory('getUserCategories', function($http){
+/*cityHapps.factory('getUserCategories', function($http){
     return {
         params : function(args) {
             return $http({
@@ -2197,9 +1621,9 @@ cityHapps.factory('getUserCategories', function($http){
             });
         }
     }
-});
+});*/
 
-cityHapps.factory('updateUserCategories', function($http){
+/*cityHapps.factory('updateUserCategories', function($http){
     return {
         params : function(args) {
             return $http({
@@ -2217,12 +1641,12 @@ cityHapps.factory('updateUserCategories', function($http){
             });
         }
     }
-});
+});*/
 
 //
 //Handles Log in and registration modals
 //
-cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory", "getCategories",
+/*cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$http", "registerDataService", "authFactory", "getCategories",
 		function($scope, $modalInstance, $http, registerDataService, authFactory){
 
 		$scope.formData = registerDataService.data;
@@ -2292,10 +1716,10 @@ cityHapps.controller("modalInstanceController", ["$scope", "$modalInstance", "$h
 		}
 	}
 
-]);
+]);*/
 
 
-cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller", "registerDataService", "$http", 'authService', '$modal', function($rootScope, $scope, $http, registerDataService, authService, $controller, $modal) {
+/*cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller", "registerDataService", "$http", 'authService', '$modal', function($rootScope, $scope, $http, registerDataService, authService, $controller, $modal) {
 
 		//$controller('appController', {$scope:$scope});
 
@@ -2303,9 +1727,9 @@ cityHapps.controller('loginController', [ "$rootScope", "$scope", "$controller",
 
 	}
 
-]);
+]);*/
 
-cityHapps.service('Session', function(){
+/*cityHapps.service('Session', function(){
 
 	this.create = function(sessionId, userId) {
 		this.id = sessionId;
@@ -2317,86 +1741,10 @@ cityHapps.service('Session', function(){
 		this.userId = null;
 	};
 
-});
+});*/
 
 
-//handle all routing via anuglar templates
-
-cityHapps.config(function($routeProvider, $locationProvider){
-
-	$routeProvider
-		.when("/", {
-			controller: 'happController',
-            templateUrl: 'app/components/happs/home.html'
-		})
-        .when("/preview", {
-            controller: 'adminEventController',
-            templateUrl: 'app/components/happs/list.html'
-        })
-		.when("/map", {
-			// controller: 'mapViewController',
-			templateUrl: 'templates/mapView.html'
-		})
-		.when("/calendar", {
-			// controller: "calController",
-			templateUrl: "templates/calView.html"
-		})
-        .when("/day", {
-            controller: "dayController",
-            templateUrl: "templates/dayView.html"
-        })
-        .when("/day/:date", {
-            controller: "calDayController",
-            templateUrl: "templates/dayView.html"
-        })
-        .when("/search", {
-            // controller: "calController",
-            templateUrl: "templates/searchView.html"
-        })
-        .when("/happ/:id", {
-            controller: "happController",
-            templateUrl: "app/components/happs/view.html"
-        })
-        .when("/venue/:id", {
-            controller: "venueController",
-            templateUrl: "app/components/venues/view.html"
-        })
-        .when("/share/:id", {
-            controller: "dayController",
-            templateUrl: "templates/dayView.html"
-        })
-        .when("/admin/event/edit/:id", {
-            controller: "adminEventController",
-            templateUrl: "templates/event.html"
-        })
-        .when("/admin/event/add", {
-            controller: "adminEventController",
-            templateUrl: "templates/event.html"
-        })
-        .when("/admin/venue/add", {
-            controller: "adminVenueController",
-            templateUrl: "app/components/venues/edit.html"
-        })
-        .when("/admin/venue/edit/:id", {
-            controller: "adminVenueController",
-            templateUrl: "app/components/venues/edit.html"
-        })
-        .when("/admin/venue/list", {
-            controller: "adminVenueController",
-            templateUrl: "app/components/venues/list.html"
-        })
-        .when("/admin/venue/list/:page", {
-            controller: "adminVenueController",
-            templateUrl: "app/components/venues/list.html"
-        })
-		.otherwise({redirectTo: "/"});
-
-		// use the HTML5 History API
-		$locationProvider.html5Mode(true);
-});
-
-
-cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal', '$log', '$http', 'getCategories', '$cookies', '$cookieStore',
+/*cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents', '$modal', '$log', '$http', 'getCategories', '$cookies', '$cookieStore',
 	function($scope, GoogleMapApi, getEvents, $modal, $log, $http, getCategories, $cookies, $cookieStore) {
 
 	//handle tabs inside mapController
@@ -2428,24 +1776,24 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			console.log($scope.tabEvents);
 		}
 
-		/*
-		$scope.mapEventModal = function(data) {
-			$modal.open({
-				templateUrl: "templates/eventModal.html",
-				controller: 'simpleModalInstanceController',
-				resolve: {
-					data: function() {
-						alert('Fire 1');
-						return data;
-					},
-					vote: function() {
-						alert($scope.vote);
-						return $scope.vote;
-					}
-				}
-			});
-		};
-		*/
+		
+		//$scope.mapEventModal = function(data) {
+//			$modal.open({
+//				templateUrl: "templates/eventModal.html",
+//				controller: 'simpleModalInstanceController',
+//				resolve: {
+//					data: function() {
+//						alert('Fire 1');
+//						return data;
+//					},
+//					vote: function() {
+//						alert($scope.vote);
+//						return $scope.vote;
+//					}
+//				}
+//			});
+//		};
+		
 
 	//sloppy code re-use, but im doing it for demo
 	$scope.now = moment().format("dddd, MMMM Do");
@@ -2701,9 +2049,9 @@ cityHapps.controller('mapController',['$scope', 'GoogleMapApi'.ns(), 'getEvents'
 			}
 		};
 
-}]);
+}]);*/
 
-cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal, $rootScope, $http, getCategories, getEventsMonthStart, $location, $cookies, $cookieStore) {
+/*cityHapps.controller('calController', function($scope, getEvents, uiCalendarConfig, $modal, $rootScope, $http, getCategories, getEventsMonthStart, $location, $cookies, $cookieStore) {
 
 	$scope.alertTest = function() {
 		//alert('firing on click');
@@ -2875,13 +2223,13 @@ cityHapps.controller('calController', function($scope, getEvents, uiCalendarConf
 
 	//console.table($scope.events);
 
-});
+});*/
 
 
 
 
 
-cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, daySliderFactory, $rootScope, $location, calDayClick, $routeParams, $cookies, $cookieStore) {
+/*cityHapps.controller("dayController", function($scope, getEvents, $modal, $http, getCategories, daySliderFactory, $rootScope, $location, calDayClick, $routeParams, $cookies, $cookieStore) {
 
     var userID = null;
 
@@ -3138,11 +2486,11 @@ cityHapps.controller("dayController", function($scope, getEvents, $modal, $http,
 
     getEvents.eventsDay($rootScope.nowDate).success(dayEvents);
 
-});
+});*/
 
 
 
-cityHapps.factory("daySliderFactory", function($http, $rootScope, $cookies, $cookieStore){
+/*cityHapps.factory("daySliderFactory", function($http, $rootScope, $cookies, $cookieStore){
 
     var userID = null;
 
@@ -3185,10 +2533,10 @@ cityHapps.factory("daySliderFactory", function($http, $rootScope, $cookies, $coo
         },
 
     }
-});
+});*/
 
 
-cityHapps.controller("calDayController", function($scope, getEvents, $modal, $http, getCategories, $rootScope, $location, $location,
+/*cityHapps.controller("calDayController", function($scope, getEvents, $modal, $http, getCategories, $rootScope, $location, $location,
     calDayClick, $routeParams, $window, daySliderFactory, $cookies, $cookieStore) {
 
     var userID = null;
@@ -3316,7 +2664,7 @@ cityHapps.controller("calDayController", function($scope, getEvents, $modal, $ht
 
     calDayClick.dateClicked($routeParams.date).success(dayEvents);
 
-});
+});*/
 
 
 
@@ -3330,7 +2678,7 @@ cityHapps.controller("calDayController", function($scope, getEvents, $modal, $ht
 /* TEST HARNESS                  */
 /* -- Start --                   */
 /* ***************************** */
-cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $http) {
+/*cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $http) {
 
 	$scope.showEventful = false;
 	$scope.showActive = false;
@@ -3372,11 +2720,11 @@ cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $
 
 				console.log(data);
 
-				switch(eventSource) {
+                switch(eventSource) {
 					case "Eventful":
 						$scope.eventData = data.events["event"];
-						$scope.showEventful = true;
-						break;
+                        $scope.showEventful = true;
+                        break;
 					case "Active":
 						$scope.eventData = data.results;
 						$scope.showActive = true;
@@ -3396,7 +2744,7 @@ cityHapps.controller('harnessController', ['$scope', '$http', function($scope, $
         }
     };
 
-}]);
+}]);*/
 /* ***************************** */
 /* TEST HARNESS                  */
 /* -- Stop --                   */

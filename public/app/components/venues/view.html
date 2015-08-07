@@ -1,53 +1,20 @@
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1149149361767339&version=v2.0";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>
-
-<div ng-controller="venueController">
-	<div class="venue-single">
-		<div class="row">
-			<div class="happ-image col-md-7" style="background-image: url('{{data.image}}'); background-size: cover;">
-				<div ng-repeat="category in data.categories" class="inline">
-					<span class="happ-category">{{category.name}}</span>
-				</div>
-			</div>
-			<div class="col-md-5">
-				<h3 class="dark bold">{{data.name}}</h3>
-				<div class="venue-address">{{data.address_1}} {{data.address_2}} {{data.address_3}}<br>{{data.city}}, {{data.state}} {{data.postal_code}}<br>{{data.country}}</div>
-				<div class="happ-buttons">
-					<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
-					<a class="happ-button inverse right{{ likeStatus ? ' active' : '' }}" href="#" ng-model="data.vote.upVote;" ng-change="simpleVoteVenue(data , 'up')" btn-checkbox>
-						<span ng-hide="likeStatus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Like This Venue</span>
-						<span ng-show="likeStatus">I Like This Venue</span>
-					</a>
-				</div>
-			</div>
+<div class="venue-single venueSingle">
+	<div class="row">
+		<div ng-repeat="category in venue.categories" class="inline">
+			<span class="happ-category">{{category.name}}</span>
 		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="happ-description" ng-if="data.description" ng-bind-html="data.description"></div>
-			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-9">
-				More Like This:
-			</div>
-			<div class="col-md-3">
-				Share It:
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<a class="happ-button" href="{{ data.google_directions_link }}">Get Directions</a>
-			</div>
-		</div>
-		<div class="row">
-			<a href="{{ data.google_directions_link }}"><img class="col-md-12" src="{{ data.google_map_large }}" /></a>
+		<div class="col-md-5 venueInfo">
+		 <h2 class="venueText">VENUE</h2>
+			<h3 class="dark bold venueName">{{venue.name}}</h3>
+			<div class="venue-address">{{venue.address_1}} {{venue.address_2}} {{venue.address_3}} {{venue.city}}, {{venue.state}} {{venue.postal_code}}</div>
+			<!--<div class="happ-buttons">
+				<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
+				<a class="happ-button inverse right{{ likeStatus ? ' active' : '' }}" href="#" ng-model="data.vote.upVote;" ng-change="simpleVoteVenue(data , 'up')" btn-checkbox>
+					<span ng-hide="likeStatus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Like This Venue</span>
+					<span ng-show="likeStatus">I Like This Venue</span>
+				</a>
+			</div>-->
 		</div>
 	</div>
 </div>

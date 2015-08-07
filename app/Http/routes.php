@@ -29,7 +29,7 @@ Route::get('happs/{id}', 'HappController@getHapp');
 Route::get('happs/{id}/venue', 'HappController@getHappVenue');
 
 Route::get('events', 'EventController@events');
-Route::get('venues', 'VenueController@venues');
+//Route::get('venues', 'VenueController@venues');
 Route::get('recommendedEvents', 'EventController@recommendedEvents');
 Route::get('eventsPaged', 'EventController@eventsPaged');
 Route::post('dayEvents', 'EventController@dayEvents');
@@ -69,8 +69,6 @@ Route::post('user/edit', 'UserController@editUser');
 Route::post('updateUserCategories', 'UserController@updateCategories');
 Route::get('getUserCategories', 'UserController@getUserCategories');
 
-Route::resource('category', 'CategoryController');
-
 Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
 
 Route::get('tags/{name}','TagController@getTags');
@@ -90,8 +88,8 @@ Route::get('about', function () {
 });
 
 // Limit this to only models that can be used
-Route::any('{model}/{id?}', 'ApiController@handleRequest')
-	->where(['model' => 'Venue|Category|Tag|Happ']);
+Route::any('api/{model}/{id?}', 'ApiController@handleRequest')
+	->where(['model' => 'venue|category|tag|happ']);
 
 // Yes, this is awful. We'll change it when we get the API in a good spot
 Route::any('{path?}', function()

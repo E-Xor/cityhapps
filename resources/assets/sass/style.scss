@@ -121,6 +121,7 @@ body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  background-color: #EAE6DE;
 }
 
 .sidebar {
@@ -131,10 +132,11 @@ body {
   overflow-y: scroll;
 }
 
-.test-wrapper {
-  width: 100%;
-  height: 100%;
+.snap-sidebar {
+  background-color: #555555;
 }
+
+.page-wrapper{ width: 100%; height: 100%; }
 
 @media (min-width: $screen-md-min) {
   .content-wrapper {
@@ -1563,14 +1565,6 @@ h3 {
 		display: inline;
 	}
 
-
-  .snap-drawer {
-    background: #2E2526;
-    right: 0;
-    width: 100%;
-    max-width: 265px;
-  }
-
   .categoriesDropdown {
     &.drawer {
       width: 100%;
@@ -1778,32 +1772,39 @@ h3 {
     font-size: 22px;
 }
 
-.category-menu {
+.sidebar-menu {
   padding-top: 154px;
-  hr{
-    margin-left: -40px;
-    border-color: #626262;
-    &:last-child{
-      visibility: hidden;
+  padding-left: 0px;
+  font-size: 16px;
+  .fa-star {
+    color: #F5A60D;
+  }
+  li {
+    a {
+      -webkit-font-smoothing: subpixel-antialiased;
+      display: block;
+      padding: 30px 40px;
+      border-bottom: 1px solid #626262;
+      &:hover {
+        color: #FFFFFF;
+        background-color: #626262;
+      }
+      &:focus {
+        color: #FFFFFF;
+      }
+    }
+    &:first-child a{
+      color: #9B9B9B;
+    }
+    &:last-child a{
+      border-bottom: none;
+    }
+    &.active a{
+      background-color: #EAE6DE;
+      color: #555555;
     }
   }
 }
-
-.category-menu li{
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
- .category-menu li a{
-
-    -webkit-font-smoothing: subpixel-antialiased;
-
-    }
-
-.category-menu li a:hover{
-   color: #fff;
-  }
-
 
 .cityLogo {
   width: 100%;
@@ -1822,46 +1823,20 @@ h3 {
   margin-right: 2%;
 }
 
-#firstMenu a{
-  color: #9b9b9b !important;
-}
-
-a {
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-}
-
-p {
-  font-family: 'Roboto', sans-serif;
-}
-
-
 footer ul li{  
   text-decoration: none;
   display: inline;
 }
 
 #footerMenu {
-    text-align: center;
-    padding: 0;
+  text-align: center;
+  padding: 0;
+  a {
+    text-decoration: underline;
+    color: #2F3030;
+    font-size: 14px;
+  }
 }
-  a{
-  text-decoration: underline;
-  color: #2F3030;
-  font-size: 14px;
-  
-}
-
-
-
-#footerMenu a{
-  text-decoration: underline;
-  color: #2F3030;
-  font-size: 14px;
-  padding-right: 10px;
-
-}
-
 
 span#copyright {   
     text-align: center;
@@ -1890,9 +1865,7 @@ span#copyright {
         line-height: 3em;
         display: inline-block;
         padding: 0 20px;
-        &.filter{
-          border-right: 1px solid #D1D2D4;
-        }
+        
       }
     }
   }
@@ -1974,7 +1947,9 @@ span#mapCircle {
     color: #777;
     float: right;
     font-weight: 500;
-   margin-top: -100px;
+    margin-top: -100px;
+    text-transform: uppercase;
+       
 
 }
 
@@ -2025,10 +2000,6 @@ div#socialIcons {
     padding-right: 0px;
 }
 
-h3.dark.bold.ng-binding {
-    display: block;
-    width: 80%;
-}
 
 #searchBox{
    position: relative;
@@ -2055,3 +2026,251 @@ input.main-search.ng-pristine.ng-untouched.ng-valid {
     width: 450px;
     height: 45px;
 }
+/*Home Page SCSS*/
+
+.homeImage {
+    width: 92%;
+    margin-left: 4%;
+    min-height: 130px;
+    }
+
+.homeButtons{
+  float: left;
+  text-decoration: none;
+  font-size: 12px;
+  width: 50%;
+  }
+
+.homeDirections{
+  background-color: #fff;
+  border-bottom: none;
+  border-left: none;
+  text-shadow: none;
+  position: absolute;
+  bottom: 0;
+  right: 50%;
+
+}
+.homeMore{
+  position: absolute;
+    bottom: 0;
+    left: 50%;
+}
+
+.homeListing{
+      position: relative;
+      margin: 0;
+
+}
+
+a .homeDirections{
+  background-color: none;
+}
+a.happ-button.homeButtons.homeDirections {
+    color: #E24B44;
+}
+
+.homeName{
+   padding: 0 10px;
+  font-size: 1em;
+  display: block;
+  height: 20px;
+}
+
+
+.homeDate {
+    margin-top: 106px;
+    padding: 0;
+    font-size: 16px;
+}
+
+.homeIcons{
+  font-size: 12px;
+  color: $grey;
+
+  a{
+    color: $grey;
+    font-size: 12px
+  }
+
+}
+
+
+
+#startDate{
+  margin-left: 5px;
+  font-size: .9em;
+}
+
+.homeInfo {
+    height: 180px;
+}
+
+.homeRP {
+    padding: 15% 13%;
+    font-weight: 600;
+    font-size: .8em;
+
+    #rating{
+      margin-bottom: 14px;
+    }
+}
+
+   .homeSingle {
+    margin: 15px 12px !important;   
+    width: 31%;
+}  
+
+/*Single Venue View*/
+.venueSingle{
+    background: #58afb9;
+    height: 164px;
+    margin: -30px -15px 0px -15px;
+  }
+
+  .venueInfo{
+    text-align: center;
+    width: 100%;
+  }
+
+  .venueText{
+    font-size: 1em;
+  }
+
+  .venueName{
+    font-size: 2em;
+    color: #fff;
+    margin-bottom: 21px;
+  
+}
+  
+
+.venue-address{
+    border-left: 1px solid $grey;
+    border-right: 1px solid $grey;
+    width: 300px;
+    margin: 0 auto;
+}
+
+/*About Page Styling*/
+.about{
+    background-color: #fff;
+    width: 95%;
+    padding: 5%;
+    margin: 0 auto;
+    padding: 3% 3% 15% 3%;
+    font-size: 16px;
+    line-height: 35px;
+}
+
+.about h1{
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  line-height: 1;
+}
+
+.aboutInfo {
+    padding-bottom: 7%;
+}
+
+/*Media Queries*/
+  
+                 
+    @media (min-width: 768px) and (max-width: 1200px) {
+
+    .happ-single{
+      float: left;
+      width: 97%;
+      
+    }
+
+
+    .homeImage{
+      width: 55%;
+      margin-left: 2%;
+      height: 231px;
+      }
+
+    .homeDate{
+        margin-top: 187px;
+        padding: 10px;
+      }
+
+    .homeName{
+      padding:0;
+      margin-bottom: 14%;
+      width: 70%;
+      font-size: 1.2em;
+    
+    }
+
+    .happText {
+     width: 45%;
+     float: right;
+    margin-top: -240px;
+     margin-left: 0px;
+    }
+
+    .homeButtons{
+      width: 20%;
+      margin-bottom: 8px;
+    }
+
+    .homeDirections{
+      border: 2px solid #FF5C50;
+      margin-right: -29%;
+    }
+    .homeMore{
+          margin-left: 29%;
+    }
+
+    .ratingPrice{
+          margin-top: -167px;
+          font-size: .9em;
+    }
+    .homeRP #rating{
+      margin-bottom: 24px;
+    }
+    }
+
+      @media only screen and (max-width : 768px) {
+
+        .homeSingle{
+          width:97%;
+        }
+
+        .homeTime{
+          margin: 0;
+          text-align: left;
+        }
+
+        .homeName{
+          
+          padding:0;
+          font-size: 1em;
+          width:70%;
+        }
+
+       .homeImage{
+        
+         width: 96%;
+         margin: 2% 0 0% 2%;
+      }
+      .ratingPrice {
+           margin-top: -45%;
+      }
+
+      .homeRP #rating {
+         margin-bottom: 30px;
+       }
+
+   .homeVenue a{
+    margin: 0;
+       
+    }
+      
+  }
+
+
+

@@ -12,16 +12,12 @@
     <link href="/assets/css/jquery.bxslider.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="/assets/css/fullcalendar.css" />
-    <!-- <link rel="stylesheet" href="/assets/css/bootstrap-responsive.min.css" /> -->
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/jquery.datetimepicker.css"/ >
-
-    <!-- Tags -->
     <link rel="stylesheet" type="text/css" href="/assets/css/ng-tags-input.min.css">
-    <!-- Tags -->
 
     <!-- load angular from CDN-->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
+    
     <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,height=device-height" >
@@ -35,42 +31,10 @@
 <!-- echo(Config::get('session.lifetime')); -->
 
 <body ng-controller="appController" ng-cloak>
-    <div ng-if="!mobile()" class="test-wrapper">
-        <aside class="sidebar">
-            <ul class="category-menu">
-                <li id="firstMenu"><a href="#">My Account</a> <i class="fa fa-sort-desc"></i></li>
-                <hr>
-                <li><a href="/">Home</a></li>
-                <hr>
-                <li><a href="#">My Favorites</a></li>
-                <hr>
-                <li><a href="#">Exhibits &amp; Museums</a></li>
-                <hr>
-                <li><a href="#">Festivals</a></li>
-                <hr>
-                <li><a href="#">Sports</a></li>
-                <hr>
-                <li><a href="#">Art</a></li>
-                <hr>
-                <li><a href="#">Music</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr>
-                <li><a href="#">Category</a></li>
-                <hr id= "lastHr">
-            </ul>
-        </aside>
-        <div class="content-wrapper">
+    <aside class="snap-sidebar" ui-view="sidebar" snap-drawer="left"></aside>
+    <div class="page-wrapper" snap-content>
+        <aside class="sidebar" ui-view="sidebar"></aside>
+        <div class="content-wrapper" >
             <header class="header-container container-fluid">
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
@@ -78,11 +42,12 @@
                             <div class="col-xs-12 center">
                                 <a href="/"><img src="/assets/img/logo-atl.png"></a>
                             </div>
+                            <div class="" snap-toggle="left"><i class="fa fa-bars"></i></div>
                         </div>
                         <hr>
                         <div class="row header-controls">
                             <div class="col-sm-6 filterSort">
-                                <span class="filter"><i class="fa fa-filter"></i> Filter By <i class="fa fa-sort-desc"></i></span><span class="sort"><i class="fa fa-exchange fa-rotate-90"></i> Sort By <i class="fa fa-sort-desc"></i></span>
+                                <span class="filter"><i class="fa fa-filter"></i> Filter By <i class="fa fa-caret-down"></i></span>
                             </div>
                             <div class="col-sm-6 center">
                                 <form ng-sumbit="search(query)" ui-keypress="{13:'search(query)'}">
@@ -118,23 +83,23 @@
                 </div>
             </header>
             <!-- Get the home body partial -->
-            <div ng-view class="main-content container-fluid" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
+            <div class="main-content container-fluid" ng-animate="{enter: 'animate', leave: 'animate'}" ui-view></div>
             <footer class="container-fluid">
                 <div id="footerSocial">
                     <a href="#"> <i class="fa fa-facebook-official"></i></a>
                     <a href="#"><i class="fa fa-twitter-square"></i></a>
                 </div>
                 <ul id="footerMenu">
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/">Events</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
-                <span id="copyright">CityHapps | &copy;2015 All Rights Reserved.</span>
+                <span id="copyright">City Happs | &copy;2015 All Rights Reserved.</span>
             </footer>
         </div>
     </div>
     <!-- if mobile -->
-    <div ng-if="mobile()" class="test-wrapper">
+    <!--div ng-if="mobile()" class="test-wrapper">
         <div snap-drawer="left">
            <ul ng-controller="modalController">
                 <li><a class="drawer-link" href="" ng-click="userCategoryToggle()" ng-if="user">{{user.email}}</a></li>
@@ -176,12 +141,15 @@
                     </div>
                 </div>
             </header>
-            <!-- Get the home body partial -->
-            <div ng-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
+            <div ui-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
         </div>
-    </div>
+    </div-->
 
     <!-- ng- scripts and things -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <script src="http://platform.twitter.com/widgets.js"></script>
 
@@ -216,10 +184,13 @@
 
     <script src="/js/checklist-model.js"></script>
 
-    <!-- Tags -->
     <script src="/js/ng-tags-input.min.js"></script>
-    <!-- tags -->
+
     <script src="/app/app.js"></script>
+    <script src="/app/controllers.js"></script>
+    <script src="/app/services.js"></script>
+    <script src="/app/filters.js"></script>
+    <script src="/app/directives.js"></script>
     <script src="/js/dom.js"></script>
 
 </body>
