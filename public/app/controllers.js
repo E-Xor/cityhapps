@@ -3,7 +3,8 @@
  */
 
 angular.module('cityHapps.controllers', []).controller('HappViewController', function($scope, $stateParams, Happ) {
-    Happ.get({ id: $stateParams.id }, function(payload) {
+    Happ.get({ id: $stateParams.id, include: 'tags'}, function(payload) {
+        console.log(payload);
       $scope.data = payload.data[0];
     });
 }).controller('HappHomeController', function($scope, $stateParams, Happ) {
@@ -117,6 +118,7 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
     var page = (typeof $stateParams.page != 'undefined') ? parseInt($stateParams.page) : 1;
     Venue.query({'page[size]': size, 'page[number]': page}, function(payload) {
         $scope.venues = payload.data;
+        // Build some pagination
         var qd = {};
         payload.links.last.split('?')[1].split("&").forEach(function(item) {var k = item.split("=")[0], v = item.split("=")[1]; v = v && decodeURIComponent(v); (k in qd) ? qd[k].push(v) : qd[k] = [v]})
         var last = parseInt(qd['page[number]'][0]);
@@ -142,7 +144,7 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         if (page != last) {
             $scope.pagination.push({'text': 'Next >', 'link': '/venues/' + (page + 1)});
         }
-        console.log($scope.pagination);
+
     });
 }).controller('VenueViewController', function($scope, $stateParams, Venue) {
     Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
