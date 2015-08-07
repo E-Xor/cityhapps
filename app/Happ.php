@@ -49,6 +49,11 @@ class Happ extends Model
     return $this->belongsTo('CityHapps\Venue', 'venue_id');
   }
 
+  public function venues()
+  {
+    return $this->belongsTo('CityHapps\Venue', 'venue_id');
+  }
+
   // public function ageLevel()
   // {
   //   return $this->hasMany('HappAgeLevel', 'id', 'happ_id');
