@@ -3,6 +3,8 @@ namespace CityHapps\Handlers;
 
 use CityHapps\Happ;
 use CityHapps\Http\Middleware\HappFilter;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Response as BaseResponse;
 use EchoIt\JsonApi\Exception as ApiException;
 use EchoIt\JsonApi\Request as ApiRequest;
@@ -53,9 +55,10 @@ class HappHandler extends ApiHandler
 
 		try {
 			if ($request->pageNumber && empty($request->id)) {
-				$results = $this->handlePaginationRequest($request, $model, $total);
+				$results = $this->customHandlePaginationRequest($request, $model, $total);
 			} else {
 				$results = $model->get();
+                $results = $this->resultDataFormatter($results);
 			}
 		} catch (\Illuminate\Database\QueryException $e) {
 			throw new Exception(
@@ -65,7 +68,140 @@ class HappHandler extends ApiHandler
 				array('details' => $e->getMessage())
 			);
 		}
+
 		return $results;
+	}
+
+	protected function customHandlePaginationRequest($request, $model, $total = null)
+	{
+		$page = $request->pageNumber;
+		$perPage = $request->pageSize;
+		if (!$total) {
+			$total = $model->count();
+		}
+		$results = $model->forPage($page, $perPage)->get(array('*'));
+		$results = $this->resultDataFormatter($results);
+		$paginator = new LengthAwarePaginator($results, $total, $perPage, $page, [
+			'path' => Paginator::resolveCurrentPath(),
+			'pageName' => 'page[number]'
+		]);
+		$paginator->appends('page[size]', $perPage);
+		if (!empty($request->filter)) {
+			foreach ($request->filter as $key=>$value) {
+				$paginator->appends($key, $value);
+			}
+		}
+		if (!empty($request->sort)) {
+			$paginator->appends('sort', implode(',', $request->sort));
+		}
+
+		return $paginator;
+	}
+
+	/**
+	 * @param $startTime
+	 * @param $endTime
+	 *
+	 * @return array $happTime
+	 */
+	protected function getHappTimeData($startTime, $endTime)
+	{
+		$happTime = [
+			'start' => null,
+			'end' => null
+		];
+
+		if(!is_null($startTime)) {
+			$happTime['start'] = $this->getHappTimeStructure($startTime);
+		}
+		if(!is_null($endTime)) {
+			$happTime['end'] = $this->getHappTimeStructure($endTime);
+		}
+
+		return $happTime;
+	}
+
+	/**
+	 * @param null $time
+	 *
+	 * @return array
+	 */
+	private  function getHappTimeStructure($time = null)
+	{
+		$happTime = [];
+		if(!is_null($time)) {
+
+			$currentTime = new \DateTime($time, $this->getSiteTimeZoneObj());
+			$localTime = $currentTime->format(\DateTime::ISO8601);
+			$currentTime->setTimezone($this->getUtcTimeZoneObj());
+			$utcTime = $currentTime->format(\DateTime::ISO8601);
+
+			$happTime  = [
+				'timezone' => $this->getSiteTimeZone(),
+				'local' => $localTime,
+				'utc' => $utcTime,
+			];
+		}
+
+		return $happTime;
+	}
+
+	/**
+	 * @return \DateTimeZone $object
+	 */
+	private function getSiteTimeZoneObj()
+	{
+		return new \DateTimeZone($this->getSiteTimeZone()) ;
+	}
+
+	private function getUtcTimeZoneObj()
+	{
+		return new \DateTimeZone("UTC");
+	}
+
+	/**
+	 * @return string timezone America/New_York
+	 */
+	private function getSiteTimeZone()
+	{
+		return 'America/New_York';
+	}
+
+	protected function resultDataFormatter($happs)
+	{
+		foreach($happs as $happ) {
+			/**
+			 * formatted happ start and end times
+			 */
+			$happTime = $this->getHappTimeData($happ->start_time, $happ->end_time);
+
+            $happ->start = $happTime['start'];
+            $happ->end = $happTime['end'];
+            $happ->address = [
+                'street_1' => $happ->address,
+                'city' => $happ->city,
+                'state' => $happ->state,
+                'zip' => $happ->zip,
+            ];
+            $happ->geo_data = [
+                'latitude' => $happ->latitude,
+                'longitude' => $happ->longitude,
+                'google_directions_link' => $happ->google_directions_link,
+                'google_map_large' => $happ->google_map_large,
+            ];
+
+            unset($happ->start_time);
+            unset($happ->end_time);
+            unset($happ->city);
+            unset($happ->state);
+            unset($happ->zip);
+            unset($happ->latitude);
+            unset($happ->longitude);
+            unset($happ->google_directions_link);
+            unset($happ->google_map_large);
+		}
+
+		return $happs;
 	}
 
 	public function customHandleFilterRequest($filters, $model)
