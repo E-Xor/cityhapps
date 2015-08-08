@@ -843,7 +843,7 @@ class Happ extends Model
 
   public static function keywordFilter($eventRecord)
   {
-    /*$threshold = 20;
+    $threshold = 20;
 
     $file = app_path() . "/../config/filters/keywords.json";
     $keywords = json_decode(file_get_contents($file), true);
@@ -859,7 +859,7 @@ class Happ extends Model
       $score += substr_count(strtoupper($eventRecord->description), strtoupper($keyword)) * $value;
     }
 
-    return $score >= $threshold;*/
+    return $score >= $threshold;
     return TRUE;
   }
 
