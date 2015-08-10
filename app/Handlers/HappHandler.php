@@ -2,6 +2,7 @@
 namespace CityHapps\Handlers;
 
 use CityHapps\Happ;
+use CityHapps\Category;
 use CityHapps\Http\Middleware\HappFilter;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -221,6 +222,9 @@ class HappHandler extends ApiHandler
 			}
 			if($key == 'agelevel') {
 				HappFilter::filterAgeLevel($model, $value);
+			}
+			if($key == 'category') {
+				$model->categories()->where('id', $value)->get();
 			}
 		}
 
