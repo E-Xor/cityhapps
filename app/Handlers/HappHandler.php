@@ -28,7 +28,7 @@ class HappHandler extends ApiHandler
 	{
 		$model = Happ::with('categories')
 			->with('tags')
-			->with('venue')
+			->with('venues')
 			->with('ageLevels');
 
 		return $this->customHandleGet($request, $model);
