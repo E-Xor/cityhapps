@@ -21,7 +21,7 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
     };
 
     $scope.getHapps = function() {
-        var filter = {include: 'categories'}; //Ultimately will include venues when they start working
+        var filter = {include: 'categories,venues'};
         // Clean up the filters
         if ($scope.filters.zip.length == 5)
             filter.zip = $scope.filters.zip;
@@ -66,10 +66,40 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         console.log($scope.filters);
         console.log(filter);
         Happ.query(filter, function(payload) {
+            // Now we need to fix the linkage
+            payload.data = $scope.fixLinks(payload.data, payload.included);
             console.log(payload);
-          $scope.happs = payload.data;
+            $scope.happs = payload.data;
         });
     };
+
+    $scope.fixLinks = function(data, includes) {
+        for (var i = 0; i < data.length; i++) {
+            var relationships = {};
+            for (var k in data[i].links) {
+                if (data[i].links[k].linkage.length != 0) {
+                    relationships[k] = [];
+                    if (Object.prototype.toString.call(data[i].links[k].linkage) === '[object Array]') {
+                        for (var j = 0; j < data[i].links[k].linkage.length; j++) {
+                            for (var l = 0; l < includes.length; l++) {
+                                if (data[i].links[k].linkage[j].id == includes[l].id && data[i].links[k].linkage[j].type == includes[l].type) {
+                                    relationships[k].push(includes[l]);
+                                }
+                            }
+                        }
+                    } else {
+                        for (var l = 0; l < includes.length; l++) {
+                            if (data[i].links[k].linkage.id == includes[l].id && data[i].links[k].linkage.type == includes[l].type) {
+                                relationships[k].push(includes[l]);
+                            }
+                        }
+                    }
+                }
+            }
+            data[i].relationships = relationships;
+        }
+        return data;
+    }
 
     $scope.todayDate = function() {
         var today = new Date();

@@ -83,8 +83,8 @@
   <div ng-repeat="happ in happs" class="happ-single col-md-4 homeSingle">
     <div class="row">
       <div class="happ-image col-xs-12 homeImage" style="background-image: url('{{happ.event_image_url}}'); background-size: cover;">
-        <div ng-repeat="category in happ.relationships.categories.data" class="inline">
-          <span class="happ-category">{{category.attributes.name}}</span>
+        <div ng-repeat="category in happ.relationships.categories" class="inline">
+          <span class="happ-category">{{category.name}}</span>
         </div>
         <div class="happ-date homeDate"><span id="startDate">{{ happ.start.local | dateToISO | date: 'MMM d' }}</span></div>
       </div>
@@ -100,8 +100,8 @@
         <div class="time homeTime homeIcons">
           <i class="fa fa-clock-o"></i> {{ happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
         </div>
-        <div class="venue homeVenue homeIcons"><i class="fa fa-map-marker"></i>
-          <a href="{{happ.relationships.venue.data.attributes.venue_url}}" target="_blank">{{happ.relationships.venue.data.attributes.venue_name}}</a>
+        <div ng-repeat="venue in happ.relationships.venues" class="venue homeVenue homeIcons">
+          <a href="{{ venue.url }}" target="_blank"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
         </div>
         <div class="ratingPrice homeRP"><span id="rating">Rating</span><span id="price">Price</span></div>
         <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
