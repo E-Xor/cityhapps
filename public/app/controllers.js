@@ -3,7 +3,7 @@
  */
 
 angular.module('cityHapps.controllers', []).controller('HappViewController', function($scope, $stateParams, Happ) {
-    Happ.get({ id: $stateParams.id, include: 'tags,categories'}, function(payload) {
+    Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
         console.log(payload);
       $scope.happ = payload.data[0];
     });
@@ -21,7 +21,7 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
     };
 
     $scope.getHapps = function() {
-        var filter = {};
+        var filter = {include: 'categories'}; //Ultimately will include venues when they start working
         // Clean up the filters
         if ($scope.filters.zip.length == 5)
             filter.zip = $scope.filters.zip;
@@ -61,7 +61,7 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
                 time += ',';
             time += 'night';
         }
-        if (time != '')
+        if (time != '' && (time.match(/,/g) || []).length != 3)
             filter.timeofday = time;
         console.log($scope.filters);
         console.log(filter);
@@ -215,14 +215,16 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
                 });
             };
         }
-}).controller('CategoryHappController', function($scope, $stateParams, Category) {
+}).controller('CategoryHappController', function($scope, $stateParams, Category, Happ) {
     // First let's get the category id
     Category.get({ slug: $stateParams.slug }, function(payload) {
-      var categoryId = payload.data.id;
-      // Then let's get our data
-      Category.query(function(payload) {
-        $scope.categories = payload.data;
-      });
+        $scope.category = payload.data[0];
+        // Then let's get our data
+        Happ.query({category: $scope.category.id}, function(happPayload) {
+            $scope.happs = happPayload.data;
+            console.log(payload);
+            console.log(happPayload);
+        });
     });
 }).controller('CategorySidebarController', function($scope, Category) {
     Category.query(function(payload) {

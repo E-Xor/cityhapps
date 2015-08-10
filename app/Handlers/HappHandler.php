@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace CityHapps\Handlers;
 
 use CityHapps\Happ;
@@ -50,7 +51,7 @@ class HappHandler extends ApiHandler
 				$model = $this->handleSortRequest($request->sort, $model);
 			}
 		} else {
-			$model = $model->where('id', '=', $request->id);
+			$model->where('id', '=', $request->id);
 		}
 
 		try {
@@ -61,7 +62,7 @@ class HappHandler extends ApiHandler
                 $results = $this->resultDataFormatter($results);
 			}
 		} catch (\Illuminate\Database\QueryException $e) {
-			throw new Exception(
+			throw new ApiException(
 				'Database Request Failed',
 				static::ERROR_SCOPE | static::ERROR_UNKNOWN_ID,
 				BaseResponse::HTTP_INTERNAL_SERVER_ERROR,
@@ -221,6 +222,11 @@ class HappHandler extends ApiHandler
 			}
 			if($key == 'agelevel') {
 				HappFilter::filterAgeLevel($model, $value);
+			}
+			if($key == 'category') {
+				$model->whereHas('categories', function($query) use ($value) {
+					$query->where('categories.id', $value);
+				});
 			}
 		}
 
