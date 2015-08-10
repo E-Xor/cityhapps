@@ -3,7 +3,7 @@
  */
 
 angular.module('cityHapps.controllers', []).controller('HappViewController', function($scope, $stateParams, Happ) {
-    Happ.get({ id: $stateParams.id, include: 'tags,categories'}, function(payload) {
+    Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
         console.log(payload);
       $scope.happ = payload.data[0];
     });
@@ -224,7 +224,6 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
             $scope.happs = happPayload.data;
             console.log(payload);
             console.log(happPayload);
-
         });
     });
 }).controller('CategorySidebarController', function($scope, Category) {
