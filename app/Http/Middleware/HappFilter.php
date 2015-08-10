@@ -170,22 +170,18 @@ class HappFilter
         $whereClause = '';
         $whereValues = array();
 
-        //Generate today date
-        $date = new \DateTime();
-        $today = $date->format('Y-m-d');
-
         foreach ($times as $time) {
             $time = self::convertTimeOfDay($time);
 
-            $from = $today . ' ' . $time['from'];
-            $to = $today . ' ' . $time['to'];
+            $from = $time['from'];
+            $to = $time['to'];
 
             if (!empty($whereClause)) {
                 $whereClause .= ' OR ';
             }
             $whereClause .= '(';
 
-            $whereClause .= '(start_time >= ? AND start_time <= ?)';
+            $whereClause .= '( DATE_FORMAT(start_time, "%T") >= ? AND  DATE_FORMAT(start_time, "%T") <= ?)';
             $whereValues[] = $from;
             $whereValues[] = $to;
 
