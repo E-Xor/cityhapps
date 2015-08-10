@@ -181,7 +181,7 @@ class HappFilter
             }
             $whereClause .= '(';
 
-            $whereClause .= '( DATE_FORMAT(start_time, "%T") >= ? AND  DATE_FORMAT(start_time, "%T") <= ?)';
+            $whereClause .= '(DATE_FORMAT(start_time, "%T") >= ? AND DATE_FORMAT(start_time, "%T") <= ?)';
             $whereValues[] = $from;
             $whereValues[] = $to;
 
