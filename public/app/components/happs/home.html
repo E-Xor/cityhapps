@@ -64,10 +64,10 @@
       </div>
       <div class="choices">
         <div class="checkbox-group">
-          <input type="checkbox" name="io" id="io_indoor" value="indoor"><label for="io_indoor">Indoor</label>
+          <input type="checkbox" id="io_indoor" ng-model="filters.indoor" ng-change="getHapps()"><label for="io_indoor">Indoor</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" name="io" id="io_outdoor" value="outdoor"><label for="io_outdoor">Outdoor</label>
+          <input type="checkbox" id="io_outdoor" ng-model="filters.outdoor" ng-change="getHapps()"><label for="io_outdoor">Outdoor</label>
         </div>
       </div>
     </div>

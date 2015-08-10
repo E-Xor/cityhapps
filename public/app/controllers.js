@@ -17,6 +17,8 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         afternoon: true,
         evening: true,
         night: true,
+        indoor: true,
+        outdoor: true,
         zip: ''
     };
 
@@ -26,6 +28,7 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         if ($scope.filters.zip.length == 5)
             filter.zip = $scope.filters.zip;
 
+        // Date Filters
         var date = ''
         if ($scope.filters.today)
             date += String($scope.todayDate());
@@ -39,10 +42,11 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
                 date += ',';
             date += String($scope.weekendDate());
         }
+        // TODO: Calendar Filter
         if (date != '')
             filter.date = date;
 
-
+        // Time Filters
         var time = '';
         if ($scope.filters.morning)
             time += 'morning';
@@ -63,6 +67,19 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         }
         if (time != '' && (time.match(/,/g) || []).length != 3)
             filter.timeofday = time;
+
+        // Indoor Outdoor Filter
+        var io = '';
+        if ($scope.filters.indoor)
+            io += 'indoor';
+        if ($scope.filters.outdoor) {
+            if (io != '')
+                io += ',';
+            io += 'outdoor';
+        }
+        if (io != '' && (io.match(/,/g) || []).length != 1)
+            filter.type = io;
+
         console.log($scope.filters);
         console.log(filter);
         Happ.query(filter, function(payload) {
