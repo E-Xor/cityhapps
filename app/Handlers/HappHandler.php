@@ -225,7 +225,7 @@ class HappHandler extends ApiHandler
 			}
 			if($key == 'category') {
 				$model->whereHas('categories', function($query) use ($value) {
-					$query->where('categories.id', $value);
+					$query->where('categories.slug', $value);
 				});
 			}
 		}

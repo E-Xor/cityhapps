@@ -215,16 +215,9 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
                 });
             };
         }
-}).controller('CategoryHappController', function($scope, $stateParams, Category, Happ) {
-    // First let's get the category id
-    Category.get({ slug: $stateParams.slug }, function(payload) {
-        $scope.category = payload.data[0];
-        // Then let's get our data
-        Happ.query({category: $scope.category.id}, function(happPayload) {
-            $scope.happs = happPayload.data;
-            console.log(payload);
-            console.log(happPayload);
-        });
+}).controller('CategoryHappController', function($scope, $stateParams, Happ) {
+    Happ.query({category: $stateParams.slug}, function(happPayload) {
+        $scope.happs = happPayload.data;
     });
 }).controller('CategorySidebarController', function($scope, Category) {
     Category.query(function(payload) {
