@@ -83,8 +83,10 @@
   <div ng-repeat="happ in happs" class="happ-single col-md-4 homeSingle">
     <div class="row">
       <div class="happ-image col-xs-12 homeImage" style="background-image: url('{{happ.event_image_url}}'); background-size: cover;">
-        <div ng-repeat="category in happ.relationships.categories" class="inline">
-          <span class="happ-category">{{category.name}}</span>
+        <div class="happ-categories" ng-if="happ.relationships.categories">
+          <span ng-repeat="category in happ.relationships.categories">
+            <span class="happ-category">{{ category.name }}</span>{{ $last ? '' : ', ' }}
+          </span>
         </div>
         <div class="happ-date homeDate"><span id="startDate">{{ happ.start.local | dateToISO | date: 'MMM d' }}</span></div>
       </div>

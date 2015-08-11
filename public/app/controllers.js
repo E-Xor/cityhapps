@@ -233,9 +233,9 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
             };
         }
 }).controller('CategoryHappController', function($scope, $stateParams, cleanData, Happ) {
-    Happ.query({category: $stateParams.slug}, function(happPayload) {
+    Happ.query({category: $stateParams.slug}, function(payload) {
         payload = cleanData.buildRelationships(payload);
-        $scope.happs = happPayload.data;
+        $scope.happs = payload.data;
     });
 }).controller('CategorySidebarController', function($scope, cleanData, Category) {
     Category.query(function(payload) {

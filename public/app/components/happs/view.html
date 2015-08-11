@@ -1,20 +1,34 @@
 <div id="viewContent">
 	<div class="happ-single col-md-9">
 		<div class="row">
-			<div class="happ-image col-md-7" style="background-image: url('{{ happ.event_image_url }}'); background-size: cover;">
-				<div ng-repeat="category in happ.relationships.categories" class="inline">
-					<span class="happ-category">{{category.name}}</span>
+			<div class="col-md-7">
+				<div class="happ-image" style="background-image: url('{{ happ.event_image_url }}'); background-size: cover;">
+					<div class="happ-categories" ng-if="happ.relationships.categories">
+						<span ng-repeat="category in happ.relationships.categories">
+							<a href="/category/{{ category.slug }}" class="happ-category">{{ category.name }}</a>{{ $last ? '' : ', ' }}
+						</span>
+					</div>
+					<div class="happ-date">
+						{{ happ.start.local | dateToISO | date: 'MMM d' }}
+					</div>
+					<!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
+					<div class="buttons">
+					<a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
+					<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
+					</div>-->
 				</div>
-				<div class="happ-date">
-					{{ happ.start.local | dateToISO | date: 'MMM d' }}
-				</div>
-				<!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
-				<div class="buttons">
-				<a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
-				<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
-				</div>-->
 			</div>
 			<div class="col-md-5 happ-data">
+				<!--div class="happ-values">
+        			<div class="happ-rating">
+        				Rating<br>
+        				<i class="fa fa-dot-circle-o"></i><i class="fa fa-dot-circle-o"></i><i class="fa fa-dot-circle-o"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle-o"></i>
+        			</div>
+        			<div class="happ-price">
+        				Price<br>
+        				<i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i>
+    				</div>
+        		</div-->
 				<h1 class="happ-name">
 					{{ happ.event_name }}
 				</h1>
@@ -24,26 +38,29 @@
 				<div class="happ-time">
 					<i class="fa fa-clock-o"></i> {{happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
 				</div>
-				<div class="happ-venue">
+				<div class="happ-venue" ng-if="happ.relationships.venue">
 					<a href="{{ happ.relationships.venue.url}}" target="_blank">
 						<i class="fa fa-map-marker"></i> {{ happ.relationships.venue.name}}
 					</a>
 				</div>
-        		<!--div class="ratingPrice">
-        			<span id="rating">Rating</span><span id="price">Price</span>
-        		</div-->
-		        <div class="happ-social">
-			        <a href="#"><i class="fa fa-facebook-official"></i></a>
-			        <a href="#"><i class="fa fa-twitter-square"></i></a>
+        		
+        		<div class="happ-data-footer">
+			        <div class="happ-social">
+				        <a href="#"><i class="fa fa-facebook-square"></i></a>
+				        <a href="#"><i class="fa fa-twitter-square"></i></a>
+			        </div>
+			        <a class="happ-button happ-getTickets" href="{{ happ.url }}">Get Tickets</a>
 		        </div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 happ-tags">
-				<i class="fa fa-tag"></i>&nbsp;
-				<span ng-repeat="tag in happ.relationships.tags">
-					<span class="happ-tag">{{ tag.tag_raw }}</span>{{ $last ? '' : ' ' }}
-				</span>
+			<div class="col-xs-12">
+				<div class="happ-tags" ng-if="happ.relationships.tags">
+					<i class="fa fa-tag"></i>&nbsp;
+					<span ng-repeat="tag in happ.relationships.tags">
+						<span class="happ-tag">{{ tag.tag_raw }}</span>{{ $last ? '' : ' ' }}
+					</span>
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -52,21 +69,15 @@
 			</div>
 		</div>
 		<div class="row">
-			<!--<div class="col-md-9">
-			More Like This:
-			</div>
-			<div class="col-md-3">
-			Share It:
-			</div>-->
-		</div>
-		<div class="row">
 			<div class="col-md-12">
 				<a class="happ-button" href="{{ happ.geo_data.google_directions_link }}">Get Directions</a>
 			</div>
 		</div>
 		<div class="row">
-			<a href="{{ data.attributes.geo_data.google_directions_link }}"><img class="col-md-12" src="{{ happ.geo_data.google_map_large }}" /><span id="mapCircle"><i class="fa fa-arrow-right"></i>
-Maps</span></a>
+			<a href="{{ data.attributes.geo_data.google_directions_link }}">
+				<img class="col-md-12" src="{{ happ.geo_data.google_map_large }}" />
+				<span id="mapCircle"><i class="fa fa-arrow-right"></i> Maps</span>
+			</a>
 		</div>
 	</div>
 </div>

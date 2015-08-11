@@ -233,15 +233,33 @@ input.main-search {
   overflow: hidden;
   .happ-image {
     height: 225px;
+    position: relative;
+    .happ-categories {
+      font-family: "Roboto Condensed", sans-serif;
+      font-weight: bold;
+      width: auto;
+      color: #FFFFFF;
+      background-color: #F5A60D;
+      padding: 7px 30px;
+      min-width: 100px;
+      position: absolute;
+      top: 18px;
+      left: -15px;
+      .happ-category, .happ-category:hover {
+        color: #FFFFFF;
+        text-decoration: none;
+      }
+    }
     .happ-date {
       color: #FFFFFF;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.8);
       padding: 11px;
-      border-top: solid #D9433F 2.5px;
+      border-top: 2.5px solid #D9433F ;
       position: absolute;
       bottom: 0px;
+      left: 15px;
       width: 100%;
-      margin-left: -15px;
+      font-weight: bold;
     }
   }
   .happ-data {
@@ -262,11 +280,59 @@ input.main-search {
       color: #3D3D3D;
       margin: 15px 0 30px;
     }
-    .happ-social {
+    .happ-data-footer {
       position: absolute;
-      right: 0px;
       bottom: 0px;
+      left: 0px;
+      padding-left: 15px;
+      padding-right: 30px;
+      width: 100%;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      .happ-getTickets {
+        width: 50%;
+        min-width: 160px;
+      }
+      .happ-social {
+        position: absolute;
+        right: 15px;
+        bottom: 0px;
+      }
+      i.fa.fa-facebook-square {
+        color: #3B5998;
+        font-size: 2.5em;
+      }
+      i.fa.fa-twitter-square {
+        color: #1DCAFF;
+        font-size: 2.5em;
+      }
     }
+  }
+  .happ-values {
+    color: #777;
+    float: right;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 12px;
+    margin: 15px 0 5px 5px;
+    .happ-rating{
+      display:block;
+      margin-bottom: 20px;
+    }
+  }
+  .happ-tags {
+    color: #FC5C50;
+    padding: 3% 2% 0;
+    .happ-tag {
+      font-weight: 500;
+      padding-left: 12px;
+    }
+  }
+  .happ-description {
+    margin: 0 auto;
+    padding: 3% 2%;
+    line-height: 1.5em;
   }
   i.fa.fa-arrow-right {
     display: block;
@@ -285,11 +351,6 @@ input.main-search {
     }
   
   }
-}
-
-.happ-image {
-  margin-left: 2%;
-  width:50%;
 }
 
 .modal-dialog {
@@ -1755,36 +1816,15 @@ h3 {
 
 }
 
-.happ-categories {
-  display: block;
-  color: #ffffff;
-  background-color: #FFA500;
-  width: 12em;
-  height: 2em;
-  text-align: center;
-  float: left;
-  margin-top: 20px;
+.happ-date {
+  color: #FFFFFF;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 11px;
+  border-top: solid #D9433F 2.5px;
+  position: absolute;
+  margin-top: 136px;
+  width: 100%;
   margin-left: -15px;
-}
-
-.happ-description {
-  margin-left: auto;
-  margin-right: auto;
-  padding: 2%;
-  text-align: justify;
-  float: left;
-  line-height: 1.5em;
-}
-
-    .happ-date {
-    color: #FFFFFF;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 11px;
-    border-top: solid #D9433F 2.5px;
-    position: absolute;
-    margin-top: 136px;
-    width: 100%;
-    margin-left: -15px;
 }
 
 .happ-buttons {
@@ -1936,21 +1976,6 @@ span#copyright {
   }
 }
 
-
-
-span.happ-category.ng-binding {
-    color: #fff;
-    font-weight: bold;
-    background-color: #FFA500;
-    padding-right: 60px;
-    padding-left: 60px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    margin-top: 3%;
-    margin-left: -13%;
-    position: absolute;
-}
-
 .venue a {
     font-size: 14px;
     color: #333;
@@ -1996,46 +2021,9 @@ span#mapCircle {
     color: #444;
 }
 
-
-
 .everything{
   position:relative;
   overflow: hidden;
-}
-.happ-date {
-    font-family: 'roboto';
-    font-weight: bold;
-    font-size: 15px;
-}
-
-.ratingPrice {
-    color: #777;
-    float: right;
-    font-weight: 500;
-    margin-top: -100px;
-    text-transform: uppercase;
-       
-
-}
-
-#rating{
-  display:block;
-  margin-bottom: 61%;
-
-}
-
-.happ-info{
-   width:27%;
-}
-
-i.fa.fa-facebook-official {
-    color: #3B5998;
-    font-size: 2em;
-}
-
- i.fa.fa-twitter-square {
-    color: #1dcaff;
-    font-size: 2em;
 }
 
 #footerSocial{
