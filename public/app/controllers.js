@@ -85,40 +85,11 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         console.log(filter);
         Happ.query(filter, function(payload) {
             // Now we need to fix the linkage
-            //payload.data = $scope.fixLinks(payload.data, payload.included);
             payload = cleanData.buildRelationships(payload);
             console.log(payload);
             $scope.happs = payload.data;
         });
     };
-
-    /*$scope.fixLinks = function(data, includes) {
-        for (var i = 0; i < data.length; i++) {
-            var relationships = {};
-            for (var k in data[i].links) {
-                if (data[i].links[k].linkage.length != 0) {
-                    relationships[k] = [];
-                    if (Object.prototype.toString.call(data[i].links[k].linkage) === '[object Array]') {
-                        for (var j = 0; j < data[i].links[k].linkage.length; j++) {
-                            for (var l = 0; l < includes.length; l++) {
-                                if (data[i].links[k].linkage[j].id == includes[l].id && data[i].links[k].linkage[j].type == includes[l].type) {
-                                    relationships[k].push(includes[l]);
-                                }
-                            }
-                        }
-                    } else {
-                        for (var l = 0; l < includes.length; l++) {
-                            if (data[i].links[k].linkage.id == includes[l].id && data[i].links[k].linkage.type == includes[l].type) {
-                                relationships[k].push(includes[l]);
-                            }
-                        }
-                    }
-                }
-            }
-            data[i].relationships = relationships;
-        }
-        return data;
-    }*/
 
     $scope.todayDate = function() {
         var today = new Date();
@@ -268,16 +239,19 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         }
 }).controller('CategoryHappController', function($scope, $stateParams, Happ) {
     Happ.query({category: $stateParams.slug}, function(happPayload) {
+        payload = cleanData.buildRelationships(payload);
         $scope.happs = happPayload.data;
     });
 }).controller('CategorySidebarController', function($scope, Category) {
     Category.query(function(payload) {
-      $scope.categories = payload.data;
+        payload = cleanData.buildRelationships(payload);
+        $scope.categories = payload.data;
     });
 }).controller('VenueListController', function($scope, $stateParams, Venue) {
     var size = 48;
     var page = (typeof $stateParams.page != 'undefined') ? parseInt($stateParams.page) : 1;
     Venue.query({'page[size]': size, 'page[number]': page}, function(payload) {
+        payload = cleanData.buildRelationships(payload);
         $scope.venues = payload.data;
         // Build some pagination
         var qd = {};
@@ -309,10 +283,10 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
     });
 }).controller('VenueViewController', function($scope, $stateParams, Venue) {
     Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
+        payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
     });
 }).controller('venueController', function($scope, $http, $stateParams, $cookies, $cookieStore) {
-
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
         $scope.likeStatus;
 
@@ -684,9 +658,9 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
             $scope.formData.parent_id = singleVenue.parent_id;
             $scope.formData.similar_venues_model = singleVenue.similar;
 
-            $scope.formData.similar_venues_storage = (function () {
+            $scope.formData.similar_venues_storage = (function() {
                 var base = [];
-                angular.forEach(singleVenue.similar, function (value) {
+                angular.forEach(singleVenue.similar, function(value) {
                     if (value.parent_id != null) {
                         base.push(value.id);
                     }
@@ -700,50 +674,6 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
 
             console.log($scope.formData);
         });
-        /*$http.get('/api/venues?id=' + $stateParams.id)
-            .success(function(data) {
-                console.log(data);
-                if (data.venues.length > 0)
-                {
-                    var singleVenue = data.venues[0];
-                    $scope.formData.venue_name = singleVenue.name;
-                    $scope.formData.venue_id = singleVenue.id;
-                    $scope.formData.parent_id = singleVenue.parent_id;
-                    $scope.formData.venue_url = singleVenue.url;
-                    $scope.formData.venue_image_url = singleVenue.image;
-                    $scope.formData.phone = singleVenue.phone;
-                    $scope.formData.street_address = singleVenue.address_1;
-                    $scope.formData.city = singleVenue.city;
-                    $scope.formData.state = singleVenue.state;
-                    $scope.formData.zip_code = singleVenue.postal_code;
-                    $scope.formData.desc = singleVenue.description;
-                    $scope.formData.hours = singleVenue.hours;
-                    dateCheckCreate = new Date(singleVenue.created_at).getTime() / 1000;
-                    dateCheckUpdate = new Date(singleVenue.updated_at).getTime() / 1000;
-                    if (dateCheckCreate != dateCheckUpdate)
-                       $scope.updated_last = singleVenue.updated_at;
-                    $scope.formData.parent_id = singleVenue.parent_id;
-                    $scope.formData.similar_venues_model = singleVenue.similar;
-
-                    $scope.formData.similar_venues_storage = (function () {
-                        var base = [];
-                        angular.forEach(singleVenue.similar, function (value) {
-                            if (value.parent_id != null) {
-                                base.push(value.id);
-                            }
-                        });
-                        return base;
-                    })();
-                    $scope.formData.tags = singleVenue.tags;
-                    $scope.loadTags = function(query) {
-                        return $http.get('/tags/' + query);
-                    };
-
-                    console.log($scope.formData);
-                }
-
-
-        });*/
     }
 }).controller('appController', function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, $cookies, $cookieStore) {
 
