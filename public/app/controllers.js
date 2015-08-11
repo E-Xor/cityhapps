@@ -1007,6 +1007,11 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         }, {scope: 'email'});
     };
 
+        $scope.loginUser = function(formData) {
+            console.log("login data");
+            console.log(formData);
+          authFactory.loginUser(formData);
+        };
 
       $scope.logout = function() {
 
@@ -1023,25 +1028,24 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
             }
         );
       };
+        $scope.registerCategories = {};
 
-        $scope.registerOpen = function(size) {
-
-            var modalInstance = $modal.open({
-                templateUrl: "templates/registrationModal.html",
-                controller: 'modalInstanceController',
-                size: size
+        $scope.getAllCategories = function(){
+            $http({
+                method: 'GET',
+                url: '/category',
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data) {
+                if (!data) {
+                    console.log('categories not get');
+                    console.log(data);
+                } else if (data) {
+                    console.log('categories get');
+                    console.log(data);
+                    $scope.registerCategories = data;
+                }
             });
         };
-
-        $scope.resetPasswordOpen = function(size) {
-
-            var modalInstance = $modal.open({
-                templateUrl: "templates/resetPasswordModal.html",
-                controller: 'modalInstanceController',
-                size: size
-            });
-        };
-
 
       // $scope.$on('Facebook:statusChange', function(ev, data) {
       //   console.log('Status: ', data);
@@ -1103,33 +1107,6 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
 
     $scope.formData = registerDataService.data;
 
-    $scope.registerOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/registrationModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.loginOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/loginModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.editOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/editModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
     $scope.getUserData = function() {
         $http
             .post('/user/getData')
@@ -1142,33 +1119,6 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
                 console.log('Errors');
                 console.log(res);
             });
-    };
-
-    $scope.resetPasswordOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/resetPasswordModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.categoriesOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/categoriesModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.confirmationOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/confirmationModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
     };
 
     $scope.logoutUser = function() {

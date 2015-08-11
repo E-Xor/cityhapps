@@ -165,6 +165,51 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/static/contact.html'
             }
         }
+    }).state('userLogin', {
+            url: '/login',
+            parent: 'default',
+            views: {
+                '@': {
+                    templateUrl: 'app/components/user/login.html',
+                    controller: 'registerFormController'
+                }
+            }
+        }).state('userRegister', {
+        url: '/register',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/user/register.html',
+                controller: 'registerFormController'
+            }
+        }
+    }).state('userRegisterCategories', {
+        url: '/register/categories',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/user/register-categories.html',
+                controller: 'registerFormController'
+            }
+        }
+    }).state('userReset', {
+        url: '/reset',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/user/reset.html',
+                controller: 'registerFormController'
+            }
+        }
+    }).state('userProfile', {
+        url: '/profile',
+        parent: 'default',
+        views: {
+            '@': {
+                templateUrl: 'app/components/user/profile.html',
+                controller: 'registerFormController'
+            }
+        }
     });
 
     $urlRouterProvider.otherwise('/');
