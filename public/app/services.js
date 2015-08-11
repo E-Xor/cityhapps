@@ -218,4 +218,173 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             return payload;
         }
     };
+}).service('HappFilterService', function($rootScope) {
+    var service = {};
+
+    service.today = true;
+    service.tomorrow = false;
+    service.weekend = false;
+    service.calendar = false;
+    service.morning = true;
+    service.afternoon = true;
+    service.evening = true;
+    service.night = true;
+    service.indoor = true;
+    service.outdoor = true;
+    service.zip = '';
+    service.search = '';
+
+    service.getDefaults = function() {
+        return {
+            today: true,
+            tomorrow: false,
+            weekend: false,
+            calendar: false,
+            morning: true,
+            afternoon: true,
+            evening: true,
+            night: true,
+            indoor: true,
+            outdoor: true,
+            zip: '',
+            search: ''
+        };
+    };
+
+    service.updateFilter = function(key, value) {
+        this[key] = value;
+        $rootScope.$broadcast('filterUpdate');
+    };
+
+    service.getFilters = function(additional) {
+        var filter = {};
+
+        // Zip Filter
+        if (this.zip.length == 5)
+            filter.zip = this.zip;
+
+        // Search Filter
+        if (this.search.trim().length > 0) {
+            filter.search = this.search;
+        }
+
+        // Date Filters
+        var date = '';
+        if (this.today)
+            date += String(this.todayDate());
+        if (this.tomorrow) {
+            if (date != '')
+                date += ',';
+            date += String(this.tomorrowDate());
+        }
+        if (this.weekend) {
+            if (date != '')
+                date += ',';
+            date += String(this.weekendDate());
+        }
+        // TODO: Calendar Filter
+        if (date != '')
+            filter.date = date;
+
+        // Time Filters
+        var time = '';
+        if (this.morning)
+            time += 'morning';
+        if (this.afternoon) {
+            if (time != '')
+                time += ',';
+            time += 'afternoon';
+        }
+        if (this.evening) {
+            if (time != '')
+                time += ',';
+            time += 'evening';
+        }
+        if (this.night) {
+            if (time != '')
+                time += ',';
+            time += 'night';
+        }
+        if (time != '' && (time.match(/,/g) || []).length != 3)
+            filter.timeofday = time;
+
+        // Indoor Outdoor Filter
+        var io = '';
+        if (this.indoor)
+            io += 'indoor';
+        if (this.outdoor) {
+            if (io != '')
+                io += ',';
+            io += 'outdoor';
+        }
+        if (io != '' && (io.match(/,/g) || []).length != 1)
+            filter.type = io;
+
+        // Get the other items in the argument
+        if (typeof additional === 'object') {
+            for (key in additional) {
+                filter[key] = additional[key];
+            }
+        }
+
+        return filter;
+    };
+
+    service.todayDate = function() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10)
+            dd = '0' + dd;
+        if (mm < 10)
+            mm = '0' + mm;
+        return yyyy + mm + dd;
+    };
+
+    service.tomorrowDate = function() {
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var dd = tomorrow.getDate();
+        var mm = tomorrow.getMonth() + 1; //January is 0!
+        var yyyy = tomorrow.getFullYear();
+        if (dd < 10)
+            dd = '0' + dd;
+        if (mm < 10)
+            mm = '0' + mm;
+        return yyyy + mm + dd;
+    };
+
+    service.weekendDate = function() {
+        var today = new Date();
+        switch (today.getDay()) {
+            case 0:
+                return this.todayDate();
+            case 6:
+                return this.todayDate() + ',' + this.tomorrowDate();
+            default:
+                var saturday = new Date();
+                saturday.setDate(saturday.getDate() + 6 - today.getDay());
+                var dd = saturday.getDate();
+                var mm = saturday.getMonth() + 1; //January is 0!
+                var yyyy = saturday.getFullYear();
+                if (dd < 10)
+                    dd = '0' + dd;
+                if (mm < 10)
+                    mm = '0' + mm;
+                var sat = yyyy + mm + dd;
+                var sunday = new Date();
+                sunday.setDate(saturday.getDate() + 1);
+                dd = sunday.getDate();
+                mm = sunday.getMonth() + 1; //January is 0!
+                yyyy = sunday.getFullYear();
+                if (dd < 10)
+                    dd = '0' + dd;
+                if (mm < 10)
+                    mm = '0' + mm;
+                return sat + ',' + yyyy + mm + dd;
+        }
+    };
+
+    return service;
 });

@@ -2,145 +2,34 @@
  * Controllers for CityHapps
  */
 
-angular.module('cityHapps.controllers', []).controller('HappViewController', function($scope, $stateParams, cleanData, Happ) {
+angular.module('cityHapps.controllers', []).controller('MainFilterController', function($scope, $stateParams, HappFilterService) {
+    $scope.filterDefaults = HappFilterService.getDefaults();
+    $scope.hideFilter = true;
+    $scope.$watchCollection('filterDefaults', function(newFilters, oldFilters) {
+        for (var key in newFilters) {
+            if (newFilters[key] != oldFilters[key]) {
+                HappFilterService.updateFilter(key, newFilters[key]);
+            }
+        }
+    });
+}).controller('HappViewController', function($scope, $stateParams, cleanData, Happ) {
     Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happ = payload.data[0];
     });
-}).controller('HappHomeController', function($scope, $stateParams, cleanData, Happ) {
-    $scope.filters = {
-        today: true,
-        tomorrow: false,
-        weekend: false,
-        calendar: false,
-        morning: true,
-        afternoon: true,
-        evening: true,
-        night: true,
-        indoor: true,
-        outdoor: true,
-        zip: ''
-    };
-
-    $scope.getHapps = function() {
-        var filter = {include: 'categories,venues'};
-        // Clean up the filters
-        if ($scope.filters.zip.length == 5)
-            filter.zip = $scope.filters.zip;
-
-        // Date Filters
-        var date = ''
-        if ($scope.filters.today)
-            date += String($scope.todayDate());
-        if ($scope.filters.tomorrow) {
-            if (date != '')
-                date += ',';
-            date += String($scope.tomorrowDate());
-        }
-        if ($scope.filters.weekend) {
-            if (date != '')
-                date += ',';
-            date += String($scope.weekendDate());
-        }
-        // TODO: Calendar Filter
-        if (date != '')
-            filter.date = date;
-
-        // Time Filters
-        var time = '';
-        if ($scope.filters.morning)
-            time += 'morning';
-        if ($scope.filters.afternoon) {
-            if (time != '')
-                time += ',';
-            time += 'afternoon';
-        }
-        if ($scope.filters.evening) {
-            if (time != '')
-                time += ',';
-            time += 'evening';
-        }
-        if ($scope.filters.night) {
-            if (time != '')
-                time += ',';
-            time += 'night';
-        }
-        if (time != '' && (time.match(/,/g) || []).length != 3)
-            filter.timeofday = time;
-
-        // Indoor Outdoor Filter
-        var io = '';
-        if ($scope.filters.indoor)
-            io += 'indoor';
-        if ($scope.filters.outdoor) {
-            if (io != '')
-                io += ',';
-            io += 'outdoor';
-        }
-        if (io != '' && (io.match(/,/g) || []).length != 1)
-            filter.type = io;
-
+}).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ) {
+    var filter = HappFilterService.getFilters({include: 'categories,venues'});
+    Happ.query(filter, function(payload) {
+        payload = cleanData.buildRelationships(payload);
+        $scope.happs = payload.data;
+    });
+    $scope.$on('filterUpdate', function() {
+        var filter = HappFilterService.getFilters({include: 'categories,venues'});
         Happ.query(filter, function(payload) {
             payload = cleanData.buildRelationships(payload);
             $scope.happs = payload.data;
         });
-    };
-
-    $scope.todayDate = function() {
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
-        var yyyy = today.getFullYear();
-        if (dd < 10)
-            dd = '0' + dd;
-        if (mm < 10)
-            mm = '0' + mm;
-        return yyyy + mm + dd;
-    };
-    $scope.tomorrowDate = function() {
-        var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        var dd = tomorrow.getDate();
-        var mm = tomorrow.getMonth() + 1; //January is 0!
-        var yyyy = tomorrow.getFullYear();
-        if (dd < 10)
-            dd = '0' + dd;
-        if (mm < 10)
-            mm = '0' + mm;
-        return yyyy + mm + dd;
-    };
-    $scope.weekendDate = function() {
-        var today = new Date();
-        switch (today.getDay()) {
-            case 0:
-                return $scope.todayDate();
-            case 6:
-                return $scope.todayDate() + ',' + $scope.tomorrowDate();
-            default:
-                var saturday = new Date();
-                saturday.setDate(saturday.getDate() + 6 - today.getDay());
-                var dd = saturday.getDate();
-                var mm = saturday.getMonth() + 1; //January is 0!
-                var yyyy = saturday.getFullYear();
-                if (dd < 10)
-                    dd = '0' + dd;
-                if (mm < 10)
-                    mm = '0' + mm;
-                var sat = yyyy + mm + dd;
-                var sunday = new Date();
-                sunday.setDate(saturday.getDate() + 1);
-                dd = sunday.getDate();
-                mm = sunday.getMonth() + 1; //January is 0!
-                yyyy = sunday.getFullYear();
-                if (dd < 10)
-                    dd = '0' + dd;
-                if (mm < 10)
-                    mm = '0' + mm;
-                return sat + ',' + yyyy + mm + dd;
-        }
-    };
-
-    $scope.getHapps();
+    });
 }).controller('happController', function($scope, $http, $stateParams, $cookies, $cookieStore, cleanData, Happ) {
 
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
@@ -232,10 +121,18 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
                 });
             };
         }
-}).controller('CategoryHappController', function($scope, $stateParams, cleanData, Happ) {
-    Happ.query({category: $stateParams.slug}, function(payload) {
+}).controller('CategoryHappController', function($scope, $stateParams, cleanData, HappFilterService, Happ) {
+    var filter = HappFilterService.getFilters({include: 'categories,venues', category: $stateParams.slug});
+    Happ.query(filter, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
+    });
+    $scope.$on('filterUpdate', function() {
+        var filter = HappFilterService.getFilters({include: 'categories,venues', category: $stateParams.slug});
+        Happ.query(filter, function(payload) {
+            payload = cleanData.buildRelationships(payload);
+            $scope.happs = payload.data;
+        });
     });
 }).controller('CategorySidebarController', function($scope, cleanData, Category) {
     Category.query(function(payload) {
