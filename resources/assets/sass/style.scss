@@ -226,13 +226,68 @@ input.main-search {
 //     margin: 0; 
 // }
 
-.happ-single, .venue-single {
-  background: white;
+.happ-single {
+  background: #FFFFFF;
+  box-shadow: 1px 3px 11px #888888;
   padding: 1%;
+  overflow: hidden;
+  .happ-image {
+    height: 225px;
+    .happ-date {
+      color: #FFFFFF;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 11px;
+      border-top: solid #D9433F 2.5px;
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      margin-left: -15px;
+    }
+  }
+  .happ-data {
+    min-height: 225px;
+    padding-bottom: 30px;
+    .happ-fulldate, .happ-time, .happ-venue {
+      font-size: 15px;
+      color: #5F5F5F;
+      margin-bottom: 16px;
+      a {
+        text-decoration: none;
+        color: #5F5F5F;
+      }
+    }
+    .happ-name {
+      font-size: 18px;
+      line-height: 22px;
+      color: #3D3D3D;
+      margin: 15px 0 30px;
+    }
+    .happ-social {
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+    }
+  }
+  i.fa.fa-arrow-right {
+    display: block;
+    margin-bottom: -20px;
+    margin-top: 8px;
+    font-size: 22px;
+  }
+}
+
+.happ-listing {
+  margin: 0 30px;
+  .happ-single {
+    margin: 25px 30px;
+    .happ-image {
+      height: 180px;
+    }
+  
+  }
 }
 
 .happ-image {
-  min-height: 180px;
   margin-left: 2%;
   width:50%;
 }
@@ -1738,12 +1793,6 @@ h3 {
   }
 }
 
-.happ-venue a {
-  text-decoration: none;
-  color: #000;
-}
-
-
   li{
     text-decoration: none;
     list-style-type: none;
@@ -1759,25 +1808,6 @@ h3 {
  text-decoration: none;
 }
 
-.happ-single {
-  background: white;
-  overflow: hidden;
-  box-shadow: 1px 3px 11px #888888;
-  i.fa.fa-arrow-right {
-    display: block;
-    margin-bottom: -20px;
-    margin-top: 8px;
-    font-size: 22px;
-  }
-}
-
-.happ-listing {
-  margin: 0 30px;
-  .happ-single {
-    margin: 25px 30px;
-  
-  }
-}
 
 #adOne {
   height: 250px;
@@ -2022,13 +2052,6 @@ footer i.fa.fa-twitter-square {
 a.ng-binding:hover{
   text-decoration: none;
   color: #333;
-}
-
-div#socialIcons {
-    margin-top: 21%;
-    margin-left: 43%;
-    font-size: 16px;
-    word-spacing: .5em;
 }
 
 .happInfo {

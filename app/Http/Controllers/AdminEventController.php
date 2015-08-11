@@ -1,5 +1,8 @@
 <?php
 
+use CityHapps\Happ;
+use CityHapps\Tag;
+
 class AdminEventController extends \BaseController {
 
   /**

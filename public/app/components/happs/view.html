@@ -2,35 +2,52 @@
 	<div class="happ-single col-md-9">
 		<div class="row">
 			<div class="happ-image col-md-7" style="background-image: url('{{ happ.event_image_url }}'); background-size: cover;">
-				<div ng-repeat="category in data.relationships.categories.data" class="inline">
-					<span class="happ-category">{{category.attributes.name}}</span>
+				<div ng-repeat="category in happ.relationships.categories" class="inline">
+					<span class="happ-category">{{category.name}}</span>
 				</div>
-				<div class="happ-date">{{happ.start.local | dateToISO | date: 'MMM d'}}</div>
-			</div>
-			<div class="col-md-5 happInfo">
-				<h3 class="dark bold">
-					{{ happ.event_name }}
-				</h3>
-				<div class="time"><i class="fa fa-clock-o"></i>
-{{happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}</p></div>
-				<div class="venue"><i class="fa fa-map-marker"></i>
-<a href="{{data.relationships.venue.data.attributes.venue_url}}" target="_blank">{{data.relationships.venue.data.attributes.venue_name}}</a></div>
-        <div class="ratingPrice"><span id="rating">Rating</span><span id="price">Price</span></div>
-        <div id="socialIcons">
-        <a href="#"><i class="fa fa-facebook-official"></i></a>
-        <a href="#"><i class="fa fa-twitter-square"></i></a>
-        </div>
-
-
+				<div class="happ-date">
+					{{ happ.start.local | dateToISO | date: 'MMM d' }}
+				</div>
 				<!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
 				<div class="buttons">
 				<a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
 				<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
 				</div>-->
 			</div>
+			<div class="col-md-5 happ-data">
+				<h1 class="happ-name">
+					{{ happ.event_name }}
+				</h1>
+				<div class="happ-fulldate">
+		          <i class="fa fa-calendar-o"></i> {{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
+		        </div>
+				<div class="happ-time">
+					<i class="fa fa-clock-o"></i> {{happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
+				</div>
+				<div class="happ-venue">
+					<a href="{{ happ.relationships.venue.url}}" target="_blank">
+						<i class="fa fa-map-marker"></i> {{ happ.relationships.venue.name}}
+					</a>
+				</div>
+        		<!--div class="ratingPrice">
+        			<span id="rating">Rating</span><span id="price">Price</span>
+        		</div-->
+		        <div class="happ-social">
+			        <a href="#"><i class="fa fa-facebook-official"></i></a>
+			        <a href="#"><i class="fa fa-twitter-square"></i></a>
+		        </div>
+			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-xs-12 happ-tags">
+				<i class="fa fa-tag"></i>&nbsp;
+				<span ng-repeat="tag in happ.relationships.tags">
+					<span class="happ-tag">{{ tag.tag_raw }}</span>{{ $last ? '' : ' ' }}
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
 				<div class="happ-description" ng-if="happ.description" ng-bind-html="happ.description"></div>
 			</div>
 		</div>

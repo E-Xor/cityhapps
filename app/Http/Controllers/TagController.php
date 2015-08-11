@@ -1,5 +1,7 @@
 <?php
 
+use CityHapps\Tag;
+
 class TagController extends \BaseController
 {
 
