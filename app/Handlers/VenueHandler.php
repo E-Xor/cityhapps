@@ -11,7 +11,7 @@ class VenueHandler extends ApiHandler
 {
 	const ERROR_SCOPE = 1024;
 
-	protected static $exposedRelations = ['tags'];
+	protected static $exposedRelations = ['tags', 'happs'];
 
 	/**
 	 * @param ApiRequest $request

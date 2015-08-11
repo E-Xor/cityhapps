@@ -103,7 +103,7 @@
           <i class="fa fa-clock-o"></i> {{ happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
         </div>
         <div ng-repeat="venue in happ.relationships.venues" class="venue homeVenue homeIcons">
-          <a href="{{ venue.url }}" target="_blank"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
+          <a href="/venue/{{ venue.id }}" target="_blank"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
         </div>
         <div class="ratingPrice homeRP"><span id="rating">Rating</span><span id="price">Price</span></div>
         <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
