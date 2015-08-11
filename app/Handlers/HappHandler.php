@@ -16,7 +16,7 @@ class HappHandler extends ApiHandler
 {
 	const ERROR_SCOPE = 1024;
 
-	protected static $exposedRelations = ['tags', 'ageLevels', 'categories', 'venues'];
+	protected static $exposedRelations = ['tags', 'ageLevels', 'categories', 'venues', 'search'];
 
 	/**
 	 * @param ApiRequest $request
@@ -227,6 +227,9 @@ class HappHandler extends ApiHandler
 				$model->whereHas('categories', function($query) use ($value) {
 					$query->where('categories.slug', $value);
 				});
+			}
+			if($key == 'search') {
+				HappFilter::filterSearch($model, $value);
 			}
 		}
 
