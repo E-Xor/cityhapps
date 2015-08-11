@@ -16,7 +16,7 @@ class HappHandler extends ApiHandler
 {
 	const ERROR_SCOPE = 1024;
 
-	protected static $exposedRelations = ['tags', 'ageLevels', 'categories', 'venues', 'search'];
+	protected static $exposedRelations = ['tags', 'ageLevels', 'categories', 'venues'];
 
 	/**
 	 * @param ApiRequest $request
