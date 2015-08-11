@@ -1,90 +1,11 @@
-<div class="filter container-fluid">
-  <div class="filter-date row">
-    <div class="col-xs-6 col-sm-3">
-      <input type="checkbox" id="date_today" ng-model="filters.today" ng-change="getHapps()"><label for="date_today">Today</label>
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <input type="checkbox" id="date_tomorrow" ng-model="filters.tomorrow" ng-change="getHapps()"><label for="date_tomorrow">Tomorrow</label>
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <input type="checkbox" id="date_weekend" ng-model="filters.weekend" ng-change="getHapps()"><label for="date_weekend">Weekend</label>
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <input type="checkbox" id="date_calendar" ng-model="filter.date.calendar"><label for="date_calendar"><i class="fa fa-calendar"></i></label>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-3">
-      <div class="label">
-          Good For:
-      </div>
-      <div class="choices">
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_infants" ng-model="filters.infants" ng-change="getHapps()"><label for="age_level_infants">Infants</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_toddlers" ng-model="filters.toddlers" ng-change="getHapps()"><label for="age_level_toddlers">Toddlers</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_preteens" ng-model="filters.preteens" ng-change="getHapps()"><label for="age_level_preteens">Preteens</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_young_adults" ng-model="filters.youngadults" ng-change="getHapps()"><label for="age_level_young_adults">Young Adults</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_adults" ng-model="filters.adults" ng-change="getHapps()"><label for="age_level_adults">Adult</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_seniors" ng-model="filters.seniors" ng-change="getHapps()"><label for="age_level_seniors">Seniors</label>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <div class="label">
-          Time of Day:
-      </div>
-      <div class="choices">
-        <div class="checkbox-group">
-          <input type="checkbox" id="timeOfDay_morning" ng-model="filters.morning" ng-change="getHapps()"><label for="timeOfDay_morning">Morning</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="timeOfDay_afternoon" ng-model="filters.afternoon" ng-change="getHapps()"><label for="timeOfDay_afternoon">Afternoon</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="timeOfDay_evening" ng-model="filters.evening" ng-change="getHapps()"><label for="timeOfDay_evening">Evening</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="timeOfDay_night" ng-model="filters.night" ng-change="getHapps()"><label for="timeOfDay_night">Night</label>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <div class="label">
-          Indoor|Outdoor:
-      </div>
-      <div class="choices">
-        <div class="checkbox-group">
-          <input type="checkbox" id="io_indoor" ng-model="filters.indoor" ng-change="getHapps()"><label for="io_indoor">Indoor</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="io_outdoor" ng-model="filters.outdoor" ng-change="getHapps()"><label for="io_outdoor">Outdoor</label>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <div>
-          <label for="zipcode">Zipcode:</label>
-          <input type="text" size="25" id="zipcode" ng-model="filters.zip" ng-keyup="getHapps()">
-      </div>
-    </div>
-  </div>
-</div>
 <div class="happ-listing homeListing">
   <div ng-repeat="happ in happs" class="happ-single col-md-4 homeSingle">
     <div class="row">
       <div class="happ-image col-xs-12 homeImage" style="background-image: url('{{happ.event_image_url}}'); background-size: cover;">
-        <div ng-repeat="category in happ.relationships.categories" class="inline">
-          <span class="happ-category">{{category.name}}</span>
+        <div class="happ-categories" ng-if="happ.relationships.categories">
+          <span ng-repeat="category in happ.relationships.categories">
+            <span class="happ-category">{{ category.name }}</span>{{ $last ? '' : ', ' }}
+          </span>
         </div>
         <div class="happ-date homeDate"><span id="startDate">{{ happ.start.local | dateToISO | date: 'MMM d' }}</span></div>
       </div>
@@ -101,7 +22,7 @@
           <i class="fa fa-clock-o"></i> {{ happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
         </div>
         <div ng-repeat="venue in happ.relationships.venues" class="venue homeVenue homeIcons">
-          <a href="{{ venue.url }}" target="_blank"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
+          <a href="/venue/{{ venue.id }}" target="_blank"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
         </div>
         <div class="ratingPrice homeRP"><span id="rating">Rating</span><span id="price">Price</span></div>
         <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>

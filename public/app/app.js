@@ -20,6 +20,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             'sidebar': {
                 templateUrl: 'app/components/categories/list.html',
                 controller: 'CategorySidebarController'
+            },
+            'menubar': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
     }).state('home', {

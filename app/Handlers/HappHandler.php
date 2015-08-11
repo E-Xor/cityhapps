@@ -228,6 +228,9 @@ class HappHandler extends ApiHandler
 					$query->where('categories.slug', $value);
 				});
 			}
+			if($key == 'search') {
+				HappFilter::filterSearch($model, $value);
+			}
 		}
 
 		return $model;
