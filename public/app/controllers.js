@@ -5,7 +5,6 @@
 angular.module('cityHapps.controllers', []).controller('HappViewController', function($scope, $stateParams, cleanData, Happ) {
     Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
-        console.log(payload);
         $scope.happ = payload.data[0];
     });
 }).controller('HappHomeController', function($scope, $stateParams, cleanData, Happ) {
@@ -81,12 +80,8 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         if (io != '' && (io.match(/,/g) || []).length != 1)
             filter.type = io;
 
-        console.log($scope.filters);
-        console.log(filter);
         Happ.query(filter, function(payload) {
-            // Now we need to fix the linkage
             payload = cleanData.buildRelationships(payload);
-            console.log(payload);
             $scope.happs = payload.data;
         });
     };
@@ -237,17 +232,17 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
                 });
             };
         }
-}).controller('CategoryHappController', function($scope, $stateParams, Happ) {
+}).controller('CategoryHappController', function($scope, $stateParams, cleanData, Happ) {
     Happ.query({category: $stateParams.slug}, function(happPayload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happs = happPayload.data;
     });
-}).controller('CategorySidebarController', function($scope, Category) {
+}).controller('CategorySidebarController', function($scope, cleanData, Category) {
     Category.query(function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.categories = payload.data;
     });
-}).controller('VenueListController', function($scope, $stateParams, Venue) {
+}).controller('VenueListController', function($scope, $stateParams, cleanData, Venue) {
     var size = 48;
     var page = (typeof $stateParams.page != 'undefined') ? parseInt($stateParams.page) : 1;
     Venue.query({'page[size]': size, 'page[number]': page}, function(payload) {
@@ -281,7 +276,7 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         }
 
     });
-}).controller('VenueViewController', function($scope, $stateParams, Venue) {
+}).controller('VenueViewController', function($scope, $stateParams, cleanData, Venue) {
     Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
@@ -989,9 +984,9 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
 
       $scope.remove = function() {
         Facebook.api(
-            "/me/permissions/user_profile",
-            "DELETE",
-            function (response) {
+            '/me/permissions/user_profile',
+            'DELETE',
+            function(response) {
               if (response && !response.error) {
                 alert('access revoked');
               }
@@ -1002,7 +997,7 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         $scope.registerOpen = function(size) {
 
             var modalInstance = $modal.open({
-                templateUrl: "templates/registrationModal.html",
+                templateUrl: 'templates/registrationModal.html',
                 controller: 'modalInstanceController',
                 size: size
             });
@@ -1011,7 +1006,7 @@ angular.module('cityHapps.controllers', []).controller('HappViewController', fun
         $scope.resetPasswordOpen = function(size) {
 
             var modalInstance = $modal.open({
-                templateUrl: "templates/resetPasswordModal.html",
+                templateUrl: 'templates/resetPasswordModal.html',
                 controller: 'modalInstanceController',
                 size: size
             });
