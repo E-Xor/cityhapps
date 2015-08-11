@@ -129,17 +129,6 @@ class EventController extends BaseController {
 
 	}
 
-
-	public function storeEvents() {
-
-		$response = '';
-
-		Happ::storeEvents();
-
-		return $response;
-
-	}
-
 }
 
 

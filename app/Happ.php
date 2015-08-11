@@ -566,13 +566,6 @@ class Happ extends Model
     return $joined;
   }
 
-  public static function storeEvents()
-  {
-    Happ::storeEventbriteEvents();
-    Happ::storeEventfulEvents();
-    Happ::storeMeetupEvents();
-  }
-
   public static function storeEventbriteEvents()
   {
 
