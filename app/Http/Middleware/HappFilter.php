@@ -207,4 +207,33 @@ class HappFilter
 
         return null;
     }
+
+    /**
+     * @param $query
+     * @param $values
+     */
+    public static function filterSearch(&$query, $values)
+    {
+        $whereClause = '';
+        $whereValues = array();
+
+        $words = explode(' ', $values);
+
+        foreach($words as $word) {
+
+            if (!empty($whereClause)) {
+                $whereClause .= ' AND ';
+            }
+
+            $whereClause .= '(description LIKE ? OR event_name LIKE ?)';
+            $whereValues[] = '%'.$word.'%';
+            $whereValues[] = '%'.$word.'%';
+
+        }
+
+        if (count($words) > 1)
+            $whereClause = '(' . $whereClause . ')';
+
+        $query->whereRaw($whereClause, $whereValues);
+    }
 } 
