@@ -2,7 +2,21 @@
  * Controllers for CityHapps
  */
 
-angular.module('cityHapps.controllers', []).controller('MainFilterController', function($scope, $stateParams, HappFilterService) {
+angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state) {
+    var vm = this;
+    vm.login = function() {
+        var credentials = {
+            email: vm.email,
+            password: vm.password
+        };
+        $auth.login(credentials).then(function(data) {
+            $state.go('/', {});
+        });
+    };
+    vm.authenticate = function(provider) {
+      $auth.authenticate(provider);
+    };
+}).controller('MainFilterController', function($scope, $stateParams, HappFilterService) {
     $scope.filterDefaults = HappFilterService.getDefaults();
     $scope.hideFilter = true;
     $scope.$watchCollection('filterDefaults', function(newFilters, oldFilters) {

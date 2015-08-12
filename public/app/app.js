@@ -7,9 +7,9 @@ angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
     'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
     'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
     'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
-    'cityHapps.filters', 'cityHapps.directives']);
+    'cityHapps.filters', 'cityHapps.directives', 'satellizer']);
 
-angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider) {
+angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
     $stateProvider.state('default', {
         abstract: true,
         views: {
@@ -175,7 +175,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             views: {
                 '@': {
                     templateUrl: 'app/components/user/login.html',
-                    controller: 'registerFormController'
+                    controller: 'AuthController as auth'
                 }
             }
         }).state('userRegister', {
@@ -220,6 +220,13 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
 
     // use the HTML5 History API
     $locationProvider.html5Mode(true);
+
+    // Satellizer configuration that specifies which API
+    // route the JWT should be retrieved from
+    $authProvider.loginUrl = '/api/authenticate';
+    $authProvider.facebook({
+        clientId: '1149149361767339'
+    });
 
     var myAppId = '1149149361767339';
     FacebookProvider.init(myAppId);
