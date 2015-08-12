@@ -779,7 +779,7 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
 
         });
     }
-).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook) {
+).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category) {
     //Facebook Auth
 
       // Define user empty data :/
@@ -874,6 +874,11 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
         }, {scope: 'email'});
     };
 
+        $scope.loginUser = function(formData) {
+            console.log("login data");
+            console.log(formData);
+          authFactory.loginUser(formData);
+        };
 
       $scope.logout = function() {
 
@@ -890,25 +895,11 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
             }
         );
       };
+        $scope.registerCategories = {};
 
-        $scope.registerOpen = function(size) {
-
-            var modalInstance = $modal.open({
-                templateUrl: 'templates/registrationModal.html',
-                controller: 'modalInstanceController',
-                size: size
-            });
-        };
-
-        $scope.resetPasswordOpen = function(size) {
-
-            var modalInstance = $modal.open({
-                templateUrl: 'templates/resetPasswordModal.html',
-                controller: 'modalInstanceController',
-                size: size
-            });
-        };
-
+        Category.query(function (payload) {
+            $scope.registerCategories = payload.data;
+        });
 
       // $scope.$on('Facebook:statusChange', function(ev, data) {
       //   console.log('Status: ', data);
@@ -943,6 +934,8 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
     };
 
     $scope.processForm = function(formData) {
+        console.log('formDAta');
+        console.log(formData);
         $http({
             method: 'POST',
             url: '/user',
@@ -959,103 +952,68 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
                 $scope.id = data.id;
 
                 authFactory.loginUser({"email":formData.email, "password":formData.password});
+
             }
             console.log(data);
         });
     };
 
+        $scope.checkCategories = function() {
+
+             console.log($scope.formData.categories);
+            var obj = $scope.formData.categories;
+
+            for (var key in obj) {
+                if ( obj[key] === false ) {
+                    return false;
+                    console.log(false);
+                } else {
+                    return true;
+                    console.log(true);
+                }
+            }
+
+        };
+
+        $scope.getUserData = function() {
+            $http
+                .post('/user/getData')
+                .success(function (res) {
+                    console.log(res);
+                    $scope.formData.username = res.username;
+                    $scope.formData.email = res.email;
+                })
+                .error(function (res) {
+                    console.log('Errors');
+                    console.log(res);
+                });
+        };
+
+        $scope.logoutUser = function() {
+            authFactory.logoutUser();
+        };
+
+        $scope.userExist = function() {
+            authFactory.userExist();
+        };
+
+
+        $scope.resetPassword = function (data) {
+            authFactory.resetPassword($scope.formData);
+        };
+
+        $scope.editUserData = function () {
+            authFactory.editUserData($scope.formData);
+        };
+
 
     }
-).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService) {
+).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
 
-    $scope.formData = registerDataService.data;
+        $scope.formData = registerDataService.data;
 
-    $scope.registerOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/registrationModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.loginOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/loginModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.editOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/editModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.getUserData = function() {
-        $http
-            .post('/user/getData')
-            .success(function (res) {
-                console.log(res);
-                $scope.formData.username = res.username;
-                $scope.formData.email = res.email;
-            })
-            .error(function (res) {
-                console.log('Errors');
-                console.log(res);
-            });
-    };
-
-    $scope.resetPasswordOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/resetPasswordModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.categoriesOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/categoriesModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.confirmationOpen = function(size) {
-
-        var modalInstance = $modal.open({
-            templateUrl: "templates/confirmationModal.html",
-            controller: 'modalInstanceController',
-            size: size
-        });
-    };
-
-    $scope.logoutUser = function() {
-        authFactory.logoutUser();
-    };
-
-    $scope.userExist = function() {
-        authFactory.userExist();
-    };
-
-
-    $scope.resetPassword = function (data) {
-        authFactory.resetPassword($scope.formData);
-    };
-
-    $scope.editUserData = function () {
-        authFactory.editUserData($scope.formData);
-    };
-
-}).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
+    }
+).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
 
         if (num === null || num === undefined) {
             $scope.data = data;

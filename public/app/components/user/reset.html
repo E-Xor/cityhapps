@@ -1,0 +1,32 @@
+<div ng-controller="registerFormController">
+    <div class="login">
+        <div class="modal-header">
+            <h2 class="modal-title uppercase center margin">Reset Password</h2>
+        </div>
+        <div class="modal-body-sign-in">
+            <form name="resetPassForm" class="resetPasswordForm" method="POST">
+                <input type="email" placeholder="Email Address" autocomplete="off" ng-remote-validate="/user/exist"
+                       ng-remote-method="POST" required name="email" class="registerEmail block"
+                       ng-model="formData.email" ng-model-onblur>
+
+                  <span class="red" ng-if="resetPassForm.email.$error.ngRemoteValidate">
+				    This email doesn't exists, enter correct email please.
+				  </span>
+                <span class="red" ng-if="resetPassForm.email.$error.email">
+				    Please enter correct email address.
+				  </span>
+
+                <div>
+                    <button ng-disabled="resetPassForm.email.$error.ngRemoteValidate || resetPassForm.email.$error.email || resetPassForm.email.$error.required" type="submit" class="create-account center" ng-click="resetPassword(formData);">Reset Password</button>
+                </div>
+                <div class="margin20 center">
+                    <a class="red pointer" href="/register">Create a new acccount</a>
+                </div>
+            </form>
+            <div class="red center margin20" ng-if="loginError">{{resetError}}</div>
+        </div>
+    </div>
+</div>
+
+
+

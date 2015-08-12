@@ -2,6 +2,8 @@
 
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use CityHapps\User;
+use Illuminate\Http\Request;
 
 class UserController extends \BaseController {
 
@@ -32,25 +34,25 @@ class UserController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
 
 		$returnUser = '';
 
 		//Dont Send email if Facebook user
-		Input::get('email'); 
+        $request->request->get('email');
 
-		Mail::send('emails.welcome', array('key' => 'value'), function($message){
+		Mail::send('emails.welcome', array('key' => 'value'), function($message) use ($request){
 
 			$message->from('team@cityhapps.com', 'CityHapps');
 
-			$email = Input::get('email');
+			$email = $request->request->get('email');
 			
 			$message->to($email, $email)->subject('Welcome to CityHapps!');
 
 		});
 
-		$json = Input::only('email', 'password', 'categories', 'fb_token', 'name');
+		$json = $request->request->all();
 
 		if (Input::only('password') == '') {
 
@@ -153,16 +155,15 @@ class UserController extends \BaseController {
 	}
 
 
-	public function check() 
+	public function check(Request $request)
 	{
 		//Add Laravel email validation check
-
-		$email = Input::only('email');
+		$email = $request->request->get('value');
 		$rules = array('email' => 'unique:users,email');
 		
-		$userID = DB::table('users')->where('email', $email)->pluck('id');
+		$userID = User::where('email', '=', $email)->pluck('id');
 
-		$validator = Validator::make($email, $rules);
+		$validator = Validator::make(array('email' => $email), $rules);
 
 		if ($validator->fails()) {
 			
@@ -172,22 +173,22 @@ class UserController extends \BaseController {
 
 		} else {
 			echo json_encode(array('isValid' => true, 
-									'value' => 'nice'));
+									'value' => 'nice ' . $email));
 			return;
 		}
 
 	}
 
-    public function exist()
+    public function exist(Request $request)
     {
         //Add Laravel email validation check
 
-        $email = Input::only('email');
+        $email = $request->request->get('value');
         $rules = array('email' => 'unique:users,email');
 
-        $userID = DB::table('users')->where('email', $email)->pluck('id');
+        $userID = User::where('email', $email)->pluck('id');
 
-        $validator = Validator::make($email, $rules);
+        $validator = Validator::make(array('email' => $email), $rules);
 
         if ($validator->fails()) {
 
