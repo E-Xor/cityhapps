@@ -1,5 +1,8 @@
 <?php
 
+use CityHapps\Venue;
+use CityHapps\Tag;
+
 class AdminVenueController extends \BaseController {
 
   /**
