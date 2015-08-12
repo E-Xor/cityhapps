@@ -55,7 +55,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
 
             $modalStack.dismissAll('submit');
 
-            document.location.reload(true);
+            document.location.href = '/';
 
         }).
         error(function(data) {
@@ -117,6 +117,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             .post('/user/reset-password', email)
             .success(function (res) {
                 console.log(res);
+                window.location.href = '/login';
             })
             .error(function(res) {
                 console.log(res);
@@ -129,6 +130,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             .post('/user/edit', data)
             .success(function(res) {
                 console.log(res);
+                window.location.reload(true);
             })
             .error(function(res) {
                 console.log(res);
