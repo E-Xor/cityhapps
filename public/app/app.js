@@ -218,32 +218,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
 
     $urlRouterProvider.otherwise('/');
 
-    /*$routeProvider
-        .when("/map", {
-            // controller: 'mapViewController',
-            templateUrl: 'templates/mapView.html'
-        })
-        .when("/calendar", {
-            // controller: "calController",
-            templateUrl: "templates/calView.html"
-        })
-        .when("/day", {
-            controller: "dayController",
-            templateUrl: "templates/dayView.html"
-        })
-        .when("/day/:date", {
-            controller: "calDayController",
-            templateUrl: "templates/dayView.html"
-        })
-        .when("/search", {
-            // controller: "calController",
-            templateUrl: "templates/searchView.html"
-        })
-        .when("/share/:id", {
-            controller: "dayController",
-            templateUrl: "templates/dayView.html"
-        });*/
-
     // use the HTML5 History API
     $locationProvider.html5Mode(true);
 
@@ -265,11 +239,6 @@ cityHapps.config(['$keepaliveProvider', '$idleProvider', function($keepaliveProv
   $idleProvider.idleDuration(5);
 
 }]);
-
-cityHapps.config(function(snapRemoteProvider) {
-    snapRemoteProvider.globalOptions.disable = 'left';
-});
-
 
 cityHapps.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
     GoogleMapApi.configure({
