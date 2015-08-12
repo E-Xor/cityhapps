@@ -71,17 +71,19 @@
             </header>
             <!-- Get the home body partial -->
             <div class="main-content container-fluid" ng-animate="{enter: 'animate', leave: 'animate'}" ui-view></div>
-            <footer class="container-fluid">
-                <div id="footerSocial">
-                    <a href="#"> <i class="fa fa-facebook-official"></i></a>
-                    <a href="#"><i class="fa fa-twitter-square"></i></a>
+            <footer class="footer container-fluid">
+                <div class="footer-social">
+                    <a href="#" class="fa-stack"><i class="fa fa-square fa-stack-1x"></i><i class="fa fa-facebook-square fa-stack-1x"></i></a>
+                    <a href="#" class="fa-stack"><i class="fa fa-square fa-stack-1x"></i><i class="fa fa-twitter-square fa-stack-1x"></i></a>
                 </div>
-                <ul id="footerMenu">
+                <ul class="footer-menu">
                     <li><a href="/">Events</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
                 </ul>
-                <span id="copyright">City Happs | &copy;2015 All Rights Reserved.</span>
+                <div class="footer-copyright">
+                    City Happs | &copy;2015 All Rights Reserved.
+                </div>
             </footer>
         </div>
     </div>

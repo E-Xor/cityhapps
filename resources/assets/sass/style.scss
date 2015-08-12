@@ -148,6 +148,7 @@ body {
     float: left;
     display: block;
   }
+
 }
 
 .header-search {
@@ -1889,26 +1890,6 @@ h3 {
   margin-right: 2%;
 }
 
-footer ul li{  
-  text-decoration: none;
-  display: inline;
-}
-
-#footerMenu {
-  text-align: center;
-  padding: 0;
-  a {
-    text-decoration: underline;
-    color: #2F3030;
-    font-size: 14px;
-  }
-}
-
-span#copyright {   
-    text-align: center;
-    display: block;
-  }
-
 .header-container {
   z-index: 2;
   background-color: #FFFFFF;
@@ -2056,15 +2037,45 @@ span#mapCircle {
   overflow: hidden;
 }
 
-#footerSocial{
-      word-spacing: .5em;
-      text-align: center;
-}
-
-footer i.fa.fa-twitter-square {
-    color: #1dcaff;
-    font-size: 2em;
-
+.footer {
+  font-weight: bold;
+  color: #3D3D3D;
+  text-align: center;
+  .footer-social{
+    font-size: 25px;
+    .fa-stack {
+      width: 1em;
+    }
+    a .fa, a:hover .fa {
+      &.fa-twitter-square {
+        color: #1DCAFF;
+      }
+      &.fa-facebook-square {
+        color: #3B5998;
+      }
+      &.fa-square {
+        color: #FFFFFF;
+      }
+    }
+  }
+  .footer-menu {
+    padding: 0;
+    font-weight: bold;
+    font-size: 12px;
+    li {  
+      text-decoration: none;
+      display: inline;
+      padding: 0 8px;
+      a {
+        text-decoration: underline;
+        color: #3D3D3D;
+      }
+    }
+  }
+  .footer-copyright {   
+    font-size: 10px;
+    padding-bottom: 20px;
+  }
 }
 
 a.ng-binding:hover{
