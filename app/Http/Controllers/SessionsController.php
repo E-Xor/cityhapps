@@ -1,10 +1,16 @@
 <?php 
 
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
 use OAuth\OAuth2\Service\Facebook;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 
-class SessionsController extends BaseController {
+class SessionsController extends Controller {
 	
 	public function index() {
 		return Response::json(Auth::user());

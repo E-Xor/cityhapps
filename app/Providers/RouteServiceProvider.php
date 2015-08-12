@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = null;
+    protected $namespace = 'CityHapps\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

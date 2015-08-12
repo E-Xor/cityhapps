@@ -1,6 +1,14 @@
 <?php
 
-class HomeController extends BaseController {
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
+use View;
+
+class HomeController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------

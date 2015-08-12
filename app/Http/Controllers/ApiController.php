@@ -1,14 +1,18 @@
 <?php
-//namespace CityHapps\Http\Controllers;
 
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
 use EchoIt\JsonApi\Request as ApiRequest;
 use EchoIt\JsonApi\ErrorResponse as ApiErrorResponse;
 use EchoIt\JsonApi\Exception as ApiException;
-//use CityHapps\Http\Requests\Request;
 
 class ApiController extends Controller
 {
-	public function handleRequest($modelName, $id = null)
+	public function handleRequest(Request $request, $modelName, $id = null)
 	{
 	    /**
 	     * Create handler name from model name
@@ -17,14 +21,14 @@ class ApiController extends Controller
 	    $handlerClass = 'CityHapps\\Handlers\\' . ucfirst($modelName) . 'Handler';
 
 	    if (class_exists($handlerClass)) {
-	        $url = Request::url();
-	        $method = Request::method();
-	        $include = ($i = Request::input('include')) ? explode(',', $i) : $i;
-	        $sort = ($i = Request::input('sort')) ? explode(',', $i) : $i;
-	        $filter = ($i = Request::except('sort', 'include', 'page')) ? $i : [];
-	        $content = Request::getContent();
+	        $url = $request->url();
+	        $method = $request->method();
+	        $include = ($i = $request->input('include')) ? explode(',', $i) : $i;
+	        $sort = ($i = $request->input('sort')) ? explode(',', $i) : $i;
+	        $filter = ($i = $request->except('sort', 'include', 'page')) ? $i : [];
+	        $content = $request->getContent();
 
-	        $page = Request::input('page');
+	        $page = $request->input('page');
 	        $pageSize = null;
 	        $pageNumber = null;
 	        if($page) {
@@ -35,7 +39,7 @@ class ApiController extends Controller
 	                 return new ApiErrorResponse(400, 400, 'Expected page[size] and page[number]');
 	            }
 	        }
-	        $request = new ApiRequest(Request::url(), $method, $id, $content, $include, $sort, $filter, $pageNumber, $pageSize);
+	        $request = new ApiRequest($request->url(), $method, $id, $content, $include, $sort, $filter, $pageNumber, $pageSize);
 	        $handler = new $handlerClass($request);
 
 	        // A handler can throw EchoIt\JsonApi\Exception which must be gracefully handled to give proper response

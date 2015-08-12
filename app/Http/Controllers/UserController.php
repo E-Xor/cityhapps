@@ -1,11 +1,16 @@
 <?php
 
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use CityHapps\User;
-use Illuminate\Http\Request;
 
-class UserController extends \BaseController {
+class UserController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -42,52 +47,35 @@ class UserController extends \BaseController {
 		//Dont Send email if Facebook user
         $request->request->get('email');
 
-		Mail::send('emails.welcome', array('key' => 'value'), function($message) use ($request){
-
+		/*Mail::send('emails.welcome', array('key' => 'value'), function($message) use ($request){
 			$message->from('team@cityhapps.com', 'CityHapps');
-
 			$email = $request->request->get('email');
-			
 			$message->to($email, $email)->subject('Welcome to CityHapps!');
-
-		});
+		});*/
 
 		$json = $request->request->all();
 
 		if (Input::only('password') == '') {
-
 			$fb_user = new User;
-
 			$fb_user->email  = $json['email'];
 			$fb_user->password = Hash::make($json['fb_token']);
 			$fb_user->fb_token = $json['fb_token'];
 			$fb_user->user_name = $json['name'];
-
 			$fb_user->save();
-
 		} else {
-
-
 			$user = new User;
-
 			$user->email = $json['email'];
 			$user->password = Hash::make($json['password']);
 			$user->save();
-			
 			$userID = $user["id"];
-
 			$categoriesPaired = $json['categories']; // array in "categoryID": true
-
 			if ($categoriesPaired != '') {
-
 				$categories = array();
-
 				foreach($categoriesPaired as $key => $value) {
 					if ($value == true) {
 						array_push($categories, $key);
 					}
 				}
-
 				$user->categories()->sync($categories);
 			}
 		}

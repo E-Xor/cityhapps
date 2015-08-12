@@ -1,6 +1,13 @@
 <?php
 
-class UserVenueController extends \BaseController {
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
+
+class UserVenueController extends Controller {
 
 	public function store()
 	{

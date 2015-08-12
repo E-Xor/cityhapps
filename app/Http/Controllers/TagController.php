@@ -1,8 +1,14 @@
 <?php
 
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
 use CityHapps\Tag;
 
-class TagController extends \BaseController
+class TagController extends Controller
 {
 
     /**
