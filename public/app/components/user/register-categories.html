@@ -5,14 +5,14 @@
 	        <h5 class="center margin20">Please choose at least 1 category that you are interested in</h5>
       </div>
 
-      	<div class="modal-body finalStep" ng-controller="registerFormController" ng-init="getAllCategories();">
+      	<div class="modal-body finalStep">
 		        <div class="registerForm">
 						
 					<div ng-repeat="category in registerCategories" class="category-item">
 						<label class="event-category" ng-model="formData.categories[category.id]" btn-checkbox>{{category.name}}</label>
 					</div>
 					
-			        <button type="submit" ng-click="processForm(formData);" class="create-account center" ng-if="checkCategories()">Finish</button>
+			        <button type="submit" ng-click="processForm(formData);" class="create-account center" ng-if="checkCategories();">Finish</button>
 		      </div>
 		      <!-- {{formData}} -->
   		</div>

@@ -1,15 +1,12 @@
-<button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-</button>
-
 <div class="register">
     <div class="modal-header">
         <h2 class="modal-title uppercase center">Edit Account</h2>
     </div>
 
-    <div class="modal-body" ng-controller="registerFormController">
+    <div class="modal-body" ng-controller="registerFormController" ng-init="getUserData();">
 
         <form name="edit">
-            <div class="editForm" ng-controller="modalController">
+            <div class="editForm">
                 <input type="email" readonly ng-value="formData.email" name="email" class="registerEmail block">
 
                 <input type="text" placeholder="Your Username" ng-model="formData.username" value="{{formData.username}}" ng-model-onblur name="username" class="registerEmail block">
@@ -24,7 +21,7 @@
 
                 <span ng-show="edit.password2.$error.validator" class="block" style="text-align: center;">Passwords do not match!</span>
 
-                <button ng-disabled="edit.password.$error.required || edit.password.$error.minlength || edit.password2.$error.required || edit.password2.$error.validator" type="button" class="create-account center" ng-click="editUserData(); cancel();">Save</button>
+                <button ng-disabled="edit.password.$error.required || edit.password.$error.minlength || edit.password2.$error.required || edit.password2.$error.validator" type="button" class="create-account center" ng-click="editUserData();">Save</button>
                 <br/>
             </div>
         </form>

@@ -13,13 +13,13 @@
 	        	<form name="register">
 	        		<div ng-show="register.$invalid && register.$dirty" class="center italic red">Fields in red contain errors</div>
 			        
-			        <div class="registerForm" ng-controller="modalController">
+			        <div class="registerForm">
 						<input type="email" placeholder="Email Address" autocomplete="off" ng-remote-validate="/user/check" ng-remote-method="POST" required name="email" class="registerEmail block" ng-model="formData.email" ng-model-onblur>
 
 						    <span ng-if="register.email.$error.ngRemoteValidate" >
 						        This email already exists, choose another please.
 						    </span>
-							<span ng-if="register.password.$error.minlength" >
+							<span ng-if="register.password.$error.minlength">
 						        Please use a minumum of 8 characters.
 						    </span>
 

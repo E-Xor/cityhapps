@@ -39,7 +39,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function categories()
     {
-        return $this->belongsToMany('Category', 'user_categories', 'user_id', 'category_id');
+        return $this->belongsToMany('CityHapps\Category', 'user_categories', 'user_id', 'category_id');
     }
 
     /**
@@ -47,6 +47,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function events()
     {
-        return $this->belongsToMany('Happ', 'user_event', 'user_id', 'event_id');
+        return $this->belongsToMany('CityHapps\Happ', 'user_event', 'user_id', 'event_id');
     }
 }

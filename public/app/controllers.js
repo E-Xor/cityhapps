@@ -897,22 +897,9 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
       };
         $scope.registerCategories = {};
 
-        $scope.getAllCategories = function(){
-            $http({
-                method: 'GET',
-                url: '/category',
-                headers: {'Content-Type': 'application/json'}
-            }).success(function(data) {
-                if (!data) {
-                    console.log('categories not get');
-                    console.log(data);
-                } else if (data) {
-                    console.log('categories get');
-                    console.log(data);
-                    $scope.registerCategories = data;
-                }
-            });
-        };
+        Category.query(function (payload) {
+            $scope.registerCategories = payload.data;
+        });
 
       // $scope.$on('Facebook:statusChange', function(ev, data) {
       //   console.log('Status: ', data);
@@ -947,6 +934,8 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
     };
 
     $scope.processForm = function(formData) {
+        console.log('formDAta');
+        console.log(formData);
         $http({
             method: 'POST',
             url: '/user',
@@ -963,49 +952,63 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
                 $scope.id = data.id;
 
                 authFactory.loginUser({"email":formData.email, "password":formData.password});
+
             }
             console.log(data);
         });
     };
 
+        $scope.checkCategories = function() {
+
+             console.log($scope.formData.categories);
+            var obj = $scope.formData.categories;
+
+            for (var key in obj) {
+                if ( obj[key] === false ) {
+                    return false;
+                    console.log(false);
+                } else {
+                    return true;
+                    console.log(true);
+                }
+            }
+
+        };
+
+        $scope.getUserData = function() {
+            $http
+                .post('/user/getData')
+                .success(function (res) {
+                    console.log(res);
+                    $scope.formData.username = res.username;
+                    $scope.formData.email = res.email;
+                })
+                .error(function (res) {
+                    console.log('Errors');
+                    console.log(res);
+                });
+        };
+
+        $scope.logoutUser = function() {
+            authFactory.logoutUser();
+        };
+
+        $scope.userExist = function() {
+            authFactory.userExist();
+        };
+
+
+        $scope.resetPassword = function (data) {
+            authFactory.resetPassword($scope.formData);
+        };
+
+        $scope.editUserData = function () {
+            authFactory.editUserData($scope.formData);
+        };
+
 
     }
-).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService) {
-
-    $scope.formData = registerDataService.data;
-
-    $scope.getUserData = function() {
-        $http
-            .post('/user/getData')
-            .success(function (res) {
-                console.log(res);
-                $scope.formData.username = res.username;
-                $scope.formData.email = res.email;
-            })
-            .error(function (res) {
-                console.log('Errors');
-                console.log(res);
-            });
-    };
-
-    $scope.logoutUser = function() {
-        authFactory.logoutUser();
-    };
-
-    $scope.userExist = function() {
-        authFactory.userExist();
-    };
-
-
-    $scope.resetPassword = function (data) {
-        authFactory.resetPassword($scope.formData);
-    };
-
-    $scope.editUserData = function () {
-        authFactory.editUserData($scope.formData);
-    };
-
-}).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
+).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
 
         if (num === null || num === undefined) {
             $scope.data = data;
