@@ -40,7 +40,7 @@
                     <div class="col-xs-12 center">
                         <a href="/"><img src="/assets/img/logo-atl.png"></a>
                     </div>
-                    <div class="" snap-toggle="left"><i class="fa fa-bars"></i></div>
+                    <div class="menu-button" snap-toggle="left"><i class="fa fa-bars"></i></div>
                 </div>
                 <hr>
                 <div ui-view="menubar"></div>

@@ -142,13 +142,33 @@ body {
   .content-wrapper {
     width: 80%;
     float: left;
+    .menu-button {
+      display: none !important;
+    }
   }
   .sidebar{
     width: 20%;
     float: left;
     display: block;
   }
+}
 
+@media (min-width: $screen-sm-min) {
+  .content-wrapper {
+    .menu-button {
+      position: absolute;
+      left: 30px;
+      top: 20px;
+      font-size: 30px;
+    }
+  }
+}
+
+.menu-button {
+  position: absolute;
+  left: 18px;
+  top: 20px;
+  font-size: 25px;
 }
 
 .header-search {
@@ -1692,25 +1712,13 @@ h3 {
     }
   }
 
-
-  li {
-    list-style: none;
-    padding: 15px 0;
-    a {
-      padding: 10px 5px;
-      &.drawer-link {
-        color: #fff;
-      }
-    }
-  }
-
 	.mobile-logo {
 		width: 40%;
 	}
 	
 	.mobile-event {
-        width: 100%;
-        background: #fff;
+    width: 100%;
+    background: #FFFFFF;
 		margin: 10px 0;
 		padding: 0;
 		float: left;
@@ -1725,13 +1733,13 @@ h3 {
     font-size: .8em;
   }
 
-    .mobile-event-image {
-      background-size: cover;
-      width: 30%;
-      height: 100px;
-      display: inline-block;
-      float: left;
-    }
+  .mobile-event-image {
+    background-size: cover;
+    width: 30%;
+    height: 100px;
+    display: inline-block;
+    float: left;
+  }
 
 	.mobile-event-details {
       width: 56%;
