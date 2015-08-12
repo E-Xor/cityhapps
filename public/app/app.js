@@ -9,7 +9,7 @@ angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
     'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
     'cityHapps.filters', 'cityHapps.directives']);
 
-angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider) {
+angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider) {
     $stateProvider.state('default', {
         abstract: true,
         views: {
@@ -204,6 +204,12 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
 
     var myAppId = '1149149361767339';
     FacebookProvider.init(myAppId);
+
+    snapRemoteProvider.globalOptions = {
+        disable: 'right',
+        touchToDrag: false
+    };
+
 }).run(function() {
    //
 });
