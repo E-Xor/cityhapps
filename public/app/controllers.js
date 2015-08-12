@@ -779,7 +779,7 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
 
         });
     }
-).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook) {
+).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category) {
     //Facebook Auth
 
       // Define user empty data :/
@@ -1006,6 +1006,11 @@ angular.module('cityHapps.controllers', []).controller('MainFilterController', f
             authFactory.editUserData($scope.formData);
         };
 
+
+    }
+).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
+
+        $scope.formData = registerDataService.data;
 
     }
 ).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
