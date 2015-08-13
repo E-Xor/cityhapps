@@ -2285,32 +2285,22 @@ a.happ-button.homeButtons.homeDirections {
     margin: 0 auto;
 }
 
-/*About Page Styling*/
-.about{
-    background-color: #fff;
-    width: 95%;
-    padding: 5%;
-    margin: 0 auto;
-    padding: 3% 3% 15% 3%;
+// Static Page Styling
+.static-page{
+    background-color: #FFFFFF;
     font-size: 16px;
     line-height: 35px;
+    padding: 0px 20px 72px;
+    h1{
+      font-size: 40px;
+      margin-top: 48px;
+      margin-bottom: 40px;
+      line-height: 1;
+    }
 }
 
-.about h1{
-  font-size: 40px;
-  margin-top: 10px;
-  margin-bottom: 50px;
-  line-height: 1;
-}
-
-.aboutInfo {
-    padding-bottom: 7%;
-}
-
-/*Media Queries*/
-  
-                 
-    @media (min-width: 768px) and (max-width: 1200px) {
+/*Media Queries*/               
+@media (min-width: 768px) and (max-width: 1200px) {
 
     .happ-single{
       float: left;
