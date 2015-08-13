@@ -2299,6 +2299,15 @@ a.happ-button.homeButtons.homeDirections {
     }
 }
 
+.intro-message {
+  background: #FFFFFF;
+  text-align: center;
+  .happ-button {
+    max-width: 200px;
+    margin: 20px auto 25px;
+  }
+}
+
 /*Media Queries*/               
 @media (min-width: 768px) and (max-width: 1200px) {
 
