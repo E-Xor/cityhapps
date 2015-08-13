@@ -87,52 +87,6 @@
             </footer>
         </div>
     </div>
-    <!-- if mobile -->
-    <!--div ng-if="mobile()" class="test-wrapper">
-        <div snap-drawer="left">
-           <ul ng-controller="modalController">
-                <li><a class="drawer-link" href="" ng-click="userCategoryToggle()" ng-if="user">{{user.email}}</a></li>
-                <li><a class="drawer-link" ng-if="user" ng-click="logoutUser()">sign out</a></li>
-                <li><a class="drawer-link"  ng-controller="modalController" ng-if="!user" ng-click="registerOpen('md')">Sign Up</a></li>
-                <li><a class="drawer-link"  ng-controller="modalController" ng-if="!user" ng-click="loginOpen('md')">Log In</a></li>
-                <li><a class="drawer-link" ng-if="user" href="">Recommendations Today</a></li>
-                <li><a class="drawer-link" href="">Sort by Distance</a></li>
-                    <li ng-controller="eventsController">
-                   <a class="drawer-link" href="" ng-click="categoryToggle()">Show All Categories</a>
-                   <div class="categoriesDropdown drawer" ng-init="getCategories()">
-                       <div class="toggle-controls">
-                           <div class="right red uppercase bold pointer" ng-click="categoryToggle()">Close</div>
-                           <div class="left red uppercase bold pointer" ng-click="clearAll()">Clear All</div>
-                       </div>
-                       <div ng-repeat="category in categories">
-                           <label class="event-category" ng-model="filterData.categories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
-                       </div>
-                   </div>
-               </li>
-           </ul>
-        </div>
-        <div class="bg-image scrollable" snap-content>
-            <header class="header-container" ng-animate=" 'animate' " >
-                <div class="wide">
-                    <div class='wide-search'>
-                        <form ng-submit="search(query)" class="wide-search">
-                            <input type="text" placeholder="Search" ng-model="query" class="search-large">
-                            <input type="submit" style="display: none;">
-                        </form>
-                    </div>
-                    <div class="header-search">
-                        <div class="mobile-header">
-                            <div class="mobile-search left"></div>
-                            <a href="#/"><img class="mobile-logo" src="/assets/img/logo.png"></a>
-                            <div class="mobile-menu right" snap-toggle="right"></div>
-                        </div>
-
-                    </div>
-                </div>
-            </header>
-            <div ui-view class="main-content" ng-animate="{enter: 'animate', leave: 'animate'}"></div>
-        </div>
-    </div-->
 
     <!-- ng- scripts and things -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
