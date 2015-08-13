@@ -87,9 +87,16 @@ Route::get('about', function () {
 	return view('main');
 });
 
+Route::group(['prefix' => 'api'], function()
+{
+	//Route::resource('authenticate', 'ApiController', ['only' => ['index']]);
+    Route::post('authenticate', 'ApiController@authenticate');
+    Route::any('{model}/{id?}', 'ApiController@handleRequest')
+		->where(['model' => 'venue|category|tag|happ']);
+});
+
 // Limit this to only models that can be used
-Route::any('api/{model}/{id?}', 'ApiController@handleRequest')
-	->where(['model' => 'venue|category|tag|happ']);
+
 
 // Yes, this is awful. We'll change it when we get the API in a good spot
 Route::any('{path?}', function()

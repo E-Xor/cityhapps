@@ -142,12 +142,33 @@ body {
   .content-wrapper {
     width: 80%;
     float: left;
+    .menu-button {
+      display: none !important;
+    }
   }
   .sidebar{
     width: 20%;
     float: left;
     display: block;
   }
+}
+
+@media (min-width: $screen-sm-min) {
+  .content-wrapper {
+    .menu-button {
+      position: absolute;
+      left: 30px;
+      top: 20px;
+      font-size: 30px;
+    }
+  }
+}
+
+.menu-button {
+  position: absolute;
+  left: 18px;
+  top: 20px;
+  font-size: 25px;
 }
 
 .header-search {
@@ -1691,25 +1712,13 @@ h3 {
     }
   }
 
-
-  li {
-    list-style: none;
-    padding: 15px 0;
-    a {
-      padding: 10px 5px;
-      &.drawer-link {
-        color: #fff;
-      }
-    }
-  }
-
 	.mobile-logo {
 		width: 40%;
 	}
 	
 	.mobile-event {
-        width: 100%;
-        background: #fff;
+    width: 100%;
+    background: #FFFFFF;
 		margin: 10px 0;
 		padding: 0;
 		float: left;
@@ -1724,13 +1733,13 @@ h3 {
     font-size: .8em;
   }
 
-    .mobile-event-image {
-      background-size: cover;
-      width: 30%;
-      height: 100px;
-      display: inline-block;
-      float: left;
-    }
+  .mobile-event-image {
+    background-size: cover;
+    width: 30%;
+    height: 100px;
+    display: inline-block;
+    float: left;
+  }
 
 	.mobile-event-details {
       width: 56%;
@@ -1889,26 +1898,6 @@ h3 {
   margin-right: 2%;
 }
 
-footer ul li{  
-  text-decoration: none;
-  display: inline;
-}
-
-#footerMenu {
-  text-align: center;
-  padding: 0;
-  a {
-    text-decoration: underline;
-    color: #2F3030;
-    font-size: 14px;
-  }
-}
-
-span#copyright {   
-    text-align: center;
-    display: block;
-  }
-
 .header-container {
   z-index: 2;
   background-color: #FFFFFF;
@@ -2056,15 +2045,45 @@ span#mapCircle {
   overflow: hidden;
 }
 
-#footerSocial{
-      word-spacing: .5em;
-      text-align: center;
-}
-
-footer i.fa.fa-twitter-square {
-    color: #1dcaff;
-    font-size: 2em;
-
+.footer {
+  font-weight: bold;
+  color: #3D3D3D;
+  text-align: center;
+  .footer-social{
+    font-size: 25px;
+    .fa-stack {
+      width: 1em;
+    }
+    a .fa, a:hover .fa {
+      &.fa-twitter-square {
+        color: #1DCAFF;
+      }
+      &.fa-facebook-square {
+        color: #3B5998;
+      }
+      &.fa-square {
+        color: #FFFFFF;
+      }
+    }
+  }
+  .footer-menu {
+    padding: 0;
+    font-weight: bold;
+    font-size: 12px;
+    li {  
+      text-decoration: none;
+      display: inline;
+      padding: 0 8px;
+      a {
+        text-decoration: underline;
+        color: #3D3D3D;
+      }
+    }
+  }
+  .footer-copyright {   
+    font-size: 10px;
+    padding-bottom: 20px;
+  }
 }
 
 a.ng-binding:hover{

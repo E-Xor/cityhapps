@@ -1,7 +1,13 @@
 <?php 
 
+namespace CityHapps\Http\Controllers;
 
-class EventbriteController extends BaseController { 
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
+
+class EventbriteController extends Controller { 
 
 	public function events() {
 

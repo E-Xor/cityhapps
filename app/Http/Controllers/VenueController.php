@@ -1,8 +1,15 @@
 <?php
 
-use CityHapps\Venue;
+namespace CityHapps\Http\Controllers;
 
-class VenueController extends BaseController {
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
+use CityHapps\Venue;
+use Input;
+
+class VenueController extends Controller {
 
 	public static function storeVenues()
     {

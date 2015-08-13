@@ -1,6 +1,13 @@
 <?php
 
-class SharedEventController extends \BaseController {
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
+
+class SharedEventController extends Controller {
 
 	/**
 	 * Display a listing of the resource.

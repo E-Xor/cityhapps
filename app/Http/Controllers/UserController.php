@@ -1,9 +1,16 @@
 <?php
 
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use CityHapps\User;
 
-class UserController extends \BaseController {
+class UserController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -32,60 +39,43 @@ class UserController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
 
 		$returnUser = '';
 
 		//Dont Send email if Facebook user
-		Input::get('email'); 
+        $request->request->get('email');
 
-		Mail::send('emails.welcome', array('key' => 'value'), function($message){
-
+		/*Mail::send('emails.welcome', array('key' => 'value'), function($message) use ($request){
 			$message->from('team@cityhapps.com', 'CityHapps');
-
-			$email = Input::get('email');
-			
+			$email = $request->request->get('email');
 			$message->to($email, $email)->subject('Welcome to CityHapps!');
+		});*/
 
-		});
-
-		$json = Input::only('email', 'password', 'categories', 'fb_token', 'name');
+		$json = $request->request->all();
 
 		if (Input::only('password') == '') {
-
 			$fb_user = new User;
-
 			$fb_user->email  = $json['email'];
 			$fb_user->password = Hash::make($json['fb_token']);
 			$fb_user->fb_token = $json['fb_token'];
 			$fb_user->user_name = $json['name'];
-
 			$fb_user->save();
-
 		} else {
-
-
 			$user = new User;
-
 			$user->email = $json['email'];
 			$user->password = Hash::make($json['password']);
 			$user->save();
-			
 			$userID = $user["id"];
-
 			$categoriesPaired = $json['categories']; // array in "categoryID": true
-
 			if ($categoriesPaired != '') {
-
 				$categories = array();
-
 				foreach($categoriesPaired as $key => $value) {
 					if ($value == true) {
 						array_push($categories, $key);
 					}
 				}
-
 				$user->categories()->sync($categories);
 			}
 		}
@@ -153,16 +143,15 @@ class UserController extends \BaseController {
 	}
 
 
-	public function check() 
+	public function check(Request $request)
 	{
 		//Add Laravel email validation check
-
-		$email = Input::only('email');
+		$email = $request->request->get('value');
 		$rules = array('email' => 'unique:users,email');
 		
-		$userID = DB::table('users')->where('email', $email)->pluck('id');
+		$userID = User::where('email', '=', $email)->pluck('id');
 
-		$validator = Validator::make($email, $rules);
+		$validator = Validator::make(array('email' => $email), $rules);
 
 		if ($validator->fails()) {
 			
@@ -172,22 +161,22 @@ class UserController extends \BaseController {
 
 		} else {
 			echo json_encode(array('isValid' => true, 
-									'value' => 'nice'));
+									'value' => 'nice ' . $email));
 			return;
 		}
 
 	}
 
-    public function exist()
+    public function exist(Request $request)
     {
         //Add Laravel email validation check
 
-        $email = Input::only('email');
+        $email = $request->request->get('value');
         $rules = array('email' => 'unique:users,email');
 
-        $userID = DB::table('users')->where('email', $email)->pluck('id');
+        $userID = User::where('email', $email)->pluck('id');
 
-        $validator = Validator::make($email, $rules);
+        $validator = Validator::make(array('email' => $email), $rules);
 
         if ($validator->fails()) {
 

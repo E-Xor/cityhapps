@@ -1,10 +1,16 @@
 <?php
 
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
 use CityHapps\Http\Middleware\JsonApiFormatter;
 use CityHapps\Happ;
 
 
-class HappController extends BaseController
+class HappController extends Controller
 {
     public function getHappList()
     {

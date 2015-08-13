@@ -1,6 +1,6 @@
 <?php
 
-// namespace CityHapps\Http\Controllers;
+namespace CityHapps\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;

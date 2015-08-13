@@ -1,0 +1,32 @@
+<h1>Login page</h1>
+<div class="login">
+    <div class="modal-header">
+        <h2 class="modal-title uppercase center margin">Sign In</h2>
+    </div>
+    <div class="modal-body-sign-in">
+        <div class="facebookButton" ng-click="authenticate('facebook')">
+            <h3 class="bold no-margin">Sign in with Facebook</h3>
+        </div>
+        <h4 class="center margin20">or</h4>
+        <div class="red center margin20" ng-if="loginError">{{loginError}}</div>
+        <form class="loginForm">
+            <input type="email" placeholder="Email" class="registerEmail block" ng-model="auth.email" ng-model-onblur>
+            <input type="password" placeholder="Password" class="registerPassword block" autocorrect="off" ng-model="auth.password">
+            <div class="margin20 center">
+                <a href="/reset" class="red pointer">Forgot Password?</a>
+            </div>
+            <div>
+                <button class="create-account center" ng-click="auth.login()">Sign In</button>
+            </div>
+            <div class="margin20 center">
+                <a href="/register" class="red pointer">Create a new acccount</a>
+            </div>
+            <!-- {{formData}} -->
+        </form>
+    </div>
+</div>
+
+
+
+
+

@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "cviebrock/eloquent-sluggable": "^3.0",
-        "echo-it/laravel-jsonapi": "dev-master"
+        "echo-it/laravel-jsonapi": "dev-master",
+        "tymon/jwt-auth": "^0.5.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -19,7 +20,6 @@
     "autoload": {
         "classmap": [
             "database",
-            "app/Http/Controllers",
             "app/Models"
         ],
         "psr-4": {

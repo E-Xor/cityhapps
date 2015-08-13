@@ -1,7 +1,13 @@
 <?php 
 
+namespace CityHapps\Http\Controllers;
 
-class MeetupController extends BaseController { 
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
+
+class MeetupController extends Controller { 
 
 	public function events() {
 

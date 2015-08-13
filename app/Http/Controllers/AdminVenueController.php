@@ -1,9 +1,15 @@
 <?php
 
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
 use CityHapps\Venue;
 use CityHapps\Tag;
 
-class AdminVenueController extends \BaseController {
+class AdminVenueController extends Controller {
 
   /**
    * Display a listing of the resource.

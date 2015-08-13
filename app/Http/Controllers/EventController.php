@@ -1,11 +1,16 @@
 <?php 
 
-// require 'vendor/autoload.php';
+namespace CityHapps\Http\Controllers;
 
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
 use Carbon\Carbon;
 use CityHapps\Happ;
+use Input;
 
-class EventController extends BaseController {
+class EventController extends Controller {
 
 	public function testEvents() {
 		

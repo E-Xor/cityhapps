@@ -1,9 +1,15 @@
 <?php
 
+namespace CityHapps\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CityHapps\Http\Requests;
+use CityHapps\Http\Controllers\Controller;
 use CityHapps\Happ;
 use CityHapps\Tag;
 
-class AdminEventController extends \BaseController {
+class AdminEventController extends Controller {
 
   /**
    * Show the form for creating a new resource.
