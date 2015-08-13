@@ -63,6 +63,22 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             }
         }
     });
+    jQuery('#date_calendar').datetimepicker({
+        timepicker: false,
+        mindate: 0,
+        format: 'm/d/Y',
+        onSelectDate: function(ct, $i, event) {
+            $scope.filterDefaults.calendar = $i[0].value;
+            $scope.$apply();
+        }
+    });
+    jQuery(window).resize(function() {
+        var setHeight = (jQuery('.filter-options').height() * -1) + 'px';
+        jQuery('.filter-options').css({bottom: setHeight});
+    });
+    jQuery(function() {
+        $(window).trigger('resize');
+    });
 }).controller('HappViewController', function($scope, $stateParams, cleanData, Happ) {
     Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
         payload = cleanData.buildRelationships(payload);

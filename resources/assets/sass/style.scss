@@ -1956,6 +1956,8 @@ h3 {
   }
 }
 
+
+
 .filter-options {
   background-color: #F7F5F3;
   border-top: 3px solid #FC5C50;
@@ -1963,8 +1965,11 @@ h3 {
   font-size: 14px;
   text-transform: uppercase;
   position: absolute;
-  bottom: -300px;
+  // bottom: -300px; // We'll actually set this with JS to make it more fluid
   width: 100%;
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.6);
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.6);
   z-index: 50;
   label, .label {
     color: #9B9B9B;
@@ -1972,17 +1977,75 @@ h3 {
     text-transform: uppercase;
     padding: 0px;
   }
+  .filter-more-options {
+    padding-bottom: 30px;
+    input[type=checkbox] {
+      display: none;
+      & + label {
+        display: inline-block;
+        margin-left: -2em;
+        line-height: 1.5em;
+        margin: 8px 0 8px 32px;
+        & > span {
+          display: inline-block;
+          width: 1.2em;
+          height: 1.2em;
+          margin: 0 0.5em 0.3em 0.25em;
+          border: 1px solid #9B9B9B;
+          color: #FF5C50;
+          vertical-align: bottom;
+          text-align: center;
+          .fa {
+            display: none;
+          }
+        }
+      }
+    }
+    input[type=checkbox]:checked + label > span .fa{
+      display: block;
+    }
+    .label {
+      margin-bottom: 12px;
+      width: 100%;
+      display: block;
+      text-align: left;
+    }
+    input[type=text] {
+      background-color: #F7F5F3;
+      border: 1px solid #9B9B9B;
+      color: #FF5C50;
+      font-weight: bold;
+      font-size: 0.9em;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-left: 32px;
+    }
+  }
 }
 
 .filter-date {
   margin-top: 30px;
   margin-bottom: 40px;
-  input {
+  input[type=checkbox] {
     display: none;
+    &:checked + label {
+      background-color: #FC5C50;
+      color: #FFFFFF;
+    }
   }
-  input:checked + label {
-    background-color: #FC5C50;
-    color: #FFFFFF;
+  .date-calendar-wrapper {
+    position: relative;
+  }
+  input[type=text] {
+    position: absolute;
+    z-index: -10;
+    &:focus {
+      outline: none;
+    }
+    &.hasValue + label {
+      background-color: #FC5C50;
+      color: #FFFFFF;
+    }
   }
   label {
     display: block;
@@ -1992,6 +2055,7 @@ h3 {
     background-color: #FFFFFF;
     //color: #9B9B9B;
     line-height: 55px;
+    z-index: 10;
   }
 }
 
