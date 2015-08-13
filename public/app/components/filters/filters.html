@@ -19,13 +19,13 @@
 <div class="filter-options container-fluid" ng-hide="hideFilter">
   <div class="filter-date row">
     <div class="col-xs-6 col-sm-3">
-      <input type="checkbox" id="date_today" ng-model="filterDefaults.today" ng-change="getHapps()"><label for="date_today">Today</label>
+      <input type="checkbox" id="date_today" ng-model="filterDefaults.today"><label for="date_today">Today</label>
     </div>
     <div class="col-xs-6 col-sm-3">
-      <input type="checkbox" id="date_tomorrow" ng-model="filterDefaults.tomorrow" ng-change="getHapps()"><label for="date_tomorrow">Tomorrow</label>
+      <input type="checkbox" id="date_tomorrow" ng-model="filterDefaults.tomorrow"><label for="date_tomorrow">Tomorrow</label>
     </div>
     <div class="col-xs-6 col-sm-3">
-      <input type="checkbox" id="date_weekend" ng-model="filterDefaults.weekend" ng-change="getHapps()"><label for="date_weekend">Weekend</label>
+      <input type="checkbox" id="date_weekend" ng-model="filterDefaults.weekend"><label for="date_weekend">Weekend</label>
     </div>
     <div class="col-xs-6 col-sm-3 date-calendar-wrapper">
       <input type="text" id="date_calendar" ng-model="filterDefaults.calendar" ng-class="{hasValue: filterDefaults.calendar!=''}">
@@ -35,29 +35,35 @@
       </label>
     </div>
   </div>
-  <div class="row">
+  <div class="filter-more-options row">
     <div class="col-xs-6 col-sm-3">
       <div class="label">
           Good For:
       </div>
       <div class="choices">
         <div class="checkbox-group">
-          <input type="checkbox" id="age_level_infants" ng-model="filterDefaults.infants" ng-change="getHapps()"><label for="age_level_infants">Infants</label>
+          <input type="checkbox" id="age_level_infants" ng-model="filterDefaults.infants">
+          <label for="age_level_infants"><span><i class="fa fa-check"></i></span>Infants</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="age_level_toddlers" ng-model="filterDefaults.toddlers" ng-change="getHapps()"><label for="age_level_toddlers">Toddlers</label>
+          <input type="checkbox" id="age_level_toddlers" ng-model="filterDefaults.toddlers">
+          <label for="age_level_toddlers"><span><i class="fa fa-check"></i></span>Toddlers</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="age_level_preteens" ng-model="filterDefaults.preteens" ng-change="getHapps()"><label for="age_level_preteens">Preteens</label>
+          <input type="checkbox" id="age_level_preteens" ng-model="filterDefaults.preteens">
+          <label for="age_level_preteens"><span><i class="fa fa-check"></i></span>Preteens</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="age_level_young_adults" ng-model="filterDefaults.youngadults" ng-change="getHapps()"><label for="age_level_young_adults">Young Adults</label>
+          <input type="checkbox" id="age_level_young_adults" ng-model="filterDefaults.youngadults">
+          <label for="age_level_young_adults"><span><i class="fa fa-check"></i></span>Young Adults</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="age_level_adults" ng-model="filterDefaults.adults" ng-change="getHapps()"><label for="age_level_adults">Adult</label>
+          <input type="checkbox" id="age_level_adults" ng-model="filterDefaults.adults">
+          <label for="age_level_adults"><span><i class="fa fa-check"></i></span>Adult</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="age_level_seniors" ng-model="filterDefaults.seniors" ng-change="getHapps()"><label for="age_level_seniors">Seniors</label>
+          <input type="checkbox" id="age_level_seniors" ng-model="filterDefaults.seniors">
+          <label for="age_level_seniors"><span><i class="fa fa-check"></i></span>Seniors</label>
         </div>
       </div>
     </div>
@@ -67,16 +73,20 @@
       </div>
       <div class="choices">
         <div class="checkbox-group">
-          <input type="checkbox" id="timeOfDay_morning" ng-model="filterDefaults.morning" ng-change="getHapps()"><label for="timeOfDay_morning">Morning</label>
+          <input type="checkbox" id="timeOfDay_morning" ng-model="filterDefaults.morning">
+          <label for="timeOfDay_morning"><span><i class="fa fa-check"></i></span>Morning</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="timeOfDay_afternoon" ng-model="filterDefaults.afternoon" ng-change="getHapps()"><label for="timeOfDay_afternoon">Afternoon</label>
+          <input type="checkbox" id="timeOfDay_afternoon" ng-model="filterDefaults.afternoon">
+          <label for="timeOfDay_afternoon"><span><i class="fa fa-check"></i></span>Afternoon</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="timeOfDay_evening" ng-model="filterDefaults.evening" ng-change="getHapps()"><label for="timeOfDay_evening">Evening</label>
+          <input type="checkbox" id="timeOfDay_evening" ng-model="filterDefaults.evening">
+          <label for="timeOfDay_evening"><span><i class="fa fa-check"></i></span>Evening</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="timeOfDay_night" ng-model="filterDefaults.night" ng-change="getHapps()"><label for="timeOfDay_night">Night</label>
+          <input type="checkbox" id="timeOfDay_night" ng-model="filterDefaults.night">
+          <label for="timeOfDay_night"><span><i class="fa fa-check"></i></span>Night</label>
         </div>
       </div>
     </div>
@@ -86,17 +96,21 @@
       </div>
       <div class="choices">
         <div class="checkbox-group">
-          <input type="checkbox" id="io_indoor" ng-model="filterDefaults.indoor" ng-change="getHapps()"><label for="io_indoor">Indoor</label>
+          <input type="checkbox" id="io_indoor" ng-model="filterDefaults.indoor">
+          <label for="io_indoor"><span><i class="fa fa-check"></i></span>Indoor</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="io_outdoor" ng-model="filterDefaults.outdoor" ng-change="getHapps()"><label for="io_outdoor">Outdoor</label>
+          <input type="checkbox" id="io_outdoor" ng-model="filterDefaults.outdoor">
+          <label for="io_outdoor"><span><i class="fa fa-check"></i></span>Outdoor</label>
         </div>
       </div>
     </div>
     <div class="col-xs-6 col-sm-3">
       <div>
-          <label for="zipcode">Zipcode:</label>
-          <input type="text" size="25" id="zipcode" ng-model="filterDefaults.zip" ng-keyup="getHapps()">
+          <div class="label">
+            <label for="zipcode">Zipcode:</label>
+          </div>
+          <input type="text" size="20" id="zipcode" ng-model="filterDefaults.zip">
       </div>
     </div>
   </div>
