@@ -1061,7 +1061,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         };
 
         $scope.getUserData = function() {
-            var data = {email: $cookieStore.get('user').email};
+            var data = {id: $cookieStore.get('user').id};
 
             $http({
                 method: 'POST',
