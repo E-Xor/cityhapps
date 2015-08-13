@@ -6,7 +6,7 @@
       </div>
 
       	<div class="modal-body finalStep">
-		        <div class="registerForm">
+		        <div class="registerForm" ng-init="getAllCategories();">
 						
 					<div ng-repeat="category in registerCategories" class="category-item">
 						<label class="event-category" ng-model="formData.categories[category.id]" btn-checkbox>{{category.name}}</label>

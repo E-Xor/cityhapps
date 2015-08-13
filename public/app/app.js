@@ -298,7 +298,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         templateUrl: 'app/components/user/reset.html',
         controller: 'registerFormController'
     }).state('main.userProfile', {
-        url: '/profile',
+        url: '/profile/edit',
         views: {
             '@main': {
                 templateUrl: 'app/components/user/profile.html',

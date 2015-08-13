@@ -13,25 +13,31 @@ use OAuth\Common\Consumer\Credentials;
 class SessionsController extends Controller {
 	
 	public function index() {
-		return Response::json(Auth::user());
+		return \Response::json(\Auth::user());
 	}
 
 
 	public function create() {
-		if (Auth::check()) {
-			return Redirect::to('/admin');	
+		if (\Auth::check()) {
+			return \Redirect::to('/admin');
 		}
-		return Redirect::to('/');
+		return \Redirect::to('/');
 	}
 
-	public function login() {
+	public function login(Request $request) {
 
-		if (Auth::attempt(array(
-			'email' => Input::json('email'), 
-			'password' => Input::json('password')
-			))) {
+		$json = $request->request->all();
 
-			return Auth::user();
+		$isAuth = \Auth::attempt(
+							[
+								'email' => $json['email'],
+								'password' => $json['password']
+							]
+						);
+
+		if ($isAuth) {
+
+			return $request->user();
 			
 			// if (Auth::viaRemember()) {
 			// 	return Response::json(Auth::user());					
@@ -40,13 +46,13 @@ class SessionsController extends Controller {
 			// }
 			
 		} else {
-			return Response::json(array('flash' => 'Invalid username or password'), 500);	
+			return \Response::json(array('flash' => 'Invalid username or password'), 500);
 		}		
 	}
 
 	public function logout() {
-		Auth::logout();
-		return Response::json(array('flash' => 'Logged Out!'));
+		\Auth::logout();
+		return \Response::json(array('flash' => 'Logged Out!'));
 	}
 
 	/**
@@ -58,10 +64,10 @@ class SessionsController extends Controller {
 	public function fbLogin() {
 
 		    // get data from input
-		    $code = Input::get( 'code' );
+		    $code = \Input::get( 'code' );
 
 		    // get fb service
-		    $fb = OAuth::consumer( 'Facebook' );
+		    $fb = \OAuth::consumer( 'Facebook' );
 
 		    // check if code is valid
 
@@ -88,7 +94,7 @@ class SessionsController extends Controller {
 		        $url = $fb->getAuthorizationUri();
 
 		        // return to facebook login url
-		         return Redirect::to( (string)$url );
+		         return \Redirect::to( (string)$url );
 		    }
 
 		}
