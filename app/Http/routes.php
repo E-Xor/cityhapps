@@ -91,6 +91,7 @@ Route::group(['prefix' => 'api'], function()
 {
 	//Route::resource('authenticate', 'ApiController', ['only' => ['index']]);
     Route::post('authenticate', 'ApiController@authenticate');
+    Route::get('authenticate/user', 'ApiController@getAuthenticatedUser');
     Route::any('{model}/{id?}', 'ApiController@handleRequest')
 		->where(['model' => 'venue|category|tag|happ']);
 });

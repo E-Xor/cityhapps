@@ -24,17 +24,17 @@ class HappHandler extends ApiHandler
 	 * @return \EchoIt\JsonApi\Model || \EchoIt\JsonApi\Illuminate\Pagination\LengthAwarePaginator
 	 * @throws ApiException
 	 */
-	public function handleGet(ApiRequest $request)
+	public function handleGet(ApiRequest $request, $user = FALSE)
 	{
 		$model = Happ::with('categories')
 			->with('tags')
 			->with('venue')
 			->with('ageLevels');
 
-		return $this->customHandleGet($request, $model);
+		return $this->customHandleGet($request, $model, $user);
 	}
 
-	private function customHandleGet(ApiRequest $request, $model)
+	private function customHandleGet(ApiRequest $request, $model, $user = FALSE)
 	{
 		$total = null;
         $request->pageNumber = !is_null($request->pageNumber) ? $request->pageNumber : 1;
@@ -69,7 +69,7 @@ class HappHandler extends ApiHandler
 				array('details' => $e->getMessage())
 			);
 		}
-
+		$results->user = $user;
 		return $results;
 	}
 

@@ -31,5 +31,6 @@ class Kernel extends HttpKernel
         'guest' => \CityHapps\Http\Middleware\RedirectIfAuthenticated::class,
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
+        'ch.auth' => \CityHapps\Http\Middleware\NoFailGetUserFromToken::class,
     ];
 }

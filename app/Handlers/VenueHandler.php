@@ -19,7 +19,7 @@ class VenueHandler extends ApiHandler
 	 * @return \EchoIt\JsonApi\Model || \EchoIt\JsonApi\Illuminate\Pagination\LengthAwarePaginator
 	 * @throws ApiException
 	 */
-	public function handleGet(ApiRequest $request)
+	public function handleGet(ApiRequest $request, $user = false)
 	{
 		return $this->handleGetDefault($request, new Venue);
 	}
