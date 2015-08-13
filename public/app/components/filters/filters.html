@@ -27,8 +27,12 @@
     <div class="col-xs-6 col-sm-3">
       <input type="checkbox" id="date_weekend" ng-model="filterDefaults.weekend" ng-change="getHapps()"><label for="date_weekend">Weekend</label>
     </div>
-    <div class="col-xs-6 col-sm-3">
-      <input type="checkbox" id="date_calendar" ng-model="filter.date.calendar"><label for="date_calendar"><i class="fa fa-calendar"></i></label>
+    <div class="col-xs-6 col-sm-3 date-calendar-wrapper">
+      <input type="text" id="date_calendar" ng-model="filterDefaults.calendar" ng-class="{hasValue: filterDefaults.calendar!=''}">
+      <label for="date_calendar">
+        <i class="fa fa-calendar"></i>
+        <span ng-if="filterDefaults.calendar!=''"> {{ filterDefaults.calendar }} <span ng-click="filterDefaults.calendar=''"><i class="fa fa-times"></i></span></span>
+      </label>
     </div>
   </div>
   <div class="row">

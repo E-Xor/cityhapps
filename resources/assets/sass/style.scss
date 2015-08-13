@@ -1977,12 +1977,26 @@ h3 {
 .filter-date {
   margin-top: 30px;
   margin-bottom: 40px;
-  input {
+  input[type=checkbox] {
     display: none;
+    &:checked + label {
+      background-color: #FC5C50;
+      color: #FFFFFF;
+    }
   }
-  input:checked + label {
-    background-color: #FC5C50;
-    color: #FFFFFF;
+  .date-calendar-wrapper {
+    position: relative;
+  }
+  input[type=text] {
+    position: absolute;
+    z-index: -10;
+    &:focus {
+      outline: none;
+    }
+    &.hasValue + label {
+      background-color: #FC5C50;
+      color: #FFFFFF;
+    }
   }
   label {
     display: block;
@@ -1992,6 +2006,7 @@ h3 {
     background-color: #FFFFFF;
     //color: #9B9B9B;
     line-height: 55px;
+    z-index: 10;
   }
 }
 
