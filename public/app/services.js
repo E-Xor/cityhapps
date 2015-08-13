@@ -55,7 +55,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
 
             $modalStack.dismissAll('submit');
 
-            document.location.href = '/';
+            //document.location.href = '/';
 
         }).
         error(function(data) {
@@ -226,7 +226,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
     service.today = true;
     service.tomorrow = false;
     service.weekend = false;
-    service.calendar = false;
+    service.calendar = '';
     service.morning = true;
     service.afternoon = true;
     service.evening = true;
@@ -241,7 +241,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             today: true,
             tomorrow: false,
             weekend: false,
-            calendar: false,
+            calendar: '',
             morning: true,
             afternoon: true,
             evening: true,
@@ -284,7 +284,12 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 date += ',';
             date += String(this.weekendDate());
         }
-        // TODO: Calendar Filter
+        if (this.calendar) {
+            if (date != '')
+                date += ',';
+            var calFixed = this.calendar.split('/');
+            date += calFixed[2] + calFixed[0] + calFixed[1];
+        }
         if (date != '')
             filter.date = date;
 

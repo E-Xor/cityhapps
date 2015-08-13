@@ -94,6 +94,7 @@ Route::group(['prefix' => 'api'], function()
     Route::any('{model}/{id?}', 'ApiController@handleRequest')
 		->where(['model' => 'venue|category|tag|happ']);
 });
+Route::get('api/categories', 'CategoryController@getAllCategories');
 
 // Limit this to only models that can be used
 

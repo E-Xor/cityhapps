@@ -47,7 +47,7 @@ class UserController extends Controller {
 		//Dont Send email if Facebook user
         $request->request->get('email');
 
-		/*Mail::send('emails.welcome', array('key' => 'value'), function($message) use ($request){
+		/*\Mail::send('emails.welcome', array('key' => 'value'), function($message) use ($request){
 			$message->from('team@cityhapps.com', 'CityHapps');
 			$email = $request->request->get('email');
 			$message->to($email, $email)->subject('Welcome to CityHapps!');
@@ -55,17 +55,17 @@ class UserController extends Controller {
 
 		$json = $request->request->all();
 
-		if (Input::only('password') == '') {
+		if (\Input::only('password') == '') {
 			$fb_user = new User;
 			$fb_user->email  = $json['email'];
-			$fb_user->password = Hash::make($json['fb_token']);
+			$fb_user->password = \Hash::make($json['fb_token']);
 			$fb_user->fb_token = $json['fb_token'];
 			$fb_user->user_name = $json['name'];
 			$fb_user->save();
 		} else {
 			$user = new User;
 			$user->email = $json['email'];
-			$user->password = Hash::make($json['password']);
+			$user->password = \Hash::make($json['password']);
 			$user->save();
 			$userID = $user["id"];
 			$categoriesPaired = $json['categories']; // array in "categoryID": true
@@ -87,13 +87,12 @@ class UserController extends Controller {
 		}
 	}
 
-
 	public function updateCategories()
 	{
 
 		$returnUser = '';
 
-		$json = Input::only('id', 'categories');
+		$json = \Input::only('id', 'categories');
 
 		$user = User::find($json['id']);
 
@@ -119,7 +118,7 @@ class UserController extends Controller {
 
 		//Checkboxes on client are fussy and need a flat 1D object
 
-		$id = Input::only('id');
+		$id = \Input::only('id');
 
 		$user = User::with('categories')->find($id);
 
@@ -151,7 +150,7 @@ class UserController extends Controller {
 		
 		$userID = User::where('email', '=', $email)->pluck('id');
 
-		$validator = Validator::make(array('email' => $email), $rules);
+		$validator = \Validator::make(array('email' => $email), $rules);
 
 		if ($validator->fails()) {
 			
@@ -196,7 +195,7 @@ class UserController extends Controller {
 
     public function resetPassword() {
 
-        $email = Input::only('email')['email'];
+        $email = \Input::only('email')['email'];
 
         $user = User::where('email', $email)->first();
 
@@ -204,11 +203,11 @@ class UserController extends Controller {
 
         if(!is_null($user)) {
 
-            $user->password = Hash::make($password);
+            $user->password = \Hash::make($password);
 
             $user->save();
 
-            Mail::send('emails.reset', array('password' => $password), function($message) use ($email){
+            \Mail::send('emails.reset', array('password' => $password), function($message) use ($email){
 
                 $message->from('team@cityhapps.com', 'CityHapps');
 
@@ -224,9 +223,10 @@ class UserController extends Controller {
 
     }
 
-    public function getUserData()
+    public function getUserData(Request $request)
     {
-        $user = User::find((int) Auth::user()->id);
+        $userId = $request->request->get('id');
+        $user = User::find($userId);
 
         $userName = $user->user_name;
         $userEmail = $user->email;
@@ -256,19 +256,19 @@ class UserController extends Controller {
      */
     public function editUser()
     {
-        $formData = Input::only('email', 'password', 'username');
+        $formData = \Input::only('email', 'password', 'username');
 
         $email = trim($formData['email']);
         $password = trim($formData['password']);
         $username = trim($formData['username']);
 
-        $userId = DB::table('users')->where('email', $email)->pluck('id');
+        $userId = \DB::table('users')->where('email', $email)->pluck('id');
         $user = User::find((int) $userId);
 
             try {
                 if (!is_null($user)) {
 
-                    $user->password = Hash::make($password);
+                    $user->password = \Hash::make($password);
                     $user->user_name = $username;
 
                     $user->save();
@@ -297,7 +297,7 @@ class UserController extends Controller {
 
 		$user = User::find($id);
 
-		$user->password = Hash::make(Input::get('password'));
+		$user->password = \Hash::make(\Input::get('password'));
 
 		$user->save();
 

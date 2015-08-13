@@ -2,14 +2,51 @@
  * Controllers for CityHapps
  */
 
-angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state) {
+angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope) {
     var vm = this;
+
+    vm.loginError = false;
+    vm.loginErrorText;
+
     vm.login = function() {
         var credentials = {
             email: vm.email,
             password: vm.password
         };
-        $auth.login(credentials).then(function(data) {
+        console.log(credentials);
+        $auth.login(credentials).then(function() {
+
+            // Return an $http request for the now authenticated
+            // user so that we can flatten the promise chain
+            return $http.get('api/authenticate/user');
+
+            // Handle errors
+        }, function(error) {
+            vm.loginError = true;
+            vm.loginErrorText = error.data.error;
+
+            // Because we returned the $http.get request in the $auth.login
+            // promise, we can chain the next promise to the end here
+        }).then(function(response) {
+
+            // Stringify the returned data to prepare it
+            // to go into local storage
+            var user = JSON.stringify(response.data.user);
+
+            // Set the stringified user data into local storage
+            localStorage.setItem('user', user);
+
+            // The user's authenticated state gets flipped to
+            // true so we can now show parts of the UI that rely
+            // on the user being logged in
+            $rootScope.authenticated = true;
+
+            // Putting the user's data on $rootScope allows
+            // us to access it anywhere across the app
+            $rootScope.currentUser = response.data.user;
+
+            // Everything worked out so we can now redirect to
+            // the users state to view the data
             $state.go('/', {});
         });
     };
@@ -25,6 +62,22 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 HappFilterService.updateFilter(key, newFilters[key]);
             }
         }
+    });
+    jQuery('#date_calendar').datetimepicker({
+        timepicker: false,
+        mindate: 0,
+        format: 'm/d/Y',
+        onSelectDate: function(ct, $i, event) {
+            $scope.filterDefaults.calendar = $i[0].value;
+            $scope.$apply();
+        }
+    });
+    jQuery(window).resize(function() {
+        var setHeight = (jQuery('.filter-options').height() * -1) + 'px';
+        jQuery('.filter-options').css({bottom: setHeight});
+    });
+    jQuery(function() {
+        $(window).trigger('resize');
     });
 }).controller('HappViewController', function($scope, $stateParams, cleanData, Happ) {
     Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
@@ -792,7 +845,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         });
     }
-).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category) {
+).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies) {
     //Facebook Auth
 
       // Define user empty data :/
@@ -910,9 +963,22 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       };
         $scope.registerCategories = {};
 
-        Category.query(function (payload) {
-            $scope.registerCategories = payload.data;
-        });
+        //Category.query(function (payload) {
+        //    $scope.registerCategories = payload.data;
+        //});
+
+        $scope.getAllCategories = function() {
+            $http
+                .get('/api/categories')
+                .success(function (res) {
+                    console.log(res);
+                    $scope.registerCategories = res.data;
+                })
+                .error(function (res) {
+                    console.log('Errors');
+                    console.log(res);
+                });
+        };
 
       // $scope.$on('Facebook:statusChange', function(ev, data) {
       //   console.log('Status: ', data);
@@ -964,7 +1030,13 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 };
                 $scope.id = data.id;
 
+                var auth = $controller('AuthController');
+                auth.email = formData.email;
+                auth.password = formData.password;
+
                 authFactory.loginUser({"email":formData.email, "password":formData.password});
+
+                auth.login();
 
             }
             console.log(data);
@@ -989,8 +1061,14 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         };
 
         $scope.getUserData = function() {
-            $http
-                .post('/user/getData')
+            var data = {id: $cookieStore.get('user').id};
+
+            $http({
+                method: 'POST',
+                url: '/user/getData',
+                data: data,
+                headers: {"Content-Type": "application/json"}
+            })
                 .success(function (res) {
                     console.log(res);
                     $scope.formData.username = res.username;
@@ -1017,6 +1095,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         $scope.editUserData = function () {
             authFactory.editUserData($scope.formData);
+        };
+
+        $scope.nextStep = function(formData) {
+
         };
 
 
