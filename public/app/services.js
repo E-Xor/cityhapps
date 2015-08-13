@@ -55,7 +55,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
 
             $modalStack.dismissAll('submit');
 
-            document.location.href = '/';
+            //document.location.href = '/';
 
         }).
         error(function(data) {

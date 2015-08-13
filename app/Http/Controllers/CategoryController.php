@@ -85,4 +85,17 @@ class CategoryController extends Controller
     {
         //
     }
+
+    public function getAllCategories()
+    {
+        $categories = Category::all();
+
+        echo json_encode(
+            [
+                'data' => $categories
+            ]
+        );
+
+        return;
+    }
 }
