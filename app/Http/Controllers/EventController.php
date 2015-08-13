@@ -8,6 +8,7 @@ use CityHapps\Http\Requests;
 use CityHapps\Http\Controllers\Controller;
 use Carbon\Carbon;
 use CityHapps\Happ;
+use Input;
 
 class EventController extends Controller {
 

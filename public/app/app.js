@@ -10,208 +10,307 @@ angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
     'cityHapps.filters', 'cityHapps.directives', 'satellizer']);
 
 angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
-    $stateProvider.state('default', {
+    $stateProvider.state('main', {
         abstract: true,
+        templateUrl: 'app/shared/templates/mainLayout.tpl.html',
+    }).state('main.home', {
+        url: '/',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/happs/home.html',
                 controller: 'HappHomeController'
             },
-            'sidebar': {
+            'sidebar@main': {
                 templateUrl: 'app/components/categories/list.html',
                 controller: 'CategorySidebarController'
             },
-            'menubar': {
+            'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
             }
         }
-    }).state('home', {
-        url: '/',
-        parent: 'default'
-    }).state('viewHapp', {
+    }).state('main.viewHapp', {
         url: '/happ/:id',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/happs/view.html',
                 controller: 'HappViewController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('addHapp', {
+    }).state('main.addHapp', {
         url: '/admin/event/add',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'templates/event.html',
                 controller: 'adminEventController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('editHapp', {
+    }).state('main.editHapp', {
         url: '/admin/event/edit/:id',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'templates/event.html',
                 controller: 'adminEventController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('listHapp', {
+    }).state('main.listHapp', {
         url: '/preview',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/happs/list.html',
                 controller: 'adminEventController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('listCategoryHapp', {
+    }).state('main.listCategoryHapp', {
         url: '/category/:slug',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/categories/happlist.html',
                 controller: 'CategoryHappController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('viewVenue', {
+    }).state('main.viewVenue', {
         url: '/venue/:id',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/venues/view.html',
                 controller: 'VenueViewController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('addVenue', {
+    }).state('main.addVenue', {
         url: '/admin/venue/add',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/venues/edit.html',
                 controller: 'adminVenueController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('editVenue', {
+    }).state('main.editVenue', {
         url: '/admin/venue/edit/:id',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/venues/edit.html',
                 controller: 'adminVenueController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('listVenue', {
+    }).state('main.listVenue', {
         url: '/venues',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/venues/list.html',
                 controller: 'VenueListController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('listVenuePage', {
+    }).state('main.listVenuePage', {
         url: '/venues/:page',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/venues/list.html',
                 controller: 'VenueListController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('adminListVenue', {
+    }).state('main.adminListVenue', {
         url: '/admin/venue/list',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/venues/admin-list.html',
                 controller: 'adminVenueController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('adminListVenuePage', {
+    }).state('main.adminListVenuePage', {
         url: '/admin/venue/list/:page',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/venues/admin-list.html',
                 controller: 'adminVenueController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('about', {
+    }).state('main.about', {
         url: '/about',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/static/about.html'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('requestVenue', {
+    }).state('main.requestVenue', {
         url: '/add-venue',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/static/add-venue.html'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('requestEvent', {
+    }).state('main.requestEvent', {
         url: '/add-event',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/static/add-event.html'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
-    }).state('contact', {
+    }).state('main.contact', {
         url: '/contact',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/static/contact.html'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
     }).state('userLogin', {
-            url: '/login',
-            parent: 'default',
-            views: {
-                '@': {
-                    templateUrl: 'app/components/user/login.html',
-                    controller: 'AuthController as auth'
-                }
-            }
-        }).state('userRegister', {
+        url: '/login',
+        templateUrl: 'app/components/user/login.html',
+        controller: 'AuthController as auth'
+    }).state('userRegister', {
         url: '/register',
-        parent: 'default',
-        views: {
-            '@': {
-                templateUrl: 'app/components/user/register.html',
-                controller: 'registerFormController'
-            }
-        }
+        templateUrl: 'app/components/user/register.html',
+        controller: 'registerFormController'
     }).state('userRegisterCategories', {
         url: '/register/categories',
-        parent: 'default',
-        views: {
-            '@': {
-                templateUrl: 'app/components/user/register-categories.html',
-                controller: 'registerFormController'
-            }
-        }
+        templateUrl: 'app/components/user/register-categories.html',
+        controller: 'registerFormController'
     }).state('userReset', {
         url: '/reset',
-        parent: 'default',
-        views: {
-            '@': {
-                templateUrl: 'app/components/user/reset.html',
-                controller: 'registerFormController'
-            }
-        }
-    }).state('userProfile', {
+        templateUrl: 'app/components/user/reset.html',
+        controller: 'registerFormController'
+    }).state('main.userProfile', {
         url: '/profile',
-        parent: 'default',
         views: {
-            '@': {
+            '@main': {
                 templateUrl: 'app/components/user/profile.html',
                 controller: 'registerFormController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
             }
         }
     });

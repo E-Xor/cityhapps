@@ -1,0 +1,55 @@
+<aside class="snap-sidebar" ui-view="sidebar" snap-drawer="left"></aside>
+<div class="page-wrapper" snap-content>
+    <aside class="sidebar" ui-view="sidebar"></aside>
+    <div class="content-wrapper" >
+        <header class="header-container container-fluid">
+            <div class="row logo-row">
+                <div class="col-xs-12 center">
+                    <a href="/"><img src="/assets/img/logo-atl.png"></a>
+                </div>
+                <div class="menu-button" snap-toggle="left"><i class="fa fa-bars"></i></div>
+            </div>
+            <hr>
+            <div ui-view="menubar"></div>
+            <div class="col-sm-4 auth" ng-controller="modalController">
+                <!--div ng-cloak ng-show="!user" class="margin">
+                    <h4 class="proxima-light recs" ng-click="registerOpen('md'); getCategories() ">Get Your Daily Recs</h4>
+                    <h5 class="red italic inline accountCreate" ng-click="registerOpen('md'); getCategories() ">create an account</h5>
+                    <h5 class="red italic inline accountSignIn" ng-click="loginOpen('md')">sign in</h5>
+                </div-->
+                <!--div ng-cloak ng-show="user" ng-init="getUserData();">
+                    <div class="user-info">
+                        <h5 class="red italic inline accountHelp" ng-click="helpFade()">help</h5>
+                            <div ng-click="categoryToggle()">  </div>
+                            <div class="categoriesDropdownUser">
+                                <div class="toggle-controls">
+                                    <div class="right red uppercase bold pointer" ng-click="categoryToggle(); updateUserCategories();">Close</div>
+                                    <div class="left red uppercase bold pointer">Edit your categories here</div>
+                                </div>
+                                <div ng-repeat="category in categories">
+                                    <label class="event-category" ng-model="filterData.userCategories[category.id]" ng-change="filterCategory()" btn-checkbox>{{category.name}}</label>
+                                </div>
+                            </div>
+                        <a class="red logout" ng-click="editOpen('md'); close();">Edit</a>
+                        <a class="red logout" ng-click="logoutUser()">Sign out</a>
+                    </div>
+                </div-->
+            </div>
+        </header>
+        <div class="main-content container-fluid" ui-view></div>
+        <footer class="footer container-fluid">
+            <div class="footer-social">
+                <a href="#" class="fa-stack"><i class="fa fa-square fa-stack-1x"></i><i class="fa fa-facebook-square fa-stack-1x"></i></a>
+                <a href="#" class="fa-stack"><i class="fa fa-square fa-stack-1x"></i><i class="fa fa-twitter-square fa-stack-1x"></i></a>
+            </div>
+            <ul class="footer-menu">
+                <li><a href="/">Events</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="footer-copyright">
+                City Happs | &copy;2015 All Rights Reserved.
+            </div>
+        </footer>
+    </div>
+</div>

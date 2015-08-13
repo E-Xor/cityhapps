@@ -533,7 +533,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     };
     // Retrieving all of the data for the listing page
     var pageNumber = ($stateParams.page) ? '&page=' + $stateParams.page : '&page=1';
-    console.log($stateParams.page);
     $http.get('/api/venues?page[size]=500' + pageNumber)
         .success(function(data) {
             $scope.venuesCount = data.length;
@@ -543,8 +542,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     // edit page
     if ($stateParams.id) {
         Venue.get({ id: $stateParams.id }, function(payload) {
-            console.log(payload);
             var singleVenue = payload.data[0];
+            $scope.formData = {};
             $scope.formData.venue_name = singleVenue.name;
             $scope.formData.venue_id = singleVenue.id;
             $scope.formData.parent_id = singleVenue.parent_id;
@@ -563,7 +562,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                $scope.updated_last = singleVenue.updated_at;
             $scope.formData.parent_id = singleVenue.parent_id;
             $scope.formData.similar_venues_model = singleVenue.similar;
-
+            console.log($scope.formData);
             $scope.formData.similar_venues_storage = (function() {
                 var base = [];
                 angular.forEach(singleVenue.similar, function(value) {
