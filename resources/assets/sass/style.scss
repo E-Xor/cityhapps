@@ -666,6 +666,39 @@ input.main-search {
   padding-bottom: 20px;
 }
 
+.user-pages{
+  .bg-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url('');
+    z-index: -10;
+  }
+  .user-register-page {
+    .main-column {
+      background-color: #FFFFFF;
+    }
+    input {
+      margin: 15px 0;
+      width: 100%;
+      height: 50px;
+      padding: 10px 15px;
+    }
+  }
+  .facebook-login {
+    background-color: #336EB7;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 10px;
+    line-height: 40px;
+    .fa {
+      font-size: 18px;
+      line-height: 40px;
+    }
+  }
+}
 
 .register, .login {
     height: 100%;
@@ -695,19 +728,6 @@ input.main-search {
 		font-size: 1.2em;
 		font-weight: 200;
         -moz-osx-font-smoothing: grayscale;
-	}
-	:-moz-input-placeholder {
-		color: #BCBABD;
-		text-align: left;
-		font-style: italic;
-		font-size: 1.2em;
-		font-weight: 200;
-      -moz-osx-font-smoothing: grayscale;
-	
-	}
-
-	.center.margin {
-		cursor: default;
 	}
 }
 
@@ -995,22 +1015,8 @@ h3 {
 	padding: 10px;
 }
 
-
-.facebookButton {
-	background: #3b5998 url("../img/facebookIcon.png") no-repeat 93% 10px/17.5px 35px;
-	width: 100%;
-	color: #fff;
-	padding: 15px;
-	cursor: pointer;
-}
-
 .fb_iframe_widget span {
   display: none !important;
-}
-
-.lucida {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size: 1.4em;
 }
 
 .event-inner {
