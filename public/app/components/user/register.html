@@ -5,52 +5,52 @@
 			<div class="col-md-4 col-md-offset-4 main-column">
 	            <div class="row logo-row">
 	                <div class="col-xs-10 col-xs-offset-1">
-	                    <a href="/"><img src="/assets/img/logo-atl.png"></a>
-	                </div>
-	            </div>
-			  	<div class="row">
-			  		<div class="col-xs-10 col-xs-offset-1">
+	                    <img class="user-logo" src="/assets/img/logo-atl.png">
 				  		<div class="facebook-login" ng-click="login()">
 							<i class="fa fa-facebook-official"></i> Sign up with Facebook
 				        </div>
 						<div class="big-or">
-							<hr>
 							<span>or</span>
 						</div>
-				    	<form name="register">
-				    		<div ng-show="register.$invalid && register.$dirty" class="center italic red">
+				    	<form name="register" novalidate>
+				    		<div class="register-error" ng-show="register.$invalid && register.$dirty">
 				    			Fields in red contain errors
 				    		</div>
-				        	<input type="name" name="name" placeholder="Name">
-				        	<input type="text" name="city" placeholder="City">
-							<input type="email" placeholder="Email" autocomplete="off" ng-remote-validate="/user/check" ng-remote-method="POST" required name="email" class="registerEmail block" ng-model="formData.email" ng-model-onblur>
-							    <span ng-if="register.email.$error.ngRemoteValidate" >
-							        This email already exists in the system.
-							    </span>
-								<span ng-if="register.password.$error.minlength">
-							        Please use a minumum of 8 characters.
-							    </span>
-							<input type="password" placeholder="Password" name="password" ng-minlength='6' required class="registerPassword block" ng-model="formData.password" ng-model-onblur>
-							<input type="password" placeholder="Re-enter Password" name="password2" required ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "class="registerPassword2 block" ng-model="formData.password2" ng-model-onblur>
 
-							<span ng-show="register.password2.$error.validator" class="block">Passwords do not match!</span>
-			                <!--email - {{register.email.$error}}<br />-->
-			                <!--pass2 - {{register.password2.$error}}<br />-->
-			                <!--pass1 - {{register.password.$error}}<br />-->
+				    		<!-- NAME -->
+				    		<div class="form-group">
+				        		<input type="text" name="name" placeholder="Name" ng-model="name" required>
+				        	</div>
 
-				        	<!-- ng-click="categoriesOpen('md'); cancel(); -->
-				        	<!-- ng-disabled="register.$invalid" -->
-					        <button type="button" class="create-account center"
-			                 ng-disabled="
-			                 register.email.$error.required || register.email.$error.email || register.email.$error.ngRemoteValidate ||
-			                 register.password.$error.required || register.password.$error.minlength ||
-			                 register.password2.$error.required || register.password2.$error.validator">
-			                    <a href="/register/categories">Next</a>
+				        	<!-- CITY -->
+				    		<div class="form-group">
+				        		<input type="text" name="city" placeholder="City" ng-model="city" required>
+				        	</div>
+
+				        	<!-- EMAIL -->
+				    		<div class="form-group">
+								<input type="email" placeholder="Email" autocomplete="off" ng-remote-validate="/user/check" ng-remote-method="POST" required name="email" class="" ng-model="formData.email" ng-model-onblur>
+							    <div class="register-error" ng-if="register.email.$error.ngRemoteValidate" >This email already exists in the system.</div>
+							</div>
+
+							<!-- PASSWORD -->
+							<div class="form-group">
+								<input type="password" placeholder="Password" name="password" ng-minlength='6' required class="" ng-model="formData.password" ng-model-onblur>
+								<input type="password" placeholder="Re-enter Password" name="password2" required ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "class="registerPassword2 block" ng-model="formData.password2" ng-model-onblur>
+								<div class="register-error" ng-show="register.password2.$error.validator">Passwords do not match!</div>
+								<div class="register-error" ng-if="register.password.$error.minlength">Please use a minumum of 6 characters for the password.</div>
+							</div>
+
+					        <button type="button" class="sign-up-button" ng-disabled="register.$invalid">
+			                    <a href="/register/categories">Sign Up</a>
 			                </button>
 
-			                <a class="center red margin pointer" href="/login">Already have an account?</a>
+			                <!-- || register.email.$error.required || register.email.$error.email || register.email.$error.ngRemoteValidate || register.password.$error.required || register.password.$error.minlength || register.password2.$error.required || register.password2.$error.validator -->
 
 						</form>
+						<div class="login-link">
+							<a class="" href="/login">Already have an account?</a>
+						</div>
 					</div>
 				</div>
 			</div>
