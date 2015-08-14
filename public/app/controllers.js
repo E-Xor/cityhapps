@@ -2,7 +2,7 @@
  * Controllers for CityHapps
  */
 
-angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope) {
+angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope, authFactory) {
     var vm = this;
 
     vm.loginError = false;
@@ -14,6 +14,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             password: vm.password
         };
         console.log(credentials);
+        authFactory.loginUser(credentials);
+
         $auth.login(credentials).then(function() {
 
             // Return an $http request for the now authenticated

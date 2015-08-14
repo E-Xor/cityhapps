@@ -74,7 +74,16 @@ Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
 Route::get('tags/{name}','TagController@getTags');
 
 // Admin
+Route::group(['prefix' => 'admin'], function()
+{
+    Route::get('venue/list/{page?}', 'UserController@checkPermission');
+    Route::get('venue/add',          'UserController@checkPermission');
+    Route::get('event/add',          'UserController@checkPermission');
+    Route::get('venue/edit/{id?}',   'UserController@checkPermission');
+    Route::get('event/edit/{id?}',   'UserController@checkPermission');
+});
 // Admin Event
+
 Route::get('admin/event/list', 'HomeController@showWelcome');
 Route::post('admin/event/create', 'AdminEventController@create');
 Route::post('admin/event/update', 'AdminEventController@update');

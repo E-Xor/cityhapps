@@ -13,6 +13,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 {
     use Authenticatable, CanResetPassword;
 
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_USER = 'ROLE_USER';
+
     /**
      * The database table used by the model.
      *
@@ -25,7 +28,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['user_name', 'email', 'password'];
+    protected $fillable = ['user_name', 'email', 'password', 'role'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -48,5 +51,35 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function events()
     {
         return $this->belongsToMany('CityHapps\Happ', 'user_event', 'user_id', 'event_id');
+    }
+
+    /**
+     * @return string User role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param $role
+     *
+     * @return User $this
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Return true if user role is ROLE_ADMIN
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->getRole() == User::ROLE_ADMIN ? true : false;
     }
 }
