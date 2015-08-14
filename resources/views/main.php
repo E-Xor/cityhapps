@@ -6,7 +6,6 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,700italic,500italic,400italic|Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/assets/css/angular-snap.min.css" />
         <link href="/assets/css/jquery.bxslider.css" rel="stylesheet" />
         <link rel="stylesheet" href="/assets/css/fullcalendar.css" />
         <link rel="stylesheet" href="/assets/css/style.css" />
@@ -25,6 +24,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-resource.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-css/1.0.7/angular-css.min.js"></script>
 
         <script src="/js/satellizer.min.js"></script>
 

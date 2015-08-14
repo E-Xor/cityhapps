@@ -963,21 +963,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       };
         $scope.registerCategories = {};
 
-        //Category.query(function (payload) {
-        //    $scope.registerCategories = payload.data;
-        //});
-
         $scope.getAllCategories = function() {
-            $http
-                .get('/api/categories')
-                .success(function (res) {
-                    console.log(res);
-                    $scope.registerCategories = res.data;
-                })
-                .error(function (res) {
-                    console.log('Errors');
-                    console.log(res);
-                });
+            Category.query(function(payload) {
+                $scope.registerCategories = payload.data;
+            });
         };
 
       // $scope.$on('Facebook:statusChange', function(ev, data) {
@@ -1007,26 +996,24 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     // $scope.categoryService = categoryService.getCategories();
 
     var credentials = {
-        "email" :  $scope.formData.email,
-        "password" : $scope.formData.password,
-        "username" : $scope.formData.username
+        'email': $scope.formData.email,
+        'password': $scope.formData.password,
+        'username': $scope.formData.username
     };
 
     $scope.processForm = function(formData) {
-        console.log('formDAta');
-        console.log(formData);
         $http({
             method: 'POST',
             url: '/user',
             data: formData,
-            headers: {"Content-Type": "application/json"}
-        }).success(function(data){
-            if(!data) {
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(data) {
+            if (!data) {
                 console.log('not working');
             } else if (data) {
                 var fbInfo = {
-                    "email" : data.email,
-                    "password" : data.fb_token
+                    'email' : data.email,
+                    'password' : data.fb_token
                 };
                 $scope.id = data.id;
 
@@ -1034,31 +1021,30 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 auth.email = formData.email;
                 auth.password = formData.password;
 
-                authFactory.loginUser({"email":formData.email, "password":formData.password});
+                authFactory.loginUser({
+                    'email': formData.email,
+                    'password': formData.password
+                });
 
                 auth.login();
-
             }
-            console.log(data);
         });
     };
 
-        $scope.checkCategories = function() {
+    $scope.checkCategories = function() {
+        var obj = $scope.formData.categories;
 
-             console.log($scope.formData.categories);
-            var obj = $scope.formData.categories;
-
-            for (var key in obj) {
-                if ( obj[key] === false ) {
-                    return false;
-                    console.log(false);
-                } else {
-                    return true;
-                    console.log(true);
-                }
+        for (var key in obj) {
+            if (obj[key] === false) {
+                return false;
+                console.log(false);
+            } else {
+                return true;
+                console.log(true);
             }
+        }
 
-        };
+    };
 
         $scope.getUserData = function() {
             var data = {id: $cookieStore.get('user').id};
