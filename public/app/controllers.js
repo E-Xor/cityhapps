@@ -848,37 +848,37 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 ).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies) {
     //Facebook Auth
 
-      // Define user empty data :/
-      $scope.user = {};
+    // Define user empty data :/
+    $scope.user = {};
 
-      /**
-       * Watch for Facebook to be ready.
-       * There's also the event that could be used
-       */
-      $scope.$watch(
-        function() {
-          return Facebook.isReady();
-        },
-        function(newVal) {
-          if (newVal)
-            $scope.facebookReady = true;
-        }
-      );
+    /**
+    * Watch for Facebook to be ready.
+    * There's also the event that could be used
+    */
+    $scope.$watch(
+    function() {
+      return Facebook.isReady();
+    },
+    function(newVal) {
+      if (newVal)
+        $scope.facebookReady = true;
+    }
+    );
 
-      var userIsConnected = false;
+    var userIsConnected = false;
 
-      Facebook.getLoginStatus(function(response) {
-        if (response.status == 'connected') {
-          userIsConnected = true;
+    Facebook.getLoginStatus(function(response) {
+    if (response.status == 'connected') {
+      userIsConnected = true;
 
-        }
-      });
+    }
+    });
 
-      $scope.IntentLogin = function() {
-        if(!userIsConnected) {
-          $scope.login();
-        }
-      };
+    $scope.IntentLogin = function() {
+    if(!userIsConnected) {
+      $scope.login();
+    }
+    };
 
 
     $scope.login = function() {
@@ -1087,14 +1087,22 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         };
 
+    // Just a quick set of JS to keep the box vertically centered
+    jQuery(window).resize(function() {
+        var setHeight = 0;
+        if (jQuery(window).height() - jQuery('.main-column').height() > 0)
+            setHeight = (jQuery(window).height() - jQuery('.main-column').height()) / 2;
+        jQuery('.main-column').css({'margin-top': setHeight + 'px'});
+    });
+    jQuery(function() {
+        jQuery(window).trigger('resize');
+    });
 
-    }
-).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
+}).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
 
         $scope.formData = registerDataService.data;
 
-    }
-).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
+}).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
 
         if (num === null || num === undefined) {
             $scope.data = data;

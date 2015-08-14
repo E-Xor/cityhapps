@@ -5,7 +5,9 @@
 			<div class="col-md-4 col-md-offset-4 main-column">
 	            <div class="row logo-row">
 	                <div class="col-xs-10 col-xs-offset-1">
-	                    <img class="user-logo" src="/assets/img/logo-atl.png">
+	                	<a href="/">
+	                    	<img class="user-logo" src="/assets/img/logo-atl.png">
+	                    </a>
 				  		<div class="facebook-login" ng-click="login()">
 							<i class="fa fa-facebook-official"></i> Sign up with Facebook
 				        </div>
@@ -41,8 +43,8 @@
 								<div class="register-error" ng-if="register.password.$error.minlength">Please use a minumum of 6 characters for the password.</div>
 							</div>
 
-					        <button type="button" class="sign-up-button" ng-disabled="register.$invalid">
-			                    <a href="/register/categories">Sign Up</a>
+					        <button type="button" class="sign-up-button" ng-disabled="register.$invalid" ui-sref="userRegisterCategories">
+			                    Sign Up
 			                </button>
 
 			                <!-- || register.email.$error.required || register.email.$error.email || register.email.$error.ngRemoteValidate || register.password.$error.required || register.password.$error.minlength || register.password2.$error.required || register.password2.$error.validator -->

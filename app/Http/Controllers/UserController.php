@@ -55,17 +55,17 @@ class UserController extends Controller {
 
 		$json = $request->request->all();
 
+		$user = new User;
+		$user->email = $json['email'];
+		$user->user_name = $json['name'];
+
 		if (\Input::only('password') == '') {
-			$fb_user = new User;
-			$fb_user->email  = $json['email'];
-			$fb_user->password = \Hash::make($json['fb_token']);
-			$fb_user->fb_token = $json['fb_token'];
-			$fb_user->user_name = $json['name'];
-			$fb_user->save();
+			$user->password = \Hash::make($json['fb_token']);
+			$user->fb_token = $json['fb_token'];
+			$user->save();
 		} else {
-			$user = new User;
-			$user->email = $json['email'];
 			$user->password = \Hash::make($json['password']);
+			$user->city = $json['city'];
 			$user->save();
 			$userID = $user["id"];
 			$categoriesPaired = $json['categories']; // array in "categoryID": true
@@ -80,11 +80,7 @@ class UserController extends Controller {
 			}
 		}
 
-		if ($user === 'undefined') {
-			return $fb_user . " New FB User Created Successfully";
-		} else {
-			return $user . " New User Created Successfully!";	
-		}
+		return $user . " New User Created Successfully!";	
 	}
 
 	public function updateCategories()
