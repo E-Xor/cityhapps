@@ -2,6 +2,7 @@
 
 namespace CityHapps\Http\Controllers;
 
+use CityHapps\User;
 use Illuminate\Http\Request;
 
 use CityHapps\Http\Requests;
@@ -36,6 +37,11 @@ class SessionsController extends Controller {
 						);
 
 		if ($isAuth) {
+
+            $userId = User::where('email', '=', $json['email'])->pluck('id');
+            $user = User::find($userId);
+
+            \Auth::login($user, true);
 
 			return $request->user();
 			

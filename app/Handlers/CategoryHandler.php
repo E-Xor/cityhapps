@@ -21,7 +21,7 @@ class CategoryHandler extends ApiHandler
 	 * @return \EchoIt\JsonApi\Model || \EchoIt\JsonApi\Illuminate\Pagination\LengthAwarePaginator
 	 * @throws ApiException
 	 */
-	public function handleGet(ApiRequest $request)
+	public function handleGet(ApiRequest $request, $user = false)
 	{
 		//you can use the default GET functionality, or override with your own
 		return $this->handleGetDefault($request, new Category);

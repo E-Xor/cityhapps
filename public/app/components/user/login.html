@@ -1,32 +1,38 @@
-<h1>Login page</h1>
-<div class="login">
-    <div class="modal-header">
-        <h2 class="modal-title uppercase center margin">Sign In</h2>
-    </div>
-    <div class="modal-body-sign-in">
-        <div class="facebookButton" ng-click="authenticate('facebook')">
-            <h3 class="bold no-margin">Sign in with Facebook</h3>
+<div class="user-pages user-page-login">
+    <div class="bg-image"></div>
+    <div class="main-column">
+        <a href="/">
+            <img class="user-logo" src="/assets/img/logo-atl.png">
+        </a>
+        <div class="facebook-login" ng-click="login()">
+            <i class="fa fa-facebook-official"></i> Log In with Facebook
         </div>
-        <h4 class="center margin20">or</h4>
-        <div class="red center margin20" ng-if="loginError">{{loginError}}</div>
+        <div class="big-or">
+            <span>or</span>
+        </div>
+        <div class="register-error" ng-if="loginError">{{ loginError }}</div>
         <form class="loginForm">
-            <input type="email" placeholder="Email" class="registerEmail block" ng-model="auth.email" ng-model-onblur>
-            <input type="password" placeholder="Password" class="registerPassword block" autocorrect="off" ng-model="auth.password">
-            <div class="margin20 center">
-                <a href="/reset" class="red pointer">Forgot Password?</a>
+
+            <!-- NAME -->
+            <div class="form-group">
+                <input type="email" placeholder="Email" class="registerEmail block" ng-model="auth.email" ng-model-onblur>
             </div>
-            <div>
-                <button class="create-account center" ng-click="auth.login()">Sign In</button>
+
+            <!-- PASSWORD -->
+            <div class="form-group">
+                <input type="password" placeholder="Password" class="registerPassword block" autocorrect="off" ng-model="auth.password">
             </div>
-            <div class="margin20 center">
-                <a href="/register" class="red pointer">Create a new acccount</a>
-            </div>
-            <!-- {{formData}} -->
+
+            <button type="button" class="sign-up-button" ng-click="auth.login()">
+                Log In
+            </button>
         </form>
+
+        <div class="login-link">
+            <a href="/reset">Forgot Password?</a>
+        </div>
+        <div class="login-link">
+            <a href="/register">Create a New Acccount</a>
+        </div>
     </div>
 </div>
-
-
-
-
-

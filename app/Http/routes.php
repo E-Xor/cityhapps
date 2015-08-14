@@ -74,7 +74,16 @@ Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
 Route::get('tags/{name}','TagController@getTags');
 
 // Admin
+Route::group(['prefix' => 'admin'], function()
+{
+    Route::get('venue/list/{page?}', 'UserController@checkPermission');
+    Route::get('venue/add',          'UserController@checkPermission');
+    Route::get('event/add',          'UserController@checkPermission');
+    Route::get('venue/edit/{id?}',   'UserController@checkPermission');
+    Route::get('event/edit/{id?}',   'UserController@checkPermission');
+});
 // Admin Event
+
 Route::get('admin/event/list', 'HomeController@showWelcome');
 Route::post('admin/event/create', 'AdminEventController@create');
 Route::post('admin/event/update', 'AdminEventController@update');
@@ -91,6 +100,7 @@ Route::group(['prefix' => 'api'], function()
 {
 	//Route::resource('authenticate', 'ApiController', ['only' => ['index']]);
     Route::post('authenticate', 'ApiController@authenticate');
+    Route::get('authenticate/user', 'ApiController@getAuthenticatedUser');
     Route::any('{model}/{id?}', 'ApiController@handleRequest')
 		->where(['model' => 'venue|category|tag|happ']);
 });

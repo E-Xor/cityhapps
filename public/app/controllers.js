@@ -2,7 +2,7 @@
  * Controllers for CityHapps
  */
 
-angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope) {
+angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope, authFactory) {
     var vm = this;
 
     vm.loginError = false;
@@ -14,6 +14,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             password: vm.password
         };
         console.log(credentials);
+        authFactory.loginUser(credentials);
+
         $auth.login(credentials).then(function() {
 
             // Return an $http request for the now authenticated
@@ -845,40 +847,40 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         });
     }
-).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies) {
+).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $rootScope) {
     //Facebook Auth
 
-      // Define user empty data :/
-      $scope.user = {};
+    // Define user empty data :/
+    $scope.user = {};
 
-      /**
-       * Watch for Facebook to be ready.
-       * There's also the event that could be used
-       */
-      $scope.$watch(
-        function() {
-          return Facebook.isReady();
-        },
-        function(newVal) {
-          if (newVal)
-            $scope.facebookReady = true;
-        }
-      );
+    /**
+    * Watch for Facebook to be ready.
+    * There's also the event that could be used
+    */
+    $scope.$watch(
+    function() {
+      return Facebook.isReady();
+    },
+    function(newVal) {
+      if (newVal)
+        $scope.facebookReady = true;
+    }
+    );
 
-      var userIsConnected = false;
+    var userIsConnected = false;
 
-      Facebook.getLoginStatus(function(response) {
-        if (response.status == 'connected') {
-          userIsConnected = true;
+    Facebook.getLoginStatus(function(response) {
+    if (response.status == 'connected') {
+      userIsConnected = true;
 
-        }
-      });
+    }
+    });
 
-      $scope.IntentLogin = function() {
-        if(!userIsConnected) {
-          $scope.login();
-        }
-      };
+    $scope.IntentLogin = function() {
+    if (!userIsConnected) {
+      $scope.login();
+    }
+    };
 
 
     $scope.login = function() {
@@ -963,21 +965,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       };
         $scope.registerCategories = {};
 
-        //Category.query(function (payload) {
-        //    $scope.registerCategories = payload.data;
-        //});
-
         $scope.getAllCategories = function() {
-            $http
-                .get('/api/categories')
-                .success(function (res) {
-                    console.log(res);
-                    $scope.registerCategories = res.data;
-                })
-                .error(function (res) {
-                    console.log('Errors');
-                    console.log(res);
-                });
+            Category.query(function(payload) {
+                $scope.registerCategories = payload.data;
+            });
         };
 
       // $scope.$on('Facebook:statusChange', function(ev, data) {
@@ -1007,26 +998,24 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     // $scope.categoryService = categoryService.getCategories();
 
     var credentials = {
-        "email" :  $scope.formData.email,
-        "password" : $scope.formData.password,
-        "username" : $scope.formData.username
+        'email': $scope.formData.email,
+        'password': $scope.formData.password,
+        'username': $scope.formData.username
     };
 
     $scope.processForm = function(formData) {
-        console.log('formDAta');
-        console.log(formData);
         $http({
             method: 'POST',
             url: '/user',
             data: formData,
-            headers: {"Content-Type": "application/json"}
-        }).success(function(data){
-            if(!data) {
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(data) {
+            if (!data) {
                 console.log('not working');
             } else if (data) {
                 var fbInfo = {
-                    "email" : data.email,
-                    "password" : data.fb_token
+                    'email' : data.email,
+                    'password' : data.fb_token
                 };
                 $scope.id = data.id;
 
@@ -1034,31 +1023,30 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 auth.email = formData.email;
                 auth.password = formData.password;
 
-                authFactory.loginUser({"email":formData.email, "password":formData.password});
+                authFactory.loginUser({
+                    'email': formData.email,
+                    'password': formData.password
+                });
 
                 auth.login();
-
             }
-            console.log(data);
         });
     };
 
-        $scope.checkCategories = function() {
+    $scope.checkCategories = function() {
+        var obj = $scope.formData.categories;
 
-             console.log($scope.formData.categories);
-            var obj = $scope.formData.categories;
-
-            for (var key in obj) {
-                if ( obj[key] === false ) {
-                    return false;
-                    console.log(false);
-                } else {
-                    return true;
-                    console.log(true);
-                }
+        for (var key in obj) {
+            if (obj[key] === false) {
+                return false;
+                console.log(false);
+            } else {
+                return true;
+                console.log(true);
             }
+        }
 
-        };
+    };
 
         $scope.getUserData = function() {
             var data = {id: $cookieStore.get('user').id};
@@ -1101,14 +1089,21 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         };
 
+    // Just a quick set of JS to keep the box vertically centered
+    jQuery(window).on('resize load', function() {
+        if (jQuery(window).height() < jQuery('.main-column').height())
+            jQuery('.main-column').addClass('fix-vertical');
+        else
+            jQuery('.main-column').removeClass('fix-vertical');
+    });
 
-    }
-).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
+    console.log($rootScope.currentUser);
+
+}).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
 
         $scope.formData = registerDataService.data;
 
-    }
-).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
+}).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
 
         if (num === null || num === undefined) {
             $scope.data = data;

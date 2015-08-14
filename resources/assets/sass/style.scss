@@ -24,15 +24,6 @@ body {
   background-color: #EAE6DE;
 }	
 
-.bg-image {
-	padding: 0;
-	background-size: contain;
-	-moz-background-size: contain;
-	z-index: 1;
-	min-height: 1000px;
-  background-color: #EAE6DE;
-}
-
 .totalEvents {
   font-weight: 200;
   font-size: 3em;
@@ -237,15 +228,6 @@ input.main-search {
 .header-search .auth {
 	cursor: pointer;
 }
-
-// .modal { 
-//     position: absolute; 
-//     top: 20px !important; 
-//     right: 3%; 
-//     left: 3%;
-//     width: auto; 
-//     margin: 0; 
-// }
 
 .happ-single {
   background: #FFFFFF;
@@ -666,52 +648,154 @@ input.main-search {
   padding-bottom: 20px;
 }
 
-
-.register, .login {
+.user-pages{
+  .bg-image {
+    width: 100%;
     height: 100%;
-    z-index: 10000;
-	input {
-		margin: 15px 0;
-		width: 100%;
-		height: 50px;
-		padding: 10px 15px;
-        border: none;
-	}
-	background: $tan;
-	padding: 0 40px;
-	
-	::-webkit-input-placeholder {
-		color: #BCBABD;
-		text-align: left;
-		font-style: italic;
-		font-size: 1.2em;
-		font-weight: 200;
-        -webkit-font-smoothing: antialiased;
-	}
-	::-moz-input-placeholder {
-		color: #BCBABD;
-		text-align: left;
-		font-style: italic;
-		font-size: 1.2em;
-		font-weight: 200;
-        -moz-osx-font-smoothing: grayscale;
-	}
-	:-moz-input-placeholder {
-		color: #BCBABD;
-		text-align: left;
-		font-style: italic;
-		font-size: 1.2em;
-		font-weight: 200;
-      -moz-osx-font-smoothing: grayscale;
-	
-	}
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: #EAE6DE;
+    background-image: url('/assets/img/user-background.png');
+    background-size: cover;
+    z-index: 0;
+  }
+  .main-column {
+    background-color: #FFFFFF;
+    z-index: 10;
+    width: 380px;
+    padding: 40px 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &.fix-vertical {
+      position: relative;
+      transform: none;
+      margin: 0 auto;
+      top: 0px;
+      left: 0px;
+    }
+  }
+  .user-logo {
+    margin: 0px auto 60px;
+    width: 176px;
+    display: block;
+  }
+  .form-group {
+    margin-bottom: 0px;
+  }
+  .register-error {
+    color: red;
+    font-weight: bold;
+    font-size: 10px;
+    text-align: center;
+  }
+  input {
+    margin: 3px 0;
+    width: 100%;
+    font-size: 10px;
+    line-height: 20px;
+    padding: 10px 15px;
+    background-color: #F4F2EE;
+    border: none;
+    color: #A09C95;
+  }
+  
+  &.user-page-register {
+  }
 
-	.center.margin {
-		cursor: default;
-	}
+  &.user-page-register-category {
+    .main-column {
+      padding-left: 20px;
+      padding-right: 20px;
+      text-align: center;
+      .instructions {
+        font-weight: bold;
+        font-size: 12px;
+        margin-bottom: 20px;
+      }
+    }
+  }
+  .facebook-login {
+    background-color: #336EB7;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 10px;
+    line-height: 40px;
+    cursor: pointer;
+    .fa {
+      font-size: 18px;
+      line-height: 40px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+  }
+  .sign-up-button {
+    width: 100%;
+    padding: 10px 27px;
+    margin: 47px auto 20px;
+    background-color: #FF5C50;
+    display: block;
+    font-size: 12px;
+    line-height: 20px;
+    color: #FFFFFF;
+    font-weight: 500;
+    text-align: center;
+    border: none;
+    &[disabled] {
+      background-color: #AAAAAA;
+    }
+  }
+  .login-link {
+    text-align: center;
+    font-size: 10px;
+    a, a:hover {
+      color: #5B5B5B;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
+.big-or {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: #FF5C50;
+  font-size: 9px;
+  margin: 18px auto;
+  & > span {
+    position: relative;
+    display: inline-block;
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 9999px;
+      height: 1px;
+      background-color: #FF5C50;
+    }
+    &:before {
+      right: 100%;
+      margin-right: 15px;
+    }
+    &:after {
+      left: 100%;
+      margin-left: 15px;
+    }
+  }
+}
 
+.user-page-profile {
+  background-color: #FFFFFF;
+  .profile-header {
+    background-color: #FF5C50;
+  }
+}
 
 .event-slider {
 	max-width: 1170px;
@@ -995,22 +1079,8 @@ h3 {
 	padding: 10px;
 }
 
-
-.facebookButton {
-	background: #3b5998 url("../img/facebookIcon.png") no-repeat 93% 10px/17.5px 35px;
-	width: 100%;
-	color: #fff;
-	padding: 15px;
-	cursor: pointer;
-}
-
 .fb_iframe_widget span {
   display: none !important;
-}
-
-.lucida {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size: 1.4em;
 }
 
 .event-inner {
@@ -1728,11 +1798,6 @@ h3 {
     padding: 0 5px;
   }
 
-  .facebookButton {
-    background: #3b5998 url("../img/facebookIcon.png") no-repeat 93% 13px/17.5px 35px;
-    font-size: .8em;
-  }
-
   .mobile-event-image {
     background-size: cover;
     width: 30%;
@@ -1763,25 +1828,8 @@ h3 {
 		padding: 10px 0;
 	}
 
-	.bg-image {
-		background-size: auto 359px;
-    background-position-x: -58px;
-	}
-
-	.left.prev {
-		height: 50px;
-		cursor: pointer;
-		background: url("../img/sliderLeft.png") no-repeat 0px 14px / 40px 22px;
-	}
-
 	.event-inner {
 		height: 425px;
-	}
-
-	.right.next {
-		height: 50px;
-		cursor: pointer;
-		background: url("../img/sliderRight.png") no-repeat 0px 14px / 40px 22px;
 	}
 
 }
@@ -2297,6 +2345,15 @@ a.happ-button.homeButtons.homeDirections {
       margin-bottom: 40px;
       line-height: 1;
     }
+}
+
+.intro-message {
+  background: #FFFFFF;
+  text-align: center;
+  .happ-button {
+    max-width: 200px;
+    margin: 20px auto 25px;
+  }
 }
 
 /*Media Queries*/               

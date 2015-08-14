@@ -1,4 +1,15 @@
 <div class="happ-listing homeListing">
+  <div ng-if="!authenticated" class="container intro-message">
+    <div class="row">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        <h1>Welcome to City&nbsp;Happs!</h1>
+        <p>
+          It’s our goal to bring the most accurate and up-to-date information on all things kids directly to your fingertips. Skip the search engine and create a CityHapps user account today to receive more information on upcoming events for kids and families in your area. We&nbsp;promise, you’ll be glad you did!
+        </p>
+        <a class="happ-button" href="/register">Sign Up</a>
+      </div>
+    </div>
+  </div>
   <div ng-repeat="happ in happs" class="happ-single col-md-4 homeSingle">
     <div class="row">
       <div class="happ-image col-xs-12 homeImage" style="background-image: url('{{happ.event_image_url}}'); background-size: cover;">

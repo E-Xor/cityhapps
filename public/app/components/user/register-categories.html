@@ -1,19 +1,17 @@
-	<div class="categories-modal">
-      <div class="modal-header">
-	        <h2 class="modasl-title uppercase center">New Account</h2>
-	        <h5 class="center">Step 2 of 2</h5>
-	        <h5 class="center margin20">Please choose at least 1 category that you are interested in</h5>
-      </div>
-
-      	<div class="modal-body finalStep">
-		        <div class="registerForm" ng-init="getAllCategories();">
-						
-					<div ng-repeat="category in registerCategories" class="category-item">
-						<label class="event-category" ng-model="formData.categories[category.id]" btn-checkbox>{{category.name}}</label>
-					</div>
-					
-			        <button type="submit" ng-click="processForm(formData);" class="create-account center" ng-if="checkCategories();">Finish</button>
-		      </div>
-		      <!-- {{formData}} -->
-  		</div>
-  	</div>
+<div class="user-pages user-page-register-category">
+	<div class="bg-image"></div>
+	<div class="main-column">
+		<a href="/">
+        	<img class="user-logo" src="/assets/img/logo-atl.png">
+        </a>
+		<div class="instructions">
+			Please select one or more types of events you're interested in.
+		</div>
+		<div class="registerForm" ng-init="getAllCategories();">
+			<div ng-repeat="category in registerCategories" class="category-item">
+				<label class="event-category" ng-model="formData.categories[category.id]" btn-checkbox>{{category.name}}</label>
+			</div>
+			<button type="submit" ng-click="processForm(formData);" class="create-account center" ng-if="checkCategories();">Finish</button>
+		</div>
+	</div>
+</div>

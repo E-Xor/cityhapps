@@ -9,6 +9,7 @@ use CityHapps\Http\Controllers\Controller;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use CityHapps\User;
+use JWTAuth;
 
 class UserController extends Controller {
 
@@ -55,19 +56,20 @@ class UserController extends Controller {
 
 		$json = $request->request->all();
 
+		$user = new User;
+		$user->email = $json['email'];
+		$user->user_name = $json['name'];
+		$user->role = User::ROLE_USER;
+
 		if (\Input::only('password') == '') {
-			$fb_user = new User;
-			$fb_user->email  = $json['email'];
-			$fb_user->password = \Hash::make($json['fb_token']);
-			$fb_user->fb_token = $json['fb_token'];
-			$fb_user->user_name = $json['name'];
-			$fb_user->save();
-		} else {
-			$user = new User;
-			$user->email = $json['email'];
-			$user->password = \Hash::make($json['password']);
+			$user->password = \Hash::make($json['fb_token']);
+			$user->fb_token = $json['fb_token'];
 			$user->save();
-			$userID = $user["id"];
+		} else {
+			$user->password = \Hash::make($json['password']);
+			$user->city = $json['city'];
+			$user->save();
+
 			$categoriesPaired = $json['categories']; // array in "categoryID": true
 			if ($categoriesPaired != '') {
 				$categories = array();
@@ -80,11 +82,7 @@ class UserController extends Controller {
 			}
 		}
 
-		if ($user === 'undefined') {
-			return $fb_user . " New FB User Created Successfully";
-		} else {
-			return $user . " New User Created Successfully!";	
-		}
+		return $user . " New User Created Successfully!";	
 	}
 
 	public function updateCategories()
@@ -316,6 +314,41 @@ class UserController extends Controller {
 	{
 		//
 	}
+
+    public function checkPermission(Request $request)
+    {
+        $uri = $request->path();
+        $domain = url();
+        $user = \Auth::user();
+
+        if ($user instanceof User) {
+            if($user->isAdmin()) {
+                return redirect()->to($domain . '/#' . $uri);
+            }
+        }
+
+        return redirect()->to($domain);
+
+
+    }
+
+    /**
+     * @return null || User $user
+     */
+    public function getAuthUser()
+    {
+        $user = null;
+
+        try {
+            $token = JWTAuth::getToken();
+            $user = JWTAuth::parseToken()->authenticate();
+
+            return $user;
+        } catch (\Exception $e) {
+            return $user;
+        }
+
+    }
 
 
 }
