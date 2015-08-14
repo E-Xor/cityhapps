@@ -847,7 +847,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         });
     }
-).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies) {
+).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $rootScope) {
     //Facebook Auth
 
     // Define user empty data :/
@@ -877,7 +877,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     });
 
     $scope.IntentLogin = function() {
-    if(!userIsConnected) {
+    if (!userIsConnected) {
       $scope.login();
     }
     };
@@ -1090,15 +1090,14 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         };
 
     // Just a quick set of JS to keep the box vertically centered
-    jQuery(window).resize(function() {
-        var setHeight = 0;
-        if (jQuery(window).height() - jQuery('.main-column').height() > 0)
-            setHeight = (jQuery(window).height() - jQuery('.main-column').height()) / 2;
-        jQuery('.main-column').css({'margin-top': setHeight + 'px'});
+    jQuery(window).on('resize load', function() {
+        if (jQuery(window).height() < jQuery('.main-column').height())
+            jQuery('.main-column').addClass('fix-vertical');
+        else
+            jQuery('.main-column').removeClass('fix-vertical');
     });
-    jQuery(function() {
-        jQuery(window).trigger('resize');
-    });
+
+    console.log($rootScope.currentUser);
 
 }).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
 
