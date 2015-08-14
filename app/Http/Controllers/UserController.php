@@ -9,6 +9,7 @@ use CityHapps\Http\Controllers\Controller;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use CityHapps\User;
+use JWTAuth;
 
 class UserController extends Controller {
 
@@ -61,11 +62,13 @@ class UserController extends Controller {
 			$fb_user->password = \Hash::make($json['fb_token']);
 			$fb_user->fb_token = $json['fb_token'];
 			$fb_user->user_name = $json['name'];
+            $fb_user->role = User::ROLE_USER;
 			$fb_user->save();
 		} else {
 			$user = new User;
 			$user->email = $json['email'];
 			$user->password = \Hash::make($json['password']);
+            $user->role = User::ROLE_USER;
 			$user->save();
 			$userID = $user["id"];
 			$categoriesPaired = $json['categories']; // array in "categoryID": true
@@ -316,6 +319,41 @@ class UserController extends Controller {
 	{
 		//
 	}
+
+    public function checkPermission(Request $request)
+    {
+        $uri = $request->path();
+        $domain = url();
+        $user = \Auth::user();
+
+        if ($user instanceof User) {
+            if($user->isAdmin()) {
+                return redirect()->to($domain . '/#' . $uri);
+            }
+        }
+
+        return redirect()->to($domain);
+
+
+    }
+
+    /**
+     * @return null || User $user
+     */
+    public function getAuthUser()
+    {
+        $user = null;
+
+        try {
+            $token = JWTAuth::getToken();
+            $user = JWTAuth::parseToken()->authenticate();
+
+            return $user;
+        } catch (\Exception $e) {
+            return $user;
+        }
+
+    }
 
 
 }
