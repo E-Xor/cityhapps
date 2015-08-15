@@ -336,10 +336,13 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 }).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ) {
 
     $scope.user = $cookies.user;
+    $scope.formData = {};
 
     // Processing the form data for adding an event
     $scope.processForm = function(formData) {
         var edit = ($stateParams.id ? true : false);
+        console.log('formData');
+        console.log(formData);
         // Validation
         var error = 0;
         if (!formData) {
@@ -366,8 +369,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           error = 1;
           $scope.descError = true;
         }
-        if (formData.parent.length > 0) {
-            formData.parent_id = formData.parent[0]['id'];
+        if (typeof formData.parent !== 'undefined' || formData.parent == '') {
+            if (formData.parent.length > 0) {
+                formData.parent_id = formData.parent[0]['id'];
+            }
         }
 
         // if any error, don't post
@@ -450,6 +455,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.allEvents = allEventsUnformatted;
     });
 
+    $scope.reload = function() {
+        document.location.reload(true);
+    };
+
     // edit page
     if ($stateParams.id) {
         $http.get('/events?id=' + $stateParams.id)
@@ -457,6 +466,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 if (data.events.length > 0)
                 {
                     var singleEvent = data.events[0];
+                    $scope.formData = {};
+
                     $scope.formData.title = singleEvent.event_name;
                     $scope.formData.event_id = singleEvent.id;
                     $scope.formData.parent_id = singleEvent.parent_id;
@@ -500,9 +511,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                         $http.get('/events/?id=' + $stateParams.id + '&current_id=' + $scope.formData.parent_id ).success(function(data){$scope.formData.parent = data;});
                     }
                 }
-        })
+        });
     }
-
+    //console.log('$scope.formData');
+    //console.log($scope.formData);
 }).controller('adminVenueController', function($scope, $http, $stateParams, $cookies, $cookieStore, Venue, Tag) {
 
     $scope.user = $cookies.user;

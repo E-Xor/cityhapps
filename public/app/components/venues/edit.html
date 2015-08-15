@@ -56,9 +56,12 @@
           <br/>
           <a href='/admin/venue/add'>Create New Venue</a>
           <br/>
-          <a href='/admin/venue/edit/{{success.id}}' ng-click="reload();">Update <b>{{success.name}}</b> Venue</a>
+          <a href='/admin/venue/edit/{{success.id}}' ng-click="reload();">Edit <b>{{success.name}}</b> Venue</a>
           <br/>
-          <a href='/admin/venue/list'>Return venues list</a>
+          <a href='/admin/venue/list'>Return to Venues List</a>
+          <br/>
+          <a href='/venue/{{success.id}}'>View Content</a>
+
 
         </h1>
         </div>
