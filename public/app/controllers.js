@@ -336,10 +336,13 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 }).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ) {
 
     $scope.user = $cookies.user;
+    $scope.formData = {};
 
     // Processing the form data for adding an event
     $scope.processForm = function(formData) {
         var edit = ($stateParams.id ? true : false);
+        console.log('formData');
+        console.log(formData);
         // Validation
         var error = 0;
         if (!formData) {
@@ -366,8 +369,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           error = 1;
           $scope.descError = true;
         }
-        if (formData.parent.length > 0) {
-            formData.parent_id = formData.parent[0]['id'];
+        if (typeof formData.parent !== 'undefined' || formData.parent == '') {
+            if (formData.parent.length > 0) {
+                formData.parent_id = formData.parent[0]['id'];
+            }
         }
 
         // if any error, don't post
@@ -450,6 +455,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.allEvents = allEventsUnformatted;
     });
 
+    $scope.reload = function() {
+        document.location.reload(true);
+    };
+
     // edit page
     if ($stateParams.id) {
         $http.get('/events?id=' + $stateParams.id)
@@ -457,6 +466,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 if (data.events.length > 0)
                 {
                     var singleEvent = data.events[0];
+                    $scope.formData = {};
+
                     $scope.formData.title = singleEvent.event_name;
                     $scope.formData.event_id = singleEvent.id;
                     $scope.formData.parent_id = singleEvent.parent_id;
@@ -500,10 +511,11 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                         $http.get('/events/?id=' + $stateParams.id + '&current_id=' + $scope.formData.parent_id ).success(function(data){$scope.formData.parent = data;});
                     }
                 }
-        })
+        });
     }
-
-}).controller('adminVenueController', function($scope, $http, $stateParams, $cookies, $cookieStore, Venue) {
+    //console.log('$scope.formData');
+    //console.log($scope.formData);
+}).controller('adminVenueController', function($scope, $http, $stateParams, $cookies, $cookieStore, Venue, Tag) {
 
     $scope.user = $cookies.user;
 
@@ -562,6 +574,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                     $scope.error = data.error.message;
             });
         } else {
+            if(typeof formData.venue_id === 'undefined' || formData.venue_id == '') {
+                formData.venue_id = $stateParams.id;
+            }
             $http({
                 method: 'POST',
                 url: '/admin/venue/update',
@@ -593,11 +608,21 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.venuesCount = data.length;
             $scope.allVenues = data.venues;
     });
-
+    console.log('id');
+    console.log($stateParams.id);
     // edit page
+    $scope.formData = {};
+
+    $scope.reload = function() {
+        document.location.reload(true);
+    };
+
     if ($stateParams.id) {
-        Venue.get({ id: $stateParams.id }, function(payload) {
+        Venue.get({ id: $stateParams.id, include: 'tags' }, function(payload) {
             var singleVenue = payload.data[0];
+
+            console.log("singleVenue");
+            console.log(singleVenue);
             $scope.formData = {};
             $scope.formData.venue_name = singleVenue.name;
             $scope.formData.venue_id = singleVenue.id;
@@ -627,14 +652,20 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 });
                 return base;
             })();
-            $scope.formData.tags = singleVenue.tags;
-            $scope.loadTags = function(query) {
+
+            //$scope.formData.tags = singleVenue.links.tags.linkage;
+            loadTags = function(query) {
                 return $http.get('/tags/' + query);
             };
-
-            console.log($scope.formData);
+            //console.log('$scope.formData in func');
+            //console.log($scope.formData);
+            //return $scope.formData;
         });
     }
+
+    //console.log('$scope.formData in root');
+    //console.log($scope.formData);
+
 }).controller('appController', function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, $cookies, $cookieStore) {
 
         $scope.$on('$idleStart', function() {
