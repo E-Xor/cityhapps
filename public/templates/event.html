@@ -58,7 +58,13 @@
         <h1>
           Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> event <b>{{success.event_name}}</b>
           <br/>
+          <br/>
           <a href='/admin/event/add'>Create New Event</a>
+          <br/>
+          <a href='/admin/event/edit/{{success.id}}' ng-click="reload();">Edit <b>{{success.event_name}}</b> Event</a>
+          <br/>
+          <a href='/happ/{{success.id}}'>View Content</a>
+          <br/>
         </h1>
         </div>
         <form method="post" ng-if="!success">
@@ -173,7 +179,7 @@
                       </div>
                   </div>
               </div>
-            <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
+            <input type="submit" value="Submit" ng-click="processForm(formData);" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
 
         </fieldset>
         </form>

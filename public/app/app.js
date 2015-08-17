@@ -314,8 +314,25 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/reset',
         templateUrl: 'app/components/user/reset.html',
         controller: 'registerFormController'
-    }).state('main.userProfile', {
+    }).state('main.userProfileEdit', {
         url: '/profile/edit',
+        views: {
+            '@main': {
+                templateUrl: 'app/components/user/profile-edit.html',
+                controller: 'registerFormController'
+            },
+            'sidebar@main': {
+                templateUrl: 'app/components/categories/list.html',
+                controller: 'CategorySidebarController'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
+            }
+        },
+        css: 'assets/css/angular-snap.min.css'
+    }).state('main.userProfile', {
+        url: '/profile',
         views: {
             '@main': {
                 templateUrl: 'app/components/user/profile.html',
