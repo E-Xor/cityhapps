@@ -104,7 +104,7 @@ class HappFilter
                 $whereClause .= ' OR ';
             }
 
-            $whereClause .= '(name = ?)';
+            $whereClause .= '(age_level.id = ?)';
             $whereValues[] = $ageLevel;
 
         }

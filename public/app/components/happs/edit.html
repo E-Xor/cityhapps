@@ -40,11 +40,13 @@
     </div>
 
     <div>
-      <label for="street_address" style="display:inline-block;width:331px;">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
-      <label for="building" style="display:inline-block;width:155px;">Building / Suite</label>
-
-      <input type="text" id="street_address" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
-      <input type="text" id="building" name="building" value="" ng-model="formData.building" style="width:341px;" />
+      <label for="street_address">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
+      <input type="text" id="street_address" class="full" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address">
+    </div>
+    
+    <div>
+      <label for="building">Building / Suite</label>
+      <input type="text" id="building" name="building" class="full" value="" ng-model="formData.building">
     </div>
 
     <div>
@@ -54,7 +56,7 @@
 
       <input type="text" id="city" name="city" value="" ng-model="formData.city" placeholder="City" style="width:222px;margin-right:20px;"/>
       <select id="state" name="state" placeholder="State" ng-model="formData.state" style="width:245px;margin-right:20px;">
-        <option>Georgia</option>
+        <option value="GA">Georgia</option>
       </select>
       <input type="text" id="zip_code" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" style="width:160px;" />
     </div>
@@ -65,12 +67,9 @@
     </div>
 
     <div>
-      <input type="checkbox" id="ageLevelInfant" ng-model="formData.ageLevel.level1" style="-webkit-appearance: checkbox;"> <label for="ageLevelInfant">Infant</label>
-      <input type="checkbox" id="ageLevelToddler" ng-model="formData.ageLevel.level2" style="-webkit-appearance: checkbox;"> <label for="ageLevelToddler">Toddler</label>
-      <input type="checkbox" id="ageLevelPreteen" ng-model="formData.ageLevel.level3" style="-webkit-appearance: checkbox;"> <label for="ageLevelPreteen">Preteen</label>
-      <input type="checkbox" id="ageLevelYoungAdult" ng-model="formData.ageLevel.level4" style="-webkit-appearance: checkbox;"> <label for="ageLevelYoungAdult">Young Adult</label>
-      <input type="checkbox" id="ageLevelAdult" ng-model="formData.ageLevel.level5" style="-webkit-appearance: checkbox;"> <label for="ageLevelAdult">Adult</label>
-      <input type="checkbox" id="ageLevelSenior" ng-model="formData.ageLevel.level6" style="-webkit-appearance: checkbox;"> <label for="ageLevelSenior">Senior</label>
+      <div ng-repeat="ageLevel in formData.ageLevels">
+        <input type="checkbox" id="ageLevel{{ ageLevel.id }}" ng-model="ageLevel.value" style="-webkit-appearance: checkbox;"> <label for="ageLevel{{ ageLevel.id }}">{{ ageLevel.name }}</label>
+      </div>
     </div>
     
     <div>

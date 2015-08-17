@@ -55,16 +55,31 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     vm.authenticate = function(provider) {
       $auth.authenticate(provider);
     };
-}).controller('MainFilterController', function($scope, $stateParams, HappFilterService) {
-    $scope.filterDefaults = HappFilterService.getDefaults();
-    $scope.hideFilter = true;
-    $scope.$watchCollection('filterDefaults', function(newFilters, oldFilters) {
-        for (var key in newFilters) {
-            if (newFilters[key] != oldFilters[key]) {
-                HappFilterService.updateFilter(key, newFilters[key]);
-            }
+}).controller('MainFilterController', function($scope, $stateParams, HappFilterService, AgeLevel) {
+    AgeLevel.query(function(payload) {
+        $scope.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+        var baseObject = {ageLevel: {}};
+        for (var i = 0; i < $scope.ageLevels.length; i++) {
+            baseObject.ageLevel[$scope.ageLevels[i].id] = true;
         }
+        $scope.filterDefaults = HappFilterService.getDefaults(baseObject);
+        $scope.$watchCollection('filterDefaults', function(newFilters, oldFilters) {
+            for (var key in newFilters) {
+                if (newFilters[key] != oldFilters[key]) {
+                    HappFilterService.updateFilter(key, newFilters[key]);
+                }
+            }
+        });
+        $scope.$watchCollection('filterDefaults.ageLevel', function(newFilters, oldFilters) {
+            for (var key in newFilters) {
+                if (newFilters[key] != oldFilters[key]) {
+                    HappFilterService.updateAgeLevelFilter(key, newFilters[key]);
+                }
+            }
+        });
     });
+    $scope.hideFilter = true;
+
     jQuery('#date_calendar').datetimepicker({
         timepicker: false,
         mindate: 0,
@@ -333,10 +348,13 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 });
             };
         }
-}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ) {
+}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ, AgeLevel, cleanData, $filter) {
 
     $scope.user = $cookies.user;
     $scope.formData = {};
+    AgeLevel.query(function(payload) {
+        $scope.formData.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+    });
 
     // Processing the form data for adding an event
     $scope.processForm = function(formData) {
@@ -461,67 +479,82 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
     // edit page
     if ($stateParams.id) {
-        $http.get('/events?id=' + $stateParams.id)
-            .success(function(data) {
-                if (data.events.length > 0)
-                {
-                    var singleEvent = data.events[0];
-                    console.log(singleEvent);
-                    $scope.formData = {};
-
-                    $scope.formData.title = singleEvent.event_name;
-                    $scope.formData.event_id = singleEvent.id;
-                    $scope.formData.parent_id = singleEvent.parent_id;
-                    $scope.formData.event_url = singleEvent.url;
-                    $scope.formData.event_image_url = singleEvent.event_image_url;
-                    $scope.formData.venue_name = singleEvent.venue_name;
-                    $scope.formData.venue_url = singleEvent.venue_url;
-                    $scope.formData.street_address = singleEvent.address;
-                    $scope.formData.city = singleEvent.city;
-                    $scope.formData.state = singleEvent.state;
-                    $scope.formData.zip_code = singleEvent.zip;
-                    $scope.formData.desc = singleEvent.description;
-                    $scope.formData.all_day = (singleEvent.all_day_flag ? true : false );
-                    $scope.formData.start_time = singleEvent.start_time;
-                    $scope.formData.end_time = singleEvent.end_time;
-                    dateCheckCreate = new Date(singleEvent.created_at).getTime() / 1000;
-                    dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
-                    if (dateCheckCreate != dateCheckUpdate)
-                       $scope.updated_last  = singleEvent.updated_at;
-                    $scope.formData.similar_events_model = singleEvent.similar;
-                    $scope.formData.similar_events_storage = (function () {
-                        var base = [];
-                        angular.forEach(singleEvent.similar, function (value) {
-                            if (value.parent_id != null) {
-                                base.push(value.id);
+        Happ.get({ id: $stateParams.id, include: 'tags,categories,venues,ageLevels'}, function(payload) {
+            payload = cleanData.buildRelationships(payload);
+            var singleEvent = payload.data[0];
+            $scope.formData = {};
+            AgeLevel.query(function(payload) {
+                $scope.formData.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+                // Loop through and set all the values on age levels
+                if (singleEvent.hasOwnProperty('relationships')) {
+                    if (singleEvent.relationships.hasOwnProperty('ageLevels')) {
+                        for (var i = 0; i < singleEvent.relationships.ageLevels.length; i++) {
+                            for (var j = 0; j < $scope.formData.ageLevels.length; j++) {
+                                if ($scope.formData.ageLevels[j].id == singleEvent.relationships.ageLevels[i].id)
+                                    $scope.formData.ageLevels[j].value = true;
                             }
-                        });
-                        return base;
-                    })();
-                    $scope.formData.locationType = {};
-                    if (singleEvent.location_type == 'Outdoor') {
-                        $scope.formData.locationType.outdoor = true;
-                    } else if (singleEvent.location_type == 'Indoor') {
-                        $scope.formData.locationType.indoor = true;
-                    }
-                    $scope.formData.tags = singleEvent.tags;
-                    $scope.formData.parent = [];
-
-                    $scope.loadTags = function(query) {
-                        return $http.get('/tags/' + query);
-                    };
-                    $scope.loadEvents = function(query){
-                        return $http.get('/events/?name=' + query + '&current_id=' + $stateParams.id);
-                    };
-                    if ($scope.formData.parent_id > 0) {
-                        //This event has NO suggested similar, events let's fetch the parent information
-                        $http.get('/events/?id=' + $stateParams.id + '&current_id=' + $scope.formData.parent_id ).success(function(data){$scope.formData.parent = data;});
+                        }
                     }
                 }
+            });
+            console.log(singleEvent);
+            $scope.formData.title = singleEvent.event_name;
+            $scope.formData.event_id = singleEvent.id;
+            $scope.formData.parent_id = singleEvent.parent_id;
+            $scope.formData.event_url = singleEvent.url;
+            $scope.formData.event_image_url = singleEvent.event_image_url;
+            $scope.formData.venue_name = singleEvent.venue_name;
+            $scope.formData.venue_url = singleEvent.venue_url;
+            $scope.formData.street_address = singleEvent.address.street_1;
+            $scope.formData.city = singleEvent.address.city;
+            $scope.formData.state = singleEvent.address.state;
+            $scope.formData.zip_code = singleEvent.address.zip;
+            $scope.formData.desc = singleEvent.description;
+            $scope.formData.all_day = singleEvent.all_day_flag ? true : false;
+            $scope.formData.start_time = $filter('date')(singleEvent.start.local, 'MM/dd/yyyy hh:mm a');
+            $scope.formData.end_time = $filter('date')(singleEvent.end.local, 'MM/dd/yyyy hh:mm a');
+            dateCheckCreate = new Date(singleEvent.created_at).getTime() / 1000;
+            dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
+            if (dateCheckCreate != dateCheckUpdate)
+                $scope.updated_last = singleEvent.updated_at;
+            $scope.formData.similar_events_model = singleEvent.similar;
+            $scope.formData.similar_events_storage = (function() {
+                var base = [];
+                angular.forEach(singleEvent.similar, function(value) {
+                    if (value.parent_id != null) {
+                        base.push(value.id);
+                    }
+                });
+                return base;
+            })();
+            
+            $scope.formData.locationType = {};
+            if (singleEvent.location_type == 'Outdoor') {
+                $scope.formData.locationType.outdoor = true;
+            } else if (singleEvent.location_type == 'Indoor') {
+                $scope.formData.locationType.indoor = true;
+            }
+
+            if (singleEvent.hasOwnProperty('relationships')) {
+                if (singleEvent.relationships.hasOwnProperty('tags')) {
+                    $scope.formData.tags = singleEvent.relationships.tags;
+                }
+            }
+            
+            $scope.formData.parent = [];
+
+            $scope.loadTags = function(query) {
+                return $http.get('/tags/' + query);
+            };
+            $scope.loadEvents = function(query){
+                return $http.get('/events/?name=' + query + '&current_id=' + $stateParams.id);
+            };
+            if ($scope.formData.parent_id > 0) {
+                //This event has NO suggested similar, events let's fetch the parent information
+                $http.get('/events/?id=' + $stateParams.id + '&current_id=' + $scope.formData.parent_id).success(function(data){$scope.formData.parent = data;});
+            }
         });
     }
-    //console.log('$scope.formData');
-    //console.log($scope.formData);
 }).controller('adminVenueController', function($scope, $http, $stateParams, $cookies, $cookieStore, Venue, Tag) {
 
     $scope.user = $cookies.user;

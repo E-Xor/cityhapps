@@ -2448,49 +2448,50 @@ a.happ-button.homeButtons.homeDirections {
 .admin-form {
   width:675px;
   margin:50px auto;
+  label {
+    display:block;
+  }
+  input.full { 
+    width:100%;
+  }
+  input, select, textarea {
+    border: 1px solid #ccc;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    padding: 4px 7px;
+    outline: 0;
+    margin:5px 0;
+  }
+  input {
+    -webkit-appearance: none;
+    &:focus {
+      border-color: #339933;
+    }
+    &[type='submit'] {
+      background: #87cefa;
+      color:#fff;
+    }
+  }
+  select {
+    background: #fff;
+    height: 31px;
+  }
+  .single_event {
+    padding: 10px 5px 0;
+  }
+  .single_event .container, .suggestion-list li .container {
+    width: 70%;
+    display: inline-block;
+  }
+  .single_event img, .suggestion-list li img {
+    vertical-align: top;
+    float: left;
+  }
+  .single_event span, .single_event small, .suggestion-list li {
+    display: block;
+  }
+  .suggestion-list li .container {
+    text-wrap: normal;
+  }
 }
-.admin-form label {
-  display:block;
-}
-.admin-form input.full { width:100%; }
-.admin-form input, .admin-form select, .admin-form textarea {
-  border: 1px solid #ccc;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  border-radius: 6px;
-  padding: 4px 7px;
-  outline: 0;
-  margin:5px 0;
-}
-.admin-form input { -webkit-appearance: none;}
-.admin-form select { background: #fff;height: 31px;}
-.admin-form input:focus {
-  border-color: #339933;
-}
-.admin-form input[type='submit'] {
-  background: #87cefa;
-  color:#fff;
-}
-input:checked + .label_container {
-  background-color: burlywood;
-}
-.single_event {
-  padding: 10px 5px 0;
-}
-.single_event .container, .suggestion-list li .container {
-  width: 70%;
-  display: inline-block;
-}
-.single_event img, .suggestion-list li img {
-  vertical-align: top;
-  float: left;
-}
-.single_event span, .single_event small, .suggestion-list li {
-  display: block;
-}
-.suggestion-list li .container {
-  text-wrap: normal;
-}
-
-
-
