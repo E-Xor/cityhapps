@@ -2358,99 +2358,139 @@ a.happ-button.homeButtons.homeDirections {
 
 /*Media Queries*/               
 @media (min-width: 768px) and (max-width: 1200px) {
-
-    .happ-single{
-      float: left;
-      width: 97%;
-      
-    }
-
-
-    .homeImage{
-      width: 55%;
-      margin-left: 2%;
-      height: 231px;
-      }
-
-    .homeDate{
-        margin-top: 187px;
-        padding: 10px;
-      }
-
-    .homeName{
-      padding:0;
-      margin-bottom: 14%;
-      width: 70%;
-      font-size: 1.2em;
-    
-    }
-
-    .happText {
-     width: 45%;
-     float: right;
-    margin-top: -240px;
-     margin-left: 0px;
-    }
-
-    .homeButtons{
-      width: 20%;
-      margin-bottom: 8px;
-    }
-
-    .homeDirections{
-      border: 2px solid #FF5C50;
-      margin-right: -29%;
-    }
-    .homeMore{
-          margin-left: 29%;
-    }
-
-    .ratingPrice{
-          margin-top: -167px;
-          font-size: .9em;
-    }
-    .homeRP #rating{
-      margin-bottom: 24px;
-    }
-    }
-
-      @media only screen and (max-width : 768px) {
-
-        .homeSingle{
-          width:97%;
-        }
-
-        .homeTime{
-          margin: 0;
-          text-align: left;
-        }
-
-        .homeName{
-          
-          padding:0;
-          font-size: 1em;
-          width:70%;
-        }
-
-       .homeImage{
-        
-         width: 96%;
-         margin: 2% 0 0% 2%;
-      }
-      .ratingPrice {
-           margin-top: -45%;
-      }
-
-      .homeRP #rating {
-         margin-bottom: 30px;
-       }
-
-   .homeVenue a{
-    margin: 0;
-       
-    }
-      
+  .happ-single{
+    float: left;
+    width: 97%;
   }
+
+  .homeImage{
+    width: 55%;
+    margin-left: 2%;
+    height: 231px;
+  }
+
+  .homeDate{
+    margin-top: 187px;
+    padding: 10px;
+  }
+
+  .homeName {
+    padding:0;
+    margin-bottom: 14%;
+    width: 70%;
+    font-size: 1.2em;
+  }
+
+  .happText {
+    width: 45%;
+    float: right;
+    margin-top: -240px;
+    margin-left: 0px;
+  }
+
+  .homeButtons{
+    width: 20%;
+    margin-bottom: 8px;
+  }
+
+  .homeDirections{
+    border: 2px solid #FF5C50;
+    margin-right: -29%;
+  }
+  .homeMore{
+    margin-left: 29%;
+  }
+
+  .ratingPrice{
+    margin-top: -167px;
+    font-size: .9em;
+  }
+  .homeRP #rating{
+    margin-bottom: 24px;
+  }
+}
+
+@media only screen and (max-width : 768px) {
+
+  .homeSingle {
+    width:97%;
+  }
+
+  .homeTime {
+    margin: 0;
+    text-align: left;
+  }
+
+  .homeName {
+    padding:0;
+    font-size: 1em;
+    width:70%;
+  }
+
+  .homeImage{
+    width: 96%;
+    margin: 2% 0 0% 2%;
+  }
+
+  .ratingPrice {
+    margin-top: -45%;
+  }
+
+  .homeRP #rating {
+     margin-bottom: 30px;
+   }
+
+  .homeVenue a{
+    margin: 0;       
+  }
+}
+
+.admin-form {
+  width:675px;
+  margin:50px auto;
+}
+.admin-form label {
+  display:block;
+}
+.admin-form input.full { width:100%; }
+.admin-form input, .admin-form select, .admin-form textarea {
+  border: 1px solid #ccc;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  padding: 4px 7px;
+  outline: 0;
+  margin:5px 0;
+}
+.admin-form input { -webkit-appearance: none;}
+.admin-form select { background: #fff;height: 31px;}
+.admin-form input:focus {
+  border-color: #339933;
+}
+.admin-form input[type='submit'] {
+  background: #87cefa;
+  color:#fff;
+}
+input:checked + .label_container {
+  background-color: burlywood;
+}
+.single_event {
+  padding: 10px 5px 0;
+}
+.single_event .container, .suggestion-list li .container {
+  width: 70%;
+  display: inline-block;
+}
+.single_event img, .suggestion-list li img {
+  vertical-align: top;
+  float: left;
+}
+.single_event span, .single_event small, .suggestion-list li {
+  display: block;
+}
+.suggestion-list li .container {
+  text-wrap: normal;
+}
 
 
 

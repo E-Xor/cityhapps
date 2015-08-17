@@ -325,7 +325,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             io += 'outdoor';
         }
         if (io != '' && (io.match(/,/g) || []).length != 1)
-            filter.type = io;
+            filter.location_type = io;
 
         // Get the other items in the argument
         if (typeof additional === 'object') {

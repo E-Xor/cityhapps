@@ -466,6 +466,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 if (data.events.length > 0)
                 {
                     var singleEvent = data.events[0];
+                    console.log(singleEvent);
                     $scope.formData = {};
 
                     $scope.formData.title = singleEvent.event_name;
@@ -497,6 +498,12 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                         });
                         return base;
                     })();
+                    $scope.formData.locationType = {};
+                    if (singleEvent.location_type == 'Outdoor') {
+                        $scope.formData.locationType.outdoor = true;
+                    } else if (singleEvent.location_type == 'Indoor') {
+                        $scope.formData.locationType.indoor = true;
+                    }
                     $scope.formData.tags = singleEvent.tags;
                     $scope.formData.parent = [];
 
