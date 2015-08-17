@@ -75,28 +75,28 @@ class AdminVenueController extends Controller {
 
     $venueParams = array();
 
-    $venueParams['venueID'] = Input::get('id');
-    $venueParams['venueName'] = Input::get('name');
-    $venueParams['url'] = Input::get('url');
-    $venueParams['address_1'] = Input::get('venue_address');
-    $venueParams['address_2'] = Input::get('venue_address2');
-    $venueParams['address_3'] = Input::get('venue_address3');
-    $venueParams['city'] = Input::get('venue_city');
-    $venueParams['state'] = Input::get('venue_state');
-    $venueParams['postal_code'] = Input::get('venue_zip');
-    $venueParams['description'] = Input::get('description');
+    $venueParams['venueID'] = \Input::get('id');
+    $venueParams['venueName'] = \Input::get('name');
+    $venueParams['url'] = \Input::get('url');
+    $venueParams['address_1'] = \Input::get('venue_address');
+    $venueParams['address_2'] = \Input::get('venue_address2');
+    $venueParams['address_3'] = \Input::get('venue_address3');
+    $venueParams['city'] = \Input::get('venue_city');
+    $venueParams['state'] = \Input::get('venue_state');
+    $venueParams['postal_code'] = \Input::get('venue_zip');
+    $venueParams['description'] = \Input::get('description');
 
-    $venueParams['lat'] = Input::get('latitude');
-    $venueParams['lng'] = Input::get('longitude');
-    $venueParams['category'] = Input::get('category'); // Note that this will be an array of values called category[]
-    $venueParams['createdAt'] = Input::get('created_at');
-    $venueParams['updatedAt'] = Input::get('updated_at');
-    $venueParams['source'] = Input::get('source');
-    $venueParams['image'] = Input::get('image');
-    $venueParams['pageSize'] = Input::get('page_size');
-    $venueParams['pageCount'] = Input::get('page_count');
-    $venueParams['pageShift'] = Input::get('page_shift');
-    $venueParams['maxPerDay'] = Input::get('max_per_day');
+    $venueParams['lat'] = \Input::get('latitude');
+    $venueParams['lng'] = \Input::get('longitude');
+    $venueParams['category'] = \Input::get('category'); // Note that this will be an array of values called category[]
+    $venueParams['createdAt'] = \Input::get('created_at');
+    $venueParams['updatedAt'] = \Input::get('updated_at');
+    $venueParams['source'] = \Input::get('source');
+    $venueParams['image'] = \Input::get('image');
+    $venueParams['pageSize'] = \Input::get('page_size');
+    $venueParams['pageCount'] = \Input::get('page_count');
+    $venueParams['pageShift'] = \Input::get('page_shift');
+    $venueParams['maxPerDay'] = \Input::get('max_per_day');
 
     $venues = Venue::selectVenues($venueParams);
 
@@ -121,30 +121,29 @@ class AdminVenueController extends Controller {
     $passValidation = true;
     $message = 'Failed to update venue';
     $venueParams = array();
-    $venueParams = array();
-
-    $venueParams['id'] = Input::get('venue_id');
+//    $allParams = \Input::all();
+    $venueParams['id'] = \Input::get('venue_id');
     if (!$venueParams['id']) $passValidation = false;
 
-    $venueParams['name'] = Input::get('venue_name');
-    $venueParams['url'] = Input::get('venue_url');
-    $venueParams['address_1'] = Input::get('street_address');
-    $venueParams['image'] = Input::get('venue_image_url');
+    $venueParams['name'] = \Input::get('venue_name');
+    $venueParams['url'] = \Input::get('venue_url');
+    $venueParams['address_1'] = \Input::get('street_address');
+    $venueParams['image'] = \Input::get('venue_image_url');
     // no room for building
-    //$venueParams['building'] = Input::get('building');
-    $venueParams['city'] = Input::get('city');
-    $venueParams['state'] = Input::get('state');
-    $venueParams['postal_code'] = Input::get('zip_code');
-    $venueParams['description'] = Input::get('desc');
-    $venueParams['hours'] = Input::get('hours');
-    $venueParams['phone'] = Input::get('phone');
-    $venueParams['similar_venues'] = Input::get('similar_venues_storage');
+    //$venueParams['building'] = \Input::get('building');
+    $venueParams['city'] = \Input::get('city');
+    $venueParams['state'] = \Input::get('state');
+    $venueParams['postal_code'] = \Input::get('zip_code');
+    $venueParams['description'] = \Input::get('desc');
+    $venueParams['hours'] = \Input::get('hours');
+    $venueParams['phone'] = \Input::get('phone');
+    $venueParams['similar_venues'] = \Input::get('similar_venues_storage');
 
    if ($passValidation)
    {
      $result = Venue::find($venueParams['id']);
 
-     $this->createTags($result, Input::get('tags'));
+     $this->createTags($result, \Input::get('tags'));
 
      $similar = $result->similar;
      if (!empty($venueParams['similar_venues'])) {
@@ -193,25 +192,25 @@ class AdminVenueController extends Controller {
     $message = 'Failed to create venue';
     $venueParams = array();
 
-    $venueParams['name'] = Input::get('venue_name');
-    $venueParams['url'] = Input::get('venue_url');
-    $venueParams['address_1'] = Input::get('street_address');
-    $venueParams['image'] = Input::get('venue_image_url');
+    $venueParams['name'] = \Input::get('venue_name');
+    $venueParams['url'] = \Input::get('venue_url');
+    $venueParams['address_1'] = \Input::get('street_address');
+    $venueParams['image'] = \Input::get('venue_image_url');
     // no room for building
-    //$venueParams['building'] = Input::get('building');
-    $venueParams['city'] = Input::get('city');
-    $venueParams['state'] = Input::get('state');
-    $venueParams['postal_code'] = Input::get('zip_code');
-    $venueParams['description'] = Input::get('desc');
-    $venueParams['hours'] = Input::get('hours');
-    $venueParams['phone'] = Input::get('phone');
+    //$venueParams['building'] = \Input::get('building');
+    $venueParams['city'] = \Input::get('city');
+    $venueParams['state'] = \Input::get('state');
+    $venueParams['postal_code'] = \Input::get('zip_code');
+    $venueParams['description'] = \Input::get('desc');
+    $venueParams['hours'] = \Input::get('hours');
+    $venueParams['phone'] = \Input::get('phone');
 
     $venueParams['source'] = "Custom";
 
 
     if ($passValidation)
       $result = Venue::create($venueParams);
-      $this->createTags($result, Input::get('tags'));
+      $this->createTags($result, \Input::get('tags'));
 
     if ($result)
       return json_encode($result);
