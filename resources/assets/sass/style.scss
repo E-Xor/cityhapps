@@ -2445,6 +2445,48 @@ a.happ-button.homeButtons.homeDirections {
   }
 }
 
+.venue-listing {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  .container {
+    background-color: #FFFFFF;
+    padding: 40px 50px;
+  }
+  .venue-line {
+    display: table-row;
+    a {
+      color: #9B9B9B;
+      display: table-cell;
+      vertical-align: middle;
+      height: 50px;
+      &:hover, &:active {
+        color: #FF5C50;
+      }
+    }
+  }
+  .venue-pagination {
+    font-weight: normal;
+    font-size: 15px;
+    margin-top: 40px;
+    float: right;
+    li {
+      display: inline-block;
+      margin-right: 20px;
+      a {
+        color: #FC5C50;
+        &.active {
+          font-weight: 900;
+        }
+        &.prevnext {
+          font-weight: 500;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+
 .admin-form {
   width:675px;
   margin:50px auto;

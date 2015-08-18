@@ -236,24 +236,33 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         $scope.pagination = [];
         if (page != 1) {
-            $scope.pagination.push({'text': '< Previous', 'link': '/venues/' + (page - 1)});
+            $scope.pagination.push({'text': '< Previous', 'link': '/venues/' + (page - 1), 'class': 'prevnext'});
+            $scope.pagination.push({'text': '1', 'link': '/venues'});
+        } else {
+            $scope.pagination.push({'text': '1', 'link': '/venues', 'class': 'active'});
         }
-        $scope.pagination.push({'text': '1', 'link': '/venues'});
         
         if (page - 3 > 1)
-            $scope.pagination.push({'text': '...'});
+            $scope.pagination.push({'text': '...', 'link': '#'});
 
         for (var i = page - 2; i < page + 3; i++) {
-            if (i > 1 && i < last)
-                $scope.pagination.push({'text': String(i), 'link': '/venues/' + i});
+            if (i > 1 && i < last) {
+                if (page == i) {
+                    $scope.pagination.push({'text': String(i), 'link': '/venues/' + i, 'class': 'active'});
+                } else {
+                    $scope.pagination.push({'text': String(i), 'link': '/venues/' + i});
+                }
+            }
         };
 
         if (page + 3 < last)
-            $scope.pagination.push({'text': '...'});
+            $scope.pagination.push({'text': '...', 'link': '#'});
 
-        $scope.pagination.push({'text': String(last), 'link': '/venues/' + last});
         if (page != last) {
-            $scope.pagination.push({'text': 'Next >', 'link': '/venues/' + (page + 1)});
+            $scope.pagination.push({'text': String(last), 'link': '/venues/' + last});
+            $scope.pagination.push({'text': 'Next >', 'link': '/venues/' + (page + 1), 'class': 'prevnext'});
+        } else {
+            $scope.pagination.push({'text': String(last), 'link': '/venues/' + last, 'class': 'active'});
         }
 
     });
