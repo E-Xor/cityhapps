@@ -102,7 +102,7 @@ Route::group(['prefix' => 'api'], function()
     Route::post('authenticate', 'ApiController@authenticate');
     Route::get('authenticate/user', 'ApiController@getAuthenticatedUser');
     Route::any('{model}/{id?}', 'ApiController@handleRequest')
-		->where(['model' => 'venue|category|tag|happ']);
+		->where(['model' => 'venue|category|tag|happ|agelevel']);
 });
 Route::get('api/categories', 'CategoryController@getAllCategories');
 

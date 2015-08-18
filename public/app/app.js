@@ -51,7 +51,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/event/add',
         views: {
             '@main': {
-                templateUrl: 'templates/event.html',
+                templateUrl: 'app/components/happs/edit.html',
                 controller: 'adminEventController'
             },
             'sidebar@main': {
@@ -68,7 +68,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/event/edit/:id',
         views: {
             '@main': {
-                templateUrl: 'templates/event.html',
+                templateUrl: 'app/components/happs/edit.html',
                 controller: 'adminEventController'
             },
             'sidebar@main': {

@@ -38,10 +38,10 @@
 				<div class="happ-time">
 					<i class="fa fa-clock-o"></i> {{happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
 				</div>
-				<div class="happ-venue" ng-if="happ.relationships.venue">
-					<a href="{{ happ.relationships.venue.url}}" target="_blank">
-						<i class="fa fa-map-marker"></i> {{ happ.relationships.venue.name}}
-					</a>
+				<div class="happ-venue" ng-if="happ.relationships.venues">
+					<div ng-repeat="venue in happ.relationships.venues">
+			          <a href="/venue/{{ venue.id }}"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
+			        </div>
 				</div>
         		
         		<div class="happ-data-footer">

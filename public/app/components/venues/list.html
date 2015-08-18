@@ -1,12 +1,16 @@
-<div class="container">
-  <div class="row">
-    <div class="venue-line col-md-4 col-sm-6" ng-repeat="venue in venues">
-      <a href="/venue/{{ venue.id }}">{{ venue.name }}</a>
+<div class="venue-listing">
+  <div class="container">
+    <div class="row">
+      <div class="venue-line col-md-4 col-sm-6" ng-repeat="venue in venues">
+        <a href="/venue/{{ venue.id }}">{{ venue.name }}</a>
+      </div>
     </div>
-    <ul class="pagination" auto-active>
-      <li ng-repeat="item in pagination">
-		<a href="{{ item.link }}">{{ item.text }}</a>
-      </li>
-    </ul>
+    <div class="row">
+      <ul class="venue-pagination">
+        <li ng-repeat="item in pagination">
+  		    <a href="{{ item.link }}" class="{{ item.class }}">{{ item.text }}</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

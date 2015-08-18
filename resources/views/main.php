@@ -22,6 +22,7 @@
 
         <!-- ng- scripts and things -->
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-animate.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-resource.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-css/1.0.7/angular-css.min.js"></script>
@@ -39,9 +40,9 @@
         <script src="/assets/js/angular/angular-cookies.min.js"></script>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
+      
         <script type="text/javascript" src="/js/ui-utils.min.js"></script>
-        <script type="text/javascript" src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+        <script type="text/javascript" src="/assets/js/ui-bootstrap-tpls-0.13.3.min.js"></script>
         <!-- <script src="/assets/js/angular/angular-touch.js"></script> -->
         <script src="/js/angular-idle.min.js"></script>
         <script src="/js/jquery.datetimepicker.js"></script>

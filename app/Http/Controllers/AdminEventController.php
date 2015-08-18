@@ -8,6 +8,7 @@ use CityHapps\Http\Requests;
 use CityHapps\Http\Controllers\Controller;
 use CityHapps\Happ;
 use CityHapps\Tag;
+use Input;
 
 class AdminEventController extends Controller {
 
@@ -46,75 +47,111 @@ class AdminEventController extends Controller {
     $passValidation = true;
     $message = 'Failed to update event';
     $eventParams = array();
-    $eventParams = array();
 
-    $eventParams['id'] = \Input::get('event_id');
-    if (!$eventParams['id']) $passValidation = false;
+    $eventParams['id'] = Input::get('event_id');
+    
+    if (!$eventParams['id'])
+      $passValidation = false;
 
-    $eventParams['event_name'] = \Input::get('title');
-    $eventParams['url'] = \Input::get('event_url');
-    $eventParams['venue_name'] = \Input::get('venue_name');
-    $eventParams['venue_url'] = \Input::get('venue_url');
-    $eventParams['address'] = \Input::get('street_address');
-    $eventParams['event_image_url'] = \Input::get('event_image_url');
-    if (\Input::get('parent_id') > 0) {
-        if (!\Input::get('parent')) {
+    $eventParams['event_name'] = Input::get('title');
+    $eventParams['url'] = Input::get('event_url');
+    $eventParams['venue_id'] = intval(Input::get('venue_id'));
+    $eventParams['venue_name'] = Input::get('venue_name');
+    $eventParams['venue_url'] = Input::get('venue_url');
+    $eventParams['address'] = Input::get('street_address');
+    $eventParams['event_image_url'] = Input::get('event_image_url');
+    if (Input::get('parent_id') > 0) {
+        if (!Input::get('parent')) {
             //tag was deleted, delete the parent_id too
             Happ::find($eventParams['id'])->update(array('parent_id' => NULL, 'status' => Happ::STATUS_ACTIVE));
         } else {
-            $eventParams['parent_id'] = \Input::get('parent_id');
+            $eventParams['parent_id'] = Input::get('parent_id');
             $eventParams['status'] = Happ::STATUS_DUPLICATED;
         }
     }
 
-   // no room for building
-   //$eventParams['building'] = \Input::get('building');
-    $eventParams['city'] = \Input::get('city');
-    $eventParams['state'] = \Input::get('state');
-    $eventParams['zip'] = \Input::get('zip_code');
-    $eventParams['description'] = \Input::get('desc');
-   /* just to explain this ternary operator a little bit
-   ** sets $time to unix time (if it is an invalid input, null, or not a date, it will return false)
-   ** $time is false: return null
-   ** $time is satisfactory: return date that mysql can use
-   */
-   $eventParams['event_date'] = (($time = strtotime(\Input::get('start_time'))) === false ? null : date("Y-m-d", $time));
-   $eventParams['start_time'] = (($time = strtotime(\Input::get('start_time'))) === false ? null : date("Y-m-d H:i:s", $time));
-   $eventParams['all_day_flag'] = \Input::get('all_day');
-   $eventParams['end_time'] = (($time = strtotime(\Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
+    // no room for building
+    //$eventParams['building'] = Input::get('building');
+    $eventParams['city'] = Input::get('city');
+    $eventParams['state'] = Input::get('state');
+    $eventParams['zip'] = Input::get('zip_code');
+    $eventParams['description'] = Input::get('desc');
+    /* just to explain this ternary operator a little bit
+     * sets $time to unix time (if it is an invalid input, null, or not a date, it will return false)
+     * $time is false: return null
+     * $time is satisfactory: return date that mysql can use
+     */
+    $eventParams['event_date'] = (($time = strtotime(Input::get('start_time'))) === false ? null : date("Y-m-d", $time));
+    $eventParams['start_time'] = (($time = strtotime(Input::get('start_time'))) === false ? null : date("Y-m-d H:i:s", $time));
+    $eventParams['all_day_flag'] = Input::get('all_day');
+    $eventParams['end_time'] = (($time = strtotime(Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
 
-   $eventParams['similar_events'] = \Input::get('similar_events_storage');
+    $eventParams['similar_events'] = Input::get('similar_events_storage');
 
-   $time = strtotime(\Input::get('start_time'));
-   $start_time = date("Y-m-d H:j:s", $time);
+    // Location Type Data
+    $location_type_data = Input::get('locationType');
+    $eventParams['location_type'] = NULL;
 
-   if ($passValidation)
-   {
-     $result = Happ::find($eventParams['id']);
-     //If we have at least 1 defined tag, let's process it
-     $this->createTags($result, \Input::get('tags'));
+    if (is_array($location_type_data)) {
+      $indoor = false;
+      $outdoor = false;
+      if (isset($location_type_data['indoor']) && $location_type_data['indoor'])
+        $indoor = true;
+      if (isset($location_type_data['outdoor']) && $location_type_data['outdoor'])
+        $outdoor = true;
 
-     $similar = $result->similar;
-       if (!empty($eventParams['similar_events'])) {
-           $similar_events = Happ::whereIn('id', $eventParams['similar_events'])->get();
-           if ($similar_events){
-               foreach($similar_events as $sv){
-                   $sv->update(array(
-                       'parent_id' => $eventParams['id'],
-                        'status' => Happ::STATUS_DUPLICATED
-                   ));
-               }
-           }
-       } else {
-           foreach ($similar as $s) {
-               Happ::find($s['id'])->update(array('parent_id' => NULL, 'status' => Happ::STATUS_ACTIVE));
-           }
-       }
+      if ($indoor && !$outdoor) 
+        $eventParams['location_type'] = 'Indoor';
+      else if (!$indoor && $outdoor) 
+        $eventParams['location_type'] = 'Outdoor';
+    }
 
-     unset($eventParams['similar_events_storage']);
-     unset($eventParams['similar_events_model']);
-     unset($eventParams['similar_events']);
-     unset($eventParams['parent']);
+    $time = strtotime(Input::get('start_time'));
+    $start_time = date("Y-m-d H:j:s", $time);
+
+    if ($passValidation)
+    {
+      $result = Happ::find($eventParams['id']);
+
+      // Process Tags
+      $this->createTags($result, Input::get('tags'));
+      
+      // Process Age Levels
+      $age_level_data = Input::get('ageLevels');
+      $result->ageLevels()->detach();
+      foreach ($age_level_data as $age_level) {
+        if (isset($age_level['value']) && $age_level['value'])
+          $result->ageLevels()->attach($age_level['id']);
+      }
+
+      // Process Categories
+      $category_data = Input::get('categories');
+      $result->categories()->detach();
+      foreach ($category_data as $category) {
+        $result->categories()->attach($category);
+      }
+
+      $similar = $result->similar;
+      if (!empty($eventParams['similar_events'])) {
+        $similar_events = Happ::whereIn('id', $eventParams['similar_events'])->get();
+        if ($similar_events) {
+          foreach($similar_events as $sv) {
+            $sv->update(array(
+              'parent_id' => $eventParams['id'],
+              'status' => Happ::STATUS_DUPLICATED
+            ));
+          }
+        }
+      } else {
+        foreach ($similar as $s) {
+          Happ::find($s['id'])->update(array('parent_id' => NULL, 'status' => Happ::STATUS_ACTIVE));
+        }
+      }
+
+      unset($eventParams['similar_events_storage']);
+      unset($eventParams['similar_events_model']);
+      unset($eventParams['similar_events']);
+      unset($eventParams['parent']);
 
      if ($result) {
       // then update
@@ -173,39 +210,67 @@ class AdminEventController extends Controller {
     $message = 'Failed to create event';
     $eventParams = array();
 
-    $eventParams['event_name'] = \Input::get('title');
-    $eventParams['url'] = \Input::get('event_url');
-    $eventParams['venue_name'] = \Input::get('venue_name');
-    $eventParams['venue_url'] = \Input::get('venue_url');
-    $eventParams['address'] = \Input::get('street_address');
-    $eventParams['event_image_url'] = \Input::get('event_image_url');
+    $eventParams['event_name'] = Input::get('title');
+    $eventParams['url'] = Input::get('event_url');
+    $eventParams['venue_id'] = Input::get('venue_id');
+    $eventParams['venue_name'] = Input::get('venue_name');
+    $eventParams['venue_url'] = Input::get('venue_url');
+    $eventParams['address'] = Input::get('street_address');
+    $eventParams['event_image_url'] = Input::get('event_image_url');
     // no room for building
-    //$eventParams['building'] = \Input::get('building');
-    $eventParams['city'] = \Input::get('city');
-    $eventParams['state'] = \Input::get('state');
-    $eventParams['zip'] = \Input::get('zip_code');
-    $eventParams['description'] = \Input::get('desc');
+    //$eventParams['building'] = Input::get('building');
+    $eventParams['city'] = Input::get('city');
+    $eventParams['state'] = Input::get('state');
+    $eventParams['zip'] = Input::get('zip_code');
+    $eventParams['description'] = Input::get('desc');
     /* just to explain this ternary operator a little bit
     ** sets $time to unix time (if it is an invalid input, null, or not a date, it will return false)
     ** $time is false: return null
     ** $time is satisfactory: return date that mysql can use
     */
-    $eventParams['event_date'] = (($time = strtotime(\Input::get('start_time'))) === false ? null : date("Y-m-d", $time));
-    $eventParams['start_time'] = (($time = strtotime(\Input::get('start_time'))) === false ? null : date("Y-m-d H:i:s", $time));
-    $eventParams['all_day_flag'] = \Input::get('all_day');
-    $eventParams['end_time'] = (($time = strtotime(\Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
+    $eventParams['event_date'] = (($time = strtotime(Input::get('start_time'))) === false ? null : date("Y-m-d", $time));
+    $eventParams['start_time'] = (($time = strtotime(Input::get('start_time'))) === false ? null : date("Y-m-d H:i:s", $time));
+    $eventParams['all_day_flag'] = Input::get('all_day');
+    $eventParams['end_time'] = (($time = strtotime(Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
 
-    $time = strtotime(\Input::get('start_time'));
+    // Location Type Data
+    $location_type_data = Input::get('locationType');
+    $eventParams['location_type'] = NULL;
+
+    if (is_array($location_type_data)) {
+      $indoor = false;
+      $outdoor = false;
+      if (isset($location_type_data['indoor']) && $location_type_data['indoor'])
+        $indoor = true;
+      if (isset($location_type_data['outdoor']) && $location_type_data['outdoor'])
+        $outdoor = true;
+
+      if ($indoor && !$outdoor) 
+        $eventParams['location_type'] = 'Indoor';
+      else if (!$indoor && $outdoor) 
+        $eventParams['location_type'] = 'Outdoor';
+    }
+
+    $time = strtotime(Input::get('start_time'));
     $start_time = date("Y-m-d H:j:s", $time);
     // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
-   // $eventParams['tags'] = \Input::get('tags');
+   // $eventParams['tags'] = Input::get('tags');
     $eventParams['source'] = "Custom";
 
 
     if ($passValidation)
       $result = Happ::create($eventParams);
 
-      $this->createTags($result, \Input::get('tags'));
+      // Process Tags
+      $this->createTags($result, Input::get('tags'));
+
+      // Process Age Levels
+      $age_level_data = Input::get('ageLevels');
+      $result->ageLevels()->detach();
+      foreach ($age_level_data as $age_level) {
+        if (isset($age_level['value']) && $age_level['value'])
+          $result->ageLevels()->attach($age_level['id']);
+      }
 
     if ($result)
       return json_encode($result);
