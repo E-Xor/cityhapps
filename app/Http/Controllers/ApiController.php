@@ -23,6 +23,8 @@ class ApiController extends Controller
 	     * Create handler name from model name
 	     * @var string
 	     */
+	    if ($modelName == 'agelevel')
+	    	$modelName = 'AgeLevel';
 	    $handlerClass = 'CityHapps\\Handlers\\' . ucfirst($modelName) . 'Handler';
 
 	    if (class_exists($handlerClass)) {
