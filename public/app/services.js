@@ -76,7 +76,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             $cookieStore.remove('user');
             //ipCookie.remove("user");
 
-            document.location.reload(true);
+            document.location.href = '/';
             if (!data) {
                 console.log('There was an error logging you out');
             } else if (data) {

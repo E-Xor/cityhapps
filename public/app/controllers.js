@@ -218,11 +218,18 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.happs = payload.data;
         });
     });
-}).controller('CategorySidebarController', function($scope, cleanData, Category) {
+}).controller('CategorySidebarController', function($scope, cleanData, Category, $cookieStore, authFactory) {
     Category.query(function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.categories = payload.data;
     });
+
+    $scope.authenticated = typeof $cookieStore.get('user') !== 'undefined';
+
+    $scope.logout = function () {
+        authFactory.logoutUser();
+    }
+
 }).controller('VenueListController', function($scope, $stateParams, cleanData, Venue) {
     var size = 48;
     var page = (typeof $stateParams.page != 'undefined') ? parseInt($stateParams.page) : 1;
@@ -1027,13 +1034,11 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     };
 
         $scope.loginUser = function(formData) {
-            console.log("login data");
-            console.log(formData);
           authFactory.loginUser(formData);
         };
 
       $scope.logout = function() {
-
+            authFactory.logout();
       };
 
       $scope.remove = function() {
