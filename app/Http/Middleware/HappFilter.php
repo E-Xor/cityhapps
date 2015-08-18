@@ -49,6 +49,16 @@ class HappFilter
     }
 
     /**
+     * @param object $model model
+     * @param string $key column name
+     * @param string $value column value
+     */
+    public static function filterLocationType(&$model, $value)
+    {
+        $model->whereRaw('(location_type = \'' . ucwords($value) . '\' OR location_type IS NULL)');
+    }
+
+    /**
      * @param $query
      * @param $values
      */
@@ -94,7 +104,7 @@ class HappFilter
                 $whereClause .= ' OR ';
             }
 
-            $whereClause .= '(name = ?)';
+            $whereClause .= '(age_level.id = ?)';
             $whereValues[] = $ageLevel;
 
         }

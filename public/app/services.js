@@ -18,6 +18,10 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
     return $resource('/api/venue/:id', {}, {
         query: { isArray: false }
     });
+}).factory('AgeLevel', function($resource) {
+    return $resource('/api/agelevel/:id', {}, {
+        query: { isArray: false }
+    });
 }).factory('voteService', function() {
 
     var vote = {};
@@ -220,9 +224,15 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             return payload;
         }
     };
-}).service('HappFilterService', function($rootScope) {
+}).service('HappFilterService', function($rootScope, AgeLevel) {
     var service = {};
 
+    AgeLevel.query(function(payload) {
+        service.ageLevel = {};
+        for (var i = 0; i < payload.data.length; i++) {
+            service.ageLevel[payload.data[i].id] = true;
+        }
+    });
     service.today = true;
     service.tomorrow = false;
     service.weekend = false;
@@ -236,25 +246,29 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
     service.zip = '';
     service.search = '';
 
-    service.getDefaults = function() {
-        return {
-            today: true,
-            tomorrow: false,
-            weekend: false,
-            calendar: '',
-            morning: true,
-            afternoon: true,
-            evening: true,
-            night: true,
-            indoor: true,
-            outdoor: true,
-            zip: '',
-            search: ''
-        };
+    service.getDefaults = function(baseObject) {
+        baseObject.today = true;
+        baseObject.tomorrow = false;
+        baseObject.weekend = false;
+        baseObject.calendar = '';
+        baseObject.morning = true;
+        baseObject.afternoon = true;
+        baseObject.evening = true;
+        baseObject.night = true;
+        baseObject.indoor = true;
+        baseObject.outdoor = true;
+        baseObject.zip = '';
+        baseObject.search = '';
+        return baseObject;
     };
 
     service.updateFilter = function(key, value) {
         this[key] = value;
+        $rootScope.$broadcast('filterUpdate');
+    };
+
+    service.updateAgeLevelFilter = function(key, value) {
+        this.ageLevel[key] = value;
         $rootScope.$broadcast('filterUpdate');
     };
 
@@ -325,7 +339,25 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             io += 'outdoor';
         }
         if (io != '' && (io.match(/,/g) || []).length != 1)
-            filter.type = io;
+            filter.location_type = io;
+
+        // Age Level filters
+        var trueCount = 0;
+        var count = 0;
+        var ageLevelString = '';
+        for (var key in this.ageLevel) {
+            if (this.ageLevel[key]) {
+                if (ageLevelString != '') {
+                    ageLevelString += ',';
+                }
+                ageLevelString += key;
+                trueCount++;
+            }
+            count++;
+        }
+        if (ageLevelString != '' && count != trueCount) {
+            filter.agelevel = ageLevelString;
+        }
 
         // Get the other items in the argument
         if (typeof additional === 'object') {
@@ -333,7 +365,6 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 filter[key] = additional[key];
             }
         }
-
         return filter;
     };
 

@@ -149,6 +149,11 @@ return [
          */
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
+        /**
+         * HTML Purifier...
+         */
+        Mews\Purifier\PurifierServiceProvider::class,
+
     ],
 
     /*

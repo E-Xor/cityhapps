@@ -5,9 +5,11 @@ namespace CityHapps\Http\Middleware;
 use Illuminate\Support\Facades\Input;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
+use DateTime;
+use DateTimeZone;
 
-class JsonApiFormatter {
-
+class JsonApiFormatter
+{
     public static function getJsonContentType()
     {
         return 'application/vnd.api+json';
@@ -18,12 +20,12 @@ class JsonApiFormatter {
      */
     private static function getSiteTimeZoneObj()
     {
-        return new \DateTimeZone(self::getSiteTimeZone()) ;
+        return new DateTimeZone(self::getSiteTimeZone()) ;
     }
 
     private static function getUtcTimeZoneObj()
     {
-        return new \DateTimeZone("UTC");
+        return new DateTimeZone("UTC");
     }
 
     /**
@@ -65,10 +67,10 @@ class JsonApiFormatter {
         $happTime = [];
         if(!is_null($time)) {
 
-            $currentTime = new \DateTime($time, self::getSiteTimeZoneObj());
-            $localTime = $currentTime->format(\DateTime::ISO8601);
+            $currentTime = new DateTime($time, self::getSiteTimeZoneObj());
+            $localTime = $currentTime->format(DateTime::ISO8601);
             $currentTime->setTimezone(self::getUtcTimeZoneObj());
-            $utcTime = $currentTime->format(\DateTime::ISO8601);
+            $utcTime = $currentTime->format(DateTime::ISO8601);
 
             $happTime  = [
                 'timezone' => self::getSiteTimeZone(),

@@ -1,157 +1,107 @@
+<div class="admin-form">
+  <div ng-if="success">
+    <h1>
+      Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> venue <b>{{success.name}}</b>
+    </h1>
+    <p>
+      <a href='/admin/venue/add'>Create New Venue</a><br>
+      <a href='/admin/venue/edit/{{success.id}}' ng-click="reload();">Continue Editing <b>{{success.name}}</b></a><br>
+      <a href='/admin/venue/list'>Return to Venues List</a><br>
+      <a href='/venue/{{success.id}}'>View Content</a>
+    </p>
+  </div>
+  <form method="POST" ng-if="!success" ng-init="">
+    <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
+    <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
+    <div class="red center margin20" ng-if="error">{{error}}</div>
 
-  <style>
-    @import url(//fonts.googleapis.com/css?family=Lato:700);
-    html, .bg-image { background:#fff;}
-    .form_container {
-    width:675px;
-    margin:50px auto;
-    }
-    .form_container label {
-    display:block;
-    }
-    .form_container input.full { width:100%; }
-    .form_container input, .form_container select, .form_container textarea {
-      border: 1px solid #ccc;
-      -moz-border-radius: 6px;
-      -webkit-border-radius: 6px;
-      border-radius: 6px;
-      padding: 4px 7px;
-      outline: 0;
-      margin:5px 0;
-    }
-    .form_container input { -webkit-appearance: none;}
-    .form_container select { background: #fff;height: 31px;}
-    .form_container input:focus {
-      border-color: #339933;
-    }
-    .form_container input[type='submit'] {
-    background: #87cefa;
-    color:#fff;
-    }
+    <div>
+      <label for="title">Venue Name <span class="red center margin20">* <span ng-if="titleError">You must have a venue name</span></span></label>
+      <input type="hidden" id="venue_id" name="venue_id" ng-model="formData.venue_id"/>
+      <input type="text" class="full" id="venue_name" name="venue_name" placeholder="Venue Name" ng-model="formData.venue_name" value=""/>
+    </div>
 
+    <div>
+      <label for="event_url">Venue URL</label>
+      <input type="text" id="venue_url" class="full" name="venue_url" value="{{venueData.venues[0].url}}" placeholder="http://www.event.com" ng-model="formData.venue_url" />
+    </div>
 
-    input:checked + .label_container {
-      background-color: burlywood;
-    }
-    .single_venue {
-      padding: 10px 5px 0;
-    }
+    <div>
+      <label for="venue_image_url">Venue Image URL</label>
+      <input type="text" id="venue_image_url" class="full" name="venue_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.venue_image_url" />
+    </div>
 
-    .single_venue .container {
-      width: 70%;
-      display: inline-block;
-    }
+    <div>
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" class="full" name="phone" value="" ng-model="formData.phone" placeholder="1-800-244-4232" />
+    </div>
 
+    <div>
+      <label for="street_address" style="display:inline-block;width:331px;">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
+      <label for="hours" style="display:inline-block;width:155px;">Hours of Operation</label>
 
-    .single_venue span, .single_venue small {
-      display: block;
-    }
+      <input type="text" id="street_address" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
+      <input type="text" id="hours" name="hours" value="" ng-model="formData.hours" style="width:341px;" placeholder="6am to 7pm" />
+    </div>
 
-  </style>
-        <div class="form_container">
-        <div ng-if="success">
-        <h1>
-          Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> venue <b>{{success.venue_name}}</b>
-          <br/>
-          <a href='/admin/venue/add'>Create New Venue</a>
-        </h1>
-        </div>
-        <form method="post" ng-if="!success">
-          <fieldset>
-          <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
-          <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
+    <div>
+      <label for="city" style="display:inline-block;width:244px;">City</label>
+      <label for="state" style="display:inline-block;width:261px;">State</label>
+      <label for="zip_code" style="display:inline-block;width:162px;">Zip Code</label>
 
-          <div class="red center margin20" ng-if="error">{{error}}</div>
-            <div>
-              <label for="title">Venue Name <span class="red center margin20">* <span ng-if="titleError">You must have a venue name</span></span></label>
-              <input type="hidden" id="venue_id" name="venue_id" ng-model="formData.venue_id"/>
-              <input type="text" class="full" id="venue_name" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
-            </div>
+      <input type="text" id="city" name="city" value="" ng-model="formData.city" placeholder="City" style="width:222px;margin-right:20px;"/>
+      <select id="state" name="state" placeholder="State" ng-model="formData.state" style="width:245px;margin-right:20px;">
+        <option value="GA">Georgia</option>
+      </select>
+      <input type="text" id="zip_code" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" style="width:160px;" />
+    </div>
 
-            <div>
-              <label for="event_url">Venue URL</label>
-              <input type="text" id="venue_url" class="full" name="venue_url" value="{{venueData.venues[0].url}}"" placeholder="http://www.event.com" ng-model="formData.venue_url" />
-            </div>
-            {{ formData }}
+    <div>
+      <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
+      <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
+    </div>
+      
+    <div>
+      <label for="tags">Tags</label>
+      <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">
+        <auto-complete source="loadTags($query)"></auto-complete>
+      </tags-input>
+    </div>
 
-            <div>
-              <label for="venue_image_url">Venue Image URL</label>
-              <input type="text" id="venue_image_url" class="full" name="venue_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.venue_image_url" />
-            </div>
-
-            <div>
-              <label for="phone">Phone Number</label>
-              <input type="text" id="phone" class="full" name="phone" value="" ng-model="formData.phone" placeholder="1-800-244-4232" />
-            </div>
-
-            <div>
-              <label for="street_address" style="display:inline-block;width:331px;">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
-              <label for="hours" style="display:inline-block;width:155px;">Hours of Operation</label>
-
-              <input type="text" id="street_address" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
-              <input type="text" id="hours" name="hours" value="" ng-model="formData.hours" style="width:341px;" placeholder="6am to 7pm" />
-            </div>
-
-            <div>
-              <label for="city" style="display:inline-block;width:244px;">City</label>
-              <label for="state" style="display:inline-block;width:261px;">State</label>
-              <label for="zip_code" style="display:inline-block;width:162px;">Zip Code</label>
-
-              <input type="text" id="city" name="city" value="" ng-model="formData.city" placeholder="City" style="width:222px;margin-right:20px;"/>
-              <select id="state" name="state" placeholder="State" ng-model="formData.state" style="width:245px;margin-right:20px;">
-                <option>Georgia</option>
-              </select>
-              <input type="text" id="zip_code" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" style="width:160px;" />
-            </div>
-
-            <div>
-              <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
-              <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
-            </div>
-            
-            <div>
-              <label for="tags">Tags</label>
-              <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">
-                <auto-complete source="loadTags($query)"></auto-complete>
-              </tags-input>
-            </div>
-            <div  ng-if="formData.parent_id > 0 || formData.similar_events_model.length == 0">
-              <dl>
-                <dt>Duplicate of</dt>
-                <dd>If you believe this is a duplicate of another event, add it here. We'll make sure it is labeled as such and removed from results.</dd>
-              </dl>
-              <tags-input id="parent_id" ng-model="formData.parent" key-property="id" display-property="event_name" replace-spaces-with-dashes="false" placeholder="Add an event" max-tags=1 addFromAutocompleteOnly="true">
-                <auto-complete source="loadEvents($query)" template="parentIdTemplate" debounceDelay="1000"></auto-complete>
-              </tags-input>
-              <span></span>
-            </div>
-            <div class="similar_venues">
-              <div ng-if="formData.parent_id > 0">
-                This item has been identified as a duplicate of <a href="admin/venue/edit/{{formData.parent_id}}">Venue ID: {{formData.parent_id}}</a>
+    <div ng-if="formData.parent_id > 0 || formData.similar_events_model.length == 0">
+      <dl>
+        <dt>Duplicate of</dt>
+        <dd>If you believe this is a duplicate of another event, add it here. We'll make sure it is labeled as such and removed from results.</dd>
+      </dl>
+      <tags-input id="parent_id" ng-model="formData.parent" key-property="id" display-property="event_name" replace-spaces-with-dashes="false" placeholder="Add an event" max-tags=1 addFromAutocompleteOnly="true">
+        <auto-complete source="loadEvents($query)" template="parentIdTemplate" debounceDelay="1000"></auto-complete>
+      </tags-input>
+      <span></span>
+    </div>
+    <div class="similar_venues">
+      <div ng-if="formData.parent_id > 0">
+        This item has been identified as a duplicate of <a href="admin/venue/edit/{{formData.parent_id}}">Venue ID: {{formData.parent_id}}</a>
+      </div>
+      <div ng-if="formData.similar_venues_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
+        <h4>Duplicated Venues</h4>
+        <p>There are venues that appear to be duplicates of this one. Select those venues here to mark them as duplicates and hide them from listings.</p>
+        <div ng-repeat="(key, value) in formData.similar_venues_model">
+          <div class="single_venue {{isCheched=value.parent_id?'checked-row':''}}">
+            <input type="checkbox" id="venue_id_{{value.id}}"
+                   checklist-model="formData.similar_venues_storage" checklist-value="value.id"
+                   style="display: none"/>
+            <label for="venue_id_{{value.id}}" class="label_container">
+              <div class="container">
+                <span>{{value.venue_name}}</span>
+                <small>Venue ID: {{value.id}}</small>
+                <small>Venue Address: {{value.venue_address_1}} ({{value.venue_lat}}@{{value.venue_lng}})</small>
+                <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
               </div>
-              <div ng-if="formData.similar_venues_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
-                <h4>Duplicated Venues</h4>
-                <p>There are venues that appear to be duplicates of this one. Select those venues here to mark them as duplicates and hide them from listings.</p>
-                <div ng-repeat="(key, value) in formData.similar_venues_model">
-                  <div class="single_venue {{isCheched=value.parent_id?'checked-row':''}}">
-                    <input type="checkbox" id="venue_id_{{value.id}}"
-                           checklist-model="formData.similar_venues_storage" checklist-value="value.id"
-                           style="display: none"/>
-                    <label for="venue_id_{{value.id}}" class="label_container">
-                      <div class="container">
-                        <span>{{value.venue_name}}</span>
-                        <small>Venue ID: {{value.id}}</small>
-                        <small>Venue Address: {{value.venue_address_1}} ({{value.venue_lat}}@{{value.venue_lng}})</small>
-                        <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
-                      </div>
-                    </label>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            <input type="submit" value="Submit" ng-click="processForm(formData); cancel()" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
-
-        </fieldset>
-        </form>
+            </label>
           </div>
-        <script src="/js/jquery.datetimepicker.js"></script>
+          </div>
+        </div>
+      </div>
+    <input type="submit" value="Submit" ng-click="processForm(formData);" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
+  </form>
+</div>

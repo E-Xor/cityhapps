@@ -51,7 +51,7 @@ class Eventbrite extends Integration {
 				$eventRecord->url					=	$jsonArray['events'][$i]['url'];
 				$eventRecord->eventbriteID  		=	$jsonArray['events'][$i]['id'];
 				$eventRecord->name_text 			=	$jsonArray['events'][$i]['name']['text'];
-				$eventRecord->description_text		=	$jsonArray['events'][$i]['description']['text'];
+				$eventRecord->description_text		=	$jsonArray['events'][$i]['description']['html'];
 				$eventRecord->start_local			=	$jsonArray['events'][$i]['start']['local'];
 				$eventRecord->end_local				=	$jsonArray['events'][$i]['end']['local'];
 				$eventRecord->AllDayFlag			=	'';

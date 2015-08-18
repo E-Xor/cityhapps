@@ -41,29 +41,9 @@
           Good For:
       </div>
       <div class="choices">
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_infants" ng-model="filterDefaults.infants">
-          <label for="age_level_infants"><span><i class="fa fa-check"></i></span>Infants</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_toddlers" ng-model="filterDefaults.toddlers">
-          <label for="age_level_toddlers"><span><i class="fa fa-check"></i></span>Toddlers</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_preteens" ng-model="filterDefaults.preteens">
-          <label for="age_level_preteens"><span><i class="fa fa-check"></i></span>Preteens</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_young_adults" ng-model="filterDefaults.youngadults">
-          <label for="age_level_young_adults"><span><i class="fa fa-check"></i></span>Young Adults</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_adults" ng-model="filterDefaults.adults">
-          <label for="age_level_adults"><span><i class="fa fa-check"></i></span>Adult</label>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="age_level_seniors" ng-model="filterDefaults.seniors">
-          <label for="age_level_seniors"><span><i class="fa fa-check"></i></span>Seniors</label>
+        <div class="checkbox-group" ng-repeat="ageLevel in ageLevels">
+          <input type="checkbox" id="age_level_{{ ageLevel.id }}" ng-model="filterDefaults.ageLevel[ageLevel.id]">
+          <label for="age_level_{{ ageLevel.id }}"><span><i class="fa fa-check"></i></span>{{ ageLevel.name }}</label>
         </div>
       </div>
     </div>

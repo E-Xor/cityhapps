@@ -7,7 +7,7 @@ angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
     'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
     'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
     'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
-    'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css']);
+    'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css', 'ngAnimate']);
 
 angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
     $stateProvider.state('main', {
@@ -51,7 +51,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/event/add',
         views: {
             '@main': {
-                templateUrl: 'templates/event.html',
+                templateUrl: 'app/components/happs/edit.html',
                 controller: 'adminEventController'
             },
             'sidebar@main': {
@@ -68,7 +68,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/event/edit/:id',
         views: {
             '@main': {
-                templateUrl: 'templates/event.html',
+                templateUrl: 'app/components/happs/edit.html',
                 controller: 'adminEventController'
             },
             'sidebar@main': {
