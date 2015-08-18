@@ -101,7 +101,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         payload = cleanData.buildRelationships(payload);
         $scope.happ = payload.data[0];
     });
-}).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ) {
+}).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ, $cookieStore) {
     var filter = HappFilterService.getFilters({include: 'categories,venues'});
     Happ.query(filter, function(payload) {
         payload = cleanData.buildRelationships(payload);
@@ -114,6 +114,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.happs = payload.data;
         });
     });
+
+    $scope.authenticated = typeof $cookieStore.get('user') !== 'undefined';
+
 }).controller('happController', function($scope, $http, $stateParams, $cookies, $cookieStore, cleanData, Happ) {
 
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
