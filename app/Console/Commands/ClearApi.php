@@ -4,6 +4,12 @@ namespace CityHapps\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
+use Eventbrite;
+use Eventful;
+use Meetup;
+use FoursquareVenues;
+use EventfulVenues;
+use MeetupVenues;
 
 class ClearApi extends Command
 {
