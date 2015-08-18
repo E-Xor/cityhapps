@@ -358,9 +358,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
     // Processing the form data for adding an event
     $scope.processForm = function(formData) {
-        var edit = ($stateParams.id ? true : false);
-        console.log('formData');
-        console.log(formData);
+        var edit = $stateParams.id ? true : false;
         // Validation
         var error = 0;
         if (!formData) {
@@ -391,6 +389,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             if (formData.parent.length > 0) {
                 formData.parent_id = formData.parent[0]['id'];
             }
+        }
+        if (formData.hasOwnProperty('venue')) {
+            formData.venue_id = formData.venue.id;
         }
 
         // if any error, don't post
@@ -477,6 +478,13 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         document.location.reload(true);
     };
 
+    // This does not work with a resource. I could not tell you why :(
+    $scope.getVenues = function(typed) {
+        return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
+            return response.data.data;
+        });
+    };
+
     // edit page
     if ($stateParams.id) {
         Happ.get({ id: $stateParams.id, include: 'tags,categories,venues,ageLevels'}, function(payload) {
@@ -497,12 +505,12 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                     }
                 }
             });
-            console.log(singleEvent);
             $scope.formData.title = singleEvent.event_name;
             $scope.formData.event_id = singleEvent.id;
             $scope.formData.parent_id = singleEvent.parent_id;
             $scope.formData.event_url = singleEvent.url;
             $scope.formData.event_image_url = singleEvent.event_image_url;
+            $scope.formData.venue = singleEvent.relationships.venue[0];
             $scope.formData.venue_name = singleEvent.venue_name;
             $scope.formData.venue_url = singleEvent.venue_url;
             $scope.formData.street_address = singleEvent.address.street_1;

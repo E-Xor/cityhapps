@@ -30,6 +30,11 @@
     </div>
 
     <div>
+      <label for="venue_realtion">Venue Relation</label>
+      <input type="text" class="full" ng-model="formData.venue" typeahead="venue as venue.name for venue in getVenues($viewValue)" typeahead-min-length="3" typeahead-template-url="app/components/happs/venue-typeahead.tpl.html">
+    </div>
+
+    <div>
       <label for="venue_name">Venue Name <span class="red center margin20">* <span ng-if="venueError">You must have a venue name</span></span></label>
       <input type="text" id="venue_name" class="full" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
     </div>
@@ -62,12 +67,14 @@
     </div>
 
     <div>
+      <label>Indoor or Outdoor</label>
       <input type="checkbox" id="indoor" ng-model="formData.locationType.indoor" style="-webkit-appearance: checkbox;"> <label for="indoor">Indoor</label>
       <input type="checkbox" id="outdoor" ng-model="formData.locationType.outdoor" style="-webkit-appearance: checkbox;"> <label for="outdoor">Outdoor</label>
     </div>
 
     <div>
-      <div ng-repeat="ageLevel in formData.ageLevels">
+      <label>Age Levels</label>
+      <div ng-repeat="ageLevel in formData.ageLevels" class="age-level">
         <input type="checkbox" id="ageLevel{{ ageLevel.id }}" ng-model="ageLevel.value" style="-webkit-appearance: checkbox;"> <label for="ageLevel{{ ageLevel.id }}">{{ ageLevel.name }}</label>
       </div>
     </div>

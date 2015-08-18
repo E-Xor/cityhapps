@@ -2469,9 +2469,17 @@ a.happ-button.homeButtons.homeDirections {
       border-color: #339933;
     }
     &[type='submit'] {
-      background: #87cefa;
-      color:#fff;
+      background: #339999;
+      color: #FFFFFF;
+      font-weight: bold;
     }
+    &[type='checkbox'] + label {
+      display: inline-block; 
+      margin-right: 20px;
+    }
+  }
+  .age-level {
+    display: inline-block;
   }
   select {
     background: #fff;

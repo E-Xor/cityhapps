@@ -55,6 +55,7 @@ class AdminEventController extends Controller {
 
     $eventParams['event_name'] = Input::get('title');
     $eventParams['url'] = Input::get('event_url');
+    $eventParams['venue_id'] = intval(Input::get('venue_id'));
     $eventParams['venue_name'] = Input::get('venue_name');
     $eventParams['venue_url'] = Input::get('venue_url');
     $eventParams['address'] = Input::get('street_address');
@@ -204,6 +205,7 @@ class AdminEventController extends Controller {
 
     $eventParams['event_name'] = Input::get('title');
     $eventParams['url'] = Input::get('event_url');
+    $eventParams['venue_id'] = Input::get('venue_id');
     $eventParams['venue_name'] = Input::get('venue_name');
     $eventParams['venue_url'] = Input::get('venue_url');
     $eventParams['address'] = Input::get('street_address');
@@ -224,6 +226,24 @@ class AdminEventController extends Controller {
     $eventParams['all_day_flag'] = Input::get('all_day');
     $eventParams['end_time'] = (($time = strtotime(Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
 
+    // Location Type Data
+    $location_type_data = Input::get('locationType');
+    $eventParams['location_type'] = NULL;
+
+    if (is_array($location_type_data)) {
+      $indoor = false;
+      $outdoor = false;
+      if (isset($location_type_data['indoor']) && $location_type_data['indoor'])
+        $indoor = true;
+      if (isset($location_type_data['outdoor']) && $location_type_data['outdoor'])
+        $outdoor = true;
+
+      if ($indoor && !$outdoor) 
+        $eventParams['location_type'] = 'Indoor';
+      else if (!$indoor && $outdoor) 
+        $eventParams['location_type'] = 'Outdoor';
+    }
+
     $time = strtotime(Input::get('start_time'));
     $start_time = date("Y-m-d H:j:s", $time);
     // no spot for tags? (maybe this is keywords, and should get ran through some filtering?)
@@ -234,7 +254,16 @@ class AdminEventController extends Controller {
     if ($passValidation)
       $result = Happ::create($eventParams);
 
+      // Process Tags
       $this->createTags($result, Input::get('tags'));
+
+      // Process Age Levels
+      $age_level_data = Input::get('ageLevels');
+      $result->ageLevels()->detach();
+      foreach ($age_level_data as $age_level) {
+        if (isset($age_level['value']) && $age_level['value'])
+          $result->ageLevels()->attach($age_level['id']);
+      }
 
     if ($result)
       return json_encode($result);
