@@ -124,6 +124,13 @@ class AdminEventController extends Controller {
           $result->ageLevels()->attach($age_level['id']);
       }
 
+      // Process Categories
+      $category_data = Input::get('categories');
+      $result->categories()->detach();
+      foreach ($category_data as $category) {
+        $result->categories()->attach($category);
+      }
+
       $similar = $result->similar;
       if (!empty($eventParams['similar_events'])) {
         $similar_events = Happ::whereIn('id', $eventParams['similar_events'])->get();

@@ -348,12 +348,15 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 });
             };
         }
-}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ, AgeLevel, cleanData, $filter) {
+}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ, AgeLevel, cleanData, $filter, Category) {
 
     $scope.user = $cookies.user;
     $scope.formData = {};
     AgeLevel.query(function(payload) {
         $scope.formData.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+    });
+    Category.query(function(payload) {
+        $scope.categories = payload.data.sort(function(a, b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);});
     });
 
     // Processing the form data for adding an event
@@ -399,7 +402,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           $scope.generalError = true;
           return;
         }
-        console.log(formData);
+
         if (!edit) {
             $http({
                 method: 'POST',
@@ -421,7 +424,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                     }
                 }
             }).error(function(data) {
-                    $scope.error = data.error.message;
+                $scope.error = data.error.message;
             });
         } else {
             $http({
@@ -510,7 +513,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.formData.parent_id = singleEvent.parent_id;
             $scope.formData.event_url = singleEvent.url;
             $scope.formData.event_image_url = singleEvent.event_image_url;
-            $scope.formData.venue = singleEvent.relationships.venue[0];
             $scope.formData.venue_name = singleEvent.venue_name;
             $scope.formData.venue_url = singleEvent.venue_url;
             $scope.formData.street_address = singleEvent.address.street_1;
@@ -535,18 +537,30 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 });
                 return base;
             })();
+
+            if (singleEvent.hasOwnProperty('relationships')) {
+                if (singleEvent.relationships.hasOwnProperty('categories')) {
+                    $scope.formData.categories = (function() {
+                        var base = [];
+                        angular.forEach(singleEvent.relationships.categories, function(value) {
+                            base.push(value.id);
+                        });
+                        return base;
+                    })();
+                }
+                if (singleEvent.relationships.hasOwnProperty('tags')) {
+                    $scope.formData.tags = singleEvent.relationships.tags;
+                }
+                if (singleEvent.relationships.hasOwnProperty('venue')) {
+                    $scope.formData.venue = singleEvent.relationships.venue[0];
+                }
+            }
             
             $scope.formData.locationType = {};
             if (singleEvent.location_type == 'Outdoor') {
                 $scope.formData.locationType.outdoor = true;
             } else if (singleEvent.location_type == 'Indoor') {
                 $scope.formData.locationType.indoor = true;
-            }
-
-            if (singleEvent.hasOwnProperty('relationships')) {
-                if (singleEvent.relationships.hasOwnProperty('tags')) {
-                    $scope.formData.tags = singleEvent.relationships.tags;
-                }
             }
             
             $scope.formData.parent = [];
@@ -656,8 +670,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.venuesCount = data.length;
             $scope.allVenues = data.venues;
     });
-    console.log('id');
-    console.log($stateParams.id);
+
     // edit page
     $scope.formData = {};
 
@@ -669,8 +682,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         Venue.get({ id: $stateParams.id, include: 'tags' }, function(payload) {
             var singleVenue = payload.data[0];
 
-            console.log("singleVenue");
-            console.log(singleVenue);
             $scope.formData = {};
             $scope.formData.venue_name = singleVenue.name;
             $scope.formData.venue_id = singleVenue.id;
@@ -690,7 +701,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                $scope.updated_last = singleVenue.updated_at;
             $scope.formData.parent_id = singleVenue.parent_id;
             $scope.formData.similar_venues_model = singleVenue.similar;
-            console.log($scope.formData);
             $scope.formData.similar_venues_storage = (function() {
                 var base = [];
                 angular.forEach(singleVenue.similar, function(value) {
@@ -701,19 +711,11 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 return base;
             })();
 
-            //$scope.formData.tags = singleVenue.links.tags.linkage;
             loadTags = function(query) {
                 return $http.get('/tags/' + query);
             };
-            //console.log('$scope.formData in func');
-            //console.log($scope.formData);
-            //return $scope.formData;
         });
     }
-
-    //console.log('$scope.formData in root');
-    //console.log($scope.formData);
-
 }).controller('appController', function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, $cookies, $cookieStore) {
 
         $scope.$on('$idleStart', function() {
@@ -789,21 +791,17 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
                     var queryString = '';
 
-                    for (var i in $scope.filterData.categories){
-                        console.log(i);
+                    for (var i in $scope.filterData.categories) {
                         if ($scope.filterData.categories[i] == true) {
-                            queryString += "category=[]" + i;
-                            //+ "&";
+                            queryString += 'category=[]' + i;
                         }
                     }
 
-                    $http.get("/events?user_id=" + userID + "&start_date=" + $scope.nowDateGet + '&start_time=' + $scope.nowGet + "&page_count=1" + "&page_size=10" + queryString)
-                        .success(function(data){
+                    $http.get('/events?user_id=' + userID + '&start_date=' + $scope.nowDateGet + '&start_time=' + $scope.nowGet + '&page_count=1' + '&page_size=10' + queryString)
+                        .success(function(data) {
                             $scope.eventData = data;
                             eventSuccess(data);
                             recommendedEventSuccess(data);
-
-                            console.log($scope.filterData.categories);
                     });
 
                 }
@@ -852,8 +850,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 if (eventID == undefined) {
                     eventID = event[num].id; // Recommended events have event_id, regular events have id
                 }
-
-                console.log(event);
 
                 var userID = $scope.user.id;
                 var upVote = event[num].vote.upVote;
@@ -1175,8 +1171,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         else
             jQuery('.main-column').removeClass('fix-vertical');
     });
-
-    console.log($rootScope.currentUser);
 
 }).controller("modalController", function($scope, $modal, $http, authFactory, registerDataService){
 

@@ -259,7 +259,6 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         baseObject.outdoor = true;
         baseObject.zip = '';
         baseObject.search = '';
-        console.log(baseObject);
         return baseObject;
     };
 
@@ -346,7 +345,6 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         var trueCount = 0;
         var count = 0;
         var ageLevelString = '';
-        console.log(this.ageLevel);
         for (var key in this.ageLevel) {
             if (this.ageLevel[key]) {
                 if (ageLevelString != '') {
@@ -367,7 +365,6 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 filter[key] = additional[key];
             }
         }
-        console.log(filter);
         return filter;
     };
 

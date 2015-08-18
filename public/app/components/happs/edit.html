@@ -29,6 +29,16 @@
       <input type="text" id="event_image_url" class="full" name="event_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.event_image_url" />
     </div>
 
+    <div class="happ-categories">
+      <label for="cateogories">Categories</label>
+      <!--div class="selected">
+        <strong>Selected: 
+        <div ng-repeat="category in categories | filter:formData.categories[0]">{{ category.name }}</div>
+        </strong>
+      </div-->
+      <select multiple ng-model="formData.categories" ng-options="category.id as category.name for category in categories" size="5"></select>
+    </div>
+
     <div>
       <label for="venue_realtion">Venue Relation</label>
       <input type="text" class="full" ng-model="formData.venue" typeahead="venue as venue.name for venue in getVenues($viewValue)" typeahead-min-length="3" typeahead-template-url="app/components/happs/venue-typeahead.tpl.html">

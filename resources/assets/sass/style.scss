@@ -2485,6 +2485,16 @@ a.happ-button.homeButtons.homeDirections {
     background: #fff;
     height: 31px;
   }
+  .happ-categories {
+    select {
+      height: auto;
+    }
+    .selected {
+      font-weight: bold;
+      float: right;
+      width: 50%;
+    }
+  }
   .single_event {
     padding: 10px 5px 0;
   }
