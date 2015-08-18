@@ -2447,3 +2447,122 @@ a.ng-binding:hover{
     display: block;
   }
 }
+
+/*Profile Page Styling*/
+
+.user-page-profile{
+  width: 97%;
+
+}
+
+.profile-header{
+  height: 125px;
+}
+
+.userInfo{
+  margin-top: 50px;
+}
+
+.currentUser{
+  color: #fff;
+  font-size: 1.3em;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.userSince{
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.userImage{
+    text-align: center;
+    margin-top: 104px;
+}
+
+.avatarSettings{
+    margin-top: 50px;
+}
+ a, a:hover{
+   color: #9b9b9b;
+
+}
+
+.profileData{
+  height: 900px;
+  color:#9B9B9B;
+  margin-top: -46px;
+}
+
+#deactivate{
+  display: block;
+  float: left;
+  color: #9B9B9B;
+}
+
+.profileDivs{
+    border-bottom: #9B9B9B 1px solid;
+    width: 420px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.edit{
+  float:right;
+  color: #9B9B9B;
+  margin-top: 7px;
+  margin-right: 20px;
+
+}
+
+.notifyBox{
+     display:block;
+     font-weight: 100;
+     padding-top: 50px;
+     padding-bottom: 100px;
+   }
+
+     span{ 
+      margin-left: 15px;
+      font-weight: 500;
+}
+
+#editPic{
+  border-right: #9B9B9B 1px solid;
+  padding-right: 5px;
+}
+
+#removePic {
+    padding-left: 5px;
+}
+
+.saveButton {
+    padding: 13px 27px;
+    border: solid #FF5C50 1px;
+    display: block;
+    color: #FF5C50;
+    text-align: center;
+    height: 50px;
+    width: 250px;
+    float: right;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-right: 125px;
+}
+
+.saveButton:hover {
+      color:#FF5C50 ;
+
+    }
+
+input[type=checkbox] + label {
+  color: #ccc;
+  font-style: italic;
+} 
+input[type=checkbox]:checked + label {
+  color: #f00;
+  font-style: normal;
+} 
+
+
