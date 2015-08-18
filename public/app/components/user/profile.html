@@ -1,20 +1,20 @@
-<div class="container user-page-profile">
+<div class="container user-page-profile" ng-init="getUser();">
     <div class="row profile-header">
         <div class="col-xs-2">
             IMAGE
         </div>
         <div class="col-xs-10">
             <div class="">
-                {{ currentUser.user_name }}
+                {{ curUser.user_name }}
             </div>
             <div class="">
-                Active User since {{ currentUser.created_at | dateToISO | date: 'MMMM yyyy' }}
+                Active User since {{ curUser.created_at | dateToISO | date: 'MMMM yyyy' }}
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-2">
-            {{ currentUser }}
+            {{ curUser }}
             DATA
         </div>
     </div>

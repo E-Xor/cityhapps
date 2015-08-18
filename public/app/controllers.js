@@ -1139,6 +1139,30 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         }
 
     };
+        $scope.curUser = {};
+
+        $scope.getUser = function () {
+
+            if(typeof $cookieStore.get('user') === 'undefined') return;
+
+            var id = {id: $cookieStore.get('user').id};
+
+            $http({
+                method: 'POST',
+                url: '/user/getData',
+                data: id,
+                headers: {"Content-Type": "application/json"}
+            })
+                .success(function (res) {
+                    //console.log('Cur User');
+                    //console.log(res);
+                    $scope.curUser = res;
+                })
+                .error(function (res) {
+                    console.log('Errors');
+                    console.log(res);
+                });
+        };
 
         $scope.getUserData = function() {
             var data = {id: $cookieStore.get('user').id};
@@ -1151,7 +1175,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             })
                 .success(function (res) {
                     console.log(res);
-                    $scope.formData.username = res.username;
+                    $scope.formData.username = res.user_name;
                     $scope.formData.email = res.email;
                 })
                 .error(function (res) {
