@@ -2494,10 +2494,11 @@ a.ng-binding:hover{
   margin-top: -46px;
 }
 
-#deactivate{
+.deactivate{
   display: block;
   float: left;
   color: #9B9B9B;
+  margin-top: 7px;
 }
 
 .profileDivs{
@@ -2508,6 +2509,11 @@ a.ng-binding:hover{
 
 }
 
+.middleInfo{
+    float: right;
+    margin-right: 195px;
+
+}
 .edit{
   float:right;
   color: #9B9B9B;
@@ -2530,7 +2536,7 @@ a.ng-binding:hover{
 
 #editPic{
   border-right: #9B9B9B 1px solid;
-  padding-right: 5px;
+  padding-right: 6px;
 }
 
 #removePic {
@@ -2556,13 +2562,27 @@ a.ng-binding:hover{
 
     }
 
-input[type=checkbox] + label {
-  color: #ccc;
-  font-style: italic;
-} 
-input[type=checkbox]:checked + label {
-  color: #f00;
-  font-style: normal;
-} 
+.filter-more-options.row.notification {
+    margin-top: 55px;
+    margin-bottom: 128px;
+    margin-left: -18px;
+}
+
+.fa.notifyCheck{
+  color: #FF5C50;
+      display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin: 0 0.5em 0.3em 0.25em;
+    border: 1px solid #9B9B9B;
+    color: #FF5C50;
+    vertical-align: bottom;
+    text-align: center;
+
+}
+input#notifyMe {
+    display: none;
+}
+
 
 
