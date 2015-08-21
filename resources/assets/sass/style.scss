@@ -358,12 +358,14 @@ input.main-search {
   }
   .happ-single {
     margin-top: 16px;
-    padding: 0 15px;
+    padding: 10px 10px 0px 10px;
     .happ-image {
       height: 123px;
       margin-bottom: 17px;
       .happ-categories {
         font-size: 10px;
+        line-height: 13px;
+        padding: 2px 18px;
       }
       .happ-date {
         font-weight: bold;
