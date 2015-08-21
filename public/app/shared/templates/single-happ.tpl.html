@@ -1,7 +1,8 @@
 <div class="col-md-4">
   <div class="container happ-single">
     <div class="row">
-      <div class="col-sm-7 col-md-12 happ-image" style="background-image: url('{{happ.event_image_url}}'); background-size: cover;">
+      <div class="col-sm-7 col-md-12 happ-image">
+        <div class="happ-image-background" style="background-image: url('{{happ.event_image_url}}'); background-size: cover;"></div>
         <div class="happ-categories" ng-if="happ.relationships.categories">
           <span ng-repeat="category in happ.relationships.categories">
             <span class="happ-category">{{ category.name }}</span>{{ $last ? '' : ', ' }}
@@ -33,17 +34,17 @@
         <h3 class="happ-name">
           {{happ.event_name}}
         </h3>
-        <div class="happ-icons">
-          <div class="happ-icon happ-icon-date">
-            <i class="fa fa-calendar-o"></i> {{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
-          </div>
-          <div class="happ-icon happ-icon-time">
-            <i class="fa fa-clock-o"></i> {{ happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
-          </div>
-          <div class="happ-icon happ-icon-venue" ng-repeat="venue in happ.relationships.venues">
-            <a href="/venue/{{ venue.id }}"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
-          </div>
-        </div>
+        <ul class="happ-icons fa-ul">
+          <li class="happ-icon happ-icon-date">
+            <i class="fa fa-li fa-calendar-o"></i>{{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
+          </li>
+          <li class="happ-icon happ-icon-time">
+            <i class="fa fa-li fa-clock-o"></i> <span class="happ-icon-data">{{ happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}</span>
+          </li>
+          <li class="happ-icon happ-icon-venue" ng-repeat="venue in happ.relationships.venues">
+            <a href="/venue/{{ venue.id }}"><i class="fa fa-li fa-map-marker"></i> <span class="happ-icon-data">{{ venue.name }}</span></a>
+          </li>
+        </ul>
         
       </div>
       <div class="happ-buttons">
