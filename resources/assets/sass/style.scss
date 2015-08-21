@@ -129,32 +129,6 @@ body {
 
 .page-wrapper{ width: 100%; height: 100%; }
 
-@media (min-width: $screen-md-min) {
-  .content-wrapper {
-    width: 80%;
-    float: left;
-    .menu-button {
-      display: none !important;
-    }
-  }
-  .sidebar{
-    width: 20%;
-    float: left;
-    display: block;
-  }
-}
-
-@media (min-width: $screen-sm-min) {
-  .content-wrapper {
-    .menu-button {
-      position: absolute;
-      left: 30px;
-      top: 20px;
-      font-size: 30px;
-    }
-  }
-}
-
 .menu-button {
   position: absolute;
   left: 18px;
@@ -254,15 +228,12 @@ input.main-search {
       }
     }
     .happ-date {
-      color: #FFFFFF;
-      background-color: rgba(0, 0, 0, 0.8);
       padding: 11px;
       border-top: 2.5px solid #D9433F ;
       position: absolute;
       bottom: 0px;
       left: 15px;
       width: 100%;
-      font-weight: bold;
     }
   }
   .happ-data {
@@ -282,6 +253,13 @@ input.main-search {
       line-height: 22px;
       color: #3D3D3D;
       margin: 15px 0 30px;
+    }
+    .happ-icons{
+      color: $grey;
+      font-size: 12px;
+      a{
+        color: $grey;
+      }
     }
     .happ-data-footer {
       position: absolute;
@@ -346,13 +324,90 @@ input.main-search {
 }
 
 .happ-listing {
-  margin: 0 30px;
+  .happ-listing-container {
+    padding-bottom: 14px;
+  }
   .happ-single {
-    margin: 25px 30px;
+    margin-top: 16px;
+    padding: 10px 10px 0px 10px;
     .happ-image {
-      height: 180px;
+      height: 123px;
+      margin-bottom: 17px;
+      .happ-image-background {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        left: -15px;
+        padding: 0 15px;
+        box-sizing: content-box;
+      }
+      .happ-categories {
+        font-size: 10px;
+        line-height: 13px;
+        padding: 2px 18px;
+        top: 10px;
+      }
+      .happ-date {
+        font-size: 9px;
+        height: 22px;
+        line-height: 22px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        border-width: 1px;
+        text-transform: uppercase;
+      }
     }
-  
+    .happ-data {
+      min-height: 0px;
+      padding-bottom: 50px;
+      .happ-name {
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 18px;
+        margin-top: 0;
+        margin-bottom: 12px;
+      }
+      .happ-icons {
+        font-size: 9.5px;
+        .happ-icon {
+          .fa {
+            font-size: 10px;
+          }
+          a {
+            color: inherit;
+          }
+          &.happ-icon-date {
+            display: none;
+          }
+        }
+      }
+    }
+    .happ-buttons {
+      line-height: 34px;
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      width: 100%;
+      padding: 0 15px;
+      .happ-button {
+        font-size: 10px;
+        border: none;
+        border-top: 1px solid #FC5C50;
+        height: auto;
+        padding: 0;
+        text-shadow: none;
+        font-weight: bold;
+        float: left;
+      }
+      .happ-button-directions {
+        background-color: #FFFFFF;
+        color: #FC5C50;
+      }
+      .happ-button-more {
+        background-color: #FC5C50;
+        color: #FFFFFF;
+      }
+    }
   }
 }
 
@@ -1732,14 +1787,6 @@ h3 {
 		}
 	}
 
-    .time {
-      float: left;
-      margin: 10px 0;
-      width: 100%;
-      text-align: center;
-      color: #fff;
-    }
-
 	.event-slider {
 		margin-bottom: 52px;
 	}
@@ -1836,13 +1883,14 @@ h3 {
 
 .happ-date {
   color: #FFFFFF;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 11px;
   border-top: solid #D9433F 2.5px;
   position: absolute;
   margin-top: 136px;
   width: 100%;
   margin-left: -15px;
+  font-weight: bold;
 }
 
 .happ-buttons {
@@ -2203,104 +2251,11 @@ a.ng-binding:hover{
   color: #333;
 }
 
-.happInfo {
-    padding-right: 0px;
-}
-
 /*Home Page SCSS*/
 
-.homeImage {
-    width: 92%;
-    margin-left: 4%;
-    min-height: 130px;
-    }
-
-.homeButtons{
-  float: left;
-  text-decoration: none;
-  font-size: 12px;
-  width: 50%;
-  }
-
-.homeDirections{
-  background-color: #fff;
-  border-bottom: none;
-  border-left: none;
-  text-shadow: none;
-  position: absolute;
-  bottom: 0;
-  right: 50%;
-
-}
-.homeMore{
-  position: absolute;
-    bottom: 0;
-    left: 50%;
-}
-
-.homeListing{
-      position: relative;
-      margin: 0;
-
-}
-
-a .homeDirections{
-  background-color: none;
-}
-a.happ-button.homeButtons.homeDirections {
-    color: #E24B44;
-}
-
-.homeName{
-   padding: 0 10px;
-  font-size: 1em;
-  display: block;
-  height: 20px;
-}
-
-
-.homeDate {
-    margin-top: 106px;
-    padding: 0;
-    font-size: 16px;
-}
-
-.homeIcons{
-  font-size: 12px;
-  color: $grey;
-
-  a{
-    color: $grey;
-    font-size: 12px
-  }
-
-}
-
-
-
-#startDate{
+.start-date{
   margin-left: 5px;
-  font-size: .9em;
 }
-
-.homeInfo {
-    height: 180px;
-}
-
-.homeRP {
-    padding: 15% 13%;
-    font-weight: 600;
-    font-size: .8em;
-
-    #rating{
-      margin-bottom: 14px;
-    }
-}
-
-   .homeSingle {
-    margin: 15px 12px !important;   
-    width: 31%;
-}  
 
 /*Single Venue View*/
 .venueSingle{
@@ -2356,92 +2311,45 @@ a.happ-button.homeButtons.homeDirections {
   }
 }
 
-/*Media Queries*/               
-@media (min-width: 768px) and (max-width: 1200px) {
-  .happ-single{
-    float: left;
-    width: 97%;
+.venue-listing {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  .container {
+    background-color: #FFFFFF;
+    padding: 40px 50px;
   }
-
-  .homeImage{
-    width: 55%;
-    margin-left: 2%;
-    height: 231px;
+  .venue-line {
+    display: table-row;
+    a {
+      color: #9B9B9B;
+      display: table-cell;
+      vertical-align: middle;
+      height: 50px;
+      &:hover, &:active {
+        color: #FF5C50;
+      }
+    }
   }
-
-  .homeDate{
-    margin-top: 187px;
-    padding: 10px;
-  }
-
-  .homeName {
-    padding:0;
-    margin-bottom: 14%;
-    width: 70%;
-    font-size: 1.2em;
-  }
-
-  .happText {
-    width: 45%;
+  .venue-pagination {
+    font-weight: normal;
+    font-size: 15px;
+    margin-top: 40px;
     float: right;
-    margin-top: -240px;
-    margin-left: 0px;
-  }
-
-  .homeButtons{
-    width: 20%;
-    margin-bottom: 8px;
-  }
-
-  .homeDirections{
-    border: 2px solid #FF5C50;
-    margin-right: -29%;
-  }
-  .homeMore{
-    margin-left: 29%;
-  }
-
-  .ratingPrice{
-    margin-top: -167px;
-    font-size: .9em;
-  }
-  .homeRP #rating{
-    margin-bottom: 24px;
-  }
-}
-
-@media only screen and (max-width : 768px) {
-
-  .homeSingle {
-    width:97%;
-  }
-
-  .homeTime {
-    margin: 0;
-    text-align: left;
-  }
-
-  .homeName {
-    padding:0;
-    font-size: 1em;
-    width:70%;
-  }
-
-  .homeImage{
-    width: 96%;
-    margin: 2% 0 0% 2%;
-  }
-
-  .ratingPrice {
-    margin-top: -45%;
-  }
-
-  .homeRP #rating {
-     margin-bottom: 30px;
-   }
-
-  .homeVenue a{
-    margin: 0;       
+    li {
+      display: inline-block;
+      margin-right: 20px;
+      a {
+        color: #FC5C50;
+        &.active {
+          font-weight: 900;
+        }
+        &.prevnext {
+          font-weight: 500;
+          font-size: 13px;
+        }
+      }
+    }
   }
 }
 
@@ -2521,5 +2429,216 @@ a.happ-button.homeButtons.homeDirections {
   }
   .single_venue span, .single_venue small {
     display: block;
+  }
+}
+
+/*Profile Page Styling*/
+
+.user-page-profile{
+  width: 97%;
+
+}
+
+.profile-header{
+  height: 125px;
+}
+
+.userInfo{
+  margin-top: 50px;
+}
+
+.currentUser{
+  color: #fff;
+  font-size: 1.3em;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.userSince{
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.userImage{
+    text-align: center;
+    margin-top: 104px;
+}
+
+.avatarSettings{
+    margin-top: 50px;
+    a, a:hover{
+       color: #9b9b9b;
+    }
+}
+
+.profileData{
+  height: 900px;
+  color:#9B9B9B;
+  margin-top: -46px;
+}
+
+.deactivate{
+  display: block;
+  float: left;
+  color: #9B9B9B;
+  margin-top: 7px;
+}
+
+.profileDivs{
+    border-bottom: #9B9B9B 1px solid;
+    width: 420px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.middleInfo{
+    float: right;
+    margin-right: 195px;
+
+}
+.edit{
+  float:right;
+  color: #9B9B9B;
+  margin-top: 7px;
+  margin-right: 20px;
+
+}
+
+.notifyBox{
+  display:block;
+  font-weight: 100;
+  padding-top: 50px;
+  padding-bottom: 100px;
+  span{ 
+    margin-left: 15px;
+    font-weight: 500;
+  }
+}
+
+#editPic{
+  border-right: #9B9B9B 1px solid;
+  padding-right: 6px;
+}
+
+#removePic {
+    padding-left: 5px;
+}
+
+.saveButton {
+    padding: 13px 27px;
+    border: solid #FF5C50 1px;
+    display: block;
+    color: #FF5C50;
+    text-align: center;
+    height: 50px;
+    width: 250px;
+    float: right;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-right: 125px;
+}
+
+.saveButton:hover {
+  color: #FF5C50;
+}
+
+.filter-more-options.row.notification {
+    margin-top: 55px;
+    margin-bottom: 128px;
+    margin-left: -18px;
+}
+
+.fa.notifyCheck{
+  color: #FF5C50;
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0 0.5em 0.3em 0.25em;
+  border: 1px solid #9B9B9B;
+  color: #FF5C50;
+  vertical-align: bottom;
+  text-align: center;
+}
+
+input#notifyMe {
+    display: none;
+}
+
+/* Bootstrap Tablet Breakpoint */
+@media (min-width: $screen-sm-min) {
+  .content-wrapper {
+    .menu-button {
+      position: absolute;
+      left: 30px;
+      top: 20px;
+      font-size: 30px;
+    }
+  }
+}
+
+/* Bootstrap Small Screen Breakpoint */
+@media (min-width: $screen-md-min) {
+  .content-wrapper {
+    width: 80%;
+    float: left;
+    .menu-button {
+      display: none !important;
+    }
+  }
+  .sidebar{
+    width: 20%;
+    float: left;
+    display: block;
+  }
+  .happ-listing {
+    .happ-single {
+      .happ-image {
+        height: 147px;
+        margin-bottom: 20px;
+        .happ-image-background {
+          box-sizing: border-box;
+          left: 0px;
+        }
+        .happ-categories {
+          font-size: 12px;
+          line-height: 14px;
+          padding: 5px 15px;
+          left: 0px;
+        }
+        .happ-date {
+          font-size: 11px;
+          height: 26px;
+          line-height: 26px;
+          position: relative;
+          top: -26px;
+          left: 0px;
+          margin: 0px;
+        }
+      }
+      .happ-data {
+        height: 220px;
+        .happ-name {
+          font-size: 15px;
+          line-height: 20px;
+          margin: 0 7px 15px;
+        }
+        .happ-icons {
+          font-size: 12px;
+          margin-right: 7px;
+          .happ-icon {
+            margin-bottom: 15px;
+            .fa {
+              font-size: 12px;
+            }
+            &.happ-icon-date {
+              display: block;
+            }
+          }
+        }
+      }
+      .happ-buttons {
+        line-height: 40px;
+      }
+    }
   }
 }

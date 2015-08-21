@@ -226,10 +226,7 @@ class UserController extends Controller {
         $userId = $request->request->get('id');
         $user = User::find($userId);
 
-        $userName = $user->user_name;
-        $userEmail = $user->email;
-
-        return json_encode(['username' => $userName, 'email' => $userEmail]);
+        return json_encode($user);
 
     }
 
@@ -319,17 +316,23 @@ class UserController extends Controller {
     {
         $uri = $request->path();
         $domain = url();
-        $user = \Auth::user();
+
+        $user = null;
+
+        try {
+            $token = JWTAuth::getToken();
+            $user = JWTAuth::parseToken()->authenticate();
+        } catch (\Exception $e) {
+            //
+        }
 
         if ($user instanceof User) {
             if($user->isAdmin()) {
-                return redirect()->to($domain . '/#' . $uri);
+                return redirect()->to($domain . '/' . $uri);
             }
         }
 
         return redirect()->to($domain);
-
-
     }
 
     /**

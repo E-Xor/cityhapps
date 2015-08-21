@@ -1,0 +1,56 @@
+<div class="col-md-4">
+  <div class="container happ-single">
+    <div class="row">
+      <div class="col-sm-7 col-md-12 happ-image">
+        <div class="happ-image-background" style="background-image: url('{{happ.event_image_url}}'); background-size: cover;"></div>
+        <div class="happ-categories" ng-if="happ.relationships.categories">
+          <span ng-repeat="category in happ.relationships.categories">
+            <span class="happ-category">{{ category.name }}</span>{{ $last ? '' : ', ' }}
+          </span>
+        </div>
+        <div class="happ-date">
+          <span class="start-date">{{ happ.start.local | dateToISO | date: 'MMM d' }}</span>
+          <span ng-if="authenticated">
+            <i class="fa fa-star"></i>
+            <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
+            <div class="buttons">
+            <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
+            <a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
+            </div>-->
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-5 col-md-12 happ-data">
+        <!--div class="happ-values">
+          <div class="happ-rating">
+            Rating<br>
+            <i class="fa fa-dot-circle-o"></i><i class="fa fa-dot-circle-o"></i><i class="fa fa-dot-circle-o"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle-o"></i>
+          </div>
+          <div class="happ-price">
+            Price<br>
+            <i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i>
+          </div>
+        </div-->
+        <h3 class="happ-name">
+          {{happ.event_name}}
+        </h3>
+        <ul class="happ-icons fa-ul">
+          <li class="happ-icon happ-icon-date">
+            <i class="fa fa-li fa-calendar-o"></i>{{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
+          </li>
+          <li class="happ-icon happ-icon-time">
+            <i class="fa fa-li fa-clock-o"></i> <span class="happ-icon-data">{{ happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}</span>
+          </li>
+          <li class="happ-icon happ-icon-venue" ng-repeat="venue in happ.relationships.venues">
+            <a href="/venue/{{ venue.id }}"><i class="fa fa-li fa-map-marker"></i> <span class="happ-icon-data">{{ venue.name }}</span></a>
+          </li>
+        </ul>
+        
+      </div>
+      <div class="happ-buttons">
+          <a class="happ-button happ-button-directions" href='{{happ.geo_data.google_directions_link}}' target="_new">Get Directions</a>
+          <a class="happ-button happ-button-more" href='/happ/{{ happ.id }}'>Learn More</a>
+        </div>
+    </div>
+  </div>
+</div>

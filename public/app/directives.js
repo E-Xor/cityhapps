@@ -22,4 +22,18 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
             scope.$on('$locationChangeSuccess', setActive);
         }
     };
-}]);
+}]).directive('chHapp', function() {
+    function link(scope, element, attributes) {
+        scope.$watch(
+            attributes.chHapp,
+            function handleHappBindingChangeEvent(newValue) {
+                scope.happ = newValue;
+            }
+        );
+    }
+
+    return {
+        link: link,
+        templateUrl: 'app/shared/templates/single-happ.tpl.html'
+    };
+});

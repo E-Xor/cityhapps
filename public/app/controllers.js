@@ -2,7 +2,7 @@
  * Controllers for CityHapps
  */
 
-angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope, authFactory) {
+angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope) {
     var vm = this;
 
     vm.loginError = false;
@@ -13,8 +13,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             email: vm.email,
             password: vm.password
         };
-        console.log(credentials);
-        authFactory.loginUser(credentials);
 
         $auth.login(credentials).then(function() {
 
@@ -30,31 +28,24 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             // Because we returned the $http.get request in the $auth.login
             // promise, we can chain the next promise to the end here
         }).then(function(response) {
-
-            // Stringify the returned data to prepare it
-            // to go into local storage
             var user = JSON.stringify(response.data.user);
-
-            // Set the stringified user data into local storage
             localStorage.setItem('user', user);
-
-            // The user's authenticated state gets flipped to
-            // true so we can now show parts of the UI that rely
-            // on the user being logged in
             $rootScope.authenticated = true;
-
-            // Putting the user's data on $rootScope allows
-            // us to access it anywhere across the app
             $rootScope.currentUser = response.data.user;
-
-            // Everything worked out so we can now redirect to
-            // the users state to view the data
-            $state.go('/', {});
+            $state.go('main.home', {});
         });
     };
     vm.authenticate = function(provider) {
       $auth.authenticate(provider);
     };
+}).controller('UserLogoutController', function($auth, $rootScope, $state) {
+    $auth.logout().then(function() {
+        localStorage.removeItem('user');
+        $rootScope.authenticated = false;
+        $rootScope.currentUser = null;
+    }).then(function() {
+        $state.go('main.home', {});
+    });
 }).controller('MainFilterController', function($scope, $stateParams, HappFilterService, AgeLevel) {
     AgeLevel.query(function(payload) {
         $scope.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
@@ -101,7 +92,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         payload = cleanData.buildRelationships(payload);
         $scope.happ = payload.data[0];
     });
-}).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ) {
+}).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ, $cookieStore) {
     var filter = HappFilterService.getFilters({include: 'categories,venues'});
     Happ.query(filter, function(payload) {
         payload = cleanData.buildRelationships(payload);
@@ -211,6 +202,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
     });
+    console.log(authenticated);
     $scope.$on('filterUpdate', function() {
         var filter = HappFilterService.getFilters({include: 'categories,venues', category: $stateParams.slug});
         Happ.query(filter, function(payload) {
@@ -236,24 +228,33 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         $scope.pagination = [];
         if (page != 1) {
-            $scope.pagination.push({'text': '< Previous', 'link': '/venues/' + (page - 1)});
+            $scope.pagination.push({'text': '< Previous', 'link': '/venues/' + (page - 1), 'class': 'prevnext'});
+            $scope.pagination.push({'text': '1', 'link': '/venues'});
+        } else {
+            $scope.pagination.push({'text': '1', 'link': '/venues', 'class': 'active'});
         }
-        $scope.pagination.push({'text': '1', 'link': '/venues'});
         
         if (page - 3 > 1)
-            $scope.pagination.push({'text': '...'});
+            $scope.pagination.push({'text': '...', 'link': '#'});
 
         for (var i = page - 2; i < page + 3; i++) {
-            if (i > 1 && i < last)
-                $scope.pagination.push({'text': String(i), 'link': '/venues/' + i});
+            if (i > 1 && i < last) {
+                if (page == i) {
+                    $scope.pagination.push({'text': String(i), 'link': '/venues/' + i, 'class': 'active'});
+                } else {
+                    $scope.pagination.push({'text': String(i), 'link': '/venues/' + i});
+                }
+            }
         };
 
         if (page + 3 < last)
-            $scope.pagination.push({'text': '...'});
+            $scope.pagination.push({'text': '...', 'link': '#'});
 
-        $scope.pagination.push({'text': String(last), 'link': '/venues/' + last});
         if (page != last) {
-            $scope.pagination.push({'text': 'Next >', 'link': '/venues/' + (page + 1)});
+            $scope.pagination.push({'text': String(last), 'link': '/venues/' + last});
+            $scope.pagination.push({'text': 'Next >', 'link': '/venues/' + (page + 1), 'class': 'prevnext'});
+        } else {
+            $scope.pagination.push({'text': String(last), 'link': '/venues/' + last, 'class': 'active'});
         }
 
     });
@@ -724,8 +725,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         });
 
-        $scope.user = $cookies.user;
-
         $scope.filterData = {};
         $scope.filterData.categories = {};
 
@@ -840,8 +839,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         };
 
-        $rootScope.user = $cookies.user;
-
         if ($rootScope.user) {
 
             $scope.voteEvent = function(event, num, action) {
@@ -908,11 +905,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             password: ''
         };
 
-        //$scope.loginUser = function(formData) {
-        //  authFactory.loginUser(formData);
-        //};
-
-
         $scope.vote = registerDataService.vote;
 
         $scope.$on('event:loginConfirmed', function(){
@@ -922,7 +914,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         });
     }
-).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $rootScope) {
+).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
     //Facebook Auth
 
     // Define user empty data :/
@@ -1018,14 +1010,16 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     };
 
         $scope.loginUser = function(formData) {
-            console.log("login data");
-            console.log(formData);
           authFactory.loginUser(formData);
         };
 
-      $scope.logout = function() {
-
-      };
+    $scope.logout = function() {
+        $auth.logout().then(function() {
+            localStorage.removeItem('user');
+            $rootScope.authenticated = false;
+            $rootScope.currentUser = null;
+        })
+    };
 
       $scope.remove = function() {
         Facebook.api(
@@ -1098,10 +1092,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 auth.email = formData.email;
                 auth.password = formData.password;
 
-                authFactory.loginUser({
+                /*authFactory.loginUser({
                     'email': formData.email,
                     'password': formData.password
-                });
+                });*/
 
                 auth.login();
             }
@@ -1123,46 +1117,46 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
     };
 
-        $scope.getUserData = function() {
-            var data = {id: $cookieStore.get('user').id};
+    $scope.getUserData = function() {
+        var data = {id: $cookieStore.get('user').id};
 
-            $http({
-                method: 'POST',
-                url: '/user/getData',
-                data: data,
-                headers: {"Content-Type": "application/json"}
+        $http({
+            method: 'POST',
+            url: '/user/getData',
+            data: data,
+            headers: {"Content-Type": "application/json"}
+        })
+            .success(function(res) {
+                console.log(res);
+                $scope.formData.username = res.user_name;
+                $scope.formData.email = res.email;
             })
-                .success(function (res) {
-                    console.log(res);
-                    $scope.formData.username = res.username;
-                    $scope.formData.email = res.email;
-                })
-                .error(function (res) {
-                    console.log('Errors');
-                    console.log(res);
-                });
-        };
+            .error(function(res) {
+                console.log('Errors');
+                console.log(res);
+            });
+    };
 
-        $scope.logoutUser = function() {
-            authFactory.logoutUser();
-        };
+    $scope.logoutUser = function() {
+        authFactory.logoutUser();
+    };
 
-        $scope.userExist = function() {
-            authFactory.userExist();
-        };
+    $scope.userExist = function() {
+        authFactory.userExist();
+    };
 
 
-        $scope.resetPassword = function (data) {
-            authFactory.resetPassword($scope.formData);
-        };
+    $scope.resetPassword = function (data) {
+        authFactory.resetPassword($scope.formData);
+    };
 
-        $scope.editUserData = function () {
-            authFactory.editUserData($scope.formData);
-        };
+    $scope.editUserData = function () {
+        authFactory.editUserData($scope.formData);
+    };
 
-        $scope.nextStep = function(formData) {
+    $scope.nextStep = function(formData) {
 
-        };
+    };
 
     // Just a quick set of JS to keep the box vertically centered
     jQuery(window).on('resize load', function() {
