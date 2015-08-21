@@ -226,10 +226,7 @@ class UserController extends Controller {
         $userId = $request->request->get('id');
         $user = User::find($userId);
 
-        $userName = $user->user_name;
-        $userEmail = $user->email;
-
-        return json_encode(['username' => $userName, 'email' => $userEmail]);
+        return json_encode($user);
 
     }
 
