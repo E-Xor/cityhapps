@@ -53,6 +53,11 @@
 		        </div>
 			</div>
 		</div>
+		<div class="row" ng-if="currentUser.role=='ROLE_ADMIN'">
+			<div class="col-xs-12">
+				<a href="/admin/event/edit/{{ happ.id }}"><i class="fa fa-pencil-square-o"></i> Edit Event</a>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="happ-tags" ng-if="happ.relationships.tags">

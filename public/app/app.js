@@ -314,6 +314,9 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/reset',
         templateUrl: 'app/components/user/reset.html',
         controller: 'registerFormController'
+    }).state('userLogout', {
+        url: '/logout',
+        controller: 'UserLogoutController'
     }).state('main.userProfileEdit', {
         url: '/profile/edit',
         views: {
@@ -370,8 +373,17 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         touchToDrag: false
     };
 
-}).run(function() {
-   //
+}).run(function($rootScope, $state, $http) {
+    $rootScope.$on('$stateChangeStart', function(event, toState) {
+        $http.get('api/authenticate/user')
+        .then(function(response) {
+            $rootScope.authenticated = true;
+            $rootScope.currentUser = response.data.user; 
+        })
+        .catch(function(payload, status) {
+            console.log('Not authenticated');
+        });
+    });
 });
 
 /*

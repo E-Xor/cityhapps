@@ -316,17 +316,23 @@ class UserController extends Controller {
     {
         $uri = $request->path();
         $domain = url();
-        $user = \Auth::user();
+
+        $user = null;
+
+        try {
+            $token = JWTAuth::getToken();
+            $user = JWTAuth::parseToken()->authenticate();
+        } catch (\Exception $e) {
+            //
+        }
 
         if ($user instanceof User) {
             if($user->isAdmin()) {
-                return redirect()->to($domain . '/#' . $uri);
+                return redirect()->to($domain . '/' . $uri);
             }
         }
 
         return redirect()->to($domain);
-
-
     }
 
     /**
