@@ -6,29 +6,26 @@
         </div>
         <div class="col-xs-9 userInfo">
             <div class="currentUser">
-             {{ currentUser.user_name }}
+             {{ curUser.user_name }}
             </div>
             <div class="userSince">
-                Active user since {{ currentUser.created_at | dateToISO | date: 'MMMM yyyy' }}
+                Active user since {{ curUser.created_at | dateToISO | date: 'MMMM yyyy' }}
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-9 col-xs-offset-3 profileData">
-        <div class="profileDivs profileUsername">  <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Username:</h5> {{ currentUser }} </div>
-        <div class="profileDivs profileLocation"> <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Location:</h5> </div>
-         <div class="profileDivs profileEmail"> <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Email:</h5> </div>
+            <div class="profileDivs profileUsername">  <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Username:</h5> {{ curUser.user_name }} </div>
+            <div class="profileDivs profileLocation"> <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Location:</h5> {{ curUser.city }}</div>
+             <div class="profileDivs profileEmail"> <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Email:</h5> {{ curUser.email }}</div>
 
-        <div class="filter-more-options row notification">   
-          <input type="checkbox" id="notifyMe" ng-model="filterDefaults.night">
-          <label for="notifyMe"><span><i class="fa fa-check notifyCheck"></i></span>I want to receive notifications for new events</label>
+            <div class="filter-more-options row notification">   
+              <input type="checkbox" id="notifyMe" ng-model="filterDefaults.night">
+              <label for="notifyMe"><span><i class="fa fa-check notifyCheck"></i></span>I want to receive notifications for new events</label>
+            </div>
+            <a class="deactivate" href="#">Deactivate account</a>
+            <a class="saveButton" href="#">Save</a>
         </div>
-       
-
-<a class="deactivate" href="#">Deactivate account</a>
-<a class="saveButton" href="#">Save</a>
-        </div>
-
     </div>
 </div>
 

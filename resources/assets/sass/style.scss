@@ -366,6 +366,7 @@ input.main-search {
         font-size: 10px;
         line-height: 13px;
         padding: 2px 18px;
+        top: 10px;
       }
       .happ-date {
         font-weight: bold;
@@ -375,6 +376,7 @@ input.main-search {
         padding-top: 0px;
         padding-bottom: 0px;
         border-width: 1px;
+        text-transform: uppercase;
       }
     }
     .happ-data {
@@ -401,30 +403,31 @@ input.main-search {
           display: none;
         }
       }
-      .happ-buttons {
-        font-size: 10px;
-        line-height: 34px;
+    }
+    .happ-buttons {
+      font-size: 10px;
+      line-height: 34px;
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      width: 100%;
+      padding: 0 15px;
+      .happ-button {
+        border: none;
         border-top: 1px solid #FC5C50;
-        position: absolute;
-        left: 0px;
-        bottom: 0px;
-        width: 100%;
-        .happ-button {
-          height: auto;
-          padding: 0;
-          border: none;
-          text-shadow: none;
-          font-weight: bold;
-          float: left;
-        }
-        .happ-button-directions {
-          background-color: #FFFFFF;
-          color: #FC5C50;
-        }
-        .happ-button-more {
-          background-color: #FC5C50;
-          color: #FFFFFF;
-        }
+        height: auto;
+        padding: 0;
+        text-shadow: none;
+        font-weight: bold;
+        float: left;
+      }
+      .happ-button-directions {
+        background-color: #FFFFFF;
+        color: #FC5C50;
+      }
+      .happ-button-more {
+        background-color: #FC5C50;
+        color: #FFFFFF;
       }
     }
   }
@@ -2484,10 +2487,9 @@ a.ng-binding:hover{
 
 .avatarSettings{
     margin-top: 50px;
-}
- a, a:hover{
-   color: #9b9b9b;
-
+    a, a:hover{
+       color: #9b9b9b;
+    }
 }
 
 .profileData{
@@ -2508,7 +2510,6 @@ a.ng-binding:hover{
     width: 420px;
     padding-top: 20px;
     padding-bottom: 20px;
-
 }
 
 .middleInfo{
@@ -2525,15 +2526,14 @@ a.ng-binding:hover{
 }
 
 .notifyBox{
-     display:block;
-     font-weight: 100;
-     padding-top: 50px;
-     padding-bottom: 100px;
-   }
-
-     span{ 
-      margin-left: 15px;
-      font-weight: 500;
+  display:block;
+  font-weight: 100;
+  padding-top: 50px;
+  padding-bottom: 100px;
+  span{ 
+    margin-left: 15px;
+    font-weight: 500;
+  }
 }
 
 #editPic{
@@ -2560,9 +2560,8 @@ a.ng-binding:hover{
 }
 
 .saveButton:hover {
-      color:#FF5C50 ;
-
-    }
+  color: #FF5C50;
+}
 
 .filter-more-options.row.notification {
     margin-top: 55px;
@@ -2572,16 +2571,16 @@ a.ng-binding:hover{
 
 .fa.notifyCheck{
   color: #FF5C50;
-      display: inline-block;
-    width: 1.2em;
-    height: 1.2em;
-    margin: 0 0.5em 0.3em 0.25em;
-    border: 1px solid #9B9B9B;
-    color: #FF5C50;
-    vertical-align: bottom;
-    text-align: center;
-
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0 0.5em 0.3em 0.25em;
+  border: 1px solid #9B9B9B;
+  color: #FF5C50;
+  vertical-align: bottom;
+  text-align: center;
 }
+
 input#notifyMe {
     display: none;
 }

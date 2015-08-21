@@ -18,42 +18,6 @@
 		</div>
 	</div>
 </div>
-<div class="happ-listing homeListing">
-  <div ng-repeat="happ in venue.relationships.happs" class="happ-single col-md-4 homeSingle">
-    <div class="row">
-      <div class="happ-image col-xs-12 homeImage" style="background-image: url('{{happ.event_image_url}}'); background-size: cover;">
-        <div class="happ-categories" ng-if="happ.relationships.categories">
-          <span ng-repeat="category in happ.relationships.categories">
-            <span class="happ-category">{{ category.name }}</span>{{ $last ? '' : ', ' }}
-          </span>
-        </div>
-        <div class="happ-date homeDate"><span id="startDate">{{ happ.start.local | dateToISO | date: 'MMM d' }}</span></div>
-      </div>
-    </div>
-    <div class="row happText">
-      <div class="col-xs-12 happInfo homeInfo">
-        <h3 class="dark bold homeName">
-          {{happ.event_name}}
-        </h3>
-        <div class="time homeTime homeIcons">
-          <i class="fa fa-calendar-o"></i> {{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
-        </div>
-        <div class="time homeTime homeIcons">
-          <i class="fa fa-clock-o"></i> {{ happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
-        </div>
-        <div ng-repeat="venue in happ.relationships.venues" class="venue homeVenue homeIcons">
-          <a href="/venue/{{ venue.id }}" target="_blank"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
-        </div>
-        <div class="ratingPrice homeRP"><span id="rating">Rating</span><span id="price">Price</span></div>
-        <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
-        <div class="buttons">
-        <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
-        <a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
-        </div>-->
-      </div>
-    </div>
-    <div class="bothButtons">
-      <a class="happ-button homeButtons homeDirections" href='{{happ.geo_data.google_directions_link}}' target="_new">Get Directions</a> <a class="happ-button homeButtons homeMore" href='/happ/{{ happ.id }}'>Learn More</a>
-    </div>
-  </div>
+<div class="happ-listing">
+  <div ng-repeat="happ in venue.relationships.happs" ch-happ="happ"></div>
 </div>
