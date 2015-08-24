@@ -2574,6 +2574,60 @@ input#notifyMe {
       font-size: 30px;
     }
   }
+  .happ-listing {
+    .happ-single {
+      .happ-image {
+        height: 178px;
+        margin-bottom: 15px;
+        .happ-image-background {
+          box-sizing: border-box;
+          left: 0px;
+        }
+        .happ-categories {
+          font-size: 13px;
+          line-height: 15px;
+          padding: 6px 18px;
+          left: 5px;
+        }
+        .happ-date {
+          font-size: 12px;
+          height: 35px;
+          line-height: 35px;
+          position: relative;
+          top: -35px;
+          left: 0px;
+          margin: 0px;
+        }
+      }
+      .happ-data {
+        .happ-name {
+          font-size: 15px;
+          line-height: 20px;
+          margin: 15px 0 15px;
+        }
+        .happ-icons {
+          font-size: 13px;
+          margin-left: 1.2em;
+          .happ-icon {
+            margin-bottom: 10px;
+            .fa {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+      .happ-buttons {
+        width: 41.66666667%;
+        border: none;
+        bottom: 15px;
+        right: 10px;
+        left: inherit;
+        .happ-button{
+          border: 1px solid #FC5C50;
+        }
+      }
+    }
+  }
 }
 
 /* Bootstrap Small Screen Breakpoint */
@@ -2603,7 +2657,6 @@ input#notifyMe {
           font-size: 12px;
           line-height: 14px;
           padding: 5px 15px;
-          left: 0px;
         }
         .happ-date {
           font-size: 11px;
@@ -2618,13 +2671,12 @@ input#notifyMe {
       .happ-data {
         height: 220px;
         .happ-name {
-          font-size: 15px;
-          line-height: 20px;
           margin: 0 7px 15px;
         }
         .happ-icons {
           font-size: 12px;
           margin-right: 7px;
+          margin-left: 2.14285714em;
           .happ-icon {
             margin-bottom: 15px;
             .fa {
@@ -2638,6 +2690,15 @@ input#notifyMe {
       }
       .happ-buttons {
         line-height: 40px;
+        width: 100%;
+        border: none;
+        right: inherit;
+        left: 0px;
+        bottom: 0px;
+        .happ-button {
+          border: none;
+          border-top: 1px solid #FC5C50;
+        }
       }
     }
   }
