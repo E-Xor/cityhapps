@@ -80,6 +80,15 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.$apply();
         }
     });
+    jQuery('#date_calendar_footer').datetimepicker({
+        timepicker: false,
+        mindate: 0,
+        format: 'm/d/Y',
+        onSelectDate: function(ct, $i, event) {
+            $scope.filterDefaults.calendar = $i[0].value;
+            $scope.$apply();
+        }
+    });
     jQuery(window).resize(function() {
         var previousCss = $('.filter-options').attr('style');
         $('.filter-options').attr('style', 'visibility: hidden; display: block !important;');
