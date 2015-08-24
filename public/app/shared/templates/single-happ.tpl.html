@@ -10,7 +10,7 @@
         </div>
         <div class="happ-date">
           <span class="start-date">{{ happ.start.local | dateToISO | date: 'MMM d' }}</span>
-          <span ng-if="authenticated">
+          <span ng-if="authenticated" class="happ-favorite">
             <i class="fa fa-star"></i>
             <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
             <div class="buttons">

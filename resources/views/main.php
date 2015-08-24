@@ -28,6 +28,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-css/1.0.7/angular-css.min.js"></script>
 
         <script src="/js/satellizer.min.js"></script>
+        <script src="/js/md5.min.js"></script>
 
         <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
         <script src="http://platform.twitter.com/widgets.js"></script>

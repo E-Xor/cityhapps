@@ -2465,20 +2465,27 @@ a.ng-binding:hover{
   font-size: 1.2em;
 }
 
-.userImage{
-    text-align: center;
-    margin-top: 104px;
+.user-profile-image{
+  text-align: center;
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    -webkit-border-radius: 75px;
+    -moz-border-radius: 75px;
+    border-radius: 75px;
+    overflow: hidden;
+    margin: 30px auto 10px;
+  }
 }
 
 .avatarSettings{
-    margin-top: 50px;
+    margin-top: 10px;
     a, a:hover{
        color: #9b9b9b;
     }
 }
 
 .profileData{
-  height: 900px;
   color:#9B9B9B;
   margin-top: -46px;
 }
@@ -2521,32 +2528,25 @@ a.ng-binding:hover{
   }
 }
 
-#editPic{
-  border-right: #9B9B9B 1px solid;
-  padding-right: 6px;
-}
-
-#removePic {
-    padding-left: 5px;
-}
-
-.saveButton {
+.profile-controls {
+  margin: 30px 0;
+  .save-button {
     padding: 13px 27px;
     border: solid #FF5C50 1px;
     display: block;
     color: #FF5C50;
     text-align: center;
     height: 50px;
-    width: 250px;
-    float: right;
+    width: 100%;
     font-size: 1.1em;
     font-weight: 500;
-    margin-right: 125px;
+    &:hover {
+      background-color: #FF5C50;
+      color: #FFFFFF;
+    }
+  }
 }
 
-.saveButton:hover {
-  color: #FF5C50;
-}
 
 .filter-more-options.row.notification {
     margin-top: 55px;
@@ -2723,6 +2723,10 @@ input#notifyMe {
           top: -26px;
           left: 0px;
           margin: 0px;
+          .happ-favorite{
+            float: right;
+            font-size: 1.1em;
+          }
         }
       }
       .happ-data {
