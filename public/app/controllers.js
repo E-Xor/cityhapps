@@ -202,7 +202,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
     });
-    console.log(authenticated);
     $scope.$on('filterUpdate', function() {
         var filter = HappFilterService.getFilters({include: 'categories,venues', category: $stateParams.slug});
         Happ.query(filter, function(payload) {
