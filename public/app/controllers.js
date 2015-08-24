@@ -46,7 +46,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     }).then(function() {
         $state.go('main.home', {});
     });
-}).controller('MainFilterController', function($scope, $stateParams, HappFilterService, AgeLevel) {
+}).controller('MainFilterController', function($scope, $stateParams, $timeout, HappFilterService, AgeLevel) {
     AgeLevel.query(function(payload) {
         $scope.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
         var baseObject = {ageLevel: {}};
@@ -81,11 +81,17 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         }
     });
     jQuery(window).resize(function() {
-        var setHeight = (jQuery('.filter-options').height() * -1) + 'px';
+        var previousCss = $('.filter-options').attr('style');
+        $('.filter-options').attr('style', 'visibility: hidden; display: block !important;');
+        var actualHeight = $('.filter-options').height();
+        $('.filter-options').attr('style', previousCss ? previousCss : '');
+        var setHeight = (actualHeight * -1) + 'px';
         jQuery('.filter-options').css({bottom: setHeight});
     });
     jQuery(function() {
         $(window).trigger('resize');
+        // Hacky way to try to correct the filter positioning
+        setTimeout(function() {$(window).trigger('resize');}, 2000);
     });
 }).controller('HappViewController', function($scope, $stateParams, cleanData, Happ) {
     Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
