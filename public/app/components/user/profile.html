@@ -1,12 +1,12 @@
 <div class="container user-page-profile">
     <div class="row profile-header">
-        <div class="col-xs-3 userImage">
-            IMAGE
-            <div class="avatarSettings"><a id="editPic" href="#">Edit</a><a id ="removePic" href="#">Remove</a></div>
+        <div class="col-xs-3 user-profile-image">
+            <div gravatar-image="currentUser.email" class="profile-image"></div>
+            <div class="avatarSettings"><a id="editPic" href="https://en.gravatar.com/" target="_blank">Edit</a><!--a id ="removePic" href="#">Remove</a--></div>
         </div>
         <div class="col-xs-9 userInfo">
             <div class="currentUser">
-             {{ currentUser.user_name }}
+                {{ currentUser.user_name }}
             </div>
             <div class="userSince">
                 Active user since {{ currentUser.created_at | dateToISO | date: 'MMMM yyyy' }}
@@ -15,49 +15,40 @@
     </div>
     <div class="row">
         <div class="col-xs-9 col-xs-offset-3 profileData">
-            <div class="profileDivs profileUsername">  <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Username:</h5> {{ currentUser.user_name }} </div>
-            <div class="profileDivs profileLocation"> <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Location:</h5> {{ currentUser.city }}</div>
-             <div class="profileDivs profileEmail"> <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Email:</h5> {{ currentUser.email }}</div>
+            <form class="profile-data">
+                <div class="profileDivs profileUsername">
+                    <a class="edit" href="#">Edit</a> 
+                    <h5>Username:</h5>
+                    <span class="profile-value">{{ currentUser.user_name }}</span>
+                    <input type="text" ng-model="currentUser.user_name">
+                </div>
+                <div class="profileDivs profileLocation">
+                    <a class="edit" href="#">Edit</a>
+                    <h5>Location:</h5>
+                    <span class="profile-value">{{ currentUser.city }}</span>
+                    <input type="text" ng-model="currentUser.city">
+                </div>
+                <div class="profileDivs profileEmail">
+                    <a class="edit" href="#">Edit</a>
+                    <h5>Email:</h5>
+                    <span class="profile-value">{{ currentUser.email }}</span>
+                    <input type="text" ng-model="currentUser.email">
+                </div>
+                <div class="profileDivs profileEmail">
+                    <a class="edit" href="#">Change Password</a>
+                    <h5>Password:</h5>
+                    <input type="password" ng-model="currentUser.password">
+                    <input type="password" ng-model="currentUser.password_confirmation">
+                </div>
 
-            <div class="filter-more-options row notification">   
-              <input type="checkbox" id="notifyMe" ng-model="filterDefaults.night">
-              <label for="notifyMe"><span><i class="fa fa-check notifyCheck"></i></span>I want to receive notifications for new events</label>
-            </div>
-            <a class="deactivate" href="#">Deactivate account</a>
-            <a class="saveButton" href="#">Save</a>
+                <!--div class="filter-more-options row notification">   
+                  <input type="checkbox" id="notifyMe" ng-model="filterDefaults.night">
+                  <label for="notifyMe"><span><i class="fa fa-check notifyCheck"></i></span>I want to receive notifications for new events</label>
+                </div-->
+                <div class="profile-controls">
+                    <a class="save-button" ng-click="processForm();">Save</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
-<!--div class="register">
-    <div class="modal-header">
-        <h2 class="modal-title uppercase center">Edit Account</h2>
-    </div>
-
-    <div class="modal-body" ng-controller="registerFormController" ng-init="getUserData();">
-
-        <form name="edit">
-            <div class="editForm">
-                <input type="email" readonly ng-value="formData.email" name="email" class="registerEmail block">
-
-                <input type="text" placeholder="Your Username" ng-model="formData.username" value="{{formData.username}}" ng-model-onblur name="username" class="registerEmail block">
-
-                <input type="password" placeholder="New password" name="password" ng-minlength='8' required
-                       class="registerPassword block" ng-model="formData.password" ng-model-onblur>
-                <span ng-if="edit.password.$error.minlength" style="text-align: center;">Please use a minumum of 8 characters.</span>
-
-                <input type="password" placeholder="Re-enter new password" name="password2" required
-                       ui-validate=" '$value==formData.password' " ui-validate-watch=" 'formData.password' "
-                       class="registerPassword2 block" ng-model="formData.password2" ng-model-onblur>
-
-                <span ng-show="edit.password2.$error.validator" class="block" style="text-align: center;">Passwords do not match!</span>
-
-                <button ng-disabled="edit.password.$error.required || edit.password.$error.minlength || edit.password2.$error.required || edit.password2.$error.validator" type="button" class="create-account center" ng-click="editUserData();">Save</button>
-                <br/>
-            </div>
-        </form>
-    </div>
-
-</div-->
-
-

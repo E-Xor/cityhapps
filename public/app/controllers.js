@@ -46,7 +46,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     }).then(function() {
         $state.go('main.home', {});
     });
-}).controller('MainFilterController', function($scope, $stateParams, HappFilterService, AgeLevel) {
+}).controller('MainFilterController', function($scope, $stateParams, $timeout, HappFilterService, AgeLevel) {
     AgeLevel.query(function(payload) {
         $scope.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
         var baseObject = {ageLevel: {}};
@@ -80,19 +80,35 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.$apply();
         }
     });
+    jQuery('#date_calendar_footer').datetimepicker({
+        timepicker: false,
+        mindate: 0,
+        format: 'm/d/Y',
+        onSelectDate: function(ct, $i, event) {
+            $scope.filterDefaults.calendar = $i[0].value;
+            $scope.$apply();
+        }
+    });
     jQuery(window).resize(function() {
-        var setHeight = (jQuery('.filter-options').height() * -1) + 'px';
+        var previousCss = $('.filter-options').attr('style');
+        $('.filter-options').attr('style', 'visibility: hidden; display: block !important;');
+        var actualHeight = $('.filter-options').height();
+        $('.filter-options').attr('style', previousCss ? previousCss : '');
+        var setHeight = (actualHeight * -1) + 'px';
         jQuery('.filter-options').css({bottom: setHeight});
     });
     jQuery(function() {
         $(window).trigger('resize');
+        // Hacky way to try to correct the filter positioning
+        setTimeout(function() {$(window).trigger('resize');}, 2000);
     });
-}).controller('HappViewController', function($scope, $stateParams, cleanData, Happ) {
+}).controller('HappViewController', function($scope, $stateParams, $rootScope, cleanData, Happ) {
     Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happ = payload.data[0];
+        $rootScope.title = payload.data[0].event_name + ' | City Happs';
     });
-}).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ, $cookieStore) {
+}).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ) {
     var filter = HappFilterService.getFilters({include: 'categories,venues'});
     Happ.query(filter, function(payload) {
         payload = cleanData.buildRelationships(payload);
@@ -202,7 +218,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
     });
-    console.log(authenticated);
     $scope.$on('filterUpdate', function() {
         var filter = HappFilterService.getFilters({include: 'categories,venues', category: $stateParams.slug});
         Happ.query(filter, function(payload) {
@@ -900,8 +915,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         }
 
         $scope.formData = {
-            email : '',
-            username : '',
+            email: '',
+            username: '',
             password: ''
         };
 
@@ -913,8 +928,22 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.upvoted = '';
 
         });
-    }
-).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
+}).controller('UserProfileController', function($scope, $http, $rootScope) {
+    $scope.processForm = function() {
+        $http.put('/user/' + $rootScope.currentUser.id, $rootScope.currentUser).success(function(data) {
+            if (!data) {
+                console.log('not working');
+            } else if (data) {
+                if (data.hasOwnProperty('id')) {
+                    $state.go('main.home', {});
+                } else {
+                    console.log(data);
+                }
+            }
+        });
+    };
+
+}).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
     //Facebook Auth
 
     // Define user empty data :/
@@ -1009,9 +1038,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         }, {scope: 'email'});
     };
 
-        $scope.loginUser = function(formData) {
-          authFactory.loginUser(formData);
-        };
+    $scope.loginUser = function(formData) {
+      authFactory.loginUser(formData);
+    };
 
     $scope.logout = function() {
         $auth.logout().then(function() {

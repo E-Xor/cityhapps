@@ -46,8 +46,8 @@
         		
         		<div class="happ-data-footer">
 			        <div class="happ-social">
-				        <a href="#"><i class="fa fa-facebook-square"></i></a>
-				        <a href="#"><i class="fa fa-twitter-square"></i></a>
+				        <a social-facebook><i class="fa fa-facebook-square"></i></a>
+				        <a social-twitter><i class="fa fa-twitter-square"></i></a>
 			        </div>
 			        <a class="happ-button happ-getTickets" href="{{ happ.url }}">Get Tickets</a>
 		        </div>
@@ -78,7 +78,7 @@
 				<a class="happ-button" href="{{ happ.geo_data.google_directions_link }}">Get Directions</a>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row happ-map">
 			<a href="{{ data.attributes.geo_data.google_directions_link }}">
 				<img class="col-md-12" src="{{ happ.geo_data.google_map_large }}" />
 				<span id="mapCircle"><i class="fa fa-arrow-right"></i> Maps</span>

@@ -208,6 +208,7 @@ input.main-search {
   box-shadow: 1px 3px 11px #888888;
   padding: 1%;
   overflow: hidden;
+  margin-bottom: 20px;
   .happ-image {
     height: 225px;
     position: relative;
@@ -315,11 +316,16 @@ input.main-search {
     padding: 3% 2%;
     line-height: 1.5em;
   }
-  i.fa.fa-arrow-right {
-    display: block;
-    margin-bottom: -20px;
-    margin-top: 8px;
-    font-size: 22px;
+  .happ-map {
+    img {
+      width: 100%;
+    }
+    .fa.fa-arrow-right {
+      display: block;
+      margin-bottom: -20px;
+      margin-top: 8px;
+      font-size: 22px;
+    }
   }
 }
 
@@ -2459,20 +2465,27 @@ a.ng-binding:hover{
   font-size: 1.2em;
 }
 
-.userImage{
-    text-align: center;
-    margin-top: 104px;
+.user-profile-image{
+  text-align: center;
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    -webkit-border-radius: 75px;
+    -moz-border-radius: 75px;
+    border-radius: 75px;
+    overflow: hidden;
+    margin: 30px auto 10px;
+  }
 }
 
 .avatarSettings{
-    margin-top: 50px;
+    margin-top: 10px;
     a, a:hover{
        color: #9b9b9b;
     }
 }
 
 .profileData{
-  height: 900px;
   color:#9B9B9B;
   margin-top: -46px;
 }
@@ -2491,17 +2504,11 @@ a.ng-binding:hover{
     padding-bottom: 20px;
 }
 
-.middleInfo{
-    float: right;
-    margin-right: 195px;
-
-}
 .edit{
   float:right;
   color: #9B9B9B;
   margin-top: 7px;
   margin-right: 20px;
-
 }
 
 .notifyBox{
@@ -2515,32 +2522,27 @@ a.ng-binding:hover{
   }
 }
 
-#editPic{
-  border-right: #9B9B9B 1px solid;
-  padding-right: 6px;
-}
-
-#removePic {
-    padding-left: 5px;
-}
-
-.saveButton {
+.profile-controls {
+  margin: 30px 0;
+  .save-button {
     padding: 13px 27px;
     border: solid #FF5C50 1px;
     display: block;
     color: #FF5C50;
     text-align: center;
     height: 50px;
-    width: 250px;
-    float: right;
+    width: 100%;
     font-size: 1.1em;
     font-weight: 500;
-    margin-right: 125px;
+    width: 250px;
+    margin-left: 200px;
+    &:hover {
+      background-color: #FF5C50;
+      color: #FFFFFF;
+    }
+  }
 }
 
-.saveButton:hover {
-  color: #FF5C50;
-}
 
 .filter-more-options.row.notification {
     margin-top: 55px;
@@ -2564,6 +2566,41 @@ input#notifyMe {
     display: none;
 }
 
+.filter-footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  left: 0px;
+  font-size: 10px;
+  -webkit-box-shadow: 0px -1px 1px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px -1px 1px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px -1px 1px 0px rgba(0,0,0,0.2);
+  z-index: 50;
+  .filter-date {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    .col-xs-3 {
+      padding:0px;
+      input[type=checkbox]:checked + label,
+      input[type=text].hasValue + label {
+        background-color: #EAE6DE;
+        color: #3D3D3D;
+        border-top: 7px solid #3D3D3D;
+      }
+      label{
+        margin-bottom: 0px;
+        color: #8B8B8B;
+        border-top: 7px solid #FFFFFF;
+        border-right: 1px solid #E1E1E1;
+        line-height: 37px;
+      }
+    }
+  }
+}
+.page-wrapper {
+  padding-bottom: 44px;
+}
+
 /* Bootstrap Tablet Breakpoint */
 @media (min-width: $screen-sm-min) {
   .content-wrapper {
@@ -2573,6 +2610,73 @@ input#notifyMe {
       top: 20px;
       font-size: 30px;
     }
+  }
+  .happ-listing {
+    .happ-single {
+      .happ-image {
+        height: 178px;
+        margin-bottom: 15px;
+        .happ-image-background {
+          box-sizing: border-box;
+          left: 0px;
+        }
+        .happ-categories {
+          font-size: 13px;
+          line-height: 15px;
+          padding: 6px 18px;
+          left: 5px;
+        }
+        .happ-date {
+          font-size: 12px;
+          height: 35px;
+          line-height: 35px;
+          position: relative;
+          top: -35px;
+          left: 0px;
+          margin: 0px;
+        }
+      }
+      .happ-data {
+        .happ-name {
+          font-size: 15px;
+          line-height: 20px;
+          margin: 15px 0 15px;
+        }
+        .happ-icons {
+          font-size: 13px;
+          margin-left: 1.2em;
+          .happ-icon {
+            margin-bottom: 10px;
+            .fa {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+      .happ-buttons {
+        width: 41.66666667%;
+        border: none;
+        bottom: 15px;
+        right: 10px;
+        left: inherit;
+        .happ-button{
+          border: 1px solid #FC5C50;
+        }
+      }
+    }
+  }
+  .filter-footer {
+    font-size: 12px;
+    .filter-date {
+      .col-xs-3 {
+        label {
+          line-height: 49px;
+        }
+      }
+    }
+  }
+  .page-wrapper {
+    padding-bottom: 56px;
   }
 }
 
@@ -2590,6 +2694,9 @@ input#notifyMe {
     float: left;
     display: block;
   }
+  .filter-footer {
+    display: none;
+  }
   .happ-listing {
     .happ-single {
       .happ-image {
@@ -2603,7 +2710,6 @@ input#notifyMe {
           font-size: 12px;
           line-height: 14px;
           padding: 5px 15px;
-          left: 0px;
         }
         .happ-date {
           font-size: 11px;
@@ -2613,18 +2719,21 @@ input#notifyMe {
           top: -26px;
           left: 0px;
           margin: 0px;
+          .happ-favorite{
+            float: right;
+            font-size: 1.1em;
+          }
         }
       }
       .happ-data {
         height: 220px;
         .happ-name {
-          font-size: 15px;
-          line-height: 20px;
           margin: 0 7px 15px;
         }
         .happ-icons {
           font-size: 12px;
           margin-right: 7px;
+          margin-left: 2.14285714em;
           .happ-icon {
             margin-bottom: 15px;
             .fa {
@@ -2638,7 +2747,19 @@ input#notifyMe {
       }
       .happ-buttons {
         line-height: 40px;
+        width: 100%;
+        border: none;
+        right: inherit;
+        left: 0px;
+        bottom: 20px;
+        .happ-button {
+          border: none;
+          border-top: 1px solid #FC5C50;
+        }
       }
     }
+  }
+  .page-wrapper {
+    padding-bottom: 0px;
   }
 }

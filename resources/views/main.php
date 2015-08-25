@@ -2,7 +2,7 @@
 <html lang="en" ng-app="cityHapps">
     <head>
         <meta charset="UTF-8">
-        <title>City Happs</title>
+        <title ng-bind-html="title">City Happs</title>
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,700italic,500italic,400italic|Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -28,6 +28,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-css/1.0.7/angular-css.min.js"></script>
 
         <script src="/js/satellizer.min.js"></script>
+        <script src="/js/md5.min.js"></script>
 
         <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
         <script src="http://platform.twitter.com/widgets.js"></script>

@@ -95,3 +95,23 @@
     </div>
   </div>
 </div>
+<div class="filter-footer">
+  <div class="filter-date row">
+    <div class="col-xs-3">
+      <input type="checkbox" id="date_today_footer" ng-model="filterDefaults.today"><label for="date_today_footer">Today</label>
+    </div>
+    <div class="col-xs-3">
+      <input type="checkbox" id="date_tomorrow_footer" ng-model="filterDefaults.tomorrow"><label for="date_tomorrow_footer">Tomorrow</label>
+    </div>
+    <div class="col-xs-3">
+      <input type="checkbox" id="date_weekend_footer" ng-model="filterDefaults.weekend"><label for="date_weekend_footer">Weekend</label>
+    </div>
+    <div class="col-xs-3 date-calendar-wrapper">
+      <input type="text" id="date_calendar_footer" ng-model="filterDefaults.calendar" ng-class="{hasValue: filterDefaults.calendar!=''}">
+      <label for="date_calendar_footer">
+        <i class="fa fa-calendar"></i>
+        <span ng-if="filterDefaults.calendar!=''"> {{ filterDefaults.calendar }} <span ng-click="filterDefaults.calendar=''"><i class="fa fa-times"></i></span></span>
+      </label>
+    </div>
+  </div>
+</div>
