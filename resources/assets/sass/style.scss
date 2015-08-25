@@ -2504,17 +2504,11 @@ a.ng-binding:hover{
     padding-bottom: 20px;
 }
 
-.middleInfo{
-    float: right;
-    margin-right: 195px;
-
-}
 .edit{
   float:right;
   color: #9B9B9B;
   margin-top: 7px;
   margin-right: 20px;
-
 }
 
 .notifyBox{
@@ -2540,6 +2534,8 @@ a.ng-binding:hover{
     width: 100%;
     font-size: 1.1em;
     font-weight: 500;
+    width: 250px;
+    margin-left: 200px;
     &:hover {
       background-color: #FF5C50;
       color: #FFFFFF;

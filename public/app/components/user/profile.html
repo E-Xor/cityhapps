@@ -15,20 +15,40 @@
     </div>
     <div class="row">
         <div class="col-xs-9 col-xs-offset-3 profileData">
-            <div class="profileDivs profileUsername">  <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Username:</h5> {{ currentUser.user_name }} </div>
-            <div class="profileDivs profileLocation"> <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Location:</h5> {{ currentUser.city }}</div>
-             <div class="profileDivs profileEmail"> <a class="edit" href="#">Edit</a> <h4 class="middleInfo"></h4> <h5>Email:</h5> {{ currentUser.email }}</div>
+            <form class="profile-data">
+                <div class="profileDivs profileUsername">
+                    <a class="edit" href="#">Edit</a> 
+                    <h5>Username:</h5>
+                    <span class="profile-value">{{ currentUser.user_name }}</span>
+                    <input type="text" ng-model="currentUser.user_name">
+                </div>
+                <div class="profileDivs profileLocation">
+                    <a class="edit" href="#">Edit</a>
+                    <h5>Location:</h5>
+                    <span class="profile-value">{{ currentUser.city }}</span>
+                    <input type="text" ng-model="currentUser.city">
+                </div>
+                <div class="profileDivs profileEmail">
+                    <a class="edit" href="#">Edit</a>
+                    <h5>Email:</h5>
+                    <span class="profile-value">{{ currentUser.email }}</span>
+                    <input type="text" ng-model="currentUser.email">
+                </div>
+                <div class="profileDivs profileEmail">
+                    <a class="edit" href="#">Change Password</a>
+                    <h5>Password:</h5>
+                    <input type="password" ng-model="currentUser.password">
+                    <input type="password" ng-model="currentUser.password_confirmation">
+                </div>
 
-            <!--div class="filter-more-options row notification">   
-              <input type="checkbox" id="notifyMe" ng-model="filterDefaults.night">
-              <label for="notifyMe"><span><i class="fa fa-check notifyCheck"></i></span>I want to receive notifications for new events</label>
-            </div-->
-        </div>
-    </div>
-    <div class="row profile-controls">
-        <div class="col-xs-3 col-xs-offset-6">
-            <!--a class="deactivate" href="#">Deactivate account</a-->
-            <a class="save-button" href="#">Save</a>
+                <!--div class="filter-more-options row notification">   
+                  <input type="checkbox" id="notifyMe" ng-model="filterDefaults.night">
+                  <label for="notifyMe"><span><i class="fa fa-check notifyCheck"></i></span>I want to receive notifications for new events</label>
+                </div-->
+                <div class="profile-controls">
+                    <a class="save-button" ng-click="processForm();">Save</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>

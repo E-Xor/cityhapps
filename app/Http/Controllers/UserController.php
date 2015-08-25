@@ -244,60 +244,44 @@ class UserController extends Controller {
 		//
 	}
 
-    /**
-     * Update user data
-     *
-     * @return string
-     */
-    public function editUser()
-    {
-        $formData = \Input::only('email', 'password', 'username');
-
-        $email = trim($formData['email']);
-        $password = trim($formData['password']);
-        $username = trim($formData['username']);
-
-        $userId = \DB::table('users')->where('email', $email)->pluck('id');
-        $user = User::find((int) $userId);
-
-            try {
-                if (!is_null($user)) {
-
-                    $user->password = \Hash::make($password);
-                    $user->user_name = $username;
-
-                    $user->save();
-
-                    return json_encode(array('status' => 'ok', 'message' => 'Successfully'));
-                }
-
-                return json_encode(array('status' => 'error', 'message' => 'some errors'));
-
-            } catch (Exception $e) {
-
-                return json_encode(array('status' => 'error', 'message' => $e->getMessage()));
-            }
-
-    }
-
-
 	/**
 	 * Update the specified resource in storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request)
 	{
+        $this->validate($request, [
+        	'user_name' => 'required',
+        	'email' => 'required|email',
+        	'city' => 'required',
+        	'password' => 'confirmed|min:6',
+        ]);
 
-		$user = User::find($id);
+        $user = FALSE;
 
-		$user->password = \Hash::make(\Input::get('password'));
+        try {
+            $token = JWTAuth::getToken();
+            $user = JWTAuth::parseToken()->authenticate();
+        } catch (\Exception $e) {
+            return $user;
+        }
 
-		$user->save();
+        if ($user) {
+            
+        	$user->user_name = \Input::get('user_name');
+        	$user->city = \Input::get('city');
+        	$user->email = \Input::get('email');
 
+        	if (\Input::get('password') != '') {
+				$user->password = \Hash::make(\Input::get('password'));
+			}
+
+			$user->save();
+
+		}
 		return $user;
-
 	}
 
 

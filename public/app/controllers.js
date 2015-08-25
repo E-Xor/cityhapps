@@ -915,8 +915,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         }
 
         $scope.formData = {
-            email : '',
-            username : '',
+            email: '',
+            username: '',
             password: ''
         };
 
@@ -928,8 +928,22 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.upvoted = '';
 
         });
-    }
-).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
+}).controller('UserProfileController', function($scope, $http, $rootScope) {
+    $scope.processForm = function() {
+        $http.put('/user/' + $rootScope.currentUser.id, $rootScope.currentUser).success(function(data) {
+            if (!data) {
+                console.log('not working');
+            } else if (data) {
+                if (data.hasOwnProperty('id')) {
+                    $state.go('main.home', {});
+                } else {
+                    console.log(data);
+                }
+            }
+        });
+    };
+
+}).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
     //Facebook Auth
 
     // Define user empty data :/
@@ -1024,9 +1038,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         }, {scope: 'email'});
     };
 
-        $scope.loginUser = function(formData) {
-          authFactory.loginUser(formData);
-        };
+    $scope.loginUser = function(formData) {
+      authFactory.loginUser(formData);
+    };
 
     $scope.logout = function() {
         $auth.logout().then(function() {

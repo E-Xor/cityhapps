@@ -339,7 +339,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         views: {
             '@main': {
                 templateUrl: 'app/components/user/profile.html',
-                controller: 'registerFormController'
+                controller: 'UserProfileController'
             },
             'sidebar@main': {
                 templateUrl: 'app/components/categories/list.html',
