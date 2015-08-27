@@ -12,17 +12,14 @@ angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
 angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
     $stateProvider.state('main', {
         abstract: true,
-        templateUrl: 'app/shared/templates/mainLayout.tpl.html'
+        templateUrl: 'app/shared/templates/main-layout.tpl.html',
+        controller: 'CategorySidebarController'
     }).state('main.home', {
         url: '/',
         views: {
             '@main': {
                 templateUrl: 'app/components/happs/home.html',
                 controller: 'HappHomeController'
-            },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
@@ -37,10 +34,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/happs/view.html',
                 controller: 'HappViewController'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -53,10 +46,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             '@main': {
                 templateUrl: 'app/components/happs/edit.html',
                 controller: 'adminEventController'
-            },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
@@ -71,10 +60,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/happs/edit.html',
                 controller: 'adminEventController'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -87,10 +72,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             '@main': {
                 templateUrl: 'app/components/happs/list.html',
                 controller: 'adminEventController'
-            },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
@@ -105,10 +86,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/categories/happlist.html',
                 controller: 'CategoryHappController'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -121,10 +98,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             '@main': {
                 templateUrl: 'app/components/venues/view.html',
                 controller: 'VenueViewController'
-            },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
@@ -139,10 +112,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/venues/edit.html',
                 controller: 'adminVenueController'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -155,10 +124,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             '@main': {
                 templateUrl: 'app/components/venues/edit.html',
                 controller: 'adminVenueController'
-            },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
@@ -173,10 +138,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/venues/list.html',
                 controller: 'VenueListController'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -189,10 +150,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             '@main': {
                 templateUrl: 'app/components/venues/list.html',
                 controller: 'VenueListController'
-            },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
@@ -207,10 +164,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/venues/admin-list.html',
                 controller: 'adminVenueController'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -224,10 +177,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/venues/admin-list.html',
                 controller: 'adminVenueController'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -239,10 +188,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         views: {
             '@main': {
                 templateUrl: 'app/components/static/about.html'
-            },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
@@ -256,10 +201,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             '@main': {
                 templateUrl: 'app/components/static/add-venue.html'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -272,10 +213,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             '@main': {
                 templateUrl: 'app/components/static/add-event.html'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -287,10 +224,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         views: {
             '@main': {
                 templateUrl: 'app/components/static/contact.html'
-            },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
@@ -324,10 +257,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/user/profile-edit.html',
                 controller: 'registerFormController'
             },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
-            },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
                 controller: 'MainFilterController'
@@ -340,10 +269,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             '@main': {
                 templateUrl: 'app/components/user/profile.html',
                 controller: 'UserProfileController'
-            },
-            'sidebar@main': {
-                templateUrl: 'app/components/categories/list.html',
-                controller: 'CategorySidebarController'
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',

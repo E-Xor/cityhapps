@@ -1,0 +1,59 @@
+<div class="snap-drawers">
+    <aside class="snap-sidebar" snap-drawer="left">
+        <ul class="sidebar-menu" auto-active>
+            <li ng-if="authenticated"><a href="/profile">My Account <i class="fa fa-caret-down"></i></a></li>
+            <li ng-if="authenticated"><a href="/favorites">My Favorites <i class="fa fa-star"></i></a></li>
+            <li ng-if="authenticated"><a href="/logout">Log Out</a></li>
+            <li ng-if="!authenticated"><a href="/login">Log In</a></li>
+            <li ng-if="!authenticated"><a href="/register">Register</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/venues">Venues</a></li>
+            <li ng-repeat="category in categories">
+                <a href="/category/{{ category.slug }}">{{ category.name }}</a>
+            </li>
+        </ul>
+    </aside>
+</div>
+<div class="page-wrapper" snap-content>
+    <aside class="sidebar">
+        <ul class="sidebar-menu" auto-active>
+            <li ng-if="authenticated"><a href="/profile">My Account <i class="fa fa-caret-down"></i></a></li>
+            <li ng-if="authenticated"><a href="/favorites">My Favorites <i class="fa fa-star"></i></a></li>
+            <li ng-if="authenticated"><a href="/logout">Log Out</a></li>
+            <li ng-if="!authenticated"><a href="/login">Log In</a></li>
+            <li ng-if="!authenticated"><a href="/register">Register</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/venues">Venues</a></li>
+            <li ng-repeat="category in categories">
+                <a href="/category/{{ category.slug }}">{{ category.name }}</a>
+            </li>
+        </ul>
+    </aside>
+    <div class="content-wrapper" >
+        <header class="header-container container-fluid">
+            <div class="row logo-row">
+                <div class="col-xs-12 center">
+                    <a href="/"><img src="/assets/img/logo-atl.png"></a>
+                </div>
+                <div class="menu-button" snap-toggle="left"><i class="fa fa-bars"></i></div>
+            </div>
+            <hr>
+            <div ui-view="menubar"></div>
+        </header>
+        <div class="main-content container-fluid" ui-view></div>
+        <footer class="footer container-fluid">
+            <div class="footer-social">
+                <a social-facebook class="fa-stack"><i class="fa fa-square fa-stack-1x"></i><i class="fa fa-facebook-square fa-stack-1x"></i></a>
+                <a social-twitter class="fa-stack"><i class="fa fa-square fa-stack-1x"></i><i class="fa fa-twitter-square fa-stack-1x"></i></a>
+            </div>
+            <ul class="footer-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="footer-copyright">
+                CityHapps | &copy;2015 All Rights Reserved.
+            </div>
+        </footer>
+    </div>
+</div>
