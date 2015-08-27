@@ -195,6 +195,30 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             }
         },
         css: 'assets/css/angular-snap.min.css'
+    }).state('main.termsConditions', {
+        url: '/terms-conditions',
+        views: {
+            '@main': {
+                templateUrl: 'app/components/static/terms-conditions.html'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
+            }
+        },
+        css: 'assets/css/angular-snap.min.css'
+    }).state('main.privacyPolicy', {
+        url: '/privacy-policy',
+        views: {
+            '@main': {
+                templateUrl: 'app/components/static/privacy-policy.html'
+            },
+            'menubar@main': {
+                templateUrl: 'app/components/filters/filters.html',
+                controller: 'MainFilterController'
+            }
+        },
+        css: 'assets/css/angular-snap.min.css'
     }).state('main.requestVenue', {
         url: '/add-venue',
         views: {
