@@ -13,6 +13,7 @@ class AgeLevelSeeder extends Seeder
     {
         DB::table('age_level')->insert(["name" => 'Infants']);
         DB::table('age_level')->insert(["name" => 'Toddlers']);
+        DB::table('age_level')->insert(["name" => 'Child']);
         DB::table('age_level')->insert(["name" => 'PreTeen']);
         DB::table('age_level')->insert(["name" => 'Young Adult']);
         DB::table('age_level')->insert(["name" => 'Adult']);
