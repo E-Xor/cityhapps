@@ -71,7 +71,7 @@ class EventfulCategorySeeder extends Seeder
 			'name' => 'food',
 			'long_name' => 'Food &amp; Wine',
 			'source_category_id' => 0,
-			'category_id' => DB::table('categories')->where('name', 'Food & Wine')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Food')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -135,7 +135,7 @@ class EventfulCategorySeeder extends Seeder
 			'name' => 'business',
 			'long_name' => 'Business &amp; Networking',
 			'source_category_id' => 0,
-			'category_id' => DB::table('categories')->where('name', 'Business')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Other')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -143,7 +143,7 @@ class EventfulCategorySeeder extends Seeder
 			'name' => 'singles_social',
 			'long_name' => 'Nightlife &amp; Singles',
 			'source_category_id' => 0,
-			'category_id' => DB::table('categories')->where('name', 'Nightlife')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Other')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -199,7 +199,7 @@ class EventfulCategorySeeder extends Seeder
 			'name' => 'sales',
 			'long_name' => 'Sales &amp; Retail',
 			'source_category_id' => 0,
-			'category_id' => DB::table('categories')->where('name', 'Business')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Other')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);

@@ -2,11 +2,19 @@
   <div ng-if="!authenticated" class="container intro-message">
     <div class="row">
       <div class="col-xs-12 col-md-8 col-md-offset-2">
-        <h1>Don’t waste time searching - check out CityHapps for all things kids in the ATL.</h1>
+        <h1 style="margin-bottom: 5px;">Don’t waste time searching.</h1>
+        <h3 style="margin-top: 5px; margin-bottom: 20px;">Check out CityHapps for all things kids in the ATL.</h3>
         <p>
           It’s our goal to bring the most accurate and up-to-date information on all things kids directly to your fingertips. Skip the search engine and create a CityHapps user account today to receive more information on upcoming events for kids and families in your area. We&nbsp;promise, you’ll be glad you did!
         </p>
         <a class="happ-button" href="/register">Sign Up</a>
+      </div>
+    </div>
+  </div>
+  <div class="container" ng-if="currentUser.role=='ROLE_ADMIN'">
+    <div class="row" >
+      <div class="col-xs-12">
+        <a href="/admin/event/add"><i class="fa fa-plus"></i> Add New Event</a> | <a href="/admin/venue/add"><i class="fa fa-plus"></i> Add New Venue</a>
       </div>
     </div>
   </div>

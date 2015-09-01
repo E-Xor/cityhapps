@@ -23,7 +23,7 @@ class MeetupCategorySeeder extends Seeder
 			'long_name' => 'Career & Business',
 			'source_category_id' => 2,
 			'name' => 'Business',
-			'category_id' => DB::table('categories')->where('name', 'Business')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Other')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -47,7 +47,7 @@ class MeetupCategorySeeder extends Seeder
 			'long_name' => 'Dancing',
 			'source_category_id' => 5,
 			'name' => 'Dancing',
-			'category_id' => DB::table('categories')->where('name', 'Nightlife')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Other')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -79,7 +79,7 @@ class MeetupCategorySeeder extends Seeder
 			'long_name' => 'Food & Drink',
 			'source_category_id' => 10,
 			'name' => 'Food & Drink',
-			'category_id' => DB::table('categories')->where('name', 'Food & Wine')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Food')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -231,7 +231,7 @@ class MeetupCategorySeeder extends Seeder
 			'long_name' => 'Singles',
 			'source_category_id' => 30,
 			'name' => 'Singles',
-			'category_id' => DB::table('categories')->where('name', 'Nightlife')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Other')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -239,7 +239,7 @@ class MeetupCategorySeeder extends Seeder
 			'long_name' => 'Socializing',
 			'source_category_id' => 31,
 			'name' => 'Social',
-			'category_id' => DB::table('categories')->where('name', 'Nightlife')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Other')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);

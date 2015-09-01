@@ -23,7 +23,7 @@ class EventbriteCategorySeeder extends Seeder
 			'name' => 'Business',
 			'long_name' => 'Business & Professional',
 			'source_category_id' => 101,
-			'category_id' => DB::table('categories')->where('name', 'Business')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Other')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -31,7 +31,7 @@ class EventbriteCategorySeeder extends Seeder
 			'name' => 'Food & Drink',
 			'long_name' => 'Food & Drink',
 			'source_category_id' => 110,
-			'category_id' => DB::table('categories')->where('name', 'Food & Wine')->value('id'),
+			'category_id' => DB::table('categories')->where('name', 'Food')->value('id'),
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
