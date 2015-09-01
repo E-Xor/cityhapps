@@ -1050,24 +1050,44 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         })
     };
 
-      $scope.remove = function() {
+    $scope.remove = function() {
         Facebook.api(
             '/me/permissions/user_profile',
             'DELETE',
             function(response) {
-              if (response && !response.error) {
-                alert('access revoked');
-              }
+                  if (response && !response.error) {
+                        alert('access revoked');
+                  }
             }
         );
-      };
-        $scope.registerCategories = {};
+    };
 
-        $scope.getAllCategories = function() {
-            Category.query(function(payload) {
-                $scope.registerCategories = payload.data;
-            });
-        };
+    $scope.registerCategories = {};
+    $scope.getAllCategories = function() {
+        Category.query(function(payload) {
+            // Per the client, we're filtering out some of the categories here.
+            for (var i = payload.data.length - 1; i >= 0; i--) {
+                switch (payload.data[i].slug) {
+                    case 'arts':
+                    case 'comedy':
+                    case 'music':
+                    case 'family':
+                    case 'movies':
+                    case 'food':
+                    case 'community':
+                    case 'sports':
+                    case 'science-tech':
+                    case 'hobbies':
+                    case 'books':
+                    case 'attractions':
+                        break;
+                    default:
+                        payload.data.splice(i, 1);
+                }
+            }
+            $scope.registerCategories = payload.data;
+        });
+    };
 
       // $scope.$on('Facebook:statusChange', function(ev, data) {
       //   console.log('Status: ', data);
