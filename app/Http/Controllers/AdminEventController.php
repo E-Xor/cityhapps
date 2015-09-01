@@ -54,6 +54,7 @@ class AdminEventController extends Controller {
       $passValidation = false;
 
     $eventParams['event_name'] = Input::get('title');
+    $eventParams['status'] = Input::get('status');
     $eventParams['url'] = Input::get('event_url');
     $eventParams['venue_id'] = intval(Input::get('venue_id'));
     $eventParams['venue_name'] = Input::get('venue_name');

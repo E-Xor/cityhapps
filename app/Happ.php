@@ -23,6 +23,7 @@ class Happ extends Model
   const STATUS_CANCELLED = 2;
   const STATUS_ARCHIVED = 3;
   const STATUS_DUPLICATED = 4;
+  const STATUS_DELETED = 5;
 
   public function users()
   {
@@ -104,6 +105,8 @@ class Happ extends Model
     }
 
     $limit = ($limit <= 100) ? $limit : 100;
+
+    $query->where('status', '=', STATUS_ACTIVE);
 
     $happs = $query->paginate($limit);
 

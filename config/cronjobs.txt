@@ -1,0 +1,4 @@
+0 2,14 * * * php /var/www/cityhapps/current/artisan api:pull >> /var/www/cityhapps/current/storage/logs/cron.log
+0 4,16 * * * php /var/www/cityhapps/current/artisan api:load >> /var/www/cityhapps/current/storage/logs/cron.log
+0 6 * * * php /var/www/cityhapps/current/artisan api:pull-venues >> /var/www/cityhapps/current/storage/logs/cron.log
+0 8 * * * php /var/www/cityhapps/current/artisan api:load-venues >> /var/www/cityhapps/current/storage/logs/cron.log

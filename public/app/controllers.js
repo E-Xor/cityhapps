@@ -525,6 +525,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 }
             });
             $scope.formData.title = singleEvent.event_name;
+            $scope.formData.status = singleEvent.status;
             $scope.formData.event_id = singleEvent.id;
             $scope.formData.parent_id = singleEvent.parent_id;
             $scope.formData.event_url = singleEvent.url;
