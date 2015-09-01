@@ -12,14 +12,14 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([
-			'name' => 'Arts',
-			'slug' => 'arts',
+			'name' => 'Editor\'s Choice',
+			'slug' => 'editors-choice',
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
-		DB::table('categories')->insert([
-			'name' => 'Business',
-			'slug' => 'business',
+        DB::table('categories')->insert([
+			'name' => 'Arts',
+			'slug' => 'arts',
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -54,8 +54,8 @@ class CategorySeeder extends Seeder
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
 		DB::table('categories')->insert([
-			'name' => 'Food & Wine',
-			'slug' => 'food-wine',
+			'name' => 'Food',
+			'slug' => 'food',
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
@@ -104,12 +104,6 @@ class CategorySeeder extends Seeder
 		DB::table('categories')->insert([
 			'name' => 'Politics',
 			'slug' => 'politics',
-			'created_at' => date('Y-m-d h:i:s'),
-			'updated_at' => date('Y-m-d h:i:s'),
-		]);
-		DB::table('categories')->insert([
-			'name' => 'Nightlife',
-			'slug' => 'nightlife',
 			'created_at' => date('Y-m-d h:i:s'),
 			'updated_at' => date('Y-m-d h:i:s'),
 		]);
