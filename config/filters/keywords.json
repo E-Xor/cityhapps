@@ -14,5 +14,9 @@
   "twerk": -20,
   "drink": -10,
   "brew": -10,
-  "dirty": -10
+  "dirty": -10,
+  "liquor": -10,
+  "immigration": -5,
+  "singles": -10,
+  "nightlife": -10
 }
