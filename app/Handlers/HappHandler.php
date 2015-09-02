@@ -50,6 +50,7 @@ class HappHandler extends ApiHandler
 				}
 				$model = $this->handleSortRequest($request->sort, $model);
 			}
+			$model->where('status', '=', Happ::STATUS_ACTIVE);
 		} else {
 			$model->where('id', '=', $request->id);
 		}

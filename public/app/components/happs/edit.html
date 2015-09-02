@@ -13,10 +13,24 @@
     <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
     <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
     <div class="red center margin20" ng-if="error">{{error}}</div>
+    
+    <input type="hidden" id="event_id" name="event_id" ng-model="formData.event_id"/>
+
     <div>
       <label for="title">Event Name <span class="red center margin20">* <span ng-if="titleError">You must have a event name</span></span></label>
-      <input type="hidden" id="event_id" name="event_id" ng-model="formData.event_id"/>
       <input type="text" class="full" id="title" name="title" value="" placeholder="Event Name" ng-model="formData.title" />
+    </div>
+
+    <div>
+      <label for="status">Happ Status<span class="red center margin20">*</span></label>
+      <select name="status" id="status" ng-model="formData.status">
+        <option value="0">Draft</option>
+        <option value="1">Active</option>
+        <option value="2">Cancelled</option>
+        <option value="3">Archived</option>
+        <option value="4">Duplicated</option>
+        <option value="5">Deleted</option>
+      </select>
     </div>
 
     <div>
