@@ -2026,12 +2026,16 @@ h3 {
         display: inline-block;
         padding: 0 20px;
         cursor: pointer;
+        border: 1px solid #FC5C50;
+        color: #FC5C50;
+        float: left;
         &.active {
           color: #F15D53;
         }
       }
       .fa-filter, .fa-exhange {
           font-size: 1.7em;
+          color: #FC5C50;
       }
     }
     .filter-search{
