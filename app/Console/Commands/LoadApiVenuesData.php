@@ -3,6 +3,7 @@
 namespace CityHapps\Console\Commands;
 
 use Illuminate\Console\Command;
+use CityHapps\Venue;
 
 class LoadApiVenuesData extends Command
 {
@@ -40,7 +41,7 @@ class LoadApiVenuesData extends Command
     {
         $this->line("Start time: " . (string)date('l jS \of F Y h:i:s A'));
         $this->line("Loading all API Venues Tables (Foursquare, Eventful, Meetup, Eventbrite) into main venues table...");
-        \VenueController::storeVenues();
+        Venue::storeVenues();
         $this->info("Finished storing venues");
     }
 }
