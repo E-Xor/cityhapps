@@ -1950,7 +1950,6 @@ h3 {
 }
 
 .sidebar-menu {
-  padding-top: 154px;
   padding-left: 0px;
   font-size: 16px;
   .fa-star {
@@ -1960,7 +1959,7 @@ h3 {
     a {
       -webkit-font-smoothing: subpixel-antialiased;
       display: block;
-      padding: 30px 40px;
+      padding: 15px 20px;
       border-bottom: 1px solid #626262;
       &:hover {
         color: #FFFFFF;
@@ -2027,12 +2026,16 @@ h3 {
         display: inline-block;
         padding: 0 20px;
         cursor: pointer;
+        border: 1px solid #FC5C50;
+        color: #FC5C50;
+        float: left;
         &.active {
           color: #F15D53;
         }
       }
       .fa-filter, .fa-exhange {
           font-size: 1.7em;
+          color: #FC5C50;
       }
     }
     .filter-search{
@@ -2534,8 +2537,7 @@ a.ng-binding:hover{
     width: 100%;
     font-size: 1.1em;
     font-weight: 500;
-    width: 250px;
-    margin-left: 200px;
+    width: 420px;
     &:hover {
       background-color: #FF5C50;
       color: #FFFFFF;
@@ -2683,14 +2685,14 @@ input#notifyMe {
 /* Bootstrap Small Screen Breakpoint */
 @media (min-width: $screen-md-min) {
   .content-wrapper {
-    width: 80%;
+    width: 88%;
     float: left;
     .menu-button {
       display: none !important;
     }
   }
   .sidebar{
-    width: 20%;
+    width: 12%;
     float: left;
     display: block;
   }
