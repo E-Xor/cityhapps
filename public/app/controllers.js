@@ -113,6 +113,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Happ.query(filter, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
+        $scope.curDate = new Date();
+        $scope.toDate = function(date){ return new Date(date); }
     });
     $scope.$on('filterUpdate', function() {
         var filter = HappFilterService.getFilters({include: 'categories,venues'});
@@ -273,7 +275,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         }
 
     });
-}).controller('VenueViewController', function($scope, $stateParams, cleanData, Venue) {
+}).controller('VenueViewController', function($scope, $http, $stateParams, cleanData, Venue) {
     Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
