@@ -17,12 +17,23 @@ html {
 	background: #F7EEEF;
 }
 
-.closeFilter{float: right;
-    margin-bottom: 20px;
-      margin-right: 20px;
-        border: 1px solid red;
-          padding: 10px;
-            color: red;}
+.closeFilter{
+  float: right;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  border: 1px solid red;
+  padding: 10px;
+  color: red;
+}
+
+.venue-description{
+  color: #fff;
+  font-size: 15px;
+  margin-top: 15px;
+  margin-left: 260px;
+  margin-right: 260px;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -2275,7 +2286,8 @@ a.ng-binding:hover{
 /*Single Venue View*/
 .venueSingle{
     background: #58afb9;
-    height: 164px;
+    /*height: 164px;*/
+    height: 230px;
     margin: -30px -15px 0px -15px;
   }
 
@@ -2297,9 +2309,8 @@ a.ng-binding:hover{
   
 
 .venue-address{
-    border-left: 1px solid $grey;
-    border-right: 1px solid $grey;
-    width: 300px;
+    font-size: 15px;
+    width: 500px;
     margin: 0 auto;
 }
 
