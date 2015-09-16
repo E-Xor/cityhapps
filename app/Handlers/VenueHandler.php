@@ -52,6 +52,7 @@ class VenueHandler extends ApiHandler
 
         try {
             if ($request->pageNumber && empty($request->id)) {
+                $model = $model->has('happs');
                 $results = $this->handlePaginationRequest($request, $model, $total);
             } else {
                 $results = $model->get();
