@@ -12,8 +12,8 @@
         </div>
         <div class="happ-date">
           <span class="start-date"> {{ displayDay(happ.start.local, happ.end.local)}}</span>
-          <span ng-if="authenticated" class="happ-favorite">
-            <i class="fa fa-star"></i>
+          <span ng-if="authenticated" ng-controller="FavoriteController" ng-click="addToFavorites(happ.id)"  class="happ-favorite">
+            <i class="fa fa-star" ng-class="{ 'favorited': isFav}"></i>
             <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
             <div class="buttons">
             <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
