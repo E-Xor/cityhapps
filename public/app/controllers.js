@@ -146,7 +146,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             month[10] = "Nov";
             month[11] = "Dec";
             var first = 'TODAY';
-            var last = endDate.getDate() + ' ' + month[endDate.getMonth()];
+            var last =  month[endDate.getMonth()] + ' ' +endDate.getDate();
 
             if(startDate.getMonth() == today.getMonth() && startDate.getDate() == today.getDate()+1) { first = 'TOMORROW' }
             if(endDate.getMonth() == today.getMonth() && endDate.getDate() == today.getDate()+1) { last = 'TOMORROW' }
