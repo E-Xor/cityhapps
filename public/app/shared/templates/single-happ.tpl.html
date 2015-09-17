@@ -11,9 +11,7 @@
           </span>
         </div>
         <div class="happ-date">
-          <span class="start-date" ng-show="curDate < toDate(happ.start.local)"> {{happ.start.local | dateToISO | date: 'MMM d' }}</span>
-          <span class="start-date" ng-show="curDate >= toDate(happ.start.local)">Today</span>
-          <span class="start-date">- &nbsp; &nbsp;{{ happ.end.local | dateToISO | date: 'MMM d' }}</span>
+          <span class="start-date"> {{ displayDay(happ.start.local, happ.end.local)}}</span>
           <span ng-if="authenticated" class="happ-favorite">
             <i class="fa fa-star"></i>
             <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>

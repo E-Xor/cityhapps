@@ -115,6 +115,45 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.happs = payload.data;
         $scope.curDate = new Date();
         $scope.toDate = function(date){ return new Date(date); }
+        $scope.displayDay = function(start, end){ 
+          startDate = new Date(start);
+          endDate = new Date(end);
+          today = new Date();
+          startDate.setHours(0, 0, 0, 0);
+          endDate.setHours(0, 0, 0, 0);
+          today.setHours(0, 0, 0, 0);
+
+
+          if( (startDate.getMonth() == endDate.getMonth()) && (startDate.getDate() == endDate.getDate()) )
+          {
+            if(startDate.getDate() == today.getDate()) return 'TODAY';
+            if(startDate.getDate() == today.getDate()+1) return 'TOMORROW';
+          }
+
+          if( startDate <= today )
+          {
+            var month = new Array();
+            month[0] = "Jan";
+            month[1] = "Feb";
+            month[2] = "Mar";
+            month[3] = "Apr";
+            month[4] = "May";
+            month[5] = "Jun";
+            month[6] = "Jul";
+            month[7] = "Aug";
+            month[8] = "Sep";
+            month[9] = "Oct";
+            month[10] = "Nov";
+            month[11] = "Dec";
+            var first = 'TODAY';
+            var last = endDate.getDate() + ' ' + month[endDate.getMonth()];
+
+            if(startDate.getMonth() == today.getMonth() && startDate.getDate() == today.getDate()+1) { first = 'TOMORROW' }
+            if(endDate.getMonth() == today.getMonth() && endDate.getDate() == today.getDate()+1) { last = 'TOMORROW' }
+
+            return first + ' - ' + last;
+          }
+        }
     });
     $scope.$on('filterUpdate', function() {
         var filter = HappFilterService.getFilters({include: 'categories,venues'});
@@ -279,6 +318,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
+        console.log(payload.data[0]);
     });
 }).controller('venueController', function($scope, $http, $stateParams, $cookies, $cookieStore) {
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
