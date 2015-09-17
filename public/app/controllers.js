@@ -46,6 +46,22 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     }).then(function() {
         $state.go('main.home', {});
     });
+}).controller('FavoriteController', function($cookies, $scope, $rootScope, $state, getFavorites) {
+    $scope.happs = {};
+    var userString = localStorage.getItem('user');
+    var user = angular.fromJson(userString);
+
+    getFavorites.get(user.id).success(function(data){
+        $scope.happs = data;
+    });
+    
+    $scope.isFav = false; 
+    $scope.addToFavorites = function(id){ 
+        getFavorites.add(user.id, id).success(function(data){
+            $scope.isFav = !$scope.isFav;
+        });
+    }
+
 }).controller('MainFilterController', function($scope, $stateParams, $timeout, HappFilterService, AgeLevel) {
     AgeLevel.query(function(payload) {
         $scope.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
@@ -113,8 +129,49 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Happ.query(filter, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
+        
+
         $scope.curDate = new Date();
         $scope.toDate = function(date){ return new Date(date); }
+        $scope.displayDay = function(start, end){ 
+          startDate = new Date(start);
+          endDate = new Date(end);
+          today = new Date();
+          startDate.setHours(0, 0, 0, 0);
+          endDate.setHours(0, 0, 0, 0);
+          today.setHours(0, 0, 0, 0);
+
+
+          if( (startDate.getMonth() == endDate.getMonth()) && (startDate.getDate() == endDate.getDate()) )
+          {
+            if(startDate.getDate() == today.getDate()) return 'TODAY';
+            if(startDate.getDate() == today.getDate()+1) return 'TOMORROW';
+          }
+
+          if( startDate <= today )
+          {
+            var month = new Array();
+            month[0] = "Jan";
+            month[1] = "Feb";
+            month[2] = "Mar";
+            month[3] = "Apr";
+            month[4] = "May";
+            month[5] = "Jun";
+            month[6] = "Jul";
+            month[7] = "Aug";
+            month[8] = "Sep";
+            month[9] = "Oct";
+            month[10] = "Nov";
+            month[11] = "Dec";
+            var first = 'TODAY';
+            var last =  month[endDate.getMonth()] + ' ' +endDate.getDate();
+
+            if(startDate.getMonth() == today.getMonth() && startDate.getDate() == today.getDate()+1) { first = 'TOMORROW' }
+            if(endDate.getMonth() == today.getMonth() && endDate.getDate() == today.getDate()+1) { last = 'TOMORROW' }
+
+            return first + ' - ' + last;
+          }
+        }
     });
     $scope.$on('filterUpdate', function() {
         var filter = HappFilterService.getFilters({include: 'categories,venues'});
@@ -279,6 +336,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
+        console.log(payload.data[0]);
     });
 }).controller('venueController', function($scope, $http, $stateParams, $cookies, $cookieStore) {
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;

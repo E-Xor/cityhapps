@@ -154,6 +154,33 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         } else if (data) {
         }
     });
+}).factory('getFavorites', function($http) {
+      return {
+         get: function(id){ 
+              return $http({
+              method: 'GET',
+              url: '/api/favorites/' + id,
+            }).success(function(data) {
+                if (!data) {
+                } else if (data) {
+                }
+            })
+          },
+        add: function(user_id, id){ 
+            return $http({
+              method: 'POST',
+              url: '/api/favorites',
+              data: { 'user_id': user_id, 'id': id}
+            }).success(function(data) {
+                console.log(data)
+                if (!data) {
+                } else if (data) {
+                }
+            }).error(function(error){ 
+                console.log('unable to add item in favorites');
+            })
+          }
+      };
 }).factory('getUserCategories', function($http) {
     return {
         params: function(args) {

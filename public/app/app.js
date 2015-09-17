@@ -144,6 +144,15 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             }
         },
         css: 'assets/css/angular-snap.min.css'
+    }).state('main.listFavorite', {
+        url: '/favorites',
+        views: {
+            '@main': {
+                templateUrl: 'app/components/favorites/list.html',
+                controller: 'FavoriteController'
+            }
+        },
+        css: 'assets/css/angular-snap.min.css'
     }).state('main.listVenuePage', {
         url: '/venues/:page',
         views: {
