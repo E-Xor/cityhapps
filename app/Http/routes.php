@@ -104,6 +104,8 @@ Route::group(['prefix' => 'api'], function()
 		->where(['model' => 'venue|category|tag|happ|agelevel']);
 });
 Route::get('api/categories', 'CategoryController@getAllCategories');
+Route::get('api/favorites/{id}', 'FavoriteController@getFavorites');
+Route::post('api/favorites', 'FavoriteController@add');
 
 // Limit this to only models that can be used
 
