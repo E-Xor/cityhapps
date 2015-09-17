@@ -46,6 +46,22 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     }).then(function() {
         $state.go('main.home', {});
     });
+}).controller('FavoriteController', function($cookies, $scope, $rootScope, $state, getFavorites) {
+    $scope.happs = {};
+    var userString = localStorage.getItem('user');
+    var user = angular.fromJson(userString);
+
+    getFavorites.get(user.id).success(function(data){
+        $scope.happs = data;
+    });
+    
+    $scope.isFav = false; 
+    $scope.addToFavorites = function(id){ 
+        getFavorites.add(user.id, id).success(function(data){
+            $scope.isFav = !$scope.isFav;
+        });
+    }
+
 }).controller('MainFilterController', function($scope, $stateParams, $timeout, HappFilterService, AgeLevel) {
     AgeLevel.query(function(payload) {
         $scope.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
@@ -113,6 +129,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Happ.query(filter, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
+        
+
         $scope.curDate = new Date();
         $scope.toDate = function(date){ return new Date(date); }
         $scope.displayDay = function(start, end){ 
