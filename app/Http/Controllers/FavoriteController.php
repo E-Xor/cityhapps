@@ -35,8 +35,11 @@ class FavoriteController extends Controller {
                ->count();
       if($check > 0) 
       { 
-          error_log('its already faved');
-          return false;
+          DB::table('favorites')
+          ->where('event_id', '=', $id)
+          ->where('user_id', '=', $user_id)
+          ->delete();
+          return $id;
       }
 
       error_log($id);
