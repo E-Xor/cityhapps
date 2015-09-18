@@ -165,19 +165,30 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 } else if (data) {
                 }
             })
-          },
+        },
         add: function(user_id, id){ 
             return $http({
               method: 'POST',
-              url: '/api/favorites',
+              url: '/api/favorites/add',
               data: { 'user_id': user_id, 'id': id}
             }).success(function(data) {
-                console.log(data)
                 if (!data) {
                 } else if (data) {
                 }
             }).error(function(error){ 
                 console.log('unable to add item in favorites');
+            })
+        },
+        check: function(user_id, id){ 
+            return $http({
+              method: 'POST',
+              url: '/api/favorites/check',
+              data: { 'user_id': user_id, 'id': id}
+            }).success(function(data) {
+                if (!data) {
+                } else if (data) {
+                }
+            }).error(function(error){ 
             })
           }
       };
