@@ -1,3 +1,8 @@
 <div class="happ-listing">
+  <div ng-if="happs.length < 1" class="centered">
+    <h3>There are no events that fit into your filters currently.</h3>
+    <p>Please try changing your filters to see more events.</p>
+    <p>Know of an event that should be listed? <a href="#">Click here</a> to submit it to CityHapps!</p>
+  </div>
   <div ng-repeat="happ in happs" ch-happ="happ"></div>
 </div>

@@ -24,6 +24,17 @@ class FavoriteController extends Controller {
       return $results;
   }
   
+  public function check(Request $request) {
+      $id = $request->input('id');
+      $user_id = $request->input('user_id');
+
+      $results = DB::table('favorites')
+               ->where('event_id', '=', $id)
+               ->where('user_id', '=', $user_id)
+               ->count();
+      return $results;
+  }
+
   public function add(Request $request) {
       
       $id = $request->input('id');
@@ -35,8 +46,11 @@ class FavoriteController extends Controller {
                ->count();
       if($check > 0) 
       { 
-          error_log('its already faved');
-          return false;
+          DB::table('favorites')
+          ->where('event_id', '=', $id)
+          ->where('user_id', '=', $user_id)
+          ->delete();
+          return $id;
       }
 
       error_log($id);
