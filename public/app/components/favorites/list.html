@@ -12,10 +12,10 @@
                 <span class="happ-category">{{ category.name }}</span>{{ $last ? '' : ', ' }}
               </span>
             </div>
-            <div class="happ-date">
-              <span class="start-date"> {{ displayDay(happ.start.local, happ.end.local)}}</span>
-              <span ng-if="authenticated" class="happ-favorite">
-                <i class="fa fa-star" style="color: yellow;"></i>
+            <div class="happ-date" ng-controller="HappHomeController">
+              <span class="start-date"> {{ displayDay(happ.start_time, happ.end_time)}}</span>
+              <span ng-if="authenticated" ng-controller="FavoriteController" ng-click="addToFavorites(happ.id)"  class="happ-favorite">
+                <i class="fa fa-star" ng-init="isFav = true" ng-class="{ 'favorited': isFav}"></i>
               </span>
             </div>
           </div>

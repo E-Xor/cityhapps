@@ -105,7 +105,8 @@ Route::group(['prefix' => 'api'], function()
 });
 Route::get('api/categories', 'CategoryController@getAllCategories');
 Route::get('api/favorites/{id}', 'FavoriteController@getFavorites');
-Route::post('api/favorites', 'FavoriteController@add');
+Route::post('api/favorites/add', 'FavoriteController@add');
+Route::post('api/favorites/check', 'FavoriteController@check');
 
 // Limit this to only models that can be used
 
