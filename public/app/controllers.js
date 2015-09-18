@@ -48,17 +48,21 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     });
 }).controller('FavoriteController', function($cookies, $scope, $rootScope, $state, getFavorites) {
     $scope.happs = {};
+
     var userString = localStorage.getItem('user');
     var user = angular.fromJson(userString);
-
-    getFavorites.get(user.id).success(function(data){
-        $scope.happs = data;
-    });
+    getFav();
+    function getFav(){
+      getFavorites.get(user.id).success(function(data){
+          $scope.happs = data;
+      });
+    }
     
     $scope.isFav = false; 
     $scope.addToFavorites = function(id){ 
         getFavorites.add(user.id, id).success(function(data){
             $scope.isFav = !$scope.isFav;
+            getFav();
         });
     }
 
