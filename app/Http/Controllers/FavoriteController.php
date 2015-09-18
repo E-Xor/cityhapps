@@ -24,6 +24,17 @@ class FavoriteController extends Controller {
       return $results;
   }
   
+  public function check(Request $request) {
+      $id = $request->input('id');
+      $user_id = $request->input('user_id');
+
+      $results = DB::table('favorites')
+               ->where('event_id', '=', $id)
+               ->where('user_id', '=', $user_id)
+               ->count();
+      return $results;
+  }
+
   public function add(Request $request) {
       
       $id = $request->input('id');
