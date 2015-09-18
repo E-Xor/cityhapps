@@ -51,7 +51,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
     var userString = localStorage.getItem('user');
     var user = angular.fromJson(userString);
+
     getFav();
+
     function getFav(){
       getFavorites.get(user.id).success(function(data){
           $scope.happs = data;
@@ -59,6 +61,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     }
     
     $scope.isFav = false; 
+
     $scope.addToFavorites = function(id){ 
         getFavorites.add(user.id, id).success(function(data){
             $scope.isFav = !$scope.isFav;
@@ -66,6 +69,18 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         });
     }
 
+    function checkFavorite(id){
+        getFavorites.check(user.id, id).success(function(data){
+            console.log(data)
+            return data;
+        });
+    }
+
+    $scope.ifFavorite = function(id){ 
+        for (i = 0; i < $scope.happs.length; i++) { 
+            if(id == $scope.happs[i].id) return 'favorited';
+        }
+    }
 }).controller('MainFilterController', function($scope, $stateParams, $timeout, HappFilterService, AgeLevel) {
     AgeLevel.query(function(payload) {
         $scope.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
