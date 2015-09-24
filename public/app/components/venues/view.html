@@ -7,7 +7,7 @@
 	<div class="col-md-5 venueInfo">
     <h2 class="venueText">VENUE</h2>
 		<h3 class="dark bold venueName">{{venue.name}}</h3>
-		<div class="venue-address">{{ venue.phone   + '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;' }} {{venue.address_1}} {{venue.address_2}} {{venue.address_3}} {{venue.city}}, {{venue.state  }} {{ venue.postal_code}} {{ '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;' + venue.hours}} </div>
+		<div class="venue-address">{{ display(venue.phone) + ' &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;' }} {{display(venue.address_1)}} {{display(venue.address_2)}} {{display(venue.address_3)}} {{display(venue.city)}}, {{display(venue.state)  }} {{ display(venue.postal_code)}} {{ '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;' + display(venue.hours)}} </div>
     <div class="venue-description">{{ venue.description}}</div>
 		<!--<div class="happ-buttons">
 			<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>

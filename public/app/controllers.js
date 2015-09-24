@@ -358,7 +358,14 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
-        console.log(payload.data[0]);
+
+        $scope.display = function(word){
+          if(word == undefined) { 
+            return ' ';
+          } else {
+            return word;
+          }
+        }
     });
 }).controller('venueController', function($scope, $http, $stateParams, $cookies, $cookieStore) {
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
@@ -380,7 +387,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
             $http({
                 method: 'POST',
-                url: '/checkUserVenueVote',
+                url: '/checkUser',
                 data: {
                     'user_id' : userId,
                     'venue_id' : venueId
