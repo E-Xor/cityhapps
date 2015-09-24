@@ -137,11 +137,14 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         // Hacky way to try to correct the filter positioning
         setTimeout(function() {$(window).trigger('resize');}, 2000);
     });
-}).controller('HappViewController', function($scope, $stateParams, $rootScope, cleanData, Happ) {
+}).controller('HappViewController', function($scope, $location, $window, $stateParams, $rootScope, cleanData, Happ) {
     Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happ = payload.data[0];
         $rootScope.title = payload.data[0].event_name + ' | City Happs';
+        $scope.get_tickets = function(){
+          $window.location.href = $scope.happ.url;
+        }
     });
 }).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ) {
     var filter = HappFilterService.getFilters({include: 'categories,venues'});

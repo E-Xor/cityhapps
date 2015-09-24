@@ -1,23 +1,30 @@
+
+<script type="text/javascript">
+function blah(url){
+  window.location.href = url;
+}
+</script>
+
 <div id="viewContent">
 	<div class="happ-single col-md-9">
 		<div class="row">
-			<div class="col-md-7">
-				<div class="happ-image" style="background-image: url('{{ happ.event_image_url }}'); background-size: cover;">
-					<div class="happ-categories" ng-if="happ.relationships.categories">
-						<span ng-repeat="category in happ.relationships.categories">
-							<a href="/category/{{ category.slug }}" class="happ-category">{{ category.name }}</a>{{ $last ? '' : ', ' }}
-						</span>
-					</div>
-					<div class="happ-date" ng-controller="HappHomeController">
-						{{ displayDay(happ.start.local, happ.end.local)}}
-					</div>
-					<!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
-					<div class="buttons">
-					<a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
-					<a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
-					</div>-->
-				</div>
-			</div>
+      <div ng-click="get_tickets()" class="col-md-7">
+        <div class="happ-image" style="background-image: url('{{ happ.event_image_url }}'); background-size: cover;">
+          <div class="happ-categories" ng-if="happ.relationships.categories">
+            <span ng-repeat="category in happ.relationships.categories">
+              <a href="/category/{{ category.slug }}" class="happ-category">{{ category.name }}</a>{{ $last ? '' : ', ' }}
+            </span>
+          </div>
+          <div class="happ-date" ng-controller="HappHomeController">
+            {{ displayDay(happ.start.local, happ.end.local)}}
+          </div>
+          <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
+          <div class="buttons">
+          <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
+          <a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
+          </div>-->
+        </div>
+      </div>
 			<div class="col-md-5 happ-data">
 				<!--div class="happ-values">
         			<div class="happ-rating">
