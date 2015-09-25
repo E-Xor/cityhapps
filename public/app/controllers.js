@@ -1018,7 +1018,11 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.upvoted = '';
 
         });
-}).controller('UserProfileController', function($scope, $http, $rootScope) {
+}).controller('UserProfileController', function($state, $scope, $http, $rootScope) {
+    $scope.changePassword = function(){
+    
+    };
+
     $scope.processForm = function() {
         $http.put('/user/' + $rootScope.currentUser.id, $rootScope.currentUser).success(function(data) {
             if (!data) {

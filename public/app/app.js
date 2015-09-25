@@ -2,7 +2,7 @@
  * CityHapps AngularJS Bootstrap
  */
 
-angular.module('cityHapps', ['ui.bootstrap', 'ui.router', 'ngRoute',
+angular.module('cityHapps', ['xeditable', 'ui.bootstrap', 'ui.router', 'ngRoute',
     'ngResource', 'ui.validate', 'facebook', 'http-auth-interceptor',
     'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
     'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
@@ -331,8 +331,9 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         touchToDrag: false
     };
 
-}).run(function($rootScope, $state, $http) {
+}).run(function($rootScope, $state, $http, editableOptions) {
     $rootScope.$on('$stateChangeStart', function(event, toState) {
+        editableOptions.theme = 'bs3';
         $http.get('api/authenticate/user')
         .then(function(response) {
             $rootScope.authenticated = true;

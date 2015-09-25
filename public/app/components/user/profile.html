@@ -15,28 +15,26 @@
     </div>
     <div class="row">
         <div class="col-xs-9 col-xs-offset-3 profileData">
-            <form class="profile-data">
                 <div class="profileDivs profileUsername">
-                    <a class="edit" href="#">Edit</a> 
                     <h5>Username:</h5>
-                    <input type="text" ng-model="currentUser.user_name" class="form-control">
+                    <a href="#" editable-text="currentUser.user_name">{{currentUser.user_name}}</a>
                 </div>
                 <div class="profileDivs profileLocation">
-                    <a class="edit" href="#">Edit</a>
                     <h5>Location:</h5>
-                    <input type="text" ng-model="currentUser.city" class="form-control">
+                    <a href="#" editable-text="currentUser.city">{{currentUser.city}}</a>
                 </div>
                 <div class="profileDivs profileEmail">
-                    <a class="edit" href="#">Edit</a>
                     <h5>Email:</h5>
-                    <input type="text" ng-model="currentUser.email" class="form-control">
+                    <a href="#" editable-text="currentUser.email">{{currentUser.email}}</a>
                 </div>
                 <div class="profileDivs profileEmail">
-                    <a class="edit" href="#">Change Password</a>
+                    <a class="edit" ng-click="changePassword()" href="#">Change Password</a>
                     <h5>Password:</h5>
                     <input type="password" ng-model="currentUser.password" class="form-control">
                     <h5>Confirm Password:</h5>
                     <input type="password" ng-model="currentUser.password_confirmation" class="form-control">
+                    <br />
+                    <button class="save-button">Change Password</button>
                 </div>
 
                 <!--div class="filter-more-options row notification">   
@@ -46,7 +44,6 @@
                 <div class="profile-controls">
                     <a class="save-button" ng-click="processForm();">Save</a>
                 </div>
-            </form>
         </div>
     </div>
 </div>

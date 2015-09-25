@@ -2,7 +2,7 @@
 <html lang="en" ng-app="cityHapps">
 <head>
     <meta charset="UTF-8">
-    <title>City Happs</title>
+    <title>22City Happs</title>
     
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,700italic,500italic,400italic|Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -12,6 +12,7 @@
     <link href="/assets/css/jquery.bxslider.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="/assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="/assets/css/xeditable.css" />
     <!-- <link rel="stylesheet" href="/assets/css/bootstrap-responsive.min.css" /> -->
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/jquery.datetimepicker.css"/ >
@@ -204,6 +205,7 @@
     <script type="text/javascript" src="/js/fullcalendar.js"></script>
     <script type="text/javascript" src="/js/calendar.js"></script>
     <script type="text/javascript" src="/assets/js/angular/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="/assets/js/angular/xeditable.js"></script>
 
     <script type="text/javascript" src="/js/snap.min.js"></script>
     <script type="text/javascript" src="/js/angular-snap.min.js"></script>
