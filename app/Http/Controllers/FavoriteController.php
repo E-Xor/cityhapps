@@ -53,8 +53,6 @@ class FavoriteController extends Controller {
           return $id;
       }
 
-      error_log($id);
-      error_log($user_id);
       DB::table('favorites')->insert(
           ['user_id' => $user_id, 'event_id' => $id]
       );
