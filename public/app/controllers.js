@@ -137,11 +137,14 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         // Hacky way to try to correct the filter positioning
         setTimeout(function() {$(window).trigger('resize');}, 2000);
     });
-}).controller('HappViewController', function($scope, $stateParams, $rootScope, cleanData, Happ) {
+}).controller('HappViewController', function($scope, $location, $window, $stateParams, $rootScope, cleanData, Happ) {
     Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happ = payload.data[0];
         $rootScope.title = payload.data[0].event_name + ' | City Happs';
+        $scope.get_tickets = function(){
+          $window.location.href = $scope.happ.url;
+        }
     });
 }).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ) {
     var filter = HappFilterService.getFilters({include: 'categories,venues'});
@@ -355,7 +358,14 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
-        console.log(payload.data[0]);
+
+        $scope.display = function(word){
+          if(word == undefined) { 
+            return ' ';
+          } else {
+            return word;
+          }
+        }
     });
 }).controller('venueController', function($scope, $http, $stateParams, $cookies, $cookieStore) {
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
@@ -377,7 +387,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
             $http({
                 method: 'POST',
-                url: '/checkUserVenueVote',
+                url: '/checkUser',
                 data: {
                     'user_id' : userId,
                     'venue_id' : venueId
@@ -1008,7 +1018,11 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.upvoted = '';
 
         });
-}).controller('UserProfileController', function($scope, $http, $rootScope) {
+}).controller('UserProfileController', function($state, $scope, $http, $rootScope) {
+    $scope.changePassword = function(){
+    
+    };
+
     $scope.processForm = function() {
         $http.put('/user/' + $rootScope.currentUser.id, $rootScope.currentUser).success(function(data) {
             if (!data) {

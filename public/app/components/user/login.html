@@ -11,7 +11,7 @@
             <span>or</span>
         </div>
         <div class="register-error" ng-if="loginError">{{ loginError }}</div>
-        <form class="loginForm">
+        <form ng-keyup="$event.keyCode == 13 && auth.login()" class="loginForm">
 
             <!-- NAME -->
             <div class="form-group">
