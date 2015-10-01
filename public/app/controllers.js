@@ -532,6 +532,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 $scope.error = data.error.message;
             });
         } else {
+            console.log(formData)
             $http({
                 method: 'POST',
                 url: '/admin/event/update',
@@ -552,7 +553,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                     }
                 }
             }).error(function(data) {
-                $scope.error = data.error.message;
+                $scope.error = data.error;
             });
         }
         }
@@ -715,6 +716,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         }
         // if any error, don't post
         if (error) {
+          console.log(error);
           $scope.generalError = true;
           return;
         }
@@ -817,7 +819,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 return base;
             })();
 
-            loadTags = function(query) {
+            $scope.loadTags = function(query) {
                 return $http.get('/tags/' + query);
             };
         });
@@ -1018,9 +1020,25 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             $scope.upvoted = '';
 
         });
-}).controller('UserProfileController', function($state, $scope, $http, $rootScope) {
+}).controller('UserProfileController', function($state, $scope, $http, $rootScope, userProfile) {
     $scope.changePassword = function(){
-    
+      var user = $scope.currentUser;
+      var error = 0;
+      if(user.password.length < 6 || user.password_confirmation.length < 6){
+        error = 1;
+        notify_error('New password length must be greater than 6 characters');
+      }
+      if(user.password != user.password_confirmation) {
+        error = 1;
+        notify_error('New passwords do not match');
+      }
+
+      if(error < 1){
+        userProfile.changePassword(user)
+          .success(function(data){
+              console.log(data);
+          });
+      }
     };
 
     $scope.processForm = function() {
@@ -1454,3 +1472,17 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         };
     }
 );
+function notify_error(message){
+    new PNotify({
+                title: 'Oh No!',
+                text: message,
+                type: 'error'
+            });
+}
+function notify_success(message){
+    new PNotify({
+                title: 'Oh No!',
+                text: message,
+                type: 'success'
+            });
+}
