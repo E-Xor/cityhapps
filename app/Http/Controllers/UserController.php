@@ -204,7 +204,7 @@ class UserController extends Controller {
           }
         }
 
-        return $user_params['password'];
+        return;
     }
 
     public function resetPassword() {

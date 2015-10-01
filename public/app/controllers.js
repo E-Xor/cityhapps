@@ -1036,7 +1036,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       if(error < 1){
         userProfile.changePassword(user)
           .success(function(data){
-              console.log(data);
+            notify_success("Password Changed");
           });
       }
     };
