@@ -1481,7 +1481,7 @@ function notify_error(message){
 }
 function notify_success(message){
     new PNotify({
-                title: 'Oh No!',
+                title: 'Success',
                 text: message,
                 type: 'success'
             });
