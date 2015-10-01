@@ -63,6 +63,7 @@ Route::resource('user', 'UserController');
 Route::post('user/check', 'UserController@check');
 Route::post('user/exist', 'UserController@exist');
 Route::post('user/reset-password', 'UserController@resetPassword');
+Route::post('user/change-password', 'UserController@changePassword');
 Route::post('user/getData', 'UserController@getUserData');
 
 Route::post('updateUserCategories', 'UserController@updateCategories');

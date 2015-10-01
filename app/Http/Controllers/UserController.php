@@ -2,6 +2,7 @@
 
 namespace CityHapps\Http\Controllers;
 
+use Log;
 use Illuminate\Http\Request;
 
 use CityHapps\Http\Requests;
@@ -189,6 +190,21 @@ class UserController extends Controller {
 
         }
 
+    }
+
+    public function changePassword(Request $request) {
+        $user_params = $request->get('user');
+        $user = User::find($user_params['id'])->first();
+
+        if(\Hash::check($user_params['current_password'], $user->password)){
+          if($user_params['password'] == $user_params['password_confirmation']){
+            error_log('-------');
+            $user->password = \Hash::make($user_params['password']);
+            $user->save();
+          }
+        }
+
+        return $user_params['password'];
     }
 
     public function resetPassword() {
