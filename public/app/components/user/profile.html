@@ -15,6 +15,8 @@
     </div>
     <div class="row">
         <div class="col-xs-9 col-xs-offset-3 profileData">
+                <h3>Update Profile</h3>
+                <hr />
                 <div class="profileDivs profileUsername">
                     <h5>Username:</h5>
                     <a href="#" editable-text="currentUser.user_name">{{currentUser.user_name}}</a>
@@ -27,23 +29,28 @@
                     <h5>Email:</h5>
                     <a href="#" editable-text="currentUser.email">{{currentUser.email}}</a>
                 </div>
+                <div class="profile-controls">
+                    <a class="save-button" ng-click="processForm();">Save</a>
+                </div>
                 <div class="profileDivs profileEmail">
-                    <a class="edit" ng-click="changePassword()" href="#">Change Password</a>
+                    <h3>Change password</h3>
+                    <hr />
+                    <h5>Current Password:</h5>
+                    <input type="password" ng-model="currentUser.current_password" class="form-control">
                     <h5>Password:</h5>
                     <input type="password" ng-model="currentUser.password" class="form-control">
                     <h5>Confirm Password:</h5>
                     <input type="password" ng-model="currentUser.password_confirmation" class="form-control">
                     <br />
-                    <button class="save-button">Change Password</button>
+                    <div class="profile-controls">
+                      <button class="save-button" ng-click="changePassword()">Change Password</button>
+                    </div>
                 </div>
 
                 <!--div class="filter-more-options row notification">   
                   <input type="checkbox" id="notifyMe" ng-model="filterDefaults.night">
                   <label for="notifyMe"><span><i class="fa fa-check notifyCheck"></i></span>I want to receive notifications for new events</label>
                 </div-->
-                <div class="profile-controls">
-                    <a class="save-button" ng-click="processForm();">Save</a>
-                </div>
         </div>
     </div>
 </div>

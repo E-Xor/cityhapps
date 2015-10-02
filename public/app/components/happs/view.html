@@ -9,7 +9,7 @@ function blah(url){
 	<div class="happ-single col-md-9">
 		<div class="row">
       <div ng-click="get_tickets()" class="col-md-7">
-        <div class="happ-image" style="background-image: url('{{ happ.event_image_url }}'); background-size: cover;">
+        <div class="happ-image" style="background-image: url('{{ happ.event_image_url }}'); background-size: cover; cursor: pointer;">
           <div class="happ-categories" ng-if="happ.relationships.categories">
             <span ng-repeat="category in happ.relationships.categories">
               <a href="/category/{{ category.slug }}" class="happ-category">{{ category.name }}</a>{{ $last ? '' : ', ' }}
