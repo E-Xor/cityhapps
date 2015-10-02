@@ -154,6 +154,45 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         } else if (data) {
         }
     });
+}).factory('userProfile', function($http) {
+      return {
+         get: function(id){ 
+              return $http({
+              method: 'GET',
+              url: '/api/favorites/' + id,
+            }).success(function(data) {
+                if (!data) {
+                } else if (data) {
+                }
+            })
+        },
+        changePassword: function(user){ 
+            return $http({
+              method: 'POST',
+              url: '/user/change-password',
+              data: { 'user': user}
+            }).success(function(data) {
+                if (!data) {
+                } else if (data) {
+                }
+            }).error(function(error){ 
+                console.log('unable to change password');
+                console.log(error);
+            })
+        },
+        check: function(user_id, id){ 
+            return $http({
+              method: 'POST',
+              url: '/api/favorites/check',
+              data: { 'user_id': user_id, 'id': id}
+            }).success(function(data) {
+                if (!data) {
+                } else if (data) {
+                }
+            }).error(function(error){ 
+            })
+          }
+      };
 }).factory('getFavorites', function($http) {
       return {
          get: function(id){ 

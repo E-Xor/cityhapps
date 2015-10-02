@@ -232,6 +232,10 @@ input.main-search {
 	cursor: pointer;
 }
 
+.happ-item{
+  width: 300px;
+}
+
 .happ-single {
   background: #FFFFFF;
   box-shadow: 1px 3px 11px #888888;
@@ -2567,6 +2571,7 @@ a.ng-binding:hover{
     font-size: 1.1em;
     font-weight: 500;
     width: 420px;
+    background-color: transparent;
     &:hover {
       background-color: #FF5C50;
       color: #FFFFFF;

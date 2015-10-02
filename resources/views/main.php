@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/assets/css/fullcalendar.css" />
         <link rel="stylesheet" href="/assets/css/style.css" />
         <link rel="stylesheet" href="/assets/css/xeditable.css" />
+        <link rel="stylesheet" href="/assets/css/pnotify.custom.min.css" />
         <link rel="stylesheet" type="text/css" href="/assets/css/jquery.datetimepicker.css"/ >
         <link rel="stylesheet" type="text/css" href="/assets/css/ng-tags-input.min.css">
         <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
@@ -67,6 +68,7 @@
 
         <script src="/js/ng-tags-input.min.js"></script>
         <script type="text/javascript" src="/js/xeditable.js"></script>
+        <script type="text/javascript" src="/js/pnotify.custom.min.js"></script>
 
         <script src="/app/app.js"></script>
         <script src="/app/controllers.js"></script>
