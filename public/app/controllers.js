@@ -22,17 +22,18 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
             // Handle errors
         }, function(error) {
-            vm.loginError = true;
-            vm.loginErrorText = error.data.error;
+            $rootScope.loginError = 'There was a problem with your username or password';
 
             // Because we returned the $http.get request in the $auth.login
             // promise, we can chain the next promise to the end here
         }).then(function(response) {
-            var user = JSON.stringify(response.data.user);
-            localStorage.setItem('user', user);
-            $rootScope.authenticated = true;
-            $rootScope.currentUser = response.data.user;
-            $state.go('main.home', {});
+            if(response !== undefined) {
+              var user = JSON.stringify(response.data.user);
+              localStorage.setItem('user', user);
+              $rootScope.authenticated = true;
+              $rootScope.currentUser = response.data.user;
+              $state.go('main.home', {});
+            }
         });
     };
     vm.authenticate = function(provider) {
