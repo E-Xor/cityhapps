@@ -261,6 +261,7 @@ class AdminEventController extends Controller {
 
     if ($passValidation)
       $result = Happ::create($eventParams);
+      $this->dispatch(new SendEventEmail($result));
 
       // Process Tags
       $this->createTags($result, Input::get('tags'));
