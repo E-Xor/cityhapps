@@ -4,6 +4,7 @@ namespace CityHapps\Jobs;
 
 use CityHapps\User;
 use CityHapps\Happ;
+use CityHapps\Models\UserCategory;
 use CityHapps\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -35,13 +36,11 @@ class SendEventEmail extends Job implements SelfHandling, ShouldQueue
         $happ = $this->happ;
         foreach ($happ->categories as $category)
         {
-                error_log('ooooooooooo');
             $user_categories = \UserCategory::where('category_id', '=', $category->id)->get();
             foreach ($user_categories as $uc)
             {
-                $user = User::where('id', '=', $uc->user_id)->get();
-                error_log($user->email);
-                Mail::raw('new Event added to your favorite category', function($message)
+                $user = User::find($uc->user_id);
+                \Mail::raw('new Event added to your favorite category', function($message)
                 {
                     $message->from('team@cityhapps.com', 'CityHapps');
                     $message->to($user->email)->cc('zaali@live.com');
