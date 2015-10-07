@@ -116,8 +116,11 @@ class AdminEventController extends Controller {
       $result = Happ::find($eventParams['id']);
 
       // Process Tags
-      $tags = Input::get('tags');
-      $this->createTags($result, $tags);
+      if(Input::has('categories'))
+      {
+        $tags = Input::get('tags');
+        $this->createTags($result, $tags);
+      }
       // Process Age Levels
       $age_level_data = Input::get('ageLevels');
       $result->ageLevels()->detach();
