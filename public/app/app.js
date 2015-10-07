@@ -7,9 +7,9 @@ angular.module('cityHapps', ['xeditable', 'ui.bootstrap', 'ui.router', 'ngRoute'
     'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
     'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
     'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
-    'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css']);
+    'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css', 'angular-google-analytics']);
 
-angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
+angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, AnalyticsProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
     $stateProvider.state('main', {
         abstract: true,
         templateUrl: 'app/shared/templates/main-layout.tpl.html',
@@ -323,13 +323,22 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         clientId: '1149149361767339'
     });
 
-    var myAppId = '1149149361767339';
+    var myAppId = '1150858754929733';
     FacebookProvider.init(myAppId);
 
     snapRemoteProvider.globalOptions = {
         disable: 'right',
         touchToDrag: false
     };
+    
+    // google analytics
+    AnalyticsProvider.setAccount('UA-65216452-1');
+
+    // Track all routes (or not)
+    AnalyticsProvider.trackPages(true);
+
+    // Track all URL query params (default is false)
+    AnalyticsProvider.trackUrlParams(true);
 
 }).run(function($rootScope, $state, $http, editableOptions) {
     $rootScope.$on('$stateChangeStart', function(event, toState) {
