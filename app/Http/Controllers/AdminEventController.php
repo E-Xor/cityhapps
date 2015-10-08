@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use CityHapps\Http\Requests;
 use CityHapps\Http\Controllers\Controller;
 use CityHapps\Happ;
+use CityHapps\Category;
 use CityHapps\Tag;
 use Input;
 
@@ -122,11 +123,15 @@ class AdminEventController extends Controller {
         $this->createTags($result, $tags);
       }
       // Process Age Levels
-      $age_level_data = Input::get('ageLevels');
-      $result->ageLevels()->detach();
-      foreach ($age_level_data as $age_level) {
-        if (isset($age_level['value']) && $age_level['value'])
-          $result->ageLevels()->attach($age_level['id']);
+      
+      if(Input::has('ageLevels'))
+      {
+        $age_level_data = Input::get('ageLevels');
+        $result->ageLevels()->detach();
+        foreach ($age_level_data as $age_level) {
+          if (isset($age_level['value']) && $age_level['value'])
+            $result->ageLevels()->attach($age_level['id']);
+        }
       }
 
       // Process Categories
@@ -135,7 +140,8 @@ class AdminEventController extends Controller {
         $category_data = Input::get('categories');
         $result->categories()->detach();
         foreach ($category_data as $category) {
-          $result->categories()->attach($category);
+          $event_category = new \EventCategory(['event_id' => $result->id, 'category_id' => $category, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+          $result->categories()->attach($event_category);
         }
       }
 
@@ -163,6 +169,7 @@ class AdminEventController extends Controller {
 
      if ($result) {
       // then update
+      error_log('result is success');
       $difference = json_encode(array_keys(array_diff($eventParams, $result->getAttributes())));
       $eventParams['serialized'] = $difference;
       $result->update($eventParams);
