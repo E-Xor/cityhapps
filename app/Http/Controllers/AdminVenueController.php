@@ -60,7 +60,7 @@ class AdminVenueController extends Controller {
             $entity->tags()->detach();
             foreach ($tags as $tag_id => $tag) {
                 if (!isset($tag["id"])) {
-                    $new_tag = new Tag(['tag_raw' => $tag["tag_raw"]]);
+                    $new_tag = new Tag(['tag_raw' => $tag["tag_raw"], 'tag_url' => $tag["tag_raw"]]);
                     $entity->tags()->save($new_tag);
                 } else {
                     //if the tag has an id, it means it was an old saved tag and we want it back
