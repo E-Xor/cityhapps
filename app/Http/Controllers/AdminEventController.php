@@ -117,7 +117,7 @@ class AdminEventController extends Controller {
       $result = Happ::find($eventParams['id']);
 
       // Process Tags
-      if(Input::has('categories'))
+      if(Input::has('tags'))
       {
         $tags = Input::get('tags');
         $this->createTags($result, $tags);
