@@ -21,7 +21,8 @@ class VenueHandler extends ApiHandler
 	 */
 	public function handleGet(ApiRequest $request, $user = false)
 	{
-		return $this->handleGetCustom($request, new Venue);
+		$model = Venue::with('tags')->with('happs');
+		return $this->handleGetCustom($request, $model);
 	}
 
 	/**
