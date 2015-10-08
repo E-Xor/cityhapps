@@ -17,10 +17,21 @@ input[type=date]{
 
 }
 
-.venue-social{
-  float: right;
-  margin-right: 20px;
+.venue-tag{
+  font-weight: 500;
+  padding-left: 12px;
+  color: #FC5C50;
+}
+
+.venue-row{
   margin-top: 20px;
+}
+
+.venue-tags{
+  margin-left: 20px;
+}
+.venue-social{
+  margin-right: 20px;
 }
 
 html {
