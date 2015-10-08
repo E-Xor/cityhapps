@@ -50,6 +50,7 @@
         <script src="/js/angular-idle.min.js"></script>
         <script src="/js/jquery.datetimepicker.js"></script>
 
+        <script src="/js/angular-google-analytics.min.js"></script>
         <script src="/js/moment.min.js"></script>
         <script type="text/javascript" src="/js/fullcalendar.js"></script>
         <script type="text/javascript" src="/js/calendar.js"></script>
