@@ -140,8 +140,7 @@ class AdminEventController extends Controller {
         $category_data = Input::get('categories');
         $result->categories()->detach();
         foreach ($category_data as $category) {
-          $event_category = new \EventCategory(['event_id' => $result->id, 'category_id' => $category, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
-          $result->categories()->attach($event_category);
+          $result->categories()->attach($category);
         }
       }
 
