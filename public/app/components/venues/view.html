@@ -18,14 +18,24 @@
 		</div>-->
 	</div>
 </div>
+<div class="row venue-row">
+  <div class="pull-left venue-tags">
+    <div class="venue-tag" ng-if="venue.relationships.tags">
+      <i class="fa fa-tag"></i>&nbsp;
+      <span ng-repeat="tag in venue.relationships.tags">
+        <span class="venue-tag">{{ tag.tag_raw }}</span>{{ $last ? '' : ' ' }}
+      </span>
+    </div>
+  </div>
+  <div class="pull-right venue-social">
+    <a social-facebook><i class="fa fa-facebook-square fa-3x"></i></a>
+    <a social-twitter><i class="fa fa-twitter-square fa-3x"></i></a>
+  </div>
+</div>
 <div class="row" ng-if="currentUser.role=='ROLE_ADMIN'">
 	<div class="col-xs-12">
 		<a href="/admin/venue/edit/{{ venue.id }}" style="color: black;"><i class="fa fa-pencil-square-o"></i> Edit Venue</a>
 	</div>
-  <div class="venue-social">
-    <a social-facebook><i class="fa fa-facebook-square fa-3x"></i></a>
-    <a social-twitter><i class="fa fa-twitter-square fa-3x"></i></a>
-  </div>
 </div>
 <div class="happ-listing">
   <div ng-repeat="happ in venue.relationships.happs" ch-happ="happ"></div>
