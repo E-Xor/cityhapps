@@ -356,7 +356,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
     });
 }).controller('VenueViewController', function($scope, $http, $stateParams, cleanData, Venue) {
-    Venue.get({id: $stateParams.id, include: 'happs'}, function(payload) {
+    Venue.get({id: $stateParams.id, include: 'happs,tags'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
 
@@ -533,7 +533,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 $scope.error = data.error.message;
             });
         } else {
-            console.log(formData)
+            console.log(formData);
             $http({
                 method: 'POST',
                 url: '/admin/event/update',
@@ -657,6 +657,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                     })();
                 }
                 if (singleEvent.relationships.hasOwnProperty('tags')) {
+                  console.log('tags:');
+                  console.log(singleEvent.relationships.tags);
                     $scope.formData.tags = singleEvent.relationships.tags;
                 }
                 if (singleEvent.relationships.hasOwnProperty('venue')) {
