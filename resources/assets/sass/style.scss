@@ -12,6 +12,16 @@ $light-grey: #D1D2D4;
 $tan: #F7EEEF;
 
 //End Vars
+input[type=date]{
+      line-height: 10px;
+
+}
+
+.venue-social{
+  float: right;
+  margin-right: 20px;
+  margin-top: 20px;
+}
 
 html {
 	background: #F7EEEF;
