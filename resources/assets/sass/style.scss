@@ -12,10 +12,6 @@ $light-grey: #D1D2D4;
 $tan: #F7EEEF;
 
 //End Vars
-input[type=date]{
-      line-height: 10px;
-
-}
 
 .venue-tag{
   font-weight: 500;
@@ -2433,7 +2429,6 @@ a.ng-binding:hover{
     border-radius: 6px;
     padding: 4px 7px;
     outline: 0;
-    margin:5px 0;
   }
   input {
     -webkit-appearance: none;
