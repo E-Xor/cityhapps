@@ -20,7 +20,7 @@
         <base href="/">
     </head>
     <body>
-        <div ui-view></div>
+        <div ui-view autoscroll="true"></div>
 
         <!-- ng- scripts and things -->
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
