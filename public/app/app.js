@@ -7,7 +7,7 @@ angular.module('cityHapps', ['xeditable', 'ui.bootstrap', 'ui.router', 'ngRoute'
     'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
     'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
     'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
-    'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css', 'angular-google-analytics']);
+    'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css', 'angular-google-analytics', 'ui.bootstrap.datetimepicker']);
 
 angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, AnalyticsProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
     $stateProvider.state('main', {
