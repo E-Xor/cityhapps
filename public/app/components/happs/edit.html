@@ -103,20 +103,38 @@
       </div>
     </div>
     
-    <div>
-      <label for="start_time" style="display:inline-block;width:262px;">Start Date/Time <span class="red center margin20"> * </span>
+    <div style="margin-top:10px; margin-bottom:10px">
+      <label for="start_time" style="display:inline-block;">Start Date/Time <span class="red center margin20"> * </span>
         <div class="red" ng-if="startDateError">You must have a start date</div>
       </label>
 
-      <label for="end_time" style="display:inline-block;width:243px;" ng-if="!formData.all_day">End Date/Time </label>
+      <datetimepicker 
+          hour-step="hourStep"
+          minute-step="minuteStep"
+          ng-model="formData.start_time"
+          date-format="MM/dd/yyyy"
+          date-options="dateOptions"
+          >
+      </datetimepicker>
+    </div>
+
+    <div style="margin-bottom:10px">
+      <label for="end_time" style="display:inline-block;width:112px;" ng-if="!formData.all_day">End Date/Time </label>
+      <datetimepicker ng-hide="formData.all_day"
+          hour-step="hourStep"
+          minute-step="minuteStep"
+          ng-model="formData.end_time"
+          date-format="MM/dd/yyyy"
+          date-options="dateOptions">
+      </datetimepicker>
+    </div>
+
+    <div>
       <label for="all_day" style="display:inline-block;" ng-if="!formData.all_day">All Day Event</label>
-      <label for="all_day" style="display:inline-block;width:245px;" ng-if="formData.all_day">All Day Event</label>
-
-
-      <input id="start_time" name="start_time" placeholder="MM/DD/YYYY H:M AM/PM" date-time-picker ng-model="formData.start_time" style="width:225px;margin-right:35px;"/>
-      <input id="end_time" name="end_time" placeholder="MM/DD/YYYY H:M AM/PM" date-time-picker ng-model="formData.end_time" ng-if="!formData.all_day" style="width:225px;margin-right:25px;"/>
+      <label for="all_day" style="display:inline-block;" ng-if="formData.all_day">All Day Event</label>
       <input id="all_day" name="all_day" type="checkbox" ng-model="formData.all_day" style="-webkit-appearance: checkbox;"/>
     </div>
+    <br />
 
     <div>
       <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
@@ -177,4 +195,3 @@
         <small>{{data.venue_name}}</small><br />
     </div>
 </script>
-<script src="/js/jquery.datetimepicker.js"></script>

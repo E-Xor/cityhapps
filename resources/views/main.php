@@ -11,8 +11,8 @@
         <link rel="stylesheet" href="/assets/css/style.css" />
         <link rel="stylesheet" href="/assets/css/xeditable.css" />
         <link rel="stylesheet" href="/assets/css/pnotify.custom.min.css" />
-        <link rel="stylesheet" type="text/css" href="/assets/css/jquery.datetimepicker.css"/ >
         <link rel="stylesheet" type="text/css" href="/assets/css/ng-tags-input.min.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/datetimepicker.css">
         <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,height=device-height" >
@@ -20,7 +20,7 @@
         <base href="/">
     </head>
     <body>
-        <div ui-view></div>
+        <div ui-view autoscroll="true"></div>
 
         <!-- ng- scripts and things -->
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
@@ -48,8 +48,10 @@
         <script type="text/javascript" src="/assets/js/ui-bootstrap-tpls-0.13.3.min.js"></script>
         <!-- <script src="/assets/js/angular/angular-touch.js"></script> -->
         <script src="/js/angular-idle.min.js"></script>
-        <script src="/js/jquery.datetimepicker.js"></script>
 
+        <script src="/js/angular-google-analytics.min.js"></script>
+        <script src="/js/ui-bootstrap-tpls-0.13.1.js"></script>
+        <script src="/js/datetimepicker.js"></script>
         <script src="/js/moment.min.js"></script>
         <script type="text/javascript" src="/js/fullcalendar.js"></script>
         <script type="text/javascript" src="/js/calendar.js"></script>

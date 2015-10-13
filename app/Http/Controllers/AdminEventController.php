@@ -2,11 +2,13 @@
 
 namespace CityHapps\Http\Controllers;
 
+use Log;
 use Illuminate\Http\Request;
 
 use CityHapps\Http\Requests;
 use CityHapps\Http\Controllers\Controller;
 use CityHapps\Happ;
+use CityHapps\Category;
 use CityHapps\Tag;
 use Input;
 
@@ -115,21 +117,31 @@ class AdminEventController extends Controller {
       $result = Happ::find($eventParams['id']);
 
       // Process Tags
-      $this->createTags($result, Input::get('tags'));
-      
+      if(Input::has('tags'))
+      {
+        $tags = Input::get('tags');
+        $this->createTags($result, $tags);
+      }
       // Process Age Levels
-      $age_level_data = Input::get('ageLevels');
-      $result->ageLevels()->detach();
-      foreach ($age_level_data as $age_level) {
-        if (isset($age_level['value']) && $age_level['value'])
-          $result->ageLevels()->attach($age_level['id']);
+      
+      if(Input::has('ageLevels'))
+      {
+        $age_level_data = Input::get('ageLevels');
+        $result->ageLevels()->detach();
+        foreach ($age_level_data as $age_level) {
+          if (isset($age_level['value']) && $age_level['value'])
+            $result->ageLevels()->attach($age_level['id']);
+        }
       }
 
       // Process Categories
-      $category_data = Input::get('categories');
-      $result->categories()->detach();
-      foreach ($category_data as $category) {
-        $result->categories()->attach($category);
+      if(Input::has('categories'))
+      {
+        $category_data = Input::get('categories');
+        $result->categories()->detach();
+        foreach ($category_data as $category) {
+          $result->categories()->attach($category);
+        }
       }
 
       $similar = $result->similar;
@@ -156,6 +168,7 @@ class AdminEventController extends Controller {
 
      if ($result) {
       // then update
+      error_log('result is success');
       $difference = json_encode(array_keys(array_diff($eventParams, $result->getAttributes())));
       $eventParams['serialized'] = $difference;
       $result->update($eventParams);
@@ -185,9 +198,9 @@ class AdminEventController extends Controller {
         if (!empty($tags)) {
             //Drop previous tags for this event
             $entity->tags()->detach();
-            foreach ($tags as $tag_id => $tag) {
+            foreach ($tags as $tag) {
                 if (!isset($tag["id"])) {
-                    $new_tag = new Tag(['tag_raw' => $tag["tag_raw"]]);
+                    $new_tag = new Tag(['tag_raw' => $tag["tag_raw"], 'tag_url' => $tag["tag_raw"]]);
                     $entity->tags()->save($new_tag);
                 } else {
                     //if the tag has an id, it means it was an old saved tag and we want it back

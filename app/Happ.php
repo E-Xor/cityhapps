@@ -57,7 +57,7 @@ class Happ extends Model
 
   public function tags()
   {
-    return $this->belongsToMany('CityHapps\Tag');
+    return $this->belongsToMany('CityHapps\Tag', 'happ_tag', 'happ_id', 'tag_id');
   }
 
   public function ageLevels()
