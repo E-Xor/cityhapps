@@ -13,6 +13,23 @@ $tan: #F7EEEF;
 
 //End Vars
 
+.venue-tag{
+  font-weight: 500;
+  padding-left: 12px;
+  color: #FC5C50;
+}
+
+.venue-row{
+  margin-top: 20px;
+}
+
+.venue-tags{
+  margin-left: 20px;
+}
+.venue-social{
+  margin-right: 20px;
+}
+
 html {
 	background: #F7EEEF;
 }
@@ -40,7 +57,8 @@ html {
 
 .venue-description{
   color: #fff;
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 500;
   margin-top: 15px;
   margin-left: 260px;
   margin-right: 260px;
@@ -2325,8 +2343,8 @@ a.ng-binding:hover{
   
 
 .venue-address{
-    font-size: 15px;
-    width: 500px;
+    font-weight: 500;
+    width: 600px;
     margin: 0 auto;
 }
 
@@ -2411,7 +2429,6 @@ a.ng-binding:hover{
     border-radius: 6px;
     padding: 4px 7px;
     outline: 0;
-    margin:5px 0;
   }
   input {
     -webkit-appearance: none;
