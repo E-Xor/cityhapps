@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="/assets/css/xeditable.css" />
         <link rel="stylesheet" href="/assets/css/pnotify.custom.min.css" />
         <link rel="stylesheet" type="text/css" href="/assets/css/ng-tags-input.min.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/jquery.datetimepicker.css">
         <link rel="stylesheet" type="text/css" href="/assets/css/datetimepicker.css">
         <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
@@ -52,6 +53,7 @@
         <script src="/js/angular-google-analytics.min.js"></script>
         <script src="/js/ui-bootstrap-tpls-0.13.1.js"></script>
         <script src="/js/datetimepicker.js"></script>
+        <script src="/js/jquery.datetimepicker.js"></script>
         <script src="/js/moment.min.js"></script>
         <script type="text/javascript" src="/js/fullcalendar.js"></script>
         <script type="text/javascript" src="/js/calendar.js"></script>
@@ -79,4 +81,4 @@
         <script src="/app/directives.js"></script>
         <script src="/js/dom.js"></script>
     </body>
-</html>
+jquery.datetimepicker.css</html>
