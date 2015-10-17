@@ -198,7 +198,6 @@ class UserController extends Controller {
 
         if(\Hash::check($user_params['current_password'], $user->password)){
           if($user_params['password'] == $user_params['password_confirmation']){
-            error_log('-------');
             $user->password = \Hash::make($user_params['password']);
             $user->save();
           }
