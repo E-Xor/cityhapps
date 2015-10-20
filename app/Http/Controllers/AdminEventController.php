@@ -168,7 +168,6 @@ class AdminEventController extends Controller {
 
      if ($result) {
       // then update
-      error_log('result is success');
       $difference = json_encode(array_keys(array_diff($eventParams, $result->getAttributes())));
       $eventParams['serialized'] = $difference;
       $result->update($eventParams);
