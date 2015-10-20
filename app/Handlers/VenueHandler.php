@@ -2,8 +2,6 @@
 namespace CityHapps\Handlers;
 
 use CityHapps\Venue;
-use Illuminate\Support\Collection;
-use CityHapps\Happ;
 
 use EchoIt\JsonApi\Exception as ApiException;
 use EchoIt\JsonApi\Request as ApiRequest;
@@ -23,8 +21,7 @@ class VenueHandler extends ApiHandler
 	 */
 	public function handleGet(ApiRequest $request, $user = false)
 	{
-		$model = Venue::with('tags')->with('happs');
-		return $this->handleGetCustom($request, $model);
+		return $this->handleGetCustom($request, new Venue);
 	}
 
 	/**
@@ -55,8 +52,7 @@ class VenueHandler extends ApiHandler
 
         try {
             if ($request->pageNumber && empty($request->id)) {
-                $model = Venue::has('happs');
-								$results = $this->handlePaginationRequest($request, $model, $total);
+                $results = $this->handlePaginationRequest($request, $model, $total);
             } else {
                 $results = $model->get();
             }
