@@ -1158,8 +1158,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                                 "email" : $scope.fbInfo.email,
                                 "password" : $scope.fbInfo.password
                             };
-                            $rootScope.authenticated = true;
-                            $rootScope.currentUser = response.data.user;
 
                             if (response.isValid == true ) {
                                 registerDataService.data = $scope.fbInfo;
