@@ -1093,7 +1093,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         });
     };
 
-}).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
+}).controller('registerFormController', function($scope, $state, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
     //Facebook Auth
 
     // Define user empty data :/
@@ -1158,18 +1158,16 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                                 "email" : $scope.fbInfo.email,
                                 "password" : $scope.fbInfo.password
                             };
+                            $rootScope.authenticated = true;
+                            $rootScope.currentUser = response.data.user;
 
                             if (response.isValid == true ) {
                                 registerDataService.data = $scope.fbInfo;
-
-                                $modal.open({
-                                    templateUrl: "templates/categoriesModal.html",
-                                    controller: 'modalInstanceController'
-                                });
-
+                                localStorage.setItem('user', user);
+                                $rootScope.authenticated = true;
+                                $rootScope.currentUser = $scope.fbUser;
+                                $state.go('main.home', {});
                             } else {
-                                console.log(response.id);
-
                                 $http({
                                     method: 'PATCH',
                                     url: '/user/' + response.id,
