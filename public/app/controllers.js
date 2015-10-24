@@ -156,9 +156,17 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         $scope.curDate = new Date();
         $scope.toDate = function(date){ return new Date(date); }
-        $scope.displayDay = function(start, end){ 
-          startDate = new Date(start);
-          endDate = new Date(end);
+        $scope.displayDay = function(happ){ 
+          startDate = new Date();;
+          endDate = new Date();
+          if(happ.start !== undefined){
+            startDate = new Date(happ.start.local);
+            endDate = new Date(happ.end.local);
+          }
+          if(happ.start_time !== undefined){
+            startDate = new Date(happ.start_time);
+            endDate = new Date(happ.end_time);
+          }
           today = new Date();
           startDate.setHours(0, 0, 0, 0);
           endDate.setHours(0, 0, 0, 0);
