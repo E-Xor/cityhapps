@@ -454,7 +454,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             dd = '0' + dd;
         if (mm < 10)
             mm = '0' + mm;
-        return yyyy + mm + dd;
+        return yyyy.toString() + mm.toString() + dd.toString();
     };
 
     service.tomorrowDate = function() {
@@ -467,7 +467,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             dd = '0' + dd;
         if (mm < 10)
             mm = '0' + mm;
-        return yyyy + mm + dd;
+        return yyyy.toString() + mm.toString() + dd.toString();
     };
 
     service.weekendDate = function() {
@@ -487,7 +487,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                     dd = '0' + dd;
                 if (mm < 10)
                     mm = '0' + mm;
-                var sat = yyyy + mm + dd;
+                var sat = yyyy.toString() + mm.toString() + dd.toString();
                 var sunday = new Date();
                 sunday.setDate(saturday.getDate() + 1);
                 dd = sunday.getDate();
@@ -497,7 +497,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                     dd = '0' + dd;
                 if (mm < 10)
                     mm = '0' + mm;
-                return sat + ',' + yyyy + mm + dd;
+                return sat + ',' + yyyy.toString() + mm.toString() + dd.toString();
         }
     };
 
