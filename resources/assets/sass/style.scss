@@ -451,7 +451,7 @@ input.main-search {
         border: none;
         border-top: 1px solid #FC5C50;
         height: auto;
-        padding: 0;
+        padding: 1.5em 0;
         text-shadow: none;
         font-weight: bold;
         float: left;
@@ -1739,9 +1739,10 @@ h3 {
   font-size: 1.3em;
   color: #fff;
   font-weight: 700;
+  line-height: 1em;
   text-shadow: 2px 1px 1px #E24B44;
   text-align: center;
-  height: 43px;
+  /* height: 43px; */
   &.active {
     color: #FF5C50;
     background: none;
@@ -1827,6 +1828,20 @@ h3 {
 
     .main-content {
         margin-top: 75px;
+
+        .intro-message {
+            h1 {
+                font-size: 24px;
+                font-weight: 600;
+            }
+            h3 {
+                font-size: 18px;
+                line-height: 1.3em;
+            }
+            .happ-button {
+                font-size: 1em;
+            }
+        }
     }
 
     .day-slider {
