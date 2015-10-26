@@ -156,9 +156,17 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         $scope.curDate = new Date();
         $scope.toDate = function(date){ return new Date(date); }
-        $scope.displayDay = function(start, end){ 
-          startDate = new Date(start);
-          endDate = new Date(end);
+        $scope.displayDay = function(happ){ 
+          startDate = new Date();;
+          endDate = new Date();
+          if(happ.start !== undefined){
+            startDate = new Date(happ.start.local);
+            endDate = new Date(happ.end.local);
+          }
+          if(happ.start_time !== undefined){
+            startDate = new Date(happ.start_time);
+            endDate = new Date(happ.end_time);
+          }
           today = new Date();
           startDate.setHours(0, 0, 0, 0);
           endDate.setHours(0, 0, 0, 0);
@@ -1085,7 +1093,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         });
     };
 
-}).controller('registerFormController', function($scope, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
+}).controller('registerFormController', function($scope, $state, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
     //Facebook Auth
 
     // Define user empty data :/
@@ -1153,15 +1161,11 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
                             if (response.isValid == true ) {
                                 registerDataService.data = $scope.fbInfo;
-
-                                $modal.open({
-                                    templateUrl: "templates/categoriesModal.html",
-                                    controller: 'modalInstanceController'
-                                });
-
+                                localStorage.setItem('user', user);
+                                $rootScope.authenticated = true;
+                                $rootScope.currentUser = $scope.fbUser;
+                                $state.go('main.home', {});
                             } else {
-                                console.log(response.id);
-
                                 $http({
                                     method: 'PATCH',
                                     url: '/user/' + response.id,

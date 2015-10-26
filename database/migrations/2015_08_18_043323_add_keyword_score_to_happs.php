@@ -13,7 +13,7 @@ class AddKeywordScoreToHapps extends Migration
     public function up()
     {
         Schema::table('happs', function ($table) {
-            $table->integer('keyword_score');
+            $table->integer('keyword_score')->nullable();
         });
     }
 
