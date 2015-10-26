@@ -1,14 +1,14 @@
-<div class="container">
+<div class="container container-controls">
   <div class="row header-controls">
       <div class="col-sm-6 filter-controls">
         <span class="filter-control" ng-click="hideFilter=!hideFilter" ng-class="{true: 'active'}[!hideFilter]">
-          <i class="fa fa-filter"></i>&nbsp;&nbsp;Filter By&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
+          <i class="fa fa-filter"></i>&nbsp;&nbsp;&nbsp;Filter By&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
         </span>
         <!--span class="sort-control">
           <i class="fa fa-exchange fa-rotate-90"></i>&nbsp;&nbsp;Sort By&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
         </span-->
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 search-controls">
         <div class="filter-search">
           <i class="fa fa-search"></i>
           <input type="text" ng-model="filterDefaults.search" />
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="filter-more-options row">
-    <div class="col-xs-6 col-sm-3">
+    <div class="col-xs-6 col-sm-3 filter-options-age">
       <div class="label">
           Good For:
       </div>
@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-6 col-sm-3">
+    <div class="col-xs-6 col-sm-3 filter-options-time">
       <div class="label">
           Time of Day:
       </div>
@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-6 col-sm-3">
+    <div class="col-xs-6 col-sm-3 filter-options-location">
       <div class="label">
           Indoor|Outdoor:
       </div>
@@ -85,7 +85,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-6 col-sm-3">
+    <div class="col-xs-6 col-sm-3 filter-options-zip">
       <div>
           <div class="label">
             <label for="zipcode">Zipcode:</label>
@@ -93,7 +93,7 @@
           <input type="text" size="20" id="zipcode" ng-model="filterDefaults.zip">
       </div>
     </div>
-  </div>
+  </div> <!-- END .filter-more-options -->
   <a href="#" class="closeFilter" ng-click="hideFilter=!hideFilter">Close</a>
 </div>
 <div class="filter-footer">

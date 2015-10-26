@@ -69,7 +69,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #EAE6DE;
-}	
+}
 
 .totalEvents {
   font-weight: 200;
@@ -451,7 +451,7 @@ input.main-search {
         border: none;
         border-top: 1px solid #FC5C50;
         height: auto;
-        padding: 0;
+        padding: 1.5em 0;
         text-shadow: none;
         font-weight: bold;
         float: left;
@@ -813,7 +813,7 @@ input.main-search {
     border: none;
     color: #A09C95;
   }
-  
+
   &.user-page-register {
   }
 
@@ -1012,7 +1012,7 @@ h3 {
 .markerLabel {
 	color: #fff;
 	text-shadow: 2px 1px 1px #E24B44;
-	font-size: 1.4em;	
+	font-size: 1.4em;
 	font-weight: bold;
 }
 
@@ -1033,7 +1033,7 @@ h3 {
   opacity: 1;
 }
 
-//view icons 
+//view icons
 .view-row {
   padding-left: 38px;
   padding-right: 0;
@@ -1049,7 +1049,7 @@ h3 {
     margin-right: 0;
   }
 }
- 
+
 .list-icon {
 	@extend .icon;
 	background: url('../img/viewSelectSprite.png') no-repeat 0 3px;
@@ -1428,7 +1428,7 @@ h3 {
 	padding: 60px 0;
 }
 
-// Map view 
+// Map view
 
 .angular-google-map-container {
 	height: 820px;
@@ -1446,7 +1446,7 @@ h3 {
   -moz-box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
   box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
   margin-top: 25px;
-  min-width: 300px; 
+  min-width: 300px;
 }
 
 .tab-pane {
@@ -1454,7 +1454,7 @@ h3 {
 	-moz-box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
 	box-shadow: 5px 0px 0px 0px rgba(0, 0, 0, 0.35);
 
-	min-width: 300px;	
+	min-width: 300px;
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
@@ -1588,7 +1588,7 @@ h3 {
       padding: 5px 10px;
       color: #fff;
       font-size: 1em;
-      font-weight: bold; 
+      font-weight: bold;
       text-shadow: 2px 1px 1px #E24B44;
       width: 11px;
       float: right;
@@ -1604,7 +1604,7 @@ h3 {
       thead {
         cursor: pointer;
     }
-  } 
+  }
 
 
   .fc-day-grid-event > .fc-content {
@@ -1614,7 +1614,7 @@ h3 {
 
 
 
-//Client Validation Styles 
+//Client Validation Styles
 
 .register input.ng-invalid.ng-dirty {
 	border: 1px solid #FF5C50;
@@ -1630,7 +1630,7 @@ h3 {
 
 
 
-//All purpose classes 
+//All purpose classes
 
 .wide-kerning {
 	letter-spacing: .8em;
@@ -1667,7 +1667,7 @@ h3 {
 
 .ellipsis{
   text-overflow: ellipsis;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .pointer {
@@ -1739,9 +1739,10 @@ h3 {
   font-size: 1.3em;
   color: #fff;
   font-weight: 700;
+  line-height: 1em;
   text-shadow: 2px 1px 1px #E24B44;
   text-align: center;
-  height: 43px;
+  /* height: 43px; */
   &.active {
     color: #FF5C50;
     background: none;
@@ -1771,17 +1772,7 @@ h3 {
   }
 }
 
-//iPad
-
-@media screen and (min-width : 768px) and (max-width : 1024px) {
-  .user-info {
-    width: 130px;
-  }
-}
-
-
-
-//Mobile
+// Mobile responsive styles
 
 @media screen and (max-width: 768px) {
     html, body {
@@ -1802,19 +1793,71 @@ h3 {
 		margin: 20px 0;
 	}
 
-  .day-slider {
-    padding: 0;
-  }
+    .header-container {
+        .logo-row {
+            img {
+                max-width: 40%;
+            }
+        }
+
+        hr {
+            margin-bottom: 10px;
+        }
+
+        .container-controls {
+            overflow: visible;
+
+            .filter-controls {
+                padding: 0;
+            }
+
+            .search-controls {
+                padding: 0;
+
+                .filter-search {
+                    position: absolute;
+                    top: 22px;
+
+                    input {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    .main-content {
+        margin-top: 75px;
+
+        .intro-message {
+            h1 {
+                font-size: 24px;
+                font-weight: 600;
+            }
+            h3 {
+                font-size: 18px;
+                line-height: 1.3em;
+            }
+            .happ-button {
+                font-size: 1em;
+            }
+        }
+    }
+
+    .day-slider {
+        padding: 0;
+    }
 
 	h4.main-date {
 		font-size: 16px;
-    margin-top: 17px;
+        margin-top: 17px;
 	}
 
 	.glyphicon.glyphicon-chevron-right{
 		height: 50px;
 		width: auto;
 		right: 50%;
+
 		&:before {
 			content: url('../img/sliderRight.png');
 			cursor: pointer;
@@ -1826,7 +1869,7 @@ h3 {
 	}
 
 	.carousel-control.right {
-    margin-right: 0;
+        margin-right: 0;
 	}
 
 	.uppercase.center.white.wide-kerning {
@@ -1836,9 +1879,10 @@ h3 {
 
 	.glyphicon.glyphicon-chevron-left{
 		height: 50px;
-		width: auto; 
+		width: auto;
 		left: 50%;
-		&:before {
+
+        &:before {
 			content: url('../img/sliderLeft.png');
 			cursor: pointer;
 		}
@@ -1861,7 +1905,7 @@ h3 {
 	}
 
     .search-large {
-      background: url("../img/searchIcon.png") 15px 40px/23px 26px no-repeat;
+        background: url("../img/searchIcon.png") 15px 40px/23px 26px no-repeat;
     }
 
   //Drawer menu styles
@@ -1881,18 +1925,17 @@ h3 {
       padding: 20px;
       border: 4px solid #FF5C50;
       top: 288px;
-      left: 0;  
-
+      left: 0;
     }
   }
 
 	.mobile-logo {
 		width: 40%;
 	}
-	
+
 	.mobile-event {
-    width: 100%;
-    background: #FFFFFF;
+        width: 100%;
+        background: #FFF;
 		margin: 10px 0;
 		padding: 0;
 		float: left;
@@ -1936,7 +1979,23 @@ h3 {
 		height: 425px;
 	}
 
-}
+} // END Mobile responsive styles
+
+// Tablet responsive styles
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .user-info {
+        width: 130px;
+    }
+} // END Tablet responsive styles
+
+// Mobile and Tablet responsive styles
+@media screen and (max-width: 1024px) {
+    .header-container {
+        div.header-controls {
+            margin-bottom: 5px;
+        }
+    }
+} // END Mobile and Tablet responsive styles
 
 .happ-date {
   color: #FFFFFF;
@@ -2054,7 +2113,7 @@ h3 {
   z-index: 2;
   background-color: #FFFFFF;
   border-bottom: 1px #C7C5C0 solid;
-  height: 235px;
+  /* height: 235px; */
   margin-bottom: 30px;
   position: relative;
   padding: 0px;
@@ -2063,7 +2122,7 @@ h3 {
   }
   hr {
     border-color: #B8B5B0;
-    margin-bottom: 35px;
+    /* margin-bottom: 35px; */
   }
   .header-controls {
     color: #9B9B9B;
@@ -2072,21 +2131,29 @@ h3 {
       text-align: center;
       font-size: 13px;
       text-transform: uppercase;
+
       span {
         line-height: 45px;
         display: inline-block;
         padding: 0 20px;
         cursor: pointer;
-        border: 1px solid #FC5C50;
-        color: #FC5C50;
+        color: #9c9c9c;
         float: left;
+
         &.active {
-          color: #F15D53;
+          color: #444;
         }
       }
       .fa-filter, .fa-exhange {
           font-size: 1.7em;
-          color: #FC5C50;
+          color: #9c9c9c;
+      }
+      &:after {
+      	content: " ";
+      	display: block;
+      	height: 0;
+      	visibility: hidden;
+      	clear: both;
       }
     }
     .filter-search{
@@ -2176,6 +2243,10 @@ h3 {
       padding-right: 5px;
       margin-left: 32px;
     }
+
+    .filter-options-age {
+        display: none;
+    }
   }
 }
 
@@ -2212,6 +2283,10 @@ h3 {
     //color: #9B9B9B;
     line-height: 55px;
     z-index: 10;
+
+    &:hover {
+        cursor: pointer;
+    }
   }
 }
 
@@ -2220,16 +2295,16 @@ h3 {
     color: #333;
     text-decoration: none;
 
-  
+
 }
 
 a:hover, a:focus {
-    color: #2a6496; 
+    color: #2a6496;
     text-decoration: none;
 }
 
 .venue a:hover {
-    text-decoration: none;  
+    text-decoration: none;
 }
 
 span#mapCircle {
@@ -2290,7 +2365,7 @@ span#mapCircle {
     padding: 0;
     font-weight: bold;
     font-size: 12px;
-    li {  
+    li {
       text-decoration: none;
       display: inline;
       padding: 0 8px;
@@ -2300,7 +2375,7 @@ span#mapCircle {
       }
     }
   }
-  .footer-copyright {   
+  .footer-copyright {
     font-size: 10px;
     padding-bottom: 20px;
   }
@@ -2338,9 +2413,9 @@ a.ng-binding:hover{
     font-size: 2em;
     color: #fff;
     margin-bottom: 21px;
-  
+
 }
-  
+
 
 .venue-address{
     font-weight: 500;
@@ -2419,7 +2494,7 @@ a.ng-binding:hover{
   label {
     display:block;
   }
-  input.full { 
+  input.full {
     width:100%;
   }
   input, select, textarea {
@@ -2441,7 +2516,7 @@ a.ng-binding:hover{
       font-weight: bold;
     }
     &[type='checkbox'] + label {
-      display: inline-block; 
+      display: inline-block;
       margin-right: 20px;
     }
   }
@@ -2569,7 +2644,7 @@ a.ng-binding:hover{
   font-weight: 100;
   padding-top: 50px;
   padding-bottom: 100px;
-  span{ 
+  span{
     margin-left: 15px;
     font-weight: 500;
   }
@@ -2736,14 +2811,14 @@ input#notifyMe {
 /* Bootstrap Small Screen Breakpoint */
 @media (min-width: $screen-md-min) {
   .content-wrapper {
-    width: 88%;
+    width: 84%;
     float: left;
     .menu-button {
       display: none !important;
     }
   }
   .sidebar{
-    width: 12%;
+    width: 16%;
     float: left;
     display: block;
   }

@@ -3,6 +3,7 @@
 Homestead.yaml
 .env
 /public/assets/css/style.css
+/public/assets/css/style.css.map
 .idea
 .idea/
 node_modules
@@ -10,3 +11,6 @@ bower_components
 .DS_Store
 Thumbs.db
 .sass-cache
+/thout-opt-dir
+/config/app.php
+/config/database.php
