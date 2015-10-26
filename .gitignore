@@ -14,9 +14,4 @@ Thumbs.db
 /thout-opt-dir
 /config/app.php
 /config/database.php
-
-config/database.php
-
-config/app.php
-
 gulpfile.js
