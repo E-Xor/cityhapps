@@ -2243,6 +2243,10 @@ h3 {
       padding-right: 5px;
       margin-left: 32px;
     }
+
+    .filter-options-age {
+        display: none;
+    }
   }
 }
 
@@ -2279,6 +2283,10 @@ h3 {
     //color: #9B9B9B;
     line-height: 55px;
     z-index: 10;
+
+    &:hover {
+        cursor: pointer;
+    }
   }
 }
 
