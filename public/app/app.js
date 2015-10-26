@@ -343,14 +343,16 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
 }).run(function($rootScope, $state, $http, editableOptions) {
     $rootScope.$on('$stateChangeStart', function(event, toState) {
         editableOptions.theme = 'bs3';
-        $http.get('api/authenticate/user')
-        .then(function(response) {
-            $rootScope.authenticated = true;
-            $rootScope.currentUser = response.data.user; 
-        })
-        .catch(function(payload, status) {
-            console.log('Not authenticated');
-        });
+        if($rootScope.authenticated !== true){
+          $http.get('api/authenticate/user')
+          .then(function(response) {
+              $rootScope.authenticated = true;
+              $rootScope.currentUser = response.data.user; 
+          })
+          .catch(function(payload, status) {
+              console.log('Not authenticated');
+          });
+        }
     });
     $rootScope.title = 'City Happs';
 });

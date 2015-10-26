@@ -273,11 +273,13 @@ class AdminEventController extends Controller {
 
     if ($passValidation)
       $result = Happ::create($eventParams);
-      $this->dispatch(new SendEventEmail($result));
+      //$this->dispatch(new SendEventEmail($result));
 
+      error_log('1111111');
       // Process Tags
-      $this->createTags($result, Input::get('tags'));
-
+      if(Input::exists('tags')){
+        $this->createTags($result, Input::get('tags'));
+      }
       // Process Age Levels
       $age_level_data = Input::get('ageLevels');
       $result->ageLevels()->detach();

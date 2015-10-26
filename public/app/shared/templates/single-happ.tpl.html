@@ -9,9 +9,9 @@
             <span class="happ-category">{{ category.name }}</span>{{ $last ? '' : ', ' }}
           </span>
         </div>
-        <div class="happ-date">
-          <span class="start-date"> {{ displayDay(happ.start.local, happ.end.local)}}</span>
-          <span ng-if="authenticated" ng-controller="FavoriteController" ng-click="addToFavorites(happ.id)"  class="happ-favorite">
+        <div class="happ-date" ng-controller="HappHomeController">
+          <span class="start-date"> {{ displayDay(happ)}}</span>
+                <span ng-if="authenticated" ng-controller="FavoriteController" ng-click="addToFavorites(happ.id)"  class="happ-favorite">
             <i class="fa fa-star favorite" ng-class="ifFavorite(happ.id)"></i>
             <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
             <div class="buttons">
