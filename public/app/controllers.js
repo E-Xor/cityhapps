@@ -1161,7 +1161,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
                             if (response.isValid == true ) {
                                 registerDataService.data = $scope.fbInfo;
-                                localStorage.setItem('user', user);
                                 $rootScope.authenticated = true;
                                 $rootScope.currentUser = $scope.fbUser;
                                 $state.go('main.home', {});
