@@ -35,8 +35,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'HappViewController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -48,8 +48,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'adminEventController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -61,8 +61,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'adminEventController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -74,8 +74,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'adminEventController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -100,8 +100,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'VenueViewController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -113,8 +113,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'adminVenueController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -126,8 +126,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'adminVenueController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -139,8 +139,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'VenueListController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -161,8 +161,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'VenueListController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -174,8 +174,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'adminVenueController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -187,8 +187,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'adminVenueController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -199,8 +199,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/static/about.html'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -211,8 +211,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/static/terms-conditions.html'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -223,8 +223,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/static/privacy-policy.html'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -235,8 +235,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/static/add-venue.html'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -247,8 +247,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/static/add-event.html'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -259,8 +259,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 templateUrl: 'app/components/static/contact.html'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -291,8 +291,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'registerFormController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -304,8 +304,8 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'UserProfileController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
-                controller: 'MainFilterController'
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
             }
         },
         css: 'assets/css/angular-snap.min.css'
@@ -330,7 +330,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         disable: 'right',
         touchToDrag: false
     };
-    
+
     // google analytics
     AnalyticsProvider.setAccount('UA-65216452-1');
 
@@ -347,7 +347,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
           $http.get('api/authenticate/user')
           .then(function(response) {
               $rootScope.authenticated = true;
-              $rootScope.currentUser = response.data.user; 
+              $rootScope.currentUser = response.data.user;
           })
           .catch(function(payload, status) {
               console.log('Not authenticated');
