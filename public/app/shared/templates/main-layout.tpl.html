@@ -1,15 +1,15 @@
 <div class="snap-drawers">
     <aside class="snap-sidebar" snap-drawer="left">
         <ul class="sidebar-menu" auto-active>
-            <li ng-if="authenticated"><a href="/profile">My Account <i class="fa fa-caret-down"></i></a></li>
-            <li ng-if="authenticated"><a href="/favorites">My Favorites <i class="fa fa-star"></i></a></li>
+            <li ng-if="authenticated"><a href="/profile" snap-close>My Account <i class="fa fa-caret-down"></i></a></li>
+            <li ng-if="authenticated"><a href="/favorites" snap-close>My Favorites <i class="fa fa-star"></i></a></li>
             <li ng-if="authenticated"><a href="/logout">Log Out</a></li>
             <li ng-if="!authenticated"><a href="/login">Log In</a></li>
             <li ng-if="!authenticated"><a href="/register">Register</a></li>
-            <li><a href="/">Home</a></li>
-            <li><a href="/venues">Venues</a></li>
+            <li><a href="/" snap-close>Home</a></li>
+            <li><a href="/venues" snap-close>Venues</a></li>
             <li ng-repeat="category in categories">
-                <a href="/category/{{ category.slug }}">{{ category.name }}</a>
+                <a href="/category/{{ category.slug }}" snap-close>{{ category.name }}</a>
             </li>
         </ul>
     </aside>
@@ -17,15 +17,15 @@
 <div class="page-wrapper" snap-content>
     <aside class="sidebar">
         <ul class="sidebar-menu" auto-active>
-            <li ng-if="authenticated"><a href="/profile">My Account <i class="fa fa-caret-down"></i></a></li>
-            <li ng-if="authenticated"><a href="/favorites">My Favorites <i class="fa fa-star"></i></a></li>
+            <li ng-if="authenticated"><a href="/profile" snap-close>My Account <i class="fa fa-caret-down"></i></a></li>
+            <li ng-if="authenticated"><a href="/favorites" snap-close>My Favorites <i class="fa fa-star"></i></a></li>
             <li ng-if="authenticated"><a href="/logout">Log Out</a></li>
             <li ng-if="!authenticated"><a href="/login">Log In</a></li>
             <li ng-if="!authenticated"><a href="/register">Register</a></li>
-            <li><a href="/">Home</a></li>
-            <li><a href="/venues">Venues</a></li>
+            <li><a href="/" snap-close>Home</a></li>
+            <li><a href="/venues" snap-close>Venues</a></li>
             <li ng-repeat="category in categories">
-                <a href="/category/{{ category.slug }}">{{ category.name }}</a>
+                <a href="/category/{{ category.slug }}" snap-close>{{ category.name }}</a>
             </li>
         </ul>
     </aside>
