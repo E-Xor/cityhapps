@@ -153,6 +153,18 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
         
+        $scope.displayStartTime = function(happ){
+          if(happ.start !== undefined){
+            return happ.start.local;
+          }
+          else { return happ.start_time }
+        }
+        $scope.displayEndTime = function(happ){
+          if(happ.end !== undefined){
+            return happ.end.local;
+          }
+          else { return happ.end_time }
+        }
 
         $scope.curDate = new Date();
         $scope.toDate = function(date){ return new Date(date); }
@@ -367,6 +379,18 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Venue.get({id: $stateParams.id, include: 'happs,tags'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
+        $scope.displayStartTime = function(happ){
+          if(happ.start !== undefined){
+            return happ.start.local;
+          }
+          else { return happ.start_time }
+        }
+        $scope.displayEndTime = function(happ){
+          if(happ.end !== undefined){
+            return happ.end.local;
+          }
+          else { return happ.end_time }
+        }
 
         $scope.display = function(word){
           if(word == undefined) { 
@@ -1161,7 +1185,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
                             if (response.isValid == true ) {
                                 registerDataService.data = $scope.fbInfo;
-                                localStorage.setItem('user', user);
                                 $rootScope.authenticated = true;
                                 $rootScope.currentUser = $scope.fbUser;
                                 $state.go('main.home', {});
