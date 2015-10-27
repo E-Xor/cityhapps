@@ -275,7 +275,6 @@ class AdminEventController extends Controller {
       $result = Happ::create($eventParams);
       //$this->dispatch(new SendEventEmail($result));
 
-      error_log('1111111');
       // Process Tags
       if(Input::exists('tags')){
         $this->createTags($result, Input::get('tags'));
