@@ -2,6 +2,7 @@
 namespace CityHapps\Handlers;
 
 use CityHapps\Category;
+use DB;
 
 use EchoIt\JsonApi\Exception as ApiException;
 use EchoIt\JsonApi\Request as ApiRequest;
@@ -21,10 +22,11 @@ class CategoryHandler extends ApiHandler
 	 * @return \EchoIt\JsonApi\Model || \EchoIt\JsonApi\Illuminate\Pagination\LengthAwarePaginator
 	 * @throws ApiException
 	 */
-	public function handleGet(ApiRequest $request, $user = false)
-	{
-		//you can use the default GET functionality, or override with your own
-		return $this->handleGetDefault($request, new Category);
-	}
-
+  public function handleGet(ApiRequest $request, $user = FALSE)
+  {
+		$categories = DB::table('event_category')->select('category_id')->distinct()->get(); 
+		$array = json_decode(json_encode($categories), true);
+    $model = Category::whereIn('id', $array)->select('id')->get();
+    return $model;
+  }
 }
