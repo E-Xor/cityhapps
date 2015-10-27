@@ -2148,9 +2148,12 @@ h3 {
           color: #444;
         }
       }
-      .fa-filter, .fa-exhange {
+      .fa-filter, .fa-exhange, .fa-rotate-90 {
           font-size: 1.7em;
           color: #9c9c9c;
+      }
+      .fa-rotate-90 {
+          font-size: 1.5em;
       }
       &:after {
       	content: " ";
