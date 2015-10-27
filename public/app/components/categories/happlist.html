@@ -4,5 +4,9 @@
     <p>Please try changing your filters to see more events.</p>
     <p>Know of an event that should be listed? <a href="#">Click here</a> to submit it to CityHapps!</p>
   </div>
-  <div ng-repeat="happ in happs" ch-happ="happ"></div>
+  <div class="container happ-listing-container">
+    <div class="row">
+      <div class="col-md-3 happ-item" ng-repeat="happ in happs" ch-happ="happ"></div>
+    </div>
+  </div>
 </div>
