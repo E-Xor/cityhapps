@@ -153,29 +153,32 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
         
+
         $scope.displayStartTime = function(happ){
-          if(happ.start !== undefined){
-            return happ.start.local;
-          }
-          else { return happ.start_time }
-        }
+          if(happ.hasOwnProperty('start')){
+            return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
+          } else { return happ.start_time }
+        }    
         $scope.displayEndTime = function(happ){
-          if(happ.end !== undefined){
-            return happ.end.local;
-          }
-          else { return happ.end_time }
-        }
+          if(happ.hasOwnProperty('end')){
+            return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
+          } else { return happ.end_time }
+        }  
 
         $scope.curDate = new Date();
         $scope.toDate = function(date){ return new Date(date); }
         $scope.displayDay = function(happ){ 
+          if (happ === undefined) return;
           startDate = new Date();;
           endDate = new Date();
-          if(happ.start !== undefined){
-            startDate = new Date(happ.start.local);
-            endDate = new Date(happ.end.local);
-          }
-          if(happ.start_time !== undefined){
+          if(happ.hasOwnProperty('start')){
+            startDate = new Date(happ.start.hasOwnProperty('local') ? happ.start.local : happ.start);
+            endDate = new Date(happ.hasOwnProperty('end') ? happ.end.local : ""); 
+          }    
+
+          if(happ.end === "") { return; }
+
+          if(happ.hasOwnProperty('start_time')){
             startDate = new Date(happ.start_time);
             endDate = new Date(happ.end_time);
           }
@@ -379,19 +382,17 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Venue.get({id: $stateParams.id, include: 'happs,tags'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venue = payload.data[0];
-        $scope.displayStartTime = function(happ){
-          if(happ.start !== undefined){
-            return happ.start.local;
-          }
-          else { return happ.start_time }
-        }
-        $scope.displayEndTime = function(happ){
-          if(happ.end !== undefined){
-            return happ.end.local;
-          }
-          else { return happ.end_time }
-        }
 
+        $scope.displayStartTime = function(happ){
+          if(happ.hasOwnProperty('start')){
+            return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
+          } else { return happ.start_time }
+        }    
+        $scope.displayEndTime = function(happ){
+          if(happ.hasOwnProperty('end')){
+            return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
+          } else { return happ.end_time }
+        }  
         $scope.display = function(word){
           if(word == undefined) { 
             return ' ';
