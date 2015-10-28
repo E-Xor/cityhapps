@@ -1848,6 +1848,14 @@ h3 {
         }
     }
 
+    .happ-listing-container {
+        .happ-item {
+            .happ-buttons {
+                padding: 0;
+            }
+        }
+    }
+
     .day-slider {
         padding: 0;
     }
@@ -1997,6 +2005,15 @@ h3 {
     .header-container {
         div.header-controls {
             margin-bottom: 5px;
+        }
+    }
+
+    .happ-listing-container {
+        padding: 0;
+
+        .happ-item {
+            padding: 0;
+            width: auto;
         }
     }
 } // END Mobile and Tablet responsive styles
