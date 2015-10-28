@@ -53,4 +53,11 @@ $(document).ready(function(){
     //    $('.share-overlay').toggle();
     //});
 
+    if ( $('#display-photo').length ) {
+      var displaynum = Math.floor(Math.random() * 6) + 1;
+      $('#display-photo').attr('src',"/assets/img/display-" + displaynum + ".jpg");
+    }
+
+});
+
 });
