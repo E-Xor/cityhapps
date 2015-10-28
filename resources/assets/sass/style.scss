@@ -2034,7 +2034,12 @@ h3 {
  text-decoration: none;
 }
 
-
+#display-photo {
+  margin: 1em auto;
+  min-width: 340px;
+  width:340px;
+  box-shadow: 1px 3px 11px #888888;
+}
 #adOne {
   height: 250px;
   margin-bottom: 20px;
