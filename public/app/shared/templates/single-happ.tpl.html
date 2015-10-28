@@ -40,7 +40,8 @@
             <i class="fa fa-li fa-calendar-o"></i>{{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
           </li>
           <li class="happ-icon happ-icon-time">
-            <i class="fa fa-li fa-clock-o"></i> <span class="happ-icon-data">{{ happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}</span>
+            <i class="fa fa-li fa-clock-o"></i> 
+            <span class="happ-icon-data">{{ displayStartTime(happ) | dateToISO | date: 'h:mm a'}} - {{ displayEndTime(happ) | dateToISO | date: 'h:mm a'}}</span>
           </li>
           <li class="happ-icon happ-icon-venue" ng-repeat="venue in happ.relationships.venues">
             <a href="/venue/{{ venue.id }}"><i class="fa fa-li fa-map-marker"></i> <span class="happ-icon-data">{{ venue.name }}</span></a>
