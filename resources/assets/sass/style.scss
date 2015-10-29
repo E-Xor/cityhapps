@@ -1856,6 +1856,12 @@ h3 {
         }
     }
 
+    form.wufoo {
+        span.subfield {
+            display: block;
+        }
+    }
+
     .day-slider {
         padding: 0;
     }
@@ -2481,6 +2487,36 @@ a.ng-binding:hover{
       margin-top: 48px;
       margin-bottom: 40px;
       line-height: 1;
+    }
+
+    form.wufoo {
+        fieldset {
+            margin-bottom: 1em;
+        }
+        .required-field {
+            color: #fc5d55;
+            font-size: .9em;
+        }
+        label {
+            line-height: 1em;
+        }
+        input.text, textarea {
+            max-width: 100%;
+            width: 400px;
+        }
+        input.text, select.select {
+            margin-bottom: 15px;
+        }
+        .checkbox, .radio, .choice {
+            display: inline-block;
+            margin: 0 2px 8px 0;
+        }
+        .choice {
+            font-weight: normal;
+            display: inline-block;
+            line-height: 1em;
+            margin: 0 16px 8px 0;
+        }
     }
 }
 
