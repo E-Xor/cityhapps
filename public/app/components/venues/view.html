@@ -6,8 +6,8 @@
 	</div>
 	<div class="col-md-5 venueInfo">
     <h2 class="venueText">VENUE</h2>
-		<h3 class="dark bold venueName">{{venue.name}}</h3>
-		<div class="venue-address">{{ display(venue.phone) + ' &nbsp; | &nbsp;' }} {{display(venue.address_1)}} {{display(venue.address_2)}} {{display(venue.address_3)}} {{display(venue.city)}}, {{display(venue.state)  }} {{ display(venue.postal_code)}} {{ '&nbsp;|&nbsp;' + display(venue.hours)}} </div>
+    <h3 class="dark bold venueName">{{venue.name}}</h3>
+    <div class="venue-address">{{ display(venue.phone) + ' &nbsp; | &nbsp;' }} {{display(venue.address_1)}} {{display(venue.address_2)}} {{display(venue.address_3)}} {{display(venue.city)}}, {{display(venue.state)  }} {{ display(venue.postal_code)}} {{ '&nbsp;|&nbsp;' + display(venue.hours)}} </div>
     <div class="venue-description">{{ venue.description}}</div>
 		<!--<div class="happ-buttons">
 			<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
@@ -37,6 +37,8 @@
 		<a href="/admin/venue/edit/{{ venue.id }}" style="color: black;"><i class="fa fa-pencil-square-o"></i> Edit Venue</a>
 	</div>
 </div>
-<div class="happ-listing">
-  <div ng-repeat="happ in venue.relationships.happs" ch-happ="happ"></div>
+<div class="container happ-listing-container">
+  <div class="row">
+    <div class="col-md-3 happ-item" ng-repeat="happ in venue.relationships.happs" ch-happ="happ"></div>
+  </div>
 </div>
