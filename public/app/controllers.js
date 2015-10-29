@@ -154,69 +154,61 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.happs = payload.data;
         
 
-        $scope.displayStartTime = function(happ){
-          if(happ.hasOwnProperty('start')){
+        $scope.displayStartTime = function(happ) {
+          if (happ.hasOwnProperty('start') && happ.start != null) {
             return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
           } else { return happ.start_time }
-        }    
-        $scope.displayEndTime = function(happ){
-          if(happ.hasOwnProperty('end')){
+        }
+        $scope.displayEndTime = function(happ) {
+          if (happ.hasOwnProperty('end') && happ.end != null) {
             return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
           } else { return happ.end_time }
         }  
 
         $scope.curDate = new Date();
-        $scope.toDate = function(date){ return new Date(date); }
-        $scope.displayDay = function(happ){ 
-          if (happ === undefined) return;
-          startDate = new Date();;
-          endDate = new Date();
-          if(happ.hasOwnProperty('start')){
+        $scope.toDate = function(date) { return new Date(date); }
+        $scope.displayDay = function(happ) {
+          if (typeof(happ) === 'undefined') return;
+
+          // This check *should* never be false, because if it was the happ would not appear
+          if (happ.hasOwnProperty('start') && happ.start != null) {
             startDate = new Date(happ.start.hasOwnProperty('local') ? happ.start.local : happ.start);
-            endDate = new Date(happ.hasOwnProperty('end') ? happ.end.local : ""); 
-          }    
-
-          if(happ.end === "") { return; }
-
-          if(happ.hasOwnProperty('start_time')){
-            startDate = new Date(happ.start_time);
-            endDate = new Date(happ.end_time);
+          } else {
+            return '';
           }
+          if (happ.hasOwnProperty('end') && happ.end != null) {
+            endDate = new Date(happ.end.hasOwnProperty('local') ? happ.end.local : ""); 
+          } else {
+            endDate = startDate;
+          }
+
           today = new Date();
+          tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
           startDate.setHours(0, 0, 0, 0);
           endDate.setHours(0, 0, 0, 0);
           today.setHours(0, 0, 0, 0);
+          tomorrow.setHours(0, 0, 0, 0);
+          var result = '';
+          var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-
-          if( (startDate.getMonth() == endDate.getMonth()) && (startDate.getDate() == endDate.getDate()) )
-          {
-            if(startDate.getDate() == today.getDate()) return 'TODAY';
-            if(startDate.getDate() == today.getDate()+1) return 'TOMORROW';
+          // Get the start date
+          if (startDate <= today) {
+            result = 'TODAY';
+          } else if (startDate == tomorrow) {
+            result = 'TOMORROW';
+          } else {
+            result = month[startDate.getMonth()] + ' ' + startDate.getDate();
           }
 
-          if( startDate <= today )
-          {
-            var month = new Array();
-            month[0] = "Jan";
-            month[1] = "Feb";
-            month[2] = "Mar";
-            month[3] = "Apr";
-            month[4] = "May";
-            month[5] = "Jun";
-            month[6] = "Jul";
-            month[7] = "Aug";
-            month[8] = "Sep";
-            month[9] = "Oct";
-            month[10] = "Nov";
-            month[11] = "Dec";
-            var first = 'TODAY';
-            var last =  month[endDate.getMonth()] + ' ' +endDate.getDate();
-
-            if(startDate.getMonth() == today.getMonth() && startDate.getDate() == today.getDate()+1) { first = 'TOMORROW' }
-            if(endDate.getMonth() == today.getMonth() && endDate.getDate() == today.getDate()+1) { last = 'TOMORROW' }
-
-            return first + ' - ' + last;
+          if ((startDate.getMonth() == endDate.getMonth()) && (startDate.getDate() == endDate.getDate())) {
+            // Return if the dates match
+            return result;
+          } else if (startDate.getMonth() != endDate.getMonth() || result == 'TODAY' || result == 'TOMORROW') {
+            // Append the whole end date if needed
+            return result + ' - ' + month[endDate.getMonth()] + ' ' + endDate.getDate();
           }
+          // Append the partial date if we're showing the month already
+          return result + ' - ' + endDate.getDate();
         }
     });
     $scope.$on('filterUpdate', function() {
