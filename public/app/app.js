@@ -252,6 +252,18 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             }
         },
         css: 'assets/css/angular-snap.min.css'
+    }).state('main.requestConfirm', {
+        url: '/form-submitted',
+        views: {
+            '@main': {
+                templateUrl: 'app/components/static/form-submitted.html'
+            },
+            'menubar@main': {
+                // templateUrl: 'app/components/filters/filters.html',
+                // controller: 'MainFilterController'
+            }
+        },
+        css: 'assets/css/angular-snap.min.css'
     }).state('main.contact', {
         url: '/contact',
         views: {
