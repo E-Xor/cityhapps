@@ -105,7 +105,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         $http({
             method: 'POST',
             url: '/user/exist',
-            data: { 'email' : email },
+            data: { 'value' : email },
             headers: {'Content-Type': 'application/json'}
         }).success(function(data) {
             console.log(data);
