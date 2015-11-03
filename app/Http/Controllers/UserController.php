@@ -140,56 +140,50 @@ class UserController extends Controller {
 
 	}
 
-
+	/*
+	 *
+	 */
 	public function check(Request $request)
 	{
-		//Add Laravel email validation check
 		$email = $request->request->get('value');
 		$rules = array('email' => 'unique:users,email');
-		
 		$userID = User::where('email', '=', $email)->pluck('id');
-
 		$validator = \Validator::make(array('email' => $email), $rules);
-
-		if ($validator->fails()) {
-			
-			echo json_encode(array('isValid' => false,
-									'id' => $userID ));
+		if ($validator->fails()) {			
+			echo json_encode(array(
+				'isValid' 	=> false,
+				'id' 		=> $userID));
 			return;
-
 		} else {
-			echo json_encode(array('isValid' => true, 
-									'value' => 'nice ' . $email));
+			echo json_encode(array(
+				'isValid' 	=> true, 
+				'value' 	=> 'nice ' . $email));
 			return;
 		}
-
 	}
 
+	/*
+	 * Checks for validity of an email and returns a user ID if it exists
+	 */
     public function exist(Request $request)
     {
-        //Add Laravel email validation check
-
-        $email = $request->request->get('value');
-        $rules = array('email' => 'unique:users,email');
-
-        $userID = User::where('email', $email)->pluck('id');
-
-        $validator = \Validator::make(array('email' => $email), $rules);
-
-        if (!$validator->fails()) {
-
-            echo json_encode(array('isValid' => true,
-                'value' => 'nice'));
-            return;
-
-        } else {
-
-            echo json_encode(array('isValid' => false,
-                'id' => $userID ));
-            return;
-
-        }
-
+    	$validator = \Validator::make($request->all(), [
+    		'value' => 'email'
+    	]);
+    	if ($validator->fails()) {
+    		echo json_encode(array(
+    			'isValid'	=> false,
+    			'id'		=> NULL,
+    		));
+    		return;
+    	} else {
+    		$userID = User::where('email', $request->request->get('value'))->pluck('id');
+    		echo json_encode(array(
+    			'isValid'	=> true,
+    			'id'		=> $userID,
+    		));
+    		return;
+    	}
     }
 
     public function changePassword(Request $request) {
