@@ -38,5 +38,9 @@
 	</div>
 </div>
 <div class="happ-listing">
-  <div ng-repeat="happ in venue.relationships.happs" ch-happ="happ"></div>
+  <div class="container happ-listing-container">
+    <div class="row">
+      <div class="col-md-3 happ-item" ng-repeat="happ in venue.relationships.happs" ch-happ="happ"></div>
+    </div>
+  </div>
 </div>
