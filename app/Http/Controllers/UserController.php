@@ -174,7 +174,7 @@ class UserController extends Controller {
 
         $userID = User::where('email', $email)->pluck('id');
 
-        $validator = Validator::make(array('email' => $email), $rules);
+        $validator = \Validator::make(array('email' => $email), $rules);
 
         if ($validator->fails()) {
 
