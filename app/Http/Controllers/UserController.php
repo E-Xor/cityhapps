@@ -176,7 +176,7 @@ class UserController extends Controller {
 
         $validator = \Validator::make(array('email' => $email), $rules);
 
-        if ($validator->fails()) {
+        if (!$validator->fails()) {
 
             echo json_encode(array('isValid' => true,
                 'value' => 'nice'));
