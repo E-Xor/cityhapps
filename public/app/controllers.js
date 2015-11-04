@@ -1210,7 +1210,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                     });
                 });
             }
-        }, {scope: 'email,user_location'});
+        }, {scope: 'email'});
     };
 
     $scope.loginUser = function(formData) {
