@@ -1154,7 +1154,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
                 console.log($scope.user.token);
 
-                Facebook.api('/me', function(response) {
+                Facebook.api('/me?fields=email,name', function(response) {
                     $scope.$apply(function() {
 
                         console.log(response);
@@ -1164,32 +1164,45 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                             "categories" : {},
                             "email" : $scope.user.info.email,
                             "password" : $scope.user.token.authResponse.accessToken,
-                            "name" : $scope.user.info.name
+                            "name" : $scope.user.info.name,
+                            "location" : "Atlanta , GA"
                         };
 
-                        authFactory.userCheck($scope.user.info.email, function(response){
+                        console.log($scope.fbInfo.location);
+
+                        authFactory.userExist($scope.user.info.email , function(response){
 
                             console.log(response);
 
                             $scope.fbUser = {
+                                "password_confirmation" : $scope.fbInfo.password,
+                                "user_name" : $scope.fbInfo.name,
+                                "name" : $scope.fbInfo.name,
+                                "city" : $scope.fbInfo.location,
                                 "email" : $scope.fbInfo.email,
-                                "password" : $scope.fbInfo.password
+                                "password" : $scope.fbInfo.password,
+                                "categories" : $scope.fbInfo.categories
                             };
 
-                            if (response.isValid == true ) {
+                            if (response.id) {
                                 registerDataService.data = $scope.fbInfo;
                                 $rootScope.authenticated = true;
                                 $rootScope.currentUser = $scope.fbUser;
                                 $state.go('main.home', {});
-                            } else {
+                            } else if (response.isValid) {
                                 $http({
-                                    method: 'PATCH',
-                                    url: '/user/' + response.id,
-                                    data: {"password" : $scope.fbUser.password},
+                                    method: 'POST',
+                                    url: '/user/',
+                                    data: $scope.fbUser,
                                     headers: {"Content-Type": "application/json"}
                                 }).success(function(data){
                                     authFactory.loginUser($scope.fbUser);
                                 });
+                                registerDataService.data = $scope.fbInfo;
+                                $rootScope.authenticated = true;
+                                $rootScope.currentUser = $scope.fbUser;
+                                $state.go('main.home', {});
+                
 
                             }
 
