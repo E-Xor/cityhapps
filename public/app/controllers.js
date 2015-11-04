@@ -1192,7 +1192,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                             } else if (response.isValid) {
                                 $http({
                                     method: 'POST',
-                                    url: '/user/',
+                                    url: '/user',
                                     data: $scope.fbUser,
                                     headers: {"Content-Type": "application/json"}
                                 }).success(function(data){
