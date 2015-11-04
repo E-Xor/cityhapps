@@ -332,10 +332,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     // route the JWT should be retrieved from
     $authProvider.loginUrl = '/api/authenticate';
     $authProvider.facebook({
-        clientId: '1678520879058865'
+        clientId: '1686011704976449'
     });
 
-    var myAppId = '1678520879058865';
+    var myAppId = '1686011704976449';
     FacebookProvider.init(myAppId);
 
     snapRemoteProvider.globalOptions = {
