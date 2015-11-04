@@ -1154,7 +1154,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
                 console.log($scope.user.token);
 
-                Facebook.api('/me?fields=email,location,name', function(response) {
+                Facebook.api('/me?fields=email,name', function(response) {
                     $scope.$apply(function() {
 
                         console.log(response);
@@ -1165,7 +1165,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                             "email" : $scope.user.info.email,
                             "password" : $scope.user.token.authResponse.accessToken,
                             "name" : $scope.user.info.name,
-                            "location" : $scope.user.info.location.name || "Atlanta , GA"
+                            "location" : "Atlanta , GA"
                         };
 
                         console.log($scope.fbInfo.location);
