@@ -1090,8 +1090,11 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
       if(error < 1){
         userProfile.changePassword(user)
-          .success(function(data){
+          .then(function(res){
             notify_success("Password Changed");
+          }, function(e) {
+            error = 1;
+            notify_error('Your original password is invalid');
           });
       }
     };

@@ -188,16 +188,17 @@ class UserController extends Controller {
 
     public function changePassword(Request $request) {
         $user_params = $request->get('user');
-        $user = User::find($user_params['id'])->first();
+        $user = User::find((int)$user_params['id'])->first();
 
         if(\Hash::check($user_params['current_password'], $user->password)){
           if($user_params['password'] == $user_params['password_confirmation']){
             $user->password = \Hash::make($user_params['password']);
             $user->save();
+            return response(null, 204);
           }
         }
 
-        return;
+        return abort(500);
     }
 
     public function resetPassword() {
