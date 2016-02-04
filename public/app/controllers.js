@@ -60,10 +60,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           $scope.happs = data;
       });
     }
-    
-    $scope.isFav = false; 
 
-    $scope.addToFavorites = function(id){ 
+    $scope.isFav = false;
+
+    $scope.addToFavorites = function(id){
         getFavorites.add(user.id, id).success(function(data){
             $scope.isFav = !$scope.isFav;
             getFav();
@@ -77,8 +77,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         });
     }
 
-    $scope.ifFavorite = function(id){ 
-        for (i = 0; i < $scope.happs.length; i++) { 
+    $scope.ifFavorite = function(id){
+        for (i = 0; i < $scope.happs.length; i++) {
             if(id == $scope.happs[i].id) return 'favorited';
         }
     }
@@ -152,7 +152,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     Happ.query(filter, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.happs = payload.data;
-        
+
 
         $scope.displayStartTime = function(happ) {
           if (happ.hasOwnProperty('start') && happ.start != null) {
@@ -163,7 +163,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           if (happ.hasOwnProperty('end') && happ.end != null) {
             return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
           } else { return happ.end_time }
-        }  
+        }
 
         $scope.curDate = new Date();
         $scope.toDate = function(date) { return new Date(date); }
@@ -177,7 +177,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             return '';
           }
           if (happ.hasOwnProperty('end') && happ.end != null) {
-            endDate = new Date(happ.end.hasOwnProperty('local') ? happ.end.local : ""); 
+            endDate = new Date(happ.end.hasOwnProperty('local') ? happ.end.local : "");
           } else {
             endDate = startDate;
           }
@@ -345,7 +345,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         } else {
             $scope.pagination.push({'text': '1', 'link': '/venues', 'class': 'active'});
         }
-        
+
         if (page - 3 > 1)
             $scope.pagination.push({'text': '...', 'link': '#'});
 
@@ -379,14 +379,14 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           if(happ.hasOwnProperty('start')){
             return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
           } else { return happ.start_time }
-        }    
+        }
         $scope.displayEndTime = function(happ){
           if(happ.hasOwnProperty('end')){
             return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
           } else { return happ.end_time }
-        }  
+        }
         $scope.display = function(word){
-          if(word == undefined) { 
+          if(word == undefined) {
             return ' ';
           } else {
             return word;
@@ -537,10 +537,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
           error = 1;
           $scope.addressError = true;
-        }
-        if (typeof formData.start_time === 'undefined' || formData.start_time == '') {
-          error = 1;
-          $scope.startDateError = true;
         }
         if (typeof formData.desc === 'undefined' || formData.desc == '') {
           error = 1;
@@ -717,14 +713,14 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                     $scope.formData.venue = singleEvent.relationships.venue[0];
                 }
             }
-            
+
             $scope.formData.locationType = {};
             if (singleEvent.location_type == 'Outdoor') {
                 $scope.formData.locationType.outdoor = true;
             } else if (singleEvent.location_type == 'Indoor') {
                 $scope.formData.locationType.indoor = true;
             }
-            
+
             $scope.formData.parent = [];
 
             $scope.loadTags = function(query) {
@@ -1202,7 +1198,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                                 $rootScope.authenticated = true;
                                 $rootScope.currentUser = $scope.fbUser;
                                 $state.go('main.home', {});
-                
+
 
                             }
 

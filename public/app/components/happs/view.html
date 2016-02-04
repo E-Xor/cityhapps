@@ -39,19 +39,25 @@ function blah(url){
 				<h1 class="happ-name">
 					{{ happ.event_name }}
 				</h1>
-				<div class="happ-fulldate">
-		          <i class="fa fa-calendar-o"></i> {{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
-		        </div>
-				<div class="happ-time">
-					<i class="fa fa-clock-o"></i> {{happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
-				</div>
-				<div class="happ-venue" ng-if="happ.relationships.venues">
-					<div ng-repeat="venue in happ.relationships.venues">
-			          <a href="/venue/{{ venue.id }}"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
-			        </div>
-				</div>
+        <div class="happ-fulldate" ng-if="happ.start">
+          <i class="fa fa-calendar-o"></i> {{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
+        </div>
+        <div class="happ-time" ng-if="happ.start">
+          <i class="fa fa-clock-o"></i>
+          <span class="start-time">
+            {{happ.start.local | dateToISO | date: 'h:mm a' }}
+          </span>
+          <span class="end-time" ng-if="happ.end">
+            - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
+          </span>
+        </div>
+        <div class="happ-venue" ng-if="happ.relationships.venues">
+          <div ng-repeat="venue in happ.relationships.venues">
+            <a href="/venue/{{ venue.id }}"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
+          </div>
+        </div>
 
-        		<div class="happ-data-footer">
+            <div class="happ-data-footer">
 			        <div class="happ-social">
                 <a href="mailto:report@cityhapps.com?subject=Bad Happ Report:%20{{ happ.id }}%20-%20{{ happ.event_name }}" title="Report this event">
                   <i class="fa-2x glyphicon glyphicon-flag"></i>

@@ -152,6 +152,8 @@ class HappFilter
             $whereValues[] = $end;
             $whereValues[] = $start;
 
+            // Add clause for no start/end times
+            $whereClause .= ' OR (start_time IS NULL OR event_date IS NULL)';
             $whereClause .= ')';
         }
 
@@ -246,4 +248,4 @@ class HappFilter
 
         $query->whereRaw($whereClause, $whereValues);
     }
-} 
+}
