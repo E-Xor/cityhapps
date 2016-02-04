@@ -63,8 +63,18 @@ function blah(url){
 		        </div>
 			</div>
 		</div>
-		<div class="row" ng-if="currentUser.role=='ROLE_ADMIN'">
-			<div class="col-xs-12">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="happ-actions">
+          <a href="mailto:feedback@cityhapps.com" class="happ-button inverse">
+            <i class="fa fa-paper-plane"></i>
+            Send Feedback
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-if="currentUser.role=='ROLE_ADMIN'">
+      <div class="col-xs-12">
 				<a href="/admin/event/edit/{{ happ.id }}"><i class="fa fa-pencil-square-o"></i> Edit This Event</a> | <a href="/admin/event/add"><i class="fa fa-plus"></i> Add New Event</a> | <a href="/admin/venue/add"><i class="fa fa-plus"></i> Add New Venue</a>
 			</div>
 		</div>
