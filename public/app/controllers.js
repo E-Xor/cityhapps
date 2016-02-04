@@ -77,11 +77,21 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         });
     }
 
-    $scope.ifFavorite = function(id){ 
-        for (i = 0; i < $scope.happs.length; i++) { 
+    $scope.ifFavorite = function(id){
+        for (i = 0; i < $scope.happs.length; i++) {
             if(id == $scope.happs[i].id) return 'favorited';
         }
     }
+}).controller('EditWelcomeMessageController', function($scope, $stateParams, welcomeMessage, $http) {
+  $scope.welcomeMessage = welcomeMessage;
+  $scope.save = function() {
+    $http.put('/admin/welcome-message', { welcome_message: $scope.welcomeMessage }).then(function(res) {
+      notify_success("Welcome Message updated successfully!");
+
+    }, function(res) {
+      notify_error("Welcome Message could not be updated");
+    });
+  };
 }).controller('MainFilterController', function($scope, $stateParams, $timeout, HappFilterService, AgeLevel) {
     AgeLevel.query(function(payload) {
         $scope.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
@@ -147,6 +157,11 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           $window.location.href = $scope.happ.url;
         }
     });
+}).controller('HappHomePageController', function ($scope, $controller, $stateParams, welcomeMessage, cleanData, HappFilterService, Happ) {
+  // NOTE: The HappHomeController is used all over so the welcomeMessage was not
+  // safe to resolve.  Extending it and using this for home page makes it safe.
+  angular.extend(this, $controller('HappHomeController', {$scope: $scope}));
+  $scope.welcomeMessage = welcomeMessage;
 }).controller('HappHomeController', function($scope, $stateParams, cleanData, HappFilterService, Happ) {
     var filter = HappFilterService.getFilters({include: 'categories,venues'});
     Happ.query(filter, function(payload) {

@@ -1837,6 +1837,7 @@ h3 {
             h1 {
                 font-size: 24px;
                 font-weight: 600;
+                margin-bottom: 5px;
             }
             h3 {
                 font-size: 18px;
@@ -2523,9 +2524,13 @@ a.ng-binding:hover{
 .intro-message {
   background: #FFFFFF;
   text-align: center;
+  h1 {
+    margin-bottom: 5px;
+  }
   .happ-button {
     max-width: 200px;
     margin: 20px auto 25px;
+    margin-bottom: 5px;
   }
 }
 
@@ -2966,5 +2971,11 @@ input#notifyMe {
   }
   .page-wrapper {
     padding-bottom: 0px;
+  }
+}
+
+.curate-page {
+  .happ-button {
+    display: inline-block;
   }
 }

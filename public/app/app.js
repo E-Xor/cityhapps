@@ -2,12 +2,14 @@
  * CityHapps AngularJS Bootstrap
  */
 
-angular.module('cityHapps', ['xeditable', 'ui.bootstrap', 'ui.router', 'ngRoute',
-    'ngResource', 'ui.validate', 'facebook', 'http-auth-interceptor',
-    'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
-    'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
-    'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
-    'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css', 'angular-google-analytics', 'ui.bootstrap.datetimepicker']);
+angular.module('cityHapps', [
+  'xeditable', 'ui.bootstrap', 'ui.router', 'ngRoute',
+  'ngResource', 'ui.validate', 'facebook', 'http-auth-interceptor',
+  'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
+  'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
+  'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
+  'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css',
+  'angular-google-analytics', 'ui.bootstrap.datetimepicker', 'textAngular']);
 
 angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, AnalyticsProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
     $stateProvider.state('main', {
@@ -17,9 +19,14 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     }).state('main.home', {
         url: '/',
         views: {
-            '@main': {
-                templateUrl: 'app/components/happs/home.html',
-                controller: 'HappHomeController'
+          '@main': {
+            templateUrl: 'app/components/happs/home.html',
+            controller: 'HappHomePageController',
+            resolve: {
+              welcomeMessage: function(siteSettings) {
+                return siteSettings.get('welcome_message');
+              }
+              }
             },
             'menubar@main': {
                 templateUrl: 'app/components/filters/filters.html',
@@ -40,6 +47,36 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             }
         },
         css: 'assets/css/angular-snap.min.css'
+    }).state('main.curate', {
+      url: '/curate',
+      views: {
+        '@main': {
+          templateUrl: 'app/components/curate/index.html'
+        },
+        'menubar@main': {
+        }
+      },
+      css: 'assets/css/angular-snap.min.css'
+    }).state('main.curateGreeting', {
+      url: '/curate/greeting',
+      views: {
+        '@main': {
+          templateUrl: 'app/components/curate/greeting.html',
+          controller: 'EditWelcomeMessageController',
+          resolve: {
+            welcomeMessage: function($http) {
+              return $http.get('/admin/welcome-message').then(function(res) {
+                return res.data.welcome_message;
+              }, function(res) {
+                throw new Error("FailedWelcomeMessage");
+              });
+            }
+          }
+        },
+        'menubar@main': {
+        }
+      },
+      css:['assets/css/textangular.min.css', 'assets/css/angular-snap.min.css']
     }).state('main.addHapp', {
         url: '/admin/event/add',
         views: {

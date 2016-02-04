@@ -86,4 +86,22 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
              }
      });
    }};
- });
+}).directive('wysiwygInput', function() {
+  return {
+    templateUrl: '/app/shared/templates/wysiwyg-input.html',
+    restrict: 'E',
+    scope: {
+      field: "=ngModel",
+      name: "@name",
+      label: "@label",
+      help: "@help"
+    },
+    link: function (scope, el, attrs) {
+      if (! scope.field) {
+        scope.field = '';
+      }
+      scope.cols = attrs.cols || '10';
+      scope.rows = attrs.rows || '3';
+    }
+  };
+});
