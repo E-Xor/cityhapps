@@ -28,7 +28,76 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
       scope.$on('$locationChangeSuccess', setActive);
     }
   };
-}]).directive('chHapp', function() {
+}]).directive('businessHoursWeekForm', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'app/shared/templates/business-hours-week-form.tpl.html',
+    scope: {
+      daysOfWeek: '=ngModel'
+    },
+    link: function(scope, el, attrs) {
+      var daysOfWeek = [
+        "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
+      ];
+      if (!scope.daysOfWeek) {
+        setTimeout(function() {
+          scope.$apply(function() {
+            scope.daysOfWeek = daysOfWeek.reduce(function(memo, day) {
+              memo.push({
+                name: day,
+                open: false,
+                open_time: null,
+                close_time: null
+              });
+              return memo;
+            }, []);
+          })
+        })
+      }
+    }
+  };
+}).directive('businessHours', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'app/shared/templates/business-hours-widget.tpl.html',
+    scope: {
+      daysOfWeek: '=ngModel'
+    },
+    link: function(scope, el, attrs) {
+      if (!scope.daysOfWeek) {
+        scope.daysOfWeek = [];
+      }
+
+      var currentDayOfWeek = (new Date()).getDay();
+      var today = scope.today = scope.daysOfWeek[currentDayOfWeek];
+      var daysOfWeek = [
+        "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
+      ];
+      scope.openToday = Boolean(today && today.open);
+      // NOTE: Consider diffing daysOfWeek and days.name to ensure we have only valid keys.
+      var usedDayNames = scope.daysOfWeek.map(function(day) { return day.name; });
+      scope.validDaysOfWeek = scope.daysOfWeek.filter(function(day) {
+        return usedDayNames.indexOf(day.name);
+      });
+
+      scope.hasDateInformation = scope.validDaysOfWeek.length > 0;
+
+      scope.showHoursForDay = function(day) {
+        var output = [];
+        if (day.open && day.open_time) {
+          output.push(day.open_time);
+          if (day.close_time) {
+            output.push(day.close_time);
+          }
+        } else {
+          output.push('Closed');
+        }
+
+        return output.join(' - ');
+      };
+    }
+  };
+}).directive('chHapp', function() {
   function link(scope, element, attributes) {
     scope.$watch(
       attributes.chHapp,

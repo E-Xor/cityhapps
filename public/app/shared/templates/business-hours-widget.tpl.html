@@ -1,0 +1,16 @@
+<div class="business-hours" ng-if="hasDateInformation">
+  <div class="today" ng-click="toggleMoreInfo()">
+    <div class="open-today-section" ng-if="openToday">
+      <span class="open-today">Open Today</span>
+      <p class="hours" ng-if="today.open_time">
+      | {{ today.open_time }} - {{ today.close_time }}
+      </p>
+    </div>
+    <span class="closed-today" ng-if="!openToday">Closed Today</span>
+  </div>
+  <div class="more-info" ng-if="showMoreInfo">
+    <div class="day" ng-repeat="day in daysOfWeek">
+      {{ day.name }} | {{ showHoursForDay(day) }}
+    </div>
+  </div>
+</div>
