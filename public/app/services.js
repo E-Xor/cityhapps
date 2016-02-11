@@ -554,4 +554,73 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         };
       };
     }
-  ]);
+]).factory('happEditFormData', function(Happ, AgeLevel, cleanData, $http, $filter, $q) {
+  return {
+    get: function(id) {
+      return $q(function(resolve, reject) {
+        Happ.get({ id: id, include: 'tags,categories,venues,ageLevels' }, function(payload) {
+          payload = cleanData.buildRelationships(payload);
+          var singleEvent = payload.data[0];
+          var formatDate = function(date) {
+            if (date && date.local) {
+              return $filter('date')(date.local, 'MM/dd/yyyy hh:mm a');
+            }
+          }
+          var formData = {
+            relationships: singleEvent.relationships,
+            title: singleEvent.event_name,
+            status: singleEvent.status,
+            event_id: singleEvent.id,
+            parent_id: singleEvent.parent_id,
+            event_url: singleEvent.url,
+            event_image_url: singleEvent.event_image_url,
+            venue_name: singleEvent.venue_name,
+            venue_url: singleEvent.venue_url,
+            street_address: singleEvent.address.street_1,
+            city: singleEvent.address.city,
+            state: singleEvent.address.state,
+            zip_code: singleEvent.address.zip,
+            desc: singleEvent.description,
+            all_day: Boolean(singleEvent.all_day_flag),
+            start_time: formatDate(singleEvent.start),
+            end_time: formatDate(singleEvent.end),
+            created_at: singleEvent.created_at,
+            updated_at: singleEvent.updated_at,
+            similar_events_model: singleEvent.similar,
+            similar_events_storage: singleEvent.similar.reduce(function(memo, value) {
+              if (value.parent_id) memo.push(value.id);
+              return memo;
+            }, [])
+          };
+
+          if (singleEvent.hasOwnProperty('relationships')) {
+            if (singleEvent.relationships.hasOwnProperty('categories')) {
+              formData.categories = singleEvent.relationships.categories.map(function(value) { return value.id; });
+            }
+            if (singleEvent.relationships.hasOwnProperty('tags')) {
+              console.log('tags:');
+              console.log(singleEvent.relationships.tags);
+              formData.tags = singleEvent.relationships.tags;
+            }
+            if (singleEvent.relationships.hasOwnProperty('venue')) {
+              formData.venue = singleEvent.relationships.venue[0];
+            }
+          }
+
+          formData.locationType = {
+            outdoor: singleEvent.location_type == 'Outdoor',
+            indoor: singleEvent.location_type == 'Indoor'
+          };
+
+          formData.parent = [];
+
+          if (formData.parent_id > 0) {
+            //This event has NO suggested similar, events let's fetch the parent information
+            $http.get('/events/?id=' + $stateParams.id + '&current_id=' + formData.parent_id).success(function(data){formData.parent = data;});
+          }
+          resolve(formData);
+        });
+      });
+    }
+  };
+});

@@ -12,6 +12,11 @@ angular.module('cityHapps', [
   'angular-google-analytics', 'ui.bootstrap.datetimepicker', 'textAngular']);
 
 angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, AnalyticsProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
+  var sortingComparator = function(key) {
+    return function(a, b) {
+      return (a[key]> b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);
+    };
+  };
     $stateProvider.state('main', {
         abstract: true,
         templateUrl: 'app/shared/templates/main-layout.tpl.html',
@@ -82,19 +87,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         views: {
             '@main': {
                 templateUrl: 'app/components/happs/edit.html',
-              controller: 'adminEventController'
-            },
-            'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
-                // controller: 'MainFilterController'
-            }
-        },
-        css: 'assets/css/angular-snap.min.css'
-    }).state('main.editHapp', {
-        url: '/admin/event/edit/:id',
-        views: {
-            '@main': {
-                templateUrl: 'app/components/happs/edit.html',
                 controller: 'adminEventController'
             },
             'menubar@main': {
@@ -103,6 +95,38 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             }
         },
         css: 'assets/css/angular-snap.min.css'
+    }).state('main.editHapp', {
+      url: '/admin/event/edit/:id',
+      views: {
+        '@main': {
+          templateUrl: 'app/components/happs/edit.html',
+          controller: 'adminEventEditController',
+          resolve: {
+            ageLevels: function($q, AgeLevel) {
+              return $q(function(resolve, reject) {
+                AgeLevel.query(function(payload) {
+                  resolve(payload.data.sort(sortingComparator('id')));
+                });
+              });
+            },
+            categories: function($q, Category) {
+              return $q(function(resolve, reject) {
+                Category.query(function(payload) {
+                  resolve(payload.data.sort(sortingComparator('name')));
+                });
+              });
+            },
+            happ: function($stateParams, happEditFormData) {
+              return happEditFormData.get($stateParams.id);
+            }
+          },
+          'menubar@main': {
+            // templateUrl: 'app/components/filters/filters.html',
+            // controller: 'MainFilterController'
+          }
+        },
+      },
+      css: 'assets/css/angular-snap.min.css'
     }).state('main.listHapp', {
         url: '/preview',
         views: {
