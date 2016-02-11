@@ -306,29 +306,6 @@ class UserController extends Controller {
 		//
 	}
 
-    public function checkPermission(Request $request)
-    {
-        $uri = $request->path();
-        $domain = url();
-
-        $user = null;
-
-        try {
-            $token = JWTAuth::getToken();
-            $user = JWTAuth::parseToken()->authenticate();
-        } catch (\Exception $e) {
-            //
-        }
-
-        if ($user instanceof User) {
-            if($user->isAdmin()) {
-                return redirect()->to($domain . '/' . $uri);
-            }
-        }
-
-        return redirect()->to($domain);
-    }
-
     /**
      * @return null || User $user
      */

@@ -82,7 +82,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         views: {
             '@main': {
                 templateUrl: 'app/components/happs/edit.html',
-                controller: 'adminEventController'
+              controller: 'adminEventController'
             },
             'menubar@main': {
                 // templateUrl: 'app/components/filters/filters.html',
@@ -389,19 +389,57 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     // Track all URL query params (default is false)
     AnalyticsProvider.trackUrlParams(true);
 
-}).run(function($rootScope, $state, $http, editableOptions) {
-    $rootScope.$on('$stateChangeStart', function(event, toState) {
-        editableOptions.theme = 'bs3';
-        if($rootScope.authenticated !== true){
-          $http.get('api/authenticate/user')
-          .then(function(response) {
-              $rootScope.authenticated = true;
-              $rootScope.currentUser = response.data.user;
-          })
-          .catch(function(payload, status) {
-              console.log('Not authenticated');
-          });
-        }
-    });
+}).run(function($rootScope, $state, $http, editableOptions, $q) {
+  var authRoute = 'api/authenticate/user';
+  function isAdmin() {
+    return $rootScope.authenticated &&
+      $rootScope.currentUser &&
+      $rootScope.currentUser.role === 'ROLE_ADMIN';
+  }
+
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+    editableOptions.theme = 'bs3';
     $rootScope.title = 'City Happs';
+    var routeRequiresAdmin = isAdminRoute(toState.url);
+
+    if (routeRequiresAdmin && $rootScope.authenticated) {
+      if(isAdmin()) {
+        return true;
+      } else {
+        $state.go('main.home');
+      }
+    }
+    if (!routeRequiresAdmin && $rootScope.authenticated) return true;
+
+    var authPromise = $http.get(authRoute).then(function(res) {
+      $rootScope.authenticated = true;
+      $rootScope.currentUser = res.data.user;
+    });
+
+    if (routeRequiresAuth(toState.url)){
+      event.preventDefault();
+      authPromise.then(function(res) {
+        $state.go(toState.name, toParams);
+      }, function(err) {
+        $state.go('userLogin');
+      });
+    } else {
+      authPromise.then(null, function(payload, status) {
+        console.log('Not authenticated');
+      });
+    }
+  });
+
+  function routeRequiresAuth(toRoute) {
+    return toRoute.match(/^\/?(admin|profile\/?)/);
+  }
+
+  function isAdminRoute(toRoute) {
+    return toRoute.match(/^\/?(admin)/);
+  }
+
+  $rootScope.$on('$stateChangeError', function(event, toState) {
+    console.log("State change rejected");
+    console.log(event, toState);
+  });
 });
