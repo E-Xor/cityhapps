@@ -565,7 +565,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             if (date && date.local) {
               return $filter('date')(date.local, 'MM/dd/yyyy hh:mm a');
             }
-          }
+          };
           var formData = {
             relationships: singleEvent.relationships,
             title: singleEvent.event_name,
@@ -584,6 +584,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             all_day: Boolean(singleEvent.all_day_flag),
             start_time: formatDate(singleEvent.start),
             end_time: formatDate(singleEvent.end),
+            business_hours: singleEvent.business_hours,
             created_at: singleEvent.created_at,
             updated_at: singleEvent.updated_at,
             similar_events_model: singleEvent.similar,

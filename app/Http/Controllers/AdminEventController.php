@@ -51,7 +51,7 @@ class AdminEventController extends Controller {
     $eventParams = array();
 
     $eventParams['id'] = Input::get('event_id');
-    
+
     if (!$eventParams['id'])
       $passValidation = false;
 
@@ -88,6 +88,7 @@ class AdminEventController extends Controller {
     $eventParams['start_time'] = (($time = strtotime(Input::get('start_time'))) === false ? null : date("Y-m-d H:i:s", $time));
     $eventParams['all_day_flag'] = Input::get('all_day');
     $eventParams['end_time'] = (($time = strtotime(Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
+    $eventParams['business_hours'] = Input::get('business_hours');
 
     $eventParams['similar_events'] = Input::get('similar_events_storage');
 
@@ -103,9 +104,9 @@ class AdminEventController extends Controller {
       if (isset($location_type_data['outdoor']) && $location_type_data['outdoor'])
         $outdoor = true;
 
-      if ($indoor && !$outdoor) 
+      if ($indoor && !$outdoor)
         $eventParams['location_type'] = 'Indoor';
-      else if (!$indoor && $outdoor) 
+      else if (!$indoor && $outdoor)
         $eventParams['location_type'] = 'Outdoor';
     }
 
@@ -123,7 +124,7 @@ class AdminEventController extends Controller {
         $this->createTags($result, $tags);
       }
       // Process Age Levels
-      
+
       if(Input::has('ageLevels'))
       {
         $age_level_data = Input::get('ageLevels');
@@ -168,7 +169,7 @@ class AdminEventController extends Controller {
 
      if ($result) {
       // then update
-      $difference = json_encode(array_keys(array_diff($eventParams, $result->getAttributes())));
+         $difference = json_encode(array_diff(array_keys($eventParams), array_keys($result->getAttributes())));
       $eventParams['serialized'] = $difference;
       $result->update($eventParams);
       $result['updated'] = 1;
@@ -246,6 +247,7 @@ class AdminEventController extends Controller {
     $eventParams['all_day_flag'] = Input::get('all_day');
     $eventParams['end_time'] = (($time = strtotime(Input::get('end_time'))) === false ? null : date("Y-m-d H:i:s", $time));
 
+    $eventParams['business_hours'] = Input::get('business_hours');
     // Location Type Data
     $location_type_data = Input::get('locationType');
     $eventParams['location_type'] = NULL;
@@ -258,9 +260,9 @@ class AdminEventController extends Controller {
       if (isset($location_type_data['outdoor']) && $location_type_data['outdoor'])
         $outdoor = true;
 
-      if ($indoor && !$outdoor) 
+      if ($indoor && !$outdoor)
         $eventParams['location_type'] = 'Indoor';
-      else if (!$indoor && $outdoor) 
+      else if (!$indoor && $outdoor)
         $eventParams['location_type'] = 'Outdoor';
     }
 

@@ -148,15 +148,12 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         // Hacky way to try to correct the filter positioning
         setTimeout(function() {$(window).trigger('resize');}, 2000);
     });
-}).controller('HappViewController', function($scope, $location, $window, $stateParams, $rootScope, cleanData, Happ) {
-    Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
-        payload = cleanData.buildRelationships(payload);
-        $scope.happ = payload.data[0];
-        $rootScope.title = payload.data[0].event_name + ' | City Happs';
-        $scope.get_tickets = function(){
-          $window.location.href = $scope.happ.url;
-        }
-    });
+}).controller('HappViewController', function($scope, $window, $rootScope, happ) {
+  $scope.happ = happ;
+  $rootScope.title = happ.event_name + ' | City Happs';
+  $scope.get_tickets = function(){
+    $window.location.href = $scope.happ.url;
+  };
 }).controller('HappHomePageController', function ($scope, $controller, $stateParams, welcomeMessage, cleanData, HappFilterService, Happ) {
   // NOTE: The HappHomeController is used all over so the welcomeMessage was not
   // safe to resolve.  Extending it and using this for home page makes it safe.

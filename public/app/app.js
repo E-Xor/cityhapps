@@ -40,18 +40,28 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         },
         css: 'assets/css/angular-snap.min.css'
     }).state('main.viewHapp', {
-        url: '/happ/:id',
-        views: {
-            '@main': {
-                templateUrl: 'app/components/happs/view.html',
-                controller: 'HappViewController'
-            },
-            'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
-                // controller: 'MainFilterController'
+      url: '/happ/:id',
+      views: {
+        '@main': {
+          templateUrl: 'app/components/happs/view.html',
+          controller: 'HappViewController',
+          resolve: {
+            happ: function($stateParams, $q, cleanData, Happ) {
+              return $q(function(resolve) {
+                Happ.get({ id: $stateParams.id, include: 'tags,categories,venues'}, function(payload) {
+                  payload = cleanData.buildRelationships(payload);
+                  resolve(payload.data[0]);
+                });
+              });
             }
+          }
         },
-        css: 'assets/css/angular-snap.min.css'
+        'menubar@main': {
+          // templateUrl: 'app/components/filters/filters.html',
+          // controller: 'MainFilterController'
+        }
+      },
+      css: 'assets/css/angular-snap.min.css'
     }).state('main.curate', {
       url: '/curate',
       views: {
@@ -443,7 +453,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     var routeRequiresAdmin = isAdminRoute(toState.url);
 
     if (routeRequiresAdmin && $rootScope.authenticated) {
-      if(isAdmin()) {
+      if (isAdmin()) {
         return true;
       } else {
         $state.go('main.home');

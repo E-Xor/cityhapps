@@ -32,27 +32,24 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
   return {
     restrict: 'E',
     templateUrl: 'app/shared/templates/business-hours-week-form.tpl.html',
+    require: 'ngModel',
     scope: {
       daysOfWeek: '=ngModel'
     },
     link: function(scope, el, attrs) {
-      var daysOfWeek = [
+      var weekDays = [
         "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
       ];
-      if (!scope.daysOfWeek) {
-        setTimeout(function() {
-          scope.$apply(function() {
-            scope.daysOfWeek = daysOfWeek.reduce(function(memo, day) {
-              memo.push({
-                name: day,
-                open: false,
-                open_time: null,
-                close_time: null
-              });
-              return memo;
-            }, []);
-          })
-        })
+      if (!scope.daysOfWeek || scope.daysOfWeek.length === 0) {
+        scope.daysOfWeek = weekDays.reduce(function(memo, day) {
+          memo.push({
+            name: day,
+            open: false,
+            open_time: null,
+            close_time: null
+          });
+          return memo;
+        }, []);
       }
     }
   };
@@ -80,20 +77,30 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
         return usedDayNames.indexOf(day.name);
       });
 
-      scope.hasDateInformation = scope.validDaysOfWeek.length > 0;
+      scope.hasDateInformation = scope.daysOfWeek.filter(function(day) {
+        return day.open === true;
+      }).length > 0 ;
 
       scope.showHoursForDay = function(day) {
         var output = [];
-        if (day.open && day.open_time) {
-          output.push(day.open_time);
-          if (day.close_time) {
-            output.push(day.close_time);
+        if (day.open) {
+          if (day.open_time) {
+            output.push(day.open_time);
+            if (day.close_time) {
+              output.push(day.close_time);
+            }
+          } else {
+            output.push('Open');
           }
         } else {
           output.push('Closed');
         }
 
         return output.join(' - ');
+      };
+
+      scope.toggleMoreInfo = function() {
+        scope.showMoreInfo = !scope.showMoreInfo;
       };
     }
   };
