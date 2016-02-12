@@ -86,8 +86,24 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/event/add',
         views: {
             '@main': {
-                templateUrl: 'app/components/happs/edit.html',
-                controller: 'adminEventController'
+              templateUrl: 'app/components/happs/edit.html',
+              controller: 'adminEventAddController',
+              resolve: {
+                ageLevels: function($q, AgeLevel) {
+                  return $q(function(resolve, reject) {
+                    AgeLevel.query(function(payload) {
+                      resolve(payload.data.sort(sortingComparator('id')));
+                    });
+                  });
+                },
+                categories: function($q, Category) {
+                  return $q(function(resolve, reject) {
+                    Category.query(function(payload) {
+                      resolve(payload.data.sort(sortingComparator('name')));
+                    });
+                  });
+                }
+              }
             },
             'menubar@main': {
                 // templateUrl: 'app/components/filters/filters.html',
