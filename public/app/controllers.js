@@ -494,262 +494,524 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 });
             };
         }
+}).controller('adminEventAddController', function($scope, $http, $stateParams, $cookies, $cookieStore, categories, ageLevels) {
+
+  $scope.formData = {};
+  $scope.formData.ageLevels = ageLevels;
+  $scope.categories = categories;
+  $scope.updated_last = $scope.formData.updated_at;
+
+  $scope.dateOptions = {
+    startingDay: 1,
+    showWeeks: false
+  };
+  // Disable weekend selection
+  $scope.disabled = function(calendarDate, mode) {
+    return mode === 'day' && ( calendarDate.getDay() === 0 || calendarDate.getDay() === 6 );
+  };
+  $scope.hourStep = 1;
+  $scope.minuteStep = 15;
+  $scope.timeOptions = {
+    hourStep: [1, 2, 3],
+    minuteStep: [1, 5, 10, 15, 25, 30]
+  };
+  $scope.showMeridian = true;
+  $scope.timeToggleMode = function() {
+    $scope.showMeridian = !$scope.showMeridian;
+  };
+  $scope.resetHours = function() {
+    $scope.date.setHours(1);
+  };
+
+  $scope.user = $cookies.user;
+
+  // Processing the form data for adding an event
+  $scope.processForm = function(formData) {
+    // Validation
+    var error = 0;
+    if (!formData) {
+      $scope.generalError = true;
+      return;
+    }
+    if (typeof formData.title === 'undefined' || formData.title == '') {
+      error = 1;
+      $scope.titleError = true;
+    }
+    if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
+      error = 1;
+      $scope.venueError = true;
+    }
+    if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
+      error = 1;
+      $scope.addressError = true;
+    }
+    if (typeof formData.start_time === 'undefined' || formData.start_time == '') {
+      error = 1;
+      $scope.startDateError = true;
+    }
+    if (typeof formData.desc === 'undefined' || formData.desc == '') {
+      error = 1;
+      $scope.descError = true;
+    }
+    if (typeof formData.parent !== 'undefined' || formData.parent == '') {
+      if (formData.parent.length > 0) {
+        formData.parent_id = formData.parent[0]['id'];
+      }
+    }
+    if (formData.hasOwnProperty('venue')) {
+      formData.venue_id = formData.venue.id;
+    }
+
+    // if any error, don't post
+    if (error) {
+      $scope.generalError = true;
+      return;
+    }
+
+    $http({
+      method: 'POST',
+      url: '/admin/event/create',
+      data: formData,
+      headers: {'Content-Type': 'application/json'}
+    }).success(function(data) {
+      if (!data) {
+        console.log('Data Not Posting');
+      }
+      else if (data) {
+        if (data.error) {
+          $scope.error = data.message;
+          console.log('Error creating event', data.message);
+        }
+        else {
+          $scope.success = data;
+          console.log('Success');
+        }
+      }
+    }).error(function(data) {
+      $scope.error = data.error.message;
+    });
+  };
+
+  $scope.reload = function() {
+    document.location.reload(true);
+  };
+
+  // This does not work with a resource. I could not tell you why :(
+  $scope.getVenues = function(typed) {
+    return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
+      return response.data.data;
+    });
+  };
+}).controller('adminEventEditController', function($scope, $http, $stateParams, $cookies, $cookieStore, happ, categories, ageLevels) {
+  $scope.formData = happ;
+  $scope.formData.ageLevels = ageLevels;
+  // Loop through and set all the values on age levels
+  if ($scope.formData.hasOwnProperty('relationships')) {
+    if ($scope.formData.relationships.hasOwnProperty('ageLevels')) {
+      for (var i = 0; i < $scope.formData.relationships.ageLevels.length; i++) {
+        for (var j = 0; j < $scope.formData.ageLevels.length; j++) {
+          if ($scope.formData.ageLevels[j].id == $scope.formData.relationships.ageLevels[i].id)
+            $scope.formData.ageLevels[j].value = true;
+        }
+      }
+    }
+  }
+  $scope.categories = categories;
+  $scope.updated_last = $scope.formData.updated_at;
+
+  $scope.toggleMinDate = function() {
+    $scope.minDate = $scope.minDate ? null : new Date();
+  };
+  $scope.toggleMinDate();
+  $scope.dateOptions = {
+    startingDay: 1,
+    showWeeks: false
+  };
+  // Disable weekend selection
+  $scope.disabled = function(calendarDate, mode) {
+    return mode === 'day' && ( calendarDate.getDay() === 0 || calendarDate.getDay() === 6 );
+  };
+  $scope.hourStep = 1;
+  $scope.minuteStep = 15;
+  $scope.timeOptions = {
+    hourStep: [1, 2, 3],
+    minuteStep: [1, 5, 10, 15, 25, 30]
+  };
+  $scope.showMeridian = true;
+  $scope.timeToggleMode = function() {
+    $scope.showMeridian = !$scope.showMeridian;
+  };
+  $scope.resetHours = function() {
+    $scope.date.setHours(1);
+  };
+
+  $scope.user = $cookies.user;
+
+  // Processing the form data for adding an event
+  $scope.processForm = function(formData) {
+    var edit = $stateParams.id ? true : false;
+    // Validation
+    var error = 0;
+    if (!formData) {
+      $scope.generalError = true;
+      return;
+    }
+    if (typeof formData.title === 'undefined' || formData.title == '') {
+      error = 1;
+      $scope.titleError = true;
+    }
+    if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
+      error = 1;
+      $scope.venueError = true;
+    }
+    if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
+      error = 1;
+      $scope.addressError = true;
+    }
+    if (typeof formData.desc === 'undefined' || formData.desc == '') {
+      error = 1;
+      $scope.descError = true;
+    }
+    if (typeof formData.parent !== 'undefined' || formData.parent == '') {
+      if (formData.parent.length > 0) {
+        formData.parent_id = formData.parent[0]['id'];
+      }
+    }
+    if (formData.hasOwnProperty('venue')) {
+      formData.venue_id = formData.venue.id;
+    }
+
+    // if any error, don't post
+    if (error) {
+      $scope.generalError = true;
+      return;
+    }
+
+    if (!edit) {
+      $http({
+        method: 'POST',
+        url: '/admin/event/create',
+        data: formData,
+        headers: {'Content-Type': 'application/json'}
+      }).success(function(data) {
+        if (!data) {
+          console.log('Data Not Posting');
+        }
+        else if (data) {
+          if (data.error) {
+            $scope.error = data.message;
+            console.log('Error creating event', data.message);
+          }
+          else {
+            $scope.success = data;
+            console.log('Success');
+          }
+        }
+      }).error(function(data) {
+        $scope.error = data.error.message;
+      });
+    } else {
+      console.log(formData);
+      $http({
+        method: 'POST',
+        url: '/admin/event/update',
+        data: formData,
+        headers: {'Content-Type': 'application/json'}
+      }).success(function(data) {
+        if (!data) {
+          console.log('Data Not Posting');
+        }
+        else if (data) {
+          if (data.error) {
+            $scope.error = data.message;
+            console.log('Error updating event', data.message);
+          }
+          else {
+            $scope.success = data;
+            console.log('Success');
+          }
+        }
+      }).error(function(data) {
+        $scope.error = data.error;
+      });
+    }
+  }
+
+  $scope.reload = function() {
+    document.location.reload(true);
+  };
+
+  // This does not work with a resource. I could not tell you why :(
+  $scope.getVenues = function(typed) {
+    return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
+      return response.data.data;
+    });
+  };
+
+  // edit page
+  if ($stateParams.id) {
+    $scope.loadTags = function(query) {
+      return $http.get('/tags/' + query);
+    };
+    $scope.loadEvents = function(query){
+      return $http.get('/events/?name=' + query + '&current_id=' + $stateParams.id);
+    };
+  }
 }).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ, AgeLevel, cleanData, $filter, Category) {
 
-    $scope.toggleMinDate = function() {
-      $scope.minDate = $scope.minDate ? null : new Date();
-    };
-    $scope.maxDate = new Date('2014-06-22');
-    $scope.toggleMinDate();
-    $scope.dateOptions = {
-      startingDay: 1,
-      showWeeks: false
-    };
-    // Disable weekend selection
-    $scope.disabled = function(calendarDate, mode) {
-      return mode === 'day' && ( calendarDate.getDay() === 0 || calendarDate.getDay() === 6 );
-    };
-    $scope.hourStep = 1;
-    $scope.minuteStep = 15;
-    $scope.timeOptions = {
-      hourStep: [1, 2, 3],
-      minuteStep: [1, 5, 10, 15, 25, 30]
-    };
-    $scope.showMeridian = true;
-    $scope.timeToggleMode = function() {
-      $scope.showMeridian = !$scope.showMeridian;
-    };
-    $scope.resetHours = function() {
-      $scope.date.setHours(1);
-    };
+  $scope.toggleMinDate = function() {
+    $scope.minDate = $scope.minDate ? null : new Date();
+  };
+  $scope.toggleMinDate();
+  $scope.dateOptions = {
+    startingDay: 1,
+    showWeeks: false
+  };
+  // Disable weekend selection
+  $scope.disabled = function(calendarDate, mode) {
+    return mode === 'day' && ( calendarDate.getDay() === 0 || calendarDate.getDay() === 6 );
+  };
+  $scope.hourStep = 1;
+  $scope.minuteStep = 15;
+  $scope.timeOptions = {
+    hourStep: [1, 2, 3],
+    minuteStep: [1, 5, 10, 15, 25, 30]
+  };
+  $scope.showMeridian = true;
+  $scope.timeToggleMode = function() {
+    $scope.showMeridian = !$scope.showMeridian;
+  };
+  $scope.resetHours = function() {
+    $scope.date.setHours(1);
+  };
 
-    $scope.user = $cookies.user;
-    $scope.formData = {};
-    AgeLevel.query(function(payload) {
-        $scope.formData.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
-    });
-    Category.query(function(payload) {
-        $scope.categories = payload.data.sort(function(a, b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);});
-    });
+  $scope.user = $cookies.user;
+  $scope.formData = {};
+  AgeLevel.query(function(payload) {
+    $scope.formData.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+  });
+  Category.query(function(payload) {
+    $scope.categories = payload.data.sort(function(a, b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);});
+  });
 
-    // Processing the form data for adding an event
-    $scope.processForm = function(formData) {
-        var edit = $stateParams.id ? true : false;
-        // Validation
-        var error = 0;
-        if (!formData) {
-          $scope.generalError = true;
-          return;
-        }
-        if (typeof formData.title === 'undefined' || formData.title == '') {
-          error = 1;
-          $scope.titleError = true;
-        }
-        if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
-          error = 1;
-          $scope.venueError = true;
-        }
-        if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
-          error = 1;
-          $scope.addressError = true;
-        }
-        if (typeof formData.desc === 'undefined' || formData.desc == '') {
-          error = 1;
-          $scope.descError = true;
-        }
-        if (typeof formData.parent !== 'undefined' || formData.parent == '') {
-            if (formData.parent.length > 0) {
-                formData.parent_id = formData.parent[0]['id'];
-            }
-        }
-        if (formData.hasOwnProperty('venue')) {
-            formData.venue_id = formData.venue.id;
-        }
-
-        // if any error, don't post
-        if (error) {
-          $scope.generalError = true;
-          return;
-        }
-
-        if (!edit) {
-            $http({
-                method: 'POST',
-                url: '/admin/event/create',
-                    data: formData,
-                    headers: {'Content-Type': 'application/json'}
-            }).success(function(data) {
-                if (!data) {
-                    console.log('Data Not Posting');
-                }
-                else if (data) {
-                    if (data.error) {
-                        $scope.error = data.message;
-                        console.log('Error creating event', data.message);
-                    }
-                    else {
-                        $scope.success = data;
-                        console.log('Success');
-                    }
-                }
-            }).error(function(data) {
-                $scope.error = data.error.message;
-            });
-        } else {
-            console.log(formData);
-            $http({
-                method: 'POST',
-                url: '/admin/event/update',
-                data: formData,
-                headers: {'Content-Type': 'application/json'}
-            }).success(function(data) {
-                if (!data) {
-                    console.log('Data Not Posting');
-                }
-                else if (data) {
-                    if (data.error) {
-                        $scope.error = data.message;
-                        console.log('Error updating event', data.message);
-                    }
-                    else {
-                        $scope.success = data;
-                        console.log('Success');
-                    }
-                }
-            }).error(function(data) {
-                $scope.error = data.error;
-            });
-        }
-        }
-    // Retieving all of the data for the listing page
-    $http.get('/events?page_size=all')
-        .success(function(data) {
-        $scope.eventsCount = data.events.length;
-        var allEventsUnformatted = data.events;
-        for (var i = 0; i < allEventsUnformatted.length; i++) {
-            if (moment(allEventsUnformatted[i].start_time).isValid()) {
-                allEventsUnformatted[i].start_date = moment(allEventsUnformatted[i].start_time).format('M/D/YYYY');
-                allEventsUnformatted[i].start_only_time = moment(allEventsUnformatted[i].start_time).format('h:mm:ss a');
-            }
-            else {
-                allEventsUnformatted[i].start_date = '';
-                allEventsUnformatted[i].start_only_time = '';
-            }
-            if (moment(allEventsUnformatted[i].end_time).isValid()) {
-                allEventsUnformatted[i].end_date = moment(allEventsUnformatted[i].end_time).format('M/D/YYYY');
-                allEventsUnformatted[i].end_only_time = moment(allEventsUnformatted[i].end_time).format('h:mm:ss a');
-            }
-            else {
-                allEventsUnformatted[i].end_date = '';
-                allEventsUnformatted[i].end_only_time = '';
-            }
-        }
-        $scope.allEvents = allEventsUnformatted;
-    });
-
-    $scope.reload = function() {
-        document.location.reload(true);
-    };
-
-    // This does not work with a resource. I could not tell you why :(
-    $scope.getVenues = function(typed) {
-        return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
-            return response.data.data;
-        });
-    };
-
-    // edit page
-    if ($stateParams.id) {
-        Happ.get({ id: $stateParams.id, include: 'tags,categories,venues,ageLevels'}, function(payload) {
-            payload = cleanData.buildRelationships(payload);
-            var singleEvent = payload.data[0];
-            $scope.formData = {};
-            AgeLevel.query(function(payload) {
-                $scope.formData.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
-                // Loop through and set all the values on age levels
-                if (singleEvent.hasOwnProperty('relationships')) {
-                    if (singleEvent.relationships.hasOwnProperty('ageLevels')) {
-                        for (var i = 0; i < singleEvent.relationships.ageLevels.length; i++) {
-                            for (var j = 0; j < $scope.formData.ageLevels.length; j++) {
-                                if ($scope.formData.ageLevels[j].id == singleEvent.relationships.ageLevels[i].id)
-                                    $scope.formData.ageLevels[j].value = true;
-                            }
-                        }
-                    }
-                }
-            });
-            $scope.formData.title = singleEvent.event_name;
-            $scope.formData.status = singleEvent.status;
-            $scope.formData.event_id = singleEvent.id;
-            $scope.formData.parent_id = singleEvent.parent_id;
-            $scope.formData.event_url = singleEvent.url;
-            $scope.formData.event_image_url = singleEvent.event_image_url;
-            $scope.formData.venue_name = singleEvent.venue_name;
-            $scope.formData.venue_url = singleEvent.venue_url;
-            $scope.formData.street_address = singleEvent.address.street_1;
-            $scope.formData.city = singleEvent.address.city;
-            $scope.formData.state = singleEvent.address.state;
-            $scope.formData.zip_code = singleEvent.address.zip;
-            $scope.formData.desc = singleEvent.description;
-            $scope.formData.all_day = singleEvent.all_day_flag ? true : false;
-            $scope.formData.start_time = $filter('date')(singleEvent.start.local, 'MM/dd/yyyy hh:mm a');
-            $scope.formData.end_time = $filter('date')(singleEvent.end.local, 'MM/dd/yyyy hh:mm a');
-            dateCheckCreate = new Date(singleEvent.created_at).getTime() / 1000;
-            dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
-            if (dateCheckCreate != dateCheckUpdate)
-                $scope.updated_last = singleEvent.updated_at;
-            $scope.formData.similar_events_model = singleEvent.similar;
-            $scope.formData.similar_events_storage = (function() {
-                var base = [];
-                angular.forEach(singleEvent.similar, function(value) {
-                    if (value.parent_id != null) {
-                        base.push(value.id);
-                    }
-                });
-                return base;
-            })();
-
-            if (singleEvent.hasOwnProperty('relationships')) {
-                if (singleEvent.relationships.hasOwnProperty('categories')) {
-                    $scope.formData.categories = (function() {
-                        var base = [];
-                        angular.forEach(singleEvent.relationships.categories, function(value) {
-                            base.push(value.id);
-                        });
-                        return base;
-                    })();
-                }
-                if (singleEvent.relationships.hasOwnProperty('tags')) {
-                  console.log('tags:');
-                  console.log(singleEvent.relationships.tags);
-                    $scope.formData.tags = singleEvent.relationships.tags;
-                }
-                if (singleEvent.relationships.hasOwnProperty('venue')) {
-                    $scope.formData.venue = singleEvent.relationships.venue[0];
-                }
-            }
-
-            $scope.formData.locationType = {};
-            if (singleEvent.location_type == 'Outdoor') {
-                $scope.formData.locationType.outdoor = true;
-            } else if (singleEvent.location_type == 'Indoor') {
-                $scope.formData.locationType.indoor = true;
-            }
-
-            $scope.formData.parent = [];
-
-            $scope.loadTags = function(query) {
-                return $http.get('/tags/' + query);
-            };
-            $scope.loadEvents = function(query){
-                return $http.get('/events/?name=' + query + '&current_id=' + $stateParams.id);
-            };
-            if ($scope.formData.parent_id > 0) {
-                //This event has NO suggested similar, events let's fetch the parent information
-                $http.get('/events/?id=' + $stateParams.id + '&current_id=' + $scope.formData.parent_id).success(function(data){$scope.formData.parent = data;});
-            }
-        });
+  // Processing the form data for adding an event
+  $scope.processForm = function(formData) {
+    var edit = $stateParams.id ? true : false;
+    // Validation
+    var error = 0;
+    if (!formData) {
+      $scope.generalError = true;
+      return;
     }
+    if (typeof formData.title === 'undefined' || formData.title == '') {
+      error = 1;
+      $scope.titleError = true;
+    }
+    if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
+      error = 1;
+      $scope.venueError = true;
+    }
+    if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
+      error = 1;
+      $scope.addressError = true;
+    }
+    if (typeof formData.desc === 'undefined' || formData.desc == '') {
+      error = 1;
+      $scope.descError = true;
+    }
+    if (typeof formData.parent !== 'undefined' || formData.parent == '') {
+      if (formData.parent.length > 0) {
+        formData.parent_id = formData.parent[0]['id'];
+      }
+    }
+    if (formData.hasOwnProperty('venue')) {
+      formData.venue_id = formData.venue.id;
+    }
+
+    // if any error, don't post
+    if (error) {
+      $scope.generalError = true;
+      return;
+    }
+
+    if (!edit) {
+      $http({
+        method: 'POST',
+        url: '/admin/event/create',
+        data: formData,
+        headers: {'Content-Type': 'application/json'}
+      }).success(function(data) {
+        if (!data) {
+          console.log('Data Not Posting');
+        }
+        else if (data) {
+          if (data.error) {
+            $scope.error = data.message;
+            console.log('Error creating event', data.message);
+          }
+          else {
+            $scope.success = data;
+            console.log('Success');
+          }
+        }
+      }).error(function(data) {
+        $scope.error = data.error.message;
+      });
+    } else {
+      console.log(formData);
+      $http({
+        method: 'POST',
+        url: '/admin/event/update',
+        data: formData,
+        headers: {'Content-Type': 'application/json'}
+      }).success(function(data) {
+        if (!data) {
+          console.log('Data Not Posting');
+        }
+        else if (data) {
+          if (data.error) {
+            $scope.error = data.message;
+            console.log('Error updating event', data.message);
+          }
+          else {
+            $scope.success = data;
+            console.log('Success');
+          }
+        }
+      }).error(function(data) {
+        $scope.error = data.error;
+      });
+    }
+  }
+  // Retieving all of the data for the listing page
+  $http.get('/events?page_size=all')
+    .success(function(data) {
+      $scope.eventsCount = data.events.length;
+      var allEventsUnformatted = data.events;
+      for (var i = 0; i < allEventsUnformatted.length; i++) {
+        if (moment(allEventsUnformatted[i].start_time).isValid()) {
+          allEventsUnformatted[i].start_date = moment(allEventsUnformatted[i].start_time).format('M/D/YYYY');
+          allEventsUnformatted[i].start_only_time = moment(allEventsUnformatted[i].start_time).format('h:mm:ss a');
+        }
+        else {
+          allEventsUnformatted[i].start_date = '';
+          allEventsUnformatted[i].start_only_time = '';
+        }
+        if (moment(allEventsUnformatted[i].end_time).isValid()) {
+          allEventsUnformatted[i].end_date = moment(allEventsUnformatted[i].end_time).format('M/D/YYYY');
+          allEventsUnformatted[i].end_only_time = moment(allEventsUnformatted[i].end_time).format('h:mm:ss a');
+        }
+        else {
+          allEventsUnformatted[i].end_date = '';
+          allEventsUnformatted[i].end_only_time = '';
+        }
+      }
+      $scope.allEvents = allEventsUnformatted;
+    });
+
+  $scope.reload = function() {
+    document.location.reload(true);
+  };
+
+  // This does not work with a resource. I could not tell you why :(
+  $scope.getVenues = function(typed) {
+    return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
+      return response.data.data;
+    });
+  };
+
+  // edit page
+  if ($stateParams.id) {
+    Happ.get({ id: $stateParams.id, include: 'tags,categories,venues,ageLevels'}, function(payload) {
+      payload = cleanData.buildRelationships(payload);
+      var singleEvent = payload.data[0];
+      $scope.formData = {};
+      AgeLevel.query(function(payload) {
+        $scope.formData.ageLevels = payload.data.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+        // Loop through and set all the values on age levels
+        if (singleEvent.hasOwnProperty('relationships')) {
+          if (singleEvent.relationships.hasOwnProperty('ageLevels')) {
+            for (var i = 0; i < singleEvent.relationships.ageLevels.length; i++) {
+              for (var j = 0; j < $scope.formData.ageLevels.length; j++) {
+                if ($scope.formData.ageLevels[j].id == singleEvent.relationships.ageLevels[i].id)
+                  $scope.formData.ageLevels[j].value = true;
+              }
+            }
+          }
+        }
+      });
+      $scope.formData.title = singleEvent.event_name;
+      $scope.formData.status = singleEvent.status;
+      $scope.formData.event_id = singleEvent.id;
+      $scope.formData.parent_id = singleEvent.parent_id;
+      $scope.formData.event_url = singleEvent.url;
+      $scope.formData.event_image_url = singleEvent.event_image_url;
+      $scope.formData.venue_name = singleEvent.venue_name;
+      $scope.formData.venue_url = singleEvent.venue_url;
+      $scope.formData.street_address = singleEvent.address.street_1;
+      $scope.formData.city = singleEvent.address.city;
+      $scope.formData.state = singleEvent.address.state;
+      $scope.formData.zip_code = singleEvent.address.zip;
+      $scope.formData.desc = singleEvent.description;
+      $scope.formData.all_day = singleEvent.all_day_flag ? true : false;
+      $scope.formData.start_time = $filter('date')(singleEvent.start.local, 'MM/dd/yyyy hh:mm a');
+      $scope.formData.end_time = $filter('date')(singleEvent.end.local, 'MM/dd/yyyy hh:mm a');
+      dateCheckCreate = new Date(singleEvent.created_at).getTime() / 1000;
+      dateCheckUpdate = new Date(singleEvent.updated_at).getTime() / 1000;
+      if (dateCheckCreate != dateCheckUpdate)
+        $scope.updated_last = singleEvent.updated_at;
+      $scope.formData.similar_events_model = singleEvent.similar;
+      $scope.formData.similar_events_storage = (function() {
+        var base = [];
+        angular.forEach(singleEvent.similar, function(value) {
+          if (value.parent_id != null) {
+            base.push(value.id);
+          }
+        });
+        return base;
+      })();
+
+      if (singleEvent.hasOwnProperty('relationships')) {
+        if (singleEvent.relationships.hasOwnProperty('categories')) {
+          $scope.formData.categories = (function() {
+            var base = [];
+            angular.forEach(singleEvent.relationships.categories, function(value) {
+              base.push(value.id);
+            });
+            return base;
+          })();
+        }
+        if (singleEvent.relationships.hasOwnProperty('tags')) {
+          console.log('tags:');
+          console.log(singleEvent.relationships.tags);
+          $scope.formData.tags = singleEvent.relationships.tags;
+        }
+        if (singleEvent.relationships.hasOwnProperty('venue')) {
+          $scope.formData.venue = singleEvent.relationships.venue[0];
+        }
+      }
+
+      $scope.formData.locationType = {};
+      if (singleEvent.location_type == 'Outdoor') {
+        $scope.formData.locationType.outdoor = true;
+      } else if (singleEvent.location_type == 'Indoor') {
+        $scope.formData.locationType.indoor = true;
+      }
+
+      $scope.formData.parent = [];
+
+      $scope.loadTags = function(query) {
+        return $http.get('/tags/' + query);
+      };
+      $scope.loadEvents = function(query){
+        return $http.get('/events/?name=' + query + '&current_id=' + $stateParams.id);
+      };
+      if ($scope.formData.parent_id > 0) {
+        //This event has NO suggested similar, events let's fetch the parent information
+        $http.get('/events/?id=' + $stateParams.id + '&current_id=' + $scope.formData.parent_id).success(function(data){$scope.formData.parent = data;});
+      }
+    });
+  }
 }).controller('adminVenueController', function($scope, $http, $stateParams, $cookies, $cookieStore, Venue, Tag) {
 
     $scope.user = $cookies.user;
