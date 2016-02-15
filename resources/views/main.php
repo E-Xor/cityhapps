@@ -44,7 +44,7 @@
         <script src="/assets/js/angular/angular-cookies.min.js"></script>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-      
+
         <script type="text/javascript" src="/js/ui-utils.min.js"></script>
         <script type="text/javascript" src="/assets/js/ui-bootstrap-tpls-0.13.3.min.js"></script>
         <!-- <script src="/assets/js/angular/angular-touch.js"></script> -->
@@ -58,6 +58,8 @@
         <script type="text/javascript" src="/js/fullcalendar.js"></script>
         <script type="text/javascript" src="/js/calendar.js"></script>
         <script type="text/javascript" src="/assets/js/angular/angular-sanitize.min.js"></script>
+
+      <script src="/assets/js/textangular.min.js"></script>
 
         <script type="text/javascript" src="/js/snap.min.js"></script>
         <script type="text/javascript" src="/js/angular-snap.min.js"></script>

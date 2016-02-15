@@ -90,6 +90,15 @@ Route::post('admin/event/update', 'AdminEventController@update');
 // Admin Venue
 Route::post('admin/venue/create', 'AdminVenueController@create');
 Route::post('admin/venue/update', 'AdminVenueController@update');
+// Admin Settings
+Route::get('admin/welcome-message', 'AdminWelcomeMessageController@show');
+Route::put('admin/welcome-message', 'AdminWelcomeMessageController@update');
+
+
+// Fetch site settings for Angular - Do NOT put private things in here; no auth.
+Route::get('site-settings', function() {
+    return response()->json(CityHapps\SiteSetting::allMap());
+});
 
 // Static Pages
 Route::get('about', function () {

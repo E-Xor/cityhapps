@@ -1,0 +1,15 @@
+<div class="curate-page">
+  <h1>Curate</h1>
+  <a href="/admin/event/add" class="happ-button inverse">
+    <i class="fa fa-plus"></i>
+    Add New Event
+  </a>
+  <a href="/admin/venue/add" class="happ-button inverse">
+    <i class="fa fa-plus"></i>
+    Add New Venue
+  </a>
+  <a href="/curate/greeting" class="happ-button inverse" ng-if="currentUser.role === 'ROLE_ADMIN'">
+    <i class="fa fa-pencil"></i>
+    Edit Welcome Message
+  </a>
+</div>

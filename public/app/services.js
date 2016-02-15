@@ -154,9 +154,19 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         } else if (data) {
         }
     });
+}).factory('siteSettings', function($http) {
+  return {
+    get: function(key) {
+      return $http.get('/site-settings').then(function(res) {
+        return res.data[key];
+      }, function(res) {
+        console.log("Failed to fetch site settings", key);
+      });
+    }
+  };
 }).factory('userProfile', function($http) {
       return {
-         get: function(id){ 
+         get: function(id){
               return $http({
               method: 'GET',
               url: '/api/favorites/' + id,
@@ -166,7 +176,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 }
             })
         },
-        changePassword: function(user){ 
+        changePassword: function(user){
             return $http({
               method: 'POST',
               url: '/user/change-password',
@@ -175,12 +185,12 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 if (!data) {
                 } else if (data) {
                 }
-            }).error(function(error){ 
+            }).error(function(error){
                 console.log('unable to change password');
                 console.log(error);
             })
         },
-        check: function(user_id, id){ 
+        check: function(user_id, id){
             return $http({
               method: 'POST',
               url: '/api/favorites/check',
@@ -189,13 +199,13 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 if (!data) {
                 } else if (data) {
                 }
-            }).error(function(error){ 
+            }).error(function(error){
             })
           }
       };
 }).factory('getFavorites', function($http) {
       return {
-         get: function(id){ 
+         get: function(id){
               return $http({
               method: 'GET',
               url: '/api/favorites/' + id,
@@ -205,7 +215,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 }
             })
         },
-        add: function(user_id, id){ 
+        add: function(user_id, id){
             return $http({
               method: 'POST',
               url: '/api/favorites/add',
@@ -214,11 +224,11 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 if (!data) {
                 } else if (data) {
                 }
-            }).error(function(error){ 
+            }).error(function(error){
                 console.log('unable to add item in favorites');
             })
         },
-        check: function(user_id, id){ 
+        check: function(user_id, id){
             return $http({
               method: 'POST',
               url: '/api/favorites/check',
@@ -227,7 +237,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
                 if (!data) {
                 } else if (data) {
                 }
-            }).error(function(error){ 
+            }).error(function(error){
             })
           }
       };

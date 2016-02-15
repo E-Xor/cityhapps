@@ -2,12 +2,10 @@
   <div ng-if="!authenticated" class="container intro-message">
     <div class="row">
       <div class="col-xs-12 col-md-8 col-md-offset-2">
-        <h1 style="margin-bottom: 5px;">CityHapps is here for families to find fun, safe, and affordable &ldquo;Happs&rdquo; to experience!</h1>
-        <p>
-          It’s our goal to bring the most accurate information and member generated knowledge on all things kids directly to your fingertips. Skip the search engine and create a CityHapps user account today.  You will receive more information on upcoming events for kids and families in your area.
-        </p>
-        <p><strong>We promise, you’ll be glad you did!</strong></p>
-        <a class="happ-button" href="/register">Sign Up</a>
+        <div class="content" ng-bind-html="welcomeMessage"></div>
+        <div class="call-to-action">
+          <a class="happ-button" href="/register">Sign Up</a>
+        </div>
       </div>
     </div>
   </div>
