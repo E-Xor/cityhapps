@@ -13,7 +13,7 @@
               </span>
             </div>
             <div class="happ-date" ng-controller="HappHomeController">
-              <span class="start-date"> {{ displayDay(happ.start_time, happ.end_time)}}</span>
+              <span class="start-date" ng-if="happ.start_time> {{ displayDay(happ.start_time, happ.end_time)}}</span>
               <span ng-if="authenticated" ng-controller="FavoriteController" ng-click="addToFavorites(happ.id)"  class="happ-favorite">
                 <i class="fa fa-star" ng-init="isFav = true" ng-class="{ 'favorited': isFav}"></i>
               </span>
@@ -24,17 +24,23 @@
               {{happ.event_name}}
             </h3>
             <ul class="happ-icons fa-ul">
-              <li class="happ-icon happ-icon-date">
+              <li class="happ-icon happ-icon-date" ng-if="happ.start">
                 <i class="fa fa-li fa-calendar-o"></i>{{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
               </li>
-              <li class="happ-icon happ-icon-time">
-                <i class="fa fa-li fa-clock-o"></i> <span class="happ-icon-data">{{ happ.start.local | dateToISO | date: 'h:mm a' }} - {{ happ.end.local | dateToISO | date: 'h:mm a' }}</span>
+              <li class="happ-icon happ-icon-time" ng-if="happ.start">
+                <i class="fa fa-li fa-clock-o"></i>
+                <span class="happ-icon-data">
+                  <span class="start-time">
+                    {{ happ.start.local | dateToISO | date: 'h:mm a' }}
+                  </span>
+                  <span class="end-time" ng-if="happ.end">
+                    - {{ happ.end.local | dateToISO | date: 'h:mm a' }}</span>
+                </span>
               </li>
               <li class="happ-icon happ-icon-venue" ng-repeat="venue in happ.relationships.venues">
                 <a href="/venue/{{ venue.id }}"><i class="fa fa-li fa-map-marker"></i> <span class="happ-icon-data">{{ venue.name }}</span></a>
               </li>
             </ul>
-            
           </div>
           <div class="happ-buttons">
               <a class="happ-button happ-button-directions" href='{{happ.geo_data.google_directions_link}}' target="_new">Get Directions</a>

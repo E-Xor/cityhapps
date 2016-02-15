@@ -13,7 +13,7 @@
     <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
     <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
     <div class="red center margin20" ng-if="error">{{error}}</div>
-    
+
     <input type="hidden" id="event_id" name="event_id" ng-model="formData.event_id"/>
 
     <div>
@@ -46,7 +46,7 @@
     <div class="happ-categories">
       <label for="cateogories">Categories</label>
       <!--div class="selected">
-        <strong>Selected: 
+        <strong>Selected:
         <div ng-repeat="category in categories | filter:formData.categories[0]">{{ category.name }}</div>
         </strong>
       </div-->
@@ -72,7 +72,7 @@
       <label for="street_address">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
       <input type="text" id="street_address" class="full" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address">
     </div>
-    
+
     <div>
       <label for="building">Building / Suite</label>
       <input type="text" id="building" name="building" class="full" value="" ng-model="formData.building">
@@ -102,13 +102,13 @@
         <input type="checkbox" id="ageLevel{{ ageLevel.id }}" ng-model="ageLevel.value" style="-webkit-appearance: checkbox;"> <label for="ageLevel{{ ageLevel.id }}">{{ ageLevel.name }}</label>
       </div>
     </div>
-    
+
     <div style="margin-top:10px; margin-bottom:10px">
-      <label for="start_time" style="display:inline-block;">Start Date/Time <span class="red center margin20"> * </span>
-        <div class="red" ng-if="startDateError">You must have a start date</div>
+      <label for="start_time" style="display:inline-block;">
+        Start Date/Time
       </label>
 
-      <datetimepicker 
+      <datetimepicker
           hour-step="hourStep"
           minute-step="minuteStep"
           ng-model="formData.start_time"

@@ -11,7 +11,7 @@
         </div>
         <div class="happ-date" ng-controller="HappHomeController">
           <span class="start-date"> {{ displayDay(happ)}}</span>
-                <span ng-if="authenticated" ng-controller="FavoriteController" ng-click="addToFavorites(happ.id)"  class="happ-favorite">
+          <span ng-if="authenticated" ng-controller="FavoriteController" ng-click="addToFavorites(happ.id)"  class="happ-favorite">
             <i class="fa fa-star favorite" ng-class="ifFavorite(happ.id)"></i>
             <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
             <div class="buttons">
@@ -36,18 +36,26 @@
           {{happ.event_name}}
         </h3>
         <ul class="happ-icons fa-ul">
-          <li class="happ-icon happ-icon-date">
-            <i class="fa fa-li fa-calendar-o"></i>{{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
+          <li class="happ-icon happ-icon-date" ng-if="happ.event_date">
+            <i class="fa fa-li fa-calendar-o"></i>{{ displayStartTime(happ) | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
           </li>
-          <li class="happ-icon happ-icon-time">
-            <i class="fa fa-li fa-clock-o"></i> 
-            <span class="happ-icon-data">{{ displayStartTime(happ) | dateToISO | date: 'h:mm a'}} - {{ displayEndTime(happ) | dateToISO | date: 'h:mm a'}}</span>
+          <li class="happ-icon happ-icon-time" ng-if="displayStartTime(happ)">
+            <i class="fa fa-li fa-clock-o"></i>
+            <span class="happ-icon-data">
+              <span class="start-time">
+              {{ displayStartTime(happ) | dateToISO | date: 'h:mm a'}}
+              </span>
+              <span class="end-time" ng-if="displayEndTime(happ)">
+                -
+                {{ displayEndTime(happ) | dateToISO | date: 'h:mm a' }}
+              </span>
+            </span>
           </li>
           <li class="happ-icon happ-icon-venue" ng-repeat="venue in happ.relationships.venues">
             <a href="/venue/{{ venue.id }}"><i class="fa fa-li fa-map-marker"></i> <span class="happ-icon-data">{{ venue.name }}</span></a>
           </li>
         </ul>
-        
+
       </div>
       <div class="happ-buttons">
           <a class="happ-button happ-button-directions" href='{{happ.geo_data.google_directions_link}}' target="_new">Get Directions</a>
