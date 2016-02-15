@@ -1770,6 +1770,16 @@ h3 {
       }
     }
   }
+  &.feedback {
+    display: inline-block;
+  }
+}
+
+.happ-actions {
+  margin-top: 15px;
+  .happ-button {
+    display: inline-block;
+  }
 }
 
 // Mobile responsive styles
