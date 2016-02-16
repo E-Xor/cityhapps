@@ -39,7 +39,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
     registerDataService.recEventCount = {};
     registerDataService.vote = {};
     return registerDataService;
-}).factory('authFactory', function($http, authService, $rootScope, $modal, $cookies, $cookieStore, $modalStack) {
+}).factory('authFactory', function($http, authService, $rootScope, $modal, $cookies, $cookieStore, $modalStack, userDecorator) {
 
     var auth = {};
 
@@ -142,8 +142,24 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
     };
 
     return auth;
+}).factory('userDecorator', function() {
+  return {
+    decorate: function(rawUser) {
+      var methods = {
+        isAdmin: function() {
+          return this.isRole('admin');
+        },
+        isCurator: function() {
+          return this.isRole('curator');
+        },
+        isRole: function(role) {
+          return this.role === "ROLE_" + role.toUpperCase();
+        }
+      };
 
-
+      return angular.extend({}, rawUser, methods);
+    }
+  };
 }).factory('getCategories', function($http) {
     return $http({
         method: 'GET',

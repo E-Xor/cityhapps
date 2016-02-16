@@ -2,7 +2,7 @@
  * Controllers for CityHapps
  */
 
-angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope) {
+angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope, userDecorator) {
     var vm = this;
 
     vm.loginError = false;
@@ -31,7 +31,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
               var user = JSON.stringify(response.data.user);
               localStorage.setItem('user', user);
               $rootScope.authenticated = true;
-              $rootScope.currentUser = response.data.user;
+              $rootScope.currentUser = userDecorator.decorate(response.data.user);
               $state.go('main.home', {});
             }
         });
@@ -50,8 +50,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 }).controller('FavoriteController', function($cookies, $scope, $rootScope, $state, getFavorites) {
     $scope.happs = {};
 
-    var userString = localStorage.getItem('user');
-    var user = angular.fromJson(userString);
+  var user = $rootScope.currentUser;
 
     getFav();
 
@@ -1383,7 +1382,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         });
     };
 
-}).controller('registerFormController', function($scope, $state, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
+}).controller('registerFormController', function($scope, $state, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope, userDecorator) {
     //Facebook Auth
 
     // Define user empty data :/
@@ -1460,7 +1459,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                             if (response.id) {
                                 registerDataService.data = $scope.fbInfo;
                                 $rootScope.authenticated = true;
-                                $rootScope.currentUser = $scope.fbUser;
+                                $rootScope.currentUser = userDecorator.decorate($scope.fbUser);
                                 $state.go('main.home', {});
                             } else if (response.isValid) {
                                 $http({

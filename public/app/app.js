@@ -439,7 +439,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     // Track all URL query params (default is false)
     AnalyticsProvider.trackUrlParams(true);
 
-}).run(function($rootScope, $state, $http, editableOptions, $q) {
+}).run(function($rootScope, $state, $http, editableOptions, $q, userDecorator) {
   var authRoute = 'api/authenticate/user';
   function isAdmin() {
     return $rootScope.authenticated &&
@@ -463,7 +463,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
 
     var authPromise = $http.get(authRoute).then(function(res) {
       $rootScope.authenticated = true;
-      $rootScope.currentUser = res.data.user;
+      $rootScope.currentUser = userDecorator.decorate(res.data.user);
     });
 
     if (routeRequiresAuth(toState.url)){
