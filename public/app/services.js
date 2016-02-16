@@ -154,6 +154,12 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         },
         isRole: function(role) {
           return this.role === "ROLE_" + role.toUpperCase();
+        },
+        canEdit: function(happ) {
+          return this.isAdmin() || this.isCurator() && this.id === happ.user_id;
+        },
+        canCreate: function() {
+          return this.isAdmin() || this.isCurator();
         }
       };
 

@@ -3,7 +3,7 @@
         <ul class="sidebar-menu" auto-active>
             <li ng-if="authenticated"><a href="/profile" snap-close>My Account <i class="fa fa-caret-down"></i></a></li>
             <li ng-if="authenticated"><a href="/favorites" snap-close>My Favorites <i class="fa fa-star"></i></a></li>
-            <li ng-if="authenticated"><a href="/curate" snap-close>Curate</a></li>
+            <li ng-if="authenticated && currentUser.canCreate()"><a href="/curate" snap-close>Curate</a></li>
             <li ng-if="authenticated"><a href="/logout">Log Out</a></li>
             <li ng-if="!authenticated"><a href="/login">Log In</a></li>
             <li ng-if="!authenticated"><a href="/register">Register</a></li>
@@ -20,7 +20,7 @@
         <ul class="sidebar-menu" auto-active>
             <li ng-if="authenticated"><a href="/profile" snap-close>My Account <i class="fa fa-caret-down"></i></a></li>
             <li ng-if="authenticated"><a href="/favorites" snap-close>My Favorites <i class="fa fa-star"></i></a></li>
-            <li ng-if="authenticated"><a href="/curate" snap-close>Curate</a></li>
+            <li ng-if="authenticated && currentUser.canCreate()"><a href="/curate" snap-close>Curate</a></li>
             <li ng-if="authenticated"><a href="/logout">Log Out</a></li>
             <li ng-if="!authenticated"><a href="/login">Log In</a></li>
             <li ng-if="!authenticated"><a href="/register">Register</a></li>

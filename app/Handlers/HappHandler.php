@@ -209,7 +209,7 @@ class HappHandler extends ApiHandler
 	public function customHandleFilterRequest($filters, $model)
 	{
 		foreach ($filters as $key => $value) {
-			if($key == 'zip') {
+			if($key == 'zip' || $key == 'user_id') {
                 HappFilter::filterByHappColumn($model, $key, $value);
 			}
 			if($key == 'location_type') {

@@ -9,7 +9,7 @@
       </div>
     </div>
   </div>
-  <div class="container" ng-if="currentUser.role=='ROLE_ADMIN'">
+  <div class="container" ng-if="currentUser.canCreate()">
     <div class="row" >
       <div class="col-xs-12">
         <a href="/admin/event/add"><i class="fa fa-plus"></i> Add New Event</a> | <a href="/admin/venue/add"><i class="fa fa-plus"></i> Add New Venue</a>

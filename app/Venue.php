@@ -11,6 +11,11 @@ class Venue extends Model
   protected $guarded = array('id', 'create_at', 'updated_at');
   protected $appends = array('google_directions_link', 'google_map_large', 'similar');
 
+  public function curator()
+  {
+    return $this->belongsto('\CityHapps\User', 'user_id');
+  }
+
   public function tags()
   {
     return $this->belongsToMany('CityHapps\Tag', 'venue_tag', 'venue_id', 'tag_id');
@@ -103,7 +108,7 @@ class Venue extends Model
     Venue::storeEventBriteVenues();
   }
 
-  /** 
+  /**
    * $venueParams will be a way to minimize results, for now it is not in use
    */
   public static function selectVenues($params) {

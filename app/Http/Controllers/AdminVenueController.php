@@ -8,6 +8,7 @@ use CityHapps\Http\Requests;
 use CityHapps\Http\Controllers\Controller;
 use CityHapps\Venue;
 use CityHapps\Tag;
+use CityHapps\User;
 
 class AdminVenueController extends Controller {
 
@@ -17,6 +18,10 @@ class AdminVenueController extends Controller {
    *
    * @return Response
    */
+    public function __construct() {
+        $this->user = $this->authFromToken();
+    }
+
   public function index()
   {
     //show the admin frontend view
@@ -125,6 +130,10 @@ class AdminVenueController extends Controller {
     $venueParams['id'] = \Input::get('venue_id');
     if (!$venueParams['id']) $passValidation = false;
 
+    $result = Venue::create($venueParams);
+    $this->authorizeVenue($result);
+
+    $venueParams['user_id'] = $this->user->id;
     $venueParams['name'] = \Input::get('venue_name');
     $venueParams['url'] = \Input::get('venue_url');
     $venueParams['address_1'] = \Input::get('street_address');
@@ -142,6 +151,8 @@ class AdminVenueController extends Controller {
    if ($passValidation)
    {
      $result = Venue::find($venueParams['id']);
+
+     $venueParams['user_id'] = $result->user_id ?: $this->user->id;
 
      $this->createTags($result, \Input::get('tags'));
 
@@ -192,6 +203,7 @@ class AdminVenueController extends Controller {
     $message = 'Failed to create venue';
     $venueParams = array();
 
+    $venueParams['user_id'] = $this->user->id;
     $venueParams['name'] = \Input::get('venue_name');
     $venueParams['url'] = \Input::get('venue_url');
     $venueParams['address_1'] = \Input::get('street_address');
@@ -219,4 +231,18 @@ class AdminVenueController extends Controller {
 
   }
 
+    protected function authFromToken() {
+        $user = parent::authFromToken();
+        if ($user->role != User::ROLE_USER) {
+            return $user;
+        } else {
+            return abort(403, json_encode(['unauthorized']), ['Content-Type' => 'application/json']);
+        }
+    }
+
+    public function authorizeVenue($venue) {
+        if ($venue->user_id && $this->user->id !== $venue->user_id) {
+            abort(403, json_encode(['unauthorized']), ['Content-Type' => 'application/json']);
+        }
+    }
 }

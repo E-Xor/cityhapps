@@ -1,15 +1,37 @@
 <div class="curate-page">
   <h1>Curate</h1>
-  <a href="/admin/event/add" class="happ-button inverse">
-    <i class="fa fa-plus"></i>
-    Add New Event
-  </a>
-  <a href="/admin/venue/add" class="happ-button inverse">
-    <i class="fa fa-plus"></i>
-    Add New Venue
-  </a>
-  <a href="/curate/greeting" class="happ-button inverse" ng-if="currentUser.role === 'ROLE_ADMIN'">
-    <i class="fa fa-pencil"></i>
-    Edit Welcome Message
-  </a>
+  <div class="curate-actions">
+    <a href="/admin/event/add" class="happ-button inverse">
+      <i class="fa fa-plus"></i>
+      Add New Event
+    </a>
+    <a href="/admin/venue/add" class="happ-button inverse">
+      <i class="fa fa-plus"></i>
+      Add New Venue
+    </a>
+    <a href="/curate/greeting" class="happ-button inverse" ng-if="currentUser.isAdmin()">
+      <i class="fa fa-pencil"></i>
+      Edit Welcome Message
+    </a>
+  </div>
+  <div class="container happ-listing happ-listing-container">
+    <div class="row">
+      <h2>Your Happs</h2>
+      <p ng-if="!happs || happs.length === 0">You don't currently have any happs.</p>
+      <div class="col-md-3 happ-item" ng-repeat="happ in happs" ch-happ="happ"></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <h2>Your Venues</h2>
+      <p ng-if="!venues || venues.length === 0">You don't currently have any venues.</p>
+      <ul class="venues-list">
+        <li ng-repeat="venue in venues">
+          <h4>
+            <a href="/venue/{{ venue.id }}">{{ venue.name }}</a>
+          </h4>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

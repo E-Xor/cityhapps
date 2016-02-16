@@ -6,13 +6,17 @@ use Log;
 use Illuminate\Http\Request;
 
 use CityHapps\Http\Requests;
-use CityHapps\Http\Controllers\Controller;
+//use CityHapps\Http\Controllers\Controller;
 use CityHapps\Happ;
 use CityHapps\Category;
 use CityHapps\Tag;
 use Input;
+use CityHapps\User;
 
 class AdminEventController extends Controller {
+    public function __construct() {
+        $this->user = $this->authFromToken();
+    }
 
   /**
    * Show the form for creating a new resource.
@@ -43,7 +47,6 @@ class AdminEventController extends Controller {
    */
   public function update()
   {
-
     // logic to push to model includes database transactions, sanitizing, etc.
     // fall back error message
     $passValidation = true;
@@ -51,6 +54,11 @@ class AdminEventController extends Controller {
     $eventParams = array();
 
     $eventParams['id'] = Input::get('event_id');
+
+    $result = Happ::find($eventParams['id']);
+    $this->authorizeHapp($result);
+
+    $eventParams['user_id'] = $result->user_id ?: $this->user->id;
 
     if (!$eventParams['id'])
       $passValidation = false;
@@ -115,8 +123,6 @@ class AdminEventController extends Controller {
 
     if ($passValidation)
     {
-      $result = Happ::find($eventParams['id']);
-
       // Process Tags
       if(Input::has('tags'))
       {
@@ -224,6 +230,7 @@ class AdminEventController extends Controller {
     $message = 'Failed to create event';
     $eventParams = array();
 
+    $eventParams['user_id'] = $this->user->id;
     $eventParams['event_name'] = Input::get('title');
     $eventParams['url'] = Input::get('event_url');
     $eventParams['venue_id'] = Input::get('venue_id');
@@ -295,5 +302,20 @@ class AdminEventController extends Controller {
       return json_encode(array('error' => true, 'message'=>$message));
 
   }
+
+    protected function authFromToken() {
+        $user = parent::authFromToken();
+        if ($user->role != User::ROLE_USER) {
+            return $user;
+        } else {
+            return abort(403, json_encode(['unauthorized']), ['Content-Type' => 'application/json']);
+        }
+    }
+
+    public function authorizeHapp($happ) {
+        if ($happ->user_id && $this->user->id !== $happ->user_id) {
+          abort(403, json_encode(['unauthorized']), ['Content-Type' => 'application/json']);
+        }
+    }
 
 }
