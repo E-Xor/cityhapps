@@ -10,6 +10,8 @@ $dark-grey: #2C2625;
 $grey: #404042;
 $light-grey: #D1D2D4;
 $tan: #F7EEEF;
+$red: #FF5C50;
+$green: #72B43E;
 
 //End Vars
 
@@ -290,7 +292,7 @@ input.main-search {
   }
   .happ-data {
     min-height: 225px;
-    padding-bottom: 30px;
+    //padding-bottom: 30px;
     .happ-fulldate, .happ-time, .happ-venue {
       font-size: 15px;
       color: #5F5F5F;
@@ -314,23 +316,19 @@ input.main-search {
       }
     }
     .happ-data-footer {
-      position: absolute;
-      bottom: 0px;
-      left: 0px;
-      padding-left: 15px;
-      padding-right: 30px;
+      //position: absolute;
+      //bottom: 0px;
+      //left: 0px;
+      padding: 0;
       width: 100%;
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
-      .happ-getTickets {
-        width: 50%;
-        min-width: 160px;
-      }
       .happ-social {
+        padding: 0;
         position: absolute;
         right: 15px;
-        bottom: 0px;
+        //bottom: 0px;
       }
       i.fa.fa-facebook-square {
         color: #3B5998;
@@ -366,6 +364,7 @@ input.main-search {
     margin: 0 auto;
     padding: 3% 2%;
     line-height: 1.5em;
+    min-height: 9em;
   }
   .happ-map {
     img {
@@ -2604,7 +2603,6 @@ a.ng-binding:hover{
     outline: 0;
   }
   input {
-    -webkit-appearance: none;
     &:focus {
       border-color: #339933;
     }
@@ -2988,4 +2986,40 @@ input#notifyMe {
   .happ-button {
     display: inline-block;
   }
+}
+
+.business-hours {
+  font-size: 13px;
+  .today {
+    border-bottom: 3px solid #333;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .open-today {
+    color: $green;
+  }
+  .closed-today {
+    color: $red;
+  }
+  .days-of-week {
+    padding-left: 0
+  }
+}
+@media (min-width: 992px) {
+  .business-hours {
+    position: absolute;
+    display: block;
+  }
+}
+@media (max-width: 992px) {
+  .business-hours {
+    position: relative;
+    display: inline-block;
+  }
+}
+
+.happ-getTickets {
+  width: 100%;
+  bottom: 0;
+  position: absolute;
 }

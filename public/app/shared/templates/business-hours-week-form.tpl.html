@@ -1,0 +1,22 @@
+<div class="business-hours-form">
+  <h4>Business Hours</h4>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">Open</div>
+    <div class="col-md-3">Close</div>
+  </div>
+  <div class="row" ng-repeat="day in daysOfWeek">
+    <div class="col-md-3">
+      <label>
+        <input type="checkbox" name="open" ng-model="day.open" ng-checked="day.open" />
+        {{ day.name }}
+      </label>
+    </div>
+    <div class="col-md-3">
+      <input class="form-control" type="text" name="open_time" ng-model="day.open_time" placeholder="09:00am"/>
+    </div>
+    <div class="col-md-3">
+      <input class="form-control" type="text" name="close_time" ng-model="day.close_time" placeholder="05:00pm" />
+    </div>
+  </div>
+</div>

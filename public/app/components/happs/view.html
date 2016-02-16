@@ -1,13 +1,6 @@
-
-<script type="text/javascript">
-function blah(url){
-  window.location.href = url;
-}
-</script>
-
 <div id="viewContent">
-	<div class="happ-single col-md-9">
-		<div class="row">
+  <div class="happ-single col-md-9">
+    <div class="row">
       <div ng-click="get_tickets()" class="col-md-7">
         <div class="happ-image" style="background-image: url('{{ happ.event_image_url }}'); background-size: cover; cursor: pointer;">
           <div class="happ-categories" ng-if="happ.relationships.categories">
@@ -15,60 +8,67 @@ function blah(url){
               <a href="/category/{{ category.slug }}" class="happ-category">{{ category.name }}</a>{{ $last ? '' : ', ' }}
             </span>
           </div>
-          <div class="happ-date" ng-controller="HappHomeController">
-            {{ displayDay(happ) }}
-          </div>
+
           <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
-          <div class="buttons">
-          <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
-          <a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
-          </div>-->
+               <div class="buttons">
+               <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
+               <a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
+               </div>-->
+          <a class="happ-button happ-getTickets" href="{{ happ.url }}">Get Tickets</a>
         </div>
       </div>
-			<div class="col-md-5 happ-data">
-				<!--div class="happ-values">
-        			<div class="happ-rating">
-        				Rating<br>
-        				<i class="fa fa-dot-circle-o"></i><i class="fa fa-dot-circle-o"></i><i class="fa fa-dot-circle-o"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle-o"></i>
-        			</div>
-        			<div class="happ-price">
-        				Price<br>
-        				<i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i>
-    				</div>
-        		</div-->
-				<h1 class="happ-name">
-					{{ happ.event_name }}
-				</h1>
-        <div class="happ-fulldate" ng-if="happ.start">
-          <i class="fa fa-calendar-o"></i> {{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
-        </div>
-        <div class="happ-time" ng-if="happ.start">
-          <i class="fa fa-clock-o"></i>
-          <span class="start-time">
-            {{happ.start.local | dateToISO | date: 'h:mm a' }}
-          </span>
-          <span class="end-time" ng-if="happ.end">
-            - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
-          </span>
-        </div>
-        <div class="happ-venue" ng-if="happ.relationships.venues">
-          <div ng-repeat="venue in happ.relationships.venues">
-            <a href="/venue/{{ venue.id }}"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
+
+      <div class="col-md-5 happ-data">
+        <div class="row">
+          <div class="col-md-9">
+            <!--div class="happ-values">
+                 <div class="happ-rating">
+                 Rating<br>
+                 <i class="fa fa-dot-circle-o"></i><i class="fa fa-dot-circle-o"></i><i class="fa fa-dot-circle-o"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle-o"></i>
+                 </div>
+                 <div class="happ-price">
+                 Price<br>
+                 <i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i>
+                 </div>
+                 </div-->
+            <h1 class="happ-name">
+              {{ happ.event_name }}
+            </h1>
+            <div class="happ-fulldate" ng-if="happ.start">
+              <i class="fa fa-calendar-o"></i> {{ happ.start.local | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
+            </div>
+            <div class="happ-time" ng-if="happ.start">
+              <i class="fa fa-clock-o"></i>
+              <span class="start-time">
+                {{happ.start.local | dateToISO | date: 'h:mm a' }}
+              </span>
+              <span class="end-time" ng-if="happ.end">
+                - {{ happ.end.local | dateToISO | date: 'h:mm a' }}
+              </span>
+            </div>
+            <div class="happ-venue" ng-if="happ.relationships.venues">
+              <div ng-repeat="venue in happ.relationships.venues">
+                <a href="/venue/{{ venue.id }}"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
+              </div>
+            </div>
+
+            <business-hours ng-model="happ.business_hours"></business-hours>
+
+          </div>
+          <div class="col-md-3" >
+            <div class="happ-data-footer">
+              <div class="happ-social">
+                <!--<a href="mailto:report@cityhapps.com?subject=Bad Happ Report:%20{{ happ.id }}%20-%20{{ happ.event_name }}" title="Report this event">
+                     <i class="fa-2x glyphicon glyphicon-flag"></i>
+                     </a>-->
+                <a social-facebook><i class="fa fa-facebook-square"></i></a>
+                <a social-twitter><i class="fa fa-twitter-square"></i></a>
+              </div>
+            </div>
           </div>
         </div>
-
-            <div class="happ-data-footer">
-			        <div class="happ-social">
-                <a href="mailto:report@cityhapps.com?subject=Bad Happ Report:%20{{ happ.id }}%20-%20{{ happ.event_name }}" title="Report this event">
-                  <i class="fa-2x glyphicon glyphicon-flag"></i>
-                </a>
-				        <a social-facebook><i class="fa fa-facebook-square"></i></a>
-				        <a social-twitter><i class="fa fa-twitter-square"></i></a>
-			        </div>
-			        <a class="happ-button happ-getTickets" href="{{ happ.url }}">Get Tickets</a>
-		        </div>
-			</div>
-		</div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-4">
         <div class="happ-actions">
@@ -81,37 +81,37 @@ function blah(url){
     </div>
     <div class="row" ng-if="currentUser.role=='ROLE_ADMIN'">
       <div class="col-xs-12">
-				<a href="/admin/event/edit/{{ happ.id }}"><i class="fa fa-pencil-square-o"></i> Edit This Event</a> | <a href="/admin/event/add"><i class="fa fa-plus"></i> Add New Event</a> | <a href="/admin/venue/add"><i class="fa fa-plus"></i> Add New Venue</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="happ-tags" ng-if="happ.relationships.tags">
-					<i class="fa fa-tag"></i>&nbsp;
-					<span ng-repeat="tag in happ.relationships.tags">
-						<span class="happ-tag">{{ tag.tag_raw }}</span>{{ $last ? '' : ' ' }}
-					</span>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="happ-description" ng-if="happ.description" ng-bind-html="happ.description"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<a class="happ-button" href="{{ happ.geo_data.google_directions_link }}">Get Directions</a>
-			</div>
-		</div>
-		<div class="row happ-map">
-			<a href="{{ happ.geo_data.google_directions_link }}">
-				<img class="col-md-12" src="{{ happ.geo_data.google_map_large }}" />
-				<span id="mapCircle"><i class="fa fa-arrow-right"></i> Maps</span>
-			</a>
-		</div>
-	</div>
+        <a href="/admin/event/edit/{{ happ.id }}"><i class="fa fa-pencil-square-o"></i> Edit This Event</a> | <a href="/admin/event/add"><i class="fa fa-plus"></i> Add New Event</a> | <a href="/admin/venue/add"><i class="fa fa-plus"></i> Add New Venue</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="happ-tags" ng-if="happ.relationships.tags">
+          <i class="fa fa-tag"></i>&nbsp;
+          <span ng-repeat="tag in happ.relationships.tags">
+            <span class="happ-tag">{{ tag.tag_raw }}</span>{{ $last ? '' : ' ' }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="happ-description" ng-if="happ.description" ng-bind-html="happ.description"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <a class="happ-button" href="{{ happ.geo_data.google_directions_link }}">Get Directions</a>
+      </div>
+    </div>
+    <div class="row happ-map">
+      <a href="{{ happ.geo_data.google_directions_link }}">
+        <img class="col-md-12" src="{{ happ.geo_data.google_map_large }}" />
+        <span id="mapCircle"><i class="fa fa-arrow-right"></i> Maps</span>
+      </a>
+    </div>
+  </div>
 </div>
 <div id="ad" class="col-md-3">
-	<img src="http://www.cityhapps.com/assets/img/display-1.jpg" id="display-photo">
+  <img src="http://www.cityhapps.com/assets/img/display-1.jpg" id="display-photo">
 </div>

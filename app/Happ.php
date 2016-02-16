@@ -163,6 +163,14 @@ class Happ extends Model
     return $res;
   }
 
+    public function getBusinessHoursAttribute($value) {
+        return $value ? json_decode($value) : [];
+    }
+
+    public function setBusinessHoursAttribute($value) {
+        $this->attributes['business_hours'] = $value ? json_encode($value) : null;
+    }
+
   public function recurringInformation()
   {
     return $this->hasMany('HappRecurring');
