@@ -56,7 +56,9 @@ class AdminEventController extends Controller {
     $eventParams['id'] = Input::get('event_id');
 
     $result = Happ::find($eventParams['id']);
-    $this->authorizeHapp($result);
+    if (!$this->authorizeResource($result)) {
+      return response()->json(['error' => 'Unauthorized', 'message' => 'Unauthorized'], 403);
+    }
 
     $eventParams['user_id'] = $result->user_id ?: $this->user->id;
 
@@ -201,9 +203,9 @@ class AdminEventController extends Controller {
      */
     private function createTags($entity, $tags)
     {
+        $entity->tags()->detach();
         if (!empty($tags)) {
             //Drop previous tags for this event
-            $entity->tags()->detach();
             foreach ($tags as $tag) {
                 if (!isset($tag["id"])) {
                     $new_tag = new Tag(['tag_raw' => $tag["tag_raw"], 'tag_url' => $tag["tag_raw"]]);
@@ -226,6 +228,10 @@ class AdminEventController extends Controller {
   {
     // logic to push to model includes database transactions, sanitizing, etc.
     // fall back error message
+
+    if (!$this->authorizeResource(null)) {
+      return response()->json(['error' => 'Unauthorized', 'message' => 'Unauthorized'], 403);
+    }
     $passValidation = true;
     $message = 'Failed to create event';
     $eventParams = array();
@@ -288,6 +294,16 @@ class AdminEventController extends Controller {
       if(Input::exists('tags')){
         $this->createTags($result, Input::get('tags'));
       }
+
+      // Process Categories
+      if(Input::has('categories'))
+      {
+          $category_data = Input::get('categories');
+          $result->categories()->detach();
+          foreach ($category_data as $category) {
+              $result->categories()->attach($category);
+          }
+      }
       // Process Age Levels
       $age_level_data = Input::get('ageLevels');
       $result->ageLevels()->detach();
@@ -307,15 +323,6 @@ class AdminEventController extends Controller {
         $user = parent::authFromToken();
         if ($user->role != User::ROLE_USER) {
             return $user;
-        } else {
-            return abort(403, json_encode(['unauthorized']), ['Content-Type' => 'application/json']);
         }
     }
-
-    public function authorizeHapp($happ) {
-        if ($happ->user_id && $this->user->id !== $happ->user_id) {
-          abort(403, json_encode(['unauthorized']), ['Content-Type' => 'application/json']);
-        }
-    }
-
 }

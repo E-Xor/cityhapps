@@ -14,6 +14,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     use Authenticatable, CanResetPassword;
 
     const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_CURATOR = 'ROLE_CURATOR';
     const ROLE_USER = 'ROLE_USER';
 
     /**
@@ -81,5 +82,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function isAdmin()
     {
         return $this->getRole() == User::ROLE_ADMIN;
+    }
+
+    public function isCurator()
+    {
+        return $this->getRole() == User::ROLE_CURATOR;
     }
 }

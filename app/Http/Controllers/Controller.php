@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use JWTAuth;
 use Exception;
+use CityHapps\CanCuratePolicy;
 
 abstract class Controller extends BaseController
 {
@@ -28,5 +29,9 @@ abstract class Controller extends BaseController
         } else {
             return abort(403, json_encode(['token_invalid']), ['Content-Type' => 'application/json']);
         }
+    }
+
+    protected function authorizeResource($resource = null) {
+        return CanCuratePolicy::can($this->user, $resource);
     }
 }

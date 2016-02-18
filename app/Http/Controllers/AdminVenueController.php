@@ -131,7 +131,10 @@ class AdminVenueController extends Controller {
     if (!$venueParams['id']) $passValidation = false;
 
     $result = Venue::create($venueParams);
-    $this->authorizeVenue($result);
+
+    if (!$this->authorizeResource($result)) {
+      return response()->json(['error' => 'Unauthorized', 'message' => 'Unauthorized'], 403);
+    }
 
     $venueParams['user_id'] = $this->user->id;
     $venueParams['name'] = \Input::get('venue_name');
@@ -199,6 +202,9 @@ class AdminVenueController extends Controller {
   {
     // logic to push to model includes database transactions, sanitizing, etc.
     // fall back error message
+    if (!$this->authorizeResource(null)) {
+      return response()->json(['error' => 'Unauthorized', 'message' => 'Unauthorized'], 403);
+    }
     $passValidation = true;
     $message = 'Failed to create venue';
     $venueParams = array();
@@ -235,14 +241,6 @@ class AdminVenueController extends Controller {
         $user = parent::authFromToken();
         if ($user->role != User::ROLE_USER) {
             return $user;
-        } else {
-            return abort(403, json_encode(['unauthorized']), ['Content-Type' => 'application/json']);
-        }
-    }
-
-    public function authorizeVenue($venue) {
-        if ($venue->user_id && $this->user->id !== $venue->user_id) {
-            abort(403, json_encode(['unauthorized']), ['Content-Type' => 'application/json']);
         }
     }
 }

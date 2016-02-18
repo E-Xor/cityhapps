@@ -683,55 +683,30 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       return;
     }
 
-    if (!edit) {
-      $http({
-        method: 'POST',
-        url: '/admin/event/create',
-        data: formData,
-        headers: {'Content-Type': 'application/json'}
-      }).success(function(data) {
-        if (!data) {
-          console.log('Data Not Posting');
+    $http({
+      method: 'POST',
+      url: '/admin/event/update',
+      data: formData,
+      headers: {'Content-Type': 'application/json'}
+    }).then(function(res) {
+      var data = res.data;
+      if (!data) {
+        console.log('Data Not Posting');
+      }
+      else if (data) {
+        if (data.error) {
+          $scope.error = data.message;
+          console.log('Error updating event', data.message);
         }
-        else if (data) {
-          if (data.error) {
-            $scope.error = data.message;
-            console.log('Error creating event', data.message);
-          }
-          else {
-            $scope.success = data;
-            console.log('Success');
-          }
+        else {
+          $scope.success = data;
+          console.log('Success');
         }
-      }).error(function(data) {
-        $scope.error = data.error.message;
-      });
-    } else {
-      console.log(formData);
-      $http({
-        method: 'POST',
-        url: '/admin/event/update',
-        data: formData,
-        headers: {'Content-Type': 'application/json'}
-      }).success(function(data) {
-        if (!data) {
-          console.log('Data Not Posting');
-        }
-        else if (data) {
-          if (data.error) {
-            $scope.error = data.message;
-            console.log('Error updating event', data.message);
-          }
-          else {
-            $scope.success = data;
-            console.log('Success');
-          }
-        }
-      }).error(function(data) {
-        $scope.error = data.error;
-      });
-    }
-  }
+      }
+    }, function(res) {
+      $scope.error = res.data && res.data.error || 'There was an error';
+    });
+  };
 
   $scope.reload = function() {
     document.location.reload(true);
