@@ -497,6 +497,16 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
   $scope.categories = categories;
   $scope.updated_last = $scope.formData.updated_at;
 
+  $scope.formData.event_image_data = null;
+
+  $scope.eventImage = function() {
+    return $scope.formData.event_image_data || $scope.formData.event_image_url;
+  };
+
+  $scope.eventImageChanged = function(datauri) {
+    return $scope.formData.event_image_data = datauri;
+  };
+
   $scope.dateOptions = {
     startingDay: 1,
     showWeeks: false
@@ -597,6 +607,17 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 }).controller('adminEventEditController', function($scope, $http, $stateParams, $cookies, $cookieStore, happ, categories, ageLevels) {
   $scope.formData = happ;
   $scope.formData.ageLevels = ageLevels;
+
+  $scope.formData.event_image_data = null;
+
+  $scope.eventImage = function() {
+    return $scope.formData.event_image_data || $scope.formData.event_image_url;
+  };
+
+  $scope.eventImageChanged = function(datauri) {
+    return $scope.formData.event_image_data = datauri;
+  };
+
   // Loop through and set all the values on age levels
   if ($scope.formData.hasOwnProperty('relationships')) {
     if ($scope.formData.relationships.hasOwnProperty('ageLevels')) {

@@ -10,27 +10,22 @@
   </div>
   <div ng-if="toggled" class="uploader">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
         <input type="file" img-cropper-fileread image="cropper.source" />
         <div>
-          <canvas width="500"
+          <canvas ng-show="cropper.source"
+                  width="500"
                   height="300"
                   image-cropper
                   image="cropper.source"
                   cropped-image="cropper.cropped"
-                  crop-width="150"
-                  crop-height="150"
-                  min-width="150"
-                  min-height="150"
-                  keep-aspect="true"
+                  crop-width="cropWidth"
+                  crop-height="cropHeight"
+                  min-width="minWidth"
+                  min-height="minHeight"
+                  keep-aspect="keepAspect"
                   crop-area-bounds="bounds"></canvas>
         </div>
-      </div>
-      <div class="col-md-4">
-        <aside ng-if="!hideCropped">
-          <div>Cropped Image (Left: {{bounds.left}} Right: {{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}})</div>
-          <div ng-show="cropper.cropped!=null"><img ng-src="{{cropper.cropped}}" /></div>
-        </aside>
       </div>
     </div>
   </div>
