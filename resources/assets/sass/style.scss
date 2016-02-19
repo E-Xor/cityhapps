@@ -2704,8 +2704,13 @@ a.ng-binding:hover{
 
 .avatarSettings{
     margin-top: 10px;
-    a, a:hover{
-       color: #9b9b9b;
+    a {
+      color: #9b9b9b;
+
+      &:hover{
+        text-decoration: underline;
+        color: #9b9b9b;
+      }
     }
 }
 
@@ -3030,4 +3035,44 @@ input#notifyMe {
   width: 100%;
   bottom: 0;
   position: absolute;
+}
+
+.image-uploader {
+  .canvas {
+    width: 100%;
+  }
+
+  .upload-controls {
+    .action-btn {
+      padding: 13px 27px;
+      border: solid $red 1px;
+      display: inline-block;
+      color: $red;
+      text-align: center;
+      height: 50px;
+      font-size: 1.1em;
+      font-weight: 500;
+      background-color: transparent;
+      &:hover {
+        background-color: $red;
+        color: #FFFFFF;
+      }
+    }
+    .keep {
+      border: solid $red 1px;
+      color: $red;
+      &:hover {
+        background-color: $red;
+        color: #FFFFFF;
+      }
+    }
+    .cancel {
+      border: solid $grey 1px;
+      color: $grey;
+      &:hover {
+        background-color: $grey;
+        color: #FFF;
+      }
+    }
+  }
 }

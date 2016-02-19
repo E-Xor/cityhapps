@@ -180,4 +180,50 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
       scope.rows = attrs.rows || '3';
     }
   };
+}).directive('imageUploader', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/app/shared/templates/image-uploader.html',
+    scope: {
+      label: '@',
+      onCrop: '&',
+      toggled: '=toggle',
+      hideCropped: '&'
+    },
+    controller: function($scope) {
+      $scope.toggled = $scope.toggled || false;
+      $scope.hideCropped = $scope.hideCropped || false;
+      $scope.cropper = { source: null, cropped: null };
+      $scope.bounds = { left: 0, right: 0, top: 0, bottom: 0 };
+      $scope.toggle = function() {
+        $scope.toggled = !$scope.toggled;
+      };
+      $scope.cancel = function() {
+        $scope.cropper = { source: null, cropped: null };
+        $scope.toggle();
+      };
+
+      if ($scope.onCrop) {
+        $scope.$watch('cropper.cropped', function(val) {
+          $scope.onCrop({datauri: val});
+        });
+      }
+    },
+    link: function(scope, el, attrs) {
+      //scope.cropWidth = attrs.cropWidth || 150;
+      //scope.cropHeight = attrs.cropHeight || 150;
+      //scope.keepAspect = attrs.keepAspect || true;
+      //scope.touchRadius = attrs.touchRadius || 30;
+      //scope.cropper = {
+      //  sourceImage: null,
+      //  croppedImage: null
+      //};
+      //scope.bounds = scope.bounds || {
+      //  left: 0,
+      //  right: 0,
+      //  top: 0,
+      //  bottom:0
+      //};
+    }
+  };
 });

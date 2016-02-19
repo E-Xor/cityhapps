@@ -9,7 +9,9 @@ angular.module('cityHapps', [
   'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
   'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
   'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css',
-  'angular-google-analytics', 'ui.bootstrap.datetimepicker', 'textAngular']);
+  'angular-google-analytics', 'ui.bootstrap.datetimepicker', 'textAngular',
+  'angular-img-cropper'
+]);
 
 angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, AnalyticsProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
   var sortingComparator = function(key) {
