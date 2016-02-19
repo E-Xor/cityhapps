@@ -10,6 +10,7 @@ use CityHapps\Http\Controllers\Controller;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use CityHapps\User;
+use CityHapps\AvatarUploader;
 use JWTAuth;
 
 class UserController extends Controller {
@@ -287,6 +288,13 @@ class UserController extends Controller {
         	if (\Input::get('password') != '') {
 				$user->password = \Hash::make(\Input::get('password'));
 			}
+
+            if (\Input::get('avatar_data')) {
+                $uploader = new AvatarUploader(\Input::get('avatar_data'), $user);
+                if ($path = $uploader->save()) {
+                    $user->avatar_path = $path;
+                }
+            }
 
 			$user->save();
 

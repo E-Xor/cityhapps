@@ -1,56 +1,69 @@
 <div class="container user-page-profile">
-    <div class="row profile-header">
-        <div class="col-xs-3 user-profile-image">
-            <div gravatar-image="currentUser.email" class="profile-image"></div>
-            <div class="avatarSettings"><a id="editPic" href="https://en.gravatar.com/" target="_blank">Edit</a><!--a id ="removePic" href="#">Remove</a--></div>
-        </div>
-        <div class="col-xs-9 userInfo">
-            <div class="currentUser">
-                {{ currentUser.user_name }}
-            </div>
-            <div class="userSince">
-                Active user since {{ currentUser.created_at | dateToISO | date: 'MMMM yyyy' }}
-            </div>
-        </div>
+  <div class="row profile-header">
+    <div class="col-xs-3 user-profile-image">
+      <div ng-if="hasPhoto()" class="profile-image">
+        <img ng-src="{{photoUri()}}">
+      </div>
+      <div ng-if="!hasPhoto()" gravatar-image="currentUser.email" class="profile-image"></div>
+      <div class="avatarSettings">
+        <a id="editPic" href="#" ng-click="togglePhotoUpload()">Edit</a>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-xs-9 col-xs-offset-3 profileData">
-                <h3>Update Profile</h3>
-                <hr />
-                <div class="profileDivs profileUsername">
-                    <h5>Username:</h5>
-                    <a href="#" editable-text="currentUser.user_name">{{currentUser.user_name}}</a>
-                </div>
-                <div class="profileDivs profileLocation">
-                    <h5>Location:</h5>
-                    <a href="#" editable-text="currentUser.city">{{currentUser.city}}</a>
-                </div>
-                <div class="profileDivs profileEmail">
-                    <h5>Email:</h5>
-                    <a href="#" editable-text="currentUser.email">{{currentUser.email}}</a>
-                </div>
-                <div class="profile-controls">
-                    <a class="save-button" ng-click="processForm();">Save</a>
-                </div>
-                <div class="profileDivs profileEmail">
-                    <h3>Change password</h3>
-                    <hr />
-                    <h5>Current Password:</h5>
-                    <input type="password" ng-model="currentUser.current_password" class="form-control">
-                    <h5>Password:</h5>
-                    <input type="password" ng-model="currentUser.password" class="form-control">
-                    <h5>Confirm Password:</h5>
-                    <input type="password" ng-model="currentUser.password_confirmation" class="form-control">
-                    <br />
-                    <div class="profile-controls">
-                      <button class="save-button" ng-click="changePassword()">Change Password</button>
-                    </div>
-                </div>
+    <div class="col-xs-9 userInfo">
+      <div class="currentUser">
+        {{ currentUser.user_name }}
+      </div>
+      <div class="userSince">
+        Active user since {{ currentUser.created_at | dateToISO | date: 'MMMM yyyy' }}
+      </div>
+    </div>
+  </div>
 
-                <!--div class="filter-more-options row notification">   
-                  <input type="checkbox" id="notifyMe" ng-model="filterDefaults.night">
-                  <label for="notifyMe"><span><i class="fa fa-check notifyCheck"></i></span>I want to receive notifications for new events</label>
-                </div-->
+  <div class="row">
+    <div class="col-xs-9 col-xs-offset-3 profileData">
+      <h3>Update Profile</h3>
+      <image-uploader
+          on-crop="photoChanged(datauri)"
+          toggle="showPhotoUpload"
+          hide-cropped="true"
+          crop-height="150"
+          crop-width="150">
+      </image-uploader>
+      <hr />
+      <div class="profileDivs profileUsername">
+        <h5>Username:</h5>
+        <a href="#" editable-text="currentUser.user_name">{{currentUser.user_name}}</a>
+      </div>
+      <div class="profileDivs profileLocation">
+        <h5>Location:</h5>
+        <a href="#" editable-text="currentUser.city">{{currentUser.city}}</a>
+      </div>
+      <div class="profileDivs profileEmail">
+        <h5>Email:</h5>
+        <a href="#" editable-text="currentUser.email">{{currentUser.email}}</a>
+      </div>
+      <div class="profile-controls">
+        <a class="save-button" ng-click="processForm();">Save</a>
+      </div>
+      <div class="profileDivs profileEmail">
+        <h3>Change password</h3>
+        <hr />
+        <h5>Current Password:</h5>
+        <input type="password" ng-model="currentUser.current_password" class="form-control">
+        <h5>Password:</h5>
+        <input type="password" ng-model="currentUser.password" class="form-control">
+        <h5>Confirm Password:</h5>
+        <input type="password" ng-model="currentUser.password_confirmation" class="form-control">
+        <br />
+        <div class="profile-controls">
+          <button class="save-button" ng-click="changePassword()">Change Password</button>
         </div>
-    </div>
+      </div>
+
+      <!--div class="filter-more-options row notification">
+      <input type="checkbox" id="notifyMe" ng-model="filterDefaults.night">
+      <label for="notifyMe"><span><i class="fa fa-check notifyCheck"></i></span>I want to receive notifications for new events</label>
+                </div-->
+  </div>
+</div>
 </div>

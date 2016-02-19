@@ -1,0 +1,5 @@
+<section class="profile-photo">
+  <h1>Upload Profile Photo</h1>
+                {{ currentUser | json }}
+  <image-uploader label="Upload Profile Photo" cropped-image="currentUser.avatar_path" crop-height="150" crop-width="150"></image-uploader>
+</section>

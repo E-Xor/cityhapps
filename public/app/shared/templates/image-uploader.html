@@ -1,0 +1,37 @@
+<div class="image-uploader">
+  <div class="upload-controls">
+    <p ng-if="toggled">
+      <button type="button" ng-click="toggle()" class="action-btn keep">Keep When Saved</button>
+      <button type="button" ng-click="cancel()" class="action-btn cancel">Cancel</button>
+    </p>
+    <p ng-if="!toggled && label">
+      <button type="button" ng-click="toggle()" class="happ-button">{{ label }}</button>
+    </p>
+  </div>
+  <div ng-if="toggled" class="uploader">
+    <div class="row">
+      <div class="col-md-8">
+        <input type="file" img-cropper-fileread image="cropper.source" />
+        <div>
+          <canvas width="500"
+                  height="300"
+                  image-cropper
+                  image="cropper.source"
+                  cropped-image="cropper.cropped"
+                  crop-width="150"
+                  crop-height="150"
+                  min-width="150"
+                  min-height="150"
+                  keep-aspect="true"
+                  crop-area-bounds="bounds"></canvas>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <aside ng-if="!hideCropped">
+          <div>Cropped Image (Left: {{bounds.left}} Right: {{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}})</div>
+          <div ng-show="cropper.cropped!=null"><img ng-src="{{cropper.cropped}}" /></div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>

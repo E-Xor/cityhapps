@@ -60,6 +60,7 @@
         <script type="text/javascript" src="/assets/js/angular/angular-sanitize.min.js"></script>
 
       <script src="/assets/js/textangular.min.js"></script>
+      <script src="/assets/js/angular-img-cropper.min.js"></script>
 
         <script type="text/javascript" src="/js/snap.min.js"></script>
         <script type="text/javascript" src="/js/angular-snap.min.js"></script>

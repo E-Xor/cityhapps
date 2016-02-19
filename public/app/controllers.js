@@ -1320,42 +1320,65 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         });
 }).controller('UserProfileController', function($state, $scope, $http, $rootScope, userProfile) {
-    $scope.changePassword = function(){
-      var user = $scope.currentUser;
-      var error = 0;
-      if(user.password.length < 6 || user.password_confirmation.length < 6){
-        error = 1;
-        notify_error('New password length must be greater than 6 characters');
-      }
-      if(user.password != user.password_confirmation) {
-        error = 1;
-        notify_error('New passwords do not match');
-      }
+  $scope.photo = null;
+  $scope.showPhotoUpload = false;
 
-      if(error < 1){
-        userProfile.changePassword(user)
-          .then(function(res){
-            notify_success("Password Changed");
-          }, function(e) {
-            error = 1;
-            notify_error('Your original password is invalid');
-          });
-      }
-    };
+  $scope.hasPhoto = function() {
+    return Boolean($scope.photoUri());
+  };
 
-    $scope.processForm = function() {
-        $http.put('/user/' + $rootScope.currentUser.id, $rootScope.currentUser).success(function(data) {
-            if (!data) {
-                console.log('not working');
-            } else if (data) {
-                if (data.hasOwnProperty('id')) {
-                    $state.go('main.home', {});
-                } else {
-                    console.log(data);
-                }
-            }
+  $scope.photoUri = function() {
+    return $scope.photo || $scope.currentUser.avatar_path;
+  };
+
+  $scope.togglePhotoUpload = function() {
+    return $scope.showPhotoUpload = !$scope.showPhotoUpload;
+  };
+
+  $scope.photoChanged = function(datauri) {
+    $scope.photo = datauri;
+  };
+  $scope.changePassword = function(){
+    var user = $scope.currentUser;
+    var error = 0;
+    if(user.password.length < 6 || user.password_confirmation.length < 6){
+      error = 1;
+      notify_error('New password length must be greater than 6 characters');
+    }
+    if(user.password != user.password_confirmation) {
+      error = 1;
+      notify_error('New passwords do not match');
+    }
+
+    if(error < 1){
+      userProfile.changePassword(user)
+        .then(function(res){
+          notify_success("Password Changed");
+        }, function(e) {
+          error = 1;
+          notify_error('Your original password is invalid');
         });
-    };
+    }
+  };
+
+  $scope.processForm = function() {
+    var payload = angular.extend({}, $rootScope.currentUser, {
+      avatar_data: $scope.photo
+    });
+    $http.put('/user/' + $rootScope.currentUser.id, payload).then(function(res) {
+      if (!res.data) {
+        console.log('not working');
+      } else if (res.data) {
+        $rootScope.currentUser.avatar_path = res.data.avatar_path;
+        $scope.photo = null;
+        if (res.data.hasOwnProperty('id')) {
+          $state.go('main.home', {});
+        } else {
+          console.log(res.data);
+        }
+      }
+    });
+  };
 
 }).controller('registerFormController', function($scope, $state, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope, userDecorator) {
     //Facebook Auth
