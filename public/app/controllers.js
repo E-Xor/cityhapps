@@ -541,10 +541,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       error = 1;
       $scope.addressError = true;
     }
-    if (typeof formData.start_time === 'undefined' || formData.start_time == '') {
-      error = 1;
-      $scope.startDateError = true;
-    }
     if (typeof formData.desc === 'undefined' || formData.desc == '') {
       error = 1;
       $scope.descError = true;
