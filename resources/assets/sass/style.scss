@@ -2982,9 +2982,17 @@ input#notifyMe {
   }
 }
 
-.curate-page {
+.curate-actions {
   .happ-button {
     display: inline-block;
+  }
+}
+
+.curate-page {
+  .venues-list {
+    h4 a {
+      color: $red;
+    }
   }
 }
 

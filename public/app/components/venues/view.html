@@ -32,7 +32,7 @@
     <a social-twitter><i class="fa fa-twitter-square fa-3x"></i></a>
   </div>
 </div>
-<div class="row" ng-if="currentUser.role=='ROLE_ADMIN'">
+<div class="row" ng-if="currentUser.canEdit(venue)">
 	<div class="col-xs-12">
 		<a href="/admin/venue/edit/{{ venue.id }}" style="color: black;"><i class="fa fa-pencil-square-o"></i> Edit Venue</a>
 	</div>

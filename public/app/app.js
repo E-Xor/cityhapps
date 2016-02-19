@@ -66,7 +66,27 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
       url: '/curate',
       views: {
         '@main': {
-          templateUrl: 'app/components/curate/index.html'
+          templateUrl: 'app/components/curate/index.html',
+          resolve: {
+            happs: function($q, $rootScope, Happ) {
+              return $q(function(resolve) {
+                Happ.query({user_id: $rootScope.currentUser.id}, function(happs) {
+                  resolve(happs.data);
+                });
+              });
+            },
+            venues: function($q, $rootScope, Venue) {
+              return $q(function(resolve) {
+                Venue.query({user_id: $rootScope.currentUser.id}, function(venues) {
+                  resolve(venues.data);
+                });
+              });
+            }
+          },
+          controller: function($scope, happs, venues) {
+            $scope.happs = happs;
+            $scope.venues = venues;
+          }
         },
         'menubar@main': {
         }
@@ -439,12 +459,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     // Track all URL query params (default is false)
     AnalyticsProvider.trackUrlParams(true);
 
-}).run(function($rootScope, $state, $http, editableOptions, $q) {
+}).run(function($rootScope, $state, $http, editableOptions, $q, userDecorator) {
   var authRoute = 'api/authenticate/user';
-  function isAdmin() {
-    return $rootScope.authenticated &&
-      $rootScope.currentUser &&
-      $rootScope.currentUser.role === 'ROLE_ADMIN';
+  function canCurate() {
+    return $rootScope.authenticated && $rootScope.currentUser.canCreate();
   }
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
@@ -453,7 +471,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     var routeRequiresAdmin = isAdminRoute(toState.url);
 
     if (routeRequiresAdmin && $rootScope.authenticated) {
-      if (isAdmin()) {
+      if (canCurate()) {
         return true;
       } else {
         $state.go('main.home');
@@ -463,7 +481,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
 
     var authPromise = $http.get(authRoute).then(function(res) {
       $rootScope.authenticated = true;
-      $rootScope.currentUser = res.data.user;
+      $rootScope.currentUser = userDecorator.decorate(res.data.user);
     });
 
     if (routeRequiresAuth(toState.url)){
@@ -481,11 +499,11 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
   });
 
   function routeRequiresAuth(toRoute) {
-    return toRoute.match(/^\/?(admin|profile\/?)/);
+    return toRoute.match(/^\/?(admin|profile|curate\/?)/);
   }
 
   function isAdminRoute(toRoute) {
-    return toRoute.match(/^\/?(admin)/);
+    return toRoute.match(/^\/?(admin|curate)/);
   }
 
   $rootScope.$on('$stateChangeError', function(event, toState) {

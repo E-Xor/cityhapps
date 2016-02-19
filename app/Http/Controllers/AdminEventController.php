@@ -6,13 +6,17 @@ use Log;
 use Illuminate\Http\Request;
 
 use CityHapps\Http\Requests;
-use CityHapps\Http\Controllers\Controller;
+//use CityHapps\Http\Controllers\Controller;
 use CityHapps\Happ;
 use CityHapps\Category;
 use CityHapps\Tag;
 use Input;
+use CityHapps\User;
 
 class AdminEventController extends Controller {
+    public function __construct() {
+        $this->user = $this->authFromToken();
+    }
 
   /**
    * Show the form for creating a new resource.
@@ -43,7 +47,6 @@ class AdminEventController extends Controller {
    */
   public function update()
   {
-
     // logic to push to model includes database transactions, sanitizing, etc.
     // fall back error message
     $passValidation = true;
@@ -51,6 +54,13 @@ class AdminEventController extends Controller {
     $eventParams = array();
 
     $eventParams['id'] = Input::get('event_id');
+
+    $result = Happ::find($eventParams['id']);
+    if (!$this->authorizeResource($result)) {
+      return response()->json(['error' => 'Unauthorized', 'message' => 'Unauthorized'], 403);
+    }
+
+    $eventParams['user_id'] = $result->user_id ?: $this->user->id;
 
     if (!$eventParams['id'])
       $passValidation = false;
@@ -115,8 +125,6 @@ class AdminEventController extends Controller {
 
     if ($passValidation)
     {
-      $result = Happ::find($eventParams['id']);
-
       // Process Tags
       if(Input::has('tags'))
       {
@@ -195,9 +203,9 @@ class AdminEventController extends Controller {
      */
     private function createTags($entity, $tags)
     {
+        $entity->tags()->detach();
         if (!empty($tags)) {
             //Drop previous tags for this event
-            $entity->tags()->detach();
             foreach ($tags as $tag) {
                 if (!isset($tag["id"])) {
                     $new_tag = new Tag(['tag_raw' => $tag["tag_raw"], 'tag_url' => $tag["tag_raw"]]);
@@ -220,10 +228,15 @@ class AdminEventController extends Controller {
   {
     // logic to push to model includes database transactions, sanitizing, etc.
     // fall back error message
+
+    if (!$this->authorizeResource(null)) {
+      return response()->json(['error' => 'Unauthorized', 'message' => 'Unauthorized'], 403);
+    }
     $passValidation = true;
     $message = 'Failed to create event';
     $eventParams = array();
 
+    $eventParams['user_id'] = $this->user->id;
     $eventParams['event_name'] = Input::get('title');
     $eventParams['url'] = Input::get('event_url');
     $eventParams['venue_id'] = Input::get('venue_id');
@@ -281,6 +294,16 @@ class AdminEventController extends Controller {
       if(Input::exists('tags')){
         $this->createTags($result, Input::get('tags'));
       }
+
+      // Process Categories
+      if(Input::has('categories'))
+      {
+          $category_data = Input::get('categories');
+          $result->categories()->detach();
+          foreach ($category_data as $category) {
+              $result->categories()->attach($category);
+          }
+      }
       // Process Age Levels
       $age_level_data = Input::get('ageLevels');
       $result->ageLevels()->detach();
@@ -296,4 +319,10 @@ class AdminEventController extends Controller {
 
   }
 
+    protected function authFromToken() {
+        $user = parent::authFromToken();
+        if ($user->role != User::ROLE_USER) {
+            return $user;
+        }
+    }
 }

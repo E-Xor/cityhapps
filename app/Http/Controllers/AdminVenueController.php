@@ -8,6 +8,7 @@ use CityHapps\Http\Requests;
 use CityHapps\Http\Controllers\Controller;
 use CityHapps\Venue;
 use CityHapps\Tag;
+use CityHapps\User;
 
 class AdminVenueController extends Controller {
 
@@ -17,6 +18,10 @@ class AdminVenueController extends Controller {
    *
    * @return Response
    */
+    public function __construct() {
+        $this->user = $this->authFromToken();
+    }
+
   public function index()
   {
     //show the admin frontend view
@@ -125,6 +130,13 @@ class AdminVenueController extends Controller {
     $venueParams['id'] = \Input::get('venue_id');
     if (!$venueParams['id']) $passValidation = false;
 
+    $result = Venue::create($venueParams);
+
+    if (!$this->authorizeResource($result)) {
+      return response()->json(['error' => 'Unauthorized', 'message' => 'Unauthorized'], 403);
+    }
+
+    $venueParams['user_id'] = $this->user->id;
     $venueParams['name'] = \Input::get('venue_name');
     $venueParams['url'] = \Input::get('venue_url');
     $venueParams['address_1'] = \Input::get('street_address');
@@ -142,6 +154,8 @@ class AdminVenueController extends Controller {
    if ($passValidation)
    {
      $result = Venue::find($venueParams['id']);
+
+     $venueParams['user_id'] = $result->user_id ?: $this->user->id;
 
      $this->createTags($result, \Input::get('tags'));
 
@@ -188,10 +202,14 @@ class AdminVenueController extends Controller {
   {
     // logic to push to model includes database transactions, sanitizing, etc.
     // fall back error message
+    if (!$this->authorizeResource(null)) {
+      return response()->json(['error' => 'Unauthorized', 'message' => 'Unauthorized'], 403);
+    }
     $passValidation = true;
     $message = 'Failed to create venue';
     $venueParams = array();
 
+    $venueParams['user_id'] = $this->user->id;
     $venueParams['name'] = \Input::get('venue_name');
     $venueParams['url'] = \Input::get('venue_url');
     $venueParams['address_1'] = \Input::get('street_address');
@@ -219,4 +237,10 @@ class AdminVenueController extends Controller {
 
   }
 
+    protected function authFromToken() {
+        $user = parent::authFromToken();
+        if ($user->role != User::ROLE_USER) {
+            return $user;
+        }
+    }
 }

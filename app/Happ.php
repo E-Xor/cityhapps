@@ -25,6 +25,10 @@ class Happ extends Model
   const STATUS_DUPLICATED = 4;
   const STATUS_DELETED = 5;
 
+  public function curator() {
+    return $this->belongsto('\CityHapps\User', 'user_id');
+  }
+
   public function users()
   {
     return $this->belongsToMany('User', 'user_event', 'event_id', 'user_id');

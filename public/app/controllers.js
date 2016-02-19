@@ -2,7 +2,7 @@
  * Controllers for CityHapps
  */
 
-angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope) {
+angular.module('cityHapps.controllers', []).controller('AuthController', function($auth, $state, $http, $rootScope, userDecorator) {
     var vm = this;
 
     vm.loginError = false;
@@ -31,7 +31,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
               var user = JSON.stringify(response.data.user);
               localStorage.setItem('user', user);
               $rootScope.authenticated = true;
-              $rootScope.currentUser = response.data.user;
+              $rootScope.currentUser = userDecorator.decorate(response.data.user);
               $state.go('main.home', {});
             }
         });
@@ -50,8 +50,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 }).controller('FavoriteController', function($cookies, $scope, $rootScope, $state, getFavorites) {
     $scope.happs = {};
 
-    var userString = localStorage.getItem('user');
-    var user = angular.fromJson(userString);
+  var user = $rootScope.currentUser;
 
     getFav();
 
@@ -684,55 +683,30 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       return;
     }
 
-    if (!edit) {
-      $http({
-        method: 'POST',
-        url: '/admin/event/create',
-        data: formData,
-        headers: {'Content-Type': 'application/json'}
-      }).success(function(data) {
-        if (!data) {
-          console.log('Data Not Posting');
+    $http({
+      method: 'POST',
+      url: '/admin/event/update',
+      data: formData,
+      headers: {'Content-Type': 'application/json'}
+    }).then(function(res) {
+      var data = res.data;
+      if (!data) {
+        console.log('Data Not Posting');
+      }
+      else if (data) {
+        if (data.error) {
+          $scope.error = data.message;
+          console.log('Error updating event', data.message);
         }
-        else if (data) {
-          if (data.error) {
-            $scope.error = data.message;
-            console.log('Error creating event', data.message);
-          }
-          else {
-            $scope.success = data;
-            console.log('Success');
-          }
+        else {
+          $scope.success = data;
+          console.log('Success');
         }
-      }).error(function(data) {
-        $scope.error = data.error.message;
-      });
-    } else {
-      console.log(formData);
-      $http({
-        method: 'POST',
-        url: '/admin/event/update',
-        data: formData,
-        headers: {'Content-Type': 'application/json'}
-      }).success(function(data) {
-        if (!data) {
-          console.log('Data Not Posting');
-        }
-        else if (data) {
-          if (data.error) {
-            $scope.error = data.message;
-            console.log('Error updating event', data.message);
-          }
-          else {
-            $scope.success = data;
-            console.log('Success');
-          }
-        }
-      }).error(function(data) {
-        $scope.error = data.error;
-      });
-    }
-  }
+      }
+    }, function(res) {
+      $scope.error = res.data && res.data.error || 'There was an error';
+    });
+  };
 
   $scope.reload = function() {
     document.location.reload(true);
@@ -1383,7 +1357,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         });
     };
 
-}).controller('registerFormController', function($scope, $state, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope) {
+}).controller('registerFormController', function($scope, $state, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope, userDecorator) {
     //Facebook Auth
 
     // Define user empty data :/
@@ -1460,7 +1434,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                             if (response.id) {
                                 registerDataService.data = $scope.fbInfo;
                                 $rootScope.authenticated = true;
-                                $rootScope.currentUser = $scope.fbUser;
+                                $rootScope.currentUser = userDecorator.decorate($scope.fbUser);
                                 $state.go('main.home', {});
                             } else if (response.isValid) {
                                 $http({
