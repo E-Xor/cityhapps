@@ -148,6 +148,7 @@ class AdminVenueController extends Controller {
     $venueParams['postal_code'] = \Input::get('zip_code');
     $venueParams['description'] = \Input::get('desc');
     $venueParams['hours'] = \Input::get('hours');
+    $venueParams['business_hours'] = \Input::get('business_hours');
     $venueParams['phone'] = \Input::get('phone');
     $venueParams['similar_venues'] = \Input::get('similar_venues_storage');
 
@@ -221,6 +222,7 @@ class AdminVenueController extends Controller {
     $venueParams['postal_code'] = \Input::get('zip_code');
     $venueParams['description'] = \Input::get('desc');
     $venueParams['hours'] = \Input::get('hours');
+    $venueParams['business_hours'] = \Input::get('business_hours');
     $venueParams['phone'] = \Input::get('phone');
 
     $venueParams['source'] = "Custom";

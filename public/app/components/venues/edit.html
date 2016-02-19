@@ -37,11 +37,8 @@
     </div>
 
     <div>
-      <label for="street_address" style="display:inline-block;width:331px;">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
-      <label for="hours" style="display:inline-block;width:155px;">Hours of Operation</label>
-
-      <input type="text" id="street_address" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address" style="width:315px;margin-right:15px;"/>
-      <input type="text" id="hours" name="hours" value="" ng-model="formData.hours" style="width:341px;" placeholder="6am to 7pm" />
+      <label for="street_address">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
+      <input type="text" id="street_address" class="full" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address">
     </div>
 
     <div>
@@ -56,11 +53,13 @@
       <input type="text" id="zip_code" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" style="width:160px;" />
     </div>
 
+    <business-hours-week-form ng-model="formData.business_hours"></business-hours-week-form>
+
     <div>
       <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
       <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
     </div>
-      
+
     <div>
       <label for="tags">Tags</label>
       <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">

@@ -26,6 +26,13 @@ class Venue extends Model
     return $this->hasMany('CityHapps\Happ', 'venue_id');
   }
 
+    public function getBusinessHoursAttribute($value) {
+        return $value ? json_decode($value) : [];
+    }
+
+    public function setBusinessHoursAttribute($value) {
+        $this->attributes['business_hours'] = $value ? json_encode($value) : null;
+    }
 
   /**
    * Return a list of duplicated venues for the current venue.

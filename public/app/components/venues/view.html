@@ -1,46 +1,57 @@
-<div class="venue-single venueSingle">
-	<div class="row">
-		<div ng-repeat="category in venue.categories" class="inline">
-			<span class="happ-category">{{category.name}}</span>
-		</div>
-	</div>
-	<div class="col-md-5 venueInfo">
-    <h2 class="venueText">VENUE</h2>
-		<h3 class="dark bold venueName">{{venue.name}}</h3>
-		<div class="venue-address">{{ display(venue.phone) + ' &nbsp; | &nbsp;' }} {{display(venue.address_1)}} {{display(venue.address_2)}} {{display(venue.address_3)}} {{display(venue.city)}}, {{display(venue.state)  }} {{ display(venue.postal_code)}} {{ '&nbsp;|&nbsp;' + display(venue.hours)}} </div>
-    <div class="venue-description">{{ venue.description}}</div>
-		<!--<div class="happ-buttons">
-			<a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
-			<a class="happ-button inverse right{{ likeStatus ? ' active' : '' }}" href="#" ng-model="data.vote.upVote;" ng-change="simpleVoteVenue(data , 'up')" btn-checkbox>
-				<span ng-hide="likeStatus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Like This Venue</span>
-				<span ng-show="likeStatus">I Like This Venue</span>
-			</a>
-		</div>-->
-	</div>
-</div>
-<div class="row venue-row">
-  <div class="pull-left venue-tags">
-    <div class="venue-tag" ng-if="venue.relationships.tags">
-      <i class="fa fa-tag"></i>&nbsp;
-      <span ng-repeat="tag in venue.relationships.tags">
-        <span class="venue-tag">{{ tag.tag_raw }}</span>{{ $last ? '' : ' ' }}
-      </span>
-    </div>
-  </div>
-  <div class="pull-right venue-social">
-    <a social-facebook><i class="fa fa-facebook-square fa-3x"></i></a>
-    <a social-twitter><i class="fa fa-twitter-square fa-3x"></i></a>
-  </div>
-</div>
-<div class="row" ng-if="currentUser.canEdit(venue)">
-	<div class="col-xs-12">
-		<a href="/admin/venue/edit/{{ venue.id }}" style="color: black;"><i class="fa fa-pencil-square-o"></i> Edit Venue</a>
-	</div>
-</div>
-<div class="happ-listing">
-  <div class="container happ-listing-container">
+<div class="venue-single">
+  <div class="venueSingle">
     <div class="row">
-      <div class="col-md-3 happ-item" ng-repeat="happ in venue.relationships.happs" ch-happ="happ"></div>
+      <div ng-repeat="category in venue.categories" class="inline">
+        <span class="happ-category">{{category.name}}</span>
+      </div>
+    </div>
+    <div class="col-md-5 venueInfo">
+      <h2 class="venueText">VENUE</h2>
+      <h3 class="dark bold venueName">{{venue.name}}</h3>
+      <div class="venue-address">{{ display(venue.phone) + ' &nbsp; | &nbsp;' }} {{display(venue.address_1)}} {{display(venue.address_2)}} {{display(venue.address_3)}} {{display(venue.city)}}, {{display(venue.state)  }} {{ display(venue.postal_code)}} {{ '&nbsp;|&nbsp;' + display(venue.hours)}} </div>
+
+      <div class="venue-description">{{ venue.description}}</div>
+      <!--<div class="happ-buttons">
+           <a class="happ-button right" href="{{data.url}}" target="_blank">Learn More</a>
+           <a class="happ-button inverse right{{ likeStatus ? ' active' : '' }}" href="#" ng-model="data.vote.upVote;" ng-change="simpleVoteVenue(data , 'up')" btn-checkbox>
+           <span ng-hide="likeStatus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Like This Venue</span>
+           <span ng-show="likeStatus">I Like This Venue</span>
+           </a>
+           </div>-->
     </div>
   </div>
+
+  <div class="venue-singlerow">
+    <div class="col-md-6 col-md-offset-3 text-center">
+      <business-hours ng-model="venue.business_hours"></business-hours>
+    </div>
+  </div>
+
+  <div class="row venue-row">
+    <div class="pull-left venue-tags">
+      <div class="venue-tag" ng-if="venue.relationships.tags">
+        <i class="fa fa-tag"></i>&nbsp;
+        <span ng-repeat="tag in venue.relationships.tags">
+          <span class="venue-tag">{{ tag.tag_raw }}</span>{{ $last ? '' : ' ' }}
+        </span>
+      </div>
+    </div>
+    <div class="pull-right venue-social">
+      <a social-facebook><i class="fa fa-facebook-square fa-3x"></i></a>
+      <a social-twitter><i class="fa fa-twitter-square fa-3x"></i></a>
+    </div>
+  </div>
+  <div class="row" ng-if="currentUser.canEdit(venue)">
+    <div class="col-xs-12">
+      <a href="/admin/venue/edit/{{ venue.id }}" style="color: black;"><i class="fa fa-pencil-square-o"></i> Edit Venue</a>
+    </div>
+  </div>
+  <div class="happ-listing">
+    <div class="container happ-listing-container">
+      <div class="row">
+        <div class="col-md-3 happ-item" ng-repeat="happ in venue.relationships.happs" ch-happ="happ"></div>
+      </div>
+    </div>
+  </div>
+
 </div>
