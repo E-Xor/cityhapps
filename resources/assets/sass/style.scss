@@ -13,6 +13,8 @@ $tan: #F7EEEF;
 $red: #FF5C50;
 $green: #72B43E;
 
+$user-pages-font-size: 14px;
+
 //End Vars
 
 .venue-tag{
@@ -810,13 +812,13 @@ input.main-search {
   .register-error {
     color: red;
     font-weight: bold;
-    font-size: 10px;
+    font-size: $user-pages-font-size;
     text-align: center;
   }
   input {
     margin: 3px 0;
     width: 100%;
-    font-size: 10px;
+    font-size: $user-pages-font-size;
     line-height: 20px;
     padding: 10px 15px;
     background-color: #F4F2EE;
@@ -843,7 +845,7 @@ input.main-search {
     background-color: #336EB7;
     color: #FFFFFF;
     text-align: center;
-    font-size: 10px;
+    font-size: $user-pages-font-size;
     line-height: 40px;
     cursor: pointer;
     .fa {
@@ -859,7 +861,7 @@ input.main-search {
     margin: 47px auto 20px;
     background-color: #FF5C50;
     display: block;
-    font-size: 12px;
+    font-size: $user-pages-font-size;
     line-height: 20px;
     color: #FFFFFF;
     font-weight: 500;
@@ -871,7 +873,7 @@ input.main-search {
   }
   .login-link {
     text-align: center;
-    font-size: 10px;
+    font-size: 12px;
     a, a:hover {
       color: #5B5B5B;
     }
@@ -888,7 +890,7 @@ input.main-search {
   white-space: nowrap;
   text-transform: uppercase;
   color: #FF5C50;
-  font-size: 9px;
+  font-size: 11px;
   margin: 18px auto;
   & > span {
     position: relative;
