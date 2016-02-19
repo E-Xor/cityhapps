@@ -26,13 +26,20 @@ class Venue extends Model
     return $this->hasMany('CityHapps\Happ', 'venue_id');
   }
 
-    public function getBusinessHoursAttribute($value) {
-        return $value ? json_decode($value) : [];
-    }
+  public function getBusinessHoursAttribute($value) {
+    return $value ? json_decode($value) : [];
+  }
 
-    public function setBusinessHoursAttribute($value) {
-        $this->attributes['business_hours'] = $value ? json_encode($value) : null;
-    }
+  public function setBusinessHoursAttribute($value) {
+    $this->attributes['business_hours'] = $value ? json_encode($value) : null;
+  }
+
+  /**
+   * Some are entered without a WYSIWYG, need to convert \n to <br>
+   */
+  public function getDescriptionAttribute($value) {
+    return $value == strip_tags($value) ? nl2br($value) : $value;
+  }
 
   /**
    * Return a list of duplicated venues for the current venue.
