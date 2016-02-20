@@ -596,6 +596,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             parent_id: singleEvent.parent_id,
             event_url: singleEvent.url,
             event_image_url: singleEvent.event_image_url,
+            organization_image_url: singleEvent.organization_image_url,
             venue_name: singleEvent.venue_name,
             venue_url: singleEvent.venue_url,
             street_address: singleEvent.address.street_1,

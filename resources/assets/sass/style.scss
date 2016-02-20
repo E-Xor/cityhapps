@@ -281,6 +281,17 @@ input.main-search {
         text-decoration: none;
       }
     }
+    .happ-org-image {
+      position: absolute;
+      bottom: 15px;
+      left: 10px;
+      z-index: 9999;
+      border: 2px solid $red;
+      img {
+        width: 75px;
+        height: 75px;
+      }
+    }
     .happ-date {
       padding: 11px;
       border-top: 2.5px solid #D9433F ;
