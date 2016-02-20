@@ -507,6 +507,17 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     return $scope.formData.event_image_data = datauri;
   };
 
+  $scope.formData.organization_image_data = null;
+
+  $scope.orgImage = function() {
+    return $scope.formData.organization_image_data || $scope.formData.organization_image_url;
+  };
+
+  $scope.orgImageChanged = function(datauri) {
+    return $scope.formData.organization_image_data = datauri;
+  };
+
+
   $scope.dateOptions = {
     startingDay: 1,
     showWeeks: false
@@ -616,6 +627,16 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
   $scope.eventImageChanged = function(datauri) {
     return $scope.formData.event_image_data = datauri;
+  };
+
+  $scope.formData.organization_image_data = null;
+
+  $scope.orgImage = function() {
+    return $scope.formData.organization_image_data || $scope.formData.organization_image_url;
+  };
+
+  $scope.orgImageChanged = function(datauri) {
+    return $scope.formData.organization_image_data = datauri;
   };
 
   // Loop through and set all the values on age levels

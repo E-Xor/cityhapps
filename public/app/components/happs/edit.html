@@ -84,6 +84,31 @@
     </div>
 
     <div>
+      <label for="org_image_url">Organization Image</label>
+      <div class="row">
+        <div class="col-md-12">
+          <image-uploader
+              on-crop="orgImageChanged(datauri)"
+              toggle="false"
+              label="Upload Organization Image"
+              keep-aspect="true"
+              crop-width="150"
+              crop-height="150"
+              min-width="150"
+              min-height="150">
+          </image-uploader>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div ng-if="orgImage()" class="event-image-preview">
+            <h3>Preview</h3>
+            <img ng-src="{{orgImage()}}">
+          </div>
+        </div>
+      </div>
+
+    <div>
       <label for="venue_url">Venue URL</label>
       <input type="text" id="venue_url" class="full" name="venue_url" value="" ng-model="formData.venue_url" placeholder="http://www.venue.com" />
     </div>

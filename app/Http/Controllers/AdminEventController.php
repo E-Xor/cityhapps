@@ -11,6 +11,7 @@ use CityHapps\Happ;
 use CityHapps\Category;
 use CityHapps\Tag;
 use CityHapps\EventImageUploader;
+use CityHapps\OrganizationImageUploader;
 use Input;
 use CityHapps\User;
 
@@ -73,7 +74,6 @@ class AdminEventController extends Controller {
     $eventParams['venue_name'] = Input::get('venue_name');
     $eventParams['venue_url'] = Input::get('venue_url');
     $eventParams['address'] = Input::get('street_address');
-    $eventParams['event_image_url'] = Input::get('event_image_url');
     if (Input::get('parent_id') > 0) {
         if (!Input::get('parent')) {
             //tag was deleted, delete the parent_id too
@@ -128,9 +128,15 @@ class AdminEventController extends Controller {
     {
       // Process Image
       if (Input::has('event_image_data')) {
-          $uploader = new EventImageUploader(Input::get('event_image_data'), $this->user);
+          $uploader = new EventImageUploader(Input::get('event_image_data'), $result);
           if ($path = $uploader->save()) {
               $eventParams['event_image_url'] = $path;
+          }
+      }
+      if (Input::has('organization_image_data')) {
+          $uploader = new OrganizationImageUploader(Input::get('organization_image_data'), $result);
+          if ($path = $uploader->save()) {
+              $eventParams['organization_image_url'] = $path;
           }
       }
 
@@ -305,6 +311,13 @@ class AdminEventController extends Controller {
             $result->event_image_url = $path;
             $result->save();
         }
+      }
+      if (Input::has('organization_image_data')) {
+          $uploader = new OrganizationImageUploader(Input::get('organization_image_data'), $result);
+          if ($path = $uploader->save()) {
+              $result->organization_image_url = $path;
+              $result->save();
+          }
       }
       // Process Tags
       if(Input::exists('tags')){
