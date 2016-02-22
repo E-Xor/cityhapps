@@ -188,13 +188,22 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
       label: '@',
       onCrop: '&',
       toggled: '=toggle',
-      hideCropped: '&'
+      minWidth: '=',
+      minHeight: '=',
+      cropWidth: '=',
+      cropHeight: '=',
+      keepAspect: '='
     },
     controller: function($scope) {
+      $scope.minWidth = $scope.minWidth || 150;
+      $scope.minHeight = $scope.minHeight || 150;
+      $scope.cropWidth = $scope.cropWidth || 150;
+      $scope.cropHeight = $scope.cropHeight || 150;
+      $scope.keepAspect = $scope.keepAspect || true;
       $scope.toggled = $scope.toggled || false;
-      $scope.hideCropped = $scope.hideCropped || false;
       $scope.cropper = { source: null, cropped: null };
       $scope.bounds = { left: 0, right: 0, top: 0, bottom: 0 };
+      console.log($scope);
       $scope.toggle = function() {
         $scope.toggled = !$scope.toggled;
       };

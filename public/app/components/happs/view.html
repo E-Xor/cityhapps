@@ -9,6 +9,11 @@
             </span>
           </div>
 
+          <div class="happ-org-image" ng-if="happ.organization_image_url">
+            <a href="{{happ.venue_url || '#'}}">
+              <img ng-src="{{happ.organization_image_url}}">
+            </a>
+          </div>
           <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
                <div class="buttons">
                <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>

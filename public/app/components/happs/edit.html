@@ -39,17 +39,37 @@
     </div>
 
     <div>
-      <label for="event_image_url">Event Image URL</label>
-      <input type="text" id="event_image_url" class="full" name="event_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.event_image_url" />
+      <label for="event_image_url">Event Image</label>
+      <div class="row">
+        <div class="col-md-12">
+          <image-uploader
+              on-crop="eventImageChanged(datauri)"
+              toggle="false"
+              label="Upload Event Image"
+              keep-aspect="true"
+              crop-width="450"
+              crop-height="200"
+              min-width="450"
+              min-height="200">
+          </image-uploader>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div ng-if="eventImage()" class="event-image-preview">
+            <h3>Preview</h3>
+            <img ng-src="{{eventImage()}}">
+          </div>
+        </div>
     </div>
 
     <div class="happ-categories">
       <label for="cateogories">Categories</label>
       <!--div class="selected">
-        <strong>Selected:
-        <div ng-repeat="category in categories | filter:formData.categories[0]">{{ category.name }}</div>
-        </strong>
-      </div-->
+           <strong>Selected:
+           <div ng-repeat="category in categories | filter:formData.categories[0]">{{ category.name }}</div>
+           </strong>
+           </div-->
       <select multiple ng-model="formData.categories" ng-options="category.id as category.name for category in categories" size="5"></select>
     </div>
 
@@ -62,6 +82,31 @@
       <label for="venue_name">Venue Name <span class="red center margin20">* <span ng-if="venueError">You must have a venue name</span></span></label>
       <input type="text" id="venue_name" class="full" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
     </div>
+
+    <div>
+      <label for="org_image_url">Organization Image</label>
+      <div class="row">
+        <div class="col-md-12">
+          <image-uploader
+              on-crop="orgImageChanged(datauri)"
+              toggle="false"
+              label="Upload Organization Image"
+              keep-aspect="true"
+              crop-width="150"
+              crop-height="150"
+              min-width="150"
+              min-height="150">
+          </image-uploader>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div ng-if="orgImage()" class="event-image-preview">
+            <h3>Preview</h3>
+            <img ng-src="{{orgImage()}}">
+          </div>
+        </div>
+      </div>
 
     <div>
       <label for="venue_url">Venue URL</label>
@@ -114,18 +159,18 @@
           ng-model="formData.start_time"
           date-format="MM/dd/yyyy"
           date-options="dateOptions"
-          >
+      >
       </datetimepicker>
     </div>
 
     <div style="margin-bottom:10px">
       <label for="end_time" style="display:inline-block;width:112px;" ng-if="!formData.all_day">End Date/Time </label>
       <datetimepicker ng-hide="formData.all_day"
-          hour-step="hourStep"
-          minute-step="minuteStep"
-          ng-model="formData.end_time"
-          date-format="MM/dd/yyyy"
-          date-options="dateOptions">
+                      hour-step="hourStep"
+                      minute-step="minuteStep"
+                      ng-model="formData.end_time"
+                      date-format="MM/dd/yyyy"
+                      date-options="dateOptions">
       </datetimepicker>
     </div>
 
@@ -143,57 +188,57 @@
       <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
     </div>
     <div>
-        <label for="tags">Tags</label>
-        <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">
-            <auto-complete source="loadTags($query)"></auto-complete>
-        </tags-input>
+      <label for="tags">Tags</label>
+      <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">
+        <auto-complete source="loadTags($query)"></auto-complete>
+      </tags-input>
     </div>
-      <div  ng-if="formData.parent_id > 0 || formData.similar_events_model.length == 0">
-          <dl>
-              <dt>Duplicate of</dt>
-              <dd>If you believe this is a duplicate of another event, add it here. We'll make sure this is labeled as such and removed from results.</dd>
-          </dl>
-          <tags-input id="parent_id" ng-model="formData.parent" key-property="id" display-property="event_name" replace-spaces-with-dashes="false" placeholder="Add an event" max-tags=1 addFromAutocompleteOnly="true">
-              <auto-complete source="loadEvents($query)" template="parentIdTemplate" debounceDelay="1000"></auto-complete>
-          </tags-input>
-          <span></span>
+    <div  ng-if="formData.parent_id > 0 || formData.similar_events_model.length == 0">
+      <dl>
+        <dt>Duplicate of</dt>
+        <dd>If you believe this is a duplicate of another event, add it here. We'll make sure this is labeled as such and removed from results.</dd>
+      </dl>
+      <tags-input id="parent_id" ng-model="formData.parent" key-property="id" display-property="event_name" replace-spaces-with-dashes="false" placeholder="Add an event" max-tags=1 addFromAutocompleteOnly="true">
+        <auto-complete source="loadEvents($query)" template="parentIdTemplate" debounceDelay="1000"></auto-complete>
+      </tags-input>
+      <span></span>
+    </div>
+    <div class="similar_events">
+      <div ng-if="formData.parent_id > 0">
+        This item has been identified as a duplicate of <a href="/admin/event/edit/{{formData.parent_id}}">Event ID:{{formData.parent_id}}</a>
       </div>
-      <div class="similar_events">
-          <div ng-if="formData.parent_id > 0">
-              This item has been identified as a duplicate of <a href="/admin/event/edit/{{formData.parent_id}}">Event ID:{{formData.parent_id}}</a>
-          </div>
-          <div ng-if="formData.similar_events_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
-              <h4>Duplicated Events</h4>
-              <p>There are events that appear to be duplicates of this one. Select those events here to mark them as duplicates and hide them from listings.</p>
-              <div ng-repeat="(key, value) in formData.similar_events_model">
-                  <div class="single_event {{isCheched=value.parent_id?'checked-row':''}}">
-                      <input type="checkbox" id="event_id_{{value.id}}"
-                             checklist-model="formData.similar_events_storage" checklist-value="value.id"
-                             style="display: none"/>
-                      <label for="event_id_{{value.id}}" class="label_container">
-                          <img width="100px" src="{{value.event_image_url}}"/>
-                          <div class="container">
-                              <span>{{value.event_name}}</span>
-                              <small>Event Venue: {{value.venue_name}}</small>
-                              <small>Event Date: {{value.event_date}}</small>
-                              <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
-                          </div>
-                      </label>
-                  </div>
+      <div ng-if="formData.similar_events_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
+        <h4>Duplicated Events</h4>
+        <p>There are events that appear to be duplicates of this one. Select those events here to mark them as duplicates and hide them from listings.</p>
+        <div ng-repeat="(key, value) in formData.similar_events_model">
+          <div class="single_event {{isCheched=value.parent_id?'checked-row':''}}">
+            <input type="checkbox" id="event_id_{{value.id}}"
+                   checklist-model="formData.similar_events_storage" checklist-value="value.id"
+                   style="display: none"/>
+            <label for="event_id_{{value.id}}" class="label_container">
+              <img width="100px" src="{{value.event_image_url}}"/>
+              <div class="container">
+                <span>{{value.event_name}}</span>
+                <small>Event Venue: {{value.venue_name}}</small>
+                <small>Event Date: {{value.event_date}}</small>
+                <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
               </div>
+            </label>
           </div>
+        </div>
       </div>
+    </div>
     <input type="submit" value="Submit" ng-click="processForm(formData);" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
-</form>
+  </form>
 </div>
 
 <script type="text/ng-template" id="parentIdTemplate">
-    <div>
-        <img width="100px" src="{{data.event_image_url}}"/>
-    </div>
-    <div class="container">
-        <strong>{{data.event_name}}</strong><br />
-        {{data.event_date}}<br />
-        <small>{{data.venue_name}}</small><br />
-    </div>
+  <div>
+    <img width="100px" src="{{data.event_image_url}}"/>
+  </div>
+  <div class="container">
+    <strong>{{data.event_name}}</strong><br />
+    {{data.event_date}}<br />
+    <small>{{data.venue_name}}</small><br />
+  </div>
 </script>
