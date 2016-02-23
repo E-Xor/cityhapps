@@ -646,4 +646,40 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
       });
     }
   };
+}).factory('venueEditFormData', function(Venue, $q) {
+  return {
+    get: function(id) {
+      return $q(function(resolve, reject) {
+        Venue.get({ id: id, include: 'tags' }, function(payload) {
+          var singleVenue = payload.data[0];
+
+          var formData = {
+            venue_name: singleVenue.name,
+            venue_id: singleVenue.id,
+            parent_id: singleVenue.parent_id,
+            venue_url: singleVenue.url,
+            venue_image_url: singleVenue.image,
+            phone: singleVenue.phone,
+            street_address: singleVenue.address_1,
+            city: singleVenue.city,
+            state: singleVenue.state,
+            zip_code: singleVenue.postal_code,
+            desc: singleVenue.description,
+            hours: singleVenue.hours,
+            business_hours: singleVenue.business_hours,
+            created_at: singleVenue.created_at,
+            updated_at: singleVenue.updated_at,
+            parent_id: singleVenue.parent_id,
+            similar_venues_model: singleVenue.similar,
+            similar_venues_storage: singleVenue.similar.reduce(function(memo, value) {
+              if (value.parent_id) memo.push(value.id);
+              return memo;
+            }, [])
+          };
+
+          resolve(formData);
+        });
+      });
+    }
+  };
 });

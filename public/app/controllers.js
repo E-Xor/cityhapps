@@ -381,29 +381,28 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         }
 
     });
-}).controller('VenueViewController', function($scope, $http, $stateParams, cleanData, Venue) {
-    Venue.get({id: $stateParams.id, include: 'happs,tags'}, function(payload) {
-        payload = cleanData.buildRelationships(payload);
-        $scope.venue = payload.data[0];
+}).controller('VenueViewController', function($scope, venue) {
+  $scope.venue = venue;
 
-        $scope.displayStartTime = function(happ){
-          if(happ.hasOwnProperty('start')){
-            return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
-          } else { return happ.start_time }
-        }
-        $scope.displayEndTime = function(happ){
-          if(happ.hasOwnProperty('end')){
-            return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
-          } else { return happ.end_time }
-        }
-        $scope.display = function(word){
-          if(word == undefined) {
-            return ' ';
-          } else {
-            return word;
-          }
-        }
-    });
+  $scope.displayStartTime = function(happ){
+    if(happ.hasOwnProperty('start')){
+      return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
+    } else { return happ.start_time }
+  };
+
+  $scope.displayEndTime = function(happ){
+    if(happ.hasOwnProperty('end')){
+      return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
+    } else { return happ.end_time }
+  };
+
+  $scope.display = function(word){
+    if(word == undefined) {
+      return ' ';
+    } else {
+      return word;
+    }
+  };
 }).controller('venueController', function($scope, $http, $stateParams, $cookies, $cookieStore) {
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
         $scope.likeStatus;
@@ -979,146 +978,109 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       }
     });
   }
-}).controller('adminVenueController', function($scope, $http, $stateParams, $cookies, $cookieStore, Venue, Tag) {
+}).controller('adminVenueController', function($scope, $http, $stateParams, venue) {
+  $scope.formData = venue;
+  // Processing the form data for adding an event
+  $scope.processForm = function(formData) {
+    var edit = Boolean($stateParams.id);
+    // Validation
+    var error = 0;
+    if (!formData) {
+      $scope.generalError = true;
+      return;
+    }
+    if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
+      error = 1;
+      $scope.venueError = true;
+    }
+    if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
+      error = 1;
+      $scope.addressError = true;
+    }
+    if (typeof formData.desc === 'undefined' || formData.desc == '') {
+      error = 1;
+      $scope.descError = true;
+    }
+    if (formData.parent) {
+      if (formData.parent.length > 0) {
+        formData.parent_id = formData.parent[0]['id'];
+      }
+    }
+    // if any error, don't post
+    if (error) {
+      console.log(error);
+      $scope.generalError = true;
+      return;
+    }
+    if (!edit) {
+      $http({
+        method: 'POST',
+        url: '/admin/venue/create',
+        data: formData,
+        headers: {'Content-Type': 'application/json'}
+      }).success(function(data) {
+        if (!data) {
+          console.log('Data Not Posting');
+        }
+        else if (data) {
+          if (data.error) {
+            $scope.error = data.message;
+            console.log('Error creating venue', data.message);
+          }
+          else {
+            $scope.success = data;
+            console.log('Success');
+          }
+        }
+      }).error(function(data) {
+        $scope.error = data.error.message;
+      });
+    } else {
+      if(typeof formData.venue_id === 'undefined' || formData.venue_id == '') {
+        formData.venue_id = $stateParams.id;
+      }
+      $http({
+        method: 'POST',
+        url: '/admin/venue/update',
+        data: formData,
+        headers: {'Content-Type': 'application/json'}
+      }).success(function(data) {
+        if (!data) {
+          console.log('Data Not Posting');
+        }
+        else if (data) {
+          if (data.error) {
+            $scope.error = data.message;
+            console.log('Error updating venue', data.message);
+          }
+          else {
+            $scope.success = data;
+            console.log('Success');
+          }
+        }
+      }).error(function(data) {
+        $scope.error = data.error;//.message;
+      });
+    }
+  };
 
-    $scope.user = $cookies.user;
+  $scope.loadTags = function(query) {
+    return $http.get('/tags/' + query);
+  };
+}).controller('adminVenueListController', function($scope, $http, $stateParams, $cookies, $cookieStore, Venue, Tag) {
+  $scope.user = $rootScope.currentUser;
 
-    // Processing the form data for adding an event
-    $scope.processForm = function(formData) {
-        var edit = ($stateParams.id ? true : false);
-        // Validation
-        var error = 0;
-        if (!formData) {
-          $scope.generalError = true;
-          return;
-        }
-        if (typeof formData.venue_name === 'undefined' || formData.venue_name == '') {
-          error = 1;
-          $scope.venueError = true;
-        }
-        if (typeof formData.street_address === 'undefined' || formData.street_address == '') {
-          error = 1;
-          $scope.addressError = true;
-        }
-        if (typeof formData.desc === 'undefined' || formData.desc == '') {
-          error = 1;
-          $scope.descError = true;
-        }
-        if (formData.parent) {
-            if (formData.parent.length > 0) {
-                formData.parent_id = formData.parent[0]['id'];
-            }
-        }
-        // if any error, don't post
-        if (error) {
-          console.log(error);
-          $scope.generalError = true;
-          return;
-        }
-        if (!edit) {
-            $http({
-                method: 'POST',
-                url: '/admin/venue/create',
-                    data: formData,
-                    headers: {'Content-Type': 'application/json'}
-            }).success(function(data) {
-                if (!data) {
-                    console.log('Data Not Posting');
-                }
-                else if (data) {
-                    if (data.error) {
-                        $scope.error = data.message;
-                        console.log('Error creating venue', data.message);
-                    }
-                    else {
-                        $scope.success = data;
-                        console.log('Success');
-                    }
-                }
-            }).error(function(data) {
-                    $scope.error = data.error.message;
-            });
-        } else {
-            if(typeof formData.venue_id === 'undefined' || formData.venue_id == '') {
-                formData.venue_id = $stateParams.id;
-            }
-            $http({
-                method: 'POST',
-                url: '/admin/venue/update',
-                data: formData,
-                headers: {'Content-Type': 'application/json'}
-            }).success(function(data) {
-                if (!data) {
-                    console.log('Data Not Posting');
-                }
-                else if (data) {
-                    if (data.error) {
-                        $scope.error = data.message;
-                        console.log('Error updating venue', data.message);
-                    }
-                    else {
-                        $scope.success = data;
-                        console.log('Success');
-                    }
-                }
-            }).error(function(data) {
-                $scope.error = data.error;//.message;
-            });
-        }
-    };
-    // Retrieving all of the data for the listing page
-    var pageNumber = ($stateParams.page) ? '&page=' + $stateParams.page : '&page=1';
-    $http.get('/api/venues?page[size]=500' + pageNumber)
-        .success(function(data) {
-            $scope.venuesCount = data.length;
-            $scope.allVenues = data.venues;
+  // Retrieving all of the data for the listing page
+  var pageNumber = ($stateParams.page) ? '&page=' + $stateParams.page : '&page=1';
+  $http.get('/api/venues?page[size]=500' + pageNumber)
+    .success(function(data) {
+      $scope.venuesCount = data.length;
+      $scope.allVenues = data.venues;
     });
 
-    // edit page
-    $scope.formData = {};
-
-    $scope.reload = function() {
-        document.location.reload(true);
-    };
-
-    if ($stateParams.id) {
-        Venue.get({ id: $stateParams.id, include: 'tags' }, function(payload) {
-            var singleVenue = payload.data[0];
-
-            $scope.formData = {};
-            $scope.formData.venue_name = singleVenue.name;
-            $scope.formData.venue_id = singleVenue.id;
-            $scope.formData.parent_id = singleVenue.parent_id;
-            $scope.formData.venue_url = singleVenue.url;
-            $scope.formData.venue_image_url = singleVenue.image;
-            $scope.formData.phone = singleVenue.phone;
-            $scope.formData.street_address = singleVenue.address_1;
-            $scope.formData.city = singleVenue.city;
-            $scope.formData.state = singleVenue.state;
-            $scope.formData.zip_code = singleVenue.postal_code;
-            $scope.formData.desc = singleVenue.description;
-            $scope.formData.hours = singleVenue.hours;
-            dateCheckCreate = new Date(singleVenue.created_at).getTime() / 1000;
-            dateCheckUpdate = new Date(singleVenue.updated_at).getTime() / 1000;
-            if (dateCheckCreate != dateCheckUpdate)
-               $scope.updated_last = singleVenue.updated_at;
-            $scope.formData.parent_id = singleVenue.parent_id;
-            $scope.formData.similar_venues_model = singleVenue.similar;
-            $scope.formData.similar_venues_storage = (function() {
-                var base = [];
-                angular.forEach(singleVenue.similar, function(value) {
-                    if (value.parent_id != null) {
-                        base.push(value.id);
-                    }
-                });
-                return base;
-            })();
-
-            $scope.loadTags = function(query) {
-                return $http.get('/tags/' + query);
-            };
-        });
-    }
+  $scope.reload = function() {
+    document.location.reload(true);
+  };
 }).controller('appController', function($scope, $window, $idle, $rootScope, authService, registerDataService, voteService, authFactory, $http, $modal, $location, getCategories, getUserCategories, search, $cookies, $cookieStore) {
 
         $scope.$on('$idleStart', function() {

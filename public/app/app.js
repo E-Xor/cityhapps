@@ -204,22 +204,36 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     }).state('main.viewVenue', {
         url: '/venue/:id',
         views: {
-            '@main': {
-                templateUrl: 'app/components/venues/view.html',
-                controller: 'VenueViewController'
-            },
-            'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
-                // controller: 'MainFilterController'
+          '@main': {
+            templateUrl: 'app/components/venues/view.html',
+            controller: 'VenueViewController',
+            resolve: {
+              venue: function($stateParams, $q, cleanData, Venue) {
+                return $q(function(resolve) {
+                  Venue.get({id: $stateParams.id, include: 'happs,tags'}, function(payload) {
+                    resolve(cleanData.buildRelationships(payload).data[0]);
+                  });
+                });
+              }
             }
+          },
+          'menubar@main': {
+            // templateUrl: 'app/components/filters/filters.html',
+            // controller: 'MainFilterController'
+          }
         },
         css: 'assets/css/angular-snap.min.css'
     }).state('main.addVenue', {
         url: '/admin/venue/add',
         views: {
             '@main': {
-                templateUrl: 'app/components/venues/edit.html',
-                controller: 'adminVenueController'
+              templateUrl: 'app/components/venues/edit.html',
+              controller: 'adminVenueController',
+              resolve: {
+                venue: function() {
+                  return {};
+                }
+              }
             },
             'menubar@main': {
                 // templateUrl: 'app/components/filters/filters.html',
@@ -228,18 +242,23 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         },
         css: 'assets/css/angular-snap.min.css'
     }).state('main.editVenue', {
-        url: '/admin/venue/edit/:id',
-        views: {
-            '@main': {
-                templateUrl: 'app/components/venues/edit.html',
-                controller: 'adminVenueController'
-            },
-            'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
-                // controller: 'MainFilterController'
+      url: '/admin/venue/edit/:id',
+      views: {
+        '@main': {
+          templateUrl: 'app/components/venues/edit.html',
+          controller: 'adminVenueController',
+          resolve: {
+            venue: function(venueEditFormData, $stateParams) {
+              return venueEditFormData.get($stateParams.id);
             }
+          }
         },
-        css: 'assets/css/angular-snap.min.css'
+        'menubar@main': {
+          // templateUrl: 'app/components/filters/filters.html',
+          // controller: 'MainFilterController'
+        }
+      },
+      css: 'assets/css/angular-snap.min.css'
     }).state('main.listVenue', {
         url: '/venues',
         views: {
