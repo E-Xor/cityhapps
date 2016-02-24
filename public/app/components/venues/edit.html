@@ -39,11 +39,58 @@
           <input type="text" id="venue_url" class="form-control" name="venue_url" value="{{venueData.venues[0].url}}" placeholder="http://www.event.com" ng-model="formData.venue_url" />
         </div>
 
-        <div>
-          <label for="venue_image_url">Venue Image URL</label>
-          <input type="text" id="venue_image_url" class="form-control" name="venue_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.venue_image_url" />
-        </div>
+        <div class="">
+          <label for="event_image_url">Venue Image</label>
+          <div class="row">
+            <div class="col-md-12">
+              <image-uploader
+                  on-crop="venueImageChanged(datauri)"
+                  toggle="false"
+                  label="Upload Venue Image"
+                  keep-aspect="true"
+                  crop-width="450"
+                  crop-height="200"
+                  min-width="450"
+                  min-height="200">
+              </image-uploader>
+            </div>
+          </div>
 
+          <div class="row">
+            <div class="col-md-6">
+              <div ng-if="venueImage()" class="event-image-preview">
+                <h3>Preview</h3>
+                <img ng-src="{{venueImage()}}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <label for="org_image_url">Organization Logo</label>
+      <div class="row">
+        <div class="col-md-12">
+          <image-uploader
+              on-crop="orgImageChanged(datauri)"
+              toggle="false"
+              label="Upload Organization Logo"
+              keep-aspect="true"
+              crop-width="150"
+              crop-height="150"
+              min-width="150"
+              min-height="150">
+          </image-uploader>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div ng-if="orgImage()" class="org-image-preview">
+            <h3>Preview</h3>
+            <img ng-src="{{orgImage()}}">
+          </div>
+        </div>
       </div>
     </div>
 

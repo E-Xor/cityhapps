@@ -3,16 +3,17 @@ namespace CityHapps;
 
 use Storage;
 
-class EventImageUploader {
-    const PATH = '/uploads/images/events/';
+class ResourceImageUploader {
+    const PATH = '/uploads/images/';
 
-    public function __construct($dataUri, $event) {
+    public function __construct($dataUri, $resource, $type = 'event') {
         $this->dataUri = $this->parseData($dataUri);
-        $this->event = $event;
+        $this->resource = $resource;
+        $this->type = $type;
     }
 
     public function save() {
-        $path = static::PATH.$this->event->id.'/'.time().'.png';
+        $path = static::PATH.$this->type.'s/'.$this->resource->id.'/'.time().'.png';
         if (!$this->dataUri || false === \Storage::disk('public')->put($path, $this->dataUri)) {
             return false;
         } else {

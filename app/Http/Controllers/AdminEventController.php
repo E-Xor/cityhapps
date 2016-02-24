@@ -6,11 +6,10 @@ use Log;
 use Illuminate\Http\Request;
 
 use CityHapps\Http\Requests;
-//use CityHapps\Http\Controllers\Controller;
 use CityHapps\Happ;
 use CityHapps\Category;
 use CityHapps\Tag;
-use CityHapps\EventImageUploader;
+use CityHapps\ResourceImageUploader;
 use CityHapps\OrganizationImageUploader;
 use Input;
 use CityHapps\User;
@@ -128,7 +127,7 @@ class AdminEventController extends Controller {
     {
       // Process Image
       if (Input::has('event_image_data')) {
-          $uploader = new EventImageUploader(Input::get('event_image_data'), $result);
+          $uploader = new ResourceImageUploader(Input::get('event_image_data'), $result);
           if ($path = $uploader->save()) {
               $eventParams['event_image_url'] = $path;
           }
@@ -306,7 +305,7 @@ class AdminEventController extends Controller {
 
       // Process Image
       if (Input::has('event_image_data')) {
-        $uploader = new EventImageUploader(Input::get('event_image_data'), $result);
+        $uploader = new ResourceImageUploader(Input::get('event_image_data'), $result);
         if ($path = $uploader->save()) {
             $result->event_image_url = $path;
             $result->save();

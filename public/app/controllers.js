@@ -1023,6 +1023,27 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 }).controller('adminVenueController', function($scope, $http, $stateParams, venue) {
   $scope.formData = venue;
   // Processing the form data for adding an event
+  $scope.formData.venue_image_data = null;
+
+  $scope.venueImage = function() {
+    return $scope.formData.venue_image_data || $scope.formData.venue_image_url;
+  };
+
+  $scope.venueImageChanged = function(datauri) {
+    return $scope.formData.venue_image_data = datauri;
+  };
+
+  $scope.formData.organization_image_data = null;
+
+  $scope.orgImage = function() {
+    console.log("HEre I am with",$scope.formData.organization_image_data || $scope.formData.organization_image_url);
+    return $scope.formData.organization_image_data || $scope.formData.organization_image_url;
+  };
+
+  $scope.orgImageChanged = function(datauri) {
+    return $scope.formData.organization_image_data = datauri;
+  };
+
   $scope.processForm = function(formData) {
     var edit = Boolean($stateParams.id);
     // Validation
