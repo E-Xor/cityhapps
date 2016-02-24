@@ -11,7 +11,8 @@
 
 
 <section class="admin-form happ-admin-form">
-  <h1>Add Event</h1>
+  <h1 ng-if="!formData.event_id">Add Event</h1>
+  <h1 ng-if="formData.event_id">Edit Event</h1>
 
   <form method="POST" role="form" ng-if="!success">
     <aside class="notifications">

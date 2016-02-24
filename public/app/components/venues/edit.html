@@ -1,66 +1,93 @@
-<div class="admin-form">
-  <div ng-if="success">
-    <h1>
-      Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> venue <b>{{success.name}}</b>
-    </h1>
-    <p>
-      <a href='/admin/venue/add'>Create New Venue</a><br>
-      <a href='/admin/venue/edit/{{success.id}}' ng-click="reload();">Continue Editing <b>{{success.name}}</b></a><br>
-      <a href='/admin/venue/list'>Return to Venues List</a><br>
-      <a href='/venue/{{success.id}}'>View Content</a>
-    </p>
-  </div>
+<aside class="successful-upadte" ng-if="success">
+  <h1>
+    Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> venue <b>{{success.name}}</b>
+  </h1>
+  <p>
+    <a href='/admin/venue/add'>Create New Venue</a><br>
+    <a href='/admin/venue/edit/{{success.id}}' ng-click="reload();">Continue Editing <b>{{success.name}}</b></a><br>
+    <a href='/admin/venue/list'>Return to Venues List</a><br>
+    <a href='/venue/{{success.id}}'>View Content</a>
+  </p>
+</aside>
+
+<section class="admin-form">
+  <h1 ng-if="!formData.venue_id">Add Venue</h1>
+  <h1 ng-if="formData.venue_id">Edit Venue</h1>
+
   <form method="POST" ng-if="!success" ng-init="">
-    <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
-    <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
-    <div class="red center margin20" ng-if="error">{{error}}</div>
+    <aside class="notifications">
+      <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
+      <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
+      <div class="red center margin20" ng-if="error">{{error}}</div>
+    </aside>
 
-    <div>
-      <label for="title">Venue Name <span class="red center margin20">* <span ng-if="titleError">You must have a venue name</span></span></label>
-      <input type="hidden" id="venue_id" name="venue_id" ng-model="formData.venue_id"/>
-      <input type="text" class="full" id="venue_name" name="venue_name" placeholder="Venue Name" ng-model="formData.venue_name" value=""/>
+    <div class="row">
+      <div class="col-md-8">
+        <label for="title">
+          Venue Name
+          <span class="red center margin20">*
+            <span ng-if="titleError">
+              You must have a venue name
+            </span>
+          </span>
+        </label>
+        <input type="hidden" id="venue_id" name="venue_id" ng-model="formData.venue_id"/>
+        <input type="text" class="form-control" id="venue_name" name="venue_name" placeholder="Venue Name" ng-model="formData.venue_name" value=""/>
+
+        <div>
+          <label for="event_url">Venue URL</label>
+          <input type="text" id="venue_url" class="form-control" name="venue_url" value="{{venueData.venues[0].url}}" placeholder="http://www.event.com" ng-model="formData.venue_url" />
+        </div>
+
+        <div>
+          <label for="venue_image_url">Venue Image URL</label>
+          <input type="text" id="venue_image_url" class="form-control" name="venue_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.venue_image_url" />
+        </div>
+
+      </div>
     </div>
 
-    <div>
-      <label for="event_url">Venue URL</label>
-      <input type="text" id="venue_url" class="full" name="venue_url" value="{{venueData.venues[0].url}}" placeholder="http://www.event.com" ng-model="formData.venue_url" />
+    <div class="row">
+      <div class="col-md-4">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" class="form-control" name="phone" value="" ng-model="formData.phone" placeholder="1-800-244-4232" />
+      </div>
     </div>
 
-    <div>
-      <label for="venue_image_url">Venue Image URL</label>
-      <input type="text" id="venue_image_url" class="full" name="venue_image_url" value="" placeholder="http://www.event.com/logo.png" ng-model="formData.venue_image_url" />
+    <div class="row">
+      <div class="col-md-8">
+        <label for="street_address">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
+        <input type="text" id="street_address" class="form-control" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address">
+      </div>
     </div>
 
-    <div>
-      <label for="phone">Phone Number</label>
-      <input type="text" id="phone" class="full" name="phone" value="" ng-model="formData.phone" placeholder="1-800-244-4232" />
-    </div>
 
-    <div>
-      <label for="street_address">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
-      <input type="text" id="street_address" class="full" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address">
-    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="city" style="">City</label>
+        <input type="text" id="city" class="form-control" name="city" value="" ng-model="formData.city" placeholder="City" />
+      </div>
+      <div class="col-md-3">
+        <label for="state">State</label>
+        <select id="state" name="state" placeholder="State" class="form-control" ng-model="formData.state">
+          <option value="GA">Georgia</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="zip_code" style="">Zip Code</label>
+        <input type="text" id="zip_code" class="form-control" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" />
 
-    <div>
-      <label for="city" style="display:inline-block;width:244px;">City</label>
-      <label for="state" style="display:inline-block;width:261px;">State</label>
-      <label for="zip_code" style="display:inline-block;width:162px;">Zip Code</label>
-
-      <input type="text" id="city" name="city" value="" ng-model="formData.city" placeholder="City" style="width:222px;margin-right:20px;"/>
-      <select id="state" name="state" placeholder="State" ng-model="formData.state" style="width:245px;margin-right:20px;">
-        <option value="GA">Georgia</option>
-      </select>
-      <input type="text" id="zip_code" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" style="width:160px;" />
+      </div>
     </div>
 
     <business-hours-week-form ng-model="formData.business_hours"></business-hours-week-form>
 
-    <div>
+    <div class="form-group">
       <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
-      <textarea class="edit-description" name="desc" id="desc" ng-model="formData.desc"></textarea>
+      <textarea class="form-control edit-description" name="desc" id="desc" ng-model="formData.desc"></textarea>
     </div>
 
-    <div>
+    <div class="form-group">
       <label for="tags">Tags</label>
       <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">
         <auto-complete source="loadTags($query)"></auto-complete>
@@ -98,9 +125,14 @@
               </div>
             </label>
           </div>
-          </div>
         </div>
       </div>
-    <input type="submit" value="Submit" ng-click="processForm(formData);" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
+    </div>
+    <div class="form-actions">
+      <input type="submit" value="Submit" class="btn btn-primary" ng-click="processForm(formData)" />
+      <span class="red center margin20" ng-if="generalError">
+        * You must fill out the required fields!
+      </span>
+    </div>
   </form>
-</div>
+</section>
