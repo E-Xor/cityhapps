@@ -3,6 +3,7 @@
 Homestead.yaml
 .env
 public/assets/css/
+public/assets/js/
 !public/assets/css/.gitkeep
 public/uploads
 .idea

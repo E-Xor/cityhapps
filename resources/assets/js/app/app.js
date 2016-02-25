@@ -8,7 +8,7 @@ angular.module('cityHapps', [
   'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
   'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
   'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
-  'cityHapps.filters', 'cityHapps.directives', 'satellizer', 'door3.css',
+  'cityHapps.filters', 'cityHapps.directives', 'satellizer',
   'angular-google-analytics', 'ui.bootstrap.datetimepicker', 'textAngular',
   'angular-img-cropper'
 ]);
@@ -21,13 +21,13 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
   };
     $stateProvider.state('main', {
         abstract: true,
-        templateUrl: 'app/shared/templates/main-layout.tpl.html',
+        templateUrl: 'templates/app/shared/main-layout.tpl.html',
         controller: 'CategorySidebarController'
     }).state('main.home', {
         url: '/',
         views: {
           '@main': {
-            templateUrl: 'app/components/happs/home.html',
+            templateUrl: 'templates/app/happs/home.html',
             controller: 'HappHomePageController',
             resolve: {
               welcomeMessage: function(siteSettings) {
@@ -36,7 +36,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
               }
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
+                templateUrl: 'templates/app/filters/filters.html',
                 controller: 'MainFilterController'
             }
         },
@@ -44,7 +44,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
       url: '/happ/:id',
       views: {
         '@main': {
-          templateUrl: 'app/components/happs/view.html',
+          templateUrl: 'templates/app/happs/view.html',
           controller: 'HappViewController',
           resolve: {
             happ: function($stateParams, $q, cleanData, Happ) {
@@ -58,7 +58,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
           }
         },
         'menubar@main': {
-          // templateUrl: 'app/components/filters/filters.html',
           // controller: 'MainFilterController'
         }
       },
@@ -66,7 +65,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
       url: '/curate',
       views: {
         '@main': {
-          templateUrl: 'app/components/curate/index.html',
+          templateUrl: 'templates/app/curate/index.html',
           resolve: {
             happs: function($q, $rootScope, Happ) {
               return $q(function(resolve) {
@@ -95,7 +94,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
       url: '/curate/greeting',
       views: {
         '@main': {
-          templateUrl: 'app/components/curate/greeting.html',
+          templateUrl: 'templates/app/curate/greeting.html',
           controller: 'EditWelcomeMessageController',
           resolve: {
             welcomeMessage: function($http) {
@@ -115,7 +114,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/event/add',
         views: {
             '@main': {
-              templateUrl: 'app/components/happs/edit.html',
+              templateUrl: 'templates/app/happs/edit.html',
               controller: 'adminEventAddController',
               resolve: {
                 ageLevels: function($q, AgeLevel) {
@@ -135,7 +134,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
               }
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -143,7 +141,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
       url: '/admin/event/edit/:id',
       views: {
         '@main': {
-          templateUrl: 'app/components/happs/edit.html',
+          templateUrl: 'templates/app/happs/edit.html',
           controller: 'adminEventEditController',
           resolve: {
             ageLevels: function($q, AgeLevel) {
@@ -165,7 +163,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             }
           },
           'menubar@main': {
-            // templateUrl: 'app/components/filters/filters.html',
             // controller: 'MainFilterController'
           }
         },
@@ -174,11 +171,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/preview',
         views: {
             '@main': {
-                templateUrl: 'app/components/happs/list.html',
+                templateUrl: 'templates/app/happs/list.html',
                 controller: 'adminEventController'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -186,11 +182,11 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/category/:slug',
         views: {
             '@main': {
-                templateUrl: 'app/components/categories/happlist.html',
+                templateUrl: 'templates/app/categories/happlist.html',
                 controller: 'CategoryHappController'
             },
             'menubar@main': {
-                templateUrl: 'app/components/filters/filters.html',
+                templateUrl: 'templates/app/filters/filters.html',
                 controller: 'MainFilterController'
             }
         },
@@ -198,7 +194,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/venue/:id',
         views: {
           '@main': {
-            templateUrl: 'app/components/venues/view.html',
+            templateUrl: 'templates/app/venues/view.html',
             controller: 'VenueViewController',
             resolve: {
               venue: function($stateParams, $q, cleanData, Venue) {
@@ -211,7 +207,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             }
           },
           'menubar@main': {
-            // templateUrl: 'app/components/filters/filters.html',
             // controller: 'MainFilterController'
           }
         },
@@ -219,7 +214,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/venue/add',
         views: {
             '@main': {
-              templateUrl: 'app/components/venues/edit.html',
+              templateUrl: 'templates/app/venues/edit.html',
               controller: 'adminVenueController',
               resolve: {
                 venue: function() {
@@ -228,7 +223,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
               }
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -236,7 +230,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
       url: '/admin/venue/edit/:id',
       views: {
         '@main': {
-          templateUrl: 'app/components/venues/edit.html',
+          templateUrl: 'templates/app/venues/edit.html',
           controller: 'adminVenueController',
           resolve: {
             venue: function(venueEditFormData, $stateParams) {
@@ -245,7 +239,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
           }
         },
         'menubar@main': {
-          // templateUrl: 'app/components/filters/filters.html',
           // controller: 'MainFilterController'
         }
       },
@@ -253,11 +246,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/venues',
         views: {
             '@main': {
-                templateUrl: 'app/components/venues/list.html',
+                templateUrl: 'templates/app/venues/list.html',
                 controller: 'VenueListController'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -265,7 +257,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/favorites',
         views: {
             '@main': {
-                templateUrl: 'app/components/favorites/list.html',
+                templateUrl: 'templates/app/favorites/list.html',
                 controller: 'FavoriteController'
             }
         },
@@ -273,11 +265,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/venues/:page',
         views: {
             '@main': {
-                templateUrl: 'app/components/venues/list.html',
+                templateUrl: 'templates/app/venues/list.html',
                 controller: 'VenueListController'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -285,11 +276,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/venue/list',
         views: {
             '@main': {
-                templateUrl: 'app/components/venues/admin-list.html',
+                templateUrl: 'templates/app/venues/admin-list.html',
                 controller: 'adminVenueController'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -297,11 +287,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/admin/venue/list/:page',
         views: {
             '@main': {
-                templateUrl: 'app/components/venues/admin-list.html',
+                templateUrl: 'templates/app/venues/admin-list.html',
                 controller: 'adminVenueController'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -309,10 +298,9 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/about',
         views: {
             '@main': {
-                templateUrl: 'app/components/static/about.html'
+                templateUrl: 'templates/app/static/about.html'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -320,10 +308,9 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/terms-conditions',
         views: {
             '@main': {
-                templateUrl: 'app/components/static/terms-conditions.html'
+                templateUrl: 'templates/app/static/terms-conditions.html'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -331,10 +318,9 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/privacy-policy',
         views: {
             '@main': {
-                templateUrl: 'app/components/static/privacy-policy.html'
+                templateUrl: 'templates/app/static/privacy-policy.html'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -342,10 +328,9 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/add-venue',
         views: {
             '@main': {
-                templateUrl: 'app/components/static/add-venue.html'
+                templateUrl: 'templates/app/static/add-venue.html'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -353,10 +338,9 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/add-event',
         views: {
             '@main': {
-                templateUrl: 'app/components/static/add-event.html'
+                templateUrl: 'templates/app/static/add-event.html'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -364,10 +348,9 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/form-submitted',
         views: {
             '@main': {
-                templateUrl: 'app/components/static/form-submitted.html'
+                templateUrl: 'templates/app/static/form-submitted.html'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -375,28 +358,27 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/contact',
         views: {
             '@main': {
-                templateUrl: 'app/components/static/contact.html'
+                templateUrl: 'templates/app/static/contact.html'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
     }).state('userLogin', {
         url: '/login',
-        templateUrl: 'app/components/user/login.html',
+        templateUrl: 'templates/app/user/login.html',
         controller: 'AuthController as auth'
     }).state('userRegister', {
         url: '/register',
-        templateUrl: 'app/components/user/register.html',
+        templateUrl: 'templates/app/user/register.html',
         controller: 'registerFormController'
     }).state('userRegisterCategories', {
         url: '/register/categories',
-        templateUrl: 'app/components/user/register-categories.html',
+        templateUrl: 'templates/app/user/register-categories.html',
         controller: 'registerFormController'
     }).state('userReset', {
         url: '/reset',
-        templateUrl: 'app/components/user/reset.html',
+        templateUrl: 'templates/app/user/reset.html',
         controller: 'registerFormController'
     }).state('userLogout', {
         url: '/logout',
@@ -405,11 +387,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/profile/edit',
         views: {
             '@main': {
-                templateUrl: 'app/components/user/profile-edit.html',
+                templateUrl: 'templates/app/user/profile-edit.html',
                 controller: 'registerFormController'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
@@ -417,11 +398,10 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/profile',
         views: {
             '@main': {
-                templateUrl: 'app/components/user/profile.html',
+                templateUrl: 'templates/app/user/profile.html',
                 controller: 'UserProfileController'
             },
             'menubar@main': {
-                // templateUrl: 'app/components/filters/filters.html',
                 // controller: 'MainFilterController'
             }
         },
