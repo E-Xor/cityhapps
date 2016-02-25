@@ -2,8 +2,8 @@
 /node_modules
 Homestead.yaml
 .env
-/public/assets/css/style.css
-/public/assets/css/style.css.map
+public/assets/css/
+!public/assets/css/.gitkeep
 public/uploads
 .idea
 .idea/

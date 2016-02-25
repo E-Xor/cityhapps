@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="cityHapps">
-    <head>
-        <meta charset="UTF-8">
-        <title ng-bind-html="title">CityHapps</title>
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,700italic,500italic,400italic|Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link href="/assets/css/jquery.bxslider.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/assets/css/fullcalendar.css" />
-        <link rel="stylesheet" href="/assets/css/style.css" />
-        <link rel="stylesheet" href="/assets/css/xeditable.css" />
-        <link rel="stylesheet" href="/assets/css/pnotify.custom.min.css" />
-        <link rel="stylesheet" type="text/css" href="/assets/css/ng-tags-input.min.css">
-        <link rel="stylesheet" type="text/css" href="/assets/css/jquery.datetimepicker.css">
-        <link rel="stylesheet" type="text/css" href="/assets/css/datetimepicker.css">
-        <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,height=device-height" >
+  <head>
+    <title ng-bind-html="title">CityHapps</title>
 
-        <base href="/">
-    </head>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,height=device-height" >
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/asset-styles.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,700italic,500italic,400italic|Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+    <base href="/">
+  </head>
     <body>
         <div ui-view autoscroll="true"></div>
 
@@ -83,5 +78,6 @@
         <script src="/app/filters.js"></script>
         <script src="/app/directives.js"></script>
         <script src="/js/dom.js"></script>
+      <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
     </body>
 </html>

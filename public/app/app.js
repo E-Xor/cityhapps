@@ -40,7 +40,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.viewHapp', {
       url: '/happ/:id',
       views: {
@@ -63,7 +62,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
           // controller: 'MainFilterController'
         }
       },
-      css: 'assets/css/angular-snap.min.css'
     }).state('main.curate', {
       url: '/curate',
       views: {
@@ -93,7 +91,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         'menubar@main': {
         }
       },
-      css: 'assets/css/angular-snap.min.css'
     }).state('main.curateGreeting', {
       url: '/curate/greeting',
       views: {
@@ -113,7 +110,7 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         'menubar@main': {
         }
       },
-      css:['assets/css/textangular.min.css', 'assets/css/angular-snap.min.css']
+      css:['assets/css/textangular.min.css']
     }).state('main.addHapp', {
         url: '/admin/event/add',
         views: {
@@ -142,7 +139,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.editHapp', {
       url: '/admin/event/edit/:id',
       views: {
@@ -174,7 +170,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
           }
         },
       },
-      css: 'assets/css/angular-snap.min.css'
     }).state('main.listHapp', {
         url: '/preview',
         views: {
@@ -187,7 +182,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.listCategoryHapp', {
         url: '/category/:slug',
         views: {
@@ -200,7 +194,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.viewVenue', {
         url: '/venue/:id',
         views: {
@@ -222,7 +215,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
             // controller: 'MainFilterController'
           }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.addVenue', {
         url: '/admin/venue/add',
         views: {
@@ -240,7 +232,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.editVenue', {
       url: '/admin/venue/edit/:id',
       views: {
@@ -258,7 +249,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
           // controller: 'MainFilterController'
         }
       },
-      css: 'assets/css/angular-snap.min.css'
     }).state('main.listVenue', {
         url: '/venues',
         views: {
@@ -271,7 +261,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.listFavorite', {
         url: '/favorites',
         views: {
@@ -280,7 +269,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 controller: 'FavoriteController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.listVenuePage', {
         url: '/venues/:page',
         views: {
@@ -293,7 +281,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.adminListVenue', {
         url: '/admin/venue/list',
         views: {
@@ -306,7 +293,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.adminListVenuePage', {
         url: '/admin/venue/list/:page',
         views: {
@@ -319,7 +305,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.about', {
         url: '/about',
         views: {
@@ -331,7 +316,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.termsConditions', {
         url: '/terms-conditions',
         views: {
@@ -343,7 +327,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.privacyPolicy', {
         url: '/privacy-policy',
         views: {
@@ -355,7 +338,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.requestVenue', {
         url: '/add-venue',
         views: {
@@ -367,7 +349,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.requestEvent', {
         url: '/add-event',
         views: {
@@ -379,7 +360,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.requestConfirm', {
         url: '/form-submitted',
         views: {
@@ -391,7 +371,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.contact', {
         url: '/contact',
         views: {
@@ -403,7 +382,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('userLogin', {
         url: '/login',
         templateUrl: 'app/components/user/login.html',
@@ -435,7 +413,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     }).state('main.userProfile', {
         url: '/profile',
         views: {
@@ -448,7 +425,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
                 // controller: 'MainFilterController'
             }
         },
-        css: 'assets/css/angular-snap.min.css'
     });
 
     $urlRouterProvider.otherwise('/');

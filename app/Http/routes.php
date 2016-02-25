@@ -75,7 +75,6 @@ Route::get('tags/{name}','TagController@getTags');
 
 // Admin Event
 
-Route::get('admin/event/list', 'HomeController@showWelcome');
 Route::post('admin/event/create', 'AdminEventController@create');
 Route::post('admin/event/update', 'AdminEventController@update');
 // Admin Venue
