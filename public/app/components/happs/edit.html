@@ -1,44 +1,54 @@
-<div class="admin-form">
-  <div ng-if="success">
-    <h1>
-      Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> event <b>{{success.event_name}}</b>
-    </h1>
-    <p>
-      <a href='/admin/event/add'>Create New Event</a><br>
-      <a href='/admin/event/edit/{{success.id}}' ng-click="reload();">Continue Editing <b>{{success.event_name}}</b></a><br>
-      <a href='/happ/{{success.id}}'>View <b>{{success.event_name}}</b></a><br>
-    </p>
-  </div>
-  <form method="POST" ng-if="!success">
-    <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
-    <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
-    <div class="red center margin20" ng-if="error">{{error}}</div>
+<aside class="successful-update" ng-if="success">
+  <h1>
+    Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> event <b>{{success.event_name}}</b>
+  </h1>
+  <p>
+    <a href='/admin/event/add'>Create New Event</a><br>
+    <a href='/admin/event/edit/{{success.id}}' ng-click="reload();">Continue Editing <b>{{success.event_name}}</b></a><br>
+    <a href='/happ/{{success.id}}'>View <b>{{success.event_name}}</b></a><br>
+  </p>
+</aside>
 
+
+<section class="admin-form happ-admin-form" ng-if="!success">
+  <h1 ng-if="!formData.event_id">Add Event</h1>
+  <h1 ng-if="formData.event_id">Edit Event</h1>
+
+  <form method="POST" role="form">
+    <aside class="notifications">
+      <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
+      <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
+      <div class="red center margin20" ng-if="error">{{error}}</div>
+
+    </aside>
     <input type="hidden" id="event_id" name="event_id" ng-model="formData.event_id"/>
 
-    <div>
-      <label for="title">Event Name <span class="red center margin20">* <span ng-if="titleError">You must have a event name</span></span></label>
-      <input type="text" class="full" id="title" name="title" value="" placeholder="Event Name" ng-model="formData.title" />
+    <div class="row">
+      <div class="col-md-8">
+        <label for="title">Event Name <span class="red center margin20">* <span ng-if="titleError">You must have a event name</span></span></label>
+        <input type="text" class="form-control" id="title" name="title" value="" placeholder="Event Name" ng-model="formData.title" />
+      </div>
+      <div class="col-md-4">
+        <label for="status">Happ Status<span class="red center margin20">*</span></label>
+        <select class="form-control" name="status" id="status" ng-model="formData.status">
+          <option value="0">Draft</option>
+          <option value="1">Active</option>
+          <option value="2">Cancelled</option>
+          <option value="3">Archived</option>
+          <option value="4">Duplicated</option>
+          <option value="5">Deleted</option>
+        </select>
+      </div>
     </div>
 
-    <div>
-      <label for="status">Happ Status<span class="red center margin20">*</span></label>
-      <select name="status" id="status" ng-model="formData.status">
-        <option value="0">Draft</option>
-        <option value="1">Active</option>
-        <option value="2">Cancelled</option>
-        <option value="3">Archived</option>
-        <option value="4">Duplicated</option>
-        <option value="5">Deleted</option>
-      </select>
-    </div>
-
-    <div>
+    <div class="row">
+      <div class="col-md-8">
       <label for="event_url">Event URL</label>
-      <input type="text" id="event_url" class="full" name="event_url" value="{{eventData.events[0].url}}" placeholder="http://www.event.com" ng-model="formData.event_url" />
+      <input type="text" id="event_url" class="form-control" name="event_url" value="{{eventData.events[0].url}}" placeholder="http://www.event.com" ng-model="formData.event_url" />
+      </div>
     </div>
 
-    <div>
+    <div class="">
       <label for="event_image_url">Event Image</label>
       <div class="row">
         <div class="col-md-12">
@@ -54,6 +64,7 @@
           </image-uploader>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-6">
           <div ng-if="eventImage()" class="event-image-preview">
@@ -61,36 +72,24 @@
             <img ng-src="{{eventImage()}}">
           </div>
         </div>
+      </div>
     </div>
 
-    <div class="happ-categories">
-      <label for="cateogories">Categories</label>
-      <!--div class="selected">
-           <strong>Selected:
-           <div ng-repeat="category in categories | filter:formData.categories[0]">{{ category.name }}</div>
-           </strong>
-           </div-->
-      <select multiple ng-model="formData.categories" ng-options="category.id as category.name for category in categories" size="5"></select>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="cateogories">Categories</label>
+        <select multiple class="form-control" ng-model="formData.categories" ng-options="category.id as category.name for category in categories" size="5"></select>
+      </div>
     </div>
 
-    <div>
-      <label for="venue_realtion">Venue Relation</label>
-      <input type="text" class="full" ng-model="formData.venue" typeahead="venue as venue.name for venue in getVenues($viewValue)" typeahead-min-length="3" typeahead-template-url="app/components/happs/venue-typeahead.tpl.html">
-    </div>
-
-    <div>
-      <label for="venue_name">Venue Name <span class="red center margin20">* <span ng-if="venueError">You must have a venue name</span></span></label>
-      <input type="text" id="venue_name" class="full" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
-    </div>
-
-    <div>
-      <label for="org_image_url">Organization Image</label>
+    <div class="">
+      <label for="org_image_url">Organization Logo</label>
       <div class="row">
         <div class="col-md-12">
           <image-uploader
               on-crop="orgImageChanged(datauri)"
               toggle="false"
-              label="Upload Organization Image"
+              label="Upload Organization Logo"
               keep-aspect="true"
               crop-width="150"
               crop-height="150"
@@ -107,131 +106,182 @@
           </div>
         </div>
       </div>
-
-    <div>
-      <label for="venue_url">Venue URL</label>
-      <input type="text" id="venue_url" class="full" name="venue_url" value="" ng-model="formData.venue_url" placeholder="http://www.venue.com" />
     </div>
 
-    <div>
-      <label for="street_address">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
-      <input type="text" id="street_address" class="full" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address">
-    </div>
-
-    <div>
-      <label for="building">Building / Suite</label>
-      <input type="text" id="building" name="building" class="full" value="" ng-model="formData.building">
-    </div>
-
-    <div>
-      <label for="city" style="display:inline-block;width:244px;">City</label>
-      <label for="state" style="display:inline-block;width:261px;">State</label>
-      <label for="zip_code" style="display:inline-block;width:162px;">Zip Code</label>
-
-      <input type="text" id="city" name="city" value="" ng-model="formData.city" placeholder="City" style="width:222px;margin-right:20px;"/>
-      <select id="state" name="state" placeholder="State" ng-model="formData.state" style="width:245px;margin-right:20px;">
-        <option value="GA">Georgia</option>
-      </select>
-      <input type="text" id="zip_code" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" style="width:160px;" />
-    </div>
-
-    <div>
-      <label>Indoor or Outdoor</label>
-      <input type="checkbox" id="indoor" ng-model="formData.locationType.indoor" style="-webkit-appearance: checkbox;"> <label for="indoor">Indoor</label>
-      <input type="checkbox" id="outdoor" ng-model="formData.locationType.outdoor" style="-webkit-appearance: checkbox;"> <label for="outdoor">Outdoor</label>
-    </div>
-
-    <div>
-      <label>Age Levels</label>
-      <div ng-repeat="ageLevel in formData.ageLevels" class="age-level">
-        <input type="checkbox" id="ageLevel{{ ageLevel.id }}" ng-model="ageLevel.value" style="-webkit-appearance: checkbox;"> <label for="ageLevel{{ ageLevel.id }}">{{ ageLevel.name }}</label>
+    <div class="row">
+      <div class="col-md-8">
+        <label for="venue_realtion">Venue Relation</label>
+        <input type="text" class="form-control" ng-model="formData.venue" typeahead="venue as venue.name for venue in getVenues($viewValue)" typeahead-min-length="3" typeahead-template-url="app/components/happs/venue-typeahead.tpl.html">
       </div>
     </div>
 
-    <div style="margin-top:10px; margin-bottom:10px">
-      <label for="start_time" style="display:inline-block;">
-        Start Date/Time
+    <div class="row">
+      <div class="col-md-8">
+        <label for="venue_name">
+          Venue Name
+          <span class="red center margin20">*
+            <span ng-if="venueError">You must have a venue name</span>
+          </span>
+        </label>
+        <input type="text" id="venue_name" class="form-control" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <label for="venue_url">Venue URL</label>
+        <input type="text" id="venue_url" class="form-control" name="venue_url" value="" ng-model="formData.venue_url" placeholder="http://www.venue.com" />
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-8">
+        <label for="street_address">Street Address <span class="red center margin20">* <span ng-if="addressError">You must have a address</span></span></label>
+        <input type="text" id="street_address" class="form-control" name="street_address" value="" ng-model="formData.street_address" placeholder="Street Address">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" name="city" value="" ng-model="formData.city" placeholder="City"/>
+      </div>
+
+      <div class="col-md-3">
+        <label for="state">State</label>
+        <select id="state" name="state" class="form-control" placeholder="State" ng-model="formData.state">
+          <option value="GA">Georgia</option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label for="zip_code">Zip Code</label>
+        <input type="text" class="form-control" id="zip_code" name="zip_code" value="" ng-model="formData.zip_code" placeholder="Zip Code" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">Indoor/Outdoor</label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="indoor" ng-model="formData.locationType.indoor">
+        Indoor
       </label>
-
-      <datetimepicker
-          hour-step="hourStep"
-          minute-step="minuteStep"
-          ng-model="formData.start_time"
-          date-format="MM/dd/yyyy"
-          date-options="dateOptions"
-      >
-      </datetimepicker>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="outdoor" ng-model="formData.locationType.outdoor">
+        Outdoor
+      </label>
     </div>
 
-    <div style="margin-bottom:10px">
-      <label for="end_time" style="display:inline-block;width:112px;" ng-if="!formData.all_day">End Date/Time </label>
-      <datetimepicker ng-hide="formData.all_day"
-                      hour-step="hourStep"
-                      minute-step="minuteStep"
-                      ng-model="formData.end_time"
-                      date-format="MM/dd/yyyy"
-                      date-options="dateOptions">
-      </datetimepicker>
-    </div>
-
-    <div>
-      <label for="all_day" style="display:inline-block;" ng-if="!formData.all_day">All Day Event</label>
-      <label for="all_day" style="display:inline-block;" ng-if="formData.all_day">All Day Event</label>
-      <input id="all_day" name="all_day" type="checkbox" ng-model="formData.all_day" style="-webkit-appearance: checkbox;"/>
-    </div>
-
-    <business-hours-week-form ng-model="formData.business_hours"></business-hours-week-form>
-    <br />
-
-    <div>
-      <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
-      <textarea name="desc" id="desc" style="width:488px;height:180px;" ng-model="formData.desc"></textarea>
-    </div>
-    <div>
-      <label for="tags">Tags</label>
-      <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">
-        <auto-complete source="loadTags($query)"></auto-complete>
-      </tags-input>
-    </div>
-    <div  ng-if="formData.parent_id > 0 || formData.similar_events_model.length == 0">
-      <dl>
-        <dt>Duplicate of</dt>
-        <dd>If you believe this is a duplicate of another event, add it here. We'll make sure this is labeled as such and removed from results.</dd>
-      </dl>
-      <tags-input id="parent_id" ng-model="formData.parent" key-property="id" display-property="event_name" replace-spaces-with-dashes="false" placeholder="Add an event" max-tags=1 addFromAutocompleteOnly="true">
-        <auto-complete source="loadEvents($query)" template="parentIdTemplate" debounceDelay="1000"></auto-complete>
-      </tags-input>
-      <span></span>
-    </div>
-    <div class="similar_events">
-      <div ng-if="formData.parent_id > 0">
-        This item has been identified as a duplicate of <a href="/admin/event/edit/{{formData.parent_id}}">Event ID:{{formData.parent_id}}</a>
+    <div class="form-group">
+        <label class="control-label">Age Levels</label>
+        <label ng-repeat="ageLevel in formData.ageLevels" class="checkbox-inline">
+          <input type="checkbox" id="ageLevel{{ ageLevel.id }}" ng-model="ageLevel.value">
+          {{ ageLevel.name }}
+        </label>
+        </div>
       </div>
-      <div ng-if="formData.similar_events_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
-        <h4>Duplicated Events</h4>
-        <p>There are events that appear to be duplicates of this one. Select those events here to mark them as duplicates and hide them from listings.</p>
-        <div ng-repeat="(key, value) in formData.similar_events_model">
-          <div class="single_event {{isCheched=value.parent_id?'checked-row':''}}">
-            <input type="checkbox" id="event_id_{{value.id}}"
-                   checklist-model="formData.similar_events_storage" checklist-value="value.id"
-                   style="display: none"/>
-            <label for="event_id_{{value.id}}" class="label_container">
-              <img width="100px" src="{{value.event_image_url}}"/>
-              <div class="container">
-                <span>{{value.event_name}}</span>
-                <small>Event Venue: {{value.venue_name}}</small>
-                <small>Event Date: {{value.event_date}}</small>
-                <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
-              </div>
+
+      <div class="time-fields">
+        <div class="form-group">
+          <p class="label-wrap">
+            <label for="start_time">
+              <i class="fa fa-calendar"></i>
+              Start Date/Time
             </label>
+          </p>
+
+          <datetimepicker
+              hour-step="hourStep"
+              minute-step="minuteStep"
+              ng-model="formData.start_time"
+              date-format="MM/dd/yyyy"
+              date-options="dateOptions"
+          >
+          </datetimepicker>
+        </div>
+
+        <div class="form-group" ng-if="!formData.all_day">
+          <p class="label-wrap">
+            <label for="end_time">
+              <i class="fa fa-calendar"></i>
+              End Date/Time
+            </label>
+          </p>
+          <datetimepicker ng-hide="formData.all_day"
+                          hour-step="hourStep"
+                          minute-step="minuteStep"
+                          ng-model="formData.end_time"
+                          date-format="MM/dd/yyyy"
+                          date-options="dateOptions">
+          </datetimepicker>
+        </div>
+
+        <div class="checkbox">
+          <label for="all_day">
+            <input id="all_day" name="all_day" type="checkbox" ng-model="formData.all_day" />
+            All Day Event
+          </label>
+        </div>
+      </div>
+
+      <business-hours-week-form ng-model="formData.business_hours"></business-hours-week-form>
+      <br />
+
+      <div class="form-group">
+        <label for="desc">Description <span class="red center margin20">* <span ng-if="descError">You must have a description</span></span></label>
+        <textarea class="form-control edit-description" name="desc" id="desc" ng-model="formData.desc"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <tags-input id="tags" ng-model="formData.tags" display-property="tag_raw" replace-spaces-with-dashes="false">
+          <auto-complete source="loadTags($query)"></auto-complete>
+        </tags-input>
+      </div>
+      <div  ng-if="formData.parent_id > 0 || formData.similar_events_model.length == 0">
+        <dl>
+          <dt>Duplicate of</dt>
+          <dd>If you believe this is a duplicate of another event, add it here. We'll make sure this is labeled as such and removed from results.</dd>
+        </dl>
+        <tags-input id="parent_id" ng-model="formData.parent" key-property="id" display-property="event_name" replace-spaces-with-dashes="false" placeholder="Add an event" max-tags=1 addFromAutocompleteOnly="true">
+          <auto-complete source="loadEvents($query)" template="parentIdTemplate" debounceDelay="1000"></auto-complete>
+        </tags-input>
+        <span></span>
+      </div>
+      <div class="similar_events">
+        <div ng-if="formData.parent_id > 0">
+          This item has been identified as a duplicate of <a href="/admin/event/edit/{{formData.parent_id}}">Event ID:{{formData.parent_id}}</a>
+        </div>
+        <div ng-if="formData.similar_events_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
+          <h4>Duplicated Events</h4>
+          <p>There are events that appear to be duplicates of this one. Select those events here to mark them as duplicates and hide them from listings.</p>
+          <div ng-repeat="(key, value) in formData.similar_events_model">
+            <div class="single_event {{isCheched=value.parent_id?'checked-row':''}}">
+              <input type="checkbox" id="event_id_{{value.id}}"
+                     checklist-model="formData.similar_events_storage" checklist-value="value.id"
+                     style="display: none"/>
+              <label for="event_id_{{value.id}}" class="label_container">
+                <img width="100px" src="{{value.event_image_url}}"/>
+                <div class="container">
+                  <span>{{value.event_name}}</span>
+                  <small>Event Venue: {{value.venue_name}}</small>
+                  <small>Event Date: {{value.event_date}}</small>
+                  <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
+                </div>
+              </label>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <input type="submit" value="Submit" ng-click="processForm(formData);" /> <span class="red center margin20" ng-if="generalError">* You must fill out the required fields!</span>
+      <div class="form-actions">
+        <input type="submit" value="Submit" ng-click="processForm(formData);" class="btn btn-primary"/>
+        <span class="red center" ng-if="generalError">* You must fill out the required fields!</span>
+      </div>
   </form>
-</div>
+</section>
 
+<!-- is this still used? -->
 <script type="text/ng-template" id="parentIdTemplate">
   <div>
     <img width="100px" src="{{data.event_image_url}}"/>

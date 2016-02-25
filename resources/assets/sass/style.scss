@@ -1,33 +1,13 @@
-//Color Pallete and variables
+@import './variables';
+@import './admin-form';
+@import './venue';
 
-$screen-sm-min: 768px;
-$screen-md-min: 992px;
-$screen-lg-min: 1200px;
 
-//Temp UX colors, grey
-
-$dark-grey: #2C2625;
-$grey: #404042;
-$light-grey: #D1D2D4;
-$tan: #F7EEEF;
-$red: #FF5C50;
-$green: #72B43E;
-
-//End Vars
-
-.venue-tag{
-  font-weight: 500;
-  padding-left: 12px;
-  color: #FC5C50;
-}
 
 .venue-row{
   margin-top: 20px;
 }
 
-.venue-tags{
-  margin-left: 20px;
-}
 .venue-social{
   margin-right: 20px;
 }
@@ -55,15 +35,6 @@ html {
   border: 1px solid red;
   padding: 10px;
   color: red;
-}
-
-.venue-description{
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  margin-top: 15px;
-  margin-left: 260px;
-  margin-right: 260px;
 }
 
 body {
@@ -810,13 +781,13 @@ input.main-search {
   .register-error {
     color: red;
     font-weight: bold;
-    font-size: 10px;
+    font-size: $user-pages-font-size;
     text-align: center;
   }
   input {
     margin: 3px 0;
     width: 100%;
-    font-size: 10px;
+    font-size: $user-pages-font-size;
     line-height: 20px;
     padding: 10px 15px;
     background-color: #F4F2EE;
@@ -843,7 +814,7 @@ input.main-search {
     background-color: #336EB7;
     color: #FFFFFF;
     text-align: center;
-    font-size: 10px;
+    font-size: $user-pages-font-size;
     line-height: 40px;
     cursor: pointer;
     .fa {
@@ -859,7 +830,7 @@ input.main-search {
     margin: 47px auto 20px;
     background-color: #FF5C50;
     display: block;
-    font-size: 12px;
+    font-size: $user-pages-font-size;
     line-height: 20px;
     color: #FFFFFF;
     font-weight: 500;
@@ -871,7 +842,7 @@ input.main-search {
   }
   .login-link {
     text-align: center;
-    font-size: 10px;
+    font-size: 12px;
     a, a:hover {
       color: #5B5B5B;
     }
@@ -888,7 +859,7 @@ input.main-search {
   white-space: nowrap;
   text-transform: uppercase;
   color: #FF5C50;
-  font-size: 9px;
+  font-size: 11px;
   margin: 18px auto;
   & > span {
     position: relative;
@@ -2490,13 +2461,6 @@ a.ng-binding:hover{
 
 }
 
-
-.venue-address{
-    font-weight: 500;
-    width: 600px;
-    margin: 0 auto;
-}
-
 // Static Page Styling
 .static-page{
     background-color: #FFFFFF;
@@ -2593,83 +2557,6 @@ a.ng-binding:hover{
         }
       }
     }
-  }
-}
-
-.admin-form {
-  width:675px;
-  margin:50px auto;
-  label {
-    display:block;
-  }
-  input.full {
-    width:100%;
-  }
-  input, select, textarea {
-    border: 1px solid #ccc;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    padding: 4px 7px;
-    outline: 0;
-  }
-  input {
-    &:focus {
-      border-color: #339933;
-    }
-    &[type='submit'] {
-      background: #339999;
-      color: #FFFFFF;
-      font-weight: bold;
-    }
-    &[type='checkbox'] + label {
-      display: inline-block;
-      margin-right: 20px;
-    }
-  }
-  .age-level {
-    display: inline-block;
-  }
-  select {
-    background: #fff;
-    height: 31px;
-  }
-  .happ-categories {
-    select {
-      height: auto;
-    }
-    .selected {
-      font-weight: bold;
-      float: right;
-      width: 50%;
-    }
-  }
-  .single_event {
-    padding: 10px 5px 0;
-  }
-  .single_event .container, .suggestion-list li .container {
-    width: 70%;
-    display: inline-block;
-  }
-  .single_event img, .suggestion-list li img {
-    vertical-align: top;
-    float: left;
-  }
-  .single_event span, .single_event small, .suggestion-list li {
-    display: block;
-  }
-  .suggestion-list li .container {
-    text-wrap: normal;
-  }
-  .single_venue {
-    padding: 10px 5px 0;
-  }
-  .single_venue .container {
-    width: 70%;
-    display: inline-block;
-  }
-  .single_venue span, .single_venue small {
-    display: block;
   }
 }
 
@@ -3053,53 +2940,4 @@ input#notifyMe {
   width: 100%;
   bottom: 0;
   position: absolute;
-}
-
-.image-uploader {
-  .canvas {
-    width: 100%;
-  }
-
-  .upload-controls {
-    .action-btn {
-      padding: 13px 27px;
-      border: solid $red 1px;
-      display: inline-block;
-      color: $red;
-      text-align: center;
-      height: 50px;
-      font-size: 1.1em;
-      font-weight: 500;
-      background-color: transparent;
-      &:hover {
-        background-color: $red;
-        color: #FFFFFF;
-      }
-    }
-    .keep {
-      border: solid $red 1px;
-      color: $red;
-      &:hover {
-        background-color: $red;
-        color: #FFFFFF;
-      }
-    }
-    .cancel {
-      border: solid $grey 1px;
-      color: $grey;
-      &:hover {
-        background-color: $grey;
-        color: #FFF;
-      }
-    }
-  }
-}
-
-.event-image-preview {
-  img {
-    width: 100%;
-  }
-  h3 {
-    margin-top: 0;
-  }
 }

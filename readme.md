@@ -10,7 +10,7 @@ Basic stack to drive Apache as the web server. The DO droplet and development en
 
 ### Laravel v5.1.*
 
-PHP framework that we are using as an internal API to handle CRUD operations. We are not using any of the template or view functionality baked into Laravel. Because the app is mostly single page, if it can’t find a route, it defers to the front­end where they are defined. More on this later. I highly recommend laracasts.com; lots of high quality videos on everything Laravel does.
+PHP framework that we are using as an internal API to handle CRUD operations. We are not using any of the template or view functionality baked into Laravel. Because the app is mostly single page, if it can’t find a route, it defers to the front­end where they are defined. More on this later.
 
 ### Digital Ocean
 
@@ -24,13 +24,13 @@ JS MVVM framework that syncs and consumes the PHP API. The official docs are not
 
 JS Library­ Used for public/js/dom.js and sporadically throughout public/js/app.js. Used for category drop down fade toggles and light calendar manipulation.
 
-### SASS
+### Sass
 
-CSS preprocessor that extends vanilla CSS. We are using the .scssvariety so make sure to keep that in mind when reading the Sass docs. There are lots of nested rules used in CityHapps. CSS is valid Sass, but not always the other way around.
-￼￼￼￼￼￼￼
+CSS preprocessor that extends vanilla CSS. There are lots of nested rules used in CityHapps.
+
 ### Gulp
 
-JS build tool
+JS build tool that ships with Laravel Elixir.  To watch assets, run `npm run elixir`, or to build for production, run `npm run build`
 
 ### Vagrant
 
@@ -54,13 +54,14 @@ After cloning the repository, you'll need an `.env` file in the root directory f
 
 ### Install Necessary Components
 
-You'll need Composer and Sass installed for the local instance to run. First, install Composer and run it to install dependencies. Then install Sass. You may need to use `sudo` to run the `gem install` command below.
+You'll need Composer, Sass, and Node/NPM installed for the local instance to run.
 
 1. Use `curl` to download and install Composer from the command line by running `curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer`, where the `--install-dir` parameter is set to wherever you'd like to install the executable
 2. From your local project directory, run `composer install` to setup the project dependencies
-3. You'll be asked to create a GitHub OAuth token during this process. Just copy the URL you're given and paste it into a browser, generate the token, and the copy that token and paste it back into the command line.
-4. Then run `gem install sass` to get Sass setup if you haven't already
-5. Compile the Sass and JavaScript by running `gulp watch`
+3. You'll be asked to create a GitHub OAuth token during this process.  Feel free to create one, or re-run with `composer install --prefer-source`
+4. Ensure you have Node 4.2.x or higher installed
+5. Then run `npm install` to bundle up Elixir for gulp usage
+6. Compile the Sass for development (watched and updated) with `npm run elixir`, or compile for production (single compilation) with `npm run build`
 
 ### Create Database
 
@@ -69,7 +70,7 @@ Setup a local database to store all the City Happs data before seeding and pulli
 1. Make sure MySQL is running
 2. Use a GUI tool or the command line to create a new, empty database, ie. `cityhapps`
 3. Make sure your database settings are correct in the `.env` file in your project directory
-4. If using MySQL instance in MAMP on a Mac, add the following line to the `database.php` file under the `connections/mysql` section: `'unix_socket' => '/Applications/MAMP/tmp/mysql/mysql.sock',`
+4. If using MySQL instance in MAMP on a Mac, add the following line to the `database.php` file under the `connections/mysql` section: `'unix_socket' => '/Applications/MAMP/tmp/mysql/mysql.sock',`.  Alternatively, if you don't want to use the faster socket, you can instead set the host to `127.0.0.1`.
 
 ### Setup and Seed the Database
 

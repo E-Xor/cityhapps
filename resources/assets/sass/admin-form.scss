@@ -1,0 +1,116 @@
+@import './variables';
+
+.admin-form {
+  h1 {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: $dark-grey;
+  }
+  .control-label {
+    display: block;
+    font-size: 16px;
+  }
+  label {
+    font-weight: normal;
+    margin-top: 15px;
+    color: $grey;
+  }
+  .label-wrap {
+    padding: 0;
+    margin:0;
+  }
+  .checkbox-inline,
+  .business-hours-form label {
+    margin-top: 0;
+  }
+  .checkbox-inline {
+    padding-right: 20px;
+    input {
+      padding-right: 5px;
+
+    }
+  }
+  .btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .btn-primary {
+    background-color: $red;
+    color: white;
+    font-weight: bold;
+    &:hover {
+      background-color: darken($red, 10%);
+    }
+    &:active {
+      background-color: darken($red, 15%);
+    }
+  }
+
+  .datetimepicker-wrapper .btn {
+    font-size: 14px;
+    font-weight: normal;
+    padding: 6px 12px;
+  }
+
+  input[type=checkbox]
+  {
+    position: relative;
+    -webkit-appearance:checkbox;
+  }
+
+  .edit-description {
+    height: 30em;
+  }
+}
+.image-uploader {
+  .canvas {
+    width: 100%;
+  }
+
+  .upload-controls {
+    .action-btn {
+      padding: 13px 27px;
+      border: solid $red 1px;
+      display: inline-block;
+      color: $red;
+      text-align: center;
+      height: 50px;
+      font-size: 1.1em;
+      font-weight: 500;
+      background-color: transparent;
+      &:hover {
+        background-color: $red;
+        color: #FFFFFF;
+      }
+    }
+    .keep {
+      border: solid $red 1px;
+      color: $red;
+      &:hover {
+        background-color: $red;
+        color: #FFFFFF;
+      }
+    }
+    .cancel {
+      border: solid $grey 1px;
+      color: $grey;
+      &:hover {
+        background-color: $grey;
+        color: #FFF;
+      }
+    }
+  }
+}
+
+.event-image-preview {
+  img {
+    width: 100%;
+  }
+  h3 {
+    margin-top: 0;
+  }
+}

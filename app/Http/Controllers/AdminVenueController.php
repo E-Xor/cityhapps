@@ -9,6 +9,9 @@ use CityHapps\Http\Controllers\Controller;
 use CityHapps\Venue;
 use CityHapps\Tag;
 use CityHapps\User;
+use CityHapps\ResourceImageUploader;
+use CityHapps\OrganizationImageUploader;
+use Input;
 
 class AdminVenueController extends Controller {
 
@@ -97,7 +100,6 @@ class AdminVenueController extends Controller {
     $venueParams['createdAt'] = \Input::get('created_at');
     $venueParams['updatedAt'] = \Input::get('updated_at');
     $venueParams['source'] = \Input::get('source');
-    $venueParams['image'] = \Input::get('image');
     $venueParams['pageSize'] = \Input::get('page_size');
     $venueParams['pageCount'] = \Input::get('page_count');
     $venueParams['pageShift'] = \Input::get('page_shift');
@@ -140,7 +142,6 @@ class AdminVenueController extends Controller {
     $venueParams['name'] = \Input::get('venue_name');
     $venueParams['url'] = \Input::get('venue_url');
     $venueParams['address_1'] = \Input::get('street_address');
-    $venueParams['image'] = \Input::get('venue_image_url');
     // no room for building
     //$venueParams['building'] = \Input::get('building');
     $venueParams['city'] = \Input::get('city');
@@ -158,6 +159,20 @@ class AdminVenueController extends Controller {
 
      $venueParams['user_id'] = $result->user_id ?: $this->user->id;
 
+     if (Input::has('venue_image_data')) {
+         $uploader = new ResourceImageUploader(\Input::get('venue_image_data'), $result, 'venue');
+         if ($path = $uploader->save()) {
+             $result->image = $path;
+             $result->save();
+         }
+     }
+     if (Input::has('organization_image_data')) {
+         $uploader = new OrganizationImageUploader(\Input::get('organization_image_data'), $result, 'venue');
+         if ($path = $uploader->save()) {
+             $result->organization_image_url = $path;
+             $result->save();
+         }
+     }
      $this->createTags($result, \Input::get('tags'));
 
      $similar = $result->similar;
@@ -214,7 +229,6 @@ class AdminVenueController extends Controller {
     $venueParams['name'] = \Input::get('venue_name');
     $venueParams['url'] = \Input::get('venue_url');
     $venueParams['address_1'] = \Input::get('street_address');
-    $venueParams['image'] = \Input::get('venue_image_url');
     // no room for building
     //$venueParams['building'] = \Input::get('building');
     $venueParams['city'] = \Input::get('city');
@@ -230,7 +244,23 @@ class AdminVenueController extends Controller {
 
     if ($passValidation)
       $result = Venue::create($venueParams);
+
       $this->createTags($result, \Input::get('tags'));
+
+      if (Input::has('venue_image_data')) {
+          $uploader = new ResourceImageUploader(\Input::get('venue_image_data'), $result, 'venue');
+          if ($path = $uploader->save()) {
+              $result->image = $path;
+              $result->save();
+          }
+      }
+      if (Input::has('organization_image_data')) {
+          $uploader = new OrganizationImageUploader(\Input::get('organization_image_data'), $result, 'venue');
+          if ($path = $uploader->save()) {
+              $result->organization_image_url = $path;
+              $result->save();
+          }
+      }
 
     if ($result)
       return json_encode($result);

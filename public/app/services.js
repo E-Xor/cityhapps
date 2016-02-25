@@ -660,6 +660,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             parent_id: singleVenue.parent_id,
             venue_url: singleVenue.url,
             venue_image_url: singleVenue.image,
+            organization_image_url: singleVenue.organization_image_url,
             phone: singleVenue.phone,
             street_address: singleVenue.address_1,
             city: singleVenue.city,

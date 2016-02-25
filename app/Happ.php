@@ -141,6 +141,13 @@ class Happ extends Model
   }
 
   /**
+   * Some are entered without a WYSIWYG, need to convert \n to <br>
+   */
+  public function getDescriptionAttribute($value) {
+    return $value == strip_tags($value) ? nl2br($value) : $value;
+  }
+
+  /**
    * Return a list of duplicated events for the current event.
    */
   public function getSimilarAttribute()
