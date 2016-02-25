@@ -1,19 +1,13 @@
 @import './variables';
 @import './admin-form';
+@import './venue';
 
-.venue-tag{
-  font-weight: 500;
-  padding-left: 12px;
-  color: #FC5C50;
-}
+
 
 .venue-row{
   margin-top: 20px;
 }
 
-.venue-tags{
-  margin-left: 20px;
-}
 .venue-social{
   margin-right: 20px;
 }
@@ -41,15 +35,6 @@ html {
   border: 1px solid red;
   padding: 10px;
   color: red;
-}
-
-.venue-description{
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  margin-top: 15px;
-  margin-left: 260px;
-  margin-right: 260px;
 }
 
 body {
@@ -2474,13 +2459,6 @@ a.ng-binding:hover{
     color: #fff;
     margin-bottom: 21px;
 
-}
-
-
-.venue-address{
-    font-weight: 500;
-    width: 600px;
-    margin: 0 auto;
 }
 
 // Static Page Styling

@@ -1,0 +1,78 @@
+@import './variables';
+
+.venue-show {
+  font-size: 18px;
+
+  .name {
+    font-size: 22px;
+    margin-top: 10px;
+  }
+  .venue-header {
+    background-color: $teal;
+    margin: -30px -15px 0px -15px;
+    padding-bottom: 20px;
+  }
+
+
+  .images {
+    position: relative;
+
+    .venue-image {
+      max-width: 100%;
+      padding: 10px;
+    }
+    .org-image {
+      position: absolute;
+      bottom: 0px;
+      left: 20px;
+      z-index: 9999;
+      border: 2px solid $red;
+      img {
+        width: 75px;
+        height: 75px;
+      }
+    }
+  }
+
+  .venue-info {
+    min-height: 170px;
+    color: white;
+  }
+
+  .venue-description {
+    color: white;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .venue-address {
+    margin: 10px auto;
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .business-hours {
+    position: relative;
+    margin: 10px;
+    margin-top: 0;
+    padding: 0 15px 5px 15px;
+    background-color: white;
+    display: block;
+    cursor: pointer;
+
+    .days-of-week {
+      margin-bottom: 0;
+    }
+
+    .today .fa {
+      float: right;
+    }
+
+  }
+
+.venue-tags{
+  margin-left: 20px;
+}
+}

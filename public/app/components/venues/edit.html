@@ -1,4 +1,4 @@
-<aside class="successful-upadte" ng-if="success">
+<aside class="successful-update" ng-if="success">
   <h1>
     Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> venue <b>{{success.name}}</b>
   </h1>
@@ -10,11 +10,11 @@
   </p>
 </aside>
 
-<section class="admin-form">
+<section class="admin-form" ng-if="!success">
   <h1 ng-if="!formData.venue_id">Add Venue</h1>
   <h1 ng-if="formData.venue_id">Edit Venue</h1>
 
-  <form method="POST" ng-if="!success" ng-init="">
+  <form method="POST" ng-init="">
     <aside class="notifications">
       <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
       <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>

@@ -10,11 +10,11 @@
 </aside>
 
 
-<section class="admin-form happ-admin-form">
+<section class="admin-form happ-admin-form" ng-if="!success">
   <h1 ng-if="!formData.event_id">Add Event</h1>
   <h1 ng-if="formData.event_id">Edit Event</h1>
 
-  <form method="POST" role="form" ng-if="!success">
+  <form method="POST" role="form">
     <aside class="notifications">
       <div class="green center margin20" ng-if="updated_last">Last updated on {{updated_last}}!</div>
       <div class="red center margin20" ng-if="generalError">* You must fill out the required fields!</div>
