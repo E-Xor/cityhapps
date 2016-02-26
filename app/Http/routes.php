@@ -102,6 +102,7 @@ Route::group(['prefix' => 'api'], function()
     Route::get('authenticate/user', 'ApiController@getAuthenticatedUser');
     Route::any('{model}/{id?}', 'ApiController@handleRequest')
 		->where(['model' => 'venue|category|tag|happ|agelevel']);
+    Route::get('venue/{id}/similar', 'SimilarVenueController@index');
 });
 Route::get('api/categories', 'CategoryController@getAllCategories');
 Route::get('api/favorites/{id}', 'FavoriteController@getFavorites');

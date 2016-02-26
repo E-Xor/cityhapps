@@ -647,7 +647,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
       });
     }
   };
-}).factory('venueEditFormData', function(Venue, $q) {
+}).factory('venueEditFormData', function(Venue, $q, $http) {
   return {
     get: function(id) {
       return $q(function(resolve, reject) {
@@ -671,15 +671,23 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             business_hours: singleVenue.business_hours,
             created_at: singleVenue.created_at,
             updated_at: singleVenue.updated_at,
-            parent_id: singleVenue.parent_id,
-            similar_venues_model: singleVenue.similar,
-            similar_venues_storage: singleVenue.similar.reduce(function(memo, value) {
-              if (value.parent_id) memo.push(value.id);
-              return memo;
-            }, [])
+            parent_id: singleVenue.parent_id
           };
 
-          resolve(formData);
+          $http.get('/api/venue/'+id+'/similar').then(function(res) {
+            formData.similar_venues_model = res.data;
+            formData.similar_venues_storage = res.data.reduce(function(memo, value) {
+              if (value.parent_id) memo.push(value.id);
+              return memo;
+            }, []);
+
+            resolve(formData);
+          }, function() {
+            formData.similar_venues_model = [];
+            formData.similar_venues_storage = [];
+
+            resolve(formData);
+          });
         });
       });
     }
