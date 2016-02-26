@@ -101,7 +101,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.filterDefaults = HappFilterService.getDefaults(baseObject);
         $scope.$watchCollection('filterDefaults', function(newFilters, oldFilters) {
             for (var key in newFilters) {
-                if (newFilters[key] != oldFilters[key]) {
+                if (newFilters[key] != oldFilters[key] && key != 'ageLevels') {
                     HappFilterService.updateFilter(key, newFilters[key]);
                 }
             }
@@ -222,13 +222,13 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           return result + ' - ' + endDate.getDate();
         }
     });
-    $scope.$on('filterUpdate', function() {
+  $scope.$on('filterUpdate', _.debounce(function() {
         var filter = HappFilterService.getFilters({include: 'categories,venues'});
         Happ.query(filter, function(payload) {
             payload = cleanData.buildRelationships(payload);
             $scope.happs = payload.data;
         });
-    });
+  }, 200));
 }).controller('happController', function($scope, $http, $stateParams, $cookies, $cookieStore, cleanData, Happ) {
 
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
@@ -1036,7 +1036,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
   $scope.formData.organization_image_data = null;
 
   $scope.orgImage = function() {
-    console.log("HEre I am with",$scope.formData.organization_image_data || $scope.formData.organization_image_url);
     return $scope.formData.organization_image_data || $scope.formData.organization_image_url;
   };
 
