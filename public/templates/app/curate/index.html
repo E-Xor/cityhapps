@@ -7,7 +7,7 @@
     </a>
     <a href="/admin/venue/add" class="happ-button inverse">
       <i class="fa fa-plus"></i>
-      Add New Venue
+      Add New Place
     </a>
     <a href="/curate/greeting" class="happ-button inverse" ng-if="currentUser.isAdmin()">
       <i class="fa fa-pencil"></i>
@@ -23,7 +23,7 @@
   </div>
   <div class="container">
     <div class="row">
-      <h2>Your Venues</h2>
+      <h2>Your Places</h2>
       <p ng-if="!venues || venues.length === 0">You don't currently have any venues.</p>
       <ul class="venues-list">
         <li ng-repeat="venue in venues">
