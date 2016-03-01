@@ -489,7 +489,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 });
             };
         }
-}).controller('adminEventAddController', function($scope, $http, $stateParams, $cookies, $cookieStore, categories, ageLevels) {
+}).controller('adminEventAddController', function($scope, $http, $stateParams, $cookies, $cookieStore, categories, ageLevels, venueTypeahead) {
 
   $scope.formData = {};
   $scope.formData.ageLevels = ageLevels;
@@ -610,11 +610,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
   // This does not work with a resource. I could not tell you why :(
   $scope.getVenues = function(typed) {
-    return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
-      return response.data.data;
-    });
+    return venueTypeahead.get(typed);
   };
-}).controller('adminEventEditController', function($scope, $http, $stateParams, $cookies, $cookieStore, happ, categories, ageLevels) {
+}).controller('adminEventEditController', function($scope, $http, $stateParams, $cookies, $cookieStore, happ, categories, ageLevels, venueTypeahead) {
   $scope.formData = happ;
   $scope.formData.ageLevels = ageLevels;
 
@@ -750,10 +748,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
   };
 
   // This does not work with a resource. I could not tell you why :(
+
   $scope.getVenues = function(typed) {
-    return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
-      return response.data.data;
-    });
+    return venueTypeahead.get(typed);
   };
 
   // edit page
@@ -765,7 +762,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       return $http.get('/events/?name=' + query + '&current_id=' + $stateParams.id);
     };
   }
-}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ, AgeLevel, cleanData, $filter, Category) {
+}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ, AgeLevel, cleanData, $filter, Category, venueTypeahead) {
 
   $scope.toggleMinDate = function() {
     $scope.minDate = $scope.minDate ? null : new Date();
@@ -922,10 +919,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
   };
 
   // This does not work with a resource. I could not tell you why :(
+
   $scope.getVenues = function(typed) {
-    return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
-      return response.data.data;
-    });
+    return venueTypeahead.get(typed);
   };
 
   // edit page

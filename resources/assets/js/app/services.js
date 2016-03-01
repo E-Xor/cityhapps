@@ -692,4 +692,16 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
       });
     }
   };
+}).factory('venueTypeahead', function($q, $http) {
+  return {
+    get: _.debounce(function(typed) {
+      if (typed.length < 3) return $q.resolve([]);
+      return $q(function(resolve, reject) {
+        return $http.get('/api/venue', { params: {search: typed} })
+          .then(function(res) {
+            resolve(res.data.data);
+          }, reject);
+      });
+    }, 200)
+  };
 });
