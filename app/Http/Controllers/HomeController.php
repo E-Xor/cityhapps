@@ -30,7 +30,7 @@ class HomeController extends Controller {
 
 	public function preview()
 	{
-		return View::make('layouts.master');
+		//return View::make('layouts.master');
 	}
 
 }

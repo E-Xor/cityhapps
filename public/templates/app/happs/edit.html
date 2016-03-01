@@ -110,26 +110,26 @@
 
     <div class="row">
       <div class="col-md-8">
-        <label for="venue_realtion">Venue Relation</label>
-        <input type="text" class="form-control" ng-model="formData.venue" typeahead="venue as venue.name for venue in getVenues($viewValue)" typeahead-min-length="3" typeahead-template-url="app/components/happs/venue-typeahead.tpl.html">
+        <label for="venue_realtion">Place Relation</label>
+        <input type="text" class="form-control" ng-model="formData.venue" typeahead="venue as venue.name for venue in getVenues($viewValue)" typeahead-min-length="3" typeahead-template-url="templates/app/happs/venue-typeahead.tpl.html">
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-8">
         <label for="venue_name">
-          Venue Name
+          Place Name
           <span class="red center margin20">*
             <span ng-if="venueError">You must have a venue name</span>
           </span>
         </label>
-        <input type="text" id="venue_name" class="form-control" name="venue_name" value="" placeholder="Venue Name" ng-model="formData.venue_name" />
+        <input type="text" id="venue_name" class="form-control" name="venue_name" value="" placeholder="Place Name" ng-model="formData.venue_name" />
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-8">
-        <label for="venue_url">Venue URL</label>
+        <label for="venue_url">Place URL</label>
         <input type="text" id="venue_url" class="form-control" name="venue_url" value="" ng-model="formData.venue_url" placeholder="http://www.venue.com" />
       </div>
     </div>
@@ -265,7 +265,7 @@
                 <img width="100px" src="{{value.event_image_url}}"/>
                 <div class="container">
                   <span>{{value.event_name}}</span>
-                  <small>Event Venue: {{value.venue_name}}</small>
+                  <small>Event Place: {{value.venue_name}}</small>
                   <small>Event Date: {{value.event_date}}</small>
                   <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
                 </div>

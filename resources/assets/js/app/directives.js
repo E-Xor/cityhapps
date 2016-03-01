@@ -31,7 +31,7 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
 }]).directive('businessHoursWeekForm', function() {
   return {
     restrict: 'E',
-    templateUrl: 'app/shared/templates/business-hours-week-form.tpl.html',
+    templateUrl: 'templates/app/shared/business-hours-week-form.tpl.html',
     require: 'ngModel',
     scope: {
       daysOfWeek: '=ngModel'
@@ -56,7 +56,7 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
 }).directive('businessHours', function() {
   return {
     restrict: 'E',
-    templateUrl: 'app/shared/templates/business-hours-widget.tpl.html',
+    templateUrl: 'templates/app/shared/business-hours-widget.tpl.html',
     scope: {
       daysOfWeek: '=ngModel'
     },
@@ -116,7 +116,7 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
 
   return {
     link: link,
-    templateUrl: 'app/shared/templates/single-happ.tpl.html'
+    templateUrl: 'templates/app/shared/single-happ.tpl.html'
   };
 }).directive('socialFacebook', [
   'socialLinker', function(linker) {
@@ -164,7 +164,7 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
     }};
 }).directive('wysiwygInput', function() {
   return {
-    templateUrl: '/app/shared/templates/wysiwyg-input.html',
+    templateUrl: '/templates/app/shared/wysiwyg-input.html',
     restrict: 'E',
     scope: {
       field: "=ngModel",
@@ -183,7 +183,7 @@ angular.module('cityHapps.directives', []).directive('autoActive', ['$location',
 }).directive('imageUploader', function() {
   return {
     restrict: 'E',
-    templateUrl: '/app/shared/templates/image-uploader.html',
+    templateUrl: '/templates/app/shared/image-uploader.html',
     scope: {
       label: '@',
       onCrop: '&',

@@ -9,17 +9,6 @@
             <span class="happ-category">{{ category.name }}</span>{{ $last ? '' : ', ' }}
           </span>
         </div>
-        <div class="happ-date" ng-controller="HappHomeController">
-          <span class="start-date"> {{ displayDay(happ)}}</span>
-          <span ng-if="authenticated" ng-controller="FavoriteController" ng-click="addToFavorites(happ.id)"  class="happ-favorite">
-            <i class="fa fa-star favorite" ng-class="ifFavorite(happ.id)"></i>
-            <!--<div class="like-icon" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox></div>
-            <div class="buttons">
-            <a class"save-button right" href="{{data.url}}" ng-model="data.vote.upVote" ng-change="simpleVoteEvent(data , 'up')" btn-checkbox>+ Save For Later</a>
-            <a class="happ-button right" href="{{data.url}}" target="_blank">Book It Now</a>
-            </div>-->
-          </span>
-        </div>
       </div>
       <div class="col-sm-5 col-md-12 happ-data">
         <!--div class="happ-values">

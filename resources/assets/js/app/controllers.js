@@ -101,7 +101,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.filterDefaults = HappFilterService.getDefaults(baseObject);
         $scope.$watchCollection('filterDefaults', function(newFilters, oldFilters) {
             for (var key in newFilters) {
-                if (newFilters[key] != oldFilters[key]) {
+                if (newFilters[key] != oldFilters[key] && key != 'ageLevels') {
                     HappFilterService.updateFilter(key, newFilters[key]);
                 }
             }
@@ -222,13 +222,13 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           return result + ' - ' + endDate.getDate();
         }
     });
-    $scope.$on('filterUpdate', function() {
+  $scope.$on('filterUpdate', _.debounce(function() {
         var filter = HappFilterService.getFilters({include: 'categories,venues'});
         Happ.query(filter, function(payload) {
             payload = cleanData.buildRelationships(payload);
             $scope.happs = payload.data;
         });
-    });
+  }, 200));
 }).controller('happController', function($scope, $http, $stateParams, $cookies, $cookieStore, cleanData, Happ) {
 
         $scope.user = $cookies.user ? JSON.parse($cookies.user) : $cookies.user;
@@ -489,7 +489,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 });
             };
         }
-}).controller('adminEventAddController', function($scope, $http, $stateParams, $cookies, $cookieStore, categories, ageLevels) {
+}).controller('adminEventAddController', function($scope, $http, $stateParams, $cookies, $cookieStore, categories, ageLevels, venueTypeahead) {
 
   $scope.formData = {};
   $scope.formData.ageLevels = ageLevels;
@@ -610,11 +610,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
   // This does not work with a resource. I could not tell you why :(
   $scope.getVenues = function(typed) {
-    return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
-      return response.data.data;
-    });
+    return venueTypeahead.get(typed);
   };
-}).controller('adminEventEditController', function($scope, $http, $stateParams, $cookies, $cookieStore, happ, categories, ageLevels) {
+}).controller('adminEventEditController', function($scope, $http, $stateParams, $cookies, $cookieStore, happ, categories, ageLevels, venueTypeahead) {
   $scope.formData = happ;
   $scope.formData.ageLevels = ageLevels;
 
@@ -750,10 +748,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
   };
 
   // This does not work with a resource. I could not tell you why :(
+
   $scope.getVenues = function(typed) {
-    return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
-      return response.data.data;
-    });
+    return venueTypeahead.get(typed);
   };
 
   // edit page
@@ -765,7 +762,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       return $http.get('/events/?name=' + query + '&current_id=' + $stateParams.id);
     };
   }
-}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ, AgeLevel, cleanData, $filter, Category) {
+}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ, AgeLevel, cleanData, $filter, Category, venueTypeahead) {
 
   $scope.toggleMinDate = function() {
     $scope.minDate = $scope.minDate ? null : new Date();
@@ -922,10 +919,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
   };
 
   // This does not work with a resource. I could not tell you why :(
+
   $scope.getVenues = function(typed) {
-    return $http.get('api/venue', {params: {search: typed}}).then(function(response) {
-      return response.data.data;
-    });
+    return venueTypeahead.get(typed);
   };
 
   // edit page
@@ -1036,7 +1032,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
   $scope.formData.organization_image_data = null;
 
   $scope.orgImage = function() {
-    console.log("HEre I am with",$scope.formData.organization_image_data || $scope.formData.organization_image_url);
     return $scope.formData.organization_image_data || $scope.formData.organization_image_url;
   };
 

@@ -9,7 +9,7 @@ class Venue extends Model
 {
   protected $table = 'venues';
   protected $guarded = array('id', 'create_at', 'updated_at');
-  protected $appends = array('google_directions_link', 'google_map_large', 'similar');
+  protected $appends = array('google_directions_link', 'google_map_large');
 
   public function curator()
   {

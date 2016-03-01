@@ -27,8 +27,6 @@ class AdminVenueController extends Controller {
 
   public function index()
   {
-    //show the admin frontend view
-    return View::make('admin/events/home');
   }
 
   /**

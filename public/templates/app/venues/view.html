@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="images">
-          <img class="venue-image" ng-src="{{venue.image}}">
+          <img ng-if="venue.image" class="venue-image" ng-src="{{venue.image}}">
           <div class="org-image" ng-if="venue.organization_image_url">
             <a href="{{venue.venue_url || '#'}}">
               <img ng-src="{{venue.organization_image_url}}">
@@ -54,7 +54,7 @@
   <div class="row" ng-if="currentUser.canEdit(venue)">
     <div class="col-xs-12">
       <a href="/admin/venue/edit/{{ venue.id }}">
-        <i class="fa fa-pencil-square-o"></i> Edit Venue
+        <i class="fa fa-pencil-square-o"></i> Edit Place
       </a>
     </div>
   </div>

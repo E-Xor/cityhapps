@@ -3,16 +3,16 @@
     Successfully <span ng-if="success.updated">updated</span> <span ng-if="!success.updated">created</span> venue <b>{{success.name}}</b>
   </h1>
   <p>
-    <a href='/admin/venue/add'>Create New Venue</a><br>
+    <a href='/admin/venue/add'>Create New Place</a><br>
     <a href='/admin/venue/edit/{{success.id}}' ng-click="reload();">Continue Editing <b>{{success.name}}</b></a><br>
-    <a href='/admin/venue/list'>Return to Venues List</a><br>
+    <a href='/admin/venue/list'>Return to Places List</a><br>
     <a href='/venue/{{success.id}}'>View Content</a>
   </p>
 </aside>
 
 <section class="admin-form" ng-if="!success">
-  <h1 ng-if="!formData.venue_id">Add Venue</h1>
-  <h1 ng-if="formData.venue_id">Edit Venue</h1>
+  <h1 ng-if="!formData.venue_id">Add Place</h1>
+  <h1 ng-if="formData.venue_id">Edit Place</h1>
 
   <form method="POST" ng-init="">
     <aside class="notifications">
@@ -24,7 +24,7 @@
     <div class="row">
       <div class="col-md-8">
         <label for="title">
-          Venue Name
+          Place Name
           <span class="red center margin20">*
             <span ng-if="titleError">
               You must have a venue name
@@ -32,21 +32,21 @@
           </span>
         </label>
         <input type="hidden" id="venue_id" name="venue_id" ng-model="formData.venue_id"/>
-        <input type="text" class="form-control" id="venue_name" name="venue_name" placeholder="Venue Name" ng-model="formData.venue_name" value=""/>
+        <input type="text" class="form-control" id="venue_name" name="venue_name" placeholder="Place Name" ng-model="formData.venue_name" value=""/>
 
         <div>
-          <label for="event_url">Venue URL</label>
+          <label for="event_url">Place URL</label>
           <input type="text" id="venue_url" class="form-control" name="venue_url" value="{{venueData.venues[0].url}}" placeholder="http://www.event.com" ng-model="formData.venue_url" />
         </div>
 
         <div class="">
-          <label for="event_image_url">Venue Image</label>
+          <label for="event_image_url">Place Image</label>
           <div class="row">
             <div class="col-md-12">
               <image-uploader
                   on-crop="venueImageChanged(datauri)"
                   toggle="false"
-                  label="Upload Venue Image"
+                  label="Upload Place Image"
                   keep-aspect="true"
                   crop-width="450"
                   crop-height="200"
@@ -153,11 +153,11 @@
     </div>
     <div class="similar_venues">
       <div ng-if="formData.parent_id > 0">
-        This item has been identified as a duplicate of <a href="admin/venue/edit/{{formData.parent_id}}">Venue ID: {{formData.parent_id}}</a>
+        This item has been identified as a duplicate of <a href="admin/venue/edit/{{formData.parent_id}}">Place ID: {{formData.parent_id}}</a>
       </div>
       <div ng-if="formData.similar_venues_model.length > 0 && formData.parent_id == null || formData.parent_id == 0">
-        <h4>Duplicated Venues</h4>
-        <p>There are venues that appear to be duplicates of this one. Select those venues here to mark them as duplicates and hide them from listings.</p>
+        <h4>Duplicated Places</h4>
+        <p>There are places that appear to be duplicates of this one. Select those venues here to mark them as duplicates and hide them from listings.</p>
         <div ng-repeat="(key, value) in formData.similar_venues_model">
           <div class="single_venue {{isCheched=value.parent_id?'checked-row':''}}">
             <input type="checkbox" id="venue_id_{{value.id}}"
@@ -166,8 +166,8 @@
             <label for="venue_id_{{value.id}}" class="label_container">
               <div class="container">
                 <span>{{value.venue_name}}</span>
-                <small>Venue ID: {{value.id}}</small>
-                <small>Venue Address: {{value.venue_address_1}} ({{value.venue_lat}}@{{value.venue_lng}})</small>
+                <small>Place ID: {{value.id}}</small>
+                <small>Place Address: {{value.venue_address_1}} ({{value.venue_lat}}@{{value.venue_lng}})</small>
                 <small ng-if="value.parent_id">Parent ID: {{value.parent_id}}<span ng-if="value.parent_id === formData.event_id"> (This Item)</span></small>
               </div>
             </label>

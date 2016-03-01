@@ -75,7 +75,6 @@ Route::get('tags/{name}','TagController@getTags');
 
 // Admin Event
 
-Route::get('admin/event/list', 'HomeController@showWelcome');
 Route::post('admin/event/create', 'AdminEventController@create');
 Route::post('admin/event/update', 'AdminEventController@update');
 // Admin Venue
@@ -103,6 +102,7 @@ Route::group(['prefix' => 'api'], function()
     Route::get('authenticate/user', 'ApiController@getAuthenticatedUser');
     Route::any('{model}/{id?}', 'ApiController@handleRequest')
 		->where(['model' => 'venue|category|tag|happ|agelevel']);
+    Route::get('venue/{id}/similar', 'SimilarVenueController@index');
 });
 Route::get('api/categories', 'CategoryController@getAllCategories');
 Route::get('api/favorites/{id}', 'FavoriteController@getFavorites');
