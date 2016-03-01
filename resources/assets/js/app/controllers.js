@@ -489,7 +489,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
                 });
             };
         }
-}).controller('adminEventAddController', function($scope, $http, $stateParams, $cookies, $cookieStore, categories, ageLevels, venueTypeahead) {
+}).controller('adminEventAddController', function($scope, $http, $stateParams, $cookies, $cookieStore, $timeout, categories, ageLevels, venueTypeahead) {
 
   $scope.formData = {};
   $scope.formData.ageLevels = ageLevels;
@@ -595,7 +595,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           console.log('Error creating event', data.message);
         }
         else {
-          $scope.success = data;
+          $timeout(function() {
+            $scope.success = data;
+          }, 1);
           console.log('Success');
         }
       }
@@ -612,7 +614,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
   $scope.getVenues = function(typed) {
     return venueTypeahead.get(typed);
   };
-}).controller('adminEventEditController', function($scope, $http, $stateParams, $cookies, $cookieStore, happ, categories, ageLevels, venueTypeahead) {
+}).controller('adminEventEditController', function($scope, $http, $stateParams, $cookies, $cookieStore, $timeout, happ, categories, ageLevels, venueTypeahead) {
   $scope.formData = happ;
   $scope.formData.ageLevels = ageLevels;
 
@@ -734,7 +736,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
           console.log('Error updating event', data.message);
         }
         else {
-          $scope.success = data;
+          $timeout(function() {
+            $scope.success = data;
+          }, 1);
           console.log('Success');
         }
       }
@@ -762,7 +766,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       return $http.get('/events/?name=' + query + '&current_id=' + $stateParams.id);
     };
   }
-}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, Happ, AgeLevel, cleanData, $filter, Category, venueTypeahead) {
+}).controller('adminEventController', function($scope, $http, $stateParams, $cookies, $cookieStore, $timeout, Happ, AgeLevel, cleanData, $filter, Category, venueTypeahead) {
 
   $scope.toggleMinDate = function() {
     $scope.minDate = $scope.minDate ? null : new Date();
@@ -855,7 +859,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             console.log('Error creating event', data.message);
           }
           else {
-            $scope.success = data;
+            $timeout(function() {
+              $scope.success = data;
+            }, 1);
             console.log('Success');
           }
         }
@@ -879,7 +885,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             console.log('Error updating event', data.message);
           }
           else {
-            $scope.success = data;
+            $timeout(function() {
+              $scope.success = data;
+            }, 1);
             console.log('Success');
           }
         }
@@ -1016,7 +1024,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       }
     });
   }
-}).controller('adminVenueController', function($scope, $http, $stateParams, venue) {
+}).controller('adminVenueController', function($scope, $timeout, $http, $stateParams, venue) {
   $scope.formData = venue;
   // Processing the form data for adding an event
   $scope.formData.venue_image_data = null;
@@ -1086,7 +1094,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             console.log('Error creating venue', data.message);
           }
           else {
-            $scope.success = data;
+            $timeout(function() {
+              $scope.success = data;
+            }, 1);
             console.log('Success');
           }
         }
@@ -1112,7 +1122,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             console.log('Error updating venue', data.message);
           }
           else {
-            $scope.success = data;
+            $timeout(function() {
+              $scope.success = data;
+            }, 1);
             console.log('Success');
           }
         }
