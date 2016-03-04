@@ -2917,6 +2917,10 @@ input#notifyMe {
   }
 }
 
+.business-hours-form .helper-text {
+  color: lighten($grey, 10%);
+}
+
 .business-hours {
   font-size: 13px;
   .today {
