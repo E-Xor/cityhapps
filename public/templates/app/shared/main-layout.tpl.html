@@ -1,4 +1,4 @@
-<div class="snap-drawers">
+<div class="snap-drawers"><!-- mobile, small screen menu -->
     <aside class="snap-sidebar" snap-drawer="left">
         <ul class="sidebar-menu" auto-active>
             <li ng-if="authenticated"><a href="/profile" snap-close>My Account <i class="fa fa-caret-down"></i></a></li>
@@ -8,6 +8,7 @@
             <li ng-if="!authenticated"><a href="/login">Log In</a></li>
             <li ng-if="!authenticated"><a href="/register">Register</a></li>
             <li><a href="/" snap-close>Home</a></li>
+            <li><a href="https://cityhapps.wordpress.com" target="_new" snap-close>Blog</a></li>
             <li><a href="/venues" snap-close>Places</a></li>
             <li ng-repeat="category in categories">
                 <a href="/category/{{ category.slug }}" snap-close>{{ category.name }}</a>
@@ -15,7 +16,7 @@
         </ul>
     </aside>
 </div>
-<div class="page-wrapper" snap-content>
+<div class="page-wrapper" snap-content><!-- wide screen menu -->
     <aside class="sidebar">
         <ul class="sidebar-menu" auto-active>
             <li ng-if="authenticated"><a href="/profile" snap-close>My Account <i class="fa fa-caret-down"></i></a></li>
@@ -25,6 +26,7 @@
             <li ng-if="!authenticated"><a href="/login">Log In</a></li>
             <li ng-if="!authenticated"><a href="/register">Register</a></li>
             <li><a href="/" snap-close>Home</a></li>
+            <li><a href="https://cityhapps.wordpress.com" target="_new" snap-close>Blog</a></li>
             <li><a href="/venues" snap-close>Places</a></li>
             <li ng-repeat="category in categories">
                 <a href="/category/{{ category.slug }}" snap-close>{{ category.name }}</a>
@@ -51,6 +53,7 @@
             <ul class="footer-menu">
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
+                <li><a href="https://cityhapps.wordpress.com" target="_new">Blog</a></li>
                 <li><a href="/contact">Contact</a></li>
             </ul>
             <div class="footer-copyright">
