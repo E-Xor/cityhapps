@@ -128,6 +128,7 @@ class EventController extends Controller {
 		$timeEvents = Happ::where('start_time', ">", $today )
 									->where('start_time', '<', $tomorrow)
 									->orderBy('start_time', 'asc')
+									->orderBy('user_id', 'desc')
 									->get();
 
 		return $timeEvents;

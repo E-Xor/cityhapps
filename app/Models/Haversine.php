@@ -79,6 +79,7 @@
                 ->having( 'distance', '<=', $max_distance )
                 ->orderBy( 'distance', 'asc' )
                 ->orderBy('start_time', 'asc')
+                ->orderBy('user_id', 'desc')
                 ->take(10)
                 ->get();
 
