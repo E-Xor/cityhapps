@@ -58,12 +58,13 @@ class LoadApiData extends Command
     $this->line("Starting Eventbrite...");
     $this->storeEventbriteEvents();
     $this->line("Eventbrite Done!");
-    $this->line("Starting Eventful...");
-    $this->storeEventfulEvents();
-    $this->line("Eventful Done!");
-    $this->line("Starting Meetup...");
-    $this->storeMeetupEvents();
-    $this->line("Meetup Done!");
+    $this->line("Skip Eventful and Meetup.");
+    // $this->line("Starting Eventful...");
+    // $this->storeEventfulEvents();
+    // $this->line("Eventful Done!");
+    // $this->line("Starting Meetup...");
+    // $this->storeMeetupEvents();
+    // $this->line("Meetup Done!");
     $this->line("End time: " . (string)date('l jS \of F Y h:i:s A'));
     $this->info("Finished storing events");
   }

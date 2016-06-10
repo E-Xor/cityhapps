@@ -53,18 +53,19 @@ class PullApi extends Command {
         $this->grabMeetup();
         break;
       case 'all':
-        $this->info('Running all integrations: eventbrite, eventful, meetup');
+        // $this->info('Running all integrations: eventbrite, eventful, meetup');
+        $this->info('Running all integrations: eventbrite only for now');
         $this->grabEventbrite();
         $this->line('Marked time: ' . (string)date('l jS \of F Y h:i:s A'));
-        $this->grabEventful();
-        $this->line('Marked time: ' . (string)date('l jS \of F Y h:i:s A'));
-        $this->grabMeetup();
+        // $this->grabEventful();
+        // $this->line('Marked time: ' . (string)date('l jS \of F Y h:i:s A'));
+        // $this->grabMeetup();
         break;
       default:
         $this->error('Integration "' . $select . '" not recognized. Must be one of the following: eventbrite, eventful, meetup, all');
         break;
     }
-    $this->line('End time: ' . (string)date('l jS \of F Y h:i:s A'));    
+    $this->line('End time: ' . (string)date('l jS \of F Y h:i:s A'));
   }
 
   /**
