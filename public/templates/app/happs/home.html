@@ -1,12 +1,13 @@
 <div class="happ-listing happ-listing-home">
   <div ng-if="!authenticated" class="container intro-message">
     <div class="row">
-      <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <div class="col-xs-12 col-md-6 col-md-offset-2">
         <div class="content" ng-bind-html="welcomeMessage"></div>
         <div class="call-to-action">
           <a class="happ-button" href="/register">Sign Up</a>
         </div>
       </div>
+      <div class="col-xs-12 col-md-4 home-page-ad"><a href="http://tinytowne.com" target="_new"><img src="/assets/img/ads/first_ad_300_200.jpg"></a></div>
     </div>
   </div>
   <div class="container" ng-if="currentUser.canCreate()">
