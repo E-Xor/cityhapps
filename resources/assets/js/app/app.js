@@ -4,7 +4,7 @@
 
 angular.module('cityHapps', [
   'xeditable', 'ui.bootstrap', 'ui.router', 'ngRoute',
-  'ngResource', 'ui.validate', 'facebook', 'http-auth-interceptor',
+  'ngResource', 'ui.validate', 'http-auth-interceptor',
   'remoteValidation', 'google-maps'.ns(), 'ui.calendar', 'angular.filter',
   'ngSanitize', 'ngCookies', 'snap', 'ngIdle', 'checklist-model',
   'ngTagsInput', 'cityHapps.controllers', 'cityHapps.services',
@@ -13,7 +13,7 @@ angular.module('cityHapps', [
   'angular-img-cropper'
 ]);
 
-angular.module('cityHapps').config(function($routeProvider, $locationProvider, FacebookProvider, AnalyticsProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
+angular.module('cityHapps').config(function($routeProvider, $locationProvider, AnalyticsProvider, $stateProvider, $urlRouterProvider, snapRemoteProvider, $authProvider) {
   var sortingComparator = function(key) {
     return function(a, b) {
       return (a[key]> b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);
@@ -380,9 +380,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
         url: '/reset',
         templateUrl: 'templates/app/user/reset.html',
         controller: 'registerFormController'
-    }).state('userLogout', {
-        url: '/logout',
-        controller: 'UserLogoutController'
     }).state('main.userProfileEdit', {
         url: '/profile/edit',
         views: {
@@ -415,12 +412,6 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from
     $authProvider.loginUrl = '/api/authenticate';
-    $authProvider.facebook({
-        clientId: '1678520879058865'
-    });
-
-    var myAppId = '1678520879058865';
-    FacebookProvider.init(myAppId);
 
     snapRemoteProvider.globalOptions = {
         disable: 'right',
@@ -457,8 +448,18 @@ angular.module('cityHapps').config(function($routeProvider, $locationProvider, F
     if (!routeRequiresAdmin && $rootScope.authenticated) return true;
 
     var authPromise = $http.get(authRoute).then(function(res) {
-      $rootScope.authenticated = true;
-      $rootScope.currentUser = userDecorator.decorate(res.data.user);
+      if (res.data.error) {
+        console.log('Not authenticated');
+        console.log(res.data.error);
+      }
+      else {
+        console.log('Authenticated');
+        $rootScope.authenticated = true;
+        $rootScope.currentUser = userDecorator.decorate(res.data.user);
+      }
+    }, function(res) {
+      console.log(res);
+      console.log('Not authenticated 40X');
     });
 
     if (routeRequiresAuth(toState.url)){

@@ -19,6 +19,8 @@
 |
 */
 
+ini_set("memory_limit", "512M");
+
 require __DIR__.'/../bootstrap/autoload.php';
 
 /*

@@ -882,18 +882,26 @@ input.main-search {
     font-size: 12px;
     margin-bottom: 20px; }
 
-.user-pages .facebook-login {
-  background-color: #336EB7;
+.user-pages .social-login, .user-pages .social-login a {
   color: #FFFFFF;
   text-align: center;
   font-size: 14px;
   line-height: 40px;
-  cursor: pointer; }
-  .user-pages .facebook-login .fa {
+  cursor: pointer;
+  margin-bottom: 10px; }
+  .user-pages .social-login .fa {
     font-size: 18px;
     line-height: 40px;
     vertical-align: middle;
     margin-right: 10px; }
+
+.user-pages .facebook-login {
+  background-color: #336EB7;
+}
+
+.user-pages .google-login {
+  background-color: #dd4b39;
+}
 
 .user-pages .sign-up-button {
   width: 100%;

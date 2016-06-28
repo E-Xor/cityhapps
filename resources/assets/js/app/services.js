@@ -67,24 +67,6 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
         });
     };
 
-    auth.logoutUser = function() {
-        $http({
-            method: 'GET',
-            url: '/auth/logout',
-            headers: {'Content-Type': 'application/json'}
-        }).success(function(data) {
-            $cookieStore.remove('user');
-            //ipCookie.remove("user");
-
-            document.location.href = '/';
-            if (!data) {
-                console.log('There was an error logging you out');
-            } else if (data) {
-                console.log('You have logged out');
-            }
-        });
-    };
-
     //for checking emails on registration
     auth.userCheck = function(email, callback) {
         $http({

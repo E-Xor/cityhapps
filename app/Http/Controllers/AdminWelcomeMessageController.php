@@ -1,6 +1,7 @@
 <?php
 namespace CityHapps\Http\Controllers;
 
+use Log;
 use Illuminate\Http\Request;
 use JWTAuth;
 
@@ -69,6 +70,8 @@ class AdminWelcomeMessageController extends Controller {
     	if (JWTAuth::getToken()) {
 	        try {
 	        	if ($user = JWTAuth::parseToken()->authenticate()) {
+                    Log::Info('AdminWelcomeMessageController::getAuthUser. Auth::login.');
+                    \Auth::login($user, true);
                     return $user;
                 } else {
                     throw new \Exception("Invalid Token");
