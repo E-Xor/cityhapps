@@ -39,14 +39,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     vm.authenticate = function(provider) {
       $auth.authenticate(provider);
     };
-}).controller('UserLogoutController', function($auth, $rootScope, $state) {
-    $auth.logout().then(function() {
-        localStorage.removeItem('user');
-        $rootScope.authenticated = false;
-        $rootScope.currentUser = null;
-    }).then(function() {
-        $state.go('main.home', {});
-    });
 }).controller('FavoriteController', function($cookies, $scope, $rootScope, $state, getFavorites) {
     $scope.happs = {};
 
@@ -1408,34 +1400,12 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     });
   };
 
-}).controller('registerFormController', function($scope, $state, $http, $modal, registerDataService, $timeout, authFactory, Facebook, Category, $controller, $cookieStore, $cookies, $auth, $rootScope, userDecorator) {
-    //Facebook Auth
+}).controller('registerFormController', function($scope, $state, $http, $modal, registerDataService, $timeout, authFactory, Category, $controller, $cookieStore, $cookies, $auth, $rootScope, userDecorator) {
 
     // Define user empty data :/
     $scope.user = {};
 
-    /**
-    * Watch for Facebook to be ready.
-    * There's also the event that could be used
-    */
-    $scope.$watch(
-    function() {
-      return Facebook.isReady();
-    },
-    function(newVal) {
-      if (newVal)
-        $scope.facebookReady = true;
-    }
-    );
-
     var userIsConnected = false;
-
-    Facebook.getLoginStatus(function(response) {
-    if (response.status == 'connected') {
-      userIsConnected = true;
-
-    }
-    });
 
     $scope.IntentLogin = function() {
     if (!userIsConnected) {
@@ -1443,96 +1413,8 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
     }
     };
 
-
-    $scope.login = function() {
-        Facebook.login(function(response) {
-            if (response.status == 'connected') {
-                $scope.logged = true;
-                $scope.user.token = response;
-
-                console.log($scope.user.token);
-
-                Facebook.api('/me?fields=email,name', function(response) {
-                    $scope.$apply(function() {
-
-                        console.log(response);
-                        $scope.user.info = response;
-
-                        $scope.fbInfo = {
-                            "categories" : {},
-                            "email" : $scope.user.info.email,
-                            "password" : $scope.user.token.authResponse.accessToken,
-                            "name" : $scope.user.info.name,
-                            "location" : "Atlanta , GA"
-                        };
-
-                        console.log($scope.fbInfo.location);
-
-                        authFactory.userExist($scope.user.info.email , function(response){
-
-                            console.log(response);
-
-                            $scope.fbUser = {
-                                "password_confirmation" : $scope.fbInfo.password,
-                                "user_name" : $scope.fbInfo.name,
-                                "name" : $scope.fbInfo.name,
-                                "city" : $scope.fbInfo.location,
-                                "email" : $scope.fbInfo.email,
-                                "password" : $scope.fbInfo.password,
-                                "categories" : $scope.fbInfo.categories
-                            };
-
-                            if (response.id) {
-                                registerDataService.data = $scope.fbInfo;
-                                $rootScope.authenticated = true;
-                                $rootScope.currentUser = userDecorator.decorate($scope.fbUser);
-                                $state.go('main.home', {});
-                            } else if (response.isValid) {
-                                $http({
-                                    method: 'POST',
-                                    url: '/user',
-                                    data: $scope.fbUser,
-                                    headers: {"Content-Type": "application/json"}
-                                }).success(function(data){
-                                    authFactory.loginUser($scope.fbUser);
-                                });
-                                registerDataService.data = $scope.fbInfo;
-                                $rootScope.authenticated = true;
-                                $rootScope.currentUser = $scope.fbUser;
-                                $state.go('main.home', {});
-
-
-                            }
-
-                        });
-                    });
-                });
-            }
-        }, {scope: 'email'});
-    };
-
     $scope.loginUser = function(formData) {
       authFactory.loginUser(formData);
-    };
-
-    $scope.logout = function() {
-        $auth.logout().then(function() {
-            localStorage.removeItem('user');
-            $rootScope.authenticated = false;
-            $rootScope.currentUser = null;
-        })
-    };
-
-    $scope.remove = function() {
-        Facebook.api(
-            '/me/permissions/user_profile',
-            'DELETE',
-            function(response) {
-                  if (response && !response.error) {
-                        alert('access revoked');
-                  }
-            }
-        );
     };
 
     $scope.registerCategories = {};
@@ -1562,28 +1444,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         });
     };
 
-      // $scope.$on('Facebook:statusChange', function(ev, data) {
-      //   console.log('Status: ', data);
-      //   if (data.status == 'connected') {
-      //     $scope.$apply(function() {
-      //       $scope.salutation = true;
-      //       $scope.byebye     = false;
-      //     });
-      //   } else {
-      //     $scope.$apply(function() {
-      //       $scope.salutation = false;
-      //       $scope.byebye     = true;
-
-      //       // Dismiss byebye message after two seconds
-      //       $timeout(function() {
-      //         $scope.byebye = false;
-      //       }, 2000);
-      //     });
-      //   }
-
-
-      // });
-
     $scope.formData = registerDataService.data;
 
     // $scope.categoryService = categoryService.getCategories();
@@ -1604,10 +1464,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             if (!data) {
                 console.log('not working');
             } else if (data) {
-                var fbInfo = {
-                    'email' : data.email,
-                    'password' : data.fb_token
-                };
                 $scope.id = data.id;
 
                 var auth = $controller('AuthController');
@@ -1659,14 +1515,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
             });
     };
 
-    $scope.logoutUser = function() {
-        authFactory.logoutUser();
-    };
-
     $scope.userExist = function() {
         authFactory.userExist();
     };
-
 
     $scope.resetPassword = function (data) {
         authFactory.resetPassword($scope.formData);
@@ -1692,7 +1543,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 
         $scope.formData = registerDataService.data;
 
-}).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore, Facebook){
+}).controller("eventModalInstanceController", function($scope, registerDataService, $rootScope, voteService, $http, $modalInstance, data, num, vote, $cookies, $cookieStore){
 
         if (num === null || num === undefined) {
             $scope.data = data;
@@ -1770,25 +1621,19 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.currentURL = "http://" + window.location.host + "/share/";
 
         $scope.fbShare = function(url, title) {
+            console.log('fbShare');
 
-            Facebook.ui({
-                method: 'feed',
-                link: url,
-                caption: title
-            }, function(response){
-                if (response && !response.error_code) {
-                    //alert(response);
-                } else {
-                    //alert('Error while posting.');
-                }
-            });
+            $scope.socialShare(url, 'Facebook Share', 'width=600, height=400')
         };
 
             $scope.socialShare = function(url, name, size) {
+                console.log('socialShare');
+
                 window.open(url, name, size);
             }
 
             $scope.sharedPush =  function(event_id, target) {
+                console.log('sharedPush');
 
                 var text = "";
                 var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

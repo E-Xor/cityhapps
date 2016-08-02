@@ -263,43 +263,35 @@ class UserController extends Controller {
 	 */
 	public function update(Request $request)
 	{
-        $this->validate($request, [
-        	'user_name' => 'required',
-        	'email' => 'required|email',
-        	'city' => 'required',
-        	'password' => 'confirmed|min:6',
-        ]);
+    $this->validate($request, [
+      'user_name' => 'required',
+      'email' => 'required|email',
+      'city' => 'required',
+      'password' => 'confirmed|min:6',
+    ]);
+    $user = FALSE;
 
-        $user = FALSE;
+    if (\Auth::check()) {
+      $user = \Auth::user();
 
-        try {
-            $token = JWTAuth::getToken();
-            $user = JWTAuth::parseToken()->authenticate();
-        } catch (\Exception $e) {
-            return $user;
+      $user->user_name = \Input::get('user_name');
+      $user->city = \Input::get('city');
+      $user->email = \Input::get('email');
+      // if (\Input::get('password') != '') {
+      //   $user->password = \Hash::make(\Input::get('password'));
+      // }
+
+      if (\Input::get('avatar_data')) {
+        $uploader = new AvatarUploader(\Input::get('avatar_data'), $user);
+        if ($path = $uploader->save()) {
+          $user->avatar_path = $path;
         }
+      }
 
-        if ($user) {
-            
-        	$user->user_name = \Input::get('user_name');
-        	$user->city = \Input::get('city');
-        	$user->email = \Input::get('email');
+      $user->save();
+      return $user;
+    }
 
-        	if (\Input::get('password') != '') {
-				$user->password = \Hash::make(\Input::get('password'));
-			}
-
-            if (\Input::get('avatar_data')) {
-                $uploader = new AvatarUploader(\Input::get('avatar_data'), $user);
-                if ($path = $uploader->save()) {
-                    $user->avatar_path = $path;
-                }
-            }
-
-			$user->save();
-
-		}
-		return $user;
 	}
 
 
@@ -324,6 +316,8 @@ class UserController extends Controller {
         try {
             $token = JWTAuth::getToken();
             $user = JWTAuth::parseToken()->authenticate();
+            Log::Info('UserController::getAuthUser. Auth::login.');
+            \Auth::login($user, true);
 
             return $user;
         } catch (\Exception $e) {

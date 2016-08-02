@@ -2,6 +2,9 @@
 
 namespace CityHapps\Http\Controllers;
 
+use Log;
+use CityHapps\User;
+
 use Illuminate\Http\Request;
 
 use CityHapps\Http\Requests;
@@ -69,20 +72,26 @@ class ApiController extends Controller
 	 */
 	public function authenticate(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+      Log::Info("ApiController::authenticate. Auth::check(): ". \Auth::check());
+      $credentials = $request->only('email', 'password');
 
-        try {
-            // verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return; 
-            }
-        } catch (JWTException $e) {
-            // something went wrong
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
+      try {
+          // verify the credentials and create a token for the user
+          if (!$token = JWTAuth::attempt($credentials)) {
+              return;
+          }
+      } catch (JWTException $e) {
+          // something went wrong
+          return response()->json(['error' => 'could_not_create_token'], 500);
+      }
 
-        // if no errors are encountered we can return a JWT
-        return response()->json(compact('token'));
+      // if no errors are encountered we can return a JWT
+      $user = User::where('email', '=', $credentials['email'])->first();
+      Log::Info('ApiController::authenticate. Authenticated!');
+      Log::Debug('ApiController::authenticate. Authenticated! User dump: ' . var_export($user, true));
+      \Auth::login($user, true);
+
+      return response()->json(compact('token'));
     }
 
     /**
@@ -90,31 +99,16 @@ class ApiController extends Controller
      */
     public function getAuthenticatedUser()
     {
-        try {
-        	if (JWTAuth::getToken()) {
-	            if (! $user = JWTAuth::parseToken()->authenticate()) {
-	                return response()->json(['user_not_found'], 404);
-	            }
-	        } else {
-	        	return response()->json(['token_absent'], 400);
-	        }
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent'], $e->getStatusCode());
-
+        Log::Info("ApiController::getAuthenticatedUser Auth::check(): ". \Auth::check());
+        if (\Auth::check()) {
+          Log::Info('ApiController::getAuthenticatedUser. Authenticated! Id: '. \Auth::user()->id .', EMail: '. \Auth::user()->email);
+          $user = \Auth::user();
+          return response()->json(compact('user'));
+        }
+        else {
+          return response()->json(['error' => 'not_authenticated']);
         }
 
-        // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user'));
     }
 
     /**
@@ -128,8 +122,10 @@ class ApiController extends Controller
     	if (JWTAuth::setRequest($request)->getToken()) {
 	        try {
 	        	$user = JWTAuth::parseToken()->authenticate();
+            Log::Info('ApiController::getAuthUser. Auth::login.');
+            \Auth::login($user, true);
 	        } catch (Exception $e) {
-	        	// 
+	        	//
 	        }
 	    }
 

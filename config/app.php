@@ -154,6 +154,10 @@ return [
          */
         Mews\Purifier\PurifierServiceProvider::class,
 
+        /**
+        * Social Login
+        */
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -203,6 +207,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Socialite'  => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

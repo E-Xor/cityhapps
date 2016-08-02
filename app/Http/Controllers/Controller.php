@@ -2,6 +2,7 @@
 
 namespace CityHapps\Http\Controllers;
 
+use Log;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -19,6 +20,8 @@ abstract class Controller extends BaseController
         if (JWTAuth::getToken()) {
             try {
                 if ($user = JWTAuth::parseToken()->authenticate()) {
+                    Log::Info('Controller::authFromToken. Auth::login.');
+                    \Auth::login($user, true);
                     return $user;
                 } else {
                     throw new Exception("Invalid Token");

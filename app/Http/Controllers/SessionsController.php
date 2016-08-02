@@ -1,7 +1,8 @@
-<?php 
+<?php
 
 namespace CityHapps\Http\Controllers;
 
+use Log;
 use CityHapps\User;
 use Illuminate\Http\Request;
 
@@ -11,8 +12,10 @@ use OAuth\OAuth2\Service\Facebook;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 
+use Socialite;
+
 class SessionsController extends Controller {
-	
+
 	public function index() {
 		return \Response::json(\Auth::user());
 	}
@@ -44,69 +47,90 @@ class SessionsController extends Controller {
             \Auth::login($user, true);
 
 			return $request->user();
-			
+
 			// if (Auth::viaRemember()) {
-			// 	return Response::json(Auth::user());					
+			// 	return Response::json(Auth::user());
 			// } else {
 			// 	return Response::json(Auth::user());
 			// }
-			
+
 		} else {
 			return \Response::json(array('flash' => 'Invalid username or password'), 500);
-		}		
+		}
 	}
 
 	public function logout() {
-		\Auth::logout();
-		return \Response::json(array('flash' => 'Logged Out!'));
-	}
-
-	/**
- * Login user with facebook
- *
- * @return void
- */
-
-	public function fbLogin() {
-
-		    // get data from input
-		    $code = \Input::get( 'code' );
-
-		    // get fb service
-		    $fb = \OAuth::consumer( 'Facebook' );
-
-		    // check if code is valid
-
-		    // if code is provided get user data and sign in
-		    if ( !empty( $code ) ) {
-
-		        // This was a callback request from facebook, get the token
-		        $token = $fb->requestAccessToken( $code );
-
-		        // Send a request with it
-		        $result = json_decode( $fb->request( '/me' ), true );
-
-		        $message = 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
-		        echo $message. "<br/>";
-
-		        //Var_dump
-		        //display whole array().
-		        dd($result);
-
-		    }
-		    // if not ask for permission first
-		    else {
-		        // get fb authorization
-		        $url = $fb->getAuthorizationUri();
-
-		        // return to facebook login url
-		         return \Redirect::to( (string)$url );
-		    }
-
+		if (\Auth::check()) {
+			Log::Info('About to log out. Id: '. \Auth::user()->id .', EMail: '. \Auth::user()->email);
+		} else {
+			Log::Info('About to log out.');
 		}
-	
+
+		\Auth::logout();
+		Log::Info('Logged Out!');
+		return \Redirect::to('/');
 	}
 
+	public function FacebookLogin() {
+		Log::Info('SessionsController::FacebookLogin. Redirect');
+		Log::Info("SessionsController::FacebookLogin. Auth::check(): ". \Auth::check());
 
+	  return Socialite::driver('facebook')->redirect();
+	}
+
+	public function GoogleLogin() {
+		Log::Info('SessionsController::GoogleLogin. Redirect');
+		Log::Info("SessionsController::GoogleLogin. Auth::check(): ". \Auth::check());
+
+	  return Socialite::driver('google')->redirect();
+	}
+
+	public function FacebookCallback() {
+		Log::Info('SessionsController::FacebookCallback');
+		Log::Info('SessionsController::FacebookCallback. Auth::check(): '. \Auth::check());
+
+		$user = Socialite::driver('facebook')->user();
+		// $user dump
+		// Laravel\Socialite\Two\User::__set_state(array(
+		//    'token' => 'EAAGa0D4ZBs5EBAPcvch1BoM4GV9rXMStVFMZB6KsljiTHBLM8O0IZALF1FZCn4YNq9TnXjkKKmhT33aA4MNXZBhgQn7yzcgGeQekzLL78LpE9HZB1rZAjIZA9lUZCISUZCBtETpLRwym7Nyd8l8fOnQtWyAgFBZAbdC7pkZD',
+		//    'refreshToken' => NULL,
+		//    'expiresIn' => '5182076',
+		//    'id' => '10210442562406023',
+		//    'nickname' => NULL,
+		//    'name' => 'Maxim Sundukov',
+		//    'email' => 'e-xormail@tut.by',
+		//    'avatar' => 'https://graph.facebook.com/v2.6/10210442562406023/picture?type=normal',
+		//    'user' =>
+		//   array (
+		//     'name' => 'Maxim Sundukov',
+		//     'email' => 'e-xormail@tut.by',
+		//     'gender' => 'male',
+		//     'verified' => true,
+		//     'id' => '10210442562406023',
+		//   ),
+		//    'avatar_original' => 'https://graph.facebook.com/v2.6/10210442562406023/picture?width=1920',
+		// ))
+
+		$token = $user->token;
+		Log::info('SessionsController::FacebookCallback. Token: ' . $token);
+
+		$name = $user->getName();
+		Log::Info('SessionsController::FacebookCallback. Name: ' . $name);
+		$email = $user->getEmail();
+		Log::Info('SessionsController::FacebookCallback. EMail: ' . $email);
+
+		$user = User::where('email', '=', $email)->first();
+		\Auth::login($user, true);
+
+		Log::Info("SessionsController::FacebookCallback. Auth::check(): ". \Auth::check());
+
+		return \Redirect::to('/');
+	}
+
+	public function GoogleCallback() {
+		Log::Info('SessionsController::GoogleCallback');
+	}
+
+}
 
 ?>

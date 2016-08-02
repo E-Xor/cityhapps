@@ -71,6 +71,12 @@ Route::get('getUserCategories', 'UserController@getUserCategories');
 
 Route::post('auth/login-fb', 'SessionsController@fbNewLogin');
 
+Route::get('social_auth/facebook/login', 'SessionsController@FacebookLogin');
+Route::get('social_auth/facebook/callback', 'SessionsController@FacebookCallback');
+Route::get('social_auth/google/login', 'SessionsController@GoogleLogin');
+Route::get('social_auth/google/callback', 'SessionsController@GoogleCallback');
+
+
 Route::get('tags/{name}','TagController@getTags');
 
 // Admin Event
