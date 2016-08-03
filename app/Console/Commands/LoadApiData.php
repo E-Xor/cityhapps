@@ -13,7 +13,7 @@ use Mews\Purifier\Purifier;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class LoadApiData extends Command 
+class LoadApiData extends Command
 {
   /**
    * The threshold score for event inclusion on keywork filters
@@ -75,7 +75,16 @@ class LoadApiData extends Command
   public static function storeEventbriteEvents()
   {
 
-    Eventbrite::chunk(200, function ($events) {
+    // Clean events eneded more than 30 days ago
+    $end_date = date_sub(new \DateTime(), date_interval_create_from_date_string("30 days"))->format('Y-m-d'); // 30 days ago
+    Eventbrite::where('end_local', '<', $end_date)->delete();
+
+    // Select eventbrite and happ_venue_id
+    Eventbrite::leftJoin('venues', function($join)
+      {
+        $join->on('venues.source_id', '=', 'eventbrite.venue_id');
+        $join->on('venues.source', '=', \DB::raw("'Eventbrite'"));
+      })->distinct()->select('eventbrite.*', 'venues.id as happ_venue_id')->chunk(200, function ($events) {
 
       foreach ($events as $event) {
 
@@ -106,10 +115,12 @@ class LoadApiData extends Command
             $eventRecord->latitude = $event->latitude;
             $eventRecord->longitude = $event->longitude;
 
-            $venue = Venue::where('source_id', $event->venue_id)->where('source', $eventRecord->source)->first();
-            if ($venue) {
-              $eventRecord->venue_id = $venue->id;
-            }
+            // Extremely slow, fixed by the join at the beginnning
+            // $venue = Venue::where('source_id', $event->venue_id)->where('source', $eventRecord->source)->first();
+            // if ($venue) {
+            //   $eventRecord->venue_id = $venue->id;
+            // }
+            $eventRecord->venue_id = $event->happ_venue_id;
 
             if ($event->start_local != null) {
               $eventRecord->event_date = date_format(date_create($event->start_local), "Y-m-d");
@@ -124,6 +135,9 @@ class LoadApiData extends Command
             if (LoadApiData::$threshold <= $eventRecord->keyword_score) {
               $eventRecord->save();
 
+              print("Saved ID: ". $eventRecord->id ."\n");
+
+              // make another quiery to pupulate categories
               foreach ($event->eventbriteCategories as $category) {
 
                 $categoryExisting = EventCategory::where('category_id', '=', $category->category_id)
@@ -330,8 +344,7 @@ class LoadApiData extends Command
    */
   public static function keywordFilter(&$eventRecord)
   {
-    $file = app_path() . "/../config/filters/keywords.json";
-    $keywords = json_decode(file_get_contents($file), true);
+    $keywords = \Config::get('app.filter_keywords');
 
     $score = 0;
 

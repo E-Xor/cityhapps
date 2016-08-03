@@ -43,5 +43,6 @@ class LoadApiVenuesData extends Command
         $this->line("Loading all API Venues Tables (Foursquare, Eventful, Meetup, Eventbrite) into main venues table...");
         Venue::storeVenues();
         $this->info("Finished storing venues");
+        $this->line("End time: " . (string)date('l jS \of F Y h:i:s A'));
     }
 }
