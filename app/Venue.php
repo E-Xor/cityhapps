@@ -112,12 +112,12 @@ class Venue extends Model
   public static function storeVenues()
   {
     Log::useFiles('php://stdout', 'info');
-    Log::info('Processing Foursquare.');
-    Venue::storeFoursquareVenues();
-    Log::info('Processing Eventful.');
-    Venue::storeEventfulVenues();
-    Log::info('Processing Meetup.');
-    Venue::storeMeetupVenues();
+    // Log::info('Processing Foursquare.');
+    // Venue::storeFoursquareVenues();
+    // Log::info('Processing Eventful.');
+    // Venue::storeEventfulVenues();
+    // Log::info('Processing Meetup.');
+    // Venue::storeMeetupVenues();
     Log::info('Processing Eventbrite.');
     Venue::storeEventBriteVenues();
   }
@@ -227,9 +227,9 @@ class Venue extends Model
     {
 
         //Using raw SQL instead of eloquent, as it is like 1000% faster for this alone.
-        $insert_select = 'INSERT INTO venues (source_id, source, name, lat, lng, address_1, city, state, postal_code, country) ';
-        $insert_select .= 'SELECT DISTINCT(venue_id) AS venue_id, "Eventbrite", venue_name, latitude, longitude, address_1, city, region, postal_code, "us"  FROM eventbrite ';
-        $insert_select .= 'ON DUPLICATE KEY UPDATE lat=VALUES(lat), lng=VALUES(lng),city=VALUES(city),address_1=VALUES(address_1), state=VALUES(state), postal_code=VALUES(postal_code)';
+        $insert_select = 'INSERT INTO venues (source_id, source, name, lat, lng, address_1, city, state, postal_code, country, created_at, updated_at) ';
+        $insert_select .= 'SELECT DISTINCT(venue_id) AS venue_id, "Eventbrite", venue_name, latitude, longitude, address_1, city, region, postal_code, "us", NOW(), NOW() FROM eventbrite ';
+        $insert_select .= 'ON DUPLICATE KEY UPDATE lat=VALUES(lat), lng=VALUES(lng),city=VALUES(city),address_1=VALUES(address_1), state=VALUES(state), postal_code=VALUES(postal_code), updated_at=NOW()';
 
         \DB::statement($insert_select);
 

@@ -43,6 +43,7 @@ class PullApiVenues extends Command
         $this->line('Start time: ' . (string)date('l jS \of F Y h:i:s A'));
         $select = $this->option('select');
         switch ($select) {
+            // eventbrite are in the eventbrite table already, no separate table and pull
             case 'foursquare':
                 $this->grabFoursquare();
                 break;

@@ -211,4 +211,5 @@ return [
 
     ],
 
+    'filter_keywords' => json_decode(file_get_contents(app_path() . "/../config/filters/keywords.json"), true),
 ];
