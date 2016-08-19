@@ -586,7 +586,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             state: singleEvent.address.state,
             zip_code: singleEvent.address.zip,
             desc: singleEvent.description,
-            all_day: Boolean(singleEvent.all_day_flag),
+            all_day: Boolean(parseInt(singleEvent.all_day_flag)),
             start_time: formatDate(singleEvent.start),
             end_time: formatDate(singleEvent.end),
             business_hours: singleEvent.business_hours,

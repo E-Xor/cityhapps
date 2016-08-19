@@ -712,6 +712,10 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       return;
     }
 
+    // Conversion to UTC. Otherwise unedited date and time causes time shift.
+    formData.start_time = moment(formData.start_time).toISOString();
+    formData.end_time = moment(formData.end_time).toISOString()
+
     $http({
       method: 'POST',
       url: '/admin/event/update',
@@ -861,7 +865,6 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.error = data.error.message;
       });
     } else {
-      console.log(formData);
       $http({
         method: 'POST',
         url: '/admin/event/update',
@@ -957,7 +960,7 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
       $scope.formData.state = singleEvent.address.state;
       $scope.formData.zip_code = singleEvent.address.zip;
       $scope.formData.desc = singleEvent.description;
-      $scope.formData.all_day = singleEvent.all_day_flag ? true : false;
+      $scope.formData.all_day = Boolean(parseInt(singleEvent.all_day_flag));
       $scope.formData.start_time = $filter('date')(singleEvent.start.local, 'MM/dd/yyyy hh:mm a');
       $scope.formData.end_time = $filter('date')(singleEvent.end.local, 'MM/dd/yyyy hh:mm a');
       dateCheckCreate = new Date(singleEvent.created_at).getTime() / 1000;

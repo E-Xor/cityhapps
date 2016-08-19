@@ -133,10 +133,10 @@ class HappHandler extends ApiHandler
 		$happTime = [];
 		if(!is_null($time)) {
 
-			$currentTime = new \DateTime($time, $this->getSiteTimeZoneObj());
-			$localTime = $currentTime->format(\DateTime::ISO8601);
-			$currentTime->setTimezone($this->getUtcTimeZoneObj());
-			$utcTime = $currentTime->format(\DateTime::ISO8601);
+			$dbTime = new \DateTime($time);
+			$utcTime = $dbTime->format(\DateTime::ISO8601);
+			$dbTime->setTimezone($this->getSiteTimeZoneObj());
+			$localTime = $dbTime->format(\DateTime::ISO8601);
 
 			$happTime  = [
 				'timezone' => $this->getSiteTimeZone(),
