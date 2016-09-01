@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace CityHapps\Handlers;
 
 use CityHapps\Category;
@@ -24,13 +24,7 @@ class CategoryHandler extends ApiHandler
 	 */
   public function handleGet(ApiRequest $request, $user = FALSE)
   {
-    $categories = DB::table('event_category')->select('category_id')->distinct()->get(); 
-    $array = json_decode(json_encode($categories), true);
-    $model = Category::whereIn('id', $array)->get();
+    $model = Category::all();
     return $model;
   }
-	//public function handleGet(ApiRequest $request, $user = false)
-	//{
-		//return $this->handleGetDefault($request, new Category);
-	//}
 }

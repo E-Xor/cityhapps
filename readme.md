@@ -95,3 +95,18 @@ Last but not least, start the server and make sure the site is running locally.
 
 1. Run `php artisan serve` from your local project directory
 2. Point your web browser to `http://localhost:8000`
+
+### Debug
+
+Logging. Helps a lot.
+
+
+```
+use Log; // storage/log/laravel.log
+
+Log::Debug('Some message');
+
+Log::Debug('Some message ' . var_export($some_var, true)); // Dumps $some_var in log file
+```
+
+Many request doens't go in controllers directly. Look in Http/routes.php, especially for api routes. These requests go to Http/Contollers/APIController.php which makes some filtering and uses Handler/*.php for data.

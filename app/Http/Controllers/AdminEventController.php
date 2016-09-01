@@ -350,7 +350,7 @@ class AdminEventController extends Controller {
 
     protected function authFromToken() {
         $user = parent::authFromToken();
-        if ($user->role != User::ROLE_USER) {
+        if ($user && $user->role != User::ROLE_USER) {
             return $user;
         }
     }
