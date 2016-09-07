@@ -26,17 +26,17 @@
         </h3>
         <ul class="happ-icons fa-ul">
           <li class="happ-icon happ-icon-date" ng-if="happ.event_date">
-            <i class="fa fa-li fa-calendar-o"></i>{{ displayStartTime(happ) | dateToISO | date: 'EEEE, MMMM d' | dateSuffix }}
+            <i class="fa fa-li fa-calendar-o"></i>{{ happ.event_date | date: 'EEEE, MMMM d' | dateSuffix }}
           </li>
-          <li class="happ-icon happ-icon-time" ng-if="displayStartTime(happ)">
+          <li class="happ-icon happ-icon-time" ng-if="happ.start">
             <i class="fa fa-li fa-clock-o"></i>
             <span class="happ-icon-data">
               <span class="start-time">
-              {{ displayStartTime(happ) | dateToISO | date: 'h:mm a'}}
+              {{ happ.start.local | date: 'h:mm a'}}
               </span>
-              <span class="end-time" ng-if="displayEndTime(happ)">
+              <span class="end-time" ng-if="happ.end">
                 -
-                {{ displayEndTime(happ) | dateToISO | date: 'h:mm a' }}
+                {{ happ.end.local | date: 'h:mm a' }}
               </span>
             </span>
           </li>

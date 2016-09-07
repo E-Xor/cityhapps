@@ -29,7 +29,7 @@
 	<script src="/js/jquery.bxslider.min.js"></script>
 	<script src="/js/app.js"></script>
 	<script src="/js/dom.js"></script>
-	
+<!-- 	
 	<script>
 	  window.fbAsyncInit = function() {
 	    FB.init({
@@ -47,7 +47,7 @@
 	     fjs.parentNode.insertBefore(js, fjs);
 	   }(document, 'script', 'facebook-jssdk'));
 	</script>
-	
+	 -->
 
 	<base href="/">
 

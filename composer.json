@@ -11,7 +11,8 @@
         "echo-it/laravel-jsonapi": "dev-master",
         "tymon/jwt-auth": "^0.5.4",
         "mews/purifier": "^2.0",
-        "laravel/socialite": "^2.0"
+        "laravel/socialite": "^2.0",
+        "doctrine/dbal": "~2.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -109,4 +109,4 @@ Log::Debug('Some message');
 Log::Debug('Some message ' . var_export($some_var, true)); // Dumps $some_var in log file
 ```
 
-Many request doens't go in controllers directly. Look in Http/routes.php, especially for api routes. These requests go to Http/Contollers/APIController.php which makes some filtering and uses Handler/*.php for data.
+Many request don't go in controllers directly. Look in Http/routes.php, especially for api routes. These requests go to Http/Contollers/APIController.php which makes some filtering and uses Handler/*.php for data.
