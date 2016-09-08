@@ -246,11 +246,13 @@ class AdminEventController extends Controller {
     if (!$this->authorizeResource(null)) {
       return response()->json(['error' => 'Unauthorized', 'message' => 'Unauthorized'], 403);
     }
+
     $passValidation = true;
     $message = 'Failed to create event';
     $eventParams = array();
 
     $eventParams['user_id'] = $this->user->id;
+    $eventParams['business_id'] = $this->user->business_id;
     $eventParams['event_name'] = Input::get('title');
     $eventParams['url'] = Input::get('event_url');
     $eventParams['venue_id'] = Input::get('venue_id');

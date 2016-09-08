@@ -9,7 +9,7 @@
             <li ng-if="!authenticated"><a href="/register">Register</a></li>
             <li><a href="/" snap-close>Home</a></li>
             <li><a href="https://cityhapps.wordpress.com/#" target="_new" snap-close>Blog</a></li>
-            <li><a href="/venues" snap-close>Places</a></li>
+            <!-- <li><a href="/venues" snap-close>Places</a></li> --><!-- Very long list of venues, not clear what's the value for a user. -->
             <li ng-repeat="category in categories">
                 <a href="/category/{{ category.slug }}" snap-close>{{ category.name }}</a>
             </li>
@@ -27,7 +27,7 @@
             <li ng-if="!authenticated"><a href="/register">Register</a></li>
             <li><a href="/" snap-close>Home</a></li>
             <li><a href="http://cityhapps.wordpress.com/#" target="_new" snap-close>Blog</a></li>
-            <li><a href="/venues" snap-close>Places</a></li>
+            <!-- <li><a href="/venues" snap-close>Places</a></li> --><!-- Very long list of venues, not clear what's the value for a user. -->
             <li ng-repeat="category in categories">
                 <a href="/category/{{ category.slug }}" snap-close>{{ category.name }}</a>
             </li>

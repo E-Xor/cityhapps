@@ -277,7 +277,6 @@ class Happ extends Model
       ->withUserEvent($eventParams['userID'])
       ->orderBy('event_date', 'asc')
       ->orderBy('start_time', 'asc')
-      ->orderBy('user_id', 'desc')
       ->getPage($eventParams['pageSize'], $eventParams['pageCount'], $eventParams['pageShift']);
 
     if ($eventParams['eventID'] && !$eventParams['eventName']) {
@@ -319,7 +318,6 @@ class Happ extends Model
 
         ->orderBy('event_date', 'asc')
         ->orderBy('start_time', 'asc')
-        ->orderBy('user_id', 'desc')
 
         ->getPage($eventParams['pageSize'], $eventParams['pageCount'], $eventParams['pageShift'])
 

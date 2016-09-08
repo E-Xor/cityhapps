@@ -157,16 +157,16 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.happs = payload.data;
 
 
-        $scope.displayStartTime = function(happ) {
-          if (happ.hasOwnProperty('start') && happ.start != null) {
-            return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
-          } else { return happ.start_time }
-        }
-        $scope.displayEndTime = function(happ) {
-          if (happ.hasOwnProperty('end') && happ.end != null) {
-            return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
-          } else { return happ.end_time }
-        }
+        // $scope.displayStartTime = function(happ) {
+        //   if (happ.hasOwnProperty('start') && happ.start != null) {
+        //     return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
+        //   } else { return happ.start_time }
+        // }
+        // $scope.displayEndTime = function(happ) {
+        //   if (happ.hasOwnProperty('end') && happ.end != null) {
+        //     return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
+        //   } else { return happ.end_time }
+        // }
 
         $scope.curDate = new Date();
         $scope.toDate = function(date) { return new Date(date); }
@@ -376,17 +376,17 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
 }).controller('VenueViewController', function($scope, venue) {
   $scope.venue = venue;
 
-  $scope.displayStartTime = function(happ){
-    if(happ.hasOwnProperty('start')){
-      return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
-    } else { return happ.start_time }
-  };
+  // $scope.displayStartTime = function(happ){
+  //   if(happ.hasOwnProperty('start')){
+  //     return happ.start.hasOwnProperty('local') ? happ.start.local : happ.start;
+  //   } else { return happ.start_time }
+  // };
 
-  $scope.displayEndTime = function(happ){
-    if(happ.hasOwnProperty('end')){
-      return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
-    } else { return happ.end_time }
-  };
+  // $scope.displayEndTime = function(happ){
+  //   if(happ.hasOwnProperty('end')){
+  //     return happ.end.hasOwnProperty('local') ? happ.end.local : happ.end;
+  //   } else { return happ.end_time }
+  // };
 
   $scope.display = function(word){
     if(word == undefined) {

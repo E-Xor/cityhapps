@@ -39,12 +39,12 @@ class HappFilter
         if(count($values) > 1) {
             $model->where(function ($model) use ($key, $values) {
                     foreach ($values as $val) {
-                        $model->orWhere($key, '=', $val)->orderBy('user_id', 'desc');
+                        $model->orWhere($key, '=', $val);
                     }
                 }
             );
         } else {
-            $model->where($key, '=', $value)->orderBy('user_id', 'desc');
+            $model->where($key, '=', $value);
         }
     }
 
@@ -55,7 +55,7 @@ class HappFilter
      */
     public static function filterLocationType(&$model, $value)
     {
-        $model->whereRaw('(location_type = \'' . ucwords($value) . '\' OR location_type IS NULL)')->orderBy('user_id', 'desc');
+        $model->whereRaw('(location_type = \'' . ucwords($value) . '\' OR location_type IS NULL)');
     }
 
     /**
@@ -116,7 +116,7 @@ class HappFilter
 
                 $q->whereRaw($whereClause, $whereValues);
 
-            })->orderBy('user_id', 'desc');
+            });
     }
 
     /**
@@ -160,7 +160,7 @@ class HappFilter
         if (count($dates) > 1)
             $whereClause = '(' . $whereClause . ')';
 
-        $query->whereRaw($whereClause, $whereValues)->orderBy('user_id', 'desc');
+        $query->whereRaw($whereClause, $whereValues);
     }
 
     /**
@@ -203,7 +203,7 @@ class HappFilter
             $whereClause = '(' . $whereClause . ')';
 
 
-        $query->whereRaw($whereClause, $whereValues)->orderBy('user_id', 'desc');
+        $query->whereRaw($whereClause, $whereValues);
     }
 
     /**
@@ -246,6 +246,6 @@ class HappFilter
         if (count($words) > 1)
             $whereClause = '(' . $whereClause . ')';
 
-        $query->whereRaw($whereClause, $whereValues)->orderBy('user_id', 'desc');
+        $query->whereRaw($whereClause, $whereValues);
     }
 }
