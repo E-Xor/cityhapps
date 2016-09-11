@@ -2,6 +2,8 @@
 
 namespace CityHapps\Handlers;
 
+use Log;
+
 use CityHapps\Happ;
 use CityHapps\Http\Middleware\HappFilter;
 use Illuminate\Pagination\Paginator;
@@ -51,6 +53,7 @@ class HappHandler extends ApiHandler
 				$model = $this->handleSortRequest($request->sort, $model);
 			}
 			$model->where('status', '=', Happ::STATUS_ACTIVE);
+			$model->orderBy('business_id', 'desc')->orderBy('user_id', 'desc');
 		} else {
 			$model->where('id', '=', $request->id);
 		}

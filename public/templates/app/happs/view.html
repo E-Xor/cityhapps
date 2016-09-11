@@ -56,8 +56,11 @@
                 <a href="/venue/{{ venue.id }}"><i class="fa fa-map-marker"></i> {{ venue.name }}</a>
               </div>
             </div>
-
             <business-hours ng-model="happ.business_hours"></business-hours>
+
+            <div ng-if="happ.business_id">
+              <i class="fa fa-star"></i>&nbsp;Sponsored
+            </div>
 
           </div>
           <div class="col-md-3" >
