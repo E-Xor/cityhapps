@@ -128,37 +128,57 @@ class HappFilter
         $whereClause = '';
         $whereValues = array();
 
-        // Handle comma separated multiple values
-        $dates = explode(',', $value);
-        foreach ($dates as $date) {
+        // Handle '>' first
+        if ($value[0] == '>') {
+            $date = substr($value, 1); // remove first '>'
             $date = date('Y-m-d', strtotime($date));
             $start = $date . ' 00:00:00';
-            $end = $date . ' 23:59:59';
 
             if (!empty($whereClause)) {
                 $whereClause .= ' OR ';
             }
             $whereClause .= '(';
-
-            // Add the clause where end_time is NULL
-            $whereClause .= '(start_time >= ? AND start_time <= ? AND end_time IS NULL)';
+            $whereClause .= '(start_time >= ? OR end_time >= ?)';
             $whereValues[] = $start;
-            $whereValues[] = $end;
-
-            $whereClause .= ' OR ';
-
-            // Add the clause for overlapping time spans
-            $whereClause .= '(start_time <= ? AND end_time >= ?)';
-            $whereValues[] = $end;
             $whereValues[] = $start;
 
             // Add clause for no start/end times
             $whereClause .= ' OR (start_time IS NULL OR event_date IS NULL)';
             $whereClause .= ')';
         }
+        else {
+            // Handle comma separated multiple values
+            $dates = explode(',', $value);
+            foreach ($dates as $date) {
+                $date = date('Y-m-d', strtotime($date));
+                $start = $date . ' 00:00:00';
+                $end = $date . ' 23:59:59';
 
-        if (count($dates) > 1)
-            $whereClause = '(' . $whereClause . ')';
+                if (!empty($whereClause)) {
+                    $whereClause .= ' OR ';
+                }
+                $whereClause .= '(';
+
+                // Add the clause where end_time is NULL
+                $whereClause .= '(start_time >= ? AND start_time <= ? AND end_time IS NULL)';
+                $whereValues[] = $start;
+                $whereValues[] = $end;
+
+                $whereClause .= ' OR ';
+
+                // Add the clause for overlapping time spans
+                $whereClause .= '(start_time <= ? AND end_time >= ?)';
+                $whereValues[] = $end;
+                $whereValues[] = $start;
+
+                // Add clause for no start/end times
+                $whereClause .= ' OR (start_time IS NULL OR event_date IS NULL)';
+                $whereClause .= ')';
+            }
+
+            if (count($dates) > 1)
+                $whereClause = '(' . $whereClause . ')';
+        }
 
         $query->whereRaw($whereClause, $whereValues);
     }

@@ -324,7 +324,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             service.ageLevel[payload.data[i].id] = true;
         }
     });
-    service.today = true;
+    service.today = false;
     service.tomorrow = false;
     service.weekend = false;
     service.calendar = '';
@@ -338,7 +338,7 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
     service.search = '';
 
     service.getDefaults = function(baseObject) {
-        baseObject.today = true;
+        baseObject.today = false;
         baseObject.tomorrow = false;
         baseObject.weekend = false;
         baseObject.calendar = '';
@@ -395,8 +395,13 @@ angular.module('cityHapps.services', []).factory('Happ', function($resource) {
             var calFixed = this.calendar.split('/');
             date += calFixed[2] + calFixed[0] + calFixed[1];
         }
-        if (date != '')
+        if (date != '') {
             filter.date = date;
+        }
+        else {
+            filter.date = '>' + String(this.todayDate());
+            filter.sort = '+event_date,-user_id,+start_time';
+        }
 
         // Time Filters
         var time = '';
