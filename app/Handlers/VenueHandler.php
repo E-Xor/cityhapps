@@ -87,7 +87,11 @@ class VenueHandler extends ApiHandler
         			$model = $model->where('name', 'LIKE', '%' . $query_value . '%');
         		}
         	} else {
-	            $model = $model->where($key, '=', $value);
+                if ($value == 'not_null') {
+                    $model = $model->whereNotNull($key);
+                } else {
+	               $model = $model->where($key, '=', $value);
+                }
 	        }
         }
         return $model;

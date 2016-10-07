@@ -331,47 +331,9 @@ angular.module('cityHapps.controllers', []).controller('AuthController', functio
         $scope.categories = payload.data;
     });
 }).controller('VenueListController', function($scope, $stateParams, cleanData, Venue) {
-    var size = 48;
-    var page = (typeof $stateParams.page != 'undefined') ? parseInt($stateParams.page) : 1;
-    Venue.query({'page[size]': size, 'page[number]': page}, function(payload) {
+    Venue.query({'user_id': 'not_null'}, function(payload) {
         payload = cleanData.buildRelationships(payload);
         $scope.venues = payload.data;
-        // Build some pagination
-        var qd = {};
-        payload.links.last.split('?')[1].split("&").forEach(function(item) {var k = item.split("=")[0], v = item.split("=")[1]; v = v && decodeURIComponent(v); (k in qd) ? qd[k].push(v) : qd[k] = [v]})
-        var last = parseInt(qd['page[number]'][0]);
-
-        $scope.pagination = [];
-        if (page != 1) {
-            $scope.pagination.push({'text': '< Previous', 'link': '/venues/' + (page - 1), 'class': 'prevnext'});
-            $scope.pagination.push({'text': '1', 'link': '/venues'});
-        } else {
-            $scope.pagination.push({'text': '1', 'link': '/venues', 'class': 'active'});
-        }
-
-        if (page - 3 > 1)
-            $scope.pagination.push({'text': '...', 'link': '#'});
-
-        for (var i = page - 2; i < page + 3; i++) {
-            if (i > 1 && i < last) {
-                if (page == i) {
-                    $scope.pagination.push({'text': String(i), 'link': '/venues/' + i, 'class': 'active'});
-                } else {
-                    $scope.pagination.push({'text': String(i), 'link': '/venues/' + i});
-                }
-            }
-        };
-
-        if (page + 3 < last)
-            $scope.pagination.push({'text': '...', 'link': '#'});
-
-        if (page != last) {
-            $scope.pagination.push({'text': String(last), 'link': '/venues/' + last});
-            $scope.pagination.push({'text': 'Next >', 'link': '/venues/' + (page + 1), 'class': 'prevnext'});
-        } else {
-            $scope.pagination.push({'text': String(last), 'link': '/venues/' + last, 'class': 'active'});
-        }
-
     });
 }).controller('VenueViewController', function($scope, venue) {
   $scope.venue = venue;
