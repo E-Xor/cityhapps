@@ -12,7 +12,7 @@ Basic stack to drive Apache as the web server. The DO droplet and development en
 
 PHP framework that we are using as an internal API to handle CRUD operations. We are not using any of the template or view functionality baked into Laravel. Because the app is mostly single page, if it can’t find a route, it defers to the front­end where they are defined. More on this later.
 
-### Digital Ocean
+### Amazon AWS
 
 Hosting provider.
 
@@ -110,3 +110,31 @@ Log::Debug('Some message ' . var_export($some_var, true)); // Dumps $some_var in
 ```
 
 Many request don't go in controllers directly. Look in Http/routes.php, especially for api routes. These requests go to Http/Contollers/APIController.php which makes some filtering and uses Handler/*.php for data.
+
+### Deploy
+
+#### Run (the only thing you usually need)
+
+`cap production deploy`
+
+#### Local setup
+
+```
+# Optional
+# If you already have rvm, ruby and gemset, you know what to do, if not
+\curl -sSL https://get.rvm.io | bash
+source /usr/local/rvm/scripts/rvm
+rvm get stable
+rvm install ruby-2.3.0
+
+cd cityhapps
+rvm use ruby-2.3.0
+(rvm use gemset <GEMSET NAME>) # If you use gemsets use that command, if don't know what's that, you don't need that.
+gem install capistrano
+```
+
+#### Remote server setup
+
+See [Production Setup](production_setup.md)
+
+

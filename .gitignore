@@ -18,3 +18,4 @@ Thumbs.db
 /config/database.php
 gulpfile.js
 .tern-port
+/log
