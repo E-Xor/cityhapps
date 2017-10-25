@@ -60,5 +60,5 @@ nvm alias default v4.4.7
 # Needed to add some shared folders so npm stops rebuilding all packages on every deploy
 
 sudo apt-get install sendmail -y
-sudo apt-get install php5-curl # needed later for larvel socialite dependency
+sudo apt-get install php5-curl # needed later for laravel socialite dependency
 ```
