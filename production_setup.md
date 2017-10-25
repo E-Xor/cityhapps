@@ -39,7 +39,7 @@ cap cityhapps:production deploy # many things failed at that point, it's fine, k
 cd /var/www/cityhapps/current
 nvm install v4.2.1
 
-# It's optional I wanted to prevent accidental some processes to be killed in case they take too much memeory. Can be completely ignored if server has lots or RAM.
+# It's optional I wanted to prevent some processes to be accidental killed in case they take too much memeory. Can be completely ignored if server has lots or RAM.
 sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
 sudo /sbin/mkswap /var/swap.1
 sudo /sbin/swapon /var/swap.1
